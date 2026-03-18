@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+PROJ=$(pwd)
+SRC="$PROJ/sqlite-src-3510200"
+
+mkdir -p "$PROJ/sqlite-testfixture" 
+
+
+CARGO_TARGET_DIR="$PROJ/sqlite-testfixture" cargo build --release --features test
+
+bash testfixture_swap_optimized.sh
