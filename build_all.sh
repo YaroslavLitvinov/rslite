@@ -1,5 +1,7 @@
 #!/bin/bash
 
-./shell_build
+./shell_build.sh
 
-./testfixture_build
+./testfixture_build.sh
+
+./sqlite-src-3510200/rustfixture sqlite-src-3510200/test/testrunner.tcl
