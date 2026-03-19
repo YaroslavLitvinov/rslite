@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-SRC=$(pwd)/sqlite-src-3510200
+SRC="/sqlite"
 PROJ=$(pwd)
 
 # Parse optional function names as arguments

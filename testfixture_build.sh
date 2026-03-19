@@ -2,7 +2,6 @@
 set -euo pipefail
 
 PROJ=$(pwd)
-SRC="$PROJ/sqlite-src-3510200"
 
 mkdir -p "$PROJ/sqlite-testfixture" 
 
