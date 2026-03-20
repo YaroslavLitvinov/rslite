@@ -77,7 +77,7 @@ pub mod src {
         pub mod json;
         pub mod legacy;
         pub mod loadext;
-        pub mod main;
+        pub mod sqlite3_main;
         pub mod malloc;
         pub mod mem0;
         pub mod mem1;
@@ -127,7 +127,7 @@ pub mod src {
         pub mod vtab;
         pub mod wal;
         pub mod walker;
-        pub mod r#where;
+        pub mod sqlite3_where;
         pub mod wherecode;
         pub mod whereexpr;
         pub mod window;
