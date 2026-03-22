@@ -104,4 +104,7 @@ RUN usermod -aG tty $USERNAME
 WORKDIR /workspace
 USER node
 
+rustup install nightly-2023-04-15-x86_64-unknown-linux-gnu
+
+
 ENTRYPOINT ["/bin/bash"]
