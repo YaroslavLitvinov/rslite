@@ -1,212 +1,19 @@
-extern "C" {
-    pub type sqlite3_value;
-    pub type sqlite3_context;
-    pub type sqlite3_mutex;
-    pub type sqlite3_pcache;
-}
-pub type sqlite_int64 = ::core::ffi::c_longlong;
-pub type u8_0 = uint8_t;
-pub type uint8_t = __uint8_t;
-pub type __uint8_t = u8;
-pub type u32_0 = uint32_t;
-pub type uint32_t = __uint32_t;
-pub type __uint32_t = u32;
-#[derive(Copy, Clone)]
-#[repr(C)]
-pub struct FuncDef {
-    pub nArg: i16_0,
-    pub funcFlags: u32_0,
-    pub pUserData: *mut ::core::ffi::c_void,
-    pub pNext: *mut FuncDef,
-    pub xSFunc: Option<
-        unsafe extern "C" fn(
-            *mut sqlite3_context,
-            ::core::ffi::c_int,
-            *mut *mut sqlite3_value,
-        ) -> (),
-    >,
-    pub xFinalize: Option<unsafe extern "C" fn(*mut sqlite3_context) -> ()>,
-    pub xValue: Option<unsafe extern "C" fn(*mut sqlite3_context) -> ()>,
-    pub xInverse: Option<
-        unsafe extern "C" fn(
-            *mut sqlite3_context,
-            ::core::ffi::c_int,
-            *mut *mut sqlite3_value,
-        ) -> (),
-    >,
-    pub zName: *const ::core::ffi::c_char,
-    pub u: C2RustUnnamed,
-}
-#[derive(Copy, Clone)]
-#[repr(C)]
-pub union C2RustUnnamed {
-    pub pHash: *mut FuncDef,
-    pub pDestructor: *mut FuncDestructor,
-}
-#[derive(Copy, Clone)]
-#[repr(C)]
-pub struct FuncDestructor {
-    pub nRef: ::core::ffi::c_int,
-    pub xDestroy: Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()>,
-    pub pUserData: *mut ::core::ffi::c_void,
-}
-pub type i16_0 = int16_t;
-pub type int16_t = __int16_t;
-pub type __int16_t = i16;
-pub type sqlite3_int64 = sqlite_int64;
-#[derive(Copy, Clone)]
-#[repr(C)]
-pub struct sqlite3_mem_methods {
-    pub xMalloc: Option<unsafe extern "C" fn(::core::ffi::c_int) -> *mut ::core::ffi::c_void>,
-    pub xFree: Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()>,
-    pub xRealloc: Option<
-        unsafe extern "C" fn(
-            *mut ::core::ffi::c_void,
-            ::core::ffi::c_int,
-        ) -> *mut ::core::ffi::c_void,
-    >,
-    pub xSize: Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ::core::ffi::c_int>,
-    pub xRoundup: Option<unsafe extern "C" fn(::core::ffi::c_int) -> ::core::ffi::c_int>,
-    pub xInit: Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ::core::ffi::c_int>,
-    pub xShutdown: Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()>,
-    pub pAppData: *mut ::core::ffi::c_void,
-}
-#[derive(Copy, Clone)]
-#[repr(C)]
-pub struct sqlite3_mutex_methods {
-    pub xMutexInit: Option<unsafe extern "C" fn() -> ::core::ffi::c_int>,
-    pub xMutexEnd: Option<unsafe extern "C" fn() -> ::core::ffi::c_int>,
-    pub xMutexAlloc: Option<unsafe extern "C" fn(::core::ffi::c_int) -> *mut sqlite3_mutex>,
-    pub xMutexFree: Option<unsafe extern "C" fn(*mut sqlite3_mutex) -> ()>,
-    pub xMutexEnter: Option<unsafe extern "C" fn(*mut sqlite3_mutex) -> ()>,
-    pub xMutexTry: Option<unsafe extern "C" fn(*mut sqlite3_mutex) -> ::core::ffi::c_int>,
-    pub xMutexLeave: Option<unsafe extern "C" fn(*mut sqlite3_mutex) -> ()>,
-    pub xMutexHeld: Option<unsafe extern "C" fn(*mut sqlite3_mutex) -> ::core::ffi::c_int>,
-    pub xMutexNotheld: Option<unsafe extern "C" fn(*mut sqlite3_mutex) -> ::core::ffi::c_int>,
-}
-#[derive(Copy, Clone)]
-#[repr(C)]
-pub struct sqlite3_pcache_page {
-    pub pBuf: *mut ::core::ffi::c_void,
-    pub pExtra: *mut ::core::ffi::c_void,
-}
-#[derive(Copy, Clone)]
-#[repr(C)]
-pub struct sqlite3_pcache_methods2 {
-    pub iVersion: ::core::ffi::c_int,
-    pub pArg: *mut ::core::ffi::c_void,
-    pub xInit: Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ::core::ffi::c_int>,
-    pub xShutdown: Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()>,
-    pub xCreate: Option<
-        unsafe extern "C" fn(
-            ::core::ffi::c_int,
-            ::core::ffi::c_int,
-            ::core::ffi::c_int,
-        ) -> *mut sqlite3_pcache,
-    >,
-    pub xCachesize: Option<unsafe extern "C" fn(*mut sqlite3_pcache, ::core::ffi::c_int) -> ()>,
-    pub xPagecount: Option<unsafe extern "C" fn(*mut sqlite3_pcache) -> ::core::ffi::c_int>,
-    pub xFetch: Option<
-        unsafe extern "C" fn(
-            *mut sqlite3_pcache,
-            ::core::ffi::c_uint,
-            ::core::ffi::c_int,
-        ) -> *mut sqlite3_pcache_page,
-    >,
-    pub xUnpin: Option<
-        unsafe extern "C" fn(
-            *mut sqlite3_pcache,
-            *mut sqlite3_pcache_page,
-            ::core::ffi::c_int,
-        ) -> (),
-    >,
-    pub xRekey: Option<
-        unsafe extern "C" fn(
-            *mut sqlite3_pcache,
-            *mut sqlite3_pcache_page,
-            ::core::ffi::c_uint,
-            ::core::ffi::c_uint,
-        ) -> (),
-    >,
-    pub xTruncate: Option<unsafe extern "C" fn(*mut sqlite3_pcache, ::core::ffi::c_uint) -> ()>,
-    pub xDestroy: Option<unsafe extern "C" fn(*mut sqlite3_pcache) -> ()>,
-    pub xShrink: Option<unsafe extern "C" fn(*mut sqlite3_pcache) -> ()>,
-}
-#[derive(Copy, Clone)]
-#[repr(C)]
-pub struct FuncDefHash {
-    pub a: [*mut FuncDef; 23],
-}
-#[derive(Copy, Clone)]
-#[repr(C)]
-pub struct Sqlite3Config {
-    pub bMemstat: ::core::ffi::c_int,
-    pub bCoreMutex: u8_0,
-    pub bFullMutex: u8_0,
-    pub bOpenUri: u8_0,
-    pub bUseCis: u8_0,
-    pub bSmallMalloc: u8_0,
-    pub bExtraSchemaChecks: u8_0,
-    pub mxStrlen: ::core::ffi::c_int,
-    pub neverCorrupt: ::core::ffi::c_int,
-    pub szLookaside: ::core::ffi::c_int,
-    pub nLookaside: ::core::ffi::c_int,
-    pub nStmtSpill: ::core::ffi::c_int,
-    pub m: sqlite3_mem_methods,
-    pub mutex: sqlite3_mutex_methods,
-    pub pcache2: sqlite3_pcache_methods2,
-    pub pHeap: *mut ::core::ffi::c_void,
-    pub nHeap: ::core::ffi::c_int,
-    pub mnReq: ::core::ffi::c_int,
-    pub mxReq: ::core::ffi::c_int,
-    pub szMmap: sqlite3_int64,
-    pub mxMmap: sqlite3_int64,
-    pub pPage: *mut ::core::ffi::c_void,
-    pub szPage: ::core::ffi::c_int,
-    pub nPage: ::core::ffi::c_int,
-    pub mxParserStack: ::core::ffi::c_int,
-    pub sharedCacheEnabled: ::core::ffi::c_int,
-    pub szPma: u32_0,
-    pub isInit: ::core::ffi::c_int,
-    pub inProgress: ::core::ffi::c_int,
-    pub isMutexInit: ::core::ffi::c_int,
-    pub isMallocInit: ::core::ffi::c_int,
-    pub isPCacheInit: ::core::ffi::c_int,
-    pub nRefInitMutex: ::core::ffi::c_int,
-    pub pInitMutex: *mut sqlite3_mutex,
-    pub xLog: Option<
-        unsafe extern "C" fn(
-            *mut ::core::ffi::c_void,
-            ::core::ffi::c_int,
-            *const ::core::ffi::c_char,
-        ) -> (),
-    >,
-    pub pLogArg: *mut ::core::ffi::c_void,
-    pub mxMemdbSize: sqlite3_int64,
-    pub xTestCallback: Option<unsafe extern "C" fn(::core::ffi::c_int) -> ::core::ffi::c_int>,
-    pub bLocaltimeFault: ::core::ffi::c_int,
-    pub xAltLocaltime: Option<
-        unsafe extern "C" fn(
-            *const ::core::ffi::c_void,
-            *mut ::core::ffi::c_void,
-        ) -> ::core::ffi::c_int,
-    >,
-    pub iOnceResetThreshold: ::core::ffi::c_int,
-    pub szSorterRef: u32_0,
-    pub iPrngSeed: ::core::ffi::c_uint,
-}
-pub const SQLITE_DEFAULT_MEMSTATUS: ::core::ffi::c_int = 1 as ::core::ffi::c_int;
-pub const OP_Ne: ::core::ffi::c_int = 53 as ::core::ffi::c_int;
-pub const SQLITE_DEFAULT_PCACHE_INITSZ: ::core::ffi::c_int = 20 as ::core::ffi::c_int;
-pub const SQLITE_DEFAULT_SORTERREF_SIZE: ::core::ffi::c_int = 0x7fffffff as ::core::ffi::c_int;
-pub const SQLITE_MAX_MMAP_SIZE: ::core::ffi::c_int = 0x7fff0000 as ::core::ffi::c_int;
-pub const SQLITE_DEFAULT_MMAP_SIZE: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-pub const SQLITE_AFF_BLOB: ::core::ffi::c_int = 0x41 as ::core::ffi::c_int;
-pub const SQLITE_AFF_TEXT: ::core::ffi::c_int = 0x42 as ::core::ffi::c_int;
-pub const SQLITE_AFF_NUMERIC: ::core::ffi::c_int = 0x43 as ::core::ffi::c_int;
-pub const SQLITE_AFF_INTEGER: ::core::ffi::c_int = 0x44 as ::core::ffi::c_int;
-pub const SQLITE_AFF_REAL: ::core::ffi::c_int = 0x45 as ::core::ffi::c_int;
+
+
+
+
+
+
+
+pub use crate::internal::SQLITE_THREADSAFE;
+pub use crate::opcodes_h::OP_Ne;
+
+pub use crate::vdbeInt_h::sqlite3_context;pub use crate::sqlite3_h::sqlite3_int64;pub use crate::sqlite3_h::sqlite3_mem_methods;pub use crate::src::src::mutex_unix::sqlite3_mutex;pub use crate::sqlite3_h::sqlite3_mutex_methods;pub use crate::sqlite3_h::sqlite3_pcache;pub use crate::sqlite3_h::sqlite3_pcache_methods2;pub use crate::sqlite3_h::sqlite3_pcache_page;pub use crate::vdbeInt_h::sqlite3_value;pub use crate::sqlite3_h::sqlite_int64;pub use crate::src::ext::rtree::rtree::u32_0;pub use crate::src::ext::rtree::rtree::u8_0;pub use crate::sqliteInt_h::FuncDef;pub use crate::sqliteInt_h::FuncDestructor;pub use crate::sqliteInt_h::__anon_union_2;pub use crate::src::fts5::i16_0;pub use crate::sqliteInt_h::FuncDefHash;pub use crate::sqliteInt_h::Sqlite3Config;pub use crate::sqliteInt_h::SQLITE_AFF_BLOB;pub use crate::sqliteInt_h::SQLITE_AFF_INTEGER;pub use crate::sqliteInt_h::SQLITE_AFF_NUMERIC;pub use crate::sqliteInt_h::SQLITE_AFF_REAL;pub use crate::sqliteInt_h::SQLITE_AFF_TEXT;pub use crate::sqliteInt_h::SQLITE_DEFAULT_MEMSTATUS;pub use crate::sqliteInt_h::SQLITE_DEFAULT_MMAP_SIZE;pub use crate::sqliteInt_h::SQLITE_DEFAULT_PCACHE_INITSZ;pub use crate::sqliteInt_h::SQLITE_DEFAULT_SORTERREF_SIZE;pub use crate::sqliteInt_h::SQLITE_MAX_MMAP_SIZE;
+pub use crate::stdlib::int16_t;
+
+pub use crate::stdlib::uint32_t;pub use crate::stdlib::uint8_t;pub use crate::stdlib::__int16_t;pub use crate::stdlib::__uint32_t;pub use crate::stdlib::__uint8_t;
 #[no_mangle]
+
 pub static mut sqlite3UpperToLower: [::core::ffi::c_uchar; 274] = [
     0 as ::core::ffi::c_int as ::core::ffi::c_uchar,
     1 as ::core::ffi::c_int as ::core::ffi::c_uchar,
@@ -484,15 +291,19 @@ pub static mut sqlite3UpperToLower: [::core::ffi::c_uchar; 274] = [
     1 as ::core::ffi::c_int as ::core::ffi::c_uchar,
 ];
 #[no_mangle]
+
 pub static mut sqlite3aLTb: *const ::core::ffi::c_uchar =
     ::core::ptr::null::<::core::ffi::c_uchar>();
 #[no_mangle]
+
 pub static mut sqlite3aEQb: *const ::core::ffi::c_uchar =
     ::core::ptr::null::<::core::ffi::c_uchar>();
 #[no_mangle]
+
 pub static mut sqlite3aGTb: *const ::core::ffi::c_uchar =
     ::core::ptr::null::<::core::ffi::c_uchar>();
 #[no_mangle]
+
 pub static mut sqlite3CtypeMap: [::core::ffi::c_uchar; 256] = [
     0 as ::core::ffi::c_int as ::core::ffi::c_uchar,
     0 as ::core::ffi::c_int as ::core::ffi::c_uchar,
@@ -751,102 +562,113 @@ pub static mut sqlite3CtypeMap: [::core::ffi::c_uchar; 256] = [
     0x40 as ::core::ffi::c_int as ::core::ffi::c_uchar,
     0x40 as ::core::ffi::c_int as ::core::ffi::c_uchar,
 ];
+
 pub const SQLITE_USE_URI: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
+
 pub const SQLITE_ALLOW_COVERING_INDEX_SCAN: ::core::ffi::c_int = 1 as ::core::ffi::c_int;
+
 pub const SQLITE_SORTER_PMASZ: ::core::ffi::c_int = 250 as ::core::ffi::c_int;
+
 pub const SQLITE_STMTJRNL_SPILL: ::core::ffi::c_int =
     64 as ::core::ffi::c_int * 1024 as ::core::ffi::c_int;
+
 pub const SQLITE_MEMDB_DEFAULT_MAXSIZE: ::core::ffi::c_int = 1073741824 as ::core::ffi::c_int;
 #[no_mangle]
-pub static mut sqlite3Config: Sqlite3Config = Sqlite3Config {
-    bMemstat: SQLITE_DEFAULT_MEMSTATUS,
-    bCoreMutex: 1 as u8_0,
-    bFullMutex: (SQLITE_THREADSAFE == 1 as ::core::ffi::c_int) as ::core::ffi::c_int as u8_0,
-    bOpenUri: SQLITE_USE_URI as u8_0,
-    bUseCis: SQLITE_ALLOW_COVERING_INDEX_SCAN as u8_0,
-    bSmallMalloc: 0 as u8_0,
-    bExtraSchemaChecks: 1 as u8_0,
-    mxStrlen: 0x7ffffffe as ::core::ffi::c_int,
-    neverCorrupt: 0 as ::core::ffi::c_int,
-    szLookaside: 1200 as ::core::ffi::c_int,
-    nLookaside: 40 as ::core::ffi::c_int,
-    nStmtSpill: SQLITE_STMTJRNL_SPILL,
-    m: sqlite3_mem_methods {
-        xMalloc: None,
-        xFree: None,
-        xRealloc: None,
-        xSize: None,
-        xRoundup: None,
-        xInit: None,
-        xShutdown: None,
-        pAppData: ::core::ptr::null::<::core::ffi::c_void>() as *mut ::core::ffi::c_void,
-    },
-    mutex: sqlite3_mutex_methods {
-        xMutexInit: None,
-        xMutexEnd: None,
-        xMutexAlloc: None,
-        xMutexFree: None,
-        xMutexEnter: None,
-        xMutexTry: None,
-        xMutexLeave: None,
-        xMutexHeld: None,
-        xMutexNotheld: None,
-    },
-    pcache2: sqlite3_pcache_methods2 {
-        iVersion: 0 as ::core::ffi::c_int,
-        pArg: ::core::ptr::null::<::core::ffi::c_void>() as *mut ::core::ffi::c_void,
-        xInit: None,
-        xShutdown: None,
-        xCreate: None,
-        xCachesize: None,
-        xPagecount: None,
-        xFetch: None,
-        xUnpin: None,
-        xRekey: None,
-        xTruncate: None,
-        xDestroy: None,
-        xShrink: None,
-    },
-    pHeap: ::core::ptr::null::<::core::ffi::c_void>() as *mut ::core::ffi::c_void,
-    nHeap: 0 as ::core::ffi::c_int,
-    mnReq: 0 as ::core::ffi::c_int,
-    mxReq: 0 as ::core::ffi::c_int,
-    szMmap: SQLITE_DEFAULT_MMAP_SIZE as sqlite3_int64,
-    mxMmap: SQLITE_MAX_MMAP_SIZE as sqlite3_int64,
-    pPage: ::core::ptr::null::<::core::ffi::c_void>() as *mut ::core::ffi::c_void,
-    szPage: 0 as ::core::ffi::c_int,
-    nPage: SQLITE_DEFAULT_PCACHE_INITSZ,
-    mxParserStack: 0 as ::core::ffi::c_int,
-    sharedCacheEnabled: 0 as ::core::ffi::c_int,
-    szPma: SQLITE_SORTER_PMASZ as u32_0,
-    isInit: 0 as ::core::ffi::c_int,
-    inProgress: 0 as ::core::ffi::c_int,
-    isMutexInit: 0 as ::core::ffi::c_int,
-    isMallocInit: 0 as ::core::ffi::c_int,
-    isPCacheInit: 0 as ::core::ffi::c_int,
-    nRefInitMutex: 0 as ::core::ffi::c_int,
-    pInitMutex: ::core::ptr::null::<sqlite3_mutex>() as *mut sqlite3_mutex,
-    xLog: None,
-    pLogArg: ::core::ptr::null::<::core::ffi::c_void>() as *mut ::core::ffi::c_void,
-    mxMemdbSize: SQLITE_MEMDB_DEFAULT_MAXSIZE as sqlite3_int64,
-    xTestCallback: None,
-    bLocaltimeFault: 0 as ::core::ffi::c_int,
-    xAltLocaltime: None,
-    iOnceResetThreshold: 0x7ffffffe as ::core::ffi::c_int,
-    szSorterRef: SQLITE_DEFAULT_SORTERREF_SIZE as u32_0,
-    iPrngSeed: 0 as ::core::ffi::c_uint,
+
+pub static mut sqlite3Config: crate::sqliteInt_h::Sqlite3Config = crate::sqliteInt_h::Sqlite3Config {
+    bMemstat:  crate::sqliteInt_h::SQLITE_DEFAULT_MEMSTATUS,
+    bCoreMutex:  1 as crate::src::ext::rtree::rtree::u8_0,
+    bFullMutex:  (crate::internal::SQLITE_THREADSAFE == 1 as ::core::ffi::c_int) as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
+    bOpenUri:  SQLITE_USE_URI as crate::src::ext::rtree::rtree::u8_0,
+    bUseCis:  SQLITE_ALLOW_COVERING_INDEX_SCAN as crate::src::ext::rtree::rtree::u8_0,
+    bSmallMalloc:  0 as crate::src::ext::rtree::rtree::u8_0,
+    bExtraSchemaChecks:  1 as crate::src::ext::rtree::rtree::u8_0,
+    mxStrlen:  0x7ffffffe as ::core::ffi::c_int,
+    neverCorrupt:  0 as ::core::ffi::c_int,
+    szLookaside:  1200 as ::core::ffi::c_int,
+    nLookaside:  40 as ::core::ffi::c_int,
+    nStmtSpill:  SQLITE_STMTJRNL_SPILL,
+    m:  crate::sqlite3_h::sqlite3_mem_methods {
+    xMalloc:  None,
+    xFree:  None,
+    xRealloc:  None,
+    xSize:  None,
+    xRoundup:  None,
+    xInit:  None,
+    xShutdown:  None,
+    pAppData:  ::core::ptr::null::<::core::ffi::c_void>() as *mut ::core::ffi::c_void,
+},
+    mutex:  crate::sqlite3_h::sqlite3_mutex_methods {
+    xMutexInit:  None,
+    xMutexEnd:  None,
+    xMutexAlloc:  None,
+    xMutexFree:  None,
+    xMutexEnter:  None,
+    xMutexTry:  None,
+    xMutexLeave:  None,
+    xMutexHeld:  None,
+    xMutexNotheld:  None,
+},
+    pcache2:  crate::sqlite3_h::sqlite3_pcache_methods2 {
+    iVersion:  0 as ::core::ffi::c_int,
+    pArg:  ::core::ptr::null::<::core::ffi::c_void>() as *mut ::core::ffi::c_void,
+    xInit:  None,
+    xShutdown:  None,
+    xCreate:  None,
+    xCachesize:  None,
+    xPagecount:  None,
+    xFetch:  None,
+    xUnpin:  None,
+    xRekey:  None,
+    xTruncate:  None,
+    xDestroy:  None,
+    xShrink:  None,
+},
+    pHeap:  ::core::ptr::null::<::core::ffi::c_void>() as *mut ::core::ffi::c_void,
+    nHeap:  0 as ::core::ffi::c_int,
+    mnReq:  0 as ::core::ffi::c_int,
+    mxReq:  0 as ::core::ffi::c_int,
+    szMmap:  crate::sqliteInt_h::SQLITE_DEFAULT_MMAP_SIZE as crate::sqlite3_h::sqlite3_int64,
+    mxMmap:  crate::sqliteInt_h::SQLITE_MAX_MMAP_SIZE as crate::sqlite3_h::sqlite3_int64,
+    pPage:  ::core::ptr::null::<::core::ffi::c_void>() as *mut ::core::ffi::c_void,
+    szPage:  0 as ::core::ffi::c_int,
+    nPage:  crate::sqliteInt_h::SQLITE_DEFAULT_PCACHE_INITSZ,
+    mxParserStack:  0 as ::core::ffi::c_int,
+    sharedCacheEnabled:  0 as ::core::ffi::c_int,
+    szPma:  SQLITE_SORTER_PMASZ as crate::src::ext::rtree::rtree::u32_0,
+    isInit:  0 as ::core::ffi::c_int,
+    inProgress:  0 as ::core::ffi::c_int,
+    isMutexInit:  0 as ::core::ffi::c_int,
+    isMallocInit:  0 as ::core::ffi::c_int,
+    isPCacheInit:  0 as ::core::ffi::c_int,
+    nRefInitMutex:  0 as ::core::ffi::c_int,
+    pInitMutex:  ::core::ptr::null::<crate::src::src::mutex_unix::sqlite3_mutex>() as *mut crate::src::src::mutex_unix::sqlite3_mutex,
+    xLog:  None,
+    pLogArg:  ::core::ptr::null::<::core::ffi::c_void>() as *mut ::core::ffi::c_void,
+    mxMemdbSize:  SQLITE_MEMDB_DEFAULT_MAXSIZE as crate::sqlite3_h::sqlite3_int64,
+    xTestCallback:  None,
+    bLocaltimeFault:  0 as ::core::ffi::c_int,
+    xAltLocaltime:  None,
+    iOnceResetThreshold:  0x7ffffffe as ::core::ffi::c_int,
+    szSorterRef:  crate::sqliteInt_h::SQLITE_DEFAULT_SORTERREF_SIZE as crate::src::ext::rtree::rtree::u32_0,
+    iPrngSeed:  0 as ::core::ffi::c_uint,
 };
 #[no_mangle]
-pub static mut sqlite3BuiltinFunctions: FuncDefHash = FuncDefHash {
-    a: [::core::ptr::null::<FuncDef>() as *mut FuncDef; 23],
+
+pub static mut sqlite3BuiltinFunctions: crate::sqliteInt_h::FuncDefHash = crate::sqliteInt_h::FuncDefHash {
+    a:  [::core::ptr::null::<crate::sqliteInt_h::FuncDef>() as *mut crate::sqliteInt_h::FuncDef; 23],
 };
 #[no_mangle]
+
 pub static mut sqlite3PendingByte: ::core::ffi::c_int = 0x40000000 as ::core::ffi::c_int;
 #[no_mangle]
-pub static mut sqlite3TreeTrace: u32_0 = 0 as u32_0;
+
+pub static mut sqlite3TreeTrace: crate::src::ext::rtree::rtree::u32_0 = 0 as crate::src::ext::rtree::rtree::u32_0;
 #[no_mangle]
-pub static mut sqlite3WhereTrace: u32_0 = 0 as u32_0;
+
+pub static mut sqlite3WhereTrace: crate::src::ext::rtree::rtree::u32_0 = 0 as crate::src::ext::rtree::rtree::u32_0;
 #[no_mangle]
+
 pub static mut sqlite3OpcodeProperty: [::core::ffi::c_uchar; 191] = [
     0 as ::core::ffi::c_int as ::core::ffi::c_uchar,
     0 as ::core::ffi::c_int as ::core::ffi::c_uchar,
@@ -1041,9 +863,11 @@ pub static mut sqlite3OpcodeProperty: [::core::ffi::c_uchar; 191] = [
     0 as ::core::ffi::c_int as ::core::ffi::c_uchar,
 ];
 #[no_mangle]
+
 pub static mut sqlite3StrBINARY: [::core::ffi::c_char; 7] =
     unsafe { ::core::mem::transmute::<[u8; 7], [::core::ffi::c_char; 7]>(*b"BINARY\0") };
 #[no_mangle]
+
 pub static mut sqlite3StdTypeLen: [::core::ffi::c_uchar; 6] = [
     3 as ::core::ffi::c_int as ::core::ffi::c_uchar,
     4 as ::core::ffi::c_int as ::core::ffi::c_uchar,
@@ -1053,15 +877,17 @@ pub static mut sqlite3StdTypeLen: [::core::ffi::c_uchar; 6] = [
     4 as ::core::ffi::c_int as ::core::ffi::c_uchar,
 ];
 #[no_mangle]
+
 pub static mut sqlite3StdTypeAffinity: [::core::ffi::c_char; 6] = [
-    SQLITE_AFF_NUMERIC as ::core::ffi::c_char,
-    SQLITE_AFF_BLOB as ::core::ffi::c_char,
-    SQLITE_AFF_INTEGER as ::core::ffi::c_char,
-    SQLITE_AFF_INTEGER as ::core::ffi::c_char,
-    SQLITE_AFF_REAL as ::core::ffi::c_char,
-    SQLITE_AFF_TEXT as ::core::ffi::c_char,
+    crate::sqliteInt_h::SQLITE_AFF_NUMERIC as ::core::ffi::c_char,
+    crate::sqliteInt_h::SQLITE_AFF_BLOB as ::core::ffi::c_char,
+    crate::sqliteInt_h::SQLITE_AFF_INTEGER as ::core::ffi::c_char,
+    crate::sqliteInt_h::SQLITE_AFF_INTEGER as ::core::ffi::c_char,
+    crate::sqliteInt_h::SQLITE_AFF_REAL as ::core::ffi::c_char,
+    crate::sqliteInt_h::SQLITE_AFF_TEXT as ::core::ffi::c_char,
 ];
 #[no_mangle]
+
 pub static mut sqlite3StdType: [*const ::core::ffi::c_char; 6] = [
     b"ANY\0" as *const u8 as *const ::core::ffi::c_char,
     b"BLOB\0" as *const u8 as *const ::core::ffi::c_char,
@@ -1070,16 +896,15 @@ pub static mut sqlite3StdType: [*const ::core::ffi::c_char; 6] = [
     b"REAL\0" as *const u8 as *const ::core::ffi::c_char,
     b"TEXT\0" as *const u8 as *const ::core::ffi::c_char,
 ];
-pub const SQLITE_THREADSAFE: ::core::ffi::c_int = 1 as ::core::ffi::c_int;
 unsafe extern "C" fn run_static_initializers() {
     sqlite3aLTb = (&raw const sqlite3UpperToLower as *const ::core::ffi::c_uchar)
-        .offset((256 as ::core::ffi::c_int - OP_Ne) as isize)
+        .offset((256 as ::core::ffi::c_int - crate::opcodes_h::OP_Ne) as isize)
         as *const ::core::ffi::c_uchar;
     sqlite3aEQb = (&raw const sqlite3UpperToLower as *const ::core::ffi::c_uchar)
-        .offset((256 as ::core::ffi::c_int + 6 as ::core::ffi::c_int - OP_Ne) as isize)
+        .offset((256 as ::core::ffi::c_int + 6 as ::core::ffi::c_int - crate::opcodes_h::OP_Ne) as isize)
         as *const ::core::ffi::c_uchar;
     sqlite3aGTb = (&raw const sqlite3UpperToLower as *const ::core::ffi::c_uchar)
-        .offset((256 as ::core::ffi::c_int + 12 as ::core::ffi::c_int - OP_Ne) as isize)
+        .offset((256 as ::core::ffi::c_int + 12 as ::core::ffi::c_int - crate::opcodes_h::OP_Ne) as isize)
         as *const ::core::ffi::c_uchar;
 }
 #[used]
