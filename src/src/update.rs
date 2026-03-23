@@ -299,23 +299,8 @@ pub unsafe extern "C" fn sqlite3Update(
     let mut chngKey: crate::src::ext::rtree::rtree::u8_0 = 0;
     let mut pRowidExpr: *mut crate::sqliteInt_h::Expr = ::core::ptr::null_mut::<crate::sqliteInt_h::Expr>();
     let mut iRowidExpr: ::core::ffi::c_int = -(1 as ::core::ffi::c_int);
-    let mut sContext: crate::sqliteInt_h::AuthContext = crate::sqliteInt_h::AuthContext {
-    zAuthContext:  ::core::ptr::null::<::core::ffi::c_char>(),
-    pParse:  ::core::ptr::null_mut::<crate::sqliteInt_h::Parse>(),
-};
-    let mut sNC: crate::sqliteInt_h::NameContext = crate::sqliteInt_h::NameContext {
-    pParse:  ::core::ptr::null_mut::<crate::sqliteInt_h::Parse>(),
-    pSrcList:  ::core::ptr::null_mut::<crate::sqliteInt_h::SrcList>(),
-    uNC:  crate::sqliteInt_h::__anon_union_14 {
-    pEList:  ::core::ptr::null_mut::<crate::sqliteInt_h::ExprList>(),
-},
-    pNext:  ::core::ptr::null_mut::<crate::sqliteInt_h::NameContext>(),
-    nRef:  0,
-    nNcErr:  0,
-    ncFlags:  0,
-    nNestedSelect:  0,
-    pWinSelect:  ::core::ptr::null_mut::<crate::sqliteInt_h::Select>(),
-};
+    let mut sContext: crate::sqliteInt_h::AuthContext = unsafe { ::core::mem::zeroed() };
+    let mut sNC: crate::sqliteInt_h::NameContext = unsafe { ::core::mem::zeroed() };
     let mut iDb: ::core::ffi::c_int = 0;
     let mut eOnePass: ::core::ffi::c_int = 0;
     let mut hasFK: ::core::ffi::c_int = 0;
@@ -342,11 +327,6 @@ pub unsafe extern "C" fn sqlite3Update(
     let mut regOld: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut regRowSet: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut regKey: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-    ::libc::memset(
-        &raw mut sContext as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<crate::sqliteInt_h::AuthContext>() as crate::__stddef_size_t_h::size_t,
-    );
     db = (*pParse).db;
     if !((*pParse).nErr != 0) {
         pTab =  crate::src::src::delete::sqlite3SrcListLookup(pParse as *mut crate::sqliteInt_h::Parse,  pTabList as *mut crate::sqliteInt_h::SrcList) as
@@ -422,11 +402,6 @@ pub unsafe extern "C" fn sqlite3Update(
                             *aXRef.offset(i as isize) = -(1 as ::core::ffi::c_int);
                             i += 1;
                         }
-                        ::libc::memset(
-                            &raw mut sNC as *mut ::core::ffi::c_void,
-                            0 as ::core::ffi::c_int,
-                            ::core::mem::size_of::<crate::sqliteInt_h::NameContext>() as crate::__stddef_size_t_h::size_t,
-                        );
                         sNC.pParse = pParse;
                         sNC.pSrcList = pTabList;
                         sNC.uNC.pUpsert = pUpsert;

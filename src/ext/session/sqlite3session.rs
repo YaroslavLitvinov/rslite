@@ -2522,16 +2522,7 @@ pub unsafe extern "C" fn sqlite3session_diff(
     let mut current_block: u64;
     let mut zDb: *const ::core::ffi::c_char = (*pSession).zDb;
     let mut rc: ::core::ffi::c_int = (*pSession).rc;
-    let mut d: SessionDiffCtx = SessionDiffCtx {
-        pStmt: ::core::ptr::null_mut::<crate::sqlite3_h::sqlite3_stmt>(),
-        bRowid: 0,
-        nOldOff: 0,
-    };
-    ::libc::memset(
-        &raw mut d as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<SessionDiffCtx>() as crate::__stddef_size_t_h::size_t,
-    );
+    let mut d: SessionDiffCtx = unsafe { ::core::mem::zeroed() };
     sessionDiffHooks(pSession, &raw mut d);
     crate::src::src::mutex::sqlite3_mutex_enter(crate::src::src::main::sqlite3_db_mutex((*pSession).db as *mut crate::sqliteInt_h::sqlite3));
     if !pzErrMsg.is_null() {
@@ -4628,11 +4619,7 @@ unsafe extern "C" fn sessionChangesetInvert(
 ) -> ::core::ffi::c_int {
     let mut current_block: u64;
     let mut rc: ::core::ffi::c_int = crate::sqlite3_h::SQLITE_OK;
-    let mut sOut: SessionBuffer = SessionBuffer {
-        aBuf: ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-        nBuf: 0,
-        nAlloc: 0,
-    };
+    let mut sOut: SessionBuffer = unsafe { ::core::mem::zeroed() };
     let mut nCol: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut abPK: *mut crate::src::ext::rtree::rtree::u8_0 = ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>();
     let mut apVal: *mut *mut crate::vdbeInt_h::sqlite3_value = ::core::ptr::null_mut::<*mut crate::vdbeInt_h::sqlite3_value>();
@@ -4641,11 +4628,6 @@ unsafe extern "C" fn sessionChangesetInvert(
         nBuf: 0 as ::core::ffi::c_int,
         nAlloc: 0 as ::core::ffi::c_int,
     };
-    ::libc::memset(
-        &raw mut sOut as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<SessionBuffer>() as crate::__stddef_size_t_h::size_t,
-    );
     if !ppInverted.is_null() {
         *ppInverted = ::core::ptr::null_mut::<::core::ffi::c_void>();
         *pnInverted = 0 as ::core::ffi::c_int;
@@ -4865,26 +4847,7 @@ pub unsafe extern "C" fn sqlite3changeset_invert(
     mut pnInverted: *mut ::core::ffi::c_int,
     mut ppInverted: *mut *mut ::core::ffi::c_void,
 ) -> ::core::ffi::c_int {
-    let mut sInput: SessionInput = SessionInput {
-        bNoDiscard: 0,
-        iCurrent: 0,
-        iNext: 0,
-        aData: ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-        nData: 0,
-        buf: SessionBuffer {
-            aBuf: ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-            nBuf: 0,
-            nAlloc: 0,
-        },
-        xInput: None,
-        pIn: ::core::ptr::null_mut::<::core::ffi::c_void>(),
-        bEof: 0,
-    };
-    ::libc::memset(
-        &raw mut sInput as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<SessionInput>() as crate::__stddef_size_t_h::size_t,
-    );
+    let mut sInput: SessionInput = unsafe { ::core::mem::zeroed() };
     sInput.nData = nChangeset;
     sInput.aData = pChangeset as *mut crate::src::ext::rtree::rtree::u8_0;
     return sessionChangesetInvert(
@@ -4915,27 +4878,8 @@ pub unsafe extern "C" fn sqlite3changeset_invert_strm(
     >,
     mut pOut: *mut ::core::ffi::c_void,
 ) -> ::core::ffi::c_int {
-    let mut sInput: SessionInput = SessionInput {
-        bNoDiscard: 0,
-        iCurrent: 0,
-        iNext: 0,
-        aData: ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-        nData: 0,
-        buf: SessionBuffer {
-            aBuf: ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-            nBuf: 0,
-            nAlloc: 0,
-        },
-        xInput: None,
-        pIn: ::core::ptr::null_mut::<::core::ffi::c_void>(),
-        bEof: 0,
-    };
+    let mut sInput: SessionInput = unsafe { ::core::mem::zeroed() };
     let mut rc: ::core::ffi::c_int = 0;
-    ::libc::memset(
-        &raw mut sInput as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<SessionInput>() as crate::__stddef_size_t_h::size_t,
-    );
     sInput.xInput = xInput;
     sInput.pIn = pIn;
     rc = sessionChangesetInvert(
@@ -5043,16 +4987,7 @@ unsafe extern "C" fn sessionUpdateFind(
             } else {
                 let mut zSep: *const ::core::ffi::c_char =
                     b"\0" as *const u8 as *const ::core::ffi::c_char;
-                let mut buf: SessionBuffer = SessionBuffer {
-                    aBuf: ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-                    nBuf: 0,
-                    nAlloc: 0,
-                };
-                ::libc::memset(
-                    &raw mut buf as *mut ::core::ffi::c_void,
-                    0 as ::core::ffi::c_int,
-                    ::core::mem::size_of::<SessionBuffer>() as crate::__stddef_size_t_h::size_t,
-                );
+                let mut buf: SessionBuffer = unsafe { ::core::mem::zeroed() };
                 (*pUp).aMask = pUp.offset(1 as ::core::ffi::c_int as isize) as *mut SessionUpdate
                     as *mut crate::src::ext::rtree::rtree::u32_0;
                 ::libc::memcpy(
@@ -5992,35 +5927,7 @@ unsafe extern "C" fn sessionChangesetApply(
     let mut rc: ::core::ffi::c_int = crate::sqlite3_h::SQLITE_OK;
     let mut zTab: *const ::core::ffi::c_char = ::core::ptr::null::<::core::ffi::c_char>();
     let mut nTab: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-    let mut sApply: SessionApplyCtx = SessionApplyCtx {
-        db: ::core::ptr::null_mut::<crate::sqliteInt_h::sqlite3>(),
-        pDelete: ::core::ptr::null_mut::<crate::sqlite3_h::sqlite3_stmt>(),
-        pInsert: ::core::ptr::null_mut::<crate::sqlite3_h::sqlite3_stmt>(),
-        pSelect: ::core::ptr::null_mut::<crate::sqlite3_h::sqlite3_stmt>(),
-        nCol: 0,
-        azCol: ::core::ptr::null_mut::<*const ::core::ffi::c_char>(),
-        abPK: ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-        aUpdateMask: ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u32_0>(),
-        pUp: ::core::ptr::null_mut::<SessionUpdate>(),
-        bStat1: 0,
-        bDeferConstraints: 0,
-        bInvertConstraints: 0,
-        constraints: SessionBuffer {
-            aBuf: ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-            nBuf: 0,
-            nAlloc: 0,
-        },
-        rebase: SessionBuffer {
-            aBuf: ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-            nBuf: 0,
-            nAlloc: 0,
-        },
-        bRebaseStarted: 0,
-        bRebase: 0,
-        bIgnoreNoop: 0,
-        bRowid: 0,
-        zErr: ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    };
+    let mut sApply: SessionApplyCtx = unsafe { ::core::mem::zeroed() };
     let mut bPatchset: ::core::ffi::c_int = 0;
     let mut savedFlag: crate::src::ext::rtree::rtree::u64_0 = (*db).flags & crate::sqliteInt_h::SQLITE_FkNoAction;
     crate::src::src::mutex::sqlite3_mutex_enter(crate::src::src::main::sqlite3_db_mutex(db as *mut crate::sqliteInt_h::sqlite3));
@@ -6030,11 +5937,6 @@ unsafe extern "C" fn sessionChangesetApply(
             32 as ::core::ffi::c_int;
     }
     (*pIter).in_0.bNoDiscard = 1 as ::core::ffi::c_int;
-    ::libc::memset(
-        &raw mut sApply as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<SessionApplyCtx>() as crate::__stddef_size_t_h::size_t,
-    );
     sApply.bRebase = (!ppRebase.is_null() && !pnRebase.is_null()) as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0;
     sApply.bInvertConstraints = (flags & crate::src::ext::session::sqlite3session::SQLITE_CHANGESETAPPLY_INVERT != 0) as ::core::ffi::c_int;
     sApply.bIgnoreNoop =
@@ -6247,44 +6149,7 @@ unsafe extern "C" fn sessionChangesetApply(
         );
         if nFk != 0 as ::core::ffi::c_int {
             let mut res: ::core::ffi::c_int = crate::src::ext::session::sqlite3session::SQLITE_CHANGESET_ABORT;
-            let mut sIter: sqlite3_changeset_iter = sqlite3_changeset_iter {
-                in_0: SessionInput {
-                    bNoDiscard: 0,
-                    iCurrent: 0,
-                    iNext: 0,
-                    aData: ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-                    nData: 0,
-                    buf: SessionBuffer {
-                        aBuf: ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-                        nBuf: 0,
-                        nAlloc: 0,
-                    },
-                    xInput: None,
-                    pIn: ::core::ptr::null_mut::<::core::ffi::c_void>(),
-                    bEof: 0,
-                },
-                tblhdr: SessionBuffer {
-                    aBuf: ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-                    nBuf: 0,
-                    nAlloc: 0,
-                },
-                bPatchset: 0,
-                bInvert: 0,
-                bSkipEmpty: 0,
-                rc: 0,
-                pConflict: ::core::ptr::null_mut::<crate::sqlite3_h::sqlite3_stmt>(),
-                zTab: ::core::ptr::null_mut::<::core::ffi::c_char>(),
-                nCol: 0,
-                op: 0,
-                bIndirect: 0,
-                abPK: ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-                apValue: ::core::ptr::null_mut::<*mut crate::vdbeInt_h::sqlite3_value>(),
-            };
-            ::libc::memset(
-                &raw mut sIter as *mut ::core::ffi::c_void,
-                0 as ::core::ffi::c_int,
-                ::core::mem::size_of::<sqlite3_changeset_iter>() as crate::__stddef_size_t_h::size_t,
-            );
+            let mut sIter: sqlite3_changeset_iter = unsafe { ::core::mem::zeroed() };
             sIter.nCol = nFk;
             res = xConflict.expect("non-null function pointer")(
                 pCtx,
@@ -7678,11 +7543,7 @@ unsafe extern "C" fn sessionRebase(
     let mut nRec: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut bNew: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut pTab: *mut SessionTable = ::core::ptr::null_mut::<SessionTable>();
-    let mut sOut: SessionBuffer = SessionBuffer {
-        aBuf: ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-        nBuf: 0 as ::core::ffi::c_int,
-        nAlloc: 0 as ::core::ffi::c_int,
-    };
+    let mut sOut: SessionBuffer = unsafe { ::core::mem::zeroed() };
     while crate::sqlite3_h::SQLITE_ROW == sessionChangesetNext(pIter, &raw mut aRec, &raw mut nRec, &raw mut bNew) {
         let mut pChange: *mut SessionChange = ::core::ptr::null_mut::<SessionChange>();
         let mut bDone: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
@@ -7831,11 +7692,6 @@ unsafe extern "C" fn sessionRebase(
     }
     if rc != crate::sqlite3_h::SQLITE_OK {
         crate::src::src::malloc::sqlite3_free(sOut.aBuf as *mut ::core::ffi::c_void);
-        ::libc::memset(
-            &raw mut sOut as *mut ::core::ffi::c_void,
-            0 as ::core::ffi::c_int,
-            ::core::mem::size_of::<SessionBuffer>() as crate::__stddef_size_t_h::size_t,
-        );
     }
     if rc == crate::sqlite3_h::SQLITE_OK {
         if xOutput.is_some() {

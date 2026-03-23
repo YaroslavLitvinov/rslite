@@ -988,24 +988,7 @@ unsafe extern "C" fn valueFromValueList(
     }
     if rc == crate::sqlite3_h::SQLITE_OK {
         let mut sz: crate::src::ext::rtree::rtree::u32_0 = 0;
-        let mut sMem: crate::src::src::vdbe::Mem = crate::vdbeInt_h::sqlite3_value {
-    u:  crate::vdbeInt_h::MemValue { r:  0. },
-    z:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    n:  0,
-    flags:  0,
-    enc:  0,
-    eSubtype:  0,
-    db:  ::core::ptr::null_mut::<crate::sqliteInt_h::sqlite3>(),
-    szMalloc:  0,
-    uTemp:  0,
-    zMalloc:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    xDel:  None,
-};
-        ::libc::memset(
-            &raw mut sMem as *mut ::core::ffi::c_void,
-            0 as ::core::ffi::c_int,
-            ::core::mem::size_of::<crate::src::src::vdbe::Mem>() as crate::__stddef_size_t_h::size_t,
-        );
+        let mut sMem: crate::src::src::vdbe::Mem = unsafe { ::core::mem::zeroed() };
         sz = crate::src::src::btree::sqlite3BtreePayloadSize((*pRhs).pCsr);
         rc = crate::src::src::vdbemem::sqlite3VdbeMemFromBtreeZeroOffset(
             (*pRhs).pCsr,

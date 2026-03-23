@@ -3144,7 +3144,7 @@ pub unsafe extern "C" fn sqlite3PagerSharedLock(mut pPager: *mut Pager) -> ::cor
                         if (*pPager).tempFile == 0
                             && (*pPager).hasHeldSharedLock as ::core::ffi::c_int != 0
                         {
-                            let mut dbFileVers: [::core::ffi::c_char; 16] = [0; 16];
+                            let mut dbFileVers: [::core::ffi::c_char; 16] = unsafe { ::core::mem::zeroed() };
                             rc = crate::src::src::os::sqlite3OsRead(
                                 
                                 (*pPager).fd as *mut crate::sqlite3_h::sqlite3_file,
@@ -3157,13 +3157,6 @@ pub unsafe extern "C" fn sqlite3PagerSharedLock(mut pPager: *mut Pager) -> ::cor
                                 if rc != crate::sqlite3_h::SQLITE_IOERR_SHORT_READ_1 {
                                     current_block = 17065001908276206241;
                                 } else {
-                                    ::libc::memset(
-                                        &raw mut dbFileVers as *mut ::core::ffi::c_char
-                                            as *mut ::core::ffi::c_void,
-                                        0 as ::core::ffi::c_int,
-                                        ::core::mem::size_of::<[::core::ffi::c_char; 16]>()
-                                            as crate::__stddef_size_t_h::size_t,
-                                    );
                                     current_block = 1622411330066726685;
                                 }
                             } else {

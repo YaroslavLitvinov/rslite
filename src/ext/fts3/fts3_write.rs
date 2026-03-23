@@ -3398,12 +3398,7 @@ unsafe extern "C" fn fts3SegmentMerge(
     let mut iIdx: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut iNewLevel: crate::sqlite3_h::sqlite3_int64 = 0 as crate::sqlite3_h::sqlite3_int64;
     let mut pWriter: *mut SegmentWriter = ::core::ptr::null_mut::<SegmentWriter>();
-    let mut filter: crate::fts3Int_h::Fts3SegFilter = crate::fts3Int_h::Fts3SegFilter {
-    zTerm:  ::core::ptr::null::<::core::ffi::c_char>(),
-    nTerm:  0,
-    iCol:  0,
-    flags:  0,
-};
+    let mut filter: crate::fts3Int_h::Fts3SegFilter = unsafe { ::core::mem::zeroed() };
     let mut csr: crate::fts3Int_h::Fts3MultiSegReader = crate::fts3Int_h::Fts3MultiSegReader {
     apSegment:  ::core::ptr::null_mut::<*mut Fts3SegReader>(),
     nSegment:  0,
@@ -3482,11 +3477,6 @@ unsafe extern "C" fn fts3SegmentMerge(
                     14255763095006029735 => {}
                     _ => {
                         if !(rc != crate::sqlite3_h::SQLITE_OK) {
-                            ::libc::memset(
-                                &raw mut filter as *mut ::core::ffi::c_void,
-                                0 as ::core::ffi::c_int,
-                                ::core::mem::size_of::<crate::fts3Int_h::Fts3SegFilter>() as crate::__stddef_size_t_h::size_t,
-                            );
                             filter.flags = crate::fts3Int_h::FTS3_SEGMENT_REQUIRE_POS;
                             filter.flags |= if bIgnoreEmpty != 0 {
                                 crate::fts3Int_h::FTS3_SEGMENT_IGNORE_EMPTY
@@ -4661,24 +4651,7 @@ unsafe extern "C" fn fts3IncrmergeLoad(
             }
             i = nHeight;
             while i >= 0 as ::core::ffi::c_int && rc == crate::sqlite3_h::SQLITE_OK {
-                let mut reader_0: NodeReader = NodeReader {
-                    aNode: ::core::ptr::null::<::core::ffi::c_char>(),
-                    nNode: 0,
-                    iOff: 0,
-                    iChild: 0,
-                    term: Blob {
-                        a: ::core::ptr::null_mut::<::core::ffi::c_char>(),
-                        n: 0,
-                        nAlloc: 0,
-                    },
-                    aDoclist: ::core::ptr::null::<::core::ffi::c_char>(),
-                    nDoclist: 0,
-                };
-                ::libc::memset(
-                    &raw mut reader_0 as *mut ::core::ffi::c_void,
-                    0 as ::core::ffi::c_int,
-                    ::core::mem::size_of::<NodeReader>() as crate::__stddef_size_t_h::size_t,
-                );
+                let mut reader_0: NodeReader = unsafe { ::core::mem::zeroed() };
                 pNode = (&raw mut (*pWriter).aNodeWriter as *mut NodeWriter).offset(i as isize)
                     as *mut NodeWriter;
                 if !(*pNode).block.a.is_null() {
@@ -5661,43 +5634,13 @@ unsafe extern "C" fn fts3ChecksumIndex(
     mut iIndex: ::core::ffi::c_int,
     mut pRc: *mut ::core::ffi::c_int,
 ) -> crate::src::ext::rtree::rtree::u64_0 {
-    let mut filter: crate::fts3Int_h::Fts3SegFilter = crate::fts3Int_h::Fts3SegFilter {
-    zTerm:  ::core::ptr::null::<::core::ffi::c_char>(),
-    nTerm:  0,
-    iCol:  0,
-    flags:  0,
-};
-    let mut csr: crate::fts3Int_h::Fts3MultiSegReader = crate::fts3Int_h::Fts3MultiSegReader {
-    apSegment:  ::core::ptr::null_mut::<*mut Fts3SegReader>(),
-    nSegment:  0,
-    nAdvance:  0,
-    pFilter:  ::core::ptr::null_mut::<crate::fts3Int_h::Fts3SegFilter>(),
-    aBuffer:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    nBuffer:  0,
-    iColFilter:  0,
-    bRestart:  0,
-    nCost:  0,
-    bLookup:  0,
-    zTerm:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    nTerm:  0,
-    aDoclist:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    nDoclist:  0,
-};
+    let mut filter: crate::fts3Int_h::Fts3SegFilter = unsafe { ::core::mem::zeroed() };
+    let mut csr: crate::fts3Int_h::Fts3MultiSegReader = unsafe { ::core::mem::zeroed() };
     let mut rc: ::core::ffi::c_int = 0;
     let mut cksum: crate::src::ext::rtree::rtree::u64_0 = 0 as crate::src::ext::rtree::rtree::u64_0;
     if *pRc != 0 {
         return 0 as crate::src::ext::rtree::rtree::u64_0;
     }
-    ::libc::memset(
-        &raw mut filter as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<crate::fts3Int_h::Fts3SegFilter>() as crate::__stddef_size_t_h::size_t,
-    );
-    ::libc::memset(
-        &raw mut csr as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<crate::fts3Int_h::Fts3MultiSegReader>() as crate::__stddef_size_t_h::size_t,
-    );
     filter.flags = crate::fts3Int_h::FTS3_SEGMENT_REQUIRE_POS | crate::fts3Int_h::FTS3_SEGMENT_IGNORE_EMPTY;
     filter.flags |= crate::fts3Int_h::FTS3_SEGMENT_SCAN;
     rc = crate::src::ext::fts3::fts3::sqlite3Fts3SegReaderCursor(

@@ -3098,10 +3098,7 @@ unsafe extern "C" fn fts3TermSelect(
 ) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = 0;
     let mut pSegcsr: *mut crate::fts3Int_h::Fts3MultiSegReader = ::core::ptr::null_mut::<crate::fts3Int_h::Fts3MultiSegReader>();
-    let mut tsc: TermSelect = TermSelect {
-        aaOutput: [::core::ptr::null_mut::<::core::ffi::c_char>(); 16],
-        anOutput: [0; 16],
-    };
+    let mut tsc: TermSelect = unsafe { ::core::mem::zeroed() };
     let mut filter: crate::fts3Int_h::Fts3SegFilter = crate::fts3Int_h::Fts3SegFilter {
     zTerm:  ::core::ptr::null::<::core::ffi::c_char>(),
     nTerm:  0,
@@ -3109,11 +3106,6 @@ unsafe extern "C" fn fts3TermSelect(
     flags:  0,
 };
     pSegcsr = (*pTok).pSegcsr;
-    ::libc::memset(
-        &raw mut tsc as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<TermSelect>() as crate::__stddef_size_t_h::size_t,
-    );
     filter.flags = crate::fts3Int_h::FTS3_SEGMENT_IGNORE_EMPTY
         | crate::fts3Int_h::FTS3_SEGMENT_REQUIRE_POS
         | (if (*pTok).isPrefix != 0 {
@@ -4873,17 +4865,7 @@ unsafe extern "C" fn fts3EvalIncrPhraseNext(
         }
     } else {
         let mut bDescDoclist: ::core::ffi::c_int = (*pCsr).bDesc as ::core::ffi::c_int;
-        let mut a: [TokenDoclist; 4] = [TokenDoclist {
-            bIgnore: 0,
-            iDocid: 0,
-            pList: ::core::ptr::null_mut::<::core::ffi::c_char>(),
-            nList: 0,
-        }; 4];
-        ::libc::memset(
-            &raw mut a as *mut TokenDoclist as *mut ::core::ffi::c_void,
-            0 as ::core::ffi::c_int,
-            ::core::mem::size_of::<[TokenDoclist; 4]>() as crate::__stddef_size_t_h::size_t,
-        );
+        let mut a: [TokenDoclist; 4] = unsafe { ::core::mem::zeroed() };
         while bEof as ::core::ffi::c_int == 0 as ::core::ffi::c_int {
             let mut bMaxSet: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
             let mut iMax: crate::sqlite3_h::sqlite3_int64 = 0 as crate::sqlite3_h::sqlite3_int64;

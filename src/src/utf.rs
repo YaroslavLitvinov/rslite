@@ -647,24 +647,7 @@ pub unsafe extern "C" fn sqlite3Utf16to8(
     mut nByte: ::core::ffi::c_int,
     mut enc: crate::src::ext::rtree::rtree::u8_0,
 ) -> *mut ::core::ffi::c_char {
-    let mut m: crate::src::src::vdbe::Mem = crate::vdbeInt_h::sqlite3_value {
-    u:  crate::vdbeInt_h::MemValue { r:  0. },
-    z:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    n:  0,
-    flags:  0,
-    enc:  0,
-    eSubtype:  0,
-    db:  ::core::ptr::null_mut::<crate::sqliteInt_h::sqlite3>(),
-    szMalloc:  0,
-    uTemp:  0,
-    zMalloc:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    xDel:  None,
-};
-    ::libc::memset(
-        &raw mut m as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<crate::src::src::vdbe::Mem>() as crate::__stddef_size_t_h::size_t,
-    );
+    let mut m: crate::src::src::vdbe::Mem = unsafe { ::core::mem::zeroed() };
     m.db = db;
     crate::src::src::vdbemem::sqlite3VdbeMemSetStr(
         

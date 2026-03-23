@@ -1374,23 +1374,7 @@ unsafe extern "C" fn sqlite3ProcessReturningSubqueries(
     mut pEList: *mut crate::sqliteInt_h::ExprList,
     mut pTab: *mut crate::sqliteInt_h::Table,
 ) {
-    let mut w: crate::sqliteInt_h::Walker = crate::sqliteInt_h::Walker {
-    pParse:  ::core::ptr::null_mut::<crate::sqliteInt_h::Parse>(),
-    xExprCallback:  None,
-    xSelectCallback:  None,
-    xSelectCallback2:  None,
-    walkerDepth:  0,
-    eCode:  0,
-    mWFlags:  0,
-    u:  crate::sqliteInt_h::__anon_union_16 {
-    pNC:  ::core::ptr::null_mut::<crate::sqliteInt_h::NameContext>(),
-},
-};
-    ::libc::memset(
-        &raw mut w as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<crate::sqliteInt_h::Walker>() as crate::__stddef_size_t_h::size_t,
-    );
+    let mut w: crate::sqliteInt_h::Walker = unsafe { ::core::mem::zeroed() };
     w.xExprCallback = Some(
         crate::src::src::walker::sqlite3ExprWalkNoop as unsafe extern "C" fn(*mut crate::sqliteInt_h::Walker, *mut crate::sqliteInt_h::Expr) -> ::core::ffi::c_int,
     )
@@ -1427,31 +1411,9 @@ unsafe extern "C" fn codeReturningTrigger(
     let mut db: *mut crate::sqliteInt_h::sqlite3 = (*pParse).db;
     let mut pNew: *mut crate::sqliteInt_h::ExprList = ::core::ptr::null_mut::<crate::sqliteInt_h::ExprList>();
     let mut pReturning: *mut crate::sqliteInt_h::Returning = ::core::ptr::null_mut::<crate::sqliteInt_h::Returning>();
-    let mut sSelect: crate::sqliteInt_h::Select = crate::sqliteInt_h::Select {
-    op:  0,
-    nSelectRow:  0,
-    selFlags:  0,
-    iLimit:  0,
-    iOffset:  0,
-    selId:  0,
-    addrOpenEphm:  [0; 2],
-    pEList:  ::core::ptr::null_mut::<crate::sqliteInt_h::ExprList>(),
-    pSrc:  ::core::ptr::null_mut::<crate::sqliteInt_h::SrcList>(),
-    pWhere:  ::core::ptr::null_mut::<crate::sqliteInt_h::Expr>(),
-    pGroupBy:  ::core::ptr::null_mut::<crate::sqliteInt_h::ExprList>(),
-    pHaving:  ::core::ptr::null_mut::<crate::sqliteInt_h::Expr>(),
-    pOrderBy:  ::core::ptr::null_mut::<crate::sqliteInt_h::ExprList>(),
-    pPrior:  ::core::ptr::null_mut::<crate::sqliteInt_h::Select>(),
-    pNext:  ::core::ptr::null_mut::<crate::sqliteInt_h::Select>(),
-    pLimit:  ::core::ptr::null_mut::<crate::sqliteInt_h::Expr>(),
-    pWith:  ::core::ptr::null_mut::<crate::sqliteInt_h::With>(),
-    pWin:  ::core::ptr::null_mut::<crate::sqliteInt_h::Window>(),
-    pWinDefn:  ::core::ptr::null_mut::<crate::sqliteInt_h::Window>(),
-};
+    let mut sSelect: crate::sqliteInt_h::Select = unsafe { ::core::mem::zeroed() };
     let mut pFrom: *mut crate::sqliteInt_h::SrcList = ::core::ptr::null_mut::<crate::sqliteInt_h::SrcList>();
-    let mut uSrc: C2RustUnnamed = C2RustUnnamed {
-        sSrc: crate::sqliteInt_h::SrcList { nSrc:  0, nAlloc:  0, a:  [] },
-    };
+    let mut uSrc: C2RustUnnamed = unsafe { ::core::mem::zeroed() };
     if (*pParse).bReturning == 0 {
         return;
     }
@@ -1459,16 +1421,6 @@ unsafe extern "C" fn codeReturningTrigger(
     if pTrigger != &raw mut (*pReturning).retTrig {
         return;
     }
-    ::libc::memset(
-        &raw mut sSelect as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<crate::sqliteInt_h::Select>() as crate::__stddef_size_t_h::size_t,
-    );
-    ::libc::memset(
-        &raw mut uSrc as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<C2RustUnnamed>() as crate::__stddef_size_t_h::size_t,
-    );
     pFrom = &raw mut uSrc.sSrc;
     sSelect.pEList =  crate::src::src::expr::sqlite3ExprListDup(db as *mut crate::sqliteInt_h::sqlite3,  (*pReturning).pReturnEL as *const crate::sqliteInt_h::ExprList, 0 as ::core::ffi::c_int) as *mut crate::sqliteInt_h::ExprList;
     sSelect.pSrc = pFrom;
@@ -1496,24 +1448,7 @@ unsafe extern "C" fn codeReturningTrigger(
     crate::src::src::expr::sqlite3ExprListDelete(db as *mut crate::sqliteInt_h::sqlite3,  sSelect.pEList as *mut crate::sqliteInt_h::ExprList);
     pNew = sqlite3ExpandReturning(pParse, (*pReturning).pReturnEL, pTab);
     if (*pParse).nErr == 0 as ::core::ffi::c_int {
-        let mut sNC: crate::sqliteInt_h::NameContext = crate::sqliteInt_h::NameContext {
-    pParse:  ::core::ptr::null_mut::<crate::sqliteInt_h::Parse>(),
-    pSrcList:  ::core::ptr::null_mut::<crate::sqliteInt_h::SrcList>(),
-    uNC:  crate::sqliteInt_h::__anon_union_14 {
-    pEList:  ::core::ptr::null_mut::<crate::sqliteInt_h::ExprList>(),
-},
-    pNext:  ::core::ptr::null_mut::<crate::sqliteInt_h::NameContext>(),
-    nRef:  0,
-    nNcErr:  0,
-    ncFlags:  0,
-    nNestedSelect:  0,
-    pWinSelect:  ::core::ptr::null_mut::<crate::sqliteInt_h::Select>(),
-};
-        ::libc::memset(
-            &raw mut sNC as *mut ::core::ffi::c_void,
-            0 as ::core::ffi::c_int,
-            ::core::mem::size_of::<crate::sqliteInt_h::NameContext>() as crate::__stddef_size_t_h::size_t,
-        );
+        let mut sNC: crate::sqliteInt_h::NameContext = unsafe { ::core::mem::zeroed() };
         if (*pReturning).nRetCol == 0 as ::core::ffi::c_int {
             (*pReturning).nRetCol = (*pNew).nExpr;
             let fresh3 = (*pParse).nTab;
@@ -1705,19 +1640,7 @@ unsafe extern "C" fn codeRowTrigger(
     let mut pPrg: *mut crate::sqliteInt_h::TriggerPrg = ::core::ptr::null_mut::<crate::sqliteInt_h::TriggerPrg>();
     let mut pWhen: *mut crate::sqliteInt_h::Expr = ::core::ptr::null_mut::<crate::sqliteInt_h::Expr>();
     let mut v: *mut crate::vdbeInt_h::Vdbe = ::core::ptr::null_mut::<crate::vdbeInt_h::Vdbe>();
-    let mut sNC: crate::sqliteInt_h::NameContext = crate::sqliteInt_h::NameContext {
-    pParse:  ::core::ptr::null_mut::<crate::sqliteInt_h::Parse>(),
-    pSrcList:  ::core::ptr::null_mut::<crate::sqliteInt_h::SrcList>(),
-    uNC:  crate::sqliteInt_h::__anon_union_14 {
-    pEList:  ::core::ptr::null_mut::<crate::sqliteInt_h::ExprList>(),
-},
-    pNext:  ::core::ptr::null_mut::<crate::sqliteInt_h::NameContext>(),
-    nRef:  0,
-    nNcErr:  0,
-    ncFlags:  0,
-    nNestedSelect:  0,
-    pWinSelect:  ::core::ptr::null_mut::<crate::sqliteInt_h::Select>(),
-};
+    let mut sNC: crate::sqliteInt_h::NameContext = unsafe { ::core::mem::zeroed() };
     let mut pProgram: *mut crate::src::src::vdbe::SubProgram = ::core::ptr::null_mut::<crate::src::src::vdbe::SubProgram>();
     let mut iEndTrigger: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut sSubParse: crate::sqliteInt_h::Parse = crate::sqliteInt_h::Parse {
@@ -1831,11 +1754,6 @@ unsafe extern "C" fn codeRowTrigger(
     (*pPrg).aColmask[0 as ::core::ffi::c_int as usize] = 0xffffffff as ::core::ffi::c_uint as crate::src::ext::rtree::rtree::u32_0;
     (*pPrg).aColmask[1 as ::core::ffi::c_int as usize] = 0xffffffff as ::core::ffi::c_uint as crate::src::ext::rtree::rtree::u32_0;
     crate::src::src::prepare::sqlite3ParseObjectInit(&raw mut sSubParse as *mut _ as *mut crate::sqliteInt_h::Parse,  db as *mut crate::sqliteInt_h::sqlite3);
-    ::libc::memset(
-        &raw mut sNC as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<crate::sqliteInt_h::NameContext>() as crate::__stddef_size_t_h::size_t,
-    );
     sNC.pParse = &raw mut sSubParse;
     sSubParse.pTriggerTab = pTab;
     sSubParse.pToplevel = pTop;

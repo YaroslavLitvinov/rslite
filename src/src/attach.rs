@@ -413,29 +413,12 @@ unsafe extern "C" fn codeAttach(
 ) {
     let mut current_block: u64;
     let mut rc: ::core::ffi::c_int = 0;
-    let mut sName: crate::sqliteInt_h::NameContext = crate::sqliteInt_h::NameContext {
-    pParse:  ::core::ptr::null_mut::<crate::sqliteInt_h::Parse>(),
-    pSrcList:  ::core::ptr::null_mut::<crate::sqliteInt_h::SrcList>(),
-    uNC:  crate::sqliteInt_h::__anon_union_14 {
-    pEList:  ::core::ptr::null_mut::<crate::sqliteInt_h::ExprList>(),
-},
-    pNext:  ::core::ptr::null_mut::<crate::sqliteInt_h::NameContext>(),
-    nRef:  0,
-    nNcErr:  0,
-    ncFlags:  0,
-    nNestedSelect:  0,
-    pWinSelect:  ::core::ptr::null_mut::<crate::sqliteInt_h::Select>(),
-};
+    let mut sName: crate::sqliteInt_h::NameContext = unsafe { ::core::mem::zeroed() };
     let mut v: *mut crate::vdbeInt_h::Vdbe = ::core::ptr::null_mut::<crate::vdbeInt_h::Vdbe>();
     let mut db: *mut crate::sqliteInt_h::sqlite3 = (*pParse).db;
     let mut regArgs: ::core::ffi::c_int = 0;
     if !(crate::sqlite3_h::SQLITE_OK != crate::src::src::prepare::sqlite3ReadSchema(pParse as *mut crate::sqliteInt_h::Parse)) {
         if !((*pParse).nErr != 0) {
-            ::libc::memset(
-                &raw mut sName as *mut ::core::ffi::c_void,
-                0 as ::core::ffi::c_int,
-                ::core::mem::size_of::<crate::sqliteInt_h::NameContext>() as crate::__stddef_size_t_h::size_t,
-            );
             sName.pParse = pParse;
             if !(crate::sqlite3_h::SQLITE_OK != resolveAttachExpr(&raw mut sName, pFilename)
                 || crate::sqlite3_h::SQLITE_OK != resolveAttachExpr(&raw mut sName, pDbname)
@@ -726,32 +709,7 @@ pub unsafe extern "C" fn sqlite3FixSrcList(
 ) -> ::core::ffi::c_int {
     let mut res: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     if !pList.is_null() {
-        let mut s: crate::sqliteInt_h::Select = crate::sqliteInt_h::Select {
-    op:  0,
-    nSelectRow:  0,
-    selFlags:  0,
-    iLimit:  0,
-    iOffset:  0,
-    selId:  0,
-    addrOpenEphm:  [0; 2],
-    pEList:  ::core::ptr::null_mut::<crate::sqliteInt_h::ExprList>(),
-    pSrc:  ::core::ptr::null_mut::<crate::sqliteInt_h::SrcList>(),
-    pWhere:  ::core::ptr::null_mut::<crate::sqliteInt_h::Expr>(),
-    pGroupBy:  ::core::ptr::null_mut::<crate::sqliteInt_h::ExprList>(),
-    pHaving:  ::core::ptr::null_mut::<crate::sqliteInt_h::Expr>(),
-    pOrderBy:  ::core::ptr::null_mut::<crate::sqliteInt_h::ExprList>(),
-    pPrior:  ::core::ptr::null_mut::<crate::sqliteInt_h::Select>(),
-    pNext:  ::core::ptr::null_mut::<crate::sqliteInt_h::Select>(),
-    pLimit:  ::core::ptr::null_mut::<crate::sqliteInt_h::Expr>(),
-    pWith:  ::core::ptr::null_mut::<crate::sqliteInt_h::With>(),
-    pWin:  ::core::ptr::null_mut::<crate::sqliteInt_h::Window>(),
-    pWinDefn:  ::core::ptr::null_mut::<crate::sqliteInt_h::Window>(),
-};
-        ::libc::memset(
-            &raw mut s as *mut ::core::ffi::c_void,
-            0 as ::core::ffi::c_int,
-            ::core::mem::size_of::<crate::sqliteInt_h::Select>() as crate::__stddef_size_t_h::size_t,
-        );
+        let mut s: crate::sqliteInt_h::Select = unsafe { ::core::mem::zeroed() };
         s.pSrc = pList;
         res = crate::src::src::walker::sqlite3WalkSelect(&raw mut (*pFix).w as *mut _ as *mut crate::sqliteInt_h::Walker,  &raw mut s as *mut _ as *mut crate::sqliteInt_h::Select);
     }

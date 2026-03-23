@@ -376,19 +376,8 @@ pub mod geopoly_c {
         mut pRc: *mut ::core::ffi::c_int,
     ) -> *mut crate::geopoly_c::GeoPoly {
         let mut current_block: u64;
-        let mut s: crate::geopoly_c::GeoParse = crate::geopoly_c::GeoParse {
-    z:  ::core::ptr::null::<::core::ffi::c_uchar>(),
-    nVertex:  0,
-    nAlloc:  0,
-    nErr:  0,
-    a:  ::core::ptr::null_mut::<crate::geopoly_c::GeoCoord>(),
-};
+        let mut s: crate::geopoly_c::GeoParse = unsafe { ::core::mem::zeroed() };
         let mut rc: ::core::ffi::c_int = crate::sqlite3_h::SQLITE_OK;
-        ::libc::memset(
-            &raw mut s as *mut ::core::ffi::c_void,
-            0 as ::core::ffi::c_int,
-            ::core::mem::size_of::<crate::geopoly_c::GeoParse>() as crate::__stddef_size_t_h::size_t,
-        );
         s.z = z;
         if geopolySkipSpace(&raw mut s) as ::core::ffi::c_int == '[' as i32 {
             s.z = s.z.offset(1);
@@ -1636,7 +1625,7 @@ pub mod geopoly_c {
         let mut needSort: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
         let mut pActive: *mut crate::geopoly_c::GeoSegment = ::core::ptr::null_mut::<crate::geopoly_c::GeoSegment>();
         let mut pSeg: *mut crate::geopoly_c::GeoSegment = ::core::ptr::null_mut::<crate::geopoly_c::GeoSegment>();
-        let mut aOverlap: [::core::ffi::c_uchar; 4] = [0; 4];
+        let mut aOverlap: [::core::ffi::c_uchar; 4] = unsafe { ::core::mem::zeroed() };
         nByte = (::core::mem::size_of::<crate::geopoly_c::GeoEvent>() as ::core::ffi::c_ulonglong)
             .wrapping_mul(nVertex as ::core::ffi::c_ulonglong)
             .wrapping_mul(2 as ::core::ffi::c_ulonglong)
@@ -1664,11 +1653,6 @@ pub mod geopoly_c {
         } else {
             0.0f64
         };
-        ::libc::memset(
-            &raw mut aOverlap as *mut ::core::ffi::c_uchar as *mut ::core::ffi::c_void,
-            0 as ::core::ffi::c_int,
-            ::core::mem::size_of::<[::core::ffi::c_uchar; 4]>() as crate::__stddef_size_t_h::size_t,
-        );
         's_58: loop {
             if pThisEvent.is_null() {
                 current_block = 6072622540298447352;
@@ -4828,12 +4812,7 @@ unsafe extern "C" fn rtreeBestIndex(
     let mut bMatch: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut nRow: i64_0 = 0;
     let mut iIdx: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-    let mut zIdxStr: [::core::ffi::c_char; 41] = [0; 41];
-    ::libc::memset(
-        &raw mut zIdxStr as *mut ::core::ffi::c_char as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<[::core::ffi::c_char; 41]>() as crate::__stddef_size_t_h::size_t,
-    );
+    let mut zIdxStr: [::core::ffi::c_char; 41] = unsafe { ::core::mem::zeroed() };
     ii = 0 as ::core::ffi::c_int;
     while ii < (*pIdxInfo).nConstraint {
         if (*(*pIdxInfo).aConstraint.offset(ii as isize)).op as ::core::ffi::c_int
@@ -6321,20 +6300,12 @@ unsafe extern "C" fn rtreeUpdate(
     let mut current_block: u64;
     let mut pRtree: *mut Rtree = pVtab as *mut Rtree;
     let mut rc: ::core::ffi::c_int = crate::sqlite3_h::SQLITE_OK;
-    let mut cell: RtreeCell = RtreeCell {
-        iRowid: 0,
-        aCoord: [RtreeCoord { f: 0. }; 10],
-    };
+    let mut cell: RtreeCell = unsafe { ::core::mem::zeroed() };
     let mut bHaveRowid: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     if (*pRtree).nNodeRef != 0 {
         return crate::sqlite3_h::SQLITE_LOCKED_VTAB;
     }
     rtreeReference(pRtree);
-    ::libc::memset(
-        &raw mut cell as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<RtreeCell>() as crate::__stddef_size_t_h::size_t,
-    );
     if nData > 1 as ::core::ffi::c_int {
         let mut ii: ::core::ffi::c_int = 0;
         let mut nn: ::core::ffi::c_int = nData - 4 as ::core::ffi::c_int;
@@ -7246,65 +7217,12 @@ unsafe extern "C" fn rtreenode(
     mut _nArg: ::core::ffi::c_int,
     mut apArg: *mut *mut crate::vdbeInt_h::sqlite3_value,
 ) {
-    let mut node: RtreeNode = RtreeNode {
-        pParent: ::core::ptr::null_mut::<RtreeNode>(),
-        iNode: 0,
-        nRef: 0,
-        isDirty: 0,
-        zData: ::core::ptr::null_mut::<u8_0>(),
-        pNext: ::core::ptr::null_mut::<RtreeNode>(),
-    };
-    let mut tree: Rtree = Rtree {
-        base: crate::sqlite3_h::sqlite3_vtab {
-    pModule:  ::core::ptr::null::<crate::sqlite3_h::sqlite3_module>(),
-    nRef:  0,
-    zErrMsg:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-},
-        db: ::core::ptr::null_mut::<crate::sqliteInt_h::sqlite3>(),
-        iNodeSize: 0,
-        nDim: 0,
-        nDim2: 0,
-        eCoordType: 0,
-        nBytesPerCell: 0,
-        inWrTrans: 0,
-        nAux: 0,
-        nAuxNotNull: 0,
-        iDepth: 0,
-        zDb: ::core::ptr::null_mut::<::core::ffi::c_char>(),
-        zName: ::core::ptr::null_mut::<::core::ffi::c_char>(),
-        zNodeName: ::core::ptr::null_mut::<::core::ffi::c_char>(),
-        nBusy: 0,
-        nRowEst: 0,
-        nCursor: 0,
-        nNodeRef: 0,
-        zReadAuxSql: ::core::ptr::null_mut::<::core::ffi::c_char>(),
-        pDeleted: ::core::ptr::null_mut::<RtreeNode>(),
-        pNodeBlob: ::core::ptr::null_mut::<crate::sqlite3_h::sqlite3_blob>(),
-        pWriteNode: ::core::ptr::null_mut::<crate::sqlite3_h::sqlite3_stmt>(),
-        pDeleteNode: ::core::ptr::null_mut::<crate::sqlite3_h::sqlite3_stmt>(),
-        pReadRowid: ::core::ptr::null_mut::<crate::sqlite3_h::sqlite3_stmt>(),
-        pWriteRowid: ::core::ptr::null_mut::<crate::sqlite3_h::sqlite3_stmt>(),
-        pDeleteRowid: ::core::ptr::null_mut::<crate::sqlite3_h::sqlite3_stmt>(),
-        pReadParent: ::core::ptr::null_mut::<crate::sqlite3_h::sqlite3_stmt>(),
-        pWriteParent: ::core::ptr::null_mut::<crate::sqlite3_h::sqlite3_stmt>(),
-        pDeleteParent: ::core::ptr::null_mut::<crate::sqlite3_h::sqlite3_stmt>(),
-        pWriteAux: ::core::ptr::null_mut::<crate::sqlite3_h::sqlite3_stmt>(),
-        aHash: [::core::ptr::null_mut::<RtreeNode>(); 97],
-    };
+    let mut node: RtreeNode = unsafe { ::core::mem::zeroed() };
+    let mut tree: Rtree = unsafe { ::core::mem::zeroed() };
     let mut ii: ::core::ffi::c_int = 0;
     let mut nData: ::core::ffi::c_int = 0;
     let mut errCode: ::core::ffi::c_int = 0;
     let mut pOut: *mut crate::sqliteInt_h::sqlite3_str = ::core::ptr::null_mut::<crate::sqliteInt_h::sqlite3_str>();
-    ::libc::memset(
-        &raw mut node as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<RtreeNode>() as crate::__stddef_size_t_h::size_t,
-    );
-    ::libc::memset(
-        &raw mut tree as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<Rtree>() as crate::__stddef_size_t_h::size_t,
-    );
     tree.nDim = crate::src::src::vdbeapi::sqlite3_value_int(*apArg.offset(0 as ::core::ffi::c_int as isize)) as u8_0;
     if (tree.nDim as ::core::ffi::c_int) < 1 as ::core::ffi::c_int
         || tree.nDim as ::core::ffi::c_int > 5 as ::core::ffi::c_int
@@ -7784,27 +7702,9 @@ unsafe extern "C" fn rtreeCheckTable(
     mut zTab: *const ::core::ffi::c_char,
     mut pzReport: *mut *mut ::core::ffi::c_char,
 ) -> ::core::ffi::c_int {
-    let mut check: RtreeCheck = RtreeCheck {
-        db: ::core::ptr::null_mut::<crate::sqliteInt_h::sqlite3>(),
-        zDb: ::core::ptr::null::<::core::ffi::c_char>(),
-        zTab: ::core::ptr::null::<::core::ffi::c_char>(),
-        bInt: 0,
-        nDim: 0,
-        pGetNode: ::core::ptr::null_mut::<crate::sqlite3_h::sqlite3_stmt>(),
-        aCheckMapping: [::core::ptr::null_mut::<crate::sqlite3_h::sqlite3_stmt>(); 2],
-        nLeaf: 0,
-        nNonLeaf: 0,
-        rc: 0,
-        zReport: ::core::ptr::null_mut::<::core::ffi::c_char>(),
-        nErr: 0,
-    };
+    let mut check: RtreeCheck = unsafe { ::core::mem::zeroed() };
     let mut pStmt: *mut crate::sqlite3_h::sqlite3_stmt = ::core::ptr::null_mut::<crate::sqlite3_h::sqlite3_stmt>();
     let mut nAux: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-    ::libc::memset(
-        &raw mut check as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<RtreeCheck>() as crate::__stddef_size_t_h::size_t,
-    );
     check.db = db;
     check.zDb = zDb;
     check.zTab = zTab;

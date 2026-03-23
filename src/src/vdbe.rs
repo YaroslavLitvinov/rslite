@@ -1468,19 +1468,7 @@ pub unsafe extern "C" fn sqlite3VdbeExec(mut p: *mut crate::vdbeInt_h::Vdbe) -> 
                         let mut len: ::core::ffi::c_int = 0;
                         let mut i_0: ::core::ffi::c_int = 0;
                         let mut pDest: *mut crate::src::src::vdbe::Mem = ::core::ptr::null_mut::<crate::src::src::vdbe::Mem>();
-                        let mut sMem: crate::src::src::vdbe::Mem = crate::vdbeInt_h::sqlite3_value {
-    u:  crate::vdbeInt_h::MemValue { r:  0. },
-    z:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    n:  0,
-    flags:  0,
-    enc:  0,
-    eSubtype:  0,
-    db:  ::core::ptr::null_mut::<crate::sqliteInt_h::sqlite3>(),
-    szMalloc:  0,
-    uTemp:  0,
-    zMalloc:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    xDel:  None,
-};
+                        let mut sMem: crate::src::src::vdbe::Mem = unsafe { ::core::mem::zeroed() };
                         let mut zData: *const crate::src::ext::rtree::rtree::u8_0 = ::core::ptr::null::<crate::src::ext::rtree::rtree::u8_0>();
                         let mut zHdr: *const crate::src::ext::rtree::rtree::u8_0 = ::core::ptr::null::<crate::src::ext::rtree::rtree::u8_0>();
                         let mut zEndHdr: *const crate::src::ext::rtree::rtree::u8_0 = ::core::ptr::null::<crate::src::ext::rtree::rtree::u8_0>();
@@ -1615,11 +1603,6 @@ pub unsafe extern "C" fn sqlite3VdbeExec(mut p: *mut crate::vdbeInt_h::Vdbe) -> 
                                         < *aOffset.offset(0 as ::core::ffi::c_int as isize)
                                     {
                                         if (*pC_1).aRow.is_null() {
-                                            ::libc::memset(
-                                                &raw mut sMem as *mut ::core::ffi::c_void,
-                                                0 as ::core::ffi::c_int,
-                                                ::core::mem::size_of::<crate::src::src::vdbe::Mem>() as crate::__stddef_size_t_h::size_t,
-                                            );
                                             rc = crate::src::src::vdbemem::sqlite3VdbeMemFromBtreeZeroOffset(
                                                 (*pC_1).uc.pCursor,
                                                 *aOffset.offset(0 as ::core::ffi::c_int as isize),
@@ -4886,26 +4869,9 @@ pub unsafe extern "C" fn sqlite3VdbeExec(mut p: *mut crate::vdbeInt_h::Vdbe) -> 
                         current_block = 5783071609795492627;
                     }
     crate::opcodes_h::OP_VCreate =>  {
-                        let mut sMem_0: crate::src::src::vdbe::Mem = crate::vdbeInt_h::sqlite3_value {
-    u:  crate::vdbeInt_h::MemValue { r:  0. },
-    z:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    n:  0,
-    flags:  0,
-    enc:  0,
-    eSubtype:  0,
-    db:  ::core::ptr::null_mut::<crate::sqliteInt_h::sqlite3>(),
-    szMalloc:  0,
-    uTemp:  0,
-    zMalloc:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    xDel:  None,
-};
+                        let mut sMem_0: crate::src::src::vdbe::Mem = unsafe { ::core::mem::zeroed() };
                         let mut zTab: *const ::core::ffi::c_char =
                             ::core::ptr::null::<::core::ffi::c_char>();
-                        ::libc::memset(
-                            &raw mut sMem_0 as *mut ::core::ffi::c_void,
-                            0 as ::core::ffi::c_int,
-                            ::core::mem::size_of::<crate::src::src::vdbe::Mem>() as crate::__stddef_size_t_h::size_t,
-                        );
                         sMem_0.db = db;
                         rc = crate::src::src::vdbemem::sqlite3VdbeMemCopy(
                             
@@ -5113,18 +5079,7 @@ pub unsafe extern "C" fn sqlite3VdbeExec(mut p: *mut crate::vdbeInt_h::Vdbe) -> 
                         let mut pModule_3: *const crate::sqlite3_h::sqlite3_module =
                             ::core::ptr::null::<crate::sqlite3_h::sqlite3_module>();
                         let mut pDest_1: *mut crate::src::src::vdbe::Mem = ::core::ptr::null_mut::<crate::src::src::vdbe::Mem>();
-                        let mut sContext: crate::vdbeInt_h::sqlite3_context = crate::vdbeInt_h::sqlite3_context {
-    pOut:  ::core::ptr::null_mut::<crate::src::src::vdbe::Mem>(),
-    pFunc:  ::core::ptr::null_mut::<crate::sqliteInt_h::FuncDef>(),
-    pMem:  ::core::ptr::null_mut::<crate::src::src::vdbe::Mem>(),
-    pVdbe:  ::core::ptr::null_mut::<crate::vdbeInt_h::Vdbe>(),
-    iOp:  0,
-    isError:  0,
-    enc:  0,
-    skipFlag:  0,
-    argc:  0,
-    argv:  [],
-};
+                        let mut sContext: crate::vdbeInt_h::sqlite3_context = unsafe { ::core::mem::zeroed() };
                         let mut nullFunc: crate::sqliteInt_h::FuncDef = crate::sqliteInt_h::FuncDef {
     nArg:  0,
     funcFlags:  0,
@@ -5146,11 +5101,6 @@ pub unsafe extern "C" fn sqlite3VdbeExec(mut p: *mut crate::vdbeInt_h::Vdbe) -> 
                         } else {
                             pVtab_3 = (*(*pCur_4).uc.pVCur).pVtab;
                             pModule_3 = (*pVtab_3).pModule;
-                            ::libc::memset(
-                                &raw mut sContext as *mut ::core::ffi::c_void,
-                                0 as ::core::ffi::c_int,
-                                ::core::mem::size_of::<crate::vdbeInt_h::sqlite3_context>() as crate::__stddef_size_t_h::size_t,
-                            );
                             sContext.pOut = pDest_1;
                             sContext.enc = encoding;
                             nullFunc.pUserData = ::core::ptr::null_mut::<::core::ffi::c_void>();

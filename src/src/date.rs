@@ -570,25 +570,8 @@ unsafe extern "C" fn toLocaltime(
     mut pCtx: *mut crate::vdbeInt_h::sqlite3_context,
 ) -> ::core::ffi::c_int {
     let mut t: crate::stdlib::time_t = 0;
-    let mut sLocal: ::libc::tm = ::libc::tm {
-    tm_sec:  0,
-    tm_min:  0,
-    tm_hour:  0,
-    tm_mday:  0,
-    tm_mon:  0,
-    tm_year:  0,
-    tm_wday:  0,
-    tm_yday:  0,
-    tm_isdst:  0,
-    tm_gmtoff:  0,
-    tm_zone:  ::core::ptr::null::<::core::ffi::c_char>(),
-};
+    let mut sLocal: ::libc::tm = unsafe { ::core::mem::zeroed() };
     let mut iYearDiff: ::core::ffi::c_int = 0;
-    ::libc::memset(
-        &raw mut sLocal as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<::libc::tm>() as crate::__stddef_size_t_h::size_t,
-    );
     computeJD(p);
     if (*p).iJD < 2108667600 as crate::src::ext::rtree::rtree::i64_0 * 100000 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::i64_0
         || (*p).iJD > 2130141456 as crate::src::ext::rtree::rtree::i64_0 * 100000 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::i64_0
@@ -793,27 +776,7 @@ unsafe extern "C" fn parseModifier(
                     iGuess = iOrigJD;
                     iErr = 0 as crate::src::ext::rtree::rtree::i64_0;
                     loop {
-                        let mut new: DateTime = DateTime {
-                            iJD: 0,
-                            Y: 0,
-                            M: 0,
-                            D: 0,
-                            h: 0,
-                            m: 0,
-                            tz: 0,
-                            s: 0.,
-                            validJD: 0,
-                            validYMD: 0,
-                            validHMS: 0,
-                            nFloor: 0,
-                            rawS_isError_useSubsec_isUtc_isLocal: [0; 1],
-                            c2rust_padding: [0; 3],
-                        };
-                        ::libc::memset(
-                            &raw mut new as *mut ::core::ffi::c_void,
-                            0 as ::core::ffi::c_int,
-                            ::core::mem::size_of::<DateTime>() as crate::__stddef_size_t_h::size_t,
-                        );
+                        let mut new: DateTime = unsafe { ::core::mem::zeroed() };
                         iGuess -= iErr;
                         new.iJD = iGuess as crate::sqlite3_h::sqlite3_int64;
                         new.validJD = 1 as ::core::ffi::c_char;
@@ -1078,22 +1041,7 @@ unsafe extern "C" fn parseModifier(
                     2413388577390654262 => {}
                     _ => {
                         if *z2.offset(n as isize) as ::core::ffi::c_int == ':' as i32 {
-                            let mut tx: DateTime = DateTime {
-                                iJD: 0,
-                                Y: 0,
-                                M: 0,
-                                D: 0,
-                                h: 0,
-                                m: 0,
-                                tz: 0,
-                                s: 0.,
-                                validJD: 0,
-                                validYMD: 0,
-                                validHMS: 0,
-                                nFloor: 0,
-                                rawS_isError_useSubsec_isUtc_isLocal: [0; 1],
-                                c2rust_padding: [0; 3],
-                            };
+                            let mut tx: DateTime = unsafe { ::core::mem::zeroed() };
                             let mut day: crate::sqlite3_h::sqlite3_int64 = 0;
                             if *(&raw const crate::src::src::global::sqlite3CtypeMap as *const ::core::ffi::c_uchar)
                                 .offset(*z2 as ::core::ffi::c_uchar as isize)
@@ -1103,11 +1051,6 @@ unsafe extern "C" fn parseModifier(
                             {
                                 z2 = z2.offset(1);
                             }
-                            ::libc::memset(
-                                &raw mut tx as *mut ::core::ffi::c_void,
-                                0 as ::core::ffi::c_int,
-                                ::core::mem::size_of::<DateTime>() as crate::__stddef_size_t_h::size_t,
-                            );
                             if !(parseHhMmSs(z2, &raw mut tx) != 0) {
                                 computeJD(&raw mut tx);
                                 tx.iJD -= 43200000 as crate::sqlite3_h::sqlite3_int64;

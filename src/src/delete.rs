@@ -242,23 +242,8 @@ pub unsafe extern "C" fn sqlite3DeleteFrom(
     let mut iIdxCur: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut nIdx: ::core::ffi::c_int = 0;
     let mut db: *mut crate::sqliteInt_h::sqlite3 = ::core::ptr::null_mut::<crate::sqliteInt_h::sqlite3>();
-    let mut sContext: crate::sqliteInt_h::AuthContext = crate::sqliteInt_h::AuthContext {
-    zAuthContext:  ::core::ptr::null::<::core::ffi::c_char>(),
-    pParse:  ::core::ptr::null_mut::<crate::sqliteInt_h::Parse>(),
-};
-    let mut sNC: crate::sqliteInt_h::NameContext = crate::sqliteInt_h::NameContext {
-    pParse:  ::core::ptr::null_mut::<crate::sqliteInt_h::Parse>(),
-    pSrcList:  ::core::ptr::null_mut::<crate::sqliteInt_h::SrcList>(),
-    uNC:  crate::sqliteInt_h::__anon_union_14 {
-    pEList:  ::core::ptr::null_mut::<crate::sqliteInt_h::ExprList>(),
-},
-    pNext:  ::core::ptr::null_mut::<crate::sqliteInt_h::NameContext>(),
-    nRef:  0,
-    nNcErr:  0,
-    ncFlags:  0,
-    nNestedSelect:  0,
-    pWinSelect:  ::core::ptr::null_mut::<crate::sqliteInt_h::Select>(),
-};
+    let mut sContext: crate::sqliteInt_h::AuthContext = unsafe { ::core::mem::zeroed() };
+    let mut sNC: crate::sqliteInt_h::NameContext = unsafe { ::core::mem::zeroed() };
     let mut iDb: ::core::ffi::c_int = 0;
     let mut memCnt: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut rcauth: ::core::ffi::c_int = 0;
@@ -278,11 +263,6 @@ pub unsafe extern "C" fn sqlite3DeleteFrom(
     let mut bComplex: ::core::ffi::c_int = 0;
     let mut isView: ::core::ffi::c_int = 0;
     let mut pTrigger: *mut crate::sqliteInt_h::Trigger = ::core::ptr::null_mut::<crate::sqliteInt_h::Trigger>();
-    ::libc::memset(
-        &raw mut sContext as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<crate::sqliteInt_h::AuthContext>() as crate::__stddef_size_t_h::size_t,
-    );
     db = (*pParse).db;
     if !((*pParse).nErr != 0) {
         pTab = sqlite3SrcListLookup(pParse, pTabList);
@@ -353,11 +333,6 @@ pub unsafe extern "C" fn sqlite3DeleteFrom(
                                 pOrderBy = ::core::ptr::null_mut::<crate::sqliteInt_h::ExprList>();
                                 pLimit = ::core::ptr::null_mut::<crate::sqliteInt_h::Expr>();
                             }
-                            ::libc::memset(
-                                &raw mut sNC as *mut ::core::ffi::c_void,
-                                0 as ::core::ffi::c_int,
-                                ::core::mem::size_of::<crate::sqliteInt_h::NameContext>() as crate::__stddef_size_t_h::size_t,
-                            );
                             sNC.pParse = pParse;
                             sNC.pSrcList = pTabList;
                             if !(crate::src::src::resolve::sqlite3ResolveExprNames(&raw mut sNC as *mut _ as *mut crate::sqliteInt_h::NameContext,  pWhere as *mut crate::sqliteInt_h::Expr) != 0) {

@@ -953,22 +953,7 @@ unsafe extern "C" fn fts3ExprParseUnbalanced(
 ) -> ::core::ffi::c_int {
     let mut nParsed: ::core::ffi::c_int = 0;
     let mut rc: ::core::ffi::c_int = 0;
-    let mut sParse: ParseContext = ParseContext {
-        pTokenizer: ::core::ptr::null_mut::<crate::src::ext::fts3::fts3_tokenizer::sqlite3_tokenizer>(),
-        iLangid: 0,
-        azCol: ::core::ptr::null_mut::<*const ::core::ffi::c_char>(),
-        bFts4: 0,
-        nCol: 0,
-        iDefaultCol: 0,
-        isNot: 0,
-        pCtx: ::core::ptr::null_mut::<crate::vdbeInt_h::sqlite3_context>(),
-        nNest: 0,
-    };
-    ::libc::memset(
-        &raw mut sParse as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<ParseContext>() as crate::__stddef_size_t_h::size_t,
-    );
+    let mut sParse: ParseContext = unsafe { ::core::mem::zeroed() };
     sParse.pTokenizer = pTokenizer;
     sParse.iLangid = iLangid;
     sParse.azCol = azCol as *mut *const ::core::ffi::c_char;

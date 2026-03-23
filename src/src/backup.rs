@@ -690,20 +690,7 @@ pub unsafe extern "C" fn sqlite3BtreeCopyFile(
     let mut current_block: u64;
     let mut rc: ::core::ffi::c_int = 0;
     let mut pFd: *mut crate::sqlite3_h::sqlite3_file = ::core::ptr::null_mut::<crate::sqlite3_h::sqlite3_file>();
-    let mut b: sqlite3_backup = sqlite3_backup {
-        pDestDb: ::core::ptr::null_mut::<crate::sqliteInt_h::sqlite3>(),
-        pDest: ::core::ptr::null_mut::<crate::btreeInt_h::Btree>(),
-        iDestSchema: 0,
-        bDestLocked: 0,
-        iNext: 0,
-        pSrcDb: ::core::ptr::null_mut::<crate::sqliteInt_h::sqlite3>(),
-        pSrc: ::core::ptr::null_mut::<crate::btreeInt_h::Btree>(),
-        rc: 0,
-        nRemaining: 0,
-        nPagecount: 0,
-        isAttached: 0,
-        pNext: ::core::ptr::null_mut::<sqlite3_backup>(),
-    };
+    let mut b: sqlite3_backup = unsafe { ::core::mem::zeroed() };
     crate::src::src::btmutex::sqlite3BtreeEnter(pTo as *mut crate::btreeInt_h::Btree);
     crate::src::src::btmutex::sqlite3BtreeEnter(pFrom as *mut crate::btreeInt_h::Btree);
     pFd =  crate::src::src::pager::sqlite3PagerFile(crate::src::src::btree::sqlite3BtreePager(pTo as *mut crate::btreeInt_h::Btree) as *mut crate::src::src::pager::Pager) as
@@ -730,11 +717,6 @@ pub unsafe extern "C" fn sqlite3BtreeCopyFile(
     }
     match current_block {
         17216689946888361452 => {
-            ::libc::memset(
-                &raw mut b as *mut ::core::ffi::c_void,
-                0 as ::core::ffi::c_int,
-                ::core::mem::size_of::<sqlite3_backup>() as crate::__stddef_size_t_h::size_t,
-            );
             b.pSrcDb = (*pFrom).db;
             b.pSrc = pFrom;
             b.pDest = pTo;

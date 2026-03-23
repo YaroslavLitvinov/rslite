@@ -1060,7 +1060,7 @@ unsafe extern "C" fn findInodeInfo(
 ) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = 0;
     let mut fd: ::core::ffi::c_int = 0;
-    let mut fileId: unixFileId = unixFileId { dev: 0, ino: 0 };
+    let mut fileId: unixFileId = unsafe { ::core::mem::zeroed() };
     let mut statbuf: crate::stdlib::stat = crate::stdlib::stat {
     st_dev:  0,
     st_ino:  0,
@@ -1089,11 +1089,6 @@ unsafe extern "C" fn findInodeInfo(
         storeLastErrno(pFile, *::libc::__errno_location());
         return crate::sqlite3_h::SQLITE_IOERR;
     }
-    ::libc::memset(
-        &raw mut fileId as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<unixFileId>() as crate::__stddef_size_t_h::size_t,
-    );
     fileId.dev = statbuf.st_dev as crate::stdlib::dev_t;
     fileId.ino = statbuf.st_ino as crate::src::ext::rtree::rtree::u64_0;
     pInode = inodeList;
@@ -2512,12 +2507,7 @@ unsafe extern "C" fn unixFcntlExternalReader(
     *piOut = 0 as ::core::ffi::c_int;
     if !(*pFile).pShm.is_null() {
         let mut pShmNode: *mut unixShmNode = (*(*pFile).pShm).pShmNode;
-        let mut f: ::libc::flock = ::libc::flock { l_type:  0, l_whence:  0, l_start:  0, l_len:  0, l_pid:  0 };
-        ::libc::memset(
-            &raw mut f as *mut ::core::ffi::c_void,
-            0 as ::core::ffi::c_int,
-            ::core::mem::size_of::<::libc::flock>() as crate::__stddef_size_t_h::size_t,
-        );
+        let mut f: ::libc::flock = unsafe { ::core::mem::zeroed() };
         f.l_type = ::libc::F_WRLCK as ::core::ffi::c_short;
         f.l_whence = ::libc::SEEK_SET as ::core::ffi::c_short;
         f.l_start = (UNIX_SHM_BASE + 3 as ::core::ffi::c_int) as crate::stdlib::__off64_t;
@@ -2547,7 +2537,7 @@ unsafe extern "C" fn unixFcntlExternalReader(
 
 unsafe extern "C" fn unixIsSharingShmNode(mut pFile: *mut unixFile) -> ::core::ffi::c_int {
     let mut pShmNode: *mut unixShmNode = ::core::ptr::null_mut::<unixShmNode>();
-    let mut lock: ::libc::flock = ::libc::flock { l_type:  0, l_whence:  0, l_start:  0, l_len:  0, l_pid:  0 };
+    let mut lock: ::libc::flock = unsafe { ::core::mem::zeroed() };
     if (*pFile).pShm.is_null() {
         return 0 as ::core::ffi::c_int;
     }
@@ -2555,11 +2545,6 @@ unsafe extern "C" fn unixIsSharingShmNode(mut pFile: *mut unixFile) -> ::core::f
         return 0 as ::core::ffi::c_int;
     }
     pShmNode = (*(*pFile).pShm).pShmNode;
-    ::libc::memset(
-        &raw mut lock as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<::libc::flock>() as crate::__stddef_size_t_h::size_t,
-    );
     lock.l_whence = ::libc::SEEK_SET as ::core::ffi::c_short;
     lock.l_start = UNIX_SHM_DMS as crate::stdlib::__off64_t;
     lock.l_len = 1 as crate::stdlib::__off64_t;

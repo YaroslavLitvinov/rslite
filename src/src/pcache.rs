@@ -561,14 +561,9 @@ unsafe extern "C" fn pcacheMergeDirtyList(mut pA: *mut crate::src::src::pcache::
 pub const N_SORT_BUCKET: ::core::ffi::c_int = 32 as ::core::ffi::c_int;
 
 unsafe extern "C" fn pcacheSortDirtyList(mut pIn: *mut crate::src::src::pcache::PgHdr) -> *mut crate::src::src::pcache::PgHdr {
-    let mut a: [*mut crate::src::src::pcache::PgHdr; 32] = [::core::ptr::null_mut::<crate::src::src::pcache::PgHdr>(); 32];
+    let mut a: [*mut crate::src::src::pcache::PgHdr; 32] = unsafe { ::core::mem::zeroed() };
     let mut p: *mut crate::src::src::pcache::PgHdr = ::core::ptr::null_mut::<crate::src::src::pcache::PgHdr>();
     let mut i: ::core::ffi::c_int = 0;
-    ::libc::memset(
-        &raw mut a as *mut *mut crate::src::src::pcache::PgHdr as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<[*mut crate::src::src::pcache::PgHdr; 32]>() as crate::__stddef_size_t_h::size_t,
-    );
     while !pIn.is_null() {
         p = pIn;
         pIn = (*p).pDirty;

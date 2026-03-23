@@ -1085,18 +1085,13 @@ unsafe extern "C" fn vdbeSorterSort(
     let mut i: ::core::ffi::c_int = 0;
     let mut p: *mut SorterRecord = ::core::ptr::null_mut::<SorterRecord>();
     let mut rc: ::core::ffi::c_int = 0;
-    let mut aSlot: [*mut SorterRecord; 64] = [::core::ptr::null_mut::<SorterRecord>(); 64];
+    let mut aSlot: [*mut SorterRecord; 64] = unsafe { ::core::mem::zeroed() };
     rc = vdbeSortAllocUnpacked(pTask);
     if rc != crate::sqlite3_h::SQLITE_OK {
         return rc;
     }
     p = (*pList).pList;
     (*pTask).xCompare = vdbeSorterGetCompare((*pTask).pSorter);
-    ::libc::memset(
-        &raw mut aSlot as *mut *mut SorterRecord as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<[*mut SorterRecord; 64]>() as crate::__stddef_size_t_h::size_t,
-    );
     while !p.is_null() {
         let mut pNext: *mut SorterRecord = ::core::ptr::null_mut::<SorterRecord>();
         if !(*pList).aMemory.is_null() {
@@ -1245,21 +1240,7 @@ unsafe extern "C" fn vdbeSorterListToPMA(
 ) -> ::core::ffi::c_int {
     let mut db: *mut crate::sqliteInt_h::sqlite3 = (*(*pTask).pSorter).db;
     let mut rc: ::core::ffi::c_int = crate::sqlite3_h::SQLITE_OK;
-    let mut writer: PmaWriter = PmaWriter {
-        eFWErr: 0,
-        aBuffer: ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-        nBuffer: 0,
-        iBufStart: 0,
-        iBufEnd: 0,
-        iWriteOff: 0,
-        pFd: ::core::ptr::null_mut::<crate::sqlite3_h::sqlite3_file>(),
-        nPmaSpill: 0,
-    };
-    ::libc::memset(
-        &raw mut writer as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<PmaWriter>() as crate::__stddef_size_t_h::size_t,
-    );
+    let mut writer: PmaWriter = unsafe { ::core::mem::zeroed() };
     if (*pTask).file.pFd.is_null() {
         rc = vdbeSorterOpenTempFile(db, 0 as crate::src::ext::rtree::rtree::i64_0, &raw mut (*pTask).file.pFd);
     }

@@ -2850,18 +2850,7 @@ unsafe extern "C" fn whereIsCoveringIndex(
         bExpr: 0,
         bUnidx: 0,
     };
-    let mut w: crate::sqliteInt_h::Walker = crate::sqliteInt_h::Walker {
-    pParse:  ::core::ptr::null_mut::<crate::sqliteInt_h::Parse>(),
-    xExprCallback:  None,
-    xSelectCallback:  None,
-    xSelectCallback2:  None,
-    walkerDepth:  0,
-    eCode:  0,
-    mWFlags:  0,
-    u:  crate::sqliteInt_h::__anon_union_16 {
-    pNC:  ::core::ptr::null_mut::<crate::sqliteInt_h::NameContext>(),
-},
-};
+    let mut w: crate::sqliteInt_h::Walker = unsafe { ::core::mem::zeroed() };
     if (*pWInfo).pSelect.is_null() {
         return 0 as crate::src::ext::rtree::rtree::u32_0;
     }
@@ -2883,11 +2872,6 @@ unsafe extern "C" fn whereIsCoveringIndex(
     ck.iTabCur = iTabCur;
     ck.bExpr = 0 as crate::src::ext::rtree::rtree::u8_0;
     ck.bUnidx = 0 as crate::src::ext::rtree::rtree::u8_0;
-    ::libc::memset(
-        &raw mut w as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<crate::sqliteInt_h::Walker>() as crate::__stddef_size_t_h::size_t,
-    );
     w.xExprCallback = Some(
         whereIsCoveringIndexWalkCallback
             as unsafe extern "C" fn(*mut crate::sqliteInt_h::Walker, *mut crate::sqliteInt_h::Expr) -> ::core::ffi::c_int,
@@ -3009,27 +2993,7 @@ unsafe extern "C" fn whereLoopAddBtree(
 ) -> ::core::ffi::c_int {
     let mut pWInfo: *mut crate::whereInt_h::WhereInfo = ::core::ptr::null_mut::<crate::whereInt_h::WhereInfo>();
     let mut pProbe: *mut crate::sqliteInt_h::Index = ::core::ptr::null_mut::<crate::sqliteInt_h::Index>();
-    let mut sPk: crate::sqliteInt_h::Index = crate::sqliteInt_h::Index {
-    zName:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    aiColumn:  ::core::ptr::null_mut::<crate::src::fts5::i16_0>(),
-    aiRowLogEst:  ::core::ptr::null_mut::<crate::sqliteInt_h::LogEst>(),
-    pTable:  ::core::ptr::null_mut::<crate::sqliteInt_h::Table>(),
-    zColAff:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    pNext:  ::core::ptr::null_mut::<crate::sqliteInt_h::Index>(),
-    pSchema:  ::core::ptr::null_mut::<crate::sqliteInt_h::Schema>(),
-    aSortOrder:  ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-    azColl:  ::core::ptr::null_mut::<*const ::core::ffi::c_char>(),
-    pPartIdxWhere:  ::core::ptr::null_mut::<crate::sqliteInt_h::Expr>(),
-    aColExpr:  ::core::ptr::null_mut::<crate::sqliteInt_h::ExprList>(),
-    tnum:  0,
-    szIdxRow:  0,
-    nKeyCol:  0,
-    nColumn:  0,
-    onError:  0,
-    idxType_bUnordered_uniqNotNull_isResized_isCovering_noSkipScan_hasStat1_bNoQuery_bAscKeyBug_bHasVCol_bHasExpr:  [0; 2],
-    c2rust_padding:  [0; 3],
-    colNotIdxed:  0,
-};
+    let mut sPk: crate::sqliteInt_h::Index = unsafe { ::core::mem::zeroed() };
     let mut aiRowEstPk: [crate::sqliteInt_h::LogEst; 2] = [0; 2];
     let mut aiColumnPk: crate::src::fts5::i16_0 = -(1 as ::core::ffi::c_int) as crate::src::fts5::i16_0;
     let mut pTabList: *mut crate::sqliteInt_h::SrcList = ::core::ptr::null_mut::<crate::sqliteInt_h::SrcList>();
@@ -3054,11 +3018,6 @@ unsafe extern "C" fn whereLoopAddBtree(
         pProbe = (*pTab).pIndex;
     } else {
         let mut pFirst: *mut crate::sqliteInt_h::Index = ::core::ptr::null_mut::<crate::sqliteInt_h::Index>();
-        ::libc::memset(
-            &raw mut sPk as *mut ::core::ffi::c_void,
-            0 as ::core::ffi::c_int,
-            ::core::mem::size_of::<crate::sqliteInt_h::Index>() as crate::__stddef_size_t_h::size_t,
-        );
         sPk.nKeyCol = 1 as crate::src::fts5::u16_0;
         sPk.nColumn = 1 as crate::src::fts5::u16_0;
         sPk.aiColumn = &raw mut aiColumnPk;
@@ -3828,10 +3787,7 @@ unsafe extern "C" fn whereLoopAddOr(
     bldFlags2:  0,
     iPlanLimit:  0,
 };
-    let mut sSum: crate::whereInt_h::WhereOrSet = crate::whereInt_h::WhereOrSet {
-    n:  0,
-    a:  [crate::whereInt_h::WhereOrCost { prereq:  0, rRun:  0, nOut:  0 }; 3],
-};
+    let mut sSum: crate::whereInt_h::WhereOrSet = unsafe { ::core::mem::zeroed() };
     let mut sCur: crate::whereInt_h::WhereOrSet = crate::whereInt_h::WhereOrSet {
     n:  0,
     a:  [crate::whereInt_h::WhereOrCost { prereq:  0, rRun:  0, nOut:  0 }; 3],
@@ -3840,11 +3796,6 @@ unsafe extern "C" fn whereLoopAddOr(
     pWC = (*pBuilder).pWC;
     pWCEnd = (*pWC).a.offset((*pWC).nTerm as isize);
     pNew = (*pBuilder).pNew;
-    ::libc::memset(
-        &raw mut sSum as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<crate::whereInt_h::WhereOrSet>() as crate::__stddef_size_t_h::size_t,
-    );
     pItem = (&raw mut (*(*pWInfo).pTabList).a as *mut crate::sqliteInt_h::SrcItem)
         .offset((*pNew).iTab as ::core::ffi::c_int as isize);
     iCur = (*pItem).iCursor;
@@ -5388,23 +5339,7 @@ unsafe extern "C" fn exprNodeIsDeterministic(
 }
 
 unsafe extern "C" fn exprIsDeterministic(mut p: *mut crate::sqliteInt_h::Expr) -> ::core::ffi::c_int {
-    let mut w: crate::sqliteInt_h::Walker = crate::sqliteInt_h::Walker {
-    pParse:  ::core::ptr::null_mut::<crate::sqliteInt_h::Parse>(),
-    xExprCallback:  None,
-    xSelectCallback:  None,
-    xSelectCallback2:  None,
-    walkerDepth:  0,
-    eCode:  0,
-    mWFlags:  0,
-    u:  crate::sqliteInt_h::__anon_union_16 {
-    pNC:  ::core::ptr::null_mut::<crate::sqliteInt_h::NameContext>(),
-},
-};
-    ::libc::memset(
-        &raw mut w as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<crate::sqliteInt_h::Walker>() as crate::__stddef_size_t_h::size_t,
-    );
+    let mut w: crate::sqliteInt_h::Walker = unsafe { ::core::mem::zeroed() };
     w.eCode = 1 as crate::src::fts5::u16_0;
     w.xExprCallback = Some(
         exprNodeIsDeterministic
@@ -5668,15 +5603,7 @@ pub unsafe extern "C" fn sqlite3WhereBegin(
     let mut pWInfo: *mut crate::whereInt_h::WhereInfo = ::core::ptr::null_mut::<crate::whereInt_h::WhereInfo>();
     let mut v: *mut crate::vdbeInt_h::Vdbe = (*pParse).pVdbe;
     let mut notReady: crate::sqliteInt_h::Bitmask = 0;
-    let mut sWLB: crate::whereInt_h::WhereLoopBuilder = crate::whereInt_h::WhereLoopBuilder {
-    pWInfo:  ::core::ptr::null_mut::<crate::whereInt_h::WhereInfo>(),
-    pWC:  ::core::ptr::null_mut::<crate::whereInt_h::WhereClause>(),
-    pNew:  ::core::ptr::null_mut::<crate::whereInt_h::WhereLoop>(),
-    pOrSet:  ::core::ptr::null_mut::<crate::whereInt_h::WhereOrSet>(),
-    bldFlags1:  0,
-    bldFlags2:  0,
-    iPlanLimit:  0,
-};
+    let mut sWLB: crate::whereInt_h::WhereLoopBuilder = unsafe { ::core::mem::zeroed() };
     let mut pMaskSet: *mut crate::whereInt_h::WhereMaskSet = ::core::ptr::null_mut::<crate::whereInt_h::WhereMaskSet>();
     let mut pLevel: *mut crate::whereInt_h::WhereLevel = ::core::ptr::null_mut::<crate::whereInt_h::WhereLevel>();
     let mut pLoop: *mut crate::whereInt_h::WhereLoop = ::core::ptr::null_mut::<crate::whereInt_h::WhereLoop>();
@@ -5685,11 +5612,6 @@ pub unsafe extern "C" fn sqlite3WhereBegin(
     let mut rc: ::core::ffi::c_int = 0;
     let mut bFordelete: crate::src::ext::rtree::rtree::u8_0 = 0 as crate::src::ext::rtree::rtree::u8_0;
     db = (*pParse).db;
-    ::libc::memset(
-        &raw mut sWLB as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<crate::whereInt_h::WhereLoopBuilder>() as crate::__stddef_size_t_h::size_t,
-    );
     if !pOrderBy.is_null() && (*pOrderBy).nExpr >= crate::sqliteInt_h::BMS {
         pOrderBy = ::core::ptr::null_mut::<crate::sqliteInt_h::ExprList>();
         wctrlFlags = (wctrlFlags as ::core::ffi::c_int & !crate::sqliteInt_h::WHERE_WANT_DISTINCT) as crate::src::fts5::u16_0;

@@ -1247,15 +1247,7 @@ unsafe extern "C" fn walMergesort(
     let mut aMerge: *mut ht_slot = ::core::ptr::null_mut::<ht_slot>();
     let mut iList: ::core::ffi::c_int = 0;
     let mut iSub: crate::src::ext::rtree::rtree::u32_0 = 0 as crate::src::ext::rtree::rtree::u32_0;
-    let mut aSub: [Sublist; 13] = [Sublist {
-        nList: 0,
-        aList: ::core::ptr::null_mut::<ht_slot>(),
-    }; 13];
-    ::libc::memset(
-        &raw mut aSub as *mut Sublist as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<[Sublist; 13]>() as crate::__stddef_size_t_h::size_t,
-    );
+    let mut aSub: [Sublist; 13] = unsafe { ::core::mem::zeroed() };
     iList = 0 as ::core::ffi::c_int;
     while iList < nList {
         nMerge = 1 as ::core::ffi::c_int;

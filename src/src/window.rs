@@ -1351,35 +1351,8 @@ unsafe extern "C" fn selectWindowRewriteEList(
     mut pTab: *mut crate::sqliteInt_h::Table,
     mut ppSub: *mut *mut crate::sqliteInt_h::ExprList,
 ) {
-    let mut sWalker: crate::sqliteInt_h::Walker = crate::sqliteInt_h::Walker {
-    pParse:  ::core::ptr::null_mut::<crate::sqliteInt_h::Parse>(),
-    xExprCallback:  None,
-    xSelectCallback:  None,
-    xSelectCallback2:  None,
-    walkerDepth:  0,
-    eCode:  0,
-    mWFlags:  0,
-    u:  crate::sqliteInt_h::__anon_union_16 {
-    pNC:  ::core::ptr::null_mut::<crate::sqliteInt_h::NameContext>(),
-},
-};
-    let mut sRewrite: WindowRewrite = WindowRewrite {
-        pWin: ::core::ptr::null_mut::<crate::sqliteInt_h::Window>(),
-        pSrc: ::core::ptr::null_mut::<crate::sqliteInt_h::SrcList>(),
-        pSub: ::core::ptr::null_mut::<crate::sqliteInt_h::ExprList>(),
-        pTab: ::core::ptr::null_mut::<crate::sqliteInt_h::Table>(),
-        pSubSelect: ::core::ptr::null_mut::<crate::sqliteInt_h::Select>(),
-    };
-    ::libc::memset(
-        &raw mut sWalker as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<crate::sqliteInt_h::Walker>() as crate::__stddef_size_t_h::size_t,
-    );
-    ::libc::memset(
-        &raw mut sRewrite as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<WindowRewrite>() as crate::__stddef_size_t_h::size_t,
-    );
+    let mut sWalker: crate::sqliteInt_h::Walker = unsafe { ::core::mem::zeroed() };
+    let mut sRewrite: WindowRewrite = unsafe { ::core::mem::zeroed() };
     sRewrite.pSub = *ppSub;
     sRewrite.pWin = pWin;
     sRewrite.pSrc = pSrc;
@@ -1507,18 +1480,7 @@ pub unsafe extern "C" fn sqlite3WindowRewrite(
         let mut pMWin: *mut crate::sqliteInt_h::Window = (*p).pWin;
         let mut pWin: *mut crate::sqliteInt_h::Window = ::core::ptr::null_mut::<crate::sqliteInt_h::Window>();
         let mut pTab: *mut crate::sqliteInt_h::Table = ::core::ptr::null_mut::<crate::sqliteInt_h::Table>();
-        let mut w: crate::sqliteInt_h::Walker = crate::sqliteInt_h::Walker {
-    pParse:  ::core::ptr::null_mut::<crate::sqliteInt_h::Parse>(),
-    xExprCallback:  None,
-    xSelectCallback:  None,
-    xSelectCallback2:  None,
-    walkerDepth:  0,
-    eCode:  0,
-    mWFlags:  0,
-    u:  crate::sqliteInt_h::__anon_union_16 {
-    pNC:  ::core::ptr::null_mut::<crate::sqliteInt_h::NameContext>(),
-},
-};
+        let mut w: crate::sqliteInt_h::Walker = unsafe { ::core::mem::zeroed() };
         let mut selFlags: crate::src::ext::rtree::rtree::u32_0 = (*p).selFlags;
         pTab = crate::src::src::malloc::sqlite3DbMallocZero(db as *mut crate::sqliteInt_h::sqlite3, ::core::mem::size_of::<crate::sqliteInt_h::Table>() as crate::src::ext::rtree::rtree::u64_0) as *mut crate::sqliteInt_h::Table;
         if pTab.is_null() {
@@ -1702,11 +1664,6 @@ pub unsafe extern "C" fn sqlite3WindowRewrite(
                 .pSTab;
                 *fresh6 = pTab;
                 pTab = pTab2;
-                ::libc::memset(
-                    &raw mut w as *mut ::core::ffi::c_void,
-                    0 as ::core::ffi::c_int,
-                    ::core::mem::size_of::<crate::sqliteInt_h::Walker>() as crate::__stddef_size_t_h::size_t,
-                );
                 w.xExprCallback = Some(
                     sqlite3WindowExtraAggFuncDepth
                         as unsafe extern "C" fn(*mut crate::sqliteInt_h::Walker, *mut crate::sqliteInt_h::Expr) -> ::core::ffi::c_int,
@@ -3137,28 +3094,11 @@ pub unsafe extern "C" fn sqlite3WindowCodeStep(
     let mut regNewPeer: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut regPeer: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut regFlushPart: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-    let mut s: WindowCodeArg = WindowCodeArg {
-        pParse: ::core::ptr::null_mut::<crate::sqliteInt_h::Parse>(),
-        pMWin: ::core::ptr::null_mut::<crate::sqliteInt_h::Window>(),
-        pVdbe: ::core::ptr::null_mut::<crate::vdbeInt_h::Vdbe>(),
-        addrGosub: 0,
-        regGosub: 0,
-        regArg: 0,
-        eDelete: 0,
-        regRowid: 0,
-        start: WindowCsrAndReg { csr: 0, reg: 0 },
-        current: WindowCsrAndReg { csr: 0, reg: 0 },
-        end: WindowCsrAndReg { csr: 0, reg: 0 },
-    };
+    let mut s: WindowCodeArg = unsafe { ::core::mem::zeroed() };
     let mut lblWhereEnd: ::core::ffi::c_int = 0;
     let mut regStart: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut regEnd: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     lblWhereEnd = crate::src::src::vdbeaux::sqlite3VdbeMakeLabel(pParse as *mut crate::sqliteInt_h::Parse);
-    ::libc::memset(
-        &raw mut s as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<WindowCodeArg>() as crate::__stddef_size_t_h::size_t,
-    );
     s.pParse = pParse;
     s.pMWin = pMWin;
     s.pVdbe = v;

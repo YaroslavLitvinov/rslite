@@ -195,12 +195,7 @@ unsafe extern "C" fn rowSetEntryMerge(
 unsafe extern "C" fn rowSetEntrySort(mut pIn: *mut RowSetEntry) -> *mut RowSetEntry {
     let mut i: ::core::ffi::c_uint = 0;
     let mut pNext: *mut RowSetEntry = ::core::ptr::null_mut::<RowSetEntry>();
-    let mut aBucket: [*mut RowSetEntry; 40] = [::core::ptr::null_mut::<RowSetEntry>(); 40];
-    ::libc::memset(
-        &raw mut aBucket as *mut *mut RowSetEntry as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<[*mut RowSetEntry; 40]>() as crate::__stddef_size_t_h::size_t,
-    );
+    let mut aBucket: [*mut RowSetEntry; 40] = unsafe { ::core::mem::zeroed() };
     while !pIn.is_null() {
         pNext = (*pIn).pRight;
         (*pIn).pRight = ::core::ptr::null_mut::<RowSetEntry>();

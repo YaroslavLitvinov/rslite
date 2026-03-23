@@ -377,19 +377,7 @@ unsafe extern "C" fn fkScanChildren(
     let mut db: *mut crate::sqliteInt_h::sqlite3 = (*pParse).db;
     let mut i: ::core::ffi::c_int = 0;
     let mut pWhere: *mut crate::sqliteInt_h::Expr = ::core::ptr::null_mut::<crate::sqliteInt_h::Expr>();
-    let mut sNameContext: crate::sqliteInt_h::NameContext = crate::sqliteInt_h::NameContext {
-    pParse:  ::core::ptr::null_mut::<crate::sqliteInt_h::Parse>(),
-    pSrcList:  ::core::ptr::null_mut::<crate::sqliteInt_h::SrcList>(),
-    uNC:  crate::sqliteInt_h::__anon_union_14 {
-    pEList:  ::core::ptr::null_mut::<crate::sqliteInt_h::ExprList>(),
-},
-    pNext:  ::core::ptr::null_mut::<crate::sqliteInt_h::NameContext>(),
-    nRef:  0,
-    nNcErr:  0,
-    ncFlags:  0,
-    nNestedSelect:  0,
-    pWinSelect:  ::core::ptr::null_mut::<crate::sqliteInt_h::Select>(),
-};
+    let mut sNameContext: crate::sqliteInt_h::NameContext = unsafe { ::core::mem::zeroed() };
     let mut pWInfo: *mut crate::whereInt_h::WhereInfo = ::core::ptr::null_mut::<crate::whereInt_h::WhereInfo>();
     let mut iFkIfZero: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut v: *mut crate::vdbeInt_h::Vdbe = crate::src::src::select::sqlite3GetVdbe(pParse as *mut crate::sqliteInt_h::Parse);
@@ -462,11 +450,6 @@ unsafe extern "C" fn fkScanChildren(
         }
         pWhere =  crate::src::src::expr::sqlite3ExprAnd(pParse as *mut crate::sqliteInt_h::Parse,  pWhere as *mut crate::sqliteInt_h::Expr,  pNe as *mut crate::sqliteInt_h::Expr) as *mut crate::sqliteInt_h::Expr;
     }
-    ::libc::memset(
-        &raw mut sNameContext as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<crate::sqliteInt_h::NameContext>() as crate::__stddef_size_t_h::size_t,
-    );
     sNameContext.pSrcList = pSrc;
     sNameContext.pParse = pParse;
     crate::src::src::resolve::sqlite3ResolveExprNames(&raw mut sNameContext as *mut _ as *mut crate::sqliteInt_h::NameContext,  pWhere as *mut crate::sqliteInt_h::Expr);

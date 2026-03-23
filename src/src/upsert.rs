@@ -112,48 +112,9 @@ pub unsafe extern "C" fn sqlite3UpsertAnalyzeTarget(
     let mut pIdx: *mut crate::sqliteInt_h::Index = ::core::ptr::null_mut::<crate::sqliteInt_h::Index>();
     let mut pTarget: *mut crate::sqliteInt_h::ExprList = ::core::ptr::null_mut::<crate::sqliteInt_h::ExprList>();
     let mut pTerm: *mut crate::sqliteInt_h::Expr = ::core::ptr::null_mut::<crate::sqliteInt_h::Expr>();
-    let mut sNC: crate::sqliteInt_h::NameContext = crate::sqliteInt_h::NameContext {
-    pParse:  ::core::ptr::null_mut::<crate::sqliteInt_h::Parse>(),
-    pSrcList:  ::core::ptr::null_mut::<crate::sqliteInt_h::SrcList>(),
-    uNC:  crate::sqliteInt_h::__anon_union_14 {
-    pEList:  ::core::ptr::null_mut::<crate::sqliteInt_h::ExprList>(),
-},
-    pNext:  ::core::ptr::null_mut::<crate::sqliteInt_h::NameContext>(),
-    nRef:  0,
-    nNcErr:  0,
-    ncFlags:  0,
-    nNestedSelect:  0,
-    pWinSelect:  ::core::ptr::null_mut::<crate::sqliteInt_h::Select>(),
-};
-    let mut sCol: [crate::sqliteInt_h::Expr; 2] = [crate::sqliteInt_h::Expr {
-    op:  0,
-    affExpr:  0,
-    op2:  0,
-    flags:  0,
-    u:  crate::sqliteInt_h::__anon_union_5 {
-    zToken:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-},
-    pLeft:  ::core::ptr::null_mut::<crate::sqliteInt_h::Expr>(),
-    pRight:  ::core::ptr::null_mut::<crate::sqliteInt_h::Expr>(),
-    x:  crate::sqliteInt_h::__anon_union_6 {
-    pList:  ::core::ptr::null_mut::<crate::sqliteInt_h::ExprList>(),
-},
-    nHeight:  0,
-    iTable:  0,
-    iColumn:  0,
-    iAgg:  0,
-    w:  crate::sqliteInt_h::__anon_union_7 { iJoin:  0 },
-    pAggInfo:  ::core::ptr::null_mut::<crate::sqliteInt_h::AggInfo>(),
-    y:  crate::sqliteInt_h::__anon_union_8 {
-    pTab:  ::core::ptr::null_mut::<crate::sqliteInt_h::Table>(),
-},
-}; 2];
+    let mut sNC: crate::sqliteInt_h::NameContext = unsafe { ::core::mem::zeroed() };
+    let mut sCol: [crate::sqliteInt_h::Expr; 2] = unsafe { ::core::mem::zeroed() };
     let mut nClause: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-    ::libc::memset(
-        &raw mut sNC as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<crate::sqliteInt_h::NameContext>() as crate::__stddef_size_t_h::size_t,
-    );
     sNC.pParse = pParse;
     sNC.pSrcList = pTabList;
     while !pUpsert.is_null() && !(*pUpsert).pUpsertTarget.is_null() {
@@ -181,11 +142,6 @@ pub unsafe extern "C" fn sqlite3UpsertAnalyzeTarget(
             }
             && (*pTerm).iColumn as ::core::ffi::c_int == crate::sqliteInt_h::XN_ROWID)
         {
-            ::libc::memset(
-                &raw mut sCol as *mut crate::sqliteInt_h::Expr as *mut ::core::ffi::c_void,
-                0 as ::core::ffi::c_int,
-                ::core::mem::size_of::<[crate::sqliteInt_h::Expr; 2]>() as crate::__stddef_size_t_h::size_t,
-            );
             sCol[0 as ::core::ffi::c_int as usize].op = crate::src::parse::TK_COLLATE as crate::src::ext::rtree::rtree::u8_0;
             sCol[0 as ::core::ffi::c_int as usize].pLeft =
                 (&raw mut sCol as *mut crate::sqliteInt_h::Expr).offset(1 as ::core::ffi::c_int as isize) as *mut crate::sqliteInt_h::Expr;

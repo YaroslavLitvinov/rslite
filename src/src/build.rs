@@ -1978,35 +1978,8 @@ pub unsafe extern "C" fn sqlite3AddDefaultValue(
                     as *const ::core::ffi::c_char,
             );
         } else {
-            let mut x: crate::sqliteInt_h::Expr = crate::sqliteInt_h::Expr {
-    op:  0,
-    affExpr:  0,
-    op2:  0,
-    flags:  0,
-    u:  crate::sqliteInt_h::__anon_union_5 {
-    zToken:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-},
-    pLeft:  ::core::ptr::null_mut::<crate::sqliteInt_h::Expr>(),
-    pRight:  ::core::ptr::null_mut::<crate::sqliteInt_h::Expr>(),
-    x:  crate::sqliteInt_h::__anon_union_6 {
-    pList:  ::core::ptr::null_mut::<crate::sqliteInt_h::ExprList>(),
-},
-    nHeight:  0,
-    iTable:  0,
-    iColumn:  0,
-    iAgg:  0,
-    w:  crate::sqliteInt_h::__anon_union_7 { iJoin:  0 },
-    pAggInfo:  ::core::ptr::null_mut::<crate::sqliteInt_h::AggInfo>(),
-    y:  crate::sqliteInt_h::__anon_union_8 {
-    pTab:  ::core::ptr::null_mut::<crate::sqliteInt_h::Table>(),
-},
-};
+            let mut x: crate::sqliteInt_h::Expr = unsafe { ::core::mem::zeroed() };
             let mut pDfltExpr: *mut crate::sqliteInt_h::Expr = ::core::ptr::null_mut::<crate::sqliteInt_h::Expr>();
-            ::libc::memset(
-                &raw mut x as *mut ::core::ffi::c_void,
-                0 as ::core::ffi::c_int,
-                ::core::mem::size_of::<crate::sqliteInt_h::Expr>() as crate::__stddef_size_t_h::size_t,
-            );
             x.op = crate::src::parse::TK_SPAN as crate::src::ext::rtree::rtree::u8_0;
             x.u.zToken = crate::src::src::malloc::sqlite3DbSpanDup(db as *mut crate::sqliteInt_h::sqlite3, zStart, zEnd);
             x.pLeft = pExpr;

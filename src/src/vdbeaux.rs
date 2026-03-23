@@ -4256,43 +4256,8 @@ pub unsafe extern "C" fn sqlite3VdbePreUpdateHook(
 ) {
     let mut db: *mut crate::sqliteInt_h::sqlite3 = (*v).db;
     let mut iKey2: crate::src::ext::rtree::rtree::i64_0 = 0;
-    let mut preupdate: crate::vdbeInt_h::PreUpdate = crate::vdbeInt_h::PreUpdate {
-    v:  ::core::ptr::null_mut::<crate::vdbeInt_h::Vdbe>(),
-    pCsr:  ::core::ptr::null_mut::<crate::vdbeInt_h::VdbeCursor>(),
-    op:  0,
-    aRecord:  ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-    pKeyinfo:  ::core::ptr::null_mut::<crate::sqliteInt_h::KeyInfo>(),
-    pUnpacked:  ::core::ptr::null_mut::<crate::sqliteInt_h::UnpackedRecord>(),
-    pNewUnpacked:  ::core::ptr::null_mut::<crate::sqliteInt_h::UnpackedRecord>(),
-    iNewReg:  0,
-    iBlobWrite:  0,
-    iKey1:  0,
-    iKey2:  0,
-    oldipk:  crate::vdbeInt_h::sqlite3_value {
-    u:  crate::vdbeInt_h::MemValue { r:  0. },
-    z:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    n:  0,
-    flags:  0,
-    enc:  0,
-    eSubtype:  0,
-    db:  ::core::ptr::null_mut::<crate::sqliteInt_h::sqlite3>(),
-    szMalloc:  0,
-    uTemp:  0,
-    zMalloc:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    xDel:  None,
-},
-    aNew:  ::core::ptr::null_mut::<crate::src::src::vdbe::Mem>(),
-    pTab:  ::core::ptr::null_mut::<crate::sqliteInt_h::Table>(),
-    pPk:  ::core::ptr::null_mut::<crate::sqliteInt_h::Index>(),
-    apDflt:  ::core::ptr::null_mut::<*mut crate::vdbeInt_h::sqlite3_value>(),
-    uKey:  crate::vdbeInt_h::__anon_struct_10 { keyinfoSpace:  [0; 32] },
-};
+    let mut preupdate: crate::vdbeInt_h::PreUpdate = unsafe { ::core::mem::zeroed() };
     let mut zTbl: *const ::core::ffi::c_char = (*pTab).zName;
-    ::libc::memset(
-        &raw mut preupdate as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<crate::vdbeInt_h::PreUpdate>() as crate::__stddef_size_t_h::size_t,
-    );
     if ((*pTab).tabFlags & crate::sqliteInt_h::TF_WithoutRowid as crate::src::ext::rtree::rtree::u32_0 == 0 as crate::src::ext::rtree::rtree::u32_0) as ::core::ffi::c_int
         == 0 as ::core::ffi::c_int
     {

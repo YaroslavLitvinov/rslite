@@ -1278,24 +1278,7 @@ pub unsafe extern "C" fn sqlite3Insert(
                                                 }
                                             }
                                         } else {
-                                            let mut sNC: crate::sqliteInt_h::NameContext = crate::sqliteInt_h::NameContext {
-    pParse:  ::core::ptr::null_mut::<crate::sqliteInt_h::Parse>(),
-    pSrcList:  ::core::ptr::null_mut::<crate::sqliteInt_h::SrcList>(),
-    uNC:  crate::sqliteInt_h::__anon_union_14 {
-    pEList:  ::core::ptr::null_mut::<crate::sqliteInt_h::ExprList>(),
-},
-    pNext:  ::core::ptr::null_mut::<crate::sqliteInt_h::NameContext>(),
-    nRef:  0,
-    nNcErr:  0,
-    ncFlags:  0,
-    nNestedSelect:  0,
-    pWinSelect:  ::core::ptr::null_mut::<crate::sqliteInt_h::Select>(),
-};
-                                            ::libc::memset(
-                                                &raw mut sNC as *mut ::core::ffi::c_void,
-                                                0 as ::core::ffi::c_int,
-                                                ::core::mem::size_of::<crate::sqliteInt_h::NameContext>() as crate::__stddef_size_t_h::size_t,
-                                            );
+                                            let mut sNC: crate::sqliteInt_h::NameContext = unsafe { ::core::mem::zeroed() };
                                             sNC.pParse = pParse;
                                             srcTab = -(1 as ::core::ffi::c_int);
                                             if !pList.is_null() {
@@ -2075,23 +2058,7 @@ pub unsafe extern "C" fn sqlite3ExprReferencesUpdatedColumn(
     mut aiChng: *mut ::core::ffi::c_int,
     mut chngRowid: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    let mut w: crate::sqliteInt_h::Walker = crate::sqliteInt_h::Walker {
-    pParse:  ::core::ptr::null_mut::<crate::sqliteInt_h::Parse>(),
-    xExprCallback:  None,
-    xSelectCallback:  None,
-    xSelectCallback2:  None,
-    walkerDepth:  0,
-    eCode:  0,
-    mWFlags:  0,
-    u:  crate::sqliteInt_h::__anon_union_16 {
-    pNC:  ::core::ptr::null_mut::<crate::sqliteInt_h::NameContext>(),
-},
-};
-    ::libc::memset(
-        &raw mut w as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<crate::sqliteInt_h::Walker>() as crate::__stddef_size_t_h::size_t,
-    );
+    let mut w: crate::sqliteInt_h::Walker = unsafe { ::core::mem::zeroed() };
     w.eCode = 0 as crate::src::fts5::u16_0;
     w.xExprCallback = Some(
         checkConstraintExprNode

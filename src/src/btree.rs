@@ -7005,7 +7005,7 @@ unsafe extern "C" fn balance_nonroot(
     let mut iSpace1: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut iOvflSpace: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut szScratch: crate::src::ext::rtree::rtree::u64_0 = 0;
-    let mut apOld: [*mut crate::btreeInt_h::MemPage; 3] = [::core::ptr::null_mut::<crate::btreeInt_h::MemPage>(); 3];
+    let mut apOld: [*mut crate::btreeInt_h::MemPage; 3] = unsafe { ::core::mem::zeroed() };
     let mut apNew: [*mut crate::btreeInt_h::MemPage; 5] = [::core::ptr::null_mut::<crate::btreeInt_h::MemPage>(); 5];
     let mut pRight: *mut crate::src::ext::rtree::rtree::u8_0 = ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>();
     let mut apDiv: [*mut crate::src::ext::rtree::rtree::u8_0; 2] = [::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(); 2];
@@ -7014,27 +7014,9 @@ unsafe extern "C" fn balance_nonroot(
     let mut szNew: [::core::ffi::c_int; 5] = [0; 5];
     let mut aSpace1: *mut crate::src::ext::rtree::rtree::u8_0 = ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>();
     let mut pgno: crate::src::src::pager::Pgno = 0;
-    let mut abDone: [crate::src::ext::rtree::rtree::u8_0; 5] = [0; 5];
+    let mut abDone: [crate::src::ext::rtree::rtree::u8_0; 5] = unsafe { ::core::mem::zeroed() };
     let mut aPgno: [crate::src::src::pager::Pgno; 5] = [0; 5];
-    let mut b: CellArray = CellArray {
-        nCell: 0,
-        pRef: ::core::ptr::null_mut::<crate::btreeInt_h::MemPage>(),
-        apCell: ::core::ptr::null_mut::<*mut crate::src::ext::rtree::rtree::u8_0>(),
-        szCell: ::core::ptr::null_mut::<crate::src::fts5::u16_0>(),
-        apEnd: [::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(); 6],
-        ixNx: [0; 6],
-    };
-    ::libc::memset(
-        &raw mut abDone as *mut crate::src::ext::rtree::rtree::u8_0 as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<[crate::src::ext::rtree::rtree::u8_0; 5]>() as crate::__stddef_size_t_h::size_t,
-    );
-    ::libc::memset(
-        &raw mut b as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        (::core::mem::size_of::<CellArray>() as crate::__stddef_size_t_h::size_t)
-            .wrapping_sub(::core::mem::size_of::<::core::ffi::c_int>() as crate::__stddef_size_t_h::size_t),
-    );
+    let mut b: CellArray = unsafe { ::core::mem::zeroed() };
     b.ixNx[(NB * 2 as ::core::ffi::c_int - 1 as ::core::ffi::c_int) as usize] =
         0x7fffffff as ::core::ffi::c_int;
     pBt = (*pParent).pBt;
@@ -7093,12 +7075,6 @@ unsafe extern "C" fn balance_nonroot(
             );
         }
         if rc != 0 {
-            ::libc::memset(
-                &raw mut apOld as *mut *mut crate::btreeInt_h::MemPage as *mut ::core::ffi::c_void,
-                0 as ::core::ffi::c_int,
-                ((i + 1 as ::core::ffi::c_int) as crate::__stddef_size_t_h::size_t)
-                    .wrapping_mul(::core::mem::size_of::<*mut crate::btreeInt_h::MemPage>() as crate::__stddef_size_t_h::size_t),
-            );
             current_block = 4198108429590484834;
             break;
         } else {
@@ -10200,32 +10176,7 @@ pub unsafe extern "C" fn sqlite3BtreeIntegrityCheck(
     mut pzOut: *mut *mut ::core::ffi::c_char,
 ) -> ::core::ffi::c_int {
     let mut i: crate::src::src::pager::Pgno = 0;
-    let mut sCheck: crate::btreeInt_h::IntegrityCk = crate::btreeInt_h::IntegrityCk {
-    pBt:  ::core::ptr::null_mut::<crate::btreeInt_h::BtShared>(),
-    pPager:  ::core::ptr::null_mut::<crate::src::src::pager::Pager>(),
-    aPgRef:  ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-    nCkPage:  0,
-    mxErr:  0,
-    nErr:  0,
-    rc:  0,
-    nStep:  0,
-    zPfx:  ::core::ptr::null::<::core::ffi::c_char>(),
-    v0:  0,
-    v1:  0,
-    v2:  0,
-    errMsg:  crate::sqliteInt_h::sqlite3_str {
-    db:  ::core::ptr::null_mut::<crate::sqliteInt_h::sqlite3>(),
-    zText:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    nAlloc:  0,
-    mxAlloc:  0,
-    nChar:  0,
-    accError:  0,
-    printfFlags:  0,
-},
-    heap:  ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u32_0>(),
-    db:  ::core::ptr::null_mut::<crate::sqliteInt_h::sqlite3>(),
-    nRow:  0,
-};
+    let mut sCheck: crate::btreeInt_h::IntegrityCk = unsafe { ::core::mem::zeroed() };
     let mut pBt: *mut crate::btreeInt_h::BtShared = (*p).pBt;
     let mut savedDbFlags: crate::src::ext::rtree::rtree::u64_0 = (*(*pBt).db).flags;
     let mut zErr: [::core::ffi::c_char; 100] = [0; 100];
@@ -10238,11 +10189,6 @@ pub unsafe extern "C" fn sqlite3BtreeIntegrityCheck(
         }
     }
     crate::src::src::btmutex::sqlite3BtreeEnter(p as *mut crate::btreeInt_h::Btree);
-    ::libc::memset(
-        &raw mut sCheck as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<crate::btreeInt_h::IntegrityCk>() as crate::__stddef_size_t_h::size_t,
-    );
     sCheck.db = db;
     sCheck.pBt = pBt;
     sCheck.pPager = (*pBt).pPager;
