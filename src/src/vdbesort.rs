@@ -296,8 +296,8 @@ unsafe extern "C" fn vdbePmaReadVarint(
                 let fresh0 = i;
                 i = i + 1;
                 aVarint[(fresh0 & 0xf as ::core::ffi::c_int) as usize] =
-                    *a.offset(0 as ::core::ffi::c_int as isize);
-                if !(*a.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+                    *a.offset(0 as isize);
+                if !(*a.offset(0 as isize) as ::core::ffi::c_int
                     & 0x80 as ::core::ffi::c_int
                     != 0 as ::core::ffi::c_int)
                 {
@@ -395,7 +395,7 @@ unsafe extern "C" fn vdbePmaReaderNext(mut pReadr: *mut PmaReader) -> ::core::ff
                     (*pIncr).pTask,
                     pReadr,
                     (&raw mut (*pIncr).aFile as *mut SorterFile)
-                        .offset(0 as ::core::ffi::c_int as isize)
+                        .offset(0 as isize)
                         as *mut SorterFile,
                     (*pIncr).iStartOff,
                 );
@@ -481,23 +481,23 @@ unsafe extern "C" fn vdbeSorterCompareText(
     let p1: *const crate::src::ext::rtree::rtree::u8_0 = pKey1 as *const crate::src::ext::rtree::rtree::u8_0;
     let p2: *const crate::src::ext::rtree::rtree::u8_0 = pKey2 as *const crate::src::ext::rtree::rtree::u8_0;
     let v1: *const crate::src::ext::rtree::rtree::u8_0 =
-        p1.offset(*p1.offset(0 as ::core::ffi::c_int as isize) as isize) as *const crate::src::ext::rtree::rtree::u8_0;
+        p1.offset(*p1.offset(0 as isize) as isize) as *const crate::src::ext::rtree::rtree::u8_0;
     let v2: *const crate::src::ext::rtree::rtree::u8_0 =
-        p2.offset(*p2.offset(0 as ::core::ffi::c_int as isize) as isize) as *const crate::src::ext::rtree::rtree::u8_0;
+        p2.offset(*p2.offset(0 as isize) as isize) as *const crate::src::ext::rtree::rtree::u8_0;
     let mut n1: ::core::ffi::c_int = 0;
     let mut n2: ::core::ffi::c_int = 0;
     let mut res: ::core::ffi::c_int = 0;
-    n1 = *p1.offset(1 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0 as ::core::ffi::c_int;
+    n1 = *p1.offset(1 as isize) as crate::src::ext::rtree::rtree::u32_0 as ::core::ffi::c_int;
     if n1 >= 0x80 as ::core::ffi::c_int {
         crate::src::src::util::sqlite3GetVarint32(
-            p1.offset(1 as ::core::ffi::c_int as isize) as *const ::core::ffi::c_uchar,
+            p1.offset(1 as isize) as *const ::core::ffi::c_uchar,
             &raw mut n1 as *mut crate::src::ext::rtree::rtree::u32_0,
         );
     }
-    n2 = *p2.offset(1 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0 as ::core::ffi::c_int;
+    n2 = *p2.offset(1 as isize) as crate::src::ext::rtree::rtree::u32_0 as ::core::ffi::c_int;
     if n2 >= 0x80 as ::core::ffi::c_int {
         crate::src::src::util::sqlite3GetVarint32(
-            p2.offset(1 as ::core::ffi::c_int as isize) as *const ::core::ffi::c_uchar,
+            p2.offset(1 as isize) as *const ::core::ffi::c_uchar,
             &raw mut n2 as *mut crate::src::ext::rtree::rtree::u32_0,
         );
     }
@@ -517,7 +517,7 @@ unsafe extern "C" fn vdbeSorterCompareText(
         }
     } else if *(*(*(*pTask).pSorter).pKeyInfo)
         .aSortFlags
-        .offset(0 as ::core::ffi::c_int as isize)
+        .offset(0 as isize)
         != 0
     {
         res = res * -(1 as ::core::ffi::c_int);
@@ -535,12 +535,12 @@ unsafe extern "C" fn vdbeSorterCompareInt(
 ) -> ::core::ffi::c_int {
     let p1: *const crate::src::ext::rtree::rtree::u8_0 = pKey1 as *const crate::src::ext::rtree::rtree::u8_0;
     let p2: *const crate::src::ext::rtree::rtree::u8_0 = pKey2 as *const crate::src::ext::rtree::rtree::u8_0;
-    let s1: ::core::ffi::c_int = *p1.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int;
-    let s2: ::core::ffi::c_int = *p2.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int;
+    let s1: ::core::ffi::c_int = *p1.offset(1 as isize) as ::core::ffi::c_int;
+    let s2: ::core::ffi::c_int = *p2.offset(1 as isize) as ::core::ffi::c_int;
     let v1: *const crate::src::ext::rtree::rtree::u8_0 =
-        p1.offset(*p1.offset(0 as ::core::ffi::c_int as isize) as isize) as *const crate::src::ext::rtree::rtree::u8_0;
+        p1.offset(*p1.offset(0 as isize) as isize) as *const crate::src::ext::rtree::rtree::u8_0;
     let v2: *const crate::src::ext::rtree::rtree::u8_0 =
-        p2.offset(*p2.offset(0 as ::core::ffi::c_int as isize) as isize) as *const crate::src::ext::rtree::rtree::u8_0;
+        p2.offset(*p2.offset(0 as isize) as isize) as *const crate::src::ext::rtree::rtree::u8_0;
     let mut res: ::core::ffi::c_int = 0;
     if s1 == s2 {
         static mut aLen: [crate::src::ext::rtree::rtree::u8_0; 10] = [
@@ -563,12 +563,12 @@ unsafe extern "C" fn vdbeSorterCompareInt(
             res = *v1.offset(i as isize) as ::core::ffi::c_int
                 - *v2.offset(i as isize) as ::core::ffi::c_int;
             if res != 0 as ::core::ffi::c_int {
-                if (*v1.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
-                    ^ *v2.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+                if (*v1.offset(0 as isize) as ::core::ffi::c_int
+                    ^ *v2.offset(0 as isize) as ::core::ffi::c_int)
                     & 0x80 as ::core::ffi::c_int
                     != 0 as ::core::ffi::c_int
                 {
-                    res = if *v1.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+                    res = if *v1.offset(0 as isize) as ::core::ffi::c_int
                         & 0x80 as ::core::ffi::c_int
                         != 0
                     {
@@ -607,7 +607,7 @@ unsafe extern "C" fn vdbeSorterCompareInt(
         }
     } else if *(*(*(*pTask).pSorter).pKeyInfo)
         .aSortFlags
-        .offset(0 as ::core::ffi::c_int as isize)
+        .offset(0 as isize)
         != 0
     {
         res = res * -(1 as ::core::ffi::c_int);
@@ -649,7 +649,7 @@ pub unsafe extern "C" fn sqlite3VdbeSorterInit(
     if pSorter.is_null() {
         rc = crate::sqliteInt_h::SQLITE_NOMEM_BKPT;
     } else {
-        let mut pBt: *mut crate::btreeInt_h::Btree = (*(*db).aDb.offset(0 as ::core::ffi::c_int as isize)).pBt;
+        let mut pBt: *mut crate::btreeInt_h::Btree = (*(*db).aDb.offset(0 as isize)).pBt;
         pKeyInfo = (pSorter as *mut crate::src::ext::rtree::rtree::u8_0).offset(sz as isize) as *mut crate::sqliteInt_h::KeyInfo;
         (*pSorter).pKeyInfo = pKeyInfo;
         ::libc::memcpy(
@@ -682,7 +682,7 @@ pub unsafe extern "C" fn sqlite3VdbeSorterInit(
             let mut mxCache: crate::src::ext::rtree::rtree::i64_0 = 0;
             let mut szPma: crate::src::ext::rtree::rtree::u32_0 = crate::src::src::global::sqlite3Config.szPma;
             (*pSorter).mnPmaSize = szPma.wrapping_mul(pgsz as crate::src::ext::rtree::rtree::u32_0) as ::core::ffi::c_int;
-            mxCache = (*(*(*db).aDb.offset(0 as ::core::ffi::c_int as isize)).pSchema).cache_size
+            mxCache = (*(*(*db).aDb.offset(0 as isize)).pSchema).cache_size
                 as crate::src::ext::rtree::rtree::i64_0;
             if mxCache < 0 as crate::src::ext::rtree::rtree::i64_0 {
                 mxCache = mxCache * -(1024 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::i64_0;
@@ -710,14 +710,14 @@ pub unsafe extern "C" fn sqlite3VdbeSorterInit(
         }
         if ((*pKeyInfo).nAllField as ::core::ffi::c_int) < 13 as ::core::ffi::c_int
             && ((*(&raw mut (*pKeyInfo).aColl as *mut *mut crate::sqliteInt_h::CollSeq)
-                .offset(0 as ::core::ffi::c_int as isize))
+                .offset(0 as isize))
             .is_null()
                 || *(&raw mut (*pKeyInfo).aColl as *mut *mut crate::sqliteInt_h::CollSeq)
-                    .offset(0 as ::core::ffi::c_int as isize)
+                    .offset(0 as isize)
                     == (*db).pDfltColl)
             && *(*pKeyInfo)
                 .aSortFlags
-                .offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+                .offset(0 as isize) as ::core::ffi::c_int
                 & crate::sqliteInt_h::KEYINFO_ORDER_BIGNULL
                 == 0 as ::core::ffi::c_int
         {
@@ -820,7 +820,7 @@ unsafe extern "C" fn vdbeMergeEngineNew(mut nReader: ::core::ffi::c_int) -> *mut
         (*pNew).nTree = N;
         (*pNew).pTask = ::core::ptr::null_mut::<SortSubtask>();
         (*pNew).aReadr =
-            pNew.offset(1 as ::core::ffi::c_int as isize) as *mut MergeEngine as *mut PmaReader;
+            pNew.offset(1 as isize) as *mut MergeEngine as *mut PmaReader;
         (*pNew).aTree =
             (*pNew).aReadr.offset(N as isize) as *mut PmaReader as *mut ::core::ffi::c_int;
     }
@@ -1010,9 +1010,9 @@ unsafe extern "C" fn vdbeSorterMerge(
         res = (*pTask).xCompare.expect("non-null function pointer")(
             pTask,
             &raw mut bCached,
-            p1.offset(1 as ::core::ffi::c_int as isize) as *mut ::core::ffi::c_void,
+            p1.offset(1 as isize) as *mut ::core::ffi::c_void,
             (*p1).nVal,
-            p2.offset(1 as ::core::ffi::c_int as isize) as *mut ::core::ffi::c_void,
+            p2.offset(1 as isize) as *mut ::core::ffi::c_void,
             (*p2).nVal,
         );
         if res <= 0 as ::core::ffi::c_int {
@@ -1271,7 +1271,7 @@ unsafe extern "C" fn vdbeSorterListToPMA(
             vdbePmaWriteVarint(&raw mut writer, (*p).nVal as crate::src::ext::rtree::rtree::u64_0);
             vdbePmaWriteBlob(
                 &raw mut writer,
-                p.offset(1 as ::core::ffi::c_int as isize) as *mut ::core::ffi::c_void as *mut crate::src::ext::rtree::rtree::u8_0,
+                p.offset(1 as isize) as *mut ::core::ffi::c_void as *mut crate::src::ext::rtree::rtree::u8_0,
                 (*p).nVal,
             );
             if (*pList).aMemory.is_null() {
@@ -1294,7 +1294,7 @@ unsafe extern "C" fn vdbeMergeEngineStep(
     mut pbEof: *mut ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = 0;
-    let mut iPrev: ::core::ffi::c_int = *(*pMerger).aTree.offset(1 as ::core::ffi::c_int as isize);
+    let mut iPrev: ::core::ffi::c_int = *(*pMerger).aTree.offset(1 as isize);
     let mut pTask: *mut SortSubtask = (*pMerger).pTask;
     rc = vdbePmaReaderNext((*pMerger).aReadr.offset(iPrev as isize) as *mut PmaReader);
     if rc == crate::sqlite3_h::SQLITE_OK {
@@ -1358,7 +1358,7 @@ unsafe extern "C" fn vdbeMergeEngineStep(
         }
         *pbEof = ((*(*pMerger)
             .aReadr
-            .offset(*(*pMerger).aTree.offset(1 as ::core::ffi::c_int as isize) as isize))
+            .offset(*(*pMerger).aTree.offset(1 as isize) as isize))
         .pFd == ::core::ptr::null_mut::<crate::sqlite3_h::sqlite3_file>()) as ::core::ffi::c_int;
     }
     return if rc == crate::sqlite3_h::SQLITE_OK {
@@ -1454,11 +1454,11 @@ pub unsafe extern "C" fn sqlite3VdbeSorterWrite(
     let mut nPMA: crate::src::ext::rtree::rtree::i64_0 = 0;
     let mut t: ::core::ffi::c_int = 0;
     pSorter = (*pCsr).uc.pSorter;
-    t = *((*pVal).z.offset(1 as ::core::ffi::c_int as isize) as *mut ::core::ffi::c_char
+    t = *((*pVal).z.offset(1 as isize) as *mut ::core::ffi::c_char
         as *const crate::src::ext::rtree::rtree::u8_0) as crate::src::ext::rtree::rtree::u32_0 as ::core::ffi::c_int;
     if t >= 0x80 as ::core::ffi::c_int {
         crate::src::src::util::sqlite3GetVarint32(
-            (*pVal).z.offset(1 as ::core::ffi::c_int as isize) as *mut ::core::ffi::c_char
+            (*pVal).z.offset(1 as isize) as *mut ::core::ffi::c_char
                 as *const ::core::ffi::c_uchar,
             &raw mut t as *mut crate::src::ext::rtree::rtree::u32_0,
         );
@@ -1547,7 +1547,7 @@ pub unsafe extern "C" fn sqlite3VdbeSorterWrite(
         (*pNew).u.pNext = (*pSorter).list.pList;
     }
     ::libc::memcpy(
-        pNew.offset(1 as ::core::ffi::c_int as isize) as *mut ::core::ffi::c_void,
+        pNew.offset(1 as isize) as *mut ::core::ffi::c_void,
         (*pVal).z as *const ::core::ffi::c_void,
         (*pVal).n as crate::__stddef_size_t_h::size_t,
     );
@@ -1561,7 +1561,7 @@ unsafe extern "C" fn vdbeIncrPopulate(mut pIncr: *mut IncrMerger) -> ::core::ffi
     let mut rc2: ::core::ffi::c_int = 0;
     let mut iStart: crate::src::ext::rtree::rtree::i64_0 = (*pIncr).iStartOff;
     let mut pOut: *mut SorterFile = (&raw mut (*pIncr).aFile as *mut SorterFile)
-        .offset(1 as ::core::ffi::c_int as isize)
+        .offset(1 as isize)
         as *mut SorterFile;
     let mut pTask: *mut SortSubtask = (*pIncr).pTask;
     let mut pMerger: *mut MergeEngine = (*pIncr).pMerger;
@@ -1585,7 +1585,7 @@ unsafe extern "C" fn vdbeIncrPopulate(mut pIncr: *mut IncrMerger) -> ::core::ffi
         let mut dummy: ::core::ffi::c_int = 0;
         let mut pReader: *mut PmaReader = (*pMerger)
             .aReadr
-            .offset(*(*pMerger).aTree.offset(1 as ::core::ffi::c_int as isize) as isize)
+            .offset(*(*pMerger).aTree.offset(1 as isize) as isize)
             as *mut PmaReader;
         let mut nKey: ::core::ffi::c_int = (*pReader).nKey;
         let mut iEof: crate::src::ext::rtree::rtree::i64_0 = writer.iWriteOff + writer.iBufEnd as crate::src::ext::rtree::rtree::i64_0;
@@ -1804,7 +1804,7 @@ unsafe extern "C" fn vdbePmaReaderIncrMergeInit(
                 db,
                 mxSz as crate::src::ext::rtree::rtree::i64_0,
                 &raw mut (*(&raw mut (*pIncr).aFile as *mut SorterFile)
-                    .offset(0 as ::core::ffi::c_int as isize))
+                    .offset(0 as isize))
                 .pFd,
             );
             if rc == crate::sqlite3_h::SQLITE_OK {
@@ -1812,7 +1812,7 @@ unsafe extern "C" fn vdbePmaReaderIncrMergeInit(
                     db,
                     mxSz as crate::src::ext::rtree::rtree::i64_0,
                     &raw mut (*(&raw mut (*pIncr).aFile as *mut SorterFile)
-                        .offset(1 as ::core::ffi::c_int as isize))
+                        .offset(1 as isize))
                     .pFd,
                 );
             }
@@ -2038,7 +2038,7 @@ unsafe extern "C" fn vdbeSorterMergeTreeBuild(
 unsafe extern "C" fn vdbeSorterSetupMerge(mut pSorter: *mut VdbeSorter) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = 0;
     let mut pTask0: *mut SortSubtask = (&raw mut (*pSorter).aTask as *mut SortSubtask)
-        .offset(0 as ::core::ffi::c_int as isize)
+        .offset(0 as isize)
         as *mut SortSubtask;
     let mut pMain: *mut MergeEngine = ::core::ptr::null_mut::<MergeEngine>();
     let mut db: *mut crate::sqliteInt_h::sqlite3 = (*(*pTask0).pSorter).db;
@@ -2119,7 +2119,7 @@ pub unsafe extern "C" fn sqlite3VdbeSorterRewind(
             *pbEof = 0 as ::core::ffi::c_int;
             rc = vdbeSorterSort(
                 (&raw mut (*pSorter).aTask as *mut SortSubtask)
-                    .offset(0 as ::core::ffi::c_int as isize) as *mut SortSubtask,
+                    .offset(0 as isize) as *mut SortSubtask,
                 &raw mut (*pSorter).list,
             );
         } else {
@@ -2186,7 +2186,7 @@ unsafe extern "C" fn vdbeSorterRowkey(
             pReader = (*(*pSorter).pMerger).aReadr.offset(
                 *(*(*pSorter).pMerger)
                     .aTree
-                    .offset(1 as ::core::ffi::c_int as isize) as isize,
+                    .offset(1 as isize) as isize,
             ) as *mut PmaReader;
         }
         *pnKey = (*pReader).nKey;
@@ -2196,7 +2196,7 @@ unsafe extern "C" fn vdbeSorterRowkey(
         pKey = (*pSorter)
             .list
             .pList
-            .offset(1 as ::core::ffi::c_int as isize) as *mut ::core::ffi::c_void;
+            .offset(1 as isize) as *mut ::core::ffi::c_void;
     }
     return pKey;
 }

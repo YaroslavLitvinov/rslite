@@ -645,7 +645,7 @@ pub unsafe extern "C" fn sqlite3VdbeReusable(mut p: *mut crate::vdbeInt_h::Vdbe)
     while i < (*p).nOp {
         if (*(*p).aOp.offset(i as isize)).opcode as ::core::ffi::c_int == 167 as ::core::ffi::c_int
         {
-            (*(*p).aOp.offset(1 as ::core::ffi::c_int as isize)).opcode = crate::opcodes_h::OP_Noop as crate::src::ext::rtree::rtree::u8_0;
+            (*(*p).aOp.offset(1 as isize)).opcode = crate::opcodes_h::OP_Noop as crate::src::ext::rtree::rtree::u8_0;
             break;
         } else {
             i += 1;
@@ -1295,7 +1295,7 @@ pub unsafe extern "C" fn sqlite3VdbeDisplayP4(
     crate::src::src::vdbe::P4_INTARRAY_1 =>  {
             let mut i: crate::src::ext::rtree::rtree::u32_0 = 0;
             let mut ai: *mut crate::src::ext::rtree::rtree::u32_0 = (*pOp).p4.ai;
-            let mut n: crate::src::ext::rtree::rtree::u32_0 = *ai.offset(0 as ::core::ffi::c_int as isize);
+            let mut n: crate::src::ext::rtree::rtree::u32_0 = *ai.offset(0 as isize);
             i = 1 as crate::src::ext::rtree::rtree::u32_0;
             while i <= n {
                 crate::src::src::printf::sqlite3_str_appendf(
@@ -1628,7 +1628,7 @@ pub unsafe extern "C" fn sqlite3VdbeList(mut p: *mut crate::vdbeInt_h::Vdbe) -> 
     let mut db: *mut crate::sqliteInt_h::sqlite3 = (*p).db;
     let mut i: ::core::ffi::c_int = 0;
     let mut rc: ::core::ffi::c_int = crate::sqlite3_h::SQLITE_OK;
-    let mut pMem: *mut crate::src::src::vdbe::Mem = (*p).aMem.offset(1 as ::core::ffi::c_int as isize) as *mut crate::src::src::vdbe::Mem;
+    let mut pMem: *mut crate::src::src::vdbe::Mem = (*p).aMem.offset(1 as isize) as *mut crate::src::src::vdbe::Mem;
     let mut bListSubprogs: ::core::ffi::c_int = ((*p).explain() as ::core::ffi::c_int
         == 1 as ::core::ffi::c_int
         || (*db).flags & crate::sqliteInt_h::SQLITE_TriggerEQP as crate::src::ext::rtree::rtree::u64_0 != 0 as crate::src::ext::rtree::rtree::u64_0)
@@ -1641,7 +1641,7 @@ pub unsafe extern "C" fn sqlite3VdbeList(mut p: *mut crate::vdbeInt_h::Vdbe) -> 
         return crate::sqlite3_h::SQLITE_ERROR;
     }
     if bListSubprogs != 0 {
-        pSub = (*p).aMem.offset(9 as ::core::ffi::c_int as isize) as *mut crate::src::src::vdbe::Mem;
+        pSub = (*p).aMem.offset(9 as isize) as *mut crate::src::src::vdbe::Mem;
     } else {
         pSub = ::core::ptr::null_mut::<crate::src::src::vdbe::Mem>();
     }
@@ -1665,19 +1665,19 @@ pub unsafe extern "C" fn sqlite3VdbeList(mut p: *mut crate::vdbeInt_h::Vdbe) -> 
                 crate::src::src::vdbemem::sqlite3VdbeMemSetInt64(pMem as *mut crate::vdbeInt_h::sqlite3_value, (*pOp).p1 as crate::src::ext::rtree::rtree::i64_0);
                 crate::src::src::vdbemem::sqlite3VdbeMemSetInt64(
                     
-                    pMem.offset(1 as ::core::ffi::c_int as isize) as
+                    pMem.offset(1 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value,
                     (*pOp).p2 as crate::src::ext::rtree::rtree::i64_0,
                 );
                 crate::src::src::vdbemem::sqlite3VdbeMemSetInt64(
                     
-                    pMem.offset(2 as ::core::ffi::c_int as isize) as
+                    pMem.offset(2 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value,
                     (*pOp).p3 as crate::src::ext::rtree::rtree::i64_0,
                 );
                 crate::src::src::vdbemem::sqlite3VdbeMemSetStr(
                     
-                    pMem.offset(3 as ::core::ffi::c_int as isize) as
+                    pMem.offset(3 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value,
                     zP4,
                     -(1 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::i64_0,
@@ -1685,11 +1685,11 @@ pub unsafe extern "C" fn sqlite3VdbeList(mut p: *mut crate::vdbeInt_h::Vdbe) -> 
                     Some(crate::src::src::malloc::sqlite3_free as unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()),
                 );
             } else {
-                crate::src::src::vdbemem::sqlite3VdbeMemSetInt64(pMem.offset(0 as ::core::ffi::c_int as isize) as
+                crate::src::src::vdbemem::sqlite3VdbeMemSetInt64(pMem.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value, i as crate::src::ext::rtree::rtree::i64_0);
                 crate::src::src::vdbemem::sqlite3VdbeMemSetStr(
                     
-                    pMem.offset(1 as ::core::ffi::c_int as isize) as
+                    pMem.offset(1 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value,
                     crate::src::opcodes::sqlite3OpcodeName((*pOp).opcode as ::core::ffi::c_int)
                         as *mut ::core::ffi::c_char,
@@ -1699,33 +1699,33 @@ pub unsafe extern "C" fn sqlite3VdbeList(mut p: *mut crate::vdbeInt_h::Vdbe) -> 
                 );
                 crate::src::src::vdbemem::sqlite3VdbeMemSetInt64(
                     
-                    pMem.offset(2 as ::core::ffi::c_int as isize) as
+                    pMem.offset(2 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value,
                     (*pOp).p1 as crate::src::ext::rtree::rtree::i64_0,
                 );
                 crate::src::src::vdbemem::sqlite3VdbeMemSetInt64(
                     
-                    pMem.offset(3 as ::core::ffi::c_int as isize) as
+                    pMem.offset(3 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value,
                     (*pOp).p2 as crate::src::ext::rtree::rtree::i64_0,
                 );
                 crate::src::src::vdbemem::sqlite3VdbeMemSetInt64(
                     
-                    pMem.offset(4 as ::core::ffi::c_int as isize) as
+                    pMem.offset(4 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value,
                     (*pOp).p3 as crate::src::ext::rtree::rtree::i64_0,
                 );
                 crate::src::src::vdbemem::sqlite3VdbeMemSetInt64(
                     
-                    pMem.offset(6 as ::core::ffi::c_int as isize) as
+                    pMem.offset(6 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value,
                     (*pOp).p5 as crate::src::ext::rtree::rtree::i64_0,
                 );
-                crate::src::src::vdbemem::sqlite3VdbeMemSetNull(pMem.offset(7 as ::core::ffi::c_int as isize) as
+                crate::src::src::vdbemem::sqlite3VdbeMemSetNull(pMem.offset(7 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
                 crate::src::src::vdbemem::sqlite3VdbeMemSetStr(
                     
-                    pMem.offset(5 as ::core::ffi::c_int as isize) as
+                    pMem.offset(5 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value,
                     zP4,
                     -(1 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::i64_0,
@@ -2102,7 +2102,7 @@ unsafe extern "C" fn vdbeCommit(mut db: *mut crate::sqliteInt_h::sqlite3, mut p:
     }
     if 0 as ::core::ffi::c_int
         == crate::src::src::util::sqlite3Strlen30(crate::src::src::btree::sqlite3BtreeGetFilename(
-            (*(*db).aDb.offset(0 as ::core::ffi::c_int as isize)).pBt,
+            (*(*db).aDb.offset(0 as isize)).pBt,
         ))
         || nTrans <= 1 as ::core::ffi::c_int
     {
@@ -2135,7 +2135,7 @@ unsafe extern "C" fn vdbeCommit(mut db: *mut crate::sqliteInt_h::sqlite3, mut p:
         let mut pVfs: *mut crate::sqlite3_h::sqlite3_vfs = (*db).pVfs;
         let mut zSuper: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
         let mut zMainFile: *const ::core::ffi::c_char =
-            crate::src::src::btree::sqlite3BtreeGetFilename((*(*db).aDb.offset(0 as ::core::ffi::c_int as isize)).pBt);
+            crate::src::src::btree::sqlite3BtreeGetFilename((*(*db).aDb.offset(0 as isize)).pBt);
         let mut pSuperJrnl: *mut crate::sqlite3_h::sqlite3_file = ::core::ptr::null_mut::<crate::sqlite3_h::sqlite3_file>();
         let mut offset: crate::src::ext::rtree::rtree::i64_0 = 0 as crate::src::ext::rtree::rtree::i64_0;
         let mut res: ::core::ffi::c_int = 0;
@@ -2153,7 +2153,7 @@ unsafe extern "C" fn vdbeCommit(mut db: *mut crate::sqliteInt_h::sqlite3, mut p:
         if zSuper.is_null() {
             return crate::sqliteInt_h::SQLITE_NOMEM_BKPT;
         }
-        zSuper = zSuper.offset(4 as ::core::ffi::c_int as isize);
+        zSuper = zSuper.offset(4 as isize);
         loop {
             let mut iRandom: crate::src::ext::rtree::rtree::u32_0 = 0;
             if retryCount != 0 {
@@ -2872,28 +2872,28 @@ unsafe extern "C" fn serialGet(
     mut serial_type: crate::src::ext::rtree::rtree::u32_0,
     mut pMem: *mut crate::src::src::vdbe::Mem,
 ) {
-    let mut x: crate::src::ext::rtree::rtree::u64_0 = ((*buf.offset(0 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0)
+    let mut x: crate::src::ext::rtree::rtree::u64_0 = ((*buf.offset(0 as isize) as crate::src::ext::rtree::rtree::u32_0)
         << 24 as ::core::ffi::c_int
-        | ((*buf.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+        | ((*buf.offset(1 as isize) as ::core::ffi::c_int)
             << 16 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u32_0
-        | ((*buf.offset(2 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+        | ((*buf.offset(2 as isize) as ::core::ffi::c_int)
             << 8 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u32_0
-        | *buf.offset(3 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0) as crate::src::ext::rtree::rtree::u64_0;
+        | *buf.offset(3 as isize) as crate::src::ext::rtree::rtree::u32_0) as crate::src::ext::rtree::rtree::u64_0;
     let mut y: crate::src::ext::rtree::rtree::u32_0 = (*buf
-        .offset(4 as ::core::ffi::c_int as isize)
-        .offset(0 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0)
+        .offset(4 as isize)
+        .offset(0 as isize) as crate::src::ext::rtree::rtree::u32_0)
         << 24 as ::core::ffi::c_int
         | ((*buf
-            .offset(4 as ::core::ffi::c_int as isize)
-            .offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+            .offset(4 as isize)
+            .offset(1 as isize) as ::core::ffi::c_int)
             << 16 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u32_0
         | ((*buf
-            .offset(4 as ::core::ffi::c_int as isize)
-            .offset(2 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+            .offset(4 as isize)
+            .offset(2 as isize) as ::core::ffi::c_int)
             << 8 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u32_0
         | *buf
-            .offset(4 as ::core::ffi::c_int as isize)
-            .offset(3 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0;
+            .offset(4 as isize)
+            .offset(3 as isize) as crate::src::ext::rtree::rtree::u32_0;
     x = (x << 32 as ::core::ffi::c_int).wrapping_add(y as crate::src::ext::rtree::rtree::u64_0);
     if serial_type == 6 as crate::src::ext::rtree::rtree::u32_0 {
         (*pMem).u.i = *(&raw mut x as *mut crate::src::ext::rtree::rtree::i64_0);
@@ -2916,28 +2916,28 @@ unsafe extern "C" fn serialGet7(
     mut buf: *const ::core::ffi::c_uchar,
     mut pMem: *mut crate::src::src::vdbe::Mem,
 ) -> ::core::ffi::c_int {
-    let mut x: crate::src::ext::rtree::rtree::u64_0 = ((*buf.offset(0 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0)
+    let mut x: crate::src::ext::rtree::rtree::u64_0 = ((*buf.offset(0 as isize) as crate::src::ext::rtree::rtree::u32_0)
         << 24 as ::core::ffi::c_int
-        | ((*buf.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+        | ((*buf.offset(1 as isize) as ::core::ffi::c_int)
             << 16 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u32_0
-        | ((*buf.offset(2 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+        | ((*buf.offset(2 as isize) as ::core::ffi::c_int)
             << 8 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u32_0
-        | *buf.offset(3 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0) as crate::src::ext::rtree::rtree::u64_0;
+        | *buf.offset(3 as isize) as crate::src::ext::rtree::rtree::u32_0) as crate::src::ext::rtree::rtree::u64_0;
     let mut y: crate::src::ext::rtree::rtree::u32_0 = (*buf
-        .offset(4 as ::core::ffi::c_int as isize)
-        .offset(0 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0)
+        .offset(4 as isize)
+        .offset(0 as isize) as crate::src::ext::rtree::rtree::u32_0)
         << 24 as ::core::ffi::c_int
         | ((*buf
-            .offset(4 as ::core::ffi::c_int as isize)
-            .offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+            .offset(4 as isize)
+            .offset(1 as isize) as ::core::ffi::c_int)
             << 16 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u32_0
         | ((*buf
-            .offset(4 as ::core::ffi::c_int as isize)
-            .offset(2 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+            .offset(4 as isize)
+            .offset(2 as isize) as ::core::ffi::c_int)
             << 8 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u32_0
         | *buf
-            .offset(4 as ::core::ffi::c_int as isize)
-            .offset(3 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0;
+            .offset(4 as isize)
+            .offset(3 as isize) as crate::src::ext::rtree::rtree::u32_0;
     x = (x << 32 as ::core::ffi::c_int).wrapping_add(y as crate::src::ext::rtree::rtree::u64_0);
     ::libc::memcpy(
         &raw mut (*pMem).u.r as *mut ::core::ffi::c_void,
@@ -2970,64 +2970,64 @@ pub unsafe extern "C" fn sqlite3VdbeSerialGet(
             return;
         }
         1 => {
-            (*pMem).u.i = *buf.offset(0 as ::core::ffi::c_int as isize) as crate::sqliteInt_h::i8_0 as crate::src::ext::rtree::rtree::i64_0;
+            (*pMem).u.i = *buf.offset(0 as isize) as crate::sqliteInt_h::i8_0 as crate::src::ext::rtree::rtree::i64_0;
             (*pMem).flags = crate::vdbeInt_h::MEM_Int as crate::src::fts5::u16_0;
             return;
         }
         2 => {
             (*pMem).u.i = (256 as ::core::ffi::c_int
-                * *buf.offset(0 as ::core::ffi::c_int as isize) as crate::sqliteInt_h::i8_0 as ::core::ffi::c_int
-                | *buf.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+                * *buf.offset(0 as isize) as crate::sqliteInt_h::i8_0 as ::core::ffi::c_int
+                | *buf.offset(1 as isize) as ::core::ffi::c_int)
                 as crate::src::ext::rtree::rtree::i64_0;
             (*pMem).flags = crate::vdbeInt_h::MEM_Int as crate::src::fts5::u16_0;
             return;
         }
         3 => {
             (*pMem).u.i = (65536 as ::core::ffi::c_int
-                * *buf.offset(0 as ::core::ffi::c_int as isize) as crate::sqliteInt_h::i8_0 as ::core::ffi::c_int
-                | (*buf.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+                * *buf.offset(0 as isize) as crate::sqliteInt_h::i8_0 as ::core::ffi::c_int
+                | (*buf.offset(1 as isize) as ::core::ffi::c_int)
                     << 8 as ::core::ffi::c_int
-                | *buf.offset(2 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+                | *buf.offset(2 as isize) as ::core::ffi::c_int)
                 as crate::src::ext::rtree::rtree::i64_0;
             (*pMem).flags = crate::vdbeInt_h::MEM_Int as crate::src::fts5::u16_0;
             return;
         }
         4 => {
             (*pMem).u.i = (16777216 as ::core::ffi::c_int
-                * *buf.offset(0 as ::core::ffi::c_int as isize) as crate::sqliteInt_h::i8_0 as ::core::ffi::c_int
-                | (*buf.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+                * *buf.offset(0 as isize) as crate::sqliteInt_h::i8_0 as ::core::ffi::c_int
+                | (*buf.offset(1 as isize) as ::core::ffi::c_int)
                     << 16 as ::core::ffi::c_int
-                | (*buf.offset(2 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+                | (*buf.offset(2 as isize) as ::core::ffi::c_int)
                     << 8 as ::core::ffi::c_int
-                | *buf.offset(3 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+                | *buf.offset(3 as isize) as ::core::ffi::c_int)
                 as crate::src::ext::rtree::rtree::i64_0;
             (*pMem).flags = crate::vdbeInt_h::MEM_Int as crate::src::fts5::u16_0;
             return;
         }
         5 => {
             (*pMem).u.i = ((*buf
-                .offset(2 as ::core::ffi::c_int as isize)
-                .offset(0 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0)
+                .offset(2 as isize)
+                .offset(0 as isize) as crate::src::ext::rtree::rtree::u32_0)
                 << 24 as ::core::ffi::c_int
                 | ((*buf
-                    .offset(2 as ::core::ffi::c_int as isize)
-                    .offset(1 as ::core::ffi::c_int as isize)
+                    .offset(2 as isize)
+                    .offset(1 as isize)
                     as ::core::ffi::c_int)
                     << 16 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u32_0
                 | ((*buf
-                    .offset(2 as ::core::ffi::c_int as isize)
-                    .offset(2 as ::core::ffi::c_int as isize)
+                    .offset(2 as isize)
+                    .offset(2 as isize)
                     as ::core::ffi::c_int)
                     << 8 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u32_0
                 | *buf
-                    .offset(2 as ::core::ffi::c_int as isize)
-                    .offset(3 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0)
+                    .offset(2 as isize)
+                    .offset(3 as isize) as crate::src::ext::rtree::rtree::u32_0)
                 as crate::src::ext::rtree::rtree::i64_0
                 + ((1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::i64_0) << 32 as ::core::ffi::c_int)
                     * (256 as ::core::ffi::c_int
-                        * *buf.offset(0 as ::core::ffi::c_int as isize) as crate::sqliteInt_h::i8_0
+                        * *buf.offset(0 as isize) as crate::sqliteInt_h::i8_0
                             as ::core::ffi::c_int
-                        | *buf.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+                        | *buf.offset(1 as isize) as ::core::ffi::c_int)
                         as crate::src::ext::rtree::rtree::i64_0;
             (*pMem).flags = crate::vdbeInt_h::MEM_Int as crate::src::fts5::u16_0;
             return;
@@ -3373,84 +3373,84 @@ pub unsafe extern "C" fn sqlite3MemCompare(
 unsafe extern "C" fn vdbeRecordDecodeInt(mut serial_type: crate::src::ext::rtree::rtree::u32_0, mut aKey: *const crate::src::ext::rtree::rtree::u8_0) -> crate::src::ext::rtree::rtree::i64_0 {
     let mut y: crate::src::ext::rtree::rtree::u32_0 = 0;
     match serial_type {
-        0 | 1 => return *aKey.offset(0 as ::core::ffi::c_int as isize) as crate::sqliteInt_h::i8_0 as crate::src::ext::rtree::rtree::i64_0,
+        0 | 1 => return *aKey.offset(0 as isize) as crate::sqliteInt_h::i8_0 as crate::src::ext::rtree::rtree::i64_0,
         2 => {
             return (256 as ::core::ffi::c_int
-                * *aKey.offset(0 as ::core::ffi::c_int as isize) as crate::sqliteInt_h::i8_0 as ::core::ffi::c_int
-                | *aKey.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+                * *aKey.offset(0 as isize) as crate::sqliteInt_h::i8_0 as ::core::ffi::c_int
+                | *aKey.offset(1 as isize) as ::core::ffi::c_int)
                 as crate::src::ext::rtree::rtree::i64_0;
         }
         3 => {
             return (65536 as ::core::ffi::c_int
-                * *aKey.offset(0 as ::core::ffi::c_int as isize) as crate::sqliteInt_h::i8_0 as ::core::ffi::c_int
-                | (*aKey.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+                * *aKey.offset(0 as isize) as crate::sqliteInt_h::i8_0 as ::core::ffi::c_int
+                | (*aKey.offset(1 as isize) as ::core::ffi::c_int)
                     << 8 as ::core::ffi::c_int
-                | *aKey.offset(2 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+                | *aKey.offset(2 as isize) as ::core::ffi::c_int)
                 as crate::src::ext::rtree::rtree::i64_0;
         }
         4 => {
-            y = (*aKey.offset(0 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0)
+            y = (*aKey.offset(0 as isize) as crate::src::ext::rtree::rtree::u32_0)
                 << 24 as ::core::ffi::c_int
-                | ((*aKey.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+                | ((*aKey.offset(1 as isize) as ::core::ffi::c_int)
                     << 16 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u32_0
-                | ((*aKey.offset(2 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+                | ((*aKey.offset(2 as isize) as ::core::ffi::c_int)
                     << 8 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u32_0
-                | *aKey.offset(3 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0;
+                | *aKey.offset(3 as isize) as crate::src::ext::rtree::rtree::u32_0;
             return *(&raw mut y as *mut ::core::ffi::c_int) as crate::src::ext::rtree::rtree::i64_0;
         }
         5 => {
             return ((*aKey
-                .offset(2 as ::core::ffi::c_int as isize)
-                .offset(0 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0)
+                .offset(2 as isize)
+                .offset(0 as isize) as crate::src::ext::rtree::rtree::u32_0)
                 << 24 as ::core::ffi::c_int
                 | ((*aKey
-                    .offset(2 as ::core::ffi::c_int as isize)
-                    .offset(1 as ::core::ffi::c_int as isize)
+                    .offset(2 as isize)
+                    .offset(1 as isize)
                     as ::core::ffi::c_int)
                     << 16 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u32_0
                 | ((*aKey
-                    .offset(2 as ::core::ffi::c_int as isize)
-                    .offset(2 as ::core::ffi::c_int as isize)
+                    .offset(2 as isize)
+                    .offset(2 as isize)
                     as ::core::ffi::c_int)
                     << 8 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u32_0
                 | *aKey
-                    .offset(2 as ::core::ffi::c_int as isize)
-                    .offset(3 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0)
+                    .offset(2 as isize)
+                    .offset(3 as isize) as crate::src::ext::rtree::rtree::u32_0)
                 as crate::src::ext::rtree::rtree::i64_0
                 + ((1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::i64_0) << 32 as ::core::ffi::c_int)
                     * (256 as ::core::ffi::c_int
-                        * *aKey.offset(0 as ::core::ffi::c_int as isize) as crate::sqliteInt_h::i8_0
+                        * *aKey.offset(0 as isize) as crate::sqliteInt_h::i8_0
                             as ::core::ffi::c_int
-                        | *aKey.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+                        | *aKey.offset(1 as isize) as ::core::ffi::c_int)
                         as crate::src::ext::rtree::rtree::i64_0;
         }
         6 => {
-            let mut x: crate::src::ext::rtree::rtree::u64_0 = ((*aKey.offset(0 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0)
+            let mut x: crate::src::ext::rtree::rtree::u64_0 = ((*aKey.offset(0 as isize) as crate::src::ext::rtree::rtree::u32_0)
                 << 24 as ::core::ffi::c_int
-                | ((*aKey.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+                | ((*aKey.offset(1 as isize) as ::core::ffi::c_int)
                     << 16 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u32_0
-                | ((*aKey.offset(2 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+                | ((*aKey.offset(2 as isize) as ::core::ffi::c_int)
                     << 8 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u32_0
-                | *aKey.offset(3 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0)
+                | *aKey.offset(3 as isize) as crate::src::ext::rtree::rtree::u32_0)
                 as crate::src::ext::rtree::rtree::u64_0;
             x = x << 32 as ::core::ffi::c_int
                 | ((*aKey
-                    .offset(4 as ::core::ffi::c_int as isize)
-                    .offset(0 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0)
+                    .offset(4 as isize)
+                    .offset(0 as isize) as crate::src::ext::rtree::rtree::u32_0)
                     << 24 as ::core::ffi::c_int
                     | ((*aKey
-                        .offset(4 as ::core::ffi::c_int as isize)
-                        .offset(1 as ::core::ffi::c_int as isize)
+                        .offset(4 as isize)
+                        .offset(1 as isize)
                         as ::core::ffi::c_int)
                         << 16 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u32_0
                     | ((*aKey
-                        .offset(4 as ::core::ffi::c_int as isize)
-                        .offset(2 as ::core::ffi::c_int as isize)
+                        .offset(4 as isize)
+                        .offset(2 as isize)
                         as ::core::ffi::c_int)
                         << 8 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u32_0
                     | *aKey
-                        .offset(4 as ::core::ffi::c_int as isize)
-                        .offset(3 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0)
+                        .offset(4 as isize)
+                        .offset(3 as isize) as crate::src::ext::rtree::rtree::u32_0)
                     as crate::src::ext::rtree::rtree::u64_0;
             return *(&raw mut x as *mut crate::src::ext::rtree::rtree::i64_0);
         }
@@ -3488,22 +3488,22 @@ pub unsafe extern "C" fn sqlite3VdbeRecordCompareWithSkip(
     xDel:  None,
 };
     if bSkip != 0 {
-        let mut s1: crate::src::ext::rtree::rtree::u32_0 = *aKey1.offset(1 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0;
+        let mut s1: crate::src::ext::rtree::rtree::u32_0 = *aKey1.offset(1 as isize) as crate::src::ext::rtree::rtree::u32_0;
         if s1 < 0x80 as crate::src::ext::rtree::rtree::u32_0 {
             idx1 = 2 as crate::src::ext::rtree::rtree::u32_0;
         } else {
             idx1 = (1 as ::core::ffi::c_int
                 + crate::src::src::util::sqlite3GetVarint32(
-                    aKey1.offset(1 as ::core::ffi::c_int as isize) as *const ::core::ffi::c_uchar,
+                    aKey1.offset(1 as isize) as *const ::core::ffi::c_uchar,
                     &raw mut s1,
                 ) as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u32_0;
         }
-        szHdr1 = *aKey1.offset(0 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0;
+        szHdr1 = *aKey1.offset(0 as isize) as crate::src::ext::rtree::rtree::u32_0;
         d1 = szHdr1.wrapping_add(sqlite3VdbeSerialTypeLen(s1));
         i = 1 as ::core::ffi::c_int;
         pRhs = pRhs.offset(1);
     } else {
-        szHdr1 = *aKey1.offset(0 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0;
+        szHdr1 = *aKey1.offset(0 as isize) as crate::src::ext::rtree::rtree::u32_0;
         if szHdr1 < 0x80 as crate::src::ext::rtree::rtree::u32_0 {
             idx1 = 1 as crate::src::ext::rtree::rtree::u32_0;
         } else {
@@ -3735,7 +3735,7 @@ unsafe extern "C" fn vdbeRecordCompareInt(
         (*(pKey1 as *const crate::src::ext::rtree::rtree::u8_0) as ::core::ffi::c_int & 0x3f as ::core::ffi::c_int) as isize,
     ) as *const crate::src::ext::rtree::rtree::u8_0;
     let mut serial_type: ::core::ffi::c_int =
-        *(pKey1 as *const crate::src::ext::rtree::rtree::u8_0).offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int;
+        *(pKey1 as *const crate::src::ext::rtree::rtree::u8_0).offset(1 as isize) as ::core::ffi::c_int;
     let mut res: ::core::ffi::c_int = 0;
     let mut y: crate::src::ext::rtree::rtree::u32_0 = 0;
     let mut x: crate::src::ext::rtree::rtree::u64_0 = 0;
@@ -3743,83 +3743,83 @@ unsafe extern "C" fn vdbeRecordCompareInt(
     let mut lhs: crate::src::ext::rtree::rtree::i64_0 = 0;
     match serial_type {
         1 => {
-            lhs = *aKey.offset(0 as ::core::ffi::c_int as isize) as crate::sqliteInt_h::i8_0 as crate::src::ext::rtree::rtree::i64_0;
+            lhs = *aKey.offset(0 as isize) as crate::sqliteInt_h::i8_0 as crate::src::ext::rtree::rtree::i64_0;
         }
         2 => {
             lhs = (256 as ::core::ffi::c_int
-                * *aKey.offset(0 as ::core::ffi::c_int as isize) as crate::sqliteInt_h::i8_0 as ::core::ffi::c_int
-                | *aKey.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+                * *aKey.offset(0 as isize) as crate::sqliteInt_h::i8_0 as ::core::ffi::c_int
+                | *aKey.offset(1 as isize) as ::core::ffi::c_int)
                 as crate::src::ext::rtree::rtree::i64_0;
         }
         3 => {
             lhs = (65536 as ::core::ffi::c_int
-                * *aKey.offset(0 as ::core::ffi::c_int as isize) as crate::sqliteInt_h::i8_0 as ::core::ffi::c_int
-                | (*aKey.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+                * *aKey.offset(0 as isize) as crate::sqliteInt_h::i8_0 as ::core::ffi::c_int
+                | (*aKey.offset(1 as isize) as ::core::ffi::c_int)
                     << 8 as ::core::ffi::c_int
-                | *aKey.offset(2 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+                | *aKey.offset(2 as isize) as ::core::ffi::c_int)
                 as crate::src::ext::rtree::rtree::i64_0;
         }
         4 => {
-            y = (*aKey.offset(0 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0)
+            y = (*aKey.offset(0 as isize) as crate::src::ext::rtree::rtree::u32_0)
                 << 24 as ::core::ffi::c_int
-                | ((*aKey.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+                | ((*aKey.offset(1 as isize) as ::core::ffi::c_int)
                     << 16 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u32_0
-                | ((*aKey.offset(2 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+                | ((*aKey.offset(2 as isize) as ::core::ffi::c_int)
                     << 8 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u32_0
-                | *aKey.offset(3 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0;
+                | *aKey.offset(3 as isize) as crate::src::ext::rtree::rtree::u32_0;
             lhs = *(&raw mut y as *mut ::core::ffi::c_int) as crate::src::ext::rtree::rtree::i64_0;
         }
         5 => {
             lhs = ((*aKey
-                .offset(2 as ::core::ffi::c_int as isize)
-                .offset(0 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0)
+                .offset(2 as isize)
+                .offset(0 as isize) as crate::src::ext::rtree::rtree::u32_0)
                 << 24 as ::core::ffi::c_int
                 | ((*aKey
-                    .offset(2 as ::core::ffi::c_int as isize)
-                    .offset(1 as ::core::ffi::c_int as isize)
+                    .offset(2 as isize)
+                    .offset(1 as isize)
                     as ::core::ffi::c_int)
                     << 16 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u32_0
                 | ((*aKey
-                    .offset(2 as ::core::ffi::c_int as isize)
-                    .offset(2 as ::core::ffi::c_int as isize)
+                    .offset(2 as isize)
+                    .offset(2 as isize)
                     as ::core::ffi::c_int)
                     << 8 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u32_0
                 | *aKey
-                    .offset(2 as ::core::ffi::c_int as isize)
-                    .offset(3 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0) as crate::src::ext::rtree::rtree::i64_0
+                    .offset(2 as isize)
+                    .offset(3 as isize) as crate::src::ext::rtree::rtree::u32_0) as crate::src::ext::rtree::rtree::i64_0
                 + ((1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::i64_0) << 32 as ::core::ffi::c_int)
                     * (256 as ::core::ffi::c_int
-                        * *aKey.offset(0 as ::core::ffi::c_int as isize) as crate::sqliteInt_h::i8_0
+                        * *aKey.offset(0 as isize) as crate::sqliteInt_h::i8_0
                             as ::core::ffi::c_int
-                        | *aKey.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+                        | *aKey.offset(1 as isize) as ::core::ffi::c_int)
                         as crate::src::ext::rtree::rtree::i64_0;
         }
         6 => {
-            x = ((*aKey.offset(0 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0)
+            x = ((*aKey.offset(0 as isize) as crate::src::ext::rtree::rtree::u32_0)
                 << 24 as ::core::ffi::c_int
-                | ((*aKey.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+                | ((*aKey.offset(1 as isize) as ::core::ffi::c_int)
                     << 16 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u32_0
-                | ((*aKey.offset(2 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+                | ((*aKey.offset(2 as isize) as ::core::ffi::c_int)
                     << 8 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u32_0
-                | *aKey.offset(3 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0) as crate::src::ext::rtree::rtree::u64_0;
+                | *aKey.offset(3 as isize) as crate::src::ext::rtree::rtree::u32_0) as crate::src::ext::rtree::rtree::u64_0;
             x = x << 32 as ::core::ffi::c_int
                 | ((*aKey
-                    .offset(4 as ::core::ffi::c_int as isize)
-                    .offset(0 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0)
+                    .offset(4 as isize)
+                    .offset(0 as isize) as crate::src::ext::rtree::rtree::u32_0)
                     << 24 as ::core::ffi::c_int
                     | ((*aKey
-                        .offset(4 as ::core::ffi::c_int as isize)
-                        .offset(1 as ::core::ffi::c_int as isize)
+                        .offset(4 as isize)
+                        .offset(1 as isize)
                         as ::core::ffi::c_int)
                         << 16 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u32_0
                     | ((*aKey
-                        .offset(4 as ::core::ffi::c_int as isize)
-                        .offset(2 as ::core::ffi::c_int as isize)
+                        .offset(4 as isize)
+                        .offset(2 as isize)
                         as ::core::ffi::c_int)
                         << 8 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u32_0
                     | *aKey
-                        .offset(4 as ::core::ffi::c_int as isize)
-                        .offset(3 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0)
+                        .offset(4 as isize)
+                        .offset(3 as isize) as crate::src::ext::rtree::rtree::u32_0)
                     as crate::src::ext::rtree::rtree::u64_0;
             lhs = *(&raw mut x as *mut crate::src::ext::rtree::rtree::i64_0);
         }
@@ -3854,7 +3854,7 @@ unsafe extern "C" fn vdbeRecordCompareString(
     let mut aKey1: *const crate::src::ext::rtree::rtree::u8_0 = pKey1 as *const crate::src::ext::rtree::rtree::u8_0;
     let mut serial_type: ::core::ffi::c_int = 0;
     let mut res: ::core::ffi::c_int = 0;
-    serial_type = *aKey1.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_schar
+    serial_type = *aKey1.offset(1 as isize) as ::core::ffi::c_schar
         as ::core::ffi::c_int;
     let mut current_block_39: u64;
     loop {
@@ -3864,7 +3864,7 @@ unsafe extern "C" fn vdbeRecordCompareString(
                 break;
             }
             crate::src::src::util::sqlite3GetVarint32(
-                aKey1.offset(1 as ::core::ffi::c_int as isize) as *const ::core::ffi::c_uchar,
+                aKey1.offset(1 as isize) as *const ::core::ffi::c_uchar,
                 &raw mut serial_type as *mut crate::src::ext::rtree::rtree::u32_0,
             );
             if !(serial_type >= 12 as ::core::ffi::c_int) {
@@ -3878,7 +3878,7 @@ unsafe extern "C" fn vdbeRecordCompareString(
                 let mut nCmp: ::core::ffi::c_int = 0;
                 let mut nStr: ::core::ffi::c_int = 0;
                 let mut szHdr: ::core::ffi::c_int =
-                    *aKey1.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int;
+                    *aKey1.offset(0 as isize) as ::core::ffi::c_int;
                 nStr = (serial_type - 12 as ::core::ffi::c_int) / 2 as ::core::ffi::c_int;
                 if szHdr + nStr > nKey1 {
                     (*pPKey2).errCode = crate::src::src::main::sqlite3CorruptError(5093 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u8_0;
@@ -3936,15 +3936,15 @@ unsafe extern "C" fn vdbeRecordCompareString(
 pub unsafe extern "C" fn sqlite3VdbeFindCompare(mut p: *mut crate::sqliteInt_h::UnpackedRecord) -> crate::src::src::vdbe::RecordCompare {
     if (*(*p).pKeyInfo).nAllField as ::core::ffi::c_int <= 13 as ::core::ffi::c_int {
         let mut flags: ::core::ffi::c_int =
-            (*(*p).aMem.offset(0 as ::core::ffi::c_int as isize)).flags as ::core::ffi::c_int;
+            (*(*p).aMem.offset(0 as isize)).flags as ::core::ffi::c_int;
         if *(*(*p).pKeyInfo)
             .aSortFlags
-            .offset(0 as ::core::ffi::c_int as isize)
+            .offset(0 as isize)
             != 0
         {
             if *(*(*p).pKeyInfo)
                 .aSortFlags
-                .offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+                .offset(0 as isize) as ::core::ffi::c_int
                 & crate::sqliteInt_h::KEYINFO_ORDER_BIGNULL
                 != 0
             {
@@ -3964,7 +3964,7 @@ pub unsafe extern "C" fn sqlite3VdbeFindCompare(mut p: *mut crate::sqliteInt_h::
             (*p).r2 = 1 as crate::sqliteInt_h::i8_0;
         }
         if flags & crate::vdbeInt_h::MEM_Int != 0 {
-            (*p).u.i = (*(*p).aMem.offset(0 as ::core::ffi::c_int as isize)).u.i;
+            (*p).u.i = (*(*p).aMem.offset(0 as isize)).u.i;
             return Some(
                 vdbeRecordCompareInt
                     as unsafe extern "C" fn(
@@ -3976,11 +3976,11 @@ pub unsafe extern "C" fn sqlite3VdbeFindCompare(mut p: *mut crate::sqliteInt_h::
         }
         if flags & (crate::vdbeInt_h::MEM_Real | crate::vdbeInt_h::MEM_IntReal | crate::vdbeInt_h::MEM_Null | crate::vdbeInt_h::MEM_Blob) == 0 as ::core::ffi::c_int
             && (*(&raw mut (*(*p).pKeyInfo).aColl as *mut *mut crate::sqliteInt_h::CollSeq)
-                .offset(0 as ::core::ffi::c_int as isize))
+                .offset(0 as isize))
             .is_null()
         {
-            (*p).u.z = (*(*p).aMem.offset(0 as ::core::ffi::c_int as isize)).z;
-            (*p).n = (*(*p).aMem.offset(0 as ::core::ffi::c_int as isize)).n;
+            (*p).u.z = (*(*p).aMem.offset(0 as isize)).z;
+            (*p).n = (*(*p).aMem.offset(0 as isize)).n;
             return Some(
                 vdbeRecordCompareString
                     as unsafe extern "C" fn(

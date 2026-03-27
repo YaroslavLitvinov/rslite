@@ -1423,7 +1423,7 @@ pub mod keywordhash_h {
         let mut j: ::core::ffi::c_int = 0;
         let mut zKW: *const ::core::ffi::c_char = ::core::ptr::null::<::core::ffi::c_char>();
         i = (*(&raw const crate::src::src::global::sqlite3UpperToLower as *const ::core::ffi::c_uchar)
-            .offset(*z.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_uchar as isize)
+            .offset(*z.offset(0 as isize) as ::core::ffi::c_uchar as isize)
             as ::core::ffi::c_int
             * 4 as ::core::ffi::c_int
             ^ *(&raw const crate::src::src::global::sqlite3UpperToLower as *const ::core::ffi::c_uchar).offset(
@@ -1439,13 +1439,13 @@ pub mod keywordhash_h {
                     *(&raw const aKWOffset as *const ::core::ffi::c_ushort).offset(i as isize)
                         as isize,
                 ) as *const ::core::ffi::c_char;
-                if !(*z.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+                if !(*z.offset(0 as isize) as ::core::ffi::c_int
                     & !(0x20 as ::core::ffi::c_int)
-                    != *zKW.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+                    != *zKW.offset(0 as isize) as ::core::ffi::c_int)
                 {
-                    if !(*z.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+                    if !(*z.offset(1 as isize) as ::core::ffi::c_int
                         & !(0x20 as ::core::ffi::c_int)
-                        != *zKW.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+                        != *zKW.offset(1 as isize) as ::core::ffi::c_int)
                     {
                         j = 2 as ::core::ffi::c_int;
                         while j < n
@@ -1937,7 +1937,7 @@ pub unsafe extern "C" fn sqlite3GetToken(
             return i;
         }
         CC_MINUS => {
-            if *z.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == '-' as i32 {
+            if *z.offset(1 as isize) as ::core::ffi::c_int == '-' as i32 {
                 i = 2 as crate::src::ext::rtree::rtree::i64_0;
                 loop {
                     c = *z.offset(i as isize) as ::core::ffi::c_int;
@@ -1948,12 +1948,12 @@ pub unsafe extern "C" fn sqlite3GetToken(
                 }
                 *tokenType = crate::src::parse::TK_COMMENT;
                 return i;
-            } else if *z.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+            } else if *z.offset(1 as isize) as ::core::ffi::c_int
                 == '>' as i32
             {
                 *tokenType = crate::src::parse::TK_PTR;
                 return (2 as ::core::ffi::c_int
-                    + (*z.offset(2 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+                    + (*z.offset(2 as isize) as ::core::ffi::c_int
                         == '>' as i32) as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::i64_0;
             }
             *tokenType = crate::src::parse::TK_MINUS_1;
@@ -1980,15 +1980,15 @@ pub unsafe extern "C" fn sqlite3GetToken(
             return 1 as crate::src::ext::rtree::rtree::i64_0;
         }
         CC_SLASH => {
-            if *z.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int != '*' as i32
-                || *z.offset(2 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+            if *z.offset(1 as isize) as ::core::ffi::c_int != '*' as i32
+                || *z.offset(2 as isize) as ::core::ffi::c_int
                     == 0 as ::core::ffi::c_int
             {
                 *tokenType = crate::src::parse::TK_SLASH_1;
                 return 1 as crate::src::ext::rtree::rtree::i64_0;
             }
             i = 3 as crate::src::ext::rtree::rtree::i64_0;
-            c = *z.offset(2 as ::core::ffi::c_int as isize) as ::core::ffi::c_int;
+            c = *z.offset(2 as isize) as ::core::ffi::c_int;
             while (c != '*' as i32 || *z.offset(i as isize) as ::core::ffi::c_int != '/' as i32)
                 && {
                     c = *z.offset(i as isize) as ::core::ffi::c_int;
@@ -2010,11 +2010,11 @@ pub unsafe extern "C" fn sqlite3GetToken(
         CC_EQ => {
             *tokenType = crate::src::parse::TK_EQ;
             return (1 as ::core::ffi::c_int
-                + (*z.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == '=' as i32)
+                + (*z.offset(1 as isize) as ::core::ffi::c_int == '=' as i32)
                     as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::i64_0;
         }
         CC_LT => {
-            c = *z.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int;
+            c = *z.offset(1 as isize) as ::core::ffi::c_int;
             if c == '=' as i32 {
                 *tokenType = crate::src::parse::TK_LE;
                 return 2 as crate::src::ext::rtree::rtree::i64_0;
@@ -2030,7 +2030,7 @@ pub unsafe extern "C" fn sqlite3GetToken(
             }
         }
         CC_GT => {
-            c = *z.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int;
+            c = *z.offset(1 as isize) as ::core::ffi::c_int;
             if c == '=' as i32 {
                 *tokenType = crate::src::parse::TK_GE;
                 return 2 as crate::src::ext::rtree::rtree::i64_0;
@@ -2043,7 +2043,7 @@ pub unsafe extern "C" fn sqlite3GetToken(
             }
         }
         CC_BANG => {
-            if *z.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int != '=' as i32 {
+            if *z.offset(1 as isize) as ::core::ffi::c_int != '=' as i32 {
                 *tokenType = crate::src::parse::TK_ILLEGAL;
                 return 1 as crate::src::ext::rtree::rtree::i64_0;
             } else {
@@ -2052,7 +2052,7 @@ pub unsafe extern "C" fn sqlite3GetToken(
             }
         }
         CC_PIPE => {
-            if *z.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int != '|' as i32 {
+            if *z.offset(1 as isize) as ::core::ffi::c_int != '|' as i32 {
                 *tokenType = crate::src::parse::TK_BITOR_1;
                 return 1 as crate::src::ext::rtree::rtree::i64_0;
             } else {
@@ -2074,7 +2074,7 @@ pub unsafe extern "C" fn sqlite3GetToken(
         }
         CC_QUOTE => {
             let mut delim: ::core::ffi::c_int =
-                *z.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int;
+                *z.offset(0 as isize) as ::core::ffi::c_int;
             i = 1 as crate::src::ext::rtree::rtree::i64_0;
             loop {
                 c = *z.offset(i as isize) as ::core::ffi::c_int;
@@ -2102,7 +2102,7 @@ pub unsafe extern "C" fn sqlite3GetToken(
         }
         CC_DOT => {
             if *(&raw const crate::src::src::global::sqlite3CtypeMap as *const ::core::ffi::c_uchar)
-                .offset(*z.offset(1 as ::core::ffi::c_int as isize) as isize)
+                .offset(*z.offset(1 as isize) as isize)
                 as ::core::ffi::c_int
                 & 0x4 as ::core::ffi::c_int
                 == 0
@@ -2117,7 +2117,7 @@ pub unsafe extern "C" fn sqlite3GetToken(
         }
         CC_QUOTE2 => {
             i = 1 as crate::src::ext::rtree::rtree::i64_0;
-            c = *z.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int;
+            c = *z.offset(0 as isize) as ::core::ffi::c_int;
             while c != ']' as i32 && {
                 c = *z.offset(i as isize) as ::core::ffi::c_int;
                 c != 0 as ::core::ffi::c_int
@@ -2192,7 +2192,7 @@ pub unsafe extern "C" fn sqlite3GetToken(
             return i;
         }
         CC_KYWD0 => {
-            if aiClass[*z.offset(1 as ::core::ffi::c_int as isize) as usize] as ::core::ffi::c_int
+            if aiClass[*z.offset(1 as isize) as usize] as ::core::ffi::c_int
                 > CC_KYWD
             {
                 i = 1 as crate::src::ext::rtree::rtree::i64_0;
@@ -2219,7 +2219,7 @@ pub unsafe extern "C" fn sqlite3GetToken(
             current_block_253 = 9239588423676249671;
         }
         CC_X => {
-            if *z.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == '\'' as i32 {
+            if *z.offset(1 as isize) as ::core::ffi::c_int == '\'' as i32 {
                 *tokenType = crate::src::parse::TK_BLOB_1;
                 i = 2 as crate::src::ext::rtree::rtree::i64_0;
                 while *(&raw const crate::src::src::global::sqlite3CtypeMap as *const ::core::ffi::c_uchar)
@@ -2250,9 +2250,9 @@ pub unsafe extern "C" fn sqlite3GetToken(
             current_block_253 = 13797367574128857302;
         }
         CC_BOM => {
-            if *z.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+            if *z.offset(1 as isize) as ::core::ffi::c_int
                 == 0xbb as ::core::ffi::c_int
-                && *z.offset(2 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+                && *z.offset(2 as isize) as ::core::ffi::c_int
                     == 0xbf as ::core::ffi::c_int
             {
                 *tokenType = crate::src::parse::TK_SPACE;
@@ -2273,12 +2273,12 @@ pub unsafe extern "C" fn sqlite3GetToken(
     match current_block_253 {
         7204910374684072340 => {
             *tokenType = crate::src::parse::TK_INTEGER;
-            if *z.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == '0' as i32
-                && (*z.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == 'x' as i32
-                    || *z.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+            if *z.offset(0 as isize) as ::core::ffi::c_int == '0' as i32
+                && (*z.offset(1 as isize) as ::core::ffi::c_int == 'x' as i32
+                    || *z.offset(1 as isize) as ::core::ffi::c_int
                         == 'X' as i32)
                 && *(&raw const crate::src::src::global::sqlite3CtypeMap as *const ::core::ffi::c_uchar)
-                    .offset(*z.offset(2 as ::core::ffi::c_int as isize) as isize)
+                    .offset(*z.offset(2 as isize) as isize)
                     as ::core::ffi::c_int
                     & 0x8 as ::core::ffi::c_int
                     != 0
@@ -2452,7 +2452,7 @@ pub unsafe extern "C" fn sqlite3RunParser(
                 } else if tokenType == crate::src::parse::TK_SPACE {
                     zSql = zSql.offset(n as isize);
                     continue;
-                } else if *zSql.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+                } else if *zSql.offset(0 as isize) as ::core::ffi::c_int
                     == 0 as ::core::ffi::c_int
                 {
                     if lastTokenParsed == crate::src::parse::TK_SEMI {
@@ -2465,18 +2465,18 @@ pub unsafe extern "C" fn sqlite3RunParser(
                     }
                     n = 0 as crate::src::ext::rtree::rtree::i64_0;
                 } else if tokenType == crate::src::parse::TK_WINDOW {
-                    tokenType = analyzeWindowKeyword(zSql.offset(6 as ::core::ffi::c_int as isize)
+                    tokenType = analyzeWindowKeyword(zSql.offset(6 as isize)
                         as *const ::core::ffi::c_char
                         as *const ::core::ffi::c_uchar);
                 } else if tokenType == crate::src::parse::TK_OVER {
                     tokenType = analyzeOverKeyword(
-                        zSql.offset(4 as ::core::ffi::c_int as isize) as *const ::core::ffi::c_char
+                        zSql.offset(4 as isize) as *const ::core::ffi::c_char
                             as *const ::core::ffi::c_uchar,
                         lastTokenParsed,
                     );
                 } else if tokenType == crate::src::parse::TK_FILTER {
                     tokenType = analyzeFilterKeyword(
-                        zSql.offset(6 as ::core::ffi::c_int as isize) as *const ::core::ffi::c_char
+                        zSql.offset(6 as isize) as *const ::core::ffi::c_char
                             as *const ::core::ffi::c_uchar,
                         lastTokenParsed,
                     );

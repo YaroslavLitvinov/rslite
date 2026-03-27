@@ -61,10 +61,10 @@ unsafe extern "C" fn simpleCreate(
     if argc > 1 as ::core::ffi::c_int {
         let mut i: ::core::ffi::c_int = 0;
         let mut n: ::core::ffi::c_int =
-            ::libc::strlen(*argv.offset(1 as ::core::ffi::c_int as isize)) as ::core::ffi::c_int;
+            ::libc::strlen(*argv.offset(1 as isize)) as ::core::ffi::c_int;
         i = 0 as ::core::ffi::c_int;
         while i < n {
-            let mut ch: ::core::ffi::c_uchar = *(*argv.offset(1 as ::core::ffi::c_int as isize))
+            let mut ch: ::core::ffi::c_uchar = *(*argv.offset(1 as isize))
                 .offset(i as isize)
                 as ::core::ffi::c_uchar;
             if ch as ::core::ffi::c_int >= 0x80 as ::core::ffi::c_int {

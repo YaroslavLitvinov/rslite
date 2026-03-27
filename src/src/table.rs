@@ -209,7 +209,7 @@ pub unsafe extern "C" fn sqlite3_get_table(
         (*db).errCode = crate::sqlite3_h::SQLITE_NOMEM;
         return crate::sqliteInt_h::SQLITE_NOMEM_BKPT;
     }
-    let ref mut fresh0 = *res.azResult.offset(0 as ::core::ffi::c_int as isize);
+    let ref mut fresh0 = *res.azResult.offset(0 as isize);
     *fresh0 = ::core::ptr::null_mut::<::core::ffi::c_char>();
     rc = crate::src::src::legacy::sqlite3_exec(
         
@@ -227,11 +227,11 @@ pub unsafe extern "C" fn sqlite3_get_table(
         &raw mut res as *mut ::core::ffi::c_void,
         pzErrMsg,
     );
-    let ref mut fresh1 = *res.azResult.offset(0 as ::core::ffi::c_int as isize);
+    let ref mut fresh1 = *res.azResult.offset(0 as isize);
     *fresh1 = res.nData as crate::stdlib::intptr_t as *mut ::core::ffi::c_void as *mut ::core::ffi::c_char;
     if rc & 0xff as ::core::ffi::c_int == crate::sqlite3_h::SQLITE_ABORT {
         sqlite3_free_table(
-            res.azResult.offset(1 as ::core::ffi::c_int as isize) as *mut *mut ::core::ffi::c_char
+            res.azResult.offset(1 as isize) as *mut *mut ::core::ffi::c_char
         );
         if !res.zErrMsg.is_null() {
             if !pzErrMsg.is_null() {
@@ -249,7 +249,7 @@ pub unsafe extern "C" fn sqlite3_get_table(
     crate::src::src::malloc::sqlite3_free(res.zErrMsg as *mut ::core::ffi::c_void);
     if rc != crate::sqlite3_h::SQLITE_OK {
         sqlite3_free_table(
-            res.azResult.offset(1 as ::core::ffi::c_int as isize) as *mut *mut ::core::ffi::c_char
+            res.azResult.offset(1 as isize) as *mut *mut ::core::ffi::c_char
         );
         return rc;
     }
@@ -262,7 +262,7 @@ pub unsafe extern "C" fn sqlite3_get_table(
                 .wrapping_mul(res.nData as usize) as crate::src::ext::rtree::rtree::u64_0,
         ) as *mut *mut ::core::ffi::c_char;
         if azNew.is_null() {
-            sqlite3_free_table(res.azResult.offset(1 as ::core::ffi::c_int as isize)
+            sqlite3_free_table(res.azResult.offset(1 as isize)
                 as *mut *mut ::core::ffi::c_char);
             (*db).errCode = crate::sqlite3_h::SQLITE_NOMEM;
             return crate::sqliteInt_h::SQLITE_NOMEM_BKPT;
@@ -270,7 +270,7 @@ pub unsafe extern "C" fn sqlite3_get_table(
         res.azResult = azNew;
     }
     *pazResult =
-        res.azResult.offset(1 as ::core::ffi::c_int as isize) as *mut *mut ::core::ffi::c_char;
+        res.azResult.offset(1 as isize) as *mut *mut ::core::ffi::c_char;
     if !pnColumn.is_null() {
         *pnColumn = res.nColumn as ::core::ffi::c_int;
     }
@@ -286,7 +286,7 @@ pub unsafe extern "C" fn sqlite3_free_table(mut azResult: *mut *mut ::core::ffi:
         let mut i: ::core::ffi::c_int = 0;
         let mut n: ::core::ffi::c_int = 0;
         azResult = azResult.offset(-1);
-        n = *azResult.offset(0 as ::core::ffi::c_int as isize) as crate::stdlib::intptr_t as ::core::ffi::c_int;
+        n = *azResult.offset(0 as isize) as crate::stdlib::intptr_t as ::core::ffi::c_int;
         i = 1 as ::core::ffi::c_int;
         while i < n {
             if !(*azResult.offset(i as isize)).is_null() {

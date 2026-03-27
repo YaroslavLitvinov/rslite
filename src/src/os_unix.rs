@@ -2753,7 +2753,7 @@ unsafe extern "C" fn unixOpenSharedMemory(mut pDbFd: *mut unixFile) -> ::core::f
                     (::core::mem::size_of::<unixShmNode>() as crate::__stddef_size_t_h::size_t)
                         .wrapping_add(nShmFilename as crate::__stddef_size_t_h::size_t),
                 );
-                (*pShmNode).zFilename = pShmNode.offset(1 as ::core::ffi::c_int as isize)
+                (*pShmNode).zFilename = pShmNode.offset(1 as isize)
                     as *mut unixShmNode
                     as *mut ::core::ffi::c_char;
                 zShm = (*pShmNode).zFilename;
@@ -3999,7 +3999,7 @@ unsafe extern "C" fn unixGetTempname(
     let mut zDir: *const ::core::ffi::c_char = ::core::ptr::null::<::core::ffi::c_char>();
     let mut iLimit: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut rc: ::core::ffi::c_int = crate::sqlite3_h::SQLITE_OK;
-    *zBuf.offset(0 as ::core::ffi::c_int as isize) = 0 as ::core::ffi::c_char;
+    *zBuf.offset(0 as isize) = 0 as ::core::ffi::c_char;
     if crate::src::src::os::sqlite3_io_error_persist != 0 && crate::src::src::os::sqlite3_io_error_hit != 0 || {
         let fresh9 = crate::src::src::os::sqlite3_io_error_pending;
         crate::src::src::os::sqlite3_io_error_pending = crate::src::src::os::sqlite3_io_error_pending - 1;
@@ -4530,11 +4530,11 @@ unsafe extern "C" fn appendOnePathElement(
     mut zName: *const ::core::ffi::c_char,
     mut nName: ::core::ffi::c_int,
 ) {
-    if *zName.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == '.' as i32 {
+    if *zName.offset(0 as isize) as ::core::ffi::c_int == '.' as i32 {
         if nName == 1 as ::core::ffi::c_int {
             return;
         }
-        if *zName.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == '.' as i32
+        if *zName.offset(1 as isize) as ::core::ffi::c_int == '.' as i32
             && nName == 2 as ::core::ffi::c_int
         {
             if (*pPath).nUsed > 1 as ::core::ffi::c_int {
@@ -4697,7 +4697,7 @@ unsafe extern "C" fn unixFullPathname(
     path.nSymlink = 0 as ::core::ffi::c_int;
     path.nOut = nOut;
     path.zOut = zOut;
-    if *zPath.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int != '/' as i32 {
+    if *zPath.offset(0 as isize) as ::core::ffi::c_int != '/' as i32 {
         let mut zPwd: [::core::ffi::c_char; 4098] = [0; 4098];
         if ::core::mem::transmute::<
             crate::sqlite3_h::sqlite3_syscall_ptr,

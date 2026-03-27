@@ -1088,9 +1088,9 @@ unsafe extern "C" fn valueFromExpr(
             || (*pLeft).op as ::core::ffi::c_int == crate::src::parse::TK_FLOAT_1
         {
             if (*pLeft).flags & 0x800 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u32_0 != 0 as crate::src::ext::rtree::rtree::u32_0
-                || *(*pLeft).u.zToken.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+                || *(*pLeft).u.zToken.offset(0 as isize) as ::core::ffi::c_int
                     != '0' as i32
-                || *(*pLeft).u.zToken.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+                || *(*pLeft).u.zToken.offset(1 as isize) as ::core::ffi::c_int
                     & !(0x20 as ::core::ffi::c_int)
                     != 'X' as i32
             {
@@ -1210,7 +1210,7 @@ unsafe extern "C" fn valueFromExpr(
         if pVal.is_null() {
             current_block = 14150411722901492361;
         } else {
-            zVal = (*pExpr).u.zToken.offset(2 as ::core::ffi::c_int as isize)
+            zVal = (*pExpr).u.zToken.offset(2 as isize)
                 as *mut ::core::ffi::c_char;
             nVal = crate::src::src::util::sqlite3Strlen30(zVal) - 1 as ::core::ffi::c_int;
             sqlite3VdbeMemSetStr(
@@ -1227,7 +1227,7 @@ unsafe extern "C" fn valueFromExpr(
             pVal = valueNew(db, pCtx);
             if !pVal.is_null() {
                 (*pVal).flags = crate::vdbeInt_h::MEM_Int as crate::src::fts5::u16_0;
-                (*pVal).u.i = (*(*pExpr).u.zToken.offset(4 as ::core::ffi::c_int as isize)
+                (*pVal).u.i = (*(*pExpr).u.zToken.offset(4 as isize)
                     as ::core::ffi::c_int
                     == 0 as ::core::ffi::c_int) as ::core::ffi::c_int
                     as crate::src::ext::rtree::rtree::i64_0;

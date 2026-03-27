@@ -330,12 +330,12 @@ pub unsafe extern "C" fn sqlite3_db_status64(
         }
     crate::sqlite3_h::SQLITE_DBSTATUS_TEMPBUF_SPILL =>  {
             let mut nRet_0: crate::src::ext::rtree::rtree::u64_0 = 0 as crate::src::ext::rtree::rtree::u64_0;
-            if !(*(*db).aDb.offset(1 as ::core::ffi::c_int as isize))
+            if !(*(*db).aDb.offset(1 as isize))
                 .pBt
                 .is_null()
             {
                 let mut pPager_1: *mut crate::src::src::pager::Pager =
-                    crate::src::src::btree::sqlite3BtreePager((*(*db).aDb.offset(1 as ::core::ffi::c_int as isize)).pBt)
+                    crate::src::src::btree::sqlite3BtreePager((*(*db).aDb.offset(1 as isize)).pBt)
                         as *mut crate::src::src::pager::Pager;
                 crate::src::src::pager::sqlite3PagerCacheStat(
                     pPager_1,
@@ -344,7 +344,7 @@ pub unsafe extern "C" fn sqlite3_db_status64(
                     &raw mut nRet_0,
                 );
                 nRet_0 = nRet_0.wrapping_mul(crate::src::src::btree::sqlite3BtreeGetPageSize(
-                    (*(*db).aDb.offset(1 as ::core::ffi::c_int as isize)).pBt,
+                    (*(*db).aDb.offset(1 as isize)).pBt,
                 ) as crate::src::ext::rtree::rtree::u64_0);
             }
             nRet_0 = nRet_0.wrapping_add((*db).nSpill);

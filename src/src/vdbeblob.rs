@@ -45,7 +45,7 @@ unsafe extern "C" fn blobSeekToRow(
     let mut v: *mut crate::vdbeInt_h::Vdbe = (*p).pStmt as *mut crate::vdbeInt_h::Vdbe;
     crate::src::src::vdbemem::sqlite3VdbeMemSetInt64(
         
-        (*v).aMem.offset(1 as ::core::ffi::c_int as isize) as *mut crate::src::src::vdbe::Mem as *mut crate::vdbeInt_h::sqlite3_value,
+        (*v).aMem.offset(1 as isize) as *mut crate::src::src::vdbe::Mem as *mut crate::vdbeInt_h::sqlite3_value,
         iRow as crate::src::ext::rtree::rtree::i64_0,
     );
     if (*v).pc > 4 as ::core::ffi::c_int {
@@ -55,7 +55,7 @@ unsafe extern "C" fn blobSeekToRow(
         rc = crate::src::src::vdbeapi::sqlite3_step((*p).pStmt);
     }
     if rc == crate::sqlite3_h::SQLITE_ROW {
-        let mut pC: *mut crate::vdbeInt_h::VdbeCursor = *(*v).apCsr.offset(0 as ::core::ffi::c_int as isize);
+        let mut pC: *mut crate::vdbeInt_h::VdbeCursor = *(*v).apCsr.offset(0 as isize);
         let mut type_0: crate::src::ext::rtree::rtree::u32_0 = 0;
         type_0 = if (*pC).nHdrParsed as ::core::ffi::c_int > (*p).iCol as ::core::ffi::c_int {
             *(&raw mut (*pC).aType as *mut crate::src::ext::rtree::rtree::u32_0).offset((*p).iCol as isize)
@@ -419,10 +419,10 @@ pub unsafe extern "C" fn sqlite3_blob_open(
     *mut crate::src::src::vdbe::VdbeOp;
                     crate::src::src::vdbeaux::sqlite3VdbeUsesBtree(v as *mut crate::vdbeInt_h::Vdbe, iDb);
                     if (*db).mallocFailed as ::core::ffi::c_int == 0 as ::core::ffi::c_int {
-                        (*aOp.offset(0 as ::core::ffi::c_int as isize)).p1 = iDb;
-                        (*aOp.offset(0 as ::core::ffi::c_int as isize)).p2 =
+                        (*aOp.offset(0 as isize)).p1 = iDb;
+                        (*aOp.offset(0 as isize)).p2 =
                             (*pTab).tnum as ::core::ffi::c_int;
-                        (*aOp.offset(0 as ::core::ffi::c_int as isize)).p3 = wrFlag;
+                        (*aOp.offset(0 as isize)).p3 = wrFlag;
                         crate::src::src::vdbeaux::sqlite3VdbeChangeP4(
                             
                             v as *mut crate::vdbeInt_h::Vdbe,
@@ -433,17 +433,17 @@ pub unsafe extern "C" fn sqlite3_blob_open(
                     }
                     if (*db).mallocFailed as ::core::ffi::c_int == 0 as ::core::ffi::c_int {
                         if wrFlag != 0 {
-                            (*aOp.offset(1 as ::core::ffi::c_int as isize)).opcode =
+                            (*aOp.offset(1 as isize)).opcode =
                                 crate::opcodes_h::OP_OpenWrite as crate::src::ext::rtree::rtree::u8_0;
                         }
-                        (*aOp.offset(1 as ::core::ffi::c_int as isize)).p2 =
+                        (*aOp.offset(1 as isize)).p2 =
                             (*pTab).tnum as ::core::ffi::c_int;
-                        (*aOp.offset(1 as ::core::ffi::c_int as isize)).p3 = iDb;
-                        (*aOp.offset(1 as ::core::ffi::c_int as isize)).p4type =
+                        (*aOp.offset(1 as isize)).p3 = iDb;
+                        (*aOp.offset(1 as isize)).p4type =
                             crate::src::src::vdbe::P4_INT32 as ::core::ffi::c_schar;
-                        (*aOp.offset(1 as ::core::ffi::c_int as isize)).p4.i =
+                        (*aOp.offset(1 as isize)).p4.i =
                             (*pTab).nCol as ::core::ffi::c_int + 1 as ::core::ffi::c_int;
-                        (*aOp.offset(3 as ::core::ffi::c_int as isize)).p2 =
+                        (*aOp.offset(3 as isize)).p2 =
                             (*pTab).nCol as ::core::ffi::c_int;
                         sParse.nVar = 0 as crate::sqliteInt_h::ynVar;
                         sParse.nMem = 1 as ::core::ffi::c_int;
@@ -566,7 +566,7 @@ unsafe extern "C" fn blobReadWrite(
                     
                     v as *mut crate::vdbeInt_h::Vdbe,
                     
-                    *(*v).apCsr.offset(0 as ::core::ffi::c_int as isize) as
+                    *(*v).apCsr.offset(0 as isize) as
     *mut crate::vdbeInt_h::VdbeCursor,
                     crate::sqlite3_h::SQLITE_DELETE,
                     (*p).zDb,

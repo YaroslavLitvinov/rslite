@@ -114,7 +114,7 @@ unsafe extern "C" fn minmaxFunc(
     };
     pColl = sqlite3GetFuncCollSeq(context);
     iBest = 0 as ::core::ffi::c_int;
-    if crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    if crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value) == crate::sqlite3_h::SQLITE_NULL {
         return;
     }
@@ -153,7 +153,7 @@ unsafe extern "C" fn typeofFunc(
         b"null\0" as *const u8 as *const ::core::ffi::c_char,
     ];
     let mut i: ::core::ffi::c_int =
-        crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as ::core::ffi::c_int as isize) as
+        crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value)
             - 1 as ::core::ffi::c_int;
     crate::src::src::vdbeapi::sqlite3_result_text(
@@ -173,7 +173,7 @@ unsafe extern "C" fn subtypeFunc(
     crate::src::src::vdbeapi::sqlite3_result_int(
         
         context as *mut crate::vdbeInt_h::sqlite3_context,
-        crate::src::src::vdbeapi::sqlite3_value_subtype(*argv.offset(0 as ::core::ffi::c_int as isize) as
+        crate::src::src::vdbeapi::sqlite3_value_subtype(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value) as ::core::ffi::c_int,
     );
 }
@@ -183,20 +183,20 @@ unsafe extern "C" fn lengthFunc(
     mut _argc: ::core::ffi::c_int,
     mut argv: *mut *mut crate::vdbeInt_h::sqlite3_value,
 ) {
-    match  crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    match  crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value) {
     crate::sqlite3_h::SQLITE_BLOB_1 | crate::sqlite3_h::SQLITE_INTEGER_1 |
         crate::sqlite3_h::SQLITE_FLOAT_1 =>  {
             crate::src::src::vdbeapi::sqlite3_result_int(
                 
                 context as *mut crate::vdbeInt_h::sqlite3_context,
-                crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as ::core::ffi::c_int as isize) as
+                crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value),
             );
         }
     crate::sqlite3_h::SQLITE_TEXT_1 =>  {
             let mut z: *const ::core::ffi::c_uchar =
-                crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as ::core::ffi::c_int as isize) as
+                crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
             let mut z0: *const ::core::ffi::c_uchar = ::core::ptr::null::<::core::ffi::c_uchar>();
             let mut c: ::core::ffi::c_uchar = 0;
@@ -236,13 +236,13 @@ unsafe extern "C" fn bytelengthFunc(
     mut _argc: ::core::ffi::c_int,
     mut argv: *mut *mut crate::vdbeInt_h::sqlite3_value,
 ) {
-    match  crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    match  crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value) {
     crate::sqlite3_h::SQLITE_BLOB_1 =>  {
             crate::src::src::vdbeapi::sqlite3_result_int(
                 
                 context as *mut crate::vdbeInt_h::sqlite3_context,
-                crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as ::core::ffi::c_int as isize) as
+                crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value),
             );
         }
@@ -258,27 +258,27 @@ unsafe extern "C" fn bytelengthFunc(
             crate::src::src::vdbeapi::sqlite3_result_int64(
                 
                 context as *mut crate::vdbeInt_h::sqlite3_context,
-                crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as ::core::ffi::c_int as isize) as
+                crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value)
                     as crate::sqlite3_h::sqlite3_int64
                     * m as crate::sqlite3_h::sqlite3_int64,
             );
         }
     crate::sqlite3_h::SQLITE_TEXT_1 =>  {
-            if crate::src::src::vdbeapi::sqlite3_value_encoding(*argv.offset(0 as ::core::ffi::c_int as isize) as
+            if crate::src::src::vdbeapi::sqlite3_value_encoding(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value) <= crate::sqlite3_h::SQLITE_UTF8
             {
                 crate::src::src::vdbeapi::sqlite3_result_int(
                     
                     context as *mut crate::vdbeInt_h::sqlite3_context,
-                    crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as ::core::ffi::c_int as isize) as
+                    crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value),
                 );
             } else {
                 crate::src::src::vdbeapi::sqlite3_result_int(
                     
                     context as *mut crate::vdbeInt_h::sqlite3_context,
-                    crate::src::src::vdbeapi::sqlite3_value_bytes16(*argv.offset(0 as ::core::ffi::c_int as isize) as
+                    crate::src::src::vdbeapi::sqlite3_value_bytes16(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value),
                 );
             }
@@ -294,11 +294,11 @@ unsafe extern "C" fn absFunc(
     mut _argc: ::core::ffi::c_int,
     mut argv: *mut *mut crate::vdbeInt_h::sqlite3_value,
 ) {
-    match  crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    match  crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value) {
     crate::sqlite3_h::SQLITE_INTEGER_1 =>  {
             let mut iVal: crate::src::ext::rtree::rtree::i64_0 =
-                crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(0 as ::core::ffi::c_int as isize) as
+                crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value) as crate::src::ext::rtree::rtree::i64_0;
             if iVal < 0 as crate::src::ext::rtree::rtree::i64_0 {
                 if iVal == crate::fts3Int_h::SMALLEST_INT64 {
@@ -319,7 +319,7 @@ unsafe extern "C" fn absFunc(
         }
     _ =>  {
             let mut rVal: ::core::ffi::c_double =
-                crate::src::src::vdbeapi::sqlite3_value_double(*argv.offset(0 as ::core::ffi::c_int as isize) as
+                crate::src::src::vdbeapi::sqlite3_value_double(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
             if rVal < 0 as ::core::ffi::c_int as ::core::ffi::c_double {
                 rVal = -rVal;
@@ -346,36 +346,36 @@ unsafe extern "C" fn instrFunc(
     let mut firstChar: ::core::ffi::c_uchar = 0;
     let mut pC1: *mut crate::vdbeInt_h::sqlite3_value = ::core::ptr::null_mut::<crate::vdbeInt_h::sqlite3_value>();
     let mut pC2: *mut crate::vdbeInt_h::sqlite3_value = ::core::ptr::null_mut::<crate::vdbeInt_h::sqlite3_value>();
-    typeHaystack = crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    typeHaystack = crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
-    typeNeedle = crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(1 as ::core::ffi::c_int as isize) as
+    typeNeedle = crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(1 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     if typeHaystack == crate::sqlite3_h::SQLITE_NULL || typeNeedle == crate::sqlite3_h::SQLITE_NULL {
         return;
     }
-    nHaystack = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    nHaystack = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
-    nNeedle = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(1 as ::core::ffi::c_int as isize) as
+    nNeedle = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(1 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     if nNeedle > 0 as ::core::ffi::c_int {
         if typeHaystack == crate::sqlite3_h::SQLITE_BLOB_1 && typeNeedle == crate::sqlite3_h::SQLITE_BLOB_1 {
-            zHaystack = crate::src::src::vdbeapi::sqlite3_value_blob(*argv.offset(0 as ::core::ffi::c_int as isize) as
+            zHaystack = crate::src::src::vdbeapi::sqlite3_value_blob(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value)
                 as *const ::core::ffi::c_uchar;
-            zNeedle = crate::src::src::vdbeapi::sqlite3_value_blob(*argv.offset(1 as ::core::ffi::c_int as isize) as
+            zNeedle = crate::src::src::vdbeapi::sqlite3_value_blob(*argv.offset(1 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value)
                 as *const ::core::ffi::c_uchar;
             isText = 0 as ::core::ffi::c_int;
             current_block = 1109700713171191020;
         } else if typeHaystack != crate::sqlite3_h::SQLITE_BLOB_1 && typeNeedle != crate::sqlite3_h::SQLITE_BLOB_1 {
-            zHaystack = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as ::core::ffi::c_int as isize) as
+            zHaystack = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
-            zNeedle = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(1 as ::core::ffi::c_int as isize) as
+            zNeedle = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(1 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
             isText = 1 as ::core::ffi::c_int;
             current_block = 1109700713171191020;
         } else {
-            pC1 =  crate::src::src::vdbeapi::sqlite3_value_dup(*argv.offset(0 as ::core::ffi::c_int as isize) as
+            pC1 =  crate::src::src::vdbeapi::sqlite3_value_dup(*argv.offset(0 as isize) as
     *const crate::vdbeInt_h::sqlite3_value) as
     *mut crate::vdbeInt_h::sqlite3_value;
             zHaystack = crate::src::src::vdbeapi::sqlite3_value_text(pC1 as *mut crate::vdbeInt_h::sqlite3_value);
@@ -383,7 +383,7 @@ unsafe extern "C" fn instrFunc(
                 current_block = 7048750207206689312;
             } else {
                 nHaystack = crate::src::src::vdbeapi::sqlite3_value_bytes(pC1 as *mut crate::vdbeInt_h::sqlite3_value);
-                pC2 =  crate::src::src::vdbeapi::sqlite3_value_dup(*argv.offset(1 as ::core::ffi::c_int as isize) as
+                pC2 =  crate::src::src::vdbeapi::sqlite3_value_dup(*argv.offset(1 as isize) as
     *const crate::vdbeInt_h::sqlite3_value) as
     *mut crate::vdbeInt_h::sqlite3_value;
                 zNeedle = crate::src::src::vdbeapi::sqlite3_value_text(pC2 as *mut crate::vdbeInt_h::sqlite3_value);
@@ -401,9 +401,9 @@ unsafe extern "C" fn instrFunc(
                 if zNeedle.is_null() || nHaystack != 0 && zHaystack.is_null() {
                     current_block = 7048750207206689312;
                 } else {
-                    firstChar = *zNeedle.offset(0 as ::core::ffi::c_int as isize);
+                    firstChar = *zNeedle.offset(0 as isize);
                     while nNeedle <= nHaystack
-                        && (*zHaystack.offset(0 as ::core::ffi::c_int as isize)
+                        && (*zHaystack.offset(0 as isize)
                             as ::core::ffi::c_int
                             != firstChar as ::core::ffi::c_int
                             || ::libc::memcmp(
@@ -417,7 +417,7 @@ unsafe extern "C" fn instrFunc(
                             nHaystack -= 1;
                             zHaystack = zHaystack.offset(1);
                             if !(isText != 0
-                                && *zHaystack.offset(0 as ::core::ffi::c_int as isize)
+                                && *zHaystack.offset(0 as isize)
                                     as ::core::ffi::c_int
                                     & 0xc0 as ::core::ffi::c_int
                                     == 0x80 as ::core::ffi::c_int)
@@ -478,14 +478,14 @@ unsafe extern "C" fn printfFunc(
     let mut db: *mut crate::sqliteInt_h::sqlite3 =  crate::src::src::vdbeapi::sqlite3_context_db_handle(context as *mut crate::vdbeInt_h::sqlite3_context) as
     *mut crate::sqliteInt_h::sqlite3;
     if argc >= 1 as ::core::ffi::c_int && {
-        zFormat = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as ::core::ffi::c_int as isize) as
+        zFormat = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value)
             as *const ::core::ffi::c_char;
         !zFormat.is_null()
     } {
         x.nArg = argc - 1 as ::core::ffi::c_int;
         x.nUsed = 0 as ::core::ffi::c_int;
-        x.apArg = argv.offset(1 as ::core::ffi::c_int as isize);
+        x.apArg = argv.offset(1 as isize);
         crate::src::src::printf::sqlite3StrAccumInit(
             
             &raw mut str as *mut _ as *mut crate::sqliteInt_h::sqlite3_str,
@@ -519,21 +519,21 @@ unsafe extern "C" fn substrFunc(
     let mut p0type: ::core::ffi::c_int = 0;
     let mut p1: crate::src::ext::rtree::rtree::i64_0 = 0;
     let mut p2: crate::src::ext::rtree::rtree::i64_0 = 0;
-    p0type = crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    p0type = crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
-    p1 = crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(1 as ::core::ffi::c_int as isize) as
+    p1 = crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(1 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value) as crate::src::ext::rtree::rtree::i64_0;
     if p0type == crate::sqlite3_h::SQLITE_BLOB_1 {
-        len = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as ::core::ffi::c_int as isize) as
+        len = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
-        z = crate::src::src::vdbeapi::sqlite3_value_blob(*argv.offset(0 as ::core::ffi::c_int as isize) as
+        z = crate::src::src::vdbeapi::sqlite3_value_blob(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value)
             as *const ::core::ffi::c_uchar;
         if z.is_null() {
             return;
         }
     } else {
-        z = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as ::core::ffi::c_int as isize) as
+        z = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
         if z.is_null() {
             return;
@@ -556,10 +556,10 @@ unsafe extern "C" fn substrFunc(
         }
     }
     if argc == 3 as ::core::ffi::c_int {
-        p2 = crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(2 as ::core::ffi::c_int as isize) as
+        p2 = crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(2 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value) as crate::src::ext::rtree::rtree::i64_0;
         if p2 == 0 as crate::src::ext::rtree::rtree::i64_0
-            && crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(2 as ::core::ffi::c_int as isize) as
+            && crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(2 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value) == crate::sqlite3_h::SQLITE_NULL
         {
             return;
@@ -569,7 +569,7 @@ unsafe extern "C" fn substrFunc(
     *mut crate::sqliteInt_h::sqlite3)).aLimit[crate::sqlite3_h::SQLITE_LIMIT_LENGTH as usize] as crate::src::ext::rtree::rtree::i64_0;
     }
     if p1 == 0 as crate::src::ext::rtree::rtree::i64_0 {
-        if crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(1 as ::core::ffi::c_int as isize) as
+        if crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(1 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value) == crate::sqlite3_h::SQLITE_NULL {
             return;
         }
@@ -664,11 +664,11 @@ unsafe extern "C" fn roundFunc(
     let mut r: ::core::ffi::c_double = 0.;
     let mut zBuf: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
     if argc == 2 as ::core::ffi::c_int {
-        if crate::sqlite3_h::SQLITE_NULL == crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(1 as ::core::ffi::c_int as isize) as
+        if crate::sqlite3_h::SQLITE_NULL == crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(1 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value) {
             return;
         }
-        n = crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(1 as ::core::ffi::c_int as isize) as
+        n = crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(1 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value) as crate::src::ext::rtree::rtree::i64_0;
         if n > 30 as crate::src::ext::rtree::rtree::i64_0 {
             n = 30 as crate::src::ext::rtree::rtree::i64_0;
@@ -677,11 +677,11 @@ unsafe extern "C" fn roundFunc(
             n = 0 as crate::src::ext::rtree::rtree::i64_0;
         }
     }
-    if crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    if crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value) == crate::sqlite3_h::SQLITE_NULL {
         return;
     }
-    r = crate::src::src::vdbeapi::sqlite3_value_double(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    r = crate::src::src::vdbeapi::sqlite3_value_double(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     if !(r < -4503599627370496.0f64 || r > 4503599627370496.0f64) {
         if n == 0 as crate::src::ext::rtree::rtree::i64_0 {
@@ -736,10 +736,10 @@ unsafe extern "C" fn upperFunc(
     let mut z2: *const ::core::ffi::c_char = ::core::ptr::null::<::core::ffi::c_char>();
     let mut i: ::core::ffi::c_int = 0;
     let mut n: ::core::ffi::c_int = 0;
-    z2 = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    z2 = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value)
         as *mut ::core::ffi::c_char;
-    n = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    n = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     if !z2.is_null() {
         z1 = contextMalloc(context, n as crate::src::ext::rtree::rtree::i64_0 + 1 as crate::src::ext::rtree::rtree::i64_0) as *mut ::core::ffi::c_char;
@@ -774,10 +774,10 @@ unsafe extern "C" fn lowerFunc(
     let mut z2: *const ::core::ffi::c_char = ::core::ptr::null::<::core::ffi::c_char>();
     let mut i: ::core::ffi::c_int = 0;
     let mut n: ::core::ffi::c_int = 0;
-    z2 = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    z2 = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value)
         as *mut ::core::ffi::c_char;
-    n = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    n = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     if !z2.is_null() {
         z1 = contextMalloc(context, n as crate::src::ext::rtree::rtree::i64_0 + 1 as crate::src::ext::rtree::rtree::i64_0) as *mut ::core::ffi::c_char;
@@ -824,7 +824,7 @@ unsafe extern "C" fn randomBlob(
 ) {
     let mut n: crate::sqlite3_h::sqlite3_int64 = 0;
     let mut p: *mut ::core::ffi::c_uchar = ::core::ptr::null_mut::<::core::ffi::c_uchar>();
-    n = crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    n = crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     if n < 1 as crate::sqlite3_h::sqlite3_int64 {
         n = 1 as crate::sqlite3_h::sqlite3_int64;
@@ -912,7 +912,7 @@ unsafe extern "C" fn patternCompare(
     let mut noCase: crate::src::ext::rtree::rtree::u8_0 = (*pInfo).noCase;
     let mut zEscaped: *const crate::src::ext::rtree::rtree::u8_0 = ::core::ptr::null::<crate::src::ext::rtree::rtree::u8_0>();
     loop {
-        c = if (*zPattern.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+        c = if (*zPattern.offset(0 as isize) as ::core::ffi::c_int)
             < 0x80 as ::core::ffi::c_int
         {
             let fresh0 = zPattern;
@@ -926,7 +926,7 @@ unsafe extern "C" fn patternCompare(
         }
         if c == matchAll {
             loop {
-                c = if (*zPattern.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+                c = if (*zPattern.offset(0 as isize) as ::core::ffi::c_int)
                     < 0x80 as ::core::ffi::c_int
                 {
                     let fresh1 = zPattern;
@@ -998,7 +998,7 @@ unsafe extern "C" fn patternCompare(
                         zString as *const ::core::ffi::c_char,
                         &raw mut zStop as *mut ::core::ffi::c_char,
                     ) as isize);
-                    if *zString.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+                    if *zString.offset(0 as isize) as ::core::ffi::c_int
                         == 0 as ::core::ffi::c_int
                     {
                         break;
@@ -1012,7 +1012,7 @@ unsafe extern "C" fn patternCompare(
             } else {
                 let mut bMatch_1: ::core::ffi::c_int = 0;
                 loop {
-                    c2 = if (*zString.offset(0 as ::core::ffi::c_int as isize)
+                    c2 = if (*zString.offset(0 as isize)
                         as ::core::ffi::c_int)
                         < 0x80 as ::core::ffi::c_int
                     {
@@ -1064,9 +1064,9 @@ unsafe extern "C" fn patternCompare(
                 }
                 while c2 != 0 && c2 != ']' as i32 as crate::src::ext::rtree::rtree::u32_0 {
                     if c2 == '-' as i32 as crate::src::ext::rtree::rtree::u32_0
-                        && *zPattern.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+                        && *zPattern.offset(0 as isize) as ::core::ffi::c_int
                             != ']' as i32
-                        && *zPattern.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+                        && *zPattern.offset(0 as isize) as ::core::ffi::c_int
                             != 0 as ::core::ffi::c_int
                         && prior_c > 0 as crate::src::ext::rtree::rtree::u32_0
                     {
@@ -1089,7 +1089,7 @@ unsafe extern "C" fn patternCompare(
                 continue;
             }
         }
-        c2 = if (*zString.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+        c2 = if (*zString.offset(0 as isize) as ::core::ffi::c_int)
             < 0x80 as ::core::ffi::c_int
         {
             let fresh4 = zString;
@@ -1184,7 +1184,7 @@ unsafe extern "C" fn likeFunc(
         matchSet: 0,
         noCase: 0,
     };
-    nPat = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    nPat = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     if nPat > (*db).aLimit[crate::sqlite3_h::SQLITE_LIMIT_LIKE_PATTERN_LENGTH as usize] {
         crate::src::src::vdbeapi::sqlite3_result_error(
@@ -1197,7 +1197,7 @@ unsafe extern "C" fn likeFunc(
     }
     if argc == 3 as ::core::ffi::c_int {
         let mut zEsc: *const ::core::ffi::c_uchar =
-            crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(2 as ::core::ffi::c_int as isize) as
+            crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(2 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
         if zEsc.is_null() {
             return;
@@ -1232,9 +1232,9 @@ unsafe extern "C" fn likeFunc(
     } else {
         escape = (*pInfo).matchSet as crate::src::ext::rtree::rtree::u32_0;
     }
-    zB = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    zB = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
-    zA = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(1 as ::core::ffi::c_int as isize) as
+    zA = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(1 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     if !zA.is_null() && !zB.is_null() {
         sqlite3_like_count += 1;
@@ -1255,16 +1255,16 @@ unsafe extern "C" fn nullifFunc(
     let mut pColl: *mut crate::sqliteInt_h::CollSeq = sqlite3GetFuncCollSeq(context);
     if crate::src::src::vdbeaux::sqlite3MemCompare(
         
-        *argv.offset(0 as ::core::ffi::c_int as isize) as
+        *argv.offset(0 as isize) as
     *const crate::vdbeInt_h::sqlite3_value,
         
-        *argv.offset(1 as ::core::ffi::c_int as isize) as
+        *argv.offset(1 as isize) as
     *const crate::vdbeInt_h::sqlite3_value,
         
         pColl as *const crate::sqliteInt_h::CollSeq,
     ) != 0 as ::core::ffi::c_int
     {
-        crate::src::src::vdbeapi::sqlite3_result_value(context as *mut crate::vdbeInt_h::sqlite3_context,  *argv.offset(0 as ::core::ffi::c_int as isize) as
+        crate::src::src::vdbeapi::sqlite3_result_value(context as *mut crate::vdbeInt_h::sqlite3_context,  *argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     }
 }
@@ -1303,10 +1303,10 @@ unsafe extern "C" fn errlogFunc(
     mut argv: *mut *mut crate::vdbeInt_h::sqlite3_value,
 ) {
     crate::src::src::printf::sqlite3_log(
-        crate::src::src::vdbeapi::sqlite3_value_int(*argv.offset(0 as ::core::ffi::c_int as isize) as
+        crate::src::src::vdbeapi::sqlite3_value_int(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value),
         b"%s\0" as *const u8 as *const ::core::ffi::c_char,
-        crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(1 as ::core::ffi::c_int as isize) as
+        crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(1 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value),
     );
 }
@@ -1317,7 +1317,7 @@ unsafe extern "C" fn compileoptionusedFunc(
     mut argv: *mut *mut crate::vdbeInt_h::sqlite3_value,
 ) {
     let mut zOptName: *const ::core::ffi::c_char = ::core::ptr::null::<::core::ffi::c_char>();
-    zOptName = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    zOptName = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value)
         as *const ::core::ffi::c_char;
     if !zOptName.is_null() {
@@ -1331,7 +1331,7 @@ unsafe extern "C" fn compileoptiongetFunc(
     mut argv: *mut *mut crate::vdbeInt_h::sqlite3_value,
 ) {
     let mut n: ::core::ffi::c_int = 0;
-    n = crate::src::src::vdbeapi::sqlite3_value_int(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    n = crate::src::src::vdbeapi::sqlite3_value_int(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     crate::src::src::vdbeapi::sqlite3_result_text(
         
@@ -1431,8 +1431,8 @@ pub unsafe extern "C" fn sqlite3QuoteValue(
                     '\'' as i32 as ::core::ffi::c_char;
                 *zText.offset((nBlob * 2 as crate::src::ext::rtree::rtree::i64_0 + 3 as crate::src::ext::rtree::rtree::i64_0) as isize) =
                     '\0' as i32 as ::core::ffi::c_char;
-                *zText.offset(0 as ::core::ffi::c_int as isize) = 'X' as i32 as ::core::ffi::c_char;
-                *zText.offset(1 as ::core::ffi::c_int as isize) =
+                *zText.offset(0 as isize) = 'X' as i32 as ::core::ffi::c_char;
+                *zText.offset(1 as isize) =
                     '\'' as i32 as ::core::ffi::c_char;
                 (*pStr).nChar = (nBlob * 2 as crate::src::ext::rtree::rtree::i64_0 + 3 as crate::src::ext::rtree::rtree::i64_0) as crate::src::ext::rtree::rtree::u32_0;
             }
@@ -1499,13 +1499,13 @@ unsafe extern "C" fn unistrFunc(
     let mut j: ::core::ffi::c_int = 0;
     let mut n: ::core::ffi::c_int = 0;
     let mut v: crate::src::ext::rtree::rtree::u32_0 = 0;
-    zIn = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    zIn = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value)
         as *const ::core::ffi::c_char;
     if zIn.is_null() {
         return;
     }
-    nIn = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    nIn = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     zOut = crate::src::src::malloc::sqlite3_malloc64((nIn + 1 as ::core::ffi::c_int) as crate::sqlite3_h::sqlite3_uint64)
         as *mut ::core::ffi::c_char;
@@ -1690,7 +1690,7 @@ unsafe extern "C" fn quoteFunc(
     );
     sqlite3QuoteValue(
         &raw mut str,
-        *argv.offset(0 as ::core::ffi::c_int as isize),
+        *argv.offset(0 as isize),
         crate::src::src::vdbeapi::sqlite3_user_data(context as *mut crate::vdbeInt_h::sqlite3_context) as crate::stdlib::intptr_t as ::core::ffi::c_int,
     );
     crate::src::src::vdbeapi::sqlite3_result_text(
@@ -1712,9 +1712,9 @@ unsafe extern "C" fn unicodeFunc(
     mut argv: *mut *mut crate::vdbeInt_h::sqlite3_value,
 ) {
     let mut z: *const ::core::ffi::c_uchar =
-        crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as ::core::ffi::c_int as isize) as
+        crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
-    if !z.is_null() && *z.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int != 0 {
+    if !z.is_null() && *z.offset(0 as isize) as ::core::ffi::c_int != 0 {
         crate::src::src::vdbeapi::sqlite3_result_int(context as *mut crate::vdbeInt_h::sqlite3_context, crate::src::src::utf::sqlite3Utf8Read(&raw mut z) as ::core::ffi::c_int);
     }
 }
@@ -1820,10 +1820,10 @@ unsafe extern "C" fn hexFunc(
     let mut pBlob: *const ::core::ffi::c_uchar = ::core::ptr::null::<::core::ffi::c_uchar>();
     let mut zHex: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
     let mut z: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
-    pBlob = crate::src::src::vdbeapi::sqlite3_value_blob(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    pBlob = crate::src::src::vdbeapi::sqlite3_value_blob(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value)
         as *const ::core::ffi::c_uchar;
-    n = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    n = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     zHex = contextMalloc(context, n as crate::src::ext::rtree::rtree::i64_0 * 2 as crate::src::ext::rtree::rtree::i64_0 + 1 as crate::src::ext::rtree::rtree::i64_0) as *mut ::core::ffi::c_char;
     z = zHex;
@@ -1861,7 +1861,7 @@ unsafe extern "C" fn strContainsChar(
     let mut zEnd: *const crate::src::ext::rtree::rtree::u8_0 = zStr.offset(nStr as isize) as *const crate::src::ext::rtree::rtree::u8_0;
     let mut z: *const crate::src::ext::rtree::rtree::u8_0 = zStr;
     while z < zEnd {
-        let mut tst: crate::src::ext::rtree::rtree::u32_0 = if (*z.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+        let mut tst: crate::src::ext::rtree::rtree::u32_0 = if (*z.offset(0 as isize) as ::core::ffi::c_int)
             < 0x80 as ::core::ffi::c_int
         {
             let fresh17 = z;
@@ -1886,17 +1886,17 @@ unsafe extern "C" fn unhexFunc(
     let mut zPass: *const crate::src::ext::rtree::rtree::u8_0 = b"\0" as *const u8 as *const ::core::ffi::c_char as *const crate::src::ext::rtree::rtree::u8_0;
     let mut nPass: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut zHex: *const crate::src::ext::rtree::rtree::u8_0 =
-        crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as ::core::ffi::c_int as isize) as
+        crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value) as *const crate::src::ext::rtree::rtree::u8_0;
     let mut nHex: ::core::ffi::c_int =
-        crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as ::core::ffi::c_int as isize) as
+        crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     let mut pBlob: *mut crate::src::ext::rtree::rtree::u8_0 = ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>();
     let mut p: *mut crate::src::ext::rtree::rtree::u8_0 = ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>();
     if argc == 2 as ::core::ffi::c_int {
-        zPass = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(1 as ::core::ffi::c_int as isize) as
+        zPass = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(1 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value) as *const crate::src::ext::rtree::rtree::u8_0;
-        nPass = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(1 as ::core::ffi::c_int as isize) as
+        nPass = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(1 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     }
     if zHex.is_null() || zPass.is_null() {
@@ -1921,7 +1921,7 @@ unsafe extern "C" fn unhexFunc(
                 & 0x8 as ::core::ffi::c_int
                 == 0
             {
-                let mut ch: crate::src::ext::rtree::rtree::u32_0 = if (*zHex.offset(0 as ::core::ffi::c_int as isize)
+                let mut ch: crate::src::ext::rtree::rtree::u32_0 = if (*zHex.offset(0 as isize)
                     as ::core::ffi::c_int)
                     < 0x80 as ::core::ffi::c_int
                 {
@@ -1984,7 +1984,7 @@ unsafe extern "C" fn zeroblobFunc(
 ) {
     let mut n: crate::src::ext::rtree::rtree::i64_0 = 0;
     let mut rc: ::core::ffi::c_int = 0;
-    n = crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    n = crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value) as crate::src::ext::rtree::rtree::i64_0;
     if n < 0 as crate::src::ext::rtree::rtree::i64_0 {
         n = 0 as crate::src::ext::rtree::rtree::i64_0;
@@ -2014,19 +2014,19 @@ unsafe extern "C" fn replaceFunc(
     let mut cntExpand: ::core::ffi::c_uint = 0;
     let mut db: *mut crate::sqliteInt_h::sqlite3 =  crate::src::src::vdbeapi::sqlite3_context_db_handle(context as *mut crate::vdbeInt_h::sqlite3_context) as
     *mut crate::sqliteInt_h::sqlite3;
-    zStr = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    zStr = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     if zStr.is_null() {
         return;
     }
-    nStr = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    nStr = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
-    zPattern = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(1 as ::core::ffi::c_int as isize) as
+    zPattern = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(1 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     if zPattern.is_null() {
         return;
     }
-    if *zPattern.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+    if *zPattern.offset(0 as isize) as ::core::ffi::c_int
         == 0 as ::core::ffi::c_int
     {
         crate::src::src::vdbeapi::sqlite3_result_text(
@@ -2041,14 +2041,14 @@ unsafe extern "C" fn replaceFunc(
         );
         return;
     }
-    nPattern = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(1 as ::core::ffi::c_int as isize) as
+    nPattern = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(1 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
-    zRep = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(2 as ::core::ffi::c_int as isize) as
+    zRep = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(2 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     if zRep.is_null() {
         return;
     }
-    nRep = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(2 as ::core::ffi::c_int as isize) as
+    nRep = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(2 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     nOut = (nStr + 1 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::i64_0;
     zOut = contextMalloc(context, nOut) as *mut ::core::ffi::c_uchar;
@@ -2061,7 +2061,7 @@ unsafe extern "C" fn replaceFunc(
     i = j;
     while i <= loopLimit {
         if *zStr.offset(i as isize) as ::core::ffi::c_int
-            != *zPattern.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+            != *zPattern.offset(0 as isize) as ::core::ffi::c_int
             || ::libc::memcmp(
                 zStr.offset(i as isize) as *const ::core::ffi::c_uchar
                     as *const ::core::ffi::c_void,
@@ -2138,17 +2138,17 @@ unsafe extern "C" fn trimFunc(
     let mut azChar: *mut *mut ::core::ffi::c_uchar =
         ::core::ptr::null_mut::<*mut ::core::ffi::c_uchar>();
     let mut nChar: ::core::ffi::c_int = 0;
-    if crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    if crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value) == crate::sqlite3_h::SQLITE_NULL {
         return;
     }
-    zIn = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    zIn = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     if zIn.is_null() {
         return;
     }
     nIn =
-        crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as ::core::ffi::c_int as isize) as
+        crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value) as ::core::ffi::c_uint;
     if argc == 1 as ::core::ffi::c_int {
         static mut lenOne: [::core::ffi::c_uint; 1] =
@@ -2161,7 +2161,7 @@ unsafe extern "C" fn trimFunc(
             &raw const azOne as *const *mut ::core::ffi::c_uchar as *mut *mut ::core::ffi::c_uchar;
         zCharSet = ::core::ptr::null::<::core::ffi::c_uchar>();
     } else {
-        zCharSet = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(1 as ::core::ffi::c_int as isize) as
+        zCharSet = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(1 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
         if zCharSet.is_null() {
             return;
@@ -2366,10 +2366,10 @@ unsafe extern "C" fn concatwsFunc(
     mut argv: *mut *mut crate::vdbeInt_h::sqlite3_value,
 ) {
     let mut nSep: ::core::ffi::c_int =
-        crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as ::core::ffi::c_int as isize) as
+        crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     let mut zSep: *const ::core::ffi::c_char =
-        crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as ::core::ffi::c_int as isize) as
+        crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value)
             as *const ::core::ffi::c_char;
     if zSep.is_null() {
@@ -2378,7 +2378,7 @@ unsafe extern "C" fn concatwsFunc(
     concatFuncCore(
         context,
         argc - 1 as ::core::ffi::c_int,
-        argv.offset(1 as ::core::ffi::c_int as isize),
+        argv.offset(1 as isize),
         nSep,
         zSep,
     );
@@ -2390,7 +2390,7 @@ unsafe extern "C" fn loadExt(
     mut argv: *mut *mut crate::vdbeInt_h::sqlite3_value,
 ) {
     let mut zFile: *const ::core::ffi::c_char =
-        crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as ::core::ffi::c_int as isize) as
+        crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value)
             as *const ::core::ffi::c_char;
     let mut zProc: *const ::core::ffi::c_char = ::core::ptr::null::<::core::ffi::c_char>();
@@ -2407,7 +2407,7 @@ unsafe extern "C" fn loadExt(
         return;
     }
     if argc == 2 as ::core::ffi::c_int {
-        zProc = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(1 as ::core::ffi::c_int as isize) as
+        zProc = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(1 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value)
             as *const ::core::ffi::c_char;
     } else {
@@ -2489,7 +2489,7 @@ unsafe extern "C" fn sumStep(
         context as *mut crate::vdbeInt_h::sqlite3_context,
         ::core::mem::size_of::<SumCtx>() as ::core::ffi::c_int,
     ) as *mut SumCtx;
-    type_0 = crate::src::src::vdbe::sqlite3_value_numeric_type(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    type_0 = crate::src::src::vdbe::sqlite3_value_numeric_type(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     if !p.is_null() && type_0 != crate::sqlite3_h::SQLITE_NULL {
         (*p).cnt += 1;
@@ -2499,14 +2499,14 @@ unsafe extern "C" fn sumStep(
                 (*p).approx = 1 as crate::src::ext::rtree::rtree::u8_0;
                 kahanBabuskaNeumaierStep(
                     p as *mut SumCtx,
-                    crate::src::src::vdbeapi::sqlite3_value_double(*argv.offset(0 as ::core::ffi::c_int as isize) as
+                    crate::src::src::vdbeapi::sqlite3_value_double(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value),
                 );
             } else {
                 let mut x: crate::src::ext::rtree::rtree::i64_0 = (*p).iSum;
                 if crate::src::src::util::sqlite3AddInt64(
                     &raw mut x,
-                    crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(0 as ::core::ffi::c_int as isize) as
+                    crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value) as crate::src::ext::rtree::rtree::i64_0,
                 ) == 0 as ::core::ffi::c_int
                 {
@@ -2517,7 +2517,7 @@ unsafe extern "C" fn sumStep(
                     (*p).approx = 1 as crate::src::ext::rtree::rtree::u8_0;
                     kahanBabuskaNeumaierStepInt64(
                         p as *mut SumCtx,
-                        crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(0 as ::core::ffi::c_int as isize) as
+                        crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value)
                             as crate::src::ext::rtree::rtree::i64_0,
                     );
@@ -2526,14 +2526,14 @@ unsafe extern "C" fn sumStep(
         } else if type_0 == crate::sqlite3_h::SQLITE_INTEGER_1 {
             kahanBabuskaNeumaierStepInt64(
                 p as *mut SumCtx,
-                crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(0 as ::core::ffi::c_int as isize) as
+                crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value) as crate::src::ext::rtree::rtree::i64_0,
             );
         } else {
             (*p).ovrfl = 0 as crate::src::ext::rtree::rtree::u8_0;
             kahanBabuskaNeumaierStep(
                 p as *mut SumCtx,
-                crate::src::src::vdbeapi::sqlite3_value_double(*argv.offset(0 as ::core::ffi::c_int as isize) as
+                crate::src::src::vdbeapi::sqlite3_value_double(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value),
             );
         }
@@ -2552,14 +2552,14 @@ unsafe extern "C" fn sumInverse(
         context as *mut crate::vdbeInt_h::sqlite3_context,
         ::core::mem::size_of::<SumCtx>() as ::core::ffi::c_int,
     ) as *mut SumCtx;
-    type_0 = crate::src::src::vdbe::sqlite3_value_numeric_type(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    type_0 = crate::src::src::vdbe::sqlite3_value_numeric_type(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     if !p.is_null() && type_0 != crate::sqlite3_h::SQLITE_NULL {
         (*p).cnt -= 1;
         if (*p).approx == 0 {
             if crate::src::src::util::sqlite3SubInt64(
                 &raw mut (*p).iSum,
-                crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(0 as ::core::ffi::c_int as isize) as
+                crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value) as crate::src::ext::rtree::rtree::i64_0,
             ) != 0
             {
@@ -2568,7 +2568,7 @@ unsafe extern "C" fn sumInverse(
             }
         } else if type_0 == crate::sqlite3_h::SQLITE_INTEGER_1 {
             let mut iVal: crate::src::ext::rtree::rtree::i64_0 =
-                crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(0 as ::core::ffi::c_int as isize) as
+                crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value) as crate::src::ext::rtree::rtree::i64_0;
             if iVal != crate::fts3Int_h::SMALLEST_INT64 {
                 kahanBabuskaNeumaierStepInt64(p as *mut SumCtx, -iVal);
@@ -2579,7 +2579,7 @@ unsafe extern "C" fn sumInverse(
         } else {
             kahanBabuskaNeumaierStep(
                 p as *mut SumCtx,
-                -crate::src::src::vdbeapi::sqlite3_value_double(*argv.offset(0 as ::core::ffi::c_int as isize) as
+                -crate::src::src::vdbeapi::sqlite3_value_double(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value),
             );
         }
@@ -2655,7 +2655,7 @@ unsafe extern "C" fn countStep(
         ::core::mem::size_of::<CountCtx>() as ::core::ffi::c_int,
     ) as *mut CountCtx;
     if (argc == 0 as ::core::ffi::c_int
-        || crate::sqlite3_h::SQLITE_NULL != crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as ::core::ffi::c_int as isize) as
+        || crate::sqlite3_h::SQLITE_NULL != crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value))
         && !p.is_null()
     {
@@ -2689,7 +2689,7 @@ unsafe extern "C" fn countInverse(
         ::core::mem::size_of::<CountCtx>() as ::core::ffi::c_int,
     ) as *mut CountCtx;
     if (argc == 0 as ::core::ffi::c_int
-        || crate::sqlite3_h::SQLITE_NULL != crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as ::core::ffi::c_int as isize) as
+        || crate::sqlite3_h::SQLITE_NULL != crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value))
         && !p.is_null()
     {
@@ -2702,7 +2702,7 @@ unsafe extern "C" fn minmaxStep(
     mut _NotUsed: ::core::ffi::c_int,
     mut argv: *mut *mut crate::vdbeInt_h::sqlite3_value,
 ) {
-    let mut pArg: *mut crate::src::src::vdbe::Mem = *argv.offset(0 as ::core::ffi::c_int as isize) as *mut crate::src::src::vdbe::Mem;
+    let mut pArg: *mut crate::src::src::vdbe::Mem = *argv.offset(0 as isize) as *mut crate::src::src::vdbe::Mem;
     let mut pBest: *mut crate::src::src::vdbe::Mem = ::core::ptr::null_mut::<crate::src::src::vdbe::Mem>();
     pBest = crate::src::src::vdbeapi::sqlite3_aggregate_context(context as *mut crate::vdbeInt_h::sqlite3_context, ::core::mem::size_of::<crate::src::src::vdbe::Mem>() as ::core::ffi::c_int)
         as *mut crate::src::src::vdbe::Mem;
@@ -2766,7 +2766,7 @@ unsafe extern "C" fn groupConcatStep(
     let mut zSep: *const ::core::ffi::c_char = ::core::ptr::null::<::core::ffi::c_char>();
     let mut nVal: ::core::ffi::c_int = 0;
     let mut nSep: ::core::ffi::c_int = 0;
-    if crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    if crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value) == crate::sqlite3_h::SQLITE_NULL {
         return;
     }
@@ -2793,10 +2793,10 @@ unsafe extern "C" fn groupConcatStep(
                 (*pGCC).nFirstSepLength = 1 as ::core::ffi::c_int;
             }
         } else if firstTerm == 0 {
-            zSep = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(1 as ::core::ffi::c_int as isize) as
+            zSep = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(1 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value)
                 as *mut ::core::ffi::c_char;
-            nSep = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(1 as ::core::ffi::c_int as isize) as
+            nSep = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(1 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
             if !zSep.is_null() {
                 crate::src::src::printf::sqlite3_str_append(&raw mut (*pGCC).str_0 as *mut _ as *mut crate::sqliteInt_h::sqlite3_str, zSep, nSep);
@@ -2839,14 +2839,14 @@ unsafe extern "C" fn groupConcatStep(
             }
         } else {
             (*pGCC).nFirstSepLength =
-                crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(1 as ::core::ffi::c_int as isize) as
+                crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(1 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
         }
         (*pGCC).nAccum += 1 as ::core::ffi::c_int;
-        zVal = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as ::core::ffi::c_int as isize) as
+        zVal = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value)
             as *mut ::core::ffi::c_char;
-        nVal = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as ::core::ffi::c_int as isize) as
+        nVal = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
         if !zVal.is_null() {
             crate::src::src::printf::sqlite3_str_append(&raw mut (*pGCC).str_0 as *mut _ as *mut crate::sqliteInt_h::sqlite3_str, zVal, nVal);
@@ -2860,7 +2860,7 @@ unsafe extern "C" fn groupConcatInverse(
     mut argv: *mut *mut crate::vdbeInt_h::sqlite3_value,
 ) {
     let mut pGCC: *mut GroupConcatCtx = ::core::ptr::null_mut::<GroupConcatCtx>();
-    if crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    if crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value) == crate::sqlite3_h::SQLITE_NULL {
         return;
     }
@@ -2871,9 +2871,9 @@ unsafe extern "C" fn groupConcatInverse(
     ) as *mut GroupConcatCtx;
     if !pGCC.is_null() {
         let mut nVS: ::core::ffi::c_int = 0;
-        crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as ::core::ffi::c_int as isize) as
+        crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
-        nVS = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as ::core::ffi::c_int as isize) as
+        nVS = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
         (*pGCC).nAccum -= 1 as ::core::ffi::c_int;
         if !(*pGCC).pnSepLengths.is_null() {
@@ -2883,7 +2883,7 @@ unsafe extern "C" fn groupConcatInverse(
                     (*pGCC).pnSepLengths as *mut ::core::ffi::c_void,
                     (*pGCC)
                         .pnSepLengths
-                        .offset(1 as ::core::ffi::c_int as isize)
+                        .offset(1 as isize)
                         as *const ::core::ffi::c_void,
                     (((*pGCC).nAccum - 1 as ::core::ffi::c_int) as crate::__stddef_size_t_h::size_t)
                         .wrapping_mul(::core::mem::size_of::<::core::ffi::c_int>() as crate::__stddef_size_t_h::size_t),
@@ -3047,35 +3047,35 @@ pub unsafe extern "C" fn sqlite3IsLikeFunction(
         3 as crate::__stddef_size_t_h::size_t,
     );
     if nExpr < 3 as ::core::ffi::c_int {
-        *aWc.offset(3 as ::core::ffi::c_int as isize) = 0 as ::core::ffi::c_char;
+        *aWc.offset(3 as isize) = 0 as ::core::ffi::c_char;
     } else {
         let mut pEscape: *mut crate::sqliteInt_h::Expr = (*(&raw mut (*(*pExpr).x.pList).a as *mut crate::sqliteInt_h::ExprList_item)
-            .offset(2 as ::core::ffi::c_int as isize))
+            .offset(2 as isize))
         .pExpr;
         let mut zEscape: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
         if (*pEscape).op as ::core::ffi::c_int != crate::src::parse::TK_STRING {
             return 0 as ::core::ffi::c_int;
         }
         zEscape = (*pEscape).u.zToken;
-        if *zEscape.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+        if *zEscape.offset(0 as isize) as ::core::ffi::c_int
             == 0 as ::core::ffi::c_int
-            || *zEscape.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+            || *zEscape.offset(1 as isize) as ::core::ffi::c_int
                 != 0 as ::core::ffi::c_int
         {
             return 0 as ::core::ffi::c_int;
         }
-        if *zEscape.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
-            == *aWc.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+        if *zEscape.offset(0 as isize) as ::core::ffi::c_int
+            == *aWc.offset(0 as isize) as ::core::ffi::c_int
         {
             return 0 as ::core::ffi::c_int;
         }
-        if *zEscape.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
-            == *aWc.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+        if *zEscape.offset(0 as isize) as ::core::ffi::c_int
+            == *aWc.offset(1 as isize) as ::core::ffi::c_int
         {
             return 0 as ::core::ffi::c_int;
         }
-        *aWc.offset(3 as ::core::ffi::c_int as isize) =
-            *zEscape.offset(0 as ::core::ffi::c_int as isize);
+        *aWc.offset(3 as isize) =
+            *zEscape.offset(0 as isize);
     }
     *pIsNocase =
         ((*pDef).funcFlags & crate::sqliteInt_h::SQLITE_FUNC_CASE as crate::src::ext::rtree::rtree::u32_0 == 0 as crate::src::ext::rtree::rtree::u32_0) as ::core::ffi::c_int;
@@ -3087,13 +3087,13 @@ unsafe extern "C" fn ceilingFunc(
     mut _argc: ::core::ffi::c_int,
     mut argv: *mut *mut crate::vdbeInt_h::sqlite3_value,
 ) {
-    match  crate::src::src::vdbe::sqlite3_value_numeric_type(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    match  crate::src::src::vdbe::sqlite3_value_numeric_type(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value) {
     crate::sqlite3_h::SQLITE_INTEGER_1 =>  {
             crate::src::src::vdbeapi::sqlite3_result_int64(
                 
                 context as *mut crate::vdbeInt_h::sqlite3_context,
-                crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(0 as ::core::ffi::c_int as isize) as
+                crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value),
             );
         }
@@ -3109,7 +3109,7 @@ unsafe extern "C" fn ceilingFunc(
                 context as *mut crate::vdbeInt_h::sqlite3_context,
                 x.expect("non-null function pointer")(crate::src::src::vdbeapi::sqlite3_value_double(
                     
-                    *argv.offset(0 as ::core::ffi::c_int as isize) as
+                    *argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value,
                 )),
             );
@@ -3134,10 +3134,10 @@ unsafe extern "C" fn logFunc(
     let mut x: ::core::ffi::c_double = 0.;
     let mut b: ::core::ffi::c_double = 0.;
     let mut ans: ::core::ffi::c_double = 0.;
-    match  crate::src::src::vdbe::sqlite3_value_numeric_type(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    match  crate::src::src::vdbe::sqlite3_value_numeric_type(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value) {
     crate::sqlite3_h::SQLITE_INTEGER_1 | crate::sqlite3_h::SQLITE_FLOAT_1 =>  {
-            x = crate::src::src::vdbeapi::sqlite3_value_double(*argv.offset(0 as ::core::ffi::c_int as isize) as
+            x = crate::src::src::vdbeapi::sqlite3_value_double(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
             if x <= 0.0f64 {
                 return;
@@ -3146,14 +3146,14 @@ unsafe extern "C" fn logFunc(
     _ =>  return,
 }
     if argc == 2 as ::core::ffi::c_int {
-        match  crate::src::src::vdbe::sqlite3_value_numeric_type(*argv.offset(0 as ::core::ffi::c_int as isize) as
+        match  crate::src::src::vdbe::sqlite3_value_numeric_type(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value) {
     crate::sqlite3_h::SQLITE_INTEGER_1 | crate::sqlite3_h::SQLITE_FLOAT_1 =>  {
                 b = crate::stdlib::log(x);
                 if b <= 0.0f64 {
                     return;
                 }
-                x = crate::src::src::vdbeapi::sqlite3_value_double(*argv.offset(1 as ::core::ffi::c_int as isize) as
+                x = crate::src::src::vdbeapi::sqlite3_value_double(*argv.offset(1 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
                 if x <= 0.0f64 {
                     return;
@@ -3195,12 +3195,12 @@ unsafe extern "C" fn math1Func(
     let mut v0: ::core::ffi::c_double = 0.;
     let mut ans: ::core::ffi::c_double = 0.;
     let mut x: Option<unsafe extern "C" fn(::core::ffi::c_double) -> ::core::ffi::c_double> = None;
-    type0 = crate::src::src::vdbe::sqlite3_value_numeric_type(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    type0 = crate::src::src::vdbe::sqlite3_value_numeric_type(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     if type0 != crate::sqlite3_h::SQLITE_INTEGER_1 && type0 != crate::sqlite3_h::SQLITE_FLOAT_1 {
         return;
     }
-    v0 = crate::src::src::vdbeapi::sqlite3_value_double(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    v0 = crate::src::src::vdbeapi::sqlite3_value_double(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     x = ::core::mem::transmute::<
         *mut ::core::ffi::c_void,
@@ -3223,19 +3223,19 @@ unsafe extern "C" fn math2Func(
     let mut x: Option<
         unsafe extern "C" fn(::core::ffi::c_double, ::core::ffi::c_double) -> ::core::ffi::c_double,
     > = None;
-    type0 = crate::src::src::vdbe::sqlite3_value_numeric_type(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    type0 = crate::src::src::vdbe::sqlite3_value_numeric_type(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     if type0 != crate::sqlite3_h::SQLITE_INTEGER_1 && type0 != crate::sqlite3_h::SQLITE_FLOAT_1 {
         return;
     }
-    type1 = crate::src::src::vdbe::sqlite3_value_numeric_type(*argv.offset(1 as ::core::ffi::c_int as isize) as
+    type1 = crate::src::src::vdbe::sqlite3_value_numeric_type(*argv.offset(1 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     if type1 != crate::sqlite3_h::SQLITE_INTEGER_1 && type1 != crate::sqlite3_h::SQLITE_FLOAT_1 {
         return;
     }
-    v0 = crate::src::src::vdbeapi::sqlite3_value_double(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    v0 = crate::src::src::vdbeapi::sqlite3_value_double(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
-    v1 = crate::src::src::vdbeapi::sqlite3_value_double(*argv.offset(1 as ::core::ffi::c_int as isize) as
+    v1 = crate::src::src::vdbeapi::sqlite3_value_double(*argv.offset(1 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     x = ::core::mem::transmute::<
         *mut ::core::ffi::c_void,
@@ -3265,12 +3265,12 @@ unsafe extern "C" fn signFunc(
 ) {
     let mut type0: ::core::ffi::c_int = 0;
     let mut x: ::core::ffi::c_double = 0.;
-    type0 = crate::src::src::vdbe::sqlite3_value_numeric_type(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    type0 = crate::src::src::vdbe::sqlite3_value_numeric_type(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     if type0 != crate::sqlite3_h::SQLITE_INTEGER_1 && type0 != crate::sqlite3_h::SQLITE_FLOAT_1 {
         return;
     }
-    x = crate::src::src::vdbeapi::sqlite3_value_double(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    x = crate::src::src::vdbeapi::sqlite3_value_double(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     crate::src::src::vdbeapi::sqlite3_result_int(
         
@@ -3368,9 +3368,9 @@ unsafe extern "C" fn percentStep(
             } else {
                 1.0f64
             };
-        eType = crate::src::src::vdbe::sqlite3_value_numeric_type(*argv.offset(1 as ::core::ffi::c_int as isize) as
+        eType = crate::src::src::vdbe::sqlite3_value_numeric_type(*argv.offset(1 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
-        rPct = crate::src::src::vdbeapi::sqlite3_value_double(*argv.offset(1 as ::core::ffi::c_int as isize) as
+        rPct = crate::src::src::vdbeapi::sqlite3_value_double(*argv.offset(1 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value) / mxFrac;
         if eType != crate::sqlite3_h::SQLITE_INTEGER_1 && eType != crate::sqlite3_h::SQLITE_FLOAT_1 || rPct < 0.0f64 || rPct > 1.0f64 {
             percentError(
@@ -3401,7 +3401,7 @@ unsafe extern "C" fn percentStep(
         );
         return;
     }
-    eType = crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    eType = crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     if eType == crate::sqlite3_h::SQLITE_NULL {
         return;
@@ -3413,7 +3413,7 @@ unsafe extern "C" fn percentStep(
         );
         return;
     }
-    y = crate::src::src::vdbeapi::sqlite3_value_double(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    y = crate::src::src::vdbeapi::sqlite3_value_double(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     if percentIsInfinity(y) != 0 {
         percentError(
@@ -3485,11 +3485,11 @@ unsafe extern "C" fn percentSort(mut a: *mut ::core::ffi::c_double, mut n: ::cor
     let mut iGt: ::core::ffi::c_int = 0;
     let mut i: ::core::ffi::c_int = 0;
     let mut rPivot: ::core::ffi::c_double = 0.;
-    if *a.offset(0 as ::core::ffi::c_int as isize)
+    if *a.offset(0 as isize)
         > *a.offset(n.wrapping_sub(1 as ::core::ffi::c_uint) as isize)
     {
-        let mut ttt: ::core::ffi::c_double = *a.offset(0 as ::core::ffi::c_int as isize);
-        *a.offset(0 as ::core::ffi::c_int as isize) =
+        let mut ttt: ::core::ffi::c_double = *a.offset(0 as isize);
+        *a.offset(0 as isize) =
             *a.offset(n.wrapping_sub(1 as ::core::ffi::c_uint) as isize);
         *a.offset(n.wrapping_sub(1 as ::core::ffi::c_uint) as isize) = ttt;
     }
@@ -3498,9 +3498,9 @@ unsafe extern "C" fn percentSort(mut a: *mut ::core::ffi::c_double, mut n: ::cor
     }
     iGt = n.wrapping_sub(1 as ::core::ffi::c_uint) as ::core::ffi::c_int;
     i = n.wrapping_div(2 as ::core::ffi::c_uint) as ::core::ffi::c_int;
-    if *a.offset(0 as ::core::ffi::c_int as isize) > *a.offset(i as isize) {
-        let mut ttt_0: ::core::ffi::c_double = *a.offset(0 as ::core::ffi::c_int as isize);
-        *a.offset(0 as ::core::ffi::c_int as isize) = *a.offset(i as isize);
+    if *a.offset(0 as isize) > *a.offset(i as isize) {
+        let mut ttt_0: ::core::ffi::c_double = *a.offset(0 as isize);
+        *a.offset(0 as isize) = *a.offset(i as isize);
         *a.offset(i as isize) = ttt_0;
     } else if *a.offset(i as isize) > *a.offset(iGt as isize) {
         let mut ttt_1: ::core::ffi::c_double = *a.offset(i as isize);
@@ -3564,7 +3564,7 @@ unsafe extern "C" fn percentInverse(
         pCtx as *mut crate::vdbeInt_h::sqlite3_context,
         ::core::mem::size_of::<Percentile>() as ::core::ffi::c_int,
     ) as *mut Percentile;
-    eType = crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    eType = crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     if eType == crate::sqlite3_h::SQLITE_NULL {
         return;
@@ -3572,7 +3572,7 @@ unsafe extern "C" fn percentInverse(
     if eType != crate::sqlite3_h::SQLITE_INTEGER_1 && eType != crate::sqlite3_h::SQLITE_FLOAT_1 {
         return;
     }
-    y = crate::src::src::vdbeapi::sqlite3_value_double(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    y = crate::src::src::vdbeapi::sqlite3_value_double(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value);
     if percentIsInfinity(y) != 0 {
         return;

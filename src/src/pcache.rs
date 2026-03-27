@@ -310,7 +310,7 @@ unsafe extern "C" fn pcacheFetchFinishWithInit(
     (*pPgHdr).pPage = pPage;
     (*pPgHdr).pData = (*pPage).pBuf;
     (*pPgHdr).pExtra =
-        pPgHdr.offset(1 as ::core::ffi::c_int as isize) as *mut crate::src::src::pcache::PgHdr as *mut ::core::ffi::c_void;
+        pPgHdr.offset(1 as isize) as *mut crate::src::src::pcache::PgHdr as *mut ::core::ffi::c_void;
     ::libc::memset((*pPgHdr).pExtra, 0 as ::core::ffi::c_int, 8 as crate::__stddef_size_t_h::size_t);
     (*pPgHdr).pCache = pCache;
     (*pPgHdr).pgno = pgno;

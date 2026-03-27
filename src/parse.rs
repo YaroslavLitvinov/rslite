@@ -5288,7 +5288,7 @@ unsafe extern "C" fn tokenExpr(
         (*p).iTable = 0 as ::core::ffi::c_int;
         (*p).iColumn = 0 as crate::sqliteInt_h::ynVar;
         (*p).u.zToken =
-            p.offset(1 as ::core::ffi::c_int as isize) as *mut crate::sqliteInt_h::Expr as *mut ::core::ffi::c_char;
+            p.offset(1 as isize) as *mut crate::sqliteInt_h::Expr as *mut ::core::ffi::c_char;
         ::libc::memcpy(
             (*p).u.zToken as *mut ::core::ffi::c_void,
             t.z as *const ::core::ffi::c_void,
@@ -5298,7 +5298,7 @@ unsafe extern "C" fn tokenExpr(
         (*p).w.iOfst =
             t.z.offset_from((*pParse).zTail) as ::core::ffi::c_long as ::core::ffi::c_int;
         if *(&raw const crate::src::src::global::sqlite3CtypeMap as *const ::core::ffi::c_uchar).offset(
-            *(*p).u.zToken.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_uchar
+            *(*p).u.zToken.offset(0 as isize) as ::core::ffi::c_uchar
                 as isize,
         ) as ::core::ffi::c_int
             & 0x80 as ::core::ffi::c_int
@@ -7193,11 +7193,11 @@ pub unsafe extern "C" fn sqlite3ParserInit(
     (*yypParser).yytos = (*yypParser).yystack;
     (*(*yypParser)
         .yystack
-        .offset(0 as ::core::ffi::c_int as isize))
+        .offset(0 as isize))
     .stateno = 0 as ::core::ffi::c_ushort;
     (*(*yypParser)
         .yystack
-        .offset(0 as ::core::ffi::c_int as isize))
+        .offset(0 as isize))
     .major = 0 as ::core::ffi::c_ushort;
 }
 #[no_mangle]
@@ -8231,15 +8231,15 @@ unsafe extern "C" fn yy_reduce(
             );
         }
         4 => {
-            (*yymsp.offset(1 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(1 as isize))
                 .minor
                 .yy502 = crate::src::parse::TK_DEFERRED;
         }
         5 | 6 | 7 | 324 => {
-            (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(0 as isize))
                 .minor
                 .yy502 =
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize)).major as ::core::ffi::c_int;
+                (*yymsp.offset(0 as isize)).major as ::core::ffi::c_int;
         }
         8 | 9 => {
             crate::src::src::build::sqlite3EndTransaction(
@@ -8254,7 +8254,7 @@ unsafe extern "C" fn yy_reduce(
                 pParse as *mut crate::sqliteInt_h::Parse,
                 crate::sqliteInt_h::SAVEPOINT_BEGIN,
                 
-                &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as *mut _
+                &raw mut (*yymsp.offset(0 as isize)).minor.yy0 as *mut _
     as *mut crate::sqliteInt_h::Token,
             );
         }
@@ -8264,7 +8264,7 @@ unsafe extern "C" fn yy_reduce(
                 pParse as *mut crate::sqliteInt_h::Parse,
                 crate::sqliteInt_h::SAVEPOINT_RELEASE,
                 
-                &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as *mut _
+                &raw mut (*yymsp.offset(0 as isize)).minor.yy0 as *mut _
     as *mut crate::sqliteInt_h::Token,
             );
         }
@@ -8274,7 +8274,7 @@ unsafe extern "C" fn yy_reduce(
                 pParse as *mut crate::sqliteInt_h::Parse,
                 crate::sqliteInt_h::SAVEPOINT_ROLLBACK,
                 
-                &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as *mut _
+                &raw mut (*yymsp.offset(0 as isize)).minor.yy0 as *mut _
     as *mut crate::sqliteInt_h::Token,
             );
         }
@@ -8288,7 +8288,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy0 as
         *mut _ as *mut crate::sqliteInt_h::Token,
                 
-                &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as *mut _
+                &raw mut (*yymsp.offset(0 as isize)).minor.yy0 as *mut _
     as *mut crate::sqliteInt_h::Token,
                 (*yymsp.offset(-(4 as ::core::ffi::c_int) as isize))
                     .minor
@@ -8304,7 +8304,7 @@ unsafe extern "C" fn yy_reduce(
             disableLookaside(pParse);
         }
         15 | 18 | 47 | 62 | 72 | 81 | 100 | 246 => {
-            (*yymsp.offset(1 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(1 as isize))
                 .minor
                 .yy502 = 0 as ::core::ffi::c_int;
         }
@@ -8314,7 +8314,7 @@ unsafe extern "C" fn yy_reduce(
                 .yy502 = 1 as ::core::ffi::c_int;
         }
         17 => {
-            (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(0 as isize))
                 .minor
                 .yy502 = ((*(*pParse).db).init.busy as ::core::ffi::c_int
                 == 0 as ::core::ffi::c_int) as ::core::ffi::c_int;
@@ -8333,7 +8333,7 @@ unsafe extern "C" fn yy_reduce(
                     .minor
                     .yy0 as
         *mut _ as *mut crate::sqliteInt_h::Token,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy9,
+                (*yymsp.offset(0 as isize)).minor.yy9,
                 
                 ::core::ptr::null_mut::<crate::sqliteInt_h::Select>() as
     *mut crate::sqliteInt_h::Select,
@@ -8351,7 +8351,7 @@ unsafe extern "C" fn yy_reduce(
     *mut crate::sqliteInt_h::Token,
                 0 as crate::src::ext::rtree::rtree::u32_0,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy637 as
     *mut crate::sqliteInt_h::Select,
@@ -8360,32 +8360,32 @@ unsafe extern "C" fn yy_reduce(
                 
                 (*pParse).db as *mut crate::sqliteInt_h::sqlite3,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy637 as
     *mut crate::sqliteInt_h::Select,
             );
         }
         21 => {
-            (*yymsp.offset(1 as ::core::ffi::c_int as isize)).minor.yy9 = 0 as crate::src::ext::rtree::rtree::u32_0;
+            (*yymsp.offset(1 as isize)).minor.yy9 = 0 as crate::src::ext::rtree::rtree::u32_0;
         }
         22 => {
             yylhsminor.yy9 = (*yymsp.offset(-(2 as ::core::ffi::c_int) as isize))
                 .minor
                 .yy9
-                | (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy9;
+                | (*yymsp.offset(0 as isize)).minor.yy9;
             (*yymsp.offset(-(2 as ::core::ffi::c_int) as isize))
                 .minor
                 .yy9 = yylhsminor.yy9;
         }
         23 => {
-            if (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            if (*yymsp.offset(0 as isize))
                 .minor
                 .yy0
                 .n
                 == 5 as ::core::ffi::c_uint
                 && crate::src::src::util::sqlite3_strnicmp(
-                    (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                    (*yymsp.offset(0 as isize))
                         .minor
                         .yy0
                         .z,
@@ -8404,11 +8404,11 @@ unsafe extern "C" fn yy_reduce(
                     
                     pParse as *mut crate::sqliteInt_h::Parse,
                     b"unknown table option: %.*s\0" as *const u8 as *const ::core::ffi::c_char,
-                    (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                    (*yymsp.offset(0 as isize))
                         .minor
                         .yy0
                         .n,
-                    (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                    (*yymsp.offset(0 as isize))
                         .minor
                         .yy0
                         .z,
@@ -8416,13 +8416,13 @@ unsafe extern "C" fn yy_reduce(
             }
         }
         24 => {
-            if (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            if (*yymsp.offset(0 as isize))
                 .minor
                 .yy0
                 .n
                 == 6 as ::core::ffi::c_uint
                 && crate::src::src::util::sqlite3_strnicmp(
-                    (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                    (*yymsp.offset(0 as isize))
                         .minor
                         .yy0
                         .z,
@@ -8437,17 +8437,17 @@ unsafe extern "C" fn yy_reduce(
                     
                     pParse as *mut crate::sqliteInt_h::Parse,
                     b"unknown table option: %.*s\0" as *const u8 as *const ::core::ffi::c_char,
-                    (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                    (*yymsp.offset(0 as isize))
                         .minor
                         .yy0
                         .n,
-                    (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                    (*yymsp.offset(0 as isize))
                         .minor
                         .yy0
                         .z,
                 );
             }
-            (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy9 = yylhsminor.yy9;
+            (*yymsp.offset(0 as isize)).minor.yy9 = yylhsminor.yy9;
         }
         25 => {
             crate::src::src::build::sqlite3AddColumn(
@@ -8459,16 +8459,16 @@ unsafe extern "C" fn yy_reduce(
                     .yy0 as
     crate::sqliteInt_h::Token,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as
+                (*yymsp.offset(0 as isize)).minor.yy0 as
     crate::sqliteInt_h::Token,
             );
         }
         26 | 65 | 106 => {
-            (*yymsp.offset(1 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(1 as isize))
                 .minor
                 .yy0
                 .n = 0 as ::core::ffi::c_uint;
-            let ref mut fresh1 = (*yymsp.offset(1 as ::core::ffi::c_int as isize))
+            let ref mut fresh1 = (*yymsp.offset(1 as isize))
                 .minor
                 .yy0
                 .z;
@@ -8478,12 +8478,12 @@ unsafe extern "C" fn yy_reduce(
             (*yymsp.offset(-(3 as ::core::ffi::c_int) as isize))
                 .minor
                 .yy0
-                .n = ((*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                .n = ((*yymsp.offset(0 as isize))
                 .minor
                 .yy0
                 .z
                 .offset(
-                    (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                    (*yymsp.offset(0 as isize))
                         .minor
                         .yy0
                         .n as isize,
@@ -8500,12 +8500,12 @@ unsafe extern "C" fn yy_reduce(
             (*yymsp.offset(-(5 as ::core::ffi::c_int) as isize))
                 .minor
                 .yy0
-                .n = ((*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                .n = ((*yymsp.offset(0 as isize))
                 .minor
                 .yy0
                 .z
                 .offset(
-                    (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                    (*yymsp.offset(0 as isize))
                         .minor
                         .yy0
                         .n as isize,
@@ -8522,12 +8522,12 @@ unsafe extern "C" fn yy_reduce(
             (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
                 .minor
                 .yy0
-                .n = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                .n = (*yymsp.offset(0 as isize))
                 .minor
                 .yy0
                 .n
                 .wrapping_add(
-                    (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                    (*yymsp.offset(0 as isize))
                         .minor
                         .yy0
                         .z
@@ -8541,24 +8541,24 @@ unsafe extern "C" fn yy_reduce(
                 );
         }
         30 => {
-            let ref mut fresh2 = (*yymsp.offset(1 as ::core::ffi::c_int as isize))
+            let ref mut fresh2 = (*yymsp.offset(1 as isize))
                 .minor
                 .yy342;
             *fresh2 = yyLookaheadToken.z;
         }
         31 => {
-            (*yymsp.offset(1 as ::core::ffi::c_int as isize)).minor.yy0 = yyLookaheadToken;
+            (*yymsp.offset(1 as isize)).minor.yy0 = yyLookaheadToken;
         }
         32 | 67 => {
             (*pParse).u1.cr.constraintName =
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0;
+                (*yymsp.offset(0 as isize)).minor.yy0;
         }
         33 => {
             crate::src::src::build::sqlite3AddDefaultValue(
                 
                 pParse as *mut crate::sqliteInt_h::Parse,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
@@ -8591,8 +8591,8 @@ unsafe extern "C" fn yy_reduce(
                     .minor
                     .yy0
                     .z
-                    .offset(1 as ::core::ffi::c_int as isize),
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                    .offset(1 as isize),
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy0
                     .z,
@@ -8603,7 +8603,7 @@ unsafe extern "C" fn yy_reduce(
                 
                 pParse as *mut crate::sqliteInt_h::Parse,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
@@ -8629,7 +8629,7 @@ unsafe extern "C" fn yy_reduce(
                 pParse as *mut crate::sqliteInt_h::Parse,
                 crate::src::parse::TK_UMINUS,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
@@ -8662,7 +8662,7 @@ unsafe extern "C" fn yy_reduce(
             let mut p_0: *mut crate::sqliteInt_h::Expr = tokenExpr(
                 pParse,
                 crate::src::parse::TK_STRING,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0,
+                (*yymsp.offset(0 as isize)).minor.yy0,
             );
             if !p_0.is_null() {
                 crate::src::src::expr::sqlite3ExprIdToTrueFalse(p_0 as *mut crate::sqliteInt_h::Expr);
@@ -8672,16 +8672,16 @@ unsafe extern "C" fn yy_reduce(
                 pParse as *mut crate::sqliteInt_h::Parse,
                 
                 p_0 as *mut crate::sqliteInt_h::Expr,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy0
                     .z,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy0
                     .z
                     .offset(
-                        (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                        (*yymsp.offset(0 as isize))
                             .minor
                             .yy0
                             .n as isize,
@@ -8692,7 +8692,7 @@ unsafe extern "C" fn yy_reduce(
             crate::src::src::build::sqlite3AddNotNull(
                 
                 pParse as *mut crate::sqliteInt_h::Parse,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy502,
             );
@@ -8707,7 +8707,7 @@ unsafe extern "C" fn yy_reduce(
                 (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
                     .minor
                     .yy502,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy502,
                 (*yymsp.offset(-(2 as ::core::ffi::c_int) as isize))
@@ -8731,7 +8731,7 @@ unsafe extern "C" fn yy_reduce(
                 
                 ::core::ptr::null_mut::<crate::sqliteInt_h::ExprList>() as
     *mut crate::sqliteInt_h::ExprList,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy502,
                 
@@ -8758,7 +8758,7 @@ unsafe extern "C" fn yy_reduce(
                     .minor
                     .yy0
                     .z,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy0
                     .z,
@@ -8781,7 +8781,7 @@ unsafe extern "C" fn yy_reduce(
                     .minor
                     .yy402 as
     *mut crate::sqliteInt_h::ExprList,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy502,
             );
@@ -8790,7 +8790,7 @@ unsafe extern "C" fn yy_reduce(
             crate::src::src::build::sqlite3DeferForeignKey(
                 
                 pParse as *mut crate::sqliteInt_h::Parse,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy502,
             );
@@ -8800,7 +8800,7 @@ unsafe extern "C" fn yy_reduce(
                 
                 pParse as *mut crate::sqliteInt_h::Parse,
                 
-                &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as *mut _
+                &raw mut (*yymsp.offset(0 as isize)).minor.yy0 as *mut _
     as *mut crate::sqliteInt_h::Token,
             );
         }
@@ -8828,17 +8828,17 @@ unsafe extern "C" fn yy_reduce(
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
                 
-                &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as *mut _
+                &raw mut (*yymsp.offset(0 as isize)).minor.yy0 as *mut _
     as *mut crate::sqliteInt_h::Token,
             );
         }
         48 => {
-            (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(0 as isize))
                 .minor
                 .yy502 = 1 as ::core::ffi::c_int;
         }
         49 => {
-            (*yymsp.offset(1 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(1 as isize))
                 .minor
                 .yy502 = crate::sqliteInt_h::OE_None * 0x101 as ::core::ffi::c_int;
         }
@@ -8848,11 +8848,11 @@ unsafe extern "C" fn yy_reduce(
                 .yy502 = (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
                 .minor
                 .yy502
-                & !(*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                & !(*yymsp.offset(0 as isize))
                     .minor
                     .yy481
                     .mask
-                | (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                | (*yymsp.offset(0 as isize))
                     .minor
                     .yy481
                     .value;
@@ -8881,7 +8881,7 @@ unsafe extern "C" fn yy_reduce(
             (*yymsp.offset(-(2 as ::core::ffi::c_int) as isize))
                 .minor
                 .yy481
-                .value = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                .value = (*yymsp.offset(0 as isize))
                 .minor
                 .yy502;
             (*yymsp.offset(-(2 as ::core::ffi::c_int) as isize))
@@ -8893,7 +8893,7 @@ unsafe extern "C" fn yy_reduce(
             (*yymsp.offset(-(2 as ::core::ffi::c_int) as isize))
                 .minor
                 .yy481
-                .value = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                .value = (*yymsp.offset(0 as isize))
                 .minor
                 .yy502
                 << 8 as ::core::ffi::c_int;
@@ -8913,12 +8913,12 @@ unsafe extern "C" fn yy_reduce(
                 .yy502 = crate::sqliteInt_h::OE_SetDflt;
         }
         57 => {
-            (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(0 as isize))
                 .minor
                 .yy502 = crate::sqliteInt_h::OE_Cascade;
         }
         58 => {
-            (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(0 as isize))
                 .minor
                 .yy502 = crate::sqliteInt_h::OE_Restrict;
         }
@@ -8935,7 +8935,7 @@ unsafe extern "C" fn yy_reduce(
         61 | 76 | 173 => {
             (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
                 .minor
-                .yy502 = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                .yy502 = (*yymsp.offset(0 as isize))
                 .minor
                 .yy502;
         }
@@ -8961,7 +8961,7 @@ unsafe extern "C" fn yy_reduce(
                     .minor
                     .yy402 as
     *mut crate::sqliteInt_h::ExprList,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy502,
                 (*yymsp.offset(-(2 as ::core::ffi::c_int) as isize))
@@ -8988,7 +8988,7 @@ unsafe extern "C" fn yy_reduce(
                     .minor
                     .yy402 as
     *mut crate::sqliteInt_h::ExprList,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy502,
                 
@@ -9047,30 +9047,30 @@ unsafe extern "C" fn yy_reduce(
             crate::src::src::build::sqlite3DeferForeignKey(
                 
                 pParse as *mut crate::sqliteInt_h::Parse,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy502,
             );
         }
         73 | 75 => {
-            (*yymsp.offset(1 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(1 as isize))
                 .minor
                 .yy502 = crate::sqliteInt_h::OE_Default;
         }
         74 => {
             (*yymsp.offset(-(2 as ::core::ffi::c_int) as isize))
                 .minor
-                .yy502 = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                .yy502 = (*yymsp.offset(0 as isize))
                 .minor
                 .yy502;
         }
         77 => {
-            (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(0 as isize))
                 .minor
                 .yy502 = crate::sqliteInt_h::OE_Ignore;
         }
         78 | 174 => {
-            (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(0 as isize))
                 .minor
                 .yy502 = crate::sqliteInt_h::OE_Replace;
         }
@@ -9079,7 +9079,7 @@ unsafe extern "C" fn yy_reduce(
                 
                 pParse as *mut crate::sqliteInt_h::Parse,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy563 as
     *mut crate::sqliteInt_h::SrcList,
@@ -9114,7 +9114,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy402 as
     *mut crate::sqliteInt_h::ExprList,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy637 as
     *mut crate::sqliteInt_h::Select,
@@ -9131,7 +9131,7 @@ unsafe extern "C" fn yy_reduce(
                 
                 pParse as *mut crate::sqliteInt_h::Parse,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy563 as
     *mut crate::sqliteInt_h::SrcList,
@@ -9158,7 +9158,7 @@ unsafe extern "C" fn yy_reduce(
                     
                     pParse as *mut crate::sqliteInt_h::Parse,
                     
-                    (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                    (*yymsp.offset(0 as isize))
                         .minor
                         .yy637 as
     *mut crate::sqliteInt_h::Select,
@@ -9170,7 +9170,7 @@ unsafe extern "C" fn yy_reduce(
                 
                 (*pParse).db as *mut crate::sqliteInt_h::sqlite3,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy637 as
     *mut crate::sqliteInt_h::Select,
@@ -9182,7 +9182,7 @@ unsafe extern "C" fn yy_reduce(
                 .yy637;
             *fresh3 = attachWithToSelect(
                 pParse,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy637,
                 (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
@@ -9196,7 +9196,7 @@ unsafe extern "C" fn yy_reduce(
                 .yy637;
             *fresh4 = attachWithToSelect(
                 pParse,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy637,
                 (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
@@ -9205,7 +9205,7 @@ unsafe extern "C" fn yy_reduce(
             );
         }
         87 => {
-            let mut p_1: *mut crate::sqliteInt_h::Select = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            let mut p_1: *mut crate::sqliteInt_h::Select = (*yymsp.offset(0 as isize))
                 .minor
                 .yy637;
             if !p_1.is_null() {
@@ -9213,7 +9213,7 @@ unsafe extern "C" fn yy_reduce(
             }
         }
         88 => {
-            let mut pRhs: *mut crate::sqliteInt_h::Select = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            let mut pRhs: *mut crate::sqliteInt_h::Select = (*yymsp.offset(0 as isize))
                 .minor
                 .yy637;
             let mut pLhs: *mut crate::sqliteInt_h::Select = (*yymsp.offset(-(2 as ::core::ffi::c_int) as isize))
@@ -9299,10 +9299,10 @@ unsafe extern "C" fn yy_reduce(
             *fresh5 = pRhs;
         }
         89 | 91 => {
-            (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(0 as isize))
                 .minor
                 .yy502 =
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize)).major as ::core::ffi::c_int;
+                (*yymsp.offset(0 as isize)).major as ::core::ffi::c_int;
         }
         90 => {
             (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
@@ -9350,7 +9350,7 @@ unsafe extern "C" fn yy_reduce(
                     .minor
                     .yy502 as crate::src::ext::rtree::rtree::u32_0,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
@@ -9397,7 +9397,7 @@ unsafe extern "C" fn yy_reduce(
                     .minor
                     .yy502 as crate::src::ext::rtree::rtree::u32_0,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
@@ -9464,7 +9464,7 @@ unsafe extern "C" fn yy_reduce(
                 
                 pParse as *mut crate::sqliteInt_h::Parse,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy637 as
     *mut crate::sqliteInt_h::Select,
@@ -9491,17 +9491,17 @@ unsafe extern "C" fn yy_reduce(
     *mut crate::sqliteInt_h::Select;
         }
         98 => {
-            (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(0 as isize))
                 .minor
                 .yy502 = crate::sqliteInt_h::SF_Distinct;
         }
         99 => {
-            (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(0 as isize))
                 .minor
                 .yy502 = crate::sqliteInt_h::SF_All;
         }
         101 | 134 | 144 | 234 | 237 | 242 => {
-            let ref mut fresh11 = (*yymsp.offset(1 as ::core::ffi::c_int as isize))
+            let ref mut fresh11 = (*yymsp.offset(1 as isize))
                 .minor
                 .yy402;
             *fresh11 = ::core::ptr::null_mut::<crate::sqliteInt_h::ExprList>();
@@ -9525,7 +9525,7 @@ unsafe extern "C" fn yy_reduce(
     *mut crate::sqliteInt_h::Expr,
             ) as
     *mut crate::sqliteInt_h::ExprList;
-            if (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            if (*yymsp.offset(0 as isize))
                 .minor
                 .yy0
                 .n
@@ -9540,7 +9540,7 @@ unsafe extern "C" fn yy_reduce(
                         .yy402 as
     *mut crate::sqliteInt_h::ExprList,
                     
-                    &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as *mut _
+                    &raw mut (*yymsp.offset(0 as isize)).minor.yy0 as *mut _
     as *const crate::sqliteInt_h::Token,
                     1 as ::core::ffi::c_int,
                 );
@@ -9572,7 +9572,7 @@ unsafe extern "C" fn yy_reduce(
             crate::src::src::expr::sqlite3ExprSetErrorOffset(
                 
                 p_2 as *mut crate::sqliteInt_h::Expr,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy0
                     .z
@@ -9613,7 +9613,7 @@ unsafe extern "C" fn yy_reduce(
             crate::src::src::expr::sqlite3ExprSetErrorOffset(
                 
                 pRight as *mut crate::sqliteInt_h::Expr,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy0
                     .z
@@ -9648,10 +9648,10 @@ unsafe extern "C" fn yy_reduce(
         105 | 117 | 258 | 259 => {
             (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
                 .minor
-                .yy0 = (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0;
+                .yy0 = (*yymsp.offset(0 as isize)).minor.yy0;
         }
         107 | 110 => {
-            let ref mut fresh15 = (*yymsp.offset(1 as ::core::ffi::c_int as isize))
+            let ref mut fresh15 = (*yymsp.offset(1 as isize))
                 .minor
                 .yy563;
             *fresh15 = ::core::ptr::null_mut::<crate::sqliteInt_h::SrcList>();
@@ -9660,7 +9660,7 @@ unsafe extern "C" fn yy_reduce(
             let ref mut fresh16 = (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
                 .minor
                 .yy563;
-            *fresh16 = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            *fresh16 = (*yymsp.offset(0 as isize))
                 .minor
                 .yy563;
             crate::src::src::build::sqlite3SrcListShiftJoinType(
@@ -9696,7 +9696,7 @@ unsafe extern "C" fn yy_reduce(
                             - 1 as ::core::ffi::c_int) as isize,
                     ))
                 .fg
-                .jointype = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                .jointype = (*yymsp.offset(0 as isize))
                     .minor
                     .yy502 as crate::src::ext::rtree::rtree::u8_0;
             }
@@ -9732,7 +9732,7 @@ unsafe extern "C" fn yy_reduce(
                 ::core::ptr::null_mut::<crate::sqliteInt_h::Select>() as
     *mut crate::sqliteInt_h::Select,
                 
-                &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                &raw mut (*yymsp.offset(0 as isize))
                     .minor
                     .yy421 as
         *mut _ as *mut crate::sqliteInt_h::OnOrUsing,
@@ -9770,7 +9770,7 @@ unsafe extern "C" fn yy_reduce(
                 ::core::ptr::null_mut::<crate::sqliteInt_h::Select>() as
     *mut crate::sqliteInt_h::Select,
                 
-                &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                &raw mut (*yymsp.offset(0 as isize))
                     .minor
                     .yy421 as
         *mut _ as *mut crate::sqliteInt_h::OnOrUsing,
@@ -9822,7 +9822,7 @@ unsafe extern "C" fn yy_reduce(
                 ::core::ptr::null_mut::<crate::sqliteInt_h::Select>() as
     *mut crate::sqliteInt_h::Select,
                 
-                &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                &raw mut (*yymsp.offset(0 as isize))
                     .minor
                     .yy421 as
         *mut _ as *mut crate::sqliteInt_h::OnOrUsing,
@@ -9872,7 +9872,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy637 as
     *mut crate::sqliteInt_h::Select,
                 
-                &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                &raw mut (*yymsp.offset(0 as isize))
                     .minor
                     .yy421 as
         *mut _ as *mut crate::sqliteInt_h::OnOrUsing,
@@ -9889,12 +9889,12 @@ unsafe extern "C" fn yy_reduce(
                     .yy0
                     .n
                     == 0 as ::core::ffi::c_uint
-                && (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                && (*yymsp.offset(0 as isize))
                     .minor
                     .yy421
                     .pOn
                     .is_null()
-                && (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                && (*yymsp.offset(0 as isize))
                     .minor
                     .yy421
                     .pUsing
@@ -9942,7 +9942,7 @@ unsafe extern "C" fn yy_reduce(
                     ::core::ptr::null_mut::<crate::sqliteInt_h::Select>() as
     *mut crate::sqliteInt_h::Select,
                     
-                    &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                    &raw mut (*yymsp.offset(0 as isize))
                         .minor
                         .yy421 as
         *mut _ as *mut crate::sqliteInt_h::OnOrUsing,
@@ -10076,7 +10076,7 @@ unsafe extern "C" fn yy_reduce(
                     
                     pSubquery as *mut crate::sqliteInt_h::Select,
                     
-                    &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                    &raw mut (*yymsp.offset(0 as isize))
                         .minor
                         .yy421 as
         *mut _ as *mut crate::sqliteInt_h::OnOrUsing,
@@ -10085,12 +10085,12 @@ unsafe extern "C" fn yy_reduce(
             }
         }
         116 | 131 => {
-            let ref mut fresh24 = (*yymsp.offset(1 as ::core::ffi::c_int as isize))
+            let ref mut fresh24 = (*yymsp.offset(1 as isize))
                 .minor
                 .yy0
                 .z;
             *fresh24 = ::core::ptr::null::<::core::ffi::c_char>();
-            (*yymsp.offset(1 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(1 as isize))
                 .minor
                 .yy0
                 .n = 0 as ::core::ffi::c_uint;
@@ -10103,7 +10103,7 @@ unsafe extern "C" fn yy_reduce(
                 ::core::ptr::null_mut::<crate::sqliteInt_h::SrcList>() as
     *mut crate::sqliteInt_h::SrcList,
                 
-                &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as *mut _
+                &raw mut (*yymsp.offset(0 as isize)).minor.yy0 as *mut _
     as *mut crate::sqliteInt_h::Token,
                 
                 ::core::ptr::null_mut::<crate::sqliteInt_h::Token>() as
@@ -10117,14 +10117,14 @@ unsafe extern "C" fn yy_reduce(
                     
                     pParse as *mut crate::sqliteInt_h::Parse,
                     (*(&raw mut (*yylhsminor.yy563).a as *mut crate::sqliteInt_h::SrcItem)
-                        .offset(0 as ::core::ffi::c_int as isize))
+                        .offset(0 as isize))
                     .zName as *const ::core::ffi::c_void,
                     
-                    &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as *mut _
+                    &raw mut (*yymsp.offset(0 as isize)).minor.yy0 as *mut _
     as *const crate::sqliteInt_h::Token,
                 );
             }
-            let ref mut fresh25 = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            let ref mut fresh25 = (*yymsp.offset(0 as isize))
                 .minor
                 .yy563;
             *fresh25 = yylhsminor.yy563;
@@ -10142,7 +10142,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy0 as
         *mut _ as *mut crate::sqliteInt_h::Token,
                 
-                &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as *mut _
+                &raw mut (*yymsp.offset(0 as isize)).minor.yy0 as *mut _
     as *mut crate::sqliteInt_h::Token,
             ) as
     *mut crate::sqliteInt_h::SrcList;
@@ -10153,10 +10153,10 @@ unsafe extern "C" fn yy_reduce(
                     
                     pParse as *mut crate::sqliteInt_h::Parse,
                     (*(&raw mut (*yylhsminor.yy563).a as *mut crate::sqliteInt_h::SrcItem)
-                        .offset(0 as ::core::ffi::c_int as isize))
+                        .offset(0 as isize))
                     .zName as *const ::core::ffi::c_void,
                     
-                    &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as *mut _
+                    &raw mut (*yymsp.offset(0 as isize)).minor.yy0 as *mut _
     as *const crate::sqliteInt_h::Token,
                 );
             }
@@ -10166,7 +10166,7 @@ unsafe extern "C" fn yy_reduce(
             *fresh26 = yylhsminor.yy563;
         }
         120 => {
-            let ref mut fresh27 = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            let ref mut fresh27 = (*yymsp.offset(0 as isize))
                 .minor
                 .yy563;
             *fresh27 =  crate::src::src::build::sqlite3SrcListAppend(
@@ -10176,7 +10176,7 @@ unsafe extern "C" fn yy_reduce(
                 ::core::ptr::null_mut::<crate::sqliteInt_h::SrcList>() as
     *mut crate::sqliteInt_h::SrcList,
                 
-                &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as *mut _
+                &raw mut (*yymsp.offset(0 as isize)).minor.yy0 as *mut _
     as *mut crate::sqliteInt_h::Token,
                 
                 ::core::ptr::null_mut::<crate::sqliteInt_h::Token>() as
@@ -10200,7 +10200,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy0 as
         *mut _ as *mut crate::sqliteInt_h::Token,
                 
-                &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as *mut _
+                &raw mut (*yymsp.offset(0 as isize)).minor.yy0 as *mut _
     as *mut crate::sqliteInt_h::Token,
             ) as
     *mut crate::sqliteInt_h::SrcList;
@@ -10237,13 +10237,13 @@ unsafe extern "C" fn yy_reduce(
                 .minor
                 .yy563)
                     .a as *mut crate::sqliteInt_h::SrcItem)
-                    .offset(0 as ::core::ffi::c_int as isize))
+                    .offset(0 as isize))
                 .zAlias;
                 *fresh30 = crate::src::src::build::sqlite3NameFromToken(
                     
                     (*pParse).db as *mut crate::sqliteInt_h::sqlite3,
                     
-                    &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as *mut _
+                    &raw mut (*yymsp.offset(0 as isize)).minor.yy0 as *mut _
     as *const crate::sqliteInt_h::Token,
                 );
             }
@@ -10278,19 +10278,19 @@ unsafe extern "C" fn yy_reduce(
                 .minor
                 .yy563)
                     .a as *mut crate::sqliteInt_h::SrcItem)
-                    .offset(0 as ::core::ffi::c_int as isize))
+                    .offset(0 as isize))
                 .zAlias;
                 *fresh32 = crate::src::src::build::sqlite3NameFromToken(
                     
                     (*pParse).db as *mut crate::sqliteInt_h::sqlite3,
                     
-                    &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as *mut _
+                    &raw mut (*yymsp.offset(0 as isize)).minor.yy0 as *mut _
     as *const crate::sqliteInt_h::Token,
                 );
             }
         }
         124 => {
-            (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(0 as isize))
                 .minor
                 .yy502 = crate::sqliteInt_h::JT_INNER;
         }
@@ -10362,7 +10362,7 @@ unsafe extern "C" fn yy_reduce(
                 .minor
                 .yy421
                 .pOn;
-            *fresh33 = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            *fresh33 = (*yymsp.offset(0 as isize))
                 .minor
                 .yy590;
             let ref mut fresh34 = (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
@@ -10386,12 +10386,12 @@ unsafe extern "C" fn yy_reduce(
                 .yy204;
         }
         130 => {
-            let ref mut fresh37 = (*yymsp.offset(1 as ::core::ffi::c_int as isize))
+            let ref mut fresh37 = (*yymsp.offset(1 as isize))
                 .minor
                 .yy421
                 .pOn;
             *fresh37 = ::core::ptr::null_mut::<crate::sqliteInt_h::Expr>();
-            let ref mut fresh38 = (*yymsp.offset(1 as ::core::ffi::c_int as isize))
+            let ref mut fresh38 = (*yymsp.offset(1 as isize))
                 .minor
                 .yy421
                 .pUsing;
@@ -10400,7 +10400,7 @@ unsafe extern "C" fn yy_reduce(
         132 => {
             (*yymsp.offset(-(2 as ::core::ffi::c_int) as isize))
                 .minor
-                .yy0 = (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0;
+                .yy0 = (*yymsp.offset(0 as isize)).minor.yy0;
         }
         133 => {
             let ref mut fresh39 = (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
@@ -10417,7 +10417,7 @@ unsafe extern "C" fn yy_reduce(
             let ref mut fresh40 = (*yymsp.offset(-(2 as ::core::ffi::c_int) as isize))
                 .minor
                 .yy402;
-            *fresh40 = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            *fresh40 = (*yymsp.offset(0 as isize))
                 .minor
                 .yy402;
         }
@@ -10449,7 +10449,7 @@ unsafe extern "C" fn yy_reduce(
                 (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
                     .minor
                     .yy502,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy502,
             );
@@ -10480,23 +10480,23 @@ unsafe extern "C" fn yy_reduce(
                 (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
                     .minor
                     .yy502,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy502,
             );
         }
         138 => {
-            (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(0 as isize))
                 .minor
                 .yy502 = crate::sqliteInt_h::SQLITE_SO_ASC;
         }
         139 => {
-            (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(0 as isize))
                 .minor
                 .yy502 = crate::sqliteInt_h::SQLITE_SO_DESC;
         }
         140 | 143 => {
-            (*yymsp.offset(1 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(1 as isize))
                 .minor
                 .yy502 = crate::sqliteInt_h::SQLITE_SO_UNDEFINED;
         }
@@ -10511,7 +10511,7 @@ unsafe extern "C" fn yy_reduce(
                 .yy502 = crate::sqliteInt_h::SQLITE_SO_DESC;
         }
         146 | 148 | 153 | 155 | 232 | 233 | 252 => {
-            let ref mut fresh43 = (*yymsp.offset(1 as ::core::ffi::c_int as isize))
+            let ref mut fresh43 = (*yymsp.offset(1 as isize))
                 .minor
                 .yy590;
             *fresh43 = ::core::ptr::null_mut::<crate::sqliteInt_h::Expr>();
@@ -10520,7 +10520,7 @@ unsafe extern "C" fn yy_reduce(
             let ref mut fresh44 = (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
                 .minor
                 .yy590;
-            *fresh44 = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            *fresh44 = (*yymsp.offset(0 as isize))
                 .minor
                 .yy590;
         }
@@ -10533,7 +10533,7 @@ unsafe extern "C" fn yy_reduce(
                 pParse as *mut crate::sqliteInt_h::Parse,
                 crate::src::parse::TK_LIMIT,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
@@ -10556,7 +10556,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
@@ -10571,7 +10571,7 @@ unsafe extern "C" fn yy_reduce(
                 pParse as *mut crate::sqliteInt_h::Parse,
                 crate::src::parse::TK_LIMIT,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
@@ -10606,7 +10606,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy563 as
     *mut crate::sqliteInt_h::SrcList,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
@@ -10623,7 +10623,7 @@ unsafe extern "C" fn yy_reduce(
                 
                 pParse as *mut crate::sqliteInt_h::Parse,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy402 as
     *mut crate::sqliteInt_h::ExprList,
@@ -10638,7 +10638,7 @@ unsafe extern "C" fn yy_reduce(
                 
                 pParse as *mut crate::sqliteInt_h::Parse,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy402 as
     *mut crate::sqliteInt_h::ExprList,
@@ -10769,7 +10769,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy402 as
     *mut crate::sqliteInt_h::ExprList,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
@@ -10800,7 +10800,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy402 as
     *mut crate::sqliteInt_h::ExprList,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
@@ -10840,7 +10840,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy204 as
     *mut crate::sqliteInt_h::IdList,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
@@ -10855,7 +10855,7 @@ unsafe extern "C" fn yy_reduce(
                 ::core::ptr::null_mut::<crate::sqliteInt_h::ExprList>() as
     *mut crate::sqliteInt_h::ExprList,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
@@ -10894,7 +10894,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy204 as
     *mut crate::sqliteInt_h::IdList,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
@@ -10924,7 +10924,7 @@ unsafe extern "C" fn yy_reduce(
                     .minor
                     .yy502,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy403 as
     *mut crate::sqliteInt_h::Upsert,
@@ -10956,7 +10956,7 @@ unsafe extern "C" fn yy_reduce(
             );
         }
         166 => {
-            let ref mut fresh55 = (*yymsp.offset(1 as ::core::ffi::c_int as isize))
+            let ref mut fresh55 = (*yymsp.offset(1 as isize))
                 .minor
                 .yy403;
             *fresh55 = ::core::ptr::null_mut::<crate::sqliteInt_h::Upsert>();
@@ -10970,7 +10970,7 @@ unsafe extern "C" fn yy_reduce(
                 
                 pParse as *mut crate::sqliteInt_h::Parse,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy402 as
     *mut crate::sqliteInt_h::ExprList,
@@ -11004,7 +11004,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy403 as
     *mut crate::sqliteInt_h::Upsert,
@@ -11035,7 +11035,7 @@ unsafe extern "C" fn yy_reduce(
                 ::core::ptr::null_mut::<crate::sqliteInt_h::Expr>() as
     *mut crate::sqliteInt_h::Expr,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy403 as
     *mut crate::sqliteInt_h::Upsert,
@@ -11101,14 +11101,14 @@ unsafe extern "C" fn yy_reduce(
                 
                 pParse as *mut crate::sqliteInt_h::Parse,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy402 as
     *mut crate::sqliteInt_h::ExprList,
             );
         }
         175 => {
-            let ref mut fresh61 = (*yymsp.offset(1 as ::core::ffi::c_int as isize))
+            let ref mut fresh61 = (*yymsp.offset(1 as isize))
                 .minor
                 .yy204;
             *fresh61 = ::core::ptr::null_mut::<crate::sqliteInt_h::IdList>();
@@ -11134,13 +11134,13 @@ unsafe extern "C" fn yy_reduce(
                     .yy204 as
     *mut crate::sqliteInt_h::IdList,
                 
-                &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as *mut _
+                &raw mut (*yymsp.offset(0 as isize)).minor.yy0 as *mut _
     as *mut crate::sqliteInt_h::Token,
             ) as
     *mut crate::sqliteInt_h::IdList;
         }
         178 => {
-            let ref mut fresh64 = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            let ref mut fresh64 = (*yymsp.offset(0 as isize))
                 .minor
                 .yy204;
             *fresh64 =  crate::src::src::build::sqlite3IdListAppend(
@@ -11150,7 +11150,7 @@ unsafe extern "C" fn yy_reduce(
                 ::core::ptr::null_mut::<crate::sqliteInt_h::IdList>() as
     *mut crate::sqliteInt_h::IdList,
                 
-                &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as *mut _
+                &raw mut (*yymsp.offset(0 as isize)).minor.yy0 as *mut _
     as *mut crate::sqliteInt_h::Token,
             ) as
     *mut crate::sqliteInt_h::IdList;
@@ -11164,13 +11164,13 @@ unsafe extern "C" fn yy_reduce(
                 .yy590;
         }
         180 => {
-            let ref mut fresh66 = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            let ref mut fresh66 = (*yymsp.offset(0 as isize))
                 .minor
                 .yy590;
             *fresh66 = tokenExpr(
                 pParse,
                 crate::src::parse::TK_ID,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0,
+                (*yymsp.offset(0 as isize)).minor.yy0,
             );
         }
         181 => {
@@ -11184,7 +11184,7 @@ unsafe extern "C" fn yy_reduce(
             let mut temp2: *mut crate::sqliteInt_h::Expr = tokenExpr(
                 pParse,
                 crate::src::parse::TK_ID,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0,
+                (*yymsp.offset(0 as isize)).minor.yy0,
             );
             yylhsminor.yy590 =  crate::src::src::expr::sqlite3PExpr(pParse as *mut crate::sqliteInt_h::Parse, crate::src::parse::TK_DOT,  temp1 as *mut crate::sqliteInt_h::Expr,  temp2 as *mut crate::sqliteInt_h::Expr) as
     *mut crate::sqliteInt_h::Expr;
@@ -11211,7 +11211,7 @@ unsafe extern "C" fn yy_reduce(
             let mut temp3: *mut crate::sqliteInt_h::Expr = tokenExpr(
                 pParse,
                 crate::src::parse::TK_ID,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0,
+                (*yymsp.offset(0 as isize)).minor.yy0,
             );
             let mut temp4: *mut crate::sqliteInt_h::Expr =  crate::src::src::expr::sqlite3PExpr(pParse as *mut crate::sqliteInt_h::Parse, crate::src::parse::TK_DOT,  temp2_0 as *mut crate::sqliteInt_h::Expr,  temp3 as *mut crate::sqliteInt_h::Expr) as
     *mut crate::sqliteInt_h::Expr;
@@ -11231,13 +11231,13 @@ unsafe extern "C" fn yy_reduce(
             *fresh68 = yylhsminor.yy590;
         }
         183 | 184 => {
-            let ref mut fresh69 = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            let ref mut fresh69 = (*yymsp.offset(0 as isize))
                 .minor
                 .yy590;
             *fresh69 = tokenExpr(
                 pParse,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize)).major as ::core::ffi::c_int,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0,
+                (*yymsp.offset(0 as isize)).major as ::core::ffi::c_int,
+                (*yymsp.offset(0 as isize)).minor.yy0,
             );
         }
         185 => {
@@ -11246,12 +11246,12 @@ unsafe extern "C" fn yy_reduce(
                 (*pParse).db as *mut crate::sqliteInt_h::sqlite3,
                 crate::src::parse::TK_INTEGER,
                 
-                &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as *mut _
+                &raw mut (*yymsp.offset(0 as isize)).minor.yy0 as *mut _
     as *const crate::sqliteInt_h::Token,
                 1 as ::core::ffi::c_int,
             ) as *mut crate::sqliteInt_h::Expr;
             if !yylhsminor.yy590.is_null() {
-                (*yylhsminor.yy590).w.iOfst = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yylhsminor.yy590).w.iOfst = (*yymsp.offset(0 as isize))
                     .minor
                     .yy0
                     .z
@@ -11259,61 +11259,61 @@ unsafe extern "C" fn yy_reduce(
                     as ::core::ffi::c_long
                     as ::core::ffi::c_int;
             }
-            let ref mut fresh70 = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            let ref mut fresh70 = (*yymsp.offset(0 as isize))
                 .minor
                 .yy590;
             *fresh70 = yylhsminor.yy590;
         }
         186 => {
-            if !(*(*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            if !(*(*yymsp.offset(0 as isize))
                 .minor
                 .yy0
                 .z
-                .offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+                .offset(0 as isize) as ::core::ffi::c_int
                 == '#' as i32
                 && *(&raw const crate::src::src::global::sqlite3CtypeMap as *const ::core::ffi::c_uchar).offset(
-                    *(*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                    *(*yymsp.offset(0 as isize))
                         .minor
                         .yy0
                         .z
-                        .offset(1 as ::core::ffi::c_int as isize)
+                        .offset(1 as isize)
                         as ::core::ffi::c_uchar as isize,
                 ) as ::core::ffi::c_int
                     & 0x4 as ::core::ffi::c_int
                     != 0)
             {
-                let mut n: crate::src::ext::rtree::rtree::u32_0 = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                let mut n: crate::src::ext::rtree::rtree::u32_0 = (*yymsp.offset(0 as isize))
                     .minor
                     .yy0
                     .n as crate::src::ext::rtree::rtree::u32_0;
-                let ref mut fresh71 = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                let ref mut fresh71 = (*yymsp.offset(0 as isize))
                     .minor
                     .yy590;
                 *fresh71 = tokenExpr(
                     pParse,
                     crate::src::parse::TK_VARIABLE,
-                    (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0,
+                    (*yymsp.offset(0 as isize)).minor.yy0,
                 );
                 crate::src::src::expr::sqlite3ExprAssignVarNumber(
                     
                     pParse as *mut crate::sqliteInt_h::Parse,
                     
-                    (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                    (*yymsp.offset(0 as isize))
                         .minor
                         .yy590 as
     *mut crate::sqliteInt_h::Expr,
                     n,
                 );
             } else {
-                let mut t: crate::sqliteInt_h::Token = (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0;
+                let mut t: crate::sqliteInt_h::Token = (*yymsp.offset(0 as isize)).minor.yy0;
                 if (*pParse).nested as ::core::ffi::c_int == 0 as ::core::ffi::c_int {
                     parserSyntaxError(pParse, &raw mut t);
-                    let ref mut fresh72 = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                    let ref mut fresh72 = (*yymsp.offset(0 as isize))
                         .minor
                         .yy590;
                     *fresh72 = ::core::ptr::null_mut::<crate::sqliteInt_h::Expr>();
                 } else {
-                    let ref mut fresh73 = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                    let ref mut fresh73 = (*yymsp.offset(0 as isize))
                         .minor
                         .yy590;
                     *fresh73 =  crate::src::src::expr::sqlite3PExpr(
@@ -11327,15 +11327,15 @@ unsafe extern "C" fn yy_reduce(
                         ::core::ptr::null_mut::<crate::sqliteInt_h::Expr>() as
     *mut crate::sqliteInt_h::Expr,
                     ) as *mut crate::sqliteInt_h::Expr;
-                    if !(*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                    if !(*yymsp.offset(0 as isize))
                         .minor
                         .yy590
                         .is_null()
                     {
                         crate::src::src::util::sqlite3GetInt32(
-                            t.z.offset(1 as ::core::ffi::c_int as isize)
+                            t.z.offset(1 as isize)
                                 as *const ::core::ffi::c_char,
-                            &raw mut (*(*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                            &raw mut (*(*yymsp.offset(0 as isize))
                                 .minor
                                 .yy590)
                                 .iTable,
@@ -11357,7 +11357,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
                 
-                &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as *mut _
+                &raw mut (*yymsp.offset(0 as isize)).minor.yy0 as *mut _
     as *const crate::sqliteInt_h::Token,
                 1 as ::core::ffi::c_int,
             ) as *mut crate::sqliteInt_h::Expr;
@@ -11500,7 +11500,7 @@ unsafe extern "C" fn yy_reduce(
                 
                 yylhsminor.yy590 as *mut crate::sqliteInt_h::Expr,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy483 as
     *mut crate::sqliteInt_h::Window,
@@ -11535,7 +11535,7 @@ unsafe extern "C" fn yy_reduce(
                 
                 yylhsminor.yy590 as *mut crate::sqliteInt_h::Expr,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy483 as
     *mut crate::sqliteInt_h::Window,
@@ -11577,7 +11577,7 @@ unsafe extern "C" fn yy_reduce(
                 
                 yylhsminor.yy590 as *mut crate::sqliteInt_h::Expr,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy483 as
     *mut crate::sqliteInt_h::Window,
@@ -11595,11 +11595,11 @@ unsafe extern "C" fn yy_reduce(
                 ::core::ptr::null_mut::<crate::sqliteInt_h::ExprList>() as
     *mut crate::sqliteInt_h::ExprList,
                 
-                &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as *mut _
+                &raw mut (*yymsp.offset(0 as isize)).minor.yy0 as *mut _
     as *const crate::sqliteInt_h::Token,
                 0 as ::core::ffi::c_int,
             ) as *mut crate::sqliteInt_h::Expr;
-            let ref mut fresh82 = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            let ref mut fresh82 = (*yymsp.offset(0 as isize))
                 .minor
                 .yy590;
             *fresh82 = yylhsminor.yy590;
@@ -11650,7 +11650,7 @@ unsafe extern "C" fn yy_reduce(
                         .minor
                         .yy590)
                         .flags |= (*(*(&raw mut (*pList).a as *mut crate::sqliteInt_h::ExprList_item)
-                        .offset(0 as ::core::ffi::c_int as isize))
+                        .offset(0 as isize))
                     .pExpr)
                         .flags
                         & crate::sqliteInt_h::EP_Propagate as crate::src::ext::rtree::rtree::u32_0;
@@ -11672,7 +11672,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
@@ -11692,7 +11692,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
@@ -11701,7 +11701,7 @@ unsafe extern "C" fn yy_reduce(
         205 => {
             (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
                 .minor
-                .yy0 = (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0;
+                .yy0 = (*yymsp.offset(0 as isize)).minor.yy0;
             (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
                 .minor
                 .yy0
@@ -11726,7 +11726,7 @@ unsafe extern "C" fn yy_reduce(
                 ::core::ptr::null_mut::<crate::sqliteInt_h::ExprList>() as
     *mut crate::sqliteInt_h::ExprList,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
@@ -11832,7 +11832,7 @@ unsafe extern "C" fn yy_reduce(
                 
                 pList_1 as *mut crate::sqliteInt_h::ExprList,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
@@ -11890,7 +11890,7 @@ unsafe extern "C" fn yy_reduce(
             *fresh91 =  crate::src::src::expr::sqlite3PExpr(
                 
                 pParse as *mut crate::sqliteInt_h::Parse,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize)).major as ::core::ffi::c_int,
+                (*yymsp.offset(0 as isize)).major as ::core::ffi::c_int,
                 
                 (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
                     .minor
@@ -11933,14 +11933,14 @@ unsafe extern "C" fn yy_reduce(
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
             ) as *mut crate::sqliteInt_h::Expr;
             binaryToUnaryIfNull(
                 pParse,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590,
                 (*yymsp.offset(-(2 as ::core::ffi::c_int) as isize))
@@ -11963,14 +11963,14 @@ unsafe extern "C" fn yy_reduce(
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
             ) as *mut crate::sqliteInt_h::Expr;
             binaryToUnaryIfNull(
                 pParse,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590,
                 (*yymsp.offset(-(3 as ::core::ffi::c_int) as isize))
@@ -11993,14 +11993,14 @@ unsafe extern "C" fn yy_reduce(
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
             ) as *mut crate::sqliteInt_h::Expr;
             binaryToUnaryIfNull(
                 pParse,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590,
                 (*yymsp.offset(-(5 as ::core::ffi::c_int) as isize))
@@ -12023,14 +12023,14 @@ unsafe extern "C" fn yy_reduce(
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
             ) as *mut crate::sqliteInt_h::Expr;
             binaryToUnaryIfNull(
                 pParse,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590,
                 (*yymsp.offset(-(4 as ::core::ffi::c_int) as isize))
@@ -12048,7 +12048,7 @@ unsafe extern "C" fn yy_reduce(
                 pParse as *mut crate::sqliteInt_h::Parse,
                 (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize)).major as ::core::ffi::c_int,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
@@ -12058,7 +12058,7 @@ unsafe extern "C" fn yy_reduce(
             ) as *mut crate::sqliteInt_h::Expr;
         }
         216 => {
-            let mut p_3: *mut crate::sqliteInt_h::Expr = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            let mut p_3: *mut crate::sqliteInt_h::Expr = (*yymsp.offset(0 as isize))
                 .minor
                 .yy590;
             let mut op: crate::src::ext::rtree::rtree::u8_0 = ((*yymsp.offset(-(1 as ::core::ffi::c_int) as isize)).major
@@ -12106,7 +12106,7 @@ unsafe extern "C" fn yy_reduce(
                 
                 pList_2 as *mut crate::sqliteInt_h::ExprList,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
@@ -12131,7 +12131,7 @@ unsafe extern "C" fn yy_reduce(
             *fresh100 = yylhsminor.yy590;
         }
         218 | 221 => {
-            (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(0 as isize))
                 .minor
                 .yy502 = 0 as ::core::ffi::c_int;
         }
@@ -12155,7 +12155,7 @@ unsafe extern "C" fn yy_reduce(
                 
                 pList_3 as *mut crate::sqliteInt_h::ExprList,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
@@ -12289,7 +12289,7 @@ unsafe extern "C" fn yy_reduce(
                 .minor
                 .yy402)
                     .a as *mut crate::sqliteInt_h::ExprList_item)
-                    .offset(0 as ::core::ffi::c_int as isize))
+                    .offset(0 as isize))
                 .pExpr;
                 if (*(*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
                     .minor
@@ -12308,7 +12308,7 @@ unsafe extern "C" fn yy_reduce(
                     .minor
                     .yy402)
                         .a as *mut crate::sqliteInt_h::ExprList_item)
-                        .offset(0 as ::core::ffi::c_int as isize))
+                        .offset(0 as isize))
                     .pExpr;
                     *fresh106 = ::core::ptr::null_mut::<crate::sqliteInt_h::Expr>();
                     crate::src::src::expr::sqlite3ExprListDelete(
@@ -12626,7 +12626,7 @@ unsafe extern "C" fn yy_reduce(
                 ::core::ptr::null_mut::<crate::sqliteInt_h::Expr>() as
     *mut crate::sqliteInt_h::Expr,
             ) as *mut crate::sqliteInt_h::Select;
-            if !(*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            if !(*yymsp.offset(0 as isize))
                 .minor
                 .yy402
                 .is_null()
@@ -12642,7 +12642,7 @@ unsafe extern "C" fn yy_reduce(
                     } as
     *mut crate::sqliteInt_h::SrcList,
                     
-                    (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                    (*yymsp.offset(0 as isize))
                         .minor
                         .yy402 as
     *mut crate::sqliteInt_h::ExprList,
@@ -12841,7 +12841,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy402 as
     *mut crate::sqliteInt_h::ExprList,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
@@ -12877,7 +12877,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy402 as
     *mut crate::sqliteInt_h::ExprList,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
@@ -12897,7 +12897,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy402 as
     *mut crate::sqliteInt_h::ExprList,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
@@ -12905,7 +12905,7 @@ unsafe extern "C" fn yy_reduce(
     *mut crate::sqliteInt_h::ExprList;
         }
         236 => {
-            let ref mut fresh125 = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            let ref mut fresh125 = (*yymsp.offset(0 as isize))
                 .minor
                 .yy402;
             *fresh125 =  crate::src::src::expr::sqlite3ExprListAppend(
@@ -12915,7 +12915,7 @@ unsafe extern "C" fn yy_reduce(
                 ::core::ptr::null_mut::<crate::sqliteInt_h::ExprList>() as
     *mut crate::sqliteInt_h::ExprList,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
@@ -12975,7 +12975,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy0 as
         *mut _ as *mut crate::sqliteInt_h::Token,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
@@ -13001,12 +13001,12 @@ unsafe extern "C" fn yy_reduce(
             }
         }
         240 | 282 => {
-            (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(0 as isize))
                 .minor
                 .yy502 = crate::sqliteInt_h::OE_Abort;
         }
         241 => {
-            (*yymsp.offset(1 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(1 as isize))
                 .minor
                 .yy502 = crate::sqliteInt_h::OE_None;
         }
@@ -13025,7 +13025,7 @@ unsafe extern "C" fn yy_reduce(
                 (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
                     .minor
                     .yy502,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy502,
             );
@@ -13043,7 +13043,7 @@ unsafe extern "C" fn yy_reduce(
                 (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
                     .minor
                     .yy502,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy502,
             );
@@ -13053,7 +13053,7 @@ unsafe extern "C" fn yy_reduce(
                 
                 pParse as *mut crate::sqliteInt_h::Parse,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy563 as
     *mut crate::sqliteInt_h::SrcList,
@@ -13070,7 +13070,7 @@ unsafe extern "C" fn yy_reduce(
                 ::core::ptr::null_mut::<crate::sqliteInt_h::Token>() as
     *mut crate::sqliteInt_h::Token,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
@@ -13086,7 +13086,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy0 as
         *mut _ as *mut crate::sqliteInt_h::Token,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
@@ -13102,7 +13102,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy0 as
         *mut _ as *mut crate::sqliteInt_h::Token,
                 
-                &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as *mut _
+                &raw mut (*yymsp.offset(0 as isize)).minor.yy0 as *mut _
     as *mut crate::sqliteInt_h::Token,
                 
                 ::core::ptr::null_mut::<crate::sqliteInt_h::Token>() as
@@ -13125,7 +13125,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy0 as
         *mut _ as *mut crate::sqliteInt_h::Token,
                 
-                &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as *mut _
+                &raw mut (*yymsp.offset(0 as isize)).minor.yy0 as *mut _
     as *mut crate::sqliteInt_h::Token,
                 0 as ::core::ffi::c_int,
             );
@@ -13167,7 +13167,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy0 as
         *mut _ as *mut crate::sqliteInt_h::Token,
                 
-                &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as *mut _
+                &raw mut (*yymsp.offset(0 as isize)).minor.yy0 as *mut _
     as *mut crate::sqliteInt_h::Token,
                 1 as ::core::ffi::c_int,
             );
@@ -13203,7 +13203,7 @@ unsafe extern "C" fn yy_reduce(
                 .minor
                 .yy0
                 .z;
-            all.n = ((*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            all.n = ((*yymsp.offset(0 as isize))
                 .minor
                 .yy0
                 .z
@@ -13215,7 +13215,7 @@ unsafe extern "C" fn yy_reduce(
                 ) as ::core::ffi::c_long as ::core::ffi::c_int
                 as ::core::ffi::c_uint)
                 .wrapping_add(
-                    (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                    (*yymsp.offset(0 as isize))
                         .minor
                         .yy0
                         .n,
@@ -13265,7 +13265,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy563 as
     *mut crate::sqliteInt_h::SrcList,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
@@ -13294,10 +13294,10 @@ unsafe extern "C" fn yy_reduce(
             };
         }
         262 => {
-            (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(0 as isize))
                 .minor
                 .yy502 =
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize)).major as ::core::ffi::c_int;
+                (*yymsp.offset(0 as isize)).major as ::core::ffi::c_int;
         }
         263 => {
             (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
@@ -13305,16 +13305,16 @@ unsafe extern "C" fn yy_reduce(
                 .yy502 = crate::src::parse::TK_INSTEAD;
         }
         264 => {
-            (*yymsp.offset(1 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(1 as isize))
                 .minor
                 .yy502 = crate::src::parse::TK_BEFORE;
         }
         265 | 266 => {
-            (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(0 as isize))
                 .minor
                 .yy28
-                .a = (*yymsp.offset(0 as ::core::ffi::c_int as isize)).major as ::core::ffi::c_int;
-            let ref mut fresh129 = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                .a = (*yymsp.offset(0 as isize)).major as ::core::ffi::c_int;
+            let ref mut fresh129 = (*yymsp.offset(0 as isize))
                 .minor
                 .yy28
                 .b;
@@ -13329,12 +13329,12 @@ unsafe extern "C" fn yy_reduce(
                 .minor
                 .yy28
                 .b;
-            *fresh130 = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            *fresh130 = (*yymsp.offset(0 as isize))
                 .minor
                 .yy204;
         }
         268 | 287 => {
-            let ref mut fresh131 = (*yymsp.offset(1 as ::core::ffi::c_int as isize))
+            let ref mut fresh131 = (*yymsp.offset(1 as isize))
                 .minor
                 .yy590;
             *fresh131 = ::core::ptr::null_mut::<crate::sqliteInt_h::Expr>();
@@ -13343,7 +13343,7 @@ unsafe extern "C" fn yy_reduce(
             let ref mut fresh132 = (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
                 .minor
                 .yy590;
-            *fresh132 = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            *fresh132 = (*yymsp.offset(0 as isize))
                 .minor
                 .yy590;
         }
@@ -13376,7 +13376,7 @@ unsafe extern "C" fn yy_reduce(
         272 => {
             (*yymsp.offset(-(2 as ::core::ffi::c_int) as isize))
                 .minor
-                .yy0 = (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0;
+                .yy0 = (*yymsp.offset(0 as isize)).minor.yy0;
             crate::src::src::util::sqlite3ErrorMsg(
                 
                 pParse as *mut crate::sqliteInt_h::Parse,
@@ -13431,7 +13431,7 @@ unsafe extern "C" fn yy_reduce(
                     .minor
                     .yy0
                     .z,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy342,
             ) as
@@ -13471,7 +13471,7 @@ unsafe extern "C" fn yy_reduce(
                 (*yymsp.offset(-(7 as ::core::ffi::c_int) as isize))
                     .minor
                     .yy342,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy342,
             ) as
@@ -13499,7 +13499,7 @@ unsafe extern "C" fn yy_reduce(
                     .minor
                     .yy0
                     .z,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy342,
             ) as
@@ -13521,7 +13521,7 @@ unsafe extern "C" fn yy_reduce(
                 (*yymsp.offset(-(2 as ::core::ffi::c_int) as isize))
                     .minor
                     .yy342,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy342,
             ) as
@@ -13588,12 +13588,12 @@ unsafe extern "C" fn yy_reduce(
             }
         }
         281 => {
-            (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(0 as isize))
                 .minor
                 .yy502 = crate::sqliteInt_h::OE_Rollback;
         }
         283 => {
-            (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(0 as isize))
                 .minor
                 .yy502 = crate::sqliteInt_h::OE_Fail;
         }
@@ -13602,7 +13602,7 @@ unsafe extern "C" fn yy_reduce(
                 
                 pParse as *mut crate::sqliteInt_h::Parse,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy563 as
     *mut crate::sqliteInt_h::SrcList,
@@ -13626,7 +13626,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
@@ -13637,7 +13637,7 @@ unsafe extern "C" fn yy_reduce(
                 
                 pParse as *mut crate::sqliteInt_h::Parse,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy590 as
     *mut crate::sqliteInt_h::Expr,
@@ -13665,7 +13665,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy0 as
         *mut _ as *mut crate::sqliteInt_h::Token,
                 
-                &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as *mut _
+                &raw mut (*yymsp.offset(0 as isize)).minor.yy0 as *mut _
     as *mut crate::sqliteInt_h::Token,
             );
         }
@@ -13691,7 +13691,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy0 as
         *mut _ as *mut crate::sqliteInt_h::Token,
                 
-                &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as *mut _
+                &raw mut (*yymsp.offset(0 as isize)).minor.yy0 as *mut _
     as *mut crate::sqliteInt_h::Token,
             );
         }
@@ -13705,7 +13705,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy563 as
     *mut crate::sqliteInt_h::SrcList,
                 
-                &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as *mut _
+                &raw mut (*yymsp.offset(0 as isize)).minor.yy0 as *mut _
     as *mut crate::sqliteInt_h::Token,
             );
         }
@@ -13741,7 +13741,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy563 as
     *mut crate::sqliteInt_h::SrcList,
                 
-                &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as *mut _
+                &raw mut (*yymsp.offset(0 as isize)).minor.yy0 as *mut _
     as *const crate::sqliteInt_h::Token,
             );
         }
@@ -13751,7 +13751,7 @@ unsafe extern "C" fn yy_reduce(
                 
                 pParse as *mut crate::sqliteInt_h::Parse,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy563 as
     *mut crate::sqliteInt_h::SrcList,
@@ -13772,7 +13772,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy0 as
         *mut _ as *mut crate::sqliteInt_h::Token,
                 
-                &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as *mut _
+                &raw mut (*yymsp.offset(0 as isize)).minor.yy0 as *mut _
     as *mut crate::sqliteInt_h::Token,
             );
         }
@@ -13785,7 +13785,7 @@ unsafe extern "C" fn yy_reduce(
                 
                 pParse as *mut crate::sqliteInt_h::Parse,
                 
-                &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as *mut _
+                &raw mut (*yymsp.offset(0 as isize)).minor.yy0 as *mut _
     as *mut crate::sqliteInt_h::Token,
             );
         }
@@ -13804,7 +13804,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy0 as
         *mut _ as *mut crate::sqliteInt_h::Token,
                 
-                &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as *mut _
+                &raw mut (*yymsp.offset(0 as isize)).minor.yy0 as *mut _
     as *mut crate::sqliteInt_h::Token,
                 (*yymsp.offset(-(4 as ::core::ffi::c_int) as isize))
                     .minor
@@ -13819,7 +13819,7 @@ unsafe extern "C" fn yy_reduce(
                 
                 pParse as *mut crate::sqliteInt_h::Parse,
                 
-                &raw mut (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0 as *mut _
+                &raw mut (*yymsp.offset(0 as isize)).minor.yy0 as *mut _
     as *mut crate::sqliteInt_h::Token,
             );
         }
@@ -13829,7 +13829,7 @@ unsafe extern "C" fn yy_reduce(
                 
                 pParse as *mut crate::sqliteInt_h::Parse,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy125 as
     *mut crate::sqliteInt_h::With,
@@ -13838,7 +13838,7 @@ unsafe extern "C" fn yy_reduce(
     *mut crate::sqliteInt_h::With;
         }
         307 => {
-            (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(0 as isize))
                 .minor
                 .yy444 = crate::sqliteInt_h::M10d_Any as crate::src::ext::rtree::rtree::u8_0;
         }
@@ -13884,7 +13884,7 @@ unsafe extern "C" fn yy_reduce(
             (*pParse).set_bHasWith(1 as crate::sqliteInt_h::bft as crate::sqliteInt_h::bft);
         }
         312 => {
-            let ref mut fresh143 = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            let ref mut fresh143 = (*yymsp.offset(0 as isize))
                 .minor
                 .yy125;
             *fresh143 =  crate::src::src::build::sqlite3WithAdd(
@@ -13894,7 +13894,7 @@ unsafe extern "C" fn yy_reduce(
                 ::core::ptr::null_mut::<crate::sqliteInt_h::With>() as
     *mut crate::sqliteInt_h::With,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy361 as
     *mut crate::sqliteInt_h::Cte,
@@ -13913,7 +13913,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy125 as
     *mut crate::sqliteInt_h::With,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy361 as
     *mut crate::sqliteInt_h::Cte,
@@ -13924,7 +13924,7 @@ unsafe extern "C" fn yy_reduce(
                 
                 pParse as *mut crate::sqliteInt_h::Parse,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy483 as
     *mut crate::sqliteInt_h::Window,
@@ -13934,14 +13934,14 @@ unsafe extern "C" fn yy_reduce(
                     .yy483 as
     *mut crate::sqliteInt_h::Window,
             );
-            let ref mut fresh145 = (*(*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            let ref mut fresh145 = (*(*yymsp.offset(0 as isize))
                 .minor
                 .yy483)
                 .pNextWin;
             *fresh145 = (*yymsp.offset(-(2 as ::core::ffi::c_int) as isize))
                 .minor
                 .yy483;
-            yylhsminor.yy483 = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            yylhsminor.yy483 = (*yymsp.offset(0 as isize))
                 .minor
                 .yy483;
             let ref mut fresh146 = (*yymsp.offset(-(2 as ::core::ffi::c_int) as isize))
@@ -13988,7 +13988,7 @@ unsafe extern "C" fn yy_reduce(
                 
                 pParse as *mut crate::sqliteInt_h::Parse,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy483 as
     *mut crate::sqliteInt_h::Window,
@@ -14012,7 +14012,7 @@ unsafe extern "C" fn yy_reduce(
                 
                 pParse as *mut crate::sqliteInt_h::Parse,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy483 as
     *mut crate::sqliteInt_h::Window,
@@ -14045,7 +14045,7 @@ unsafe extern "C" fn yy_reduce(
                 
                 pParse as *mut crate::sqliteInt_h::Parse,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy483 as
     *mut crate::sqliteInt_h::Window,
@@ -14067,7 +14067,7 @@ unsafe extern "C" fn yy_reduce(
                 
                 pParse as *mut crate::sqliteInt_h::Parse,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy483 as
     *mut crate::sqliteInt_h::Window,
@@ -14095,7 +14095,7 @@ unsafe extern "C" fn yy_reduce(
                 
                 pParse as *mut crate::sqliteInt_h::Parse,
                 
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy483 as
     *mut crate::sqliteInt_h::Window,
@@ -14117,7 +14117,7 @@ unsafe extern "C" fn yy_reduce(
             *fresh153 = yylhsminor.yy483;
         }
         321 => {
-            let ref mut fresh154 = (*yymsp.offset(1 as ::core::ffi::c_int as isize))
+            let ref mut fresh154 = (*yymsp.offset(1 as isize))
                 .minor
                 .yy483;
             *fresh154 =  crate::src::src::window::sqlite3WindowAlloc(
@@ -14157,7 +14157,7 @@ unsafe extern "C" fn yy_reduce(
                 
                 ::core::ptr::null_mut::<crate::sqliteInt_h::Expr>() as
     *mut crate::sqliteInt_h::Expr,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy444,
             ) as
@@ -14194,7 +14194,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy205
                     .pExpr as
     *mut crate::sqliteInt_h::Expr,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yymsp.offset(0 as isize))
                     .minor
                     .yy444,
             ) as
@@ -14205,10 +14205,10 @@ unsafe extern "C" fn yy_reduce(
             *fresh156 = yylhsminor.yy483;
         }
         325 | 327 => {
-            yylhsminor.yy205 = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            yylhsminor.yy205 = (*yymsp.offset(0 as isize))
                 .minor
                 .yy205;
-            (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(0 as isize))
                 .minor
                 .yy205 = yylhsminor.yy205;
         }
@@ -14222,7 +14222,7 @@ unsafe extern "C" fn yy_reduce(
         }
         329 => {
             yylhsminor.yy205.eType =
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize)).major as ::core::ffi::c_int;
+                (*yymsp.offset(0 as isize)).major as ::core::ffi::c_int;
             yylhsminor.yy205.pExpr = (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
                 .minor
                 .yy590;
@@ -14231,14 +14231,14 @@ unsafe extern "C" fn yy_reduce(
                 .yy205 = yylhsminor.yy205;
         }
         331 => {
-            (*yymsp.offset(1 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(1 as isize))
                 .minor
                 .yy444 = 0 as crate::src::ext::rtree::rtree::u8_0;
         }
         332 => {
             (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
                 .minor
-                .yy444 = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                .yy444 = (*yymsp.offset(0 as isize))
                 .minor
                 .yy444;
         }
@@ -14248,25 +14248,25 @@ unsafe extern "C" fn yy_reduce(
                 .yy444 = (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize)).major as crate::src::ext::rtree::rtree::u8_0;
         }
         335 => {
-            (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            (*yymsp.offset(0 as isize))
                 .minor
-                .yy444 = (*yymsp.offset(0 as ::core::ffi::c_int as isize)).major as crate::src::ext::rtree::rtree::u8_0;
+                .yy444 = (*yymsp.offset(0 as isize)).major as crate::src::ext::rtree::rtree::u8_0;
         }
         336 => {
             let ref mut fresh157 = (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
                 .minor
                 .yy483;
-            *fresh157 = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            *fresh157 = (*yymsp.offset(0 as isize))
                 .minor
                 .yy483;
         }
         337 => {
-            if !(*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            if !(*yymsp.offset(0 as isize))
                 .minor
                 .yy483
                 .is_null()
             {
-                let ref mut fresh158 = (*(*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                let ref mut fresh158 = (*(*yymsp.offset(0 as isize))
                     .minor
                     .yy483)
                     .pFilter;
@@ -14284,7 +14284,7 @@ unsafe extern "C" fn yy_reduce(
     *mut crate::sqliteInt_h::Expr,
                 );
             }
-            yylhsminor.yy483 = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            yylhsminor.yy483 = (*yymsp.offset(0 as isize))
                 .minor
                 .yy483;
             let ref mut fresh159 = (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
@@ -14293,10 +14293,10 @@ unsafe extern "C" fn yy_reduce(
             *fresh159 = yylhsminor.yy483;
         }
         338 => {
-            yylhsminor.yy483 = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            yylhsminor.yy483 = (*yymsp.offset(0 as isize))
                 .minor
                 .yy483;
-            let ref mut fresh160 = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            let ref mut fresh160 = (*yymsp.offset(0 as isize))
                 .minor
                 .yy483;
             *fresh160 = yylhsminor.yy483;
@@ -14307,7 +14307,7 @@ unsafe extern "C" fn yy_reduce(
                     as *mut crate::sqliteInt_h::Window;
             if !yylhsminor.yy483.is_null() {
                 (*yylhsminor.yy483).eFrmType = crate::src::parse::TK_FILTER as crate::src::ext::rtree::rtree::u8_0;
-                (*yylhsminor.yy483).pFilter = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                (*yylhsminor.yy483).pFilter = (*yymsp.offset(0 as isize))
                     .minor
                     .yy590;
             } else {
@@ -14315,13 +14315,13 @@ unsafe extern "C" fn yy_reduce(
                     
                     (*pParse).db as *mut crate::sqliteInt_h::sqlite3,
                     
-                    (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                    (*yymsp.offset(0 as isize))
                         .minor
                         .yy590 as
     *mut crate::sqliteInt_h::Expr,
                 );
             }
-            let ref mut fresh161 = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            let ref mut fresh161 = (*yymsp.offset(0 as isize))
                 .minor
                 .yy483;
             *fresh161 = yylhsminor.yy483;
@@ -14352,11 +14352,11 @@ unsafe extern "C" fn yy_reduce(
                 *fresh164 = crate::src::src::malloc::sqlite3DbStrNDup(
                     
                     (*pParse).db as *mut crate::sqliteInt_h::sqlite3,
-                    (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                    (*yymsp.offset(0 as isize))
                         .minor
                         .yy0
                         .z,
-                    (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+                    (*yymsp.offset(0 as isize))
                         .minor
                         .yy0
                         .n as crate::src::ext::rtree::rtree::u64_0,
@@ -14374,11 +14374,11 @@ unsafe extern "C" fn yy_reduce(
         343 => {
             yylhsminor.yy590 = tokenExpr(
                 pParse,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize)).major as ::core::ffi::c_int,
-                (*yymsp.offset(0 as ::core::ffi::c_int as isize)).minor.yy0,
+                (*yymsp.offset(0 as isize)).major as ::core::ffi::c_int,
+                (*yymsp.offset(0 as isize)).minor.yy0,
             );
             crate::src::src::util::sqlite3DequoteNumber(pParse as *mut crate::sqliteInt_h::Parse,  yylhsminor.yy590 as *mut crate::sqliteInt_h::Expr);
-            let ref mut fresh166 = (*yymsp.offset(0 as ::core::ffi::c_int as isize))
+            let ref mut fresh166 = (*yymsp.offset(0 as isize))
                 .minor
                 .yy590;
             *fresh166 = yylhsminor.yy590;
@@ -14404,7 +14404,7 @@ unsafe extern "C" fn yy_syntax_error(
     mut yyminor: crate::sqliteInt_h::Token,
 ) {
     let mut pParse: *mut crate::sqliteInt_h::Parse = (*yypParser).pParse;
-    if *yyminor.z.offset(0 as ::core::ffi::c_int as isize) != 0 {
+    if *yyminor.z.offset(0 as isize) != 0 {
         parserSyntaxError(pParse, &raw mut yyminor);
     } else {
         crate::src::src::util::sqlite3ErrorMsg(

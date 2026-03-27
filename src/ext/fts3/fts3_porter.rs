@@ -126,9 +126,9 @@ unsafe extern "C" fn isConsonant(mut z: *const ::core::ffi::c_char) -> ::core::f
     if j < 2 as ::core::ffi::c_int {
         return j;
     }
-    return (*z.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+    return (*z.offset(1 as isize) as ::core::ffi::c_int
         == 0 as ::core::ffi::c_int
-        || isVowel(z.offset(1 as ::core::ffi::c_int as isize)) != 0)
+        || isVowel(z.offset(1 as isize)) != 0)
         as ::core::ffi::c_int;
 }
 
@@ -142,7 +142,7 @@ unsafe extern "C" fn isVowel(mut z: *const ::core::ffi::c_char) -> ::core::ffi::
     if j < 2 as ::core::ffi::c_int {
         return 1 as ::core::ffi::c_int - j;
     }
-    return isConsonant(z.offset(1 as ::core::ffi::c_int as isize));
+    return isConsonant(z.offset(1 as isize));
 }
 
 unsafe extern "C" fn m_gt_0(mut z: *const ::core::ffi::c_char) -> ::core::ffi::c_int {
@@ -217,18 +217,18 @@ unsafe extern "C" fn hasVowel(mut z: *const ::core::ffi::c_char) -> ::core::ffi:
 
 unsafe extern "C" fn doubleConsonant(mut z: *const ::core::ffi::c_char) -> ::core::ffi::c_int {
     return (isConsonant(z) != 0
-        && *z.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
-            == *z.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+        && *z.offset(0 as isize) as ::core::ffi::c_int
+            == *z.offset(1 as isize) as ::core::ffi::c_int)
         as ::core::ffi::c_int;
 }
 
 unsafe extern "C" fn star_oh(mut z: *const ::core::ffi::c_char) -> ::core::ffi::c_int {
     return (isConsonant(z) != 0
-        && *z.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int != 'w' as i32
-        && *z.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int != 'x' as i32
-        && *z.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int != 'y' as i32
-        && isVowel(z.offset(1 as ::core::ffi::c_int as isize)) != 0
-        && isConsonant(z.offset(2 as ::core::ffi::c_int as isize)) != 0)
+        && *z.offset(0 as isize) as ::core::ffi::c_int != 'w' as i32
+        && *z.offset(0 as isize) as ::core::ffi::c_int != 'x' as i32
+        && *z.offset(0 as isize) as ::core::ffi::c_int != 'y' as i32
+        && isVowel(z.offset(1 as isize)) != 0
+        && isConsonant(z.offset(2 as isize)) != 0)
         as ::core::ffi::c_int;
 }
 
@@ -350,7 +350,7 @@ unsafe extern "C" fn porter_stemmer(
     );
     z = (&raw mut zReverse as *mut ::core::ffi::c_char)
         .offset((j + 1 as ::core::ffi::c_int) as isize) as *mut ::core::ffi::c_char;
-    if *z.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == 's' as i32 {
+    if *z.offset(0 as isize) as ::core::ffi::c_int == 's' as i32 {
         if stem(
             &raw mut z,
             b"sess\0" as *const u8 as *const ::core::ffi::c_char,
@@ -432,12 +432,12 @@ unsafe extern "C" fn porter_stemmer(
             }
         }
     }
-    if *z.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == 'y' as i32
-        && hasVowel(z.offset(1 as ::core::ffi::c_int as isize)) != 0
+    if *z.offset(0 as isize) as ::core::ffi::c_int == 'y' as i32
+        && hasVowel(z.offset(1 as isize)) != 0
     {
-        *z.offset(0 as ::core::ffi::c_int as isize) = 'i' as i32 as ::core::ffi::c_char;
+        *z.offset(0 as isize) = 'i' as i32 as ::core::ffi::c_char;
     }
-    match *z.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int {
+    match *z.offset(1 as isize) as ::core::ffi::c_int {
         97 => {
             if stem(
                 &raw mut z,
@@ -696,7 +696,7 @@ unsafe extern "C" fn porter_stemmer(
         }
         _ => {}
     }
-    match *z.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int {
+    match *z.offset(0 as isize) as ::core::ffi::c_int {
         101 => {
             if stem(
                 &raw mut z,
@@ -783,57 +783,57 @@ unsafe extern "C" fn porter_stemmer(
         }
         _ => {}
     }
-    match *z.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int {
+    match *z.offset(1 as isize) as ::core::ffi::c_int {
         97 => {
-            if *z.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == 'l' as i32
-                && m_gt_1(z.offset(2 as ::core::ffi::c_int as isize)) != 0
+            if *z.offset(0 as isize) as ::core::ffi::c_int == 'l' as i32
+                && m_gt_1(z.offset(2 as isize)) != 0
             {
-                z = z.offset(2 as ::core::ffi::c_int as isize);
+                z = z.offset(2 as isize);
             }
         }
         99 => {
-            if *z.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == 'e' as i32
-                && *z.offset(2 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == 'n' as i32
-                && (*z.offset(3 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == 'a' as i32
-                    || *z.offset(3 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+            if *z.offset(0 as isize) as ::core::ffi::c_int == 'e' as i32
+                && *z.offset(2 as isize) as ::core::ffi::c_int == 'n' as i32
+                && (*z.offset(3 as isize) as ::core::ffi::c_int == 'a' as i32
+                    || *z.offset(3 as isize) as ::core::ffi::c_int
                         == 'e' as i32)
-                && m_gt_1(z.offset(4 as ::core::ffi::c_int as isize)) != 0
+                && m_gt_1(z.offset(4 as isize)) != 0
             {
-                z = z.offset(4 as ::core::ffi::c_int as isize);
+                z = z.offset(4 as isize);
             }
         }
         101 => {
-            if *z.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == 'r' as i32
-                && m_gt_1(z.offset(2 as ::core::ffi::c_int as isize)) != 0
+            if *z.offset(0 as isize) as ::core::ffi::c_int == 'r' as i32
+                && m_gt_1(z.offset(2 as isize)) != 0
             {
-                z = z.offset(2 as ::core::ffi::c_int as isize);
+                z = z.offset(2 as isize);
             }
         }
         105 => {
-            if *z.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == 'c' as i32
-                && m_gt_1(z.offset(2 as ::core::ffi::c_int as isize)) != 0
+            if *z.offset(0 as isize) as ::core::ffi::c_int == 'c' as i32
+                && m_gt_1(z.offset(2 as isize)) != 0
             {
-                z = z.offset(2 as ::core::ffi::c_int as isize);
+                z = z.offset(2 as isize);
             }
         }
         108 => {
-            if *z.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == 'e' as i32
-                && *z.offset(2 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == 'b' as i32
-                && (*z.offset(3 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == 'a' as i32
-                    || *z.offset(3 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+            if *z.offset(0 as isize) as ::core::ffi::c_int == 'e' as i32
+                && *z.offset(2 as isize) as ::core::ffi::c_int == 'b' as i32
+                && (*z.offset(3 as isize) as ::core::ffi::c_int == 'a' as i32
+                    || *z.offset(3 as isize) as ::core::ffi::c_int
                         == 'i' as i32)
-                && m_gt_1(z.offset(4 as ::core::ffi::c_int as isize)) != 0
+                && m_gt_1(z.offset(4 as isize)) != 0
             {
-                z = z.offset(4 as ::core::ffi::c_int as isize);
+                z = z.offset(4 as isize);
             }
         }
         110 => {
-            if *z.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == 't' as i32 {
-                if *z.offset(2 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == 'a' as i32 {
-                    if m_gt_1(z.offset(3 as ::core::ffi::c_int as isize)) != 0 {
-                        z = z.offset(3 as ::core::ffi::c_int as isize);
+            if *z.offset(0 as isize) as ::core::ffi::c_int == 't' as i32 {
+                if *z.offset(2 as isize) as ::core::ffi::c_int == 'a' as i32 {
+                    if m_gt_1(z.offset(3 as isize)) != 0 {
+                        z = z.offset(3 as isize);
                     }
-                } else if *z.offset(2 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+                } else if *z.offset(2 as isize) as ::core::ffi::c_int
                     == 'e' as i32
                 {
                     if stem(
@@ -878,13 +878,13 @@ unsafe extern "C" fn porter_stemmer(
             }
         }
         111 => {
-            if *z.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == 'u' as i32 {
-                if m_gt_1(z.offset(2 as ::core::ffi::c_int as isize)) != 0 {
-                    z = z.offset(2 as ::core::ffi::c_int as isize);
+            if *z.offset(0 as isize) as ::core::ffi::c_int == 'u' as i32 {
+                if m_gt_1(z.offset(2 as isize)) != 0 {
+                    z = z.offset(2 as isize);
                 }
-            } else if *z.offset(3 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+            } else if *z.offset(3 as isize) as ::core::ffi::c_int
                 == 's' as i32
-                || *z.offset(3 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == 't' as i32
+                || *z.offset(3 as isize) as ::core::ffi::c_int == 't' as i32
             {
                 stem(
                     &raw mut z,
@@ -901,11 +901,11 @@ unsafe extern "C" fn porter_stemmer(
             }
         }
         115 => {
-            if *z.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == 'm' as i32
-                && *z.offset(2 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == 'i' as i32
-                && m_gt_1(z.offset(3 as ::core::ffi::c_int as isize)) != 0
+            if *z.offset(0 as isize) as ::core::ffi::c_int == 'm' as i32
+                && *z.offset(2 as isize) as ::core::ffi::c_int == 'i' as i32
+                && m_gt_1(z.offset(3 as isize)) != 0
             {
-                z = z.offset(3 as ::core::ffi::c_int as isize);
+                z = z.offset(3 as isize);
             }
         }
         116 => {
@@ -934,35 +934,35 @@ unsafe extern "C" fn porter_stemmer(
             }
         }
         117 => {
-            if *z.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == 's' as i32
-                && *z.offset(2 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == 'o' as i32
-                && m_gt_1(z.offset(3 as ::core::ffi::c_int as isize)) != 0
+            if *z.offset(0 as isize) as ::core::ffi::c_int == 's' as i32
+                && *z.offset(2 as isize) as ::core::ffi::c_int == 'o' as i32
+                && m_gt_1(z.offset(3 as isize)) != 0
             {
-                z = z.offset(3 as ::core::ffi::c_int as isize);
+                z = z.offset(3 as isize);
             }
         }
         118 | 122 => {
-            if *z.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == 'e' as i32
-                && *z.offset(2 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == 'i' as i32
-                && m_gt_1(z.offset(3 as ::core::ffi::c_int as isize)) != 0
+            if *z.offset(0 as isize) as ::core::ffi::c_int == 'e' as i32
+                && *z.offset(2 as isize) as ::core::ffi::c_int == 'i' as i32
+                && m_gt_1(z.offset(3 as isize)) != 0
             {
-                z = z.offset(3 as ::core::ffi::c_int as isize);
+                z = z.offset(3 as isize);
             }
         }
         _ => {}
     }
-    if *z.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == 'e' as i32 {
-        if m_gt_1(z.offset(1 as ::core::ffi::c_int as isize)) != 0 {
+    if *z.offset(0 as isize) as ::core::ffi::c_int == 'e' as i32 {
+        if m_gt_1(z.offset(1 as isize)) != 0 {
             z = z.offset(1);
-        } else if m_eq_1(z.offset(1 as ::core::ffi::c_int as isize)) != 0
-            && star_oh(z.offset(1 as ::core::ffi::c_int as isize)) == 0
+        } else if m_eq_1(z.offset(1 as isize)) != 0
+            && star_oh(z.offset(1 as isize)) == 0
         {
             z = z.offset(1);
         }
     }
     if m_gt_1(z) != 0
-        && *z.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == 'l' as i32
-        && *z.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == 'l' as i32
+        && *z.offset(0 as isize) as ::core::ffi::c_int == 'l' as i32
+        && *z.offset(1 as isize) as ::core::ffi::c_int == 'l' as i32
     {
         z = z.offset(1);
     }

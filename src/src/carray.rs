@@ -233,7 +233,7 @@ unsafe extern "C" fn carrayFilter(
     match idxNum {
         1 => {
             let mut pBind: *mut carray_bind = crate::src::src::vdbeapi::sqlite3_value_pointer(
-                *argv.offset(0 as ::core::ffi::c_int as isize),
+                *argv.offset(0 as isize),
                 b"carray-bind\0" as *const u8 as *const ::core::ffi::c_char,
             ) as *mut carray_bind;
             if !pBind.is_null() {
@@ -245,11 +245,11 @@ unsafe extern "C" fn carrayFilter(
         }
         2 | 3 => {
             (*pCur).pPtr = crate::src::src::vdbeapi::sqlite3_value_pointer(
-                *argv.offset(0 as ::core::ffi::c_int as isize),
+                *argv.offset(0 as isize),
                 b"carray\0" as *const u8 as *const ::core::ffi::c_char,
             );
             (*pCur).iCnt = if !(*pCur).pPtr.is_null() {
-                crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(1 as ::core::ffi::c_int as isize))
+                crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(1 as isize))
             } else {
                 0 as crate::sqlite3_h::sqlite3_int64
             };
@@ -258,7 +258,7 @@ unsafe extern "C" fn carrayFilter(
             } else {
                 let mut i: ::core::ffi::c_uchar = 0;
                 let mut zType: *const ::core::ffi::c_char =
-                    crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(2 as ::core::ffi::c_int as isize))
+                    crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(2 as isize))
                         as *const ::core::ffi::c_char;
                 i = 0 as ::core::ffi::c_uchar;
                 while (i as usize)

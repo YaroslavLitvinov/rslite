@@ -173,11 +173,11 @@ unsafe extern "C" fn isLikeOrGlob(
         return 0 as ::core::ffi::c_int;
     }
     pList = (*pExpr).x.pList;
-    pLeft = (*(&raw mut (*pList).a as *mut crate::sqliteInt_h::ExprList_item).offset(1 as ::core::ffi::c_int as isize))
+    pLeft = (*(&raw mut (*pList).a as *mut crate::sqliteInt_h::ExprList_item).offset(1 as isize))
         .pExpr;
     pRight =  crate::src::src::expr::sqlite3ExprSkipCollate(
         
-        (*(&raw mut (*pList).a as *mut crate::sqliteInt_h::ExprList_item).offset(0 as ::core::ffi::c_int as isize))
+        (*(&raw mut (*pList).a as *mut crate::sqliteInt_h::ExprList_item).offset(0 as isize))
             .pExpr as
     *mut crate::sqliteInt_h::Expr,
     ) as *mut crate::sqliteInt_h::Expr;
@@ -233,7 +233,7 @@ unsafe extern "C" fn isLikeOrGlob(
         }
         if (cnt > 1 as ::core::ffi::c_int
             || cnt > 0 as ::core::ffi::c_int
-                && *z.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+                && *z.offset(0 as isize) as ::core::ffi::c_int
                     != wc[3 as ::core::ffi::c_int as usize] as ::core::ffi::c_int)
             && 255 as ::core::ffi::c_int
                 != *z.offset((cnt - 1 as ::core::ffi::c_int) as isize) as ::core::ffi::c_int
@@ -282,7 +282,7 @@ unsafe extern "C" fn isLikeOrGlob(
                     isNum = crate::src::src::util::sqlite3AtoF(zNew, &raw mut rDummy, iTo, crate::sqlite3_h::SQLITE_UTF8 as crate::src::ext::rtree::rtree::u8_0);
                     if isNum <= 0 as ::core::ffi::c_int {
                         if iTo == 1 as ::core::ffi::c_int
-                            && *zNew.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+                            && *zNew.offset(0 as isize) as ::core::ffi::c_int
                                 == '-' as i32
                         {
                             isNum = 1 as ::core::ffi::c_int;
@@ -308,7 +308,7 @@ unsafe extern "C" fn isLikeOrGlob(
                 let mut v: *mut crate::vdbeInt_h::Vdbe = (*pParse).pVdbe;
                 crate::src::src::vdbeaux::sqlite3VdbeSetVarmask(v, (*pRight).iColumn as ::core::ffi::c_int);
                 if *pisComplete != 0
-                    && *(*pRight).u.zToken.offset(1 as ::core::ffi::c_int as isize)
+                    && *(*pRight).u.zToken.offset(1 as isize)
                         as ::core::ffi::c_int
                         != 0
                 {
@@ -365,7 +365,7 @@ unsafe extern "C" fn isAuxiliaryVtabOperator(
             return 0 as ::core::ffi::c_int;
         }
         pCol = (*(&raw mut (*pList).a as *mut crate::sqliteInt_h::ExprList_item)
-            .offset(1 as ::core::ffi::c_int as isize))
+            .offset(1 as isize))
         .pExpr;
         if (*pCol).op as ::core::ffi::c_int == crate::src::parse::TK_COLUMN
             && (*(*pCol).y.pTab).eTabType as ::core::ffi::c_int == crate::sqliteInt_h::TABTYP_VTAB
@@ -380,7 +380,7 @@ unsafe extern "C" fn isAuxiliaryVtabOperator(
                 {
                     *peOp2 = aOp[i as usize].eOp2;
                     *ppRight = (*(&raw mut (*pList).a as *mut crate::sqliteInt_h::ExprList_item)
-                        .offset(0 as ::core::ffi::c_int as isize))
+                        .offset(0 as isize))
                     .pExpr;
                     *ppLeft = pCol;
                     return 1 as ::core::ffi::c_int;
@@ -389,7 +389,7 @@ unsafe extern "C" fn isAuxiliaryVtabOperator(
             }
         }
         pCol = (*(&raw mut (*pList).a as *mut crate::sqliteInt_h::ExprList_item)
-            .offset(0 as ::core::ffi::c_int as isize))
+            .offset(0 as isize))
         .pExpr;
         if (*pCol).op as ::core::ffi::c_int == crate::src::parse::TK_COLUMN
             && (*(*pCol).y.pTab).eTabType as ::core::ffi::c_int == crate::sqliteInt_h::TABTYP_VTAB
@@ -419,7 +419,7 @@ unsafe extern "C" fn isAuxiliaryVtabOperator(
                 if i >= crate::sqlite3_h::SQLITE_INDEX_CONSTRAINT_FUNCTION {
                     *peOp2 = i as ::core::ffi::c_uchar;
                     *ppRight = (*(&raw mut (*pList).a as *mut crate::sqliteInt_h::ExprList_item)
-                        .offset(1 as ::core::ffi::c_int as isize))
+                        .offset(1 as isize))
                     .pExpr;
                     *ppLeft = pCol;
                     return 1 as ::core::ffi::c_int;
@@ -699,7 +699,7 @@ unsafe extern "C" fn exprAnalyzeOrTerm(
             let fresh6 = iOne;
             iOne = iOne + 1;
             pOne = whereNthSubterm(
-                (*pOrWc).a.offset(0 as ::core::ffi::c_int as isize) as *mut crate::whereInt_h::WhereTerm,
+                (*pOrWc).a.offset(0 as isize) as *mut crate::whereInt_h::WhereTerm,
                 fresh6,
             );
             if pOne.is_null() {
@@ -711,7 +711,7 @@ unsafe extern "C" fn exprAnalyzeOrTerm(
                 let fresh7 = iTwo;
                 iTwo = iTwo + 1;
                 pTwo = whereNthSubterm(
-                    (*pOrWc).a.offset(1 as ::core::ffi::c_int as isize) as *mut crate::whereInt_h::WhereTerm,
+                    (*pOrWc).a.offset(1 as isize) as *mut crate::whereInt_h::WhereTerm,
                     fresh7,
                 );
                 if pTwo.is_null() {
@@ -841,7 +841,7 @@ unsafe extern "C" fn termIsEquivalence(
     }
     if (*pExpr).op as ::core::ffi::c_int == crate::src::parse::TK_IS
         && (*pSrc).nSrc >= 2 as ::core::ffi::c_int
-        && (*(&raw mut (*pSrc).a as *mut crate::sqliteInt_h::SrcItem).offset(0 as ::core::ffi::c_int as isize))
+        && (*(&raw mut (*pSrc).a as *mut crate::sqliteInt_h::SrcItem).offset(0 as isize))
             .fg
             .jointype as ::core::ffi::c_int
             & crate::sqliteInt_h::JT_LTORJ
@@ -965,8 +965,8 @@ unsafe extern "C" fn exprMightBeIndexed2(
                                 .pExpr as *mut crate::sqliteInt_h::Expr,
                             ) == 0
                         {
-                            *aiCurCol.offset(0 as ::core::ffi::c_int as isize) = iCur;
-                            *aiCurCol.offset(1 as ::core::ffi::c_int as isize) = crate::sqliteInt_h::XN_EXPR;
+                            *aiCurCol.offset(0 as isize) = iCur;
+                            *aiCurCol.offset(1 as isize) = crate::sqliteInt_h::XN_EXPR;
                             return 1 as ::core::ffi::c_int;
                         }
                     }
@@ -994,12 +994,12 @@ unsafe extern "C" fn exprMightBeIndexed(
         && (op >= crate::src::parse::TK_GT_1 && op <= 58 as ::core::ffi::c_int)
     {
         pExpr = (*(&raw mut (*(*pExpr).x.pList).a as *mut crate::sqliteInt_h::ExprList_item)
-            .offset(0 as ::core::ffi::c_int as isize))
+            .offset(0 as isize))
         .pExpr;
     }
     if (*pExpr).op as ::core::ffi::c_int == crate::src::parse::TK_COLUMN {
-        *aiCurCol.offset(0 as ::core::ffi::c_int as isize) = (*pExpr).iTable;
-        *aiCurCol.offset(1 as ::core::ffi::c_int as isize) = (*pExpr).iColumn as ::core::ffi::c_int;
+        *aiCurCol.offset(0 as isize) = (*pExpr).iTable;
+        *aiCurCol.offset(1 as isize) = (*pExpr).iColumn as ::core::ffi::c_int;
         return 1 as ::core::ffi::c_int;
     }
     i = 0 as ::core::ffi::c_int;
@@ -1281,7 +1281,7 @@ unsafe extern "C" fn exprAnalyze(
             ::core::ptr::null::<::core::ffi::c_char>();
         let wtFlags: crate::src::fts5::u16_0 = (crate::whereInt_h::TERM_LIKEOPT | crate::whereInt_h::TERM_VIRTUAL | crate::whereInt_h::TERM_DYNAMIC) as crate::src::fts5::u16_0;
         pLeft_1 = (*(&raw mut (*(*pExpr).x.pList).a as *mut crate::sqliteInt_h::ExprList_item)
-            .offset(1 as ::core::ffi::c_int as isize))
+            .offset(1 as isize))
         .pExpr;
         pStr2 =  crate::src::src::expr::sqlite3ExprDup(db as *mut crate::sqliteInt_h::sqlite3,  pStr1 as *const crate::sqliteInt_h::Expr, 0 as ::core::ffi::c_int) as
     *mut crate::sqliteInt_h::Expr;
@@ -1564,14 +1564,14 @@ pub unsafe extern "C" fn sqlite3WhereAddLimit(mut pWC: *mut crate::whereInt_h::W
         && (*p).selFlags & (crate::sqliteInt_h::SF_Distinct | crate::sqliteInt_h::SF_Aggregate) as crate::src::ext::rtree::rtree::u32_0 == 0 as crate::src::ext::rtree::rtree::u32_0
         && ((*(*p).pSrc).nSrc == 1 as ::core::ffi::c_int
             && (*(*(&raw mut (*(*p).pSrc).a as *mut crate::sqliteInt_h::SrcItem)
-                .offset(0 as ::core::ffi::c_int as isize))
+                .offset(0 as isize))
             .pSTab)
                 .eTabType as ::core::ffi::c_int
                 == crate::sqliteInt_h::TABTYP_VTAB)
     {
         let mut pOrderBy: *mut crate::sqliteInt_h::ExprList = (*p).pOrderBy;
         let mut iCsr: ::core::ffi::c_int = (*(&raw mut (*(*p).pSrc).a as *mut crate::sqliteInt_h::SrcItem)
-            .offset(0 as ::core::ffi::c_int as isize))
+            .offset(0 as isize))
         .iCursor;
         let mut ii: ::core::ffi::c_int = 0;
         let mut current_block_4: u64;

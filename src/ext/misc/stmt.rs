@@ -206,7 +206,7 @@ unsafe extern "C" fn stmtFilter(
             ::core::mem::size_of::<StmtRow>() as crate::__stddef_size_t_h::size_t,
         );
         if !zSql.is_null() {
-            (*pNew).zSql = pNew.offset(1 as ::core::ffi::c_int as isize) as *mut StmtRow
+            (*pNew).zSql = pNew.offset(1 as isize) as *mut StmtRow
                 as *mut ::core::ffi::c_char;
             ::libc::memcpy(
                 (*pNew).zSql as *mut ::core::ffi::c_void,

@@ -139,7 +139,7 @@ unsafe extern "C" fn fts3tokConnectMethod(
     nDequote = argc - 3 as ::core::ffi::c_int;
     rc = fts3tokDequoteArray(
         nDequote,
-        argv.offset(3 as ::core::ffi::c_int as isize) as *const *const ::core::ffi::c_char,
+        argv.offset(3 as isize) as *const *const ::core::ffi::c_char,
         &raw mut azDequote,
     );
     if rc == crate::sqlite3_h::SQLITE_OK {
@@ -147,7 +147,7 @@ unsafe extern "C" fn fts3tokConnectMethod(
         if nDequote < 1 as ::core::ffi::c_int {
             zModule = b"simple\0" as *const u8 as *const ::core::ffi::c_char;
         } else {
-            zModule = *azDequote.offset(0 as ::core::ffi::c_int as isize);
+            zModule = *azDequote.offset(0 as isize);
         }
         rc = fts3tokQueryTokenizer(pHash as *mut crate::src::ext::fts3::fts3_hash::Fts3Hash, zModule, &raw mut pMod, pzErr);
     }
@@ -155,7 +155,7 @@ unsafe extern "C" fn fts3tokConnectMethod(
         let mut azArg: *const *const ::core::ffi::c_char =
             ::core::ptr::null::<*const ::core::ffi::c_char>();
         if nDequote > 1 as ::core::ffi::c_int {
-            azArg = azDequote.offset(1 as ::core::ffi::c_int as isize)
+            azArg = azDequote.offset(1 as isize)
                 as *mut *mut ::core::ffi::c_char
                 as *const *const ::core::ffi::c_char;
         }
@@ -304,10 +304,10 @@ unsafe extern "C" fn fts3tokFilterMethod(
     fts3tokResetCursor(pCsr);
     if idxNum == 1 as ::core::ffi::c_int {
         let mut zByte: *const ::core::ffi::c_char =
-            crate::src::src::vdbeapi::sqlite3_value_text(*apVal.offset(0 as ::core::ffi::c_int as isize))
+            crate::src::src::vdbeapi::sqlite3_value_text(*apVal.offset(0 as isize))
                 as *const ::core::ffi::c_char;
         let mut nByte: crate::sqlite3_h::sqlite3_int64 =
-            crate::src::src::vdbeapi::sqlite3_value_bytes(*apVal.offset(0 as ::core::ffi::c_int as isize)) as crate::sqlite3_h::sqlite3_int64;
+            crate::src::src::vdbeapi::sqlite3_value_bytes(*apVal.offset(0 as isize)) as crate::sqlite3_h::sqlite3_int64;
         (*pCsr).zInput = crate::src::src::malloc::sqlite3_malloc64((nByte + 1 as crate::sqlite3_h::sqlite3_int64) as crate::sqlite3_h::sqlite3_uint64)
             as *mut ::core::ffi::c_char;
         if (*pCsr).zInput.is_null() {

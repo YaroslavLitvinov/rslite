@@ -114,13 +114,13 @@ unsafe extern "C" fn statConnect(
         crate::src::src::util::sqlite3TokenInit(
             
             &raw mut nm as *mut _ as *mut crate::sqliteInt_h::Token,
-            *argv.offset(3 as ::core::ffi::c_int as isize) as *mut ::core::ffi::c_char,
+            *argv.offset(3 as isize) as *mut ::core::ffi::c_char,
         );
         iDb = crate::src::src::build::sqlite3FindDb(db as *mut crate::sqliteInt_h::sqlite3,  &raw mut nm as *mut _ as *mut crate::sqliteInt_h::Token);
         if iDb < 0 as ::core::ffi::c_int {
             *pzErr = crate::src::src::printf::sqlite3_mprintf(
                 b"no such database: %s\0" as *const u8 as *const ::core::ffi::c_char,
-                *argv.offset(3 as ::core::ffi::c_int as isize),
+                *argv.offset(3 as isize),
             );
             return crate::sqlite3_h::SQLITE_ERROR;
         }
@@ -208,33 +208,33 @@ unsafe extern "C" fn statBestIndex(
     if (*pIdxInfo).nOrderBy == 1 as ::core::ffi::c_int
         && (*(*pIdxInfo)
             .aOrderBy
-            .offset(0 as ::core::ffi::c_int as isize))
+            .offset(0 as isize))
         .iColumn
             == 0 as ::core::ffi::c_int
         && (*(*pIdxInfo)
             .aOrderBy
-            .offset(0 as ::core::ffi::c_int as isize))
+            .offset(0 as isize))
         .desc as ::core::ffi::c_int
             == 0 as ::core::ffi::c_int
         || (*pIdxInfo).nOrderBy == 2 as ::core::ffi::c_int
             && (*(*pIdxInfo)
                 .aOrderBy
-                .offset(0 as ::core::ffi::c_int as isize))
+                .offset(0 as isize))
             .iColumn
                 == 0 as ::core::ffi::c_int
             && (*(*pIdxInfo)
                 .aOrderBy
-                .offset(0 as ::core::ffi::c_int as isize))
+                .offset(0 as isize))
             .desc as ::core::ffi::c_int
                 == 0 as ::core::ffi::c_int
             && (*(*pIdxInfo)
                 .aOrderBy
-                .offset(1 as ::core::ffi::c_int as isize))
+                .offset(1 as isize))
             .iColumn
                 == 1 as ::core::ffi::c_int
             && (*(*pIdxInfo)
                 .aOrderBy
-                .offset(1 as ::core::ffi::c_int as isize))
+                .offset(1 as isize))
             .desc as ::core::ffi::c_int
                 == 0 as ::core::ffi::c_int
     {
@@ -377,7 +377,7 @@ unsafe extern "C" fn statDecodePage(
             0 as ::core::ffi::c_int
         }) as isize,
     ) as *mut crate::src::ext::rtree::rtree::u8_0;
-    (*p).flags = *aHdr.offset(0 as ::core::ffi::c_int as isize);
+    (*p).flags = *aHdr.offset(0 as isize);
     if (*p).flags as ::core::ffi::c_int == 0xa as ::core::ffi::c_int
         || (*p).flags as ::core::ffi::c_int == 0xd as ::core::ffi::c_int
     {
@@ -398,31 +398,31 @@ unsafe extern "C" fn statDecodePage(
             if (*p).iPgno == 1 as crate::src::ext::rtree::rtree::u32_0 {
                 nHdr += 100 as ::core::ffi::c_int;
             }
-            (*p).nCell = (*(aHdr.offset(3 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u8_0)
-                .offset(0 as ::core::ffi::c_int as isize)
+            (*p).nCell = (*(aHdr.offset(3 as isize) as *mut crate::src::ext::rtree::rtree::u8_0)
+                .offset(0 as isize)
                 as ::core::ffi::c_int)
                 << 8 as ::core::ffi::c_int
-                | *(aHdr.offset(3 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u8_0)
-                    .offset(1 as ::core::ffi::c_int as isize)
+                | *(aHdr.offset(3 as isize) as *mut crate::src::ext::rtree::rtree::u8_0)
+                    .offset(1 as isize)
                     as ::core::ffi::c_int;
             (*p).nMxPayload = 0 as ::core::ffi::c_int;
             szPage = crate::src::src::btree::sqlite3BtreeGetPageSize(pBt);
-            nUnused = ((*(aHdr.offset(5 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u8_0)
-                .offset(0 as ::core::ffi::c_int as isize)
+            nUnused = ((*(aHdr.offset(5 as isize) as *mut crate::src::ext::rtree::rtree::u8_0)
+                .offset(0 as isize)
                 as ::core::ffi::c_int)
                 << 8 as ::core::ffi::c_int
-                | *(aHdr.offset(5 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u8_0)
-                    .offset(1 as ::core::ffi::c_int as isize)
+                | *(aHdr.offset(5 as isize) as *mut crate::src::ext::rtree::rtree::u8_0)
+                    .offset(1 as isize)
                     as ::core::ffi::c_int)
                 - nHdr
                 - 2 as ::core::ffi::c_int * (*p).nCell;
-            nUnused += *aHdr.offset(7 as ::core::ffi::c_int as isize) as ::core::ffi::c_int;
-            iOff = (*(aHdr.offset(1 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u8_0)
-                .offset(0 as ::core::ffi::c_int as isize)
+            nUnused += *aHdr.offset(7 as isize) as ::core::ffi::c_int;
+            iOff = (*(aHdr.offset(1 as isize) as *mut crate::src::ext::rtree::rtree::u8_0)
+                .offset(0 as isize)
                 as ::core::ffi::c_int)
                 << 8 as ::core::ffi::c_int
-                | *(aHdr.offset(1 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u8_0)
-                    .offset(1 as ::core::ffi::c_int as isize)
+                | *(aHdr.offset(1 as isize) as *mut crate::src::ext::rtree::rtree::u8_0)
+                    .offset(1 as isize)
                     as ::core::ffi::c_int;
             loop {
                 if !(iOff != 0) {
@@ -435,18 +435,18 @@ unsafe extern "C" fn statDecodePage(
                     break;
                 }
                 nUnused += (*(aData.offset((iOff + 2 as ::core::ffi::c_int) as isize) as *mut crate::src::ext::rtree::rtree::u8_0)
-                    .offset(0 as ::core::ffi::c_int as isize)
+                    .offset(0 as isize)
                     as ::core::ffi::c_int)
                     << 8 as ::core::ffi::c_int
                     | *(aData.offset((iOff + 2 as ::core::ffi::c_int) as isize) as *mut crate::src::ext::rtree::rtree::u8_0)
-                        .offset(1 as ::core::ffi::c_int as isize)
+                        .offset(1 as isize)
                         as ::core::ffi::c_int;
                 iNext = (*(aData.offset(iOff as isize) as *mut crate::src::ext::rtree::rtree::u8_0)
-                    .offset(0 as ::core::ffi::c_int as isize)
+                    .offset(0 as isize)
                     as ::core::ffi::c_int)
                     << 8 as ::core::ffi::c_int
                     | *(aData.offset(iOff as isize) as *mut crate::src::ext::rtree::rtree::u8_0)
-                        .offset(1 as ::core::ffi::c_int as isize)
+                        .offset(1 as isize)
                         as ::core::ffi::c_int;
                 if iNext < iOff + 4 as ::core::ffi::c_int && iNext > 0 as ::core::ffi::c_int {
                     current_block = 13503832839001051727;
@@ -461,7 +461,7 @@ unsafe extern "C" fn statDecodePage(
                     (*p).iRightChildPg = if isLeaf != 0 {
                         0 as crate::src::ext::rtree::rtree::u32_0
                     } else {
-                        crate::src::src::util::sqlite3Get4byte(aHdr.offset(8 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u8_0)
+                        crate::src::src::util::sqlite3Get4byte(aHdr.offset(8 as isize) as *mut crate::src::ext::rtree::rtree::u8_0)
                     };
                     if (*p).nCell != 0 {
                         let mut i: ::core::ffi::c_int = 0;
@@ -493,12 +493,12 @@ unsafe extern "C" fn statDecodePage(
                                 (*p).aCell.offset(i as isize) as *mut StatCell;
                             iOff = (*(aData.offset((nHdr + i * 2 as ::core::ffi::c_int) as isize)
                                 as *mut crate::src::ext::rtree::rtree::u8_0)
-                                .offset(0 as ::core::ffi::c_int as isize)
+                                .offset(0 as isize)
                                 as ::core::ffi::c_int)
                                 << 8 as ::core::ffi::c_int
                                 | *(aData.offset((nHdr + i * 2 as ::core::ffi::c_int) as isize)
                                     as *mut crate::src::ext::rtree::rtree::u8_0)
-                                    .offset(1 as ::core::ffi::c_int as isize)
+                                    .offset(1 as isize)
                                     as ::core::ffi::c_int;
                             if iOff < nHdr || iOff >= szPage {
                                 current_block = 13503832839001051727;
@@ -577,7 +577,7 @@ unsafe extern "C" fn statDecodePage(
                                     if (*pCell).aOvfl.is_null() {
                                         return crate::sqliteInt_h::SQLITE_NOMEM_BKPT;
                                     }
-                                    *(*pCell).aOvfl.offset(0 as ::core::ffi::c_int as isize) =
+                                    *(*pCell).aOvfl.offset(0 as isize) =
                                         crate::src::src::util::sqlite3Get4byte(
                                             aData.offset((iOff + nLocal) as isize) as *mut crate::src::ext::rtree::rtree::u8_0
                                         );
@@ -715,7 +715,7 @@ unsafe extern "C" fn statNext(mut pCursor: *mut crate::sqlite3_h::sqlite3_vtab_c
                     pBt,
                     iRoot,
                     (&raw mut (*pCsr).aPage as *mut StatPage)
-                        .offset(0 as ::core::ffi::c_int as isize)
+                        .offset(0 as isize)
                         as *mut StatPage,
                 );
                 (*pCsr).aPage[0 as ::core::ffi::c_int as usize].iPgno = iRoot;
@@ -805,25 +805,25 @@ unsafe extern "C" fn statNext(mut pCursor: *mut crate::sqlite3_h::sqlite3_vtab_c
                     return crate::src::src::main::sqlite3CorruptError(657 as ::core::ffi::c_int);
                 }
                 if (*p).iCell == (*p).nCell {
-                    (*p.offset(1 as ::core::ffi::c_int as isize)).iPgno = (*p).iRightChildPg;
+                    (*p.offset(1 as isize)).iPgno = (*p).iRightChildPg;
                 } else {
-                    (*p.offset(1 as ::core::ffi::c_int as isize)).iPgno =
+                    (*p.offset(1 as isize)).iPgno =
                         (*(*p).aCell.offset((*p).iCell as isize)).iChildPg;
                 }
                 rc = statGetPage(
                     pBt,
-                    (*p.offset(1 as ::core::ffi::c_int as isize)).iPgno,
-                    p.offset(1 as ::core::ffi::c_int as isize) as *mut StatPage,
+                    (*p.offset(1 as isize)).iPgno,
+                    p.offset(1 as isize) as *mut StatPage,
                 );
                 (*pCsr).nPage += 1;
-                (*p.offset(1 as ::core::ffi::c_int as isize)).iCell = 0 as ::core::ffi::c_int;
+                (*p.offset(1 as isize)).iCell = 0 as ::core::ffi::c_int;
                 if (*pCsr).isAgg == 0 {
                     z = crate::src::src::printf::sqlite3_mprintf(
                         b"%s%.3x/\0" as *const u8 as *const ::core::ffi::c_char,
                         (*p).zPath,
                         (*p).iCell,
                     );
-                    let ref mut fresh0 = (*p.offset(1 as ::core::ffi::c_int as isize)).zPath;
+                    let ref mut fresh0 = (*p.offset(1 as isize)).zPath;
                     *fresh0 = z;
                     if z.is_null() {
                         rc = crate::sqliteInt_h::SQLITE_NOMEM_BKPT;

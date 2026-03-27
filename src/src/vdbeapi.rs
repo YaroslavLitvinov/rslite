@@ -1001,14 +1001,14 @@ unsafe extern "C" fn valueFromValueList(
             let mut iSerial: crate::src::ext::rtree::rtree::u32_0 = 0;
             let mut pOut: *mut crate::vdbeInt_h::sqlite3_value = (*pRhs).pOut;
             let mut iOff: ::core::ffi::c_int = 1 as ::core::ffi::c_int
-                + (if (*zBuf.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int)
+                + (if (*zBuf.offset(1 as isize) as ::core::ffi::c_int)
                     < 0x80 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0 as ::core::ffi::c_int
                 {
-                    iSerial = *zBuf.offset(1 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u32_0;
+                    iSerial = *zBuf.offset(1 as isize) as crate::src::ext::rtree::rtree::u32_0;
                     1 as ::core::ffi::c_int
                 } else {
                     crate::src::src::util::sqlite3GetVarint32(
-                        zBuf.offset(1 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u8_0,
+                        zBuf.offset(1 as isize) as *mut crate::src::ext::rtree::rtree::u8_0,
                         &raw mut iSerial,
                     ) as ::core::ffi::c_int
                 }) as crate::src::ext::rtree::rtree::u8_0 as ::core::ffi::c_int;

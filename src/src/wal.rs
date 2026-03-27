@@ -255,13 +255,13 @@ unsafe extern "C" fn walIndexPage(
 }
 
 unsafe extern "C" fn walCkptInfo(mut pWal: *mut Wal) -> *mut WalCkptInfo {
-    return (*(*pWal).apWiData.offset(0 as ::core::ffi::c_int as isize))
+    return (*(*pWal).apWiData.offset(0 as isize))
         .offset((::core::mem::size_of::<WalIndexHdr>() as usize).wrapping_div(2 as usize) as isize)
         as *mut crate::src::ext::rtree::rtree::u32_0 as *mut WalCkptInfo;
 }
 
 unsafe extern "C" fn walIndexHdr(mut pWal: *mut Wal) -> *mut WalIndexHdr {
-    return *(*pWal).apWiData.offset(0 as ::core::ffi::c_int as isize) as *mut WalIndexHdr;
+    return *(*pWal).apWiData.offset(0 as isize) as *mut WalIndexHdr;
 }
 
 unsafe extern "C" fn walChecksumBytes(
@@ -276,8 +276,8 @@ unsafe extern "C" fn walChecksumBytes(
     let mut aData: *mut crate::src::ext::rtree::rtree::u32_0 = a as *mut crate::src::ext::rtree::rtree::u32_0;
     let mut aEnd: *mut crate::src::ext::rtree::rtree::u32_0 = a.offset(nByte as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut crate::src::ext::rtree::rtree::u32_0;
     if !aIn.is_null() {
-        s1 = *aIn.offset(0 as ::core::ffi::c_int as isize);
-        s2 = *aIn.offset(1 as ::core::ffi::c_int as isize);
+        s1 = *aIn.offset(0 as isize);
+        s2 = *aIn.offset(1 as isize);
     } else {
         s2 = 0 as crate::src::ext::rtree::rtree::u32_0;
         s1 = s2;
@@ -285,40 +285,40 @@ unsafe extern "C" fn walChecksumBytes(
     if nativeCksum == 0 {
         loop {
             s1 = (s1 as ::core::ffi::c_uint).wrapping_add(
-                ((*aData.offset(0 as ::core::ffi::c_int as isize) & 0xff as crate::src::ext::rtree::rtree::u32_0)
+                ((*aData.offset(0 as isize) & 0xff as crate::src::ext::rtree::rtree::u32_0)
                     << 24 as ::core::ffi::c_int)
                     .wrapping_add(
-                        (*aData.offset(0 as ::core::ffi::c_int as isize) & 0xff00 as crate::src::ext::rtree::rtree::u32_0)
+                        (*aData.offset(0 as isize) & 0xff00 as crate::src::ext::rtree::rtree::u32_0)
                             << 8 as ::core::ffi::c_int,
                     )
                     .wrapping_add(
-                        (*aData.offset(0 as ::core::ffi::c_int as isize) & 0xff0000 as crate::src::ext::rtree::rtree::u32_0)
+                        (*aData.offset(0 as isize) & 0xff0000 as crate::src::ext::rtree::rtree::u32_0)
                             >> 8 as ::core::ffi::c_int,
                     )
                     .wrapping_add(
-                        (*aData.offset(0 as ::core::ffi::c_int as isize) & 0xff000000 as crate::src::ext::rtree::rtree::u32_0)
+                        (*aData.offset(0 as isize) & 0xff000000 as crate::src::ext::rtree::rtree::u32_0)
                             >> 24 as ::core::ffi::c_int,
                     )
                     .wrapping_add(s2) as ::core::ffi::c_uint,
             ) as crate::src::ext::rtree::rtree::u32_0 as crate::src::ext::rtree::rtree::u32_0;
             s2 = (s2 as ::core::ffi::c_uint).wrapping_add(
-                ((*aData.offset(1 as ::core::ffi::c_int as isize) & 0xff as crate::src::ext::rtree::rtree::u32_0)
+                ((*aData.offset(1 as isize) & 0xff as crate::src::ext::rtree::rtree::u32_0)
                     << 24 as ::core::ffi::c_int)
                     .wrapping_add(
-                        (*aData.offset(1 as ::core::ffi::c_int as isize) & 0xff00 as crate::src::ext::rtree::rtree::u32_0)
+                        (*aData.offset(1 as isize) & 0xff00 as crate::src::ext::rtree::rtree::u32_0)
                             << 8 as ::core::ffi::c_int,
                     )
                     .wrapping_add(
-                        (*aData.offset(1 as ::core::ffi::c_int as isize) & 0xff0000 as crate::src::ext::rtree::rtree::u32_0)
+                        (*aData.offset(1 as isize) & 0xff0000 as crate::src::ext::rtree::rtree::u32_0)
                             >> 8 as ::core::ffi::c_int,
                     )
                     .wrapping_add(
-                        (*aData.offset(1 as ::core::ffi::c_int as isize) & 0xff000000 as crate::src::ext::rtree::rtree::u32_0)
+                        (*aData.offset(1 as isize) & 0xff000000 as crate::src::ext::rtree::rtree::u32_0)
                             >> 24 as ::core::ffi::c_int,
                     )
                     .wrapping_add(s1) as ::core::ffi::c_uint,
             ) as crate::src::ext::rtree::rtree::u32_0 as crate::src::ext::rtree::rtree::u32_0;
-            aData = aData.offset(2 as ::core::ffi::c_int as isize);
+            aData = aData.offset(2 as isize);
             if !(aData < aEnd) {
                 break;
             }
@@ -390,8 +390,8 @@ unsafe extern "C" fn walChecksumBytes(
             }
         }
     }
-    *aOut.offset(0 as ::core::ffi::c_int as isize) = s1;
-    *aOut.offset(1 as ::core::ffi::c_int as isize) = s2;
+    *aOut.offset(0 as isize) = s1;
+    *aOut.offset(1 as isize) = s2;
 }
 
 unsafe extern "C" fn walShmBarrier(mut pWal: *mut Wal) {
@@ -413,14 +413,14 @@ unsafe extern "C" fn walIndexWriteHdr(mut pWal: *mut Wal) {
         &raw mut (*pWal).hdr.aCksum as *mut crate::src::ext::rtree::rtree::u32_0,
     );
     ::libc::memcpy(
-        aHdr.offset(1 as ::core::ffi::c_int as isize) as *mut WalIndexHdr
+        aHdr.offset(1 as isize) as *mut WalIndexHdr
             as *mut ::core::ffi::c_void,
         &raw mut (*pWal).hdr as *const ::core::ffi::c_void,
         ::core::mem::size_of::<WalIndexHdr>() as crate::__stddef_size_t_h::size_t,
     );
     walShmBarrier(pWal);
     ::libc::memcpy(
-        aHdr.offset(0 as ::core::ffi::c_int as isize) as *mut WalIndexHdr
+        aHdr.offset(0 as isize) as *mut WalIndexHdr
             as *mut ::core::ffi::c_void,
         &raw mut (*pWal).hdr as *const ::core::ffi::c_void,
         ::core::mem::size_of::<WalIndexHdr>() as crate::__stddef_size_t_h::size_t,
@@ -437,16 +437,16 @@ unsafe extern "C" fn walEncodeFrame(
     let mut nativeCksum: ::core::ffi::c_int = 0;
     let mut aCksum: *mut crate::src::ext::rtree::rtree::u32_0 = &raw mut (*pWal).hdr.aFrameCksum as *mut crate::src::ext::rtree::rtree::u32_0;
     crate::src::src::util::sqlite3Put4byte(
-        aFrame.offset(0 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u8_0,
+        aFrame.offset(0 as isize) as *mut crate::src::ext::rtree::rtree::u8_0,
         iPage,
     );
     crate::src::src::util::sqlite3Put4byte(
-        aFrame.offset(4 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u8_0,
+        aFrame.offset(4 as isize) as *mut crate::src::ext::rtree::rtree::u8_0,
         nTruncate,
     );
     if (*pWal).iReCksum == 0 as crate::src::ext::rtree::rtree::u32_0 {
         ::libc::memcpy(
-            aFrame.offset(8 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u8_0
+            aFrame.offset(8 as isize) as *mut crate::src::ext::rtree::rtree::u8_0
                 as *mut ::core::ffi::c_void,
             &raw mut (*pWal).hdr.aSalt as *mut crate::src::ext::rtree::rtree::u32_0 as *const ::core::ffi::c_void,
             8 as crate::__stddef_size_t_h::size_t,
@@ -462,16 +462,16 @@ unsafe extern "C" fn walEncodeFrame(
             aCksum,
         );
         crate::src::src::util::sqlite3Put4byte(
-            aFrame.offset(16 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u8_0,
-            *aCksum.offset(0 as ::core::ffi::c_int as isize),
+            aFrame.offset(16 as isize) as *mut crate::src::ext::rtree::rtree::u8_0,
+            *aCksum.offset(0 as isize),
         );
         crate::src::src::util::sqlite3Put4byte(
-            aFrame.offset(20 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u8_0,
-            *aCksum.offset(1 as ::core::ffi::c_int as isize),
+            aFrame.offset(20 as isize) as *mut crate::src::ext::rtree::rtree::u8_0,
+            *aCksum.offset(1 as isize),
         );
     } else {
         ::libc::memset(
-            aFrame.offset(8 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u8_0
+            aFrame.offset(8 as isize) as *mut crate::src::ext::rtree::rtree::u8_0
                 as *mut ::core::ffi::c_void,
             0 as ::core::ffi::c_int,
             16 as crate::__stddef_size_t_h::size_t,
@@ -491,13 +491,13 @@ unsafe extern "C" fn walDecodeFrame(
     let mut pgno: crate::src::ext::rtree::rtree::u32_0 = 0;
     if ::libc::memcmp(
         &raw mut (*pWal).hdr.aSalt as *const ::core::ffi::c_void,
-        aFrame.offset(8 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *const ::core::ffi::c_void,
+        aFrame.offset(8 as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *const ::core::ffi::c_void,
         8 as crate::__stddef_size_t_h::size_t,
     ) != 0 as ::core::ffi::c_int
     {
         return 0 as ::core::ffi::c_int;
     }
-    pgno = crate::src::src::util::sqlite3Get4byte(aFrame.offset(0 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u8_0);
+    pgno = crate::src::src::util::sqlite3Get4byte(aFrame.offset(0 as isize) as *mut crate::src::ext::rtree::rtree::u8_0);
     if pgno == 0 as crate::src::ext::rtree::rtree::u32_0 {
         return 0 as ::core::ffi::c_int;
     }
@@ -511,15 +511,15 @@ unsafe extern "C" fn walDecodeFrame(
         aCksum,
         aCksum,
     );
-    if *aCksum.offset(0 as ::core::ffi::c_int as isize)
-        != crate::src::src::util::sqlite3Get4byte(aFrame.offset(16 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u8_0)
-        || *aCksum.offset(1 as ::core::ffi::c_int as isize)
-            != crate::src::src::util::sqlite3Get4byte(aFrame.offset(20 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u8_0)
+    if *aCksum.offset(0 as isize)
+        != crate::src::src::util::sqlite3Get4byte(aFrame.offset(16 as isize) as *mut crate::src::ext::rtree::rtree::u8_0)
+        || *aCksum.offset(1 as isize)
+            != crate::src::src::util::sqlite3Get4byte(aFrame.offset(20 as isize) as *mut crate::src::ext::rtree::rtree::u8_0)
     {
         return 0 as ::core::ffi::c_int;
     }
     *piPage = pgno;
-    *pnTruncate = crate::src::src::util::sqlite3Get4byte(aFrame.offset(4 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u8_0);
+    *pnTruncate = crate::src::src::util::sqlite3Get4byte(aFrame.offset(4 as isize) as *mut crate::src::ext::rtree::rtree::u8_0);
     return 1 as ::core::ffi::c_int;
 }
 
@@ -637,7 +637,7 @@ unsafe extern "C" fn walFramePage(mut iFrame: crate::src::ext::rtree::rtree::u32
 unsafe extern "C" fn walFramePgno(mut pWal: *mut Wal, mut iFrame: crate::src::ext::rtree::rtree::u32_0) -> crate::src::ext::rtree::rtree::u32_0 {
     let mut iHash: ::core::ffi::c_int = walFramePage(iFrame);
     if iHash == 0 as ::core::ffi::c_int {
-        return *(*(*pWal).apWiData.offset(0 as ::core::ffi::c_int as isize)).offset(
+        return *(*(*pWal).apWiData.offset(0 as isize)).offset(
             WALINDEX_HDR_SIZE
                 .wrapping_div(::core::mem::size_of::<crate::src::ext::rtree::rtree::u32_0>() as usize)
                 .wrapping_add(iFrame as usize)
@@ -786,11 +786,11 @@ unsafe extern "C" fn walIndexRecover(mut pWal: *mut Wal) -> ::core::ffi::c_int {
                 current_block = 2310077433060450808;
             } else {
                 magic = crate::src::src::util::sqlite3Get4byte(
-                    (&raw mut aBuf as *mut crate::src::ext::rtree::rtree::u8_0).offset(0 as ::core::ffi::c_int as isize)
+                    (&raw mut aBuf as *mut crate::src::ext::rtree::rtree::u8_0).offset(0 as isize)
                         as *mut crate::src::ext::rtree::rtree::u8_0,
                 );
                 szPage = crate::src::src::util::sqlite3Get4byte(
-                    (&raw mut aBuf as *mut crate::src::ext::rtree::rtree::u8_0).offset(8 as ::core::ffi::c_int as isize)
+                    (&raw mut aBuf as *mut crate::src::ext::rtree::rtree::u8_0).offset(8 as isize)
                         as *mut crate::src::ext::rtree::rtree::u8_0,
                 ) as ::core::ffi::c_int;
                 if magic & 0xfffffffe as crate::src::ext::rtree::rtree::u32_0 != WAL_MAGIC as crate::src::ext::rtree::rtree::u32_0
@@ -803,12 +803,12 @@ unsafe extern "C" fn walIndexRecover(mut pWal: *mut Wal) -> ::core::ffi::c_int {
                     (*pWal).hdr.bigEndCksum = (magic & 0x1 as crate::src::ext::rtree::rtree::u32_0) as crate::src::ext::rtree::rtree::u8_0;
                     (*pWal).szPage = szPage as crate::src::ext::rtree::rtree::u32_0;
                     (*pWal).nCkpt = crate::src::src::util::sqlite3Get4byte(
-                        (&raw mut aBuf as *mut crate::src::ext::rtree::rtree::u8_0).offset(12 as ::core::ffi::c_int as isize)
+                        (&raw mut aBuf as *mut crate::src::ext::rtree::rtree::u8_0).offset(12 as isize)
                             as *mut crate::src::ext::rtree::rtree::u8_0,
                     );
                     ::libc::memcpy(
                         &raw mut (*pWal).hdr.aSalt as *mut ::core::ffi::c_void,
-                        (&raw mut aBuf as *mut crate::src::ext::rtree::rtree::u8_0).offset(16 as ::core::ffi::c_int as isize)
+                        (&raw mut aBuf as *mut crate::src::ext::rtree::rtree::u8_0).offset(16 as isize)
                             as *mut crate::src::ext::rtree::rtree::u8_0 as *const ::core::ffi::c_void,
                         8 as crate::__stddef_size_t_h::size_t,
                     );
@@ -822,20 +822,20 @@ unsafe extern "C" fn walIndexRecover(mut pWal: *mut Wal) -> ::core::ffi::c_int {
                     );
                     if (*pWal).hdr.aFrameCksum[0 as ::core::ffi::c_int as usize]
                         != crate::src::src::util::sqlite3Get4byte(
-                            (&raw mut aBuf as *mut crate::src::ext::rtree::rtree::u8_0).offset(24 as ::core::ffi::c_int as isize)
+                            (&raw mut aBuf as *mut crate::src::ext::rtree::rtree::u8_0).offset(24 as isize)
                                 as *mut crate::src::ext::rtree::rtree::u8_0,
                         )
                         || (*pWal).hdr.aFrameCksum[1 as ::core::ffi::c_int as usize]
                             != crate::src::src::util::sqlite3Get4byte(
                                 (&raw mut aBuf as *mut crate::src::ext::rtree::rtree::u8_0)
-                                    .offset(28 as ::core::ffi::c_int as isize)
+                                    .offset(28 as isize)
                                     as *mut crate::src::ext::rtree::rtree::u8_0,
                             )
                     {
                         current_block = 1095482132288021607;
                     } else {
                         version = crate::src::src::util::sqlite3Get4byte(
-                            (&raw mut aBuf as *mut crate::src::ext::rtree::rtree::u8_0).offset(4 as ::core::ffi::c_int as isize)
+                            (&raw mut aBuf as *mut crate::src::ext::rtree::rtree::u8_0).offset(4 as isize)
                                 as *mut crate::src::ext::rtree::rtree::u8_0,
                         );
                         if version != WAL_MAX_VERSION as crate::src::ext::rtree::rtree::u32_0 {
@@ -1113,7 +1113,7 @@ pub unsafe extern "C" fn sqlite3WalOpen(
         return crate::sqliteInt_h::SQLITE_NOMEM_BKPT;
     }
     (*pRet).pVfs = pVfs;
-    (*pRet).pWalFd = pRet.offset(1 as ::core::ffi::c_int as isize) as *mut Wal as *mut crate::sqlite3_h::sqlite3_file;
+    (*pRet).pWalFd = pRet.offset(1 as isize) as *mut Wal as *mut crate::sqlite3_h::sqlite3_file;
     (*pRet).pDbFd = pDbFd;
     (*pRet).readLock = -(1 as ::core::ffi::c_int) as crate::src::fts5::i16_0;
     (*pRet).mxWalSize = mxWalSize;
@@ -1417,13 +1417,13 @@ unsafe extern "C" fn walRestartHdr(mut pWal: *mut Wal, mut salt1: crate::src::ex
     (*pWal).nCkpt = (*pWal).nCkpt.wrapping_add(1);
     (*pWal).hdr.mxFrame = 0 as crate::src::ext::rtree::rtree::u32_0;
     crate::src::src::util::sqlite3Put4byte(
-        aSalt.offset(0 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u32_0 as *mut crate::src::ext::rtree::rtree::u8_0,
+        aSalt.offset(0 as isize) as *mut crate::src::ext::rtree::rtree::u32_0 as *mut crate::src::ext::rtree::rtree::u8_0,
         (1 as crate::src::ext::rtree::rtree::u32_0).wrapping_add(crate::src::src::util::sqlite3Get4byte(
-            aSalt.offset(0 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u32_0 as *mut crate::src::ext::rtree::rtree::u8_0,
+            aSalt.offset(0 as isize) as *mut crate::src::ext::rtree::rtree::u32_0 as *mut crate::src::ext::rtree::rtree::u8_0,
         )),
     );
     ::libc::memcpy(
-        (&raw mut (*pWal).hdr.aSalt as *mut crate::src::ext::rtree::rtree::u32_0).offset(1 as ::core::ffi::c_int as isize)
+        (&raw mut (*pWal).hdr.aSalt as *mut crate::src::ext::rtree::rtree::u32_0).offset(1 as isize)
             as *mut crate::src::ext::rtree::rtree::u32_0 as *mut ::core::ffi::c_void,
         &raw mut salt1 as *const ::core::ffi::c_void,
         4 as crate::__stddef_size_t_h::size_t,
@@ -1799,14 +1799,14 @@ unsafe extern "C" fn walIndexTryHdr(
     aHdr = walIndexHdr(pWal);
     ::libc::memcpy(
         &raw mut h1 as *mut ::core::ffi::c_void,
-        aHdr.offset(0 as ::core::ffi::c_int as isize) as *mut WalIndexHdr
+        aHdr.offset(0 as isize) as *mut WalIndexHdr
             as *mut ::core::ffi::c_void,
         ::core::mem::size_of::<WalIndexHdr>() as crate::__stddef_size_t_h::size_t,
     );
     walShmBarrier(pWal);
     ::libc::memcpy(
         &raw mut h2 as *mut ::core::ffi::c_void,
-        aHdr.offset(1 as ::core::ffi::c_int as isize) as *mut WalIndexHdr
+        aHdr.offset(1 as isize) as *mut WalIndexHdr
             as *mut ::core::ffi::c_void,
         ::core::mem::size_of::<WalIndexHdr>() as crate::__stddef_size_t_h::size_t,
     );
@@ -1983,7 +1983,7 @@ unsafe extern "C" fn walBeginShmUnreliable(
                     if !(rc != crate::sqlite3_h::SQLITE_OK) {
                         if ::libc::memcmp(
                             &raw mut (*pWal).hdr.aSalt as *const ::core::ffi::c_void,
-                            (&raw mut aBuf as *mut crate::src::ext::rtree::rtree::u8_0).offset(16 as ::core::ffi::c_int as isize)
+                            (&raw mut aBuf as *mut crate::src::ext::rtree::rtree::u8_0).offset(16 as isize)
                                 as *mut crate::src::ext::rtree::rtree::u8_0
                                 as *const ::core::ffi::c_void,
                             8 as crate::__stddef_size_t_h::size_t,
@@ -2101,7 +2101,7 @@ unsafe extern "C" fn walTryBeginRead(
             rc = walIndexReadHdr(pWal, pChanged);
         }
         if rc == crate::sqlite3_h::SQLITE_BUSY {
-            if (*(*pWal).apWiData.offset(0 as ::core::ffi::c_int as isize)).is_null() {
+            if (*(*pWal).apWiData.offset(0 as isize)).is_null() {
                 rc = WAL_RETRY;
             } else {
                 rc = walLockShared(pWal, WAL_RECOVER_LOCK);
@@ -2433,12 +2433,12 @@ pub unsafe extern "C" fn sqlite3WalUndo(
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3WalSavepoint(mut pWal: *mut Wal, mut aWalData: *mut crate::src::ext::rtree::rtree::u32_0) {
-    *aWalData.offset(0 as ::core::ffi::c_int as isize) = (*pWal).hdr.mxFrame;
-    *aWalData.offset(1 as ::core::ffi::c_int as isize) =
+    *aWalData.offset(0 as isize) = (*pWal).hdr.mxFrame;
+    *aWalData.offset(1 as isize) =
         (*pWal).hdr.aFrameCksum[0 as ::core::ffi::c_int as usize];
-    *aWalData.offset(2 as ::core::ffi::c_int as isize) =
+    *aWalData.offset(2 as isize) =
         (*pWal).hdr.aFrameCksum[1 as ::core::ffi::c_int as usize];
-    *aWalData.offset(3 as ::core::ffi::c_int as isize) = (*pWal).nCkpt;
+    *aWalData.offset(3 as isize) = (*pWal).nCkpt;
 }
 #[no_mangle]
 
@@ -2447,16 +2447,16 @@ pub unsafe extern "C" fn sqlite3WalSavepointUndo(
     mut aWalData: *mut crate::src::ext::rtree::rtree::u32_0,
 ) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = crate::sqlite3_h::SQLITE_OK;
-    if *aWalData.offset(3 as ::core::ffi::c_int as isize) != (*pWal).nCkpt {
-        *aWalData.offset(0 as ::core::ffi::c_int as isize) = 0 as crate::src::ext::rtree::rtree::u32_0;
-        *aWalData.offset(3 as ::core::ffi::c_int as isize) = (*pWal).nCkpt;
+    if *aWalData.offset(3 as isize) != (*pWal).nCkpt {
+        *aWalData.offset(0 as isize) = 0 as crate::src::ext::rtree::rtree::u32_0;
+        *aWalData.offset(3 as isize) = (*pWal).nCkpt;
     }
-    if *aWalData.offset(0 as ::core::ffi::c_int as isize) < (*pWal).hdr.mxFrame {
-        (*pWal).hdr.mxFrame = *aWalData.offset(0 as ::core::ffi::c_int as isize);
+    if *aWalData.offset(0 as isize) < (*pWal).hdr.mxFrame {
+        (*pWal).hdr.mxFrame = *aWalData.offset(0 as isize);
         (*pWal).hdr.aFrameCksum[0 as ::core::ffi::c_int as usize] =
-            *aWalData.offset(1 as ::core::ffi::c_int as isize);
+            *aWalData.offset(1 as isize);
         (*pWal).hdr.aFrameCksum[1 as ::core::ffi::c_int as usize] =
-            *aWalData.offset(2 as ::core::ffi::c_int as isize);
+            *aWalData.offset(2 as isize);
         walCleanupHash(pWal);
         if (*pWal).iReCksum > (*pWal).hdr.mxFrame {
             (*pWal).iReCksum = 0 as crate::src::ext::rtree::rtree::u32_0;
@@ -2625,7 +2625,7 @@ unsafe extern "C" fn walRewriteChecksums(
             let mut iPgno: crate::src::ext::rtree::rtree::u32_0 = 0;
             let mut nDbSize: crate::src::ext::rtree::rtree::u32_0 = 0;
             iPgno = crate::src::src::util::sqlite3Get4byte(aBuf);
-            nDbSize = crate::src::src::util::sqlite3Get4byte(aBuf.offset(4 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u8_0);
+            nDbSize = crate::src::src::util::sqlite3Get4byte(aBuf.offset(4 as isize) as *mut crate::src::ext::rtree::rtree::u8_0);
             walEncodeFrame(
                 pWal,
                 iPgno,
@@ -2689,19 +2689,19 @@ unsafe extern "C" fn walFrames(
         let mut aWalHdr: [crate::src::ext::rtree::rtree::u8_0; 32] = [0; 32];
         let mut aCksum: [crate::src::ext::rtree::rtree::u32_0; 2] = [0; 2];
         crate::src::src::util::sqlite3Put4byte(
-            (&raw mut aWalHdr as *mut crate::src::ext::rtree::rtree::u8_0).offset(0 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u8_0,
+            (&raw mut aWalHdr as *mut crate::src::ext::rtree::rtree::u8_0).offset(0 as isize) as *mut crate::src::ext::rtree::rtree::u8_0,
             (WAL_MAGIC | crate::sqliteInt_h::SQLITE_BIGENDIAN) as crate::src::ext::rtree::rtree::u32_0,
         );
         crate::src::src::util::sqlite3Put4byte(
-            (&raw mut aWalHdr as *mut crate::src::ext::rtree::rtree::u8_0).offset(4 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u8_0,
+            (&raw mut aWalHdr as *mut crate::src::ext::rtree::rtree::u8_0).offset(4 as isize) as *mut crate::src::ext::rtree::rtree::u8_0,
             WAL_MAX_VERSION as crate::src::ext::rtree::rtree::u32_0,
         );
         crate::src::src::util::sqlite3Put4byte(
-            (&raw mut aWalHdr as *mut crate::src::ext::rtree::rtree::u8_0).offset(8 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u8_0,
+            (&raw mut aWalHdr as *mut crate::src::ext::rtree::rtree::u8_0).offset(8 as isize) as *mut crate::src::ext::rtree::rtree::u8_0,
             szPage as crate::src::ext::rtree::rtree::u32_0,
         );
         crate::src::src::util::sqlite3Put4byte(
-            (&raw mut aWalHdr as *mut crate::src::ext::rtree::rtree::u8_0).offset(12 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u8_0,
+            (&raw mut aWalHdr as *mut crate::src::ext::rtree::rtree::u8_0).offset(12 as isize) as *mut crate::src::ext::rtree::rtree::u8_0,
             (*pWal).nCkpt,
         );
         if (*pWal).nCkpt == 0 as crate::src::ext::rtree::rtree::u32_0 {
@@ -2711,7 +2711,7 @@ unsafe extern "C" fn walFrames(
             );
         }
         ::libc::memcpy(
-            (&raw mut aWalHdr as *mut crate::src::ext::rtree::rtree::u8_0).offset(16 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u8_0
+            (&raw mut aWalHdr as *mut crate::src::ext::rtree::rtree::u8_0).offset(16 as isize) as *mut crate::src::ext::rtree::rtree::u8_0
                 as *mut ::core::ffi::c_void,
             &raw mut (*pWal).hdr.aSalt as *mut crate::src::ext::rtree::rtree::u32_0 as *const ::core::ffi::c_void,
             8 as crate::__stddef_size_t_h::size_t,
@@ -2724,11 +2724,11 @@ unsafe extern "C" fn walFrames(
             &raw mut aCksum as *mut crate::src::ext::rtree::rtree::u32_0,
         );
         crate::src::src::util::sqlite3Put4byte(
-            (&raw mut aWalHdr as *mut crate::src::ext::rtree::rtree::u8_0).offset(24 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u8_0,
+            (&raw mut aWalHdr as *mut crate::src::ext::rtree::rtree::u8_0).offset(24 as isize) as *mut crate::src::ext::rtree::rtree::u8_0,
             aCksum[0 as ::core::ffi::c_int as usize],
         );
         crate::src::src::util::sqlite3Put4byte(
-            (&raw mut aWalHdr as *mut crate::src::ext::rtree::rtree::u8_0).offset(28 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u8_0,
+            (&raw mut aWalHdr as *mut crate::src::ext::rtree::rtree::u8_0).offset(28 as isize) as *mut crate::src::ext::rtree::rtree::u8_0,
             aCksum[1 as ::core::ffi::c_int as usize],
         );
         (*pWal).szPage = szPage as crate::src::ext::rtree::rtree::u32_0;

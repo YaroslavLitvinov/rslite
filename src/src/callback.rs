@@ -128,27 +128,27 @@ unsafe extern "C" fn findCollSeqEntry(
         ) as *mut crate::sqliteInt_h::CollSeq;
         if !pColl.is_null() {
             let mut pDel: *mut crate::sqliteInt_h::CollSeq = ::core::ptr::null_mut::<crate::sqliteInt_h::CollSeq>();
-            let ref mut fresh3 = (*pColl.offset(0 as ::core::ffi::c_int as isize)).zName;
-            *fresh3 = pColl.offset(3 as ::core::ffi::c_int as isize) as *mut crate::sqliteInt_h::CollSeq
+            let ref mut fresh3 = (*pColl.offset(0 as isize)).zName;
+            *fresh3 = pColl.offset(3 as isize) as *mut crate::sqliteInt_h::CollSeq
                 as *mut ::core::ffi::c_char;
-            (*pColl.offset(0 as ::core::ffi::c_int as isize)).enc = crate::sqlite3_h::SQLITE_UTF8 as crate::src::ext::rtree::rtree::u8_0;
-            let ref mut fresh4 = (*pColl.offset(1 as ::core::ffi::c_int as isize)).zName;
-            *fresh4 = pColl.offset(3 as ::core::ffi::c_int as isize) as *mut crate::sqliteInt_h::CollSeq
+            (*pColl.offset(0 as isize)).enc = crate::sqlite3_h::SQLITE_UTF8 as crate::src::ext::rtree::rtree::u8_0;
+            let ref mut fresh4 = (*pColl.offset(1 as isize)).zName;
+            *fresh4 = pColl.offset(3 as isize) as *mut crate::sqliteInt_h::CollSeq
                 as *mut ::core::ffi::c_char;
-            (*pColl.offset(1 as ::core::ffi::c_int as isize)).enc = crate::sqlite3_h::SQLITE_UTF16LE as crate::src::ext::rtree::rtree::u8_0;
-            let ref mut fresh5 = (*pColl.offset(2 as ::core::ffi::c_int as isize)).zName;
-            *fresh5 = pColl.offset(3 as ::core::ffi::c_int as isize) as *mut crate::sqliteInt_h::CollSeq
+            (*pColl.offset(1 as isize)).enc = crate::sqlite3_h::SQLITE_UTF16LE as crate::src::ext::rtree::rtree::u8_0;
+            let ref mut fresh5 = (*pColl.offset(2 as isize)).zName;
+            *fresh5 = pColl.offset(3 as isize) as *mut crate::sqliteInt_h::CollSeq
                 as *mut ::core::ffi::c_char;
-            (*pColl.offset(2 as ::core::ffi::c_int as isize)).enc = crate::sqlite3_h::SQLITE_UTF16BE as crate::src::ext::rtree::rtree::u8_0;
+            (*pColl.offset(2 as isize)).enc = crate::sqlite3_h::SQLITE_UTF16BE as crate::src::ext::rtree::rtree::u8_0;
             ::libc::memcpy(
-                (*pColl.offset(0 as ::core::ffi::c_int as isize)).zName as *mut ::core::ffi::c_void,
+                (*pColl.offset(0 as isize)).zName as *mut ::core::ffi::c_void,
                 zName as *const ::core::ffi::c_void,
                 nName as crate::__stddef_size_t_h::size_t,
             );
             pDel = crate::src::src::hash::sqlite3HashInsert(
                 
                 &raw mut (*db).aCollSeq as *mut _ as *mut crate::src::src::hash::Hash,
-                (*pColl.offset(0 as ::core::ffi::c_int as isize)).zName,
+                (*pColl.offset(0 as isize)).zName,
                 pColl as *mut ::core::ffi::c_void,
             ) as *mut crate::sqliteInt_h::CollSeq;
             if !pDel.is_null() {
@@ -306,7 +306,7 @@ pub unsafe extern "C" fn sqlite3InsertBuiltinFuncs(
         let mut zName: *const ::core::ffi::c_char = (*aDef.offset(i as isize)).zName;
         let mut nName: ::core::ffi::c_int = crate::src::src::util::sqlite3Strlen30(zName);
         let mut h: ::core::ffi::c_int =
-            (*zName.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int + nName)
+            (*zName.offset(0 as isize) as ::core::ffi::c_int + nName)
                 % crate::sqliteInt_h::SQLITE_FUNC_HASH_SZ;
         pOther = sqlite3FunctionSearch(h, zName);
         if !pOther.is_null() {
@@ -352,7 +352,7 @@ pub unsafe extern "C" fn sqlite3FindFunction(
     {
         bestScore = 0 as ::core::ffi::c_int;
         h = (*(&raw const crate::src::src::global::sqlite3UpperToLower as *const ::core::ffi::c_uchar)
-            .offset(*zName.offset(0 as ::core::ffi::c_int as isize) as crate::src::ext::rtree::rtree::u8_0 as isize)
+            .offset(*zName.offset(0 as isize) as crate::src::ext::rtree::rtree::u8_0 as isize)
             as ::core::ffi::c_int
             + nName)
             % crate::sqliteInt_h::SQLITE_FUNC_HASH_SZ;
@@ -378,12 +378,12 @@ pub unsafe extern "C" fn sqlite3FindFunction(
     } {
         let mut pOther: *mut crate::sqliteInt_h::FuncDef = ::core::ptr::null_mut::<crate::sqliteInt_h::FuncDef>();
         let mut z: *mut crate::src::ext::rtree::rtree::u8_0 = ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>();
-        (*pBest).zName = pBest.offset(1 as ::core::ffi::c_int as isize) as *mut crate::sqliteInt_h::FuncDef
+        (*pBest).zName = pBest.offset(1 as isize) as *mut crate::sqliteInt_h::FuncDef
             as *const ::core::ffi::c_char;
         (*pBest).nArg = nArg as crate::src::fts5::u16_0 as crate::src::fts5::i16_0;
         (*pBest).funcFlags = enc as crate::src::ext::rtree::rtree::u32_0;
         ::libc::memcpy(
-            pBest.offset(1 as ::core::ffi::c_int as isize) as *mut crate::sqliteInt_h::FuncDef
+            pBest.offset(1 as isize) as *mut crate::sqliteInt_h::FuncDef
                 as *mut ::core::ffi::c_char as *mut ::core::ffi::c_void,
             zName as *const ::core::ffi::c_void,
             (nName + 1 as ::core::ffi::c_int) as crate::__stddef_size_t_h::size_t,

@@ -512,7 +512,7 @@ unsafe extern "C" fn pcache1Create(
     pCache = crate::src::src::malloc::sqlite3MallocZero(sz as crate::src::ext::rtree::rtree::u64_0) as *mut PCache1;
     if !pCache.is_null() {
         if pcache1_g.separateCache != 0 {
-            pGroup = pCache.offset(1 as ::core::ffi::c_int as isize) as *mut PCache1 as *mut PGroup;
+            pGroup = pCache.offset(1 as isize) as *mut PCache1 as *mut PGroup;
             (*pGroup).mxPinned = 10 as ::core::ffi::c_uint;
         } else {
             pGroup = &raw mut pcache1_g.grp;

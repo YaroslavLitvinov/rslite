@@ -267,17 +267,17 @@ unsafe extern "C" fn isValidSchemaTableName(
     }
     zLegacy = (*pTab).zName;
     if ::libc::strcmp(
-        zLegacy.offset(7 as ::core::ffi::c_int as isize),
+        zLegacy.offset(7 as isize),
         crate::sqliteInt_h::LEGACY_TEMP_SCHEMA_TABLE
             .as_ptr()
-            .offset(7 as ::core::ffi::c_int as isize) as *const ::core::ffi::c_char,
+            .offset(7 as isize) as *const ::core::ffi::c_char,
     ) == 0 as ::core::ffi::c_int
     {
         if crate::src::src::util::sqlite3StrICmp(
-            zTab.offset(7 as ::core::ffi::c_int as isize),
+            zTab.offset(7 as isize),
             crate::sqliteInt_h::PREFERRED_TEMP_SCHEMA_TABLE
                 .as_ptr()
-                .offset(7 as ::core::ffi::c_int as isize) as *const ::core::ffi::c_char,
+                .offset(7 as isize) as *const ::core::ffi::c_char,
         ) == 0 as ::core::ffi::c_int
         {
             return 1 as ::core::ffi::c_int;
@@ -286,28 +286,28 @@ unsafe extern "C" fn isValidSchemaTableName(
             return 0 as ::core::ffi::c_int;
         }
         if crate::src::src::util::sqlite3StrICmp(
-            zTab.offset(7 as ::core::ffi::c_int as isize),
+            zTab.offset(7 as isize),
             crate::sqliteInt_h::LEGACY_SCHEMA_TABLE
                 .as_ptr()
-                .offset(7 as ::core::ffi::c_int as isize) as *const ::core::ffi::c_char,
+                .offset(7 as isize) as *const ::core::ffi::c_char,
         ) == 0 as ::core::ffi::c_int
         {
             return 1 as ::core::ffi::c_int;
         }
         if crate::src::src::util::sqlite3StrICmp(
-            zTab.offset(7 as ::core::ffi::c_int as isize),
+            zTab.offset(7 as isize),
             crate::sqliteInt_h::PREFERRED_SCHEMA_TABLE
                 .as_ptr()
-                .offset(7 as ::core::ffi::c_int as isize) as *const ::core::ffi::c_char,
+                .offset(7 as isize) as *const ::core::ffi::c_char,
         ) == 0 as ::core::ffi::c_int
         {
             return 1 as ::core::ffi::c_int;
         }
     } else if crate::src::src::util::sqlite3StrICmp(
-        zTab.offset(7 as ::core::ffi::c_int as isize),
+        zTab.offset(7 as isize),
         crate::sqliteInt_h::PREFERRED_SCHEMA_TABLE
             .as_ptr()
-            .offset(7 as ::core::ffi::c_int as isize) as *const ::core::ffi::c_char,
+            .offset(7 as isize) as *const ::core::ffi::c_char,
     ) == 0 as ::core::ffi::c_int
     {
         return 1 as ::core::ffi::c_int;
@@ -358,8 +358,8 @@ unsafe extern "C" fn lookupName(
                 && crate::src::src::util::sqlite3StrICmp(b"main\0" as *const u8 as *const ::core::ffi::c_char, zDb)
                     == 0 as ::core::ffi::c_int
             {
-                pSchema = (*(*db).aDb.offset(0 as ::core::ffi::c_int as isize)).pSchema;
-                zDb = (*(*db).aDb.offset(0 as ::core::ffi::c_int as isize)).zDbSName;
+                pSchema = (*(*db).aDb.offset(0 as isize)).pSchema;
+                zDb = (*(*db).aDb.offset(0 as isize)).zDbSName;
             }
         }
     }
@@ -671,7 +671,7 @@ unsafe extern "C" fn lookupName(
                     ) == 0 as ::core::ffi::c_int
                 {
                     pTab = (*(&raw mut (*(*pUpsert).pUpsertSrc).a as *mut crate::sqliteInt_h::SrcItem)
-                        .offset(0 as ::core::ffi::c_int as isize))
+                        .offset(0 as isize))
                     .pSTab;
                     (*pExpr).iTable = EXCLUDED_TABLE_NUMBER;
                 }
@@ -1264,7 +1264,7 @@ unsafe extern "C" fn resolveExprStep(
                     if n == 2 as ::core::ffi::c_int {
                         (*pExpr).iTable = exprProbability(
                             (*(&raw mut (*pList).a as *mut crate::sqliteInt_h::ExprList_item)
-                                .offset(1 as ::core::ffi::c_int as isize))
+                                .offset(1 as isize))
                             .pExpr,
                         );
                         if (*pExpr).iTable < 0 as ::core::ffi::c_int {
@@ -1279,7 +1279,7 @@ unsafe extern "C" fn resolveExprStep(
                             (*pNC).nNcErr += 1;
                         }
                     } else {
-                        (*pExpr).iTable = if *(*pDef).zName.offset(0 as ::core::ffi::c_int as isize)
+                        (*pExpr).iTable = if *(*pDef).zName.offset(0 as isize)
                             as ::core::ffi::c_int
                             == 'u' as i32
                         {
@@ -1615,7 +1615,7 @@ unsafe extern "C" fn resolveExprStep(
                     nRight = crate::src::src::expr::sqlite3ExprVectorSize(
                         
                         (*(&raw mut (*(*pExpr).x.pList).a as *mut crate::sqliteInt_h::ExprList_item)
-                            .offset(0 as ::core::ffi::c_int as isize))
+                            .offset(0 as isize))
                         .pExpr as
     *const crate::sqliteInt_h::Expr,
                     );
@@ -1623,7 +1623,7 @@ unsafe extern "C" fn resolveExprStep(
                         nRight = crate::src::src::expr::sqlite3ExprVectorSize(
                             
                             (*(&raw mut (*(*pExpr).x.pList).a as *mut crate::sqliteInt_h::ExprList_item)
-                                .offset(1 as ::core::ffi::c_int as isize))
+                                .offset(1 as isize))
                             .pExpr as
     *const crate::sqliteInt_h::Expr,
                         );
@@ -1979,7 +1979,7 @@ unsafe extern "C" fn resolveOrderGroupBy(
         let mut pE: *mut crate::sqliteInt_h::Expr = (*pItem).pExpr;
         let mut pE2: *mut crate::sqliteInt_h::Expr =  crate::src::src::expr::sqlite3ExprSkipCollateAndLikely(pE as *mut crate::sqliteInt_h::Expr) as *mut crate::sqliteInt_h::Expr;
         if !pE2.is_null() {
-            if *zType.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int != 'G' as i32 {
+            if *zType.offset(0 as isize) as ::core::ffi::c_int != 'G' as i32 {
                 iCol = resolveAsName(pParse, (*pSelect).pEList, pE2);
                 if iCol > 0 as ::core::ffi::c_int {
                     (*pItem).u.x.iOrderByCol = iCol as crate::src::fts5::u16_0;
@@ -2083,7 +2083,7 @@ unsafe extern "C" fn resolveSelectStep(
         if (*p).selFlags & crate::sqliteInt_h::SF_Converted as crate::src::ext::rtree::rtree::u32_0 != 0 {
             let mut pSub: *mut crate::sqliteInt_h::Select = ::core::ptr::null_mut::<crate::sqliteInt_h::Select>();
             pSub = (*(*(&raw mut (*(*p).pSrc).a as *mut crate::sqliteInt_h::SrcItem)
-                .offset(0 as ::core::ffi::c_int as isize))
+                .offset(0 as isize))
             .u4
             .pSubq)
                 .pSelect;
@@ -2188,7 +2188,7 @@ unsafe extern "C" fn resolveSelectStep(
         if (*p).selFlags & crate::sqliteInt_h::SF_Converted as crate::src::ext::rtree::rtree::u32_0 != 0 {
             let mut pSub_0: *mut crate::sqliteInt_h::Select = ::core::ptr::null_mut::<crate::sqliteInt_h::Select>();
             pSub_0 = (*(*(&raw mut (*(*p).pSrc).a as *mut crate::sqliteInt_h::SrcItem)
-                .offset(0 as ::core::ffi::c_int as isize))
+                .offset(0 as isize))
             .u4
             .pSubq)
                 .pSelect;
@@ -2412,15 +2412,15 @@ pub unsafe extern "C" fn sqlite3ResolveSelfReference(
     if !pTab.is_null() {
         (*pSrc).nSrc = 1 as ::core::ffi::c_int;
         let ref mut fresh2 =
-            (*(&raw mut (*pSrc).a as *mut crate::sqliteInt_h::SrcItem).offset(0 as ::core::ffi::c_int as isize)).zName;
+            (*(&raw mut (*pSrc).a as *mut crate::sqliteInt_h::SrcItem).offset(0 as isize)).zName;
         *fresh2 = (*pTab).zName;
         let ref mut fresh3 =
-            (*(&raw mut (*pSrc).a as *mut crate::sqliteInt_h::SrcItem).offset(0 as ::core::ffi::c_int as isize)).pSTab;
+            (*(&raw mut (*pSrc).a as *mut crate::sqliteInt_h::SrcItem).offset(0 as isize)).pSTab;
         *fresh3 = pTab;
-        (*(&raw mut (*pSrc).a as *mut crate::sqliteInt_h::SrcItem).offset(0 as ::core::ffi::c_int as isize)).iCursor =
+        (*(&raw mut (*pSrc).a as *mut crate::sqliteInt_h::SrcItem).offset(0 as isize)).iCursor =
             -(1 as ::core::ffi::c_int);
         if (*pTab).pSchema
-            != (*(*(*pParse).db).aDb.offset(1 as ::core::ffi::c_int as isize)).pSchema
+            != (*(*(*pParse).db).aDb.offset(1 as isize)).pSchema
         {
             type_0 |= crate::sqliteInt_h::NC_FromDDL;
         }

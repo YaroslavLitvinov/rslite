@@ -126,17 +126,17 @@ pub unsafe extern "C" fn sqlite3UpsertAnalyzeTarget(
         if rc != 0 {
             return rc;
         }
-        pTab = (*(&raw mut (*pTabList).a as *mut crate::sqliteInt_h::SrcItem).offset(0 as ::core::ffi::c_int as isize))
+        pTab = (*(&raw mut (*pTabList).a as *mut crate::sqliteInt_h::SrcItem).offset(0 as isize))
             .pSTab;
         pTarget = (*pUpsert).pUpsertTarget;
         iCursor = (*(&raw mut (*pTabList).a as *mut crate::sqliteInt_h::SrcItem)
-            .offset(0 as ::core::ffi::c_int as isize))
+            .offset(0 as isize))
         .iCursor;
         if !((*pTab).tabFlags & crate::sqliteInt_h::TF_WithoutRowid as crate::src::ext::rtree::rtree::u32_0 == 0 as crate::src::ext::rtree::rtree::u32_0
             && (*pTarget).nExpr == 1 as ::core::ffi::c_int
             && {
                 pTerm = (*(&raw mut (*pTarget).a as *mut crate::sqliteInt_h::ExprList_item)
-                    .offset(0 as ::core::ffi::c_int as isize))
+                    .offset(0 as isize))
                 .pExpr;
                 (*pTerm).op as ::core::ffi::c_int == crate::src::parse::TK_COLUMN
             }
@@ -144,11 +144,11 @@ pub unsafe extern "C" fn sqlite3UpsertAnalyzeTarget(
         {
             sCol[0 as ::core::ffi::c_int as usize].op = crate::src::parse::TK_COLLATE as crate::src::ext::rtree::rtree::u8_0;
             sCol[0 as ::core::ffi::c_int as usize].pLeft =
-                (&raw mut sCol as *mut crate::sqliteInt_h::Expr).offset(1 as ::core::ffi::c_int as isize) as *mut crate::sqliteInt_h::Expr;
+                (&raw mut sCol as *mut crate::sqliteInt_h::Expr).offset(1 as isize) as *mut crate::sqliteInt_h::Expr;
             sCol[1 as ::core::ffi::c_int as usize].op = crate::src::parse::TK_COLUMN as crate::src::ext::rtree::rtree::u8_0;
             sCol[1 as ::core::ffi::c_int as usize].iTable = (*(&raw mut (*pTabList).a
                 as *mut crate::sqliteInt_h::SrcItem)
-                .offset(0 as ::core::ffi::c_int as isize))
+                .offset(0 as isize))
             .iCursor;
             let mut current_block_46: u64;
             pIdx = (*pTab).pIndex;
@@ -198,18 +198,18 @@ pub unsafe extern "C" fn sqlite3UpsertAnalyzeTarget(
                                         if (*pExpr).op as ::core::ffi::c_int != crate::src::parse::TK_COLLATE {
                                             sCol[0 as ::core::ffi::c_int as usize].pLeft = pExpr;
                                             pExpr = (&raw mut sCol as *mut crate::sqliteInt_h::Expr)
-                                                .offset(0 as ::core::ffi::c_int as isize)
+                                                .offset(0 as isize)
                                                 as *mut crate::sqliteInt_h::Expr;
                                         }
                                     } else {
                                         sCol[0 as ::core::ffi::c_int as usize].pLeft =
                                             (&raw mut sCol as *mut crate::sqliteInt_h::Expr)
-                                                .offset(1 as ::core::ffi::c_int as isize)
+                                                .offset(1 as isize)
                                                 as *mut crate::sqliteInt_h::Expr;
                                         sCol[1 as ::core::ffi::c_int as usize].iColumn =
                                             *(*pIdx).aiColumn.offset(ii as isize) as crate::sqliteInt_h::ynVar;
                                         pExpr = (&raw mut sCol as *mut crate::sqliteInt_h::Expr)
-                                            .offset(0 as ::core::ffi::c_int as isize)
+                                            .offset(0 as isize)
                                             as *mut crate::sqliteInt_h::Expr;
                                     }
                                     jj = 0 as ::core::ffi::c_int;

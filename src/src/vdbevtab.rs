@@ -262,7 +262,7 @@ unsafe extern "C" fn bytecodevtabColumn(
         8 => {
             let mut aOp: *mut crate::vdbeInt_h::Op = (*pCur).aOp;
             if !((*pCur).iRowid == (*pCur).iAddr + 1 as ::core::ffi::c_int) {
-                if !(*aOp.offset(0 as ::core::ffi::c_int as isize))
+                if !(*aOp.offset(0 as isize))
                     .p4
                     .z
                     .is_null()
@@ -270,10 +270,10 @@ unsafe extern "C" fn bytecodevtabColumn(
                     crate::src::src::vdbeapi::sqlite3_result_text(
                         
                         ctx as *mut crate::vdbeInt_h::sqlite3_context,
-                        (*aOp.offset(0 as ::core::ffi::c_int as isize))
+                        (*aOp.offset(0 as isize))
                             .p4
                             .z
-                            .offset(3 as ::core::ffi::c_int as isize),
+                            .offset(3 as isize),
                         -(1 as ::core::ffi::c_int),
                         crate::sqlite3_h::SQLITE_STATIC,
                     );
@@ -353,10 +353,10 @@ unsafe extern "C" fn bytecodevtabFilter(
     (*pCur).iRowid = 0 as ::core::ffi::c_int;
     (*pCur).iAddr = 0 as ::core::ffi::c_int;
     (*pCur).showSubprograms = (idxNum == 0 as ::core::ffi::c_int) as ::core::ffi::c_int;
-    if crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as ::core::ffi::c_int as isize) as
+    if crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value) == crate::sqlite3_h::SQLITE_TEXT {
         let mut zSql: *const ::core::ffi::c_char =
-            crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as ::core::ffi::c_int as isize) as
+            crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value)
                 as *const ::core::ffi::c_char;
         if zSql.is_null() {
@@ -375,7 +375,7 @@ unsafe extern "C" fn bytecodevtabFilter(
     } else {
         (*pCur).pStmt = crate::src::src::vdbeapi::sqlite3_value_pointer(
             
-            *argv.offset(0 as ::core::ffi::c_int as isize) as
+            *argv.offset(0 as isize) as
     *mut crate::vdbeInt_h::sqlite3_value,
             b"stmt-pointer\0" as *const u8 as *const ::core::ffi::c_char,
         ) as *mut crate::sqlite3_h::sqlite3_stmt;

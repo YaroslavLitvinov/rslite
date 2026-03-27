@@ -299,14 +299,14 @@ pub unsafe extern "C" fn sqlite3_randomness(
             0x6b206574 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u32_0,
         ];
         ::libc::memcpy(
-            (&raw mut sqlite3Prng.s as *mut crate::src::ext::rtree::rtree::u32_0).offset(0 as ::core::ffi::c_int as isize)
+            (&raw mut sqlite3Prng.s as *mut crate::src::ext::rtree::rtree::u32_0).offset(0 as isize)
                 as *mut crate::src::ext::rtree::rtree::u32_0 as *mut ::core::ffi::c_void,
             &raw const chacha20_init as *const crate::src::ext::rtree::rtree::u32_0 as *const ::core::ffi::c_void,
             16 as crate::__stddef_size_t_h::size_t,
         );
         if pVfs.is_null() {
             ::libc::memset(
-                (&raw mut sqlite3Prng.s as *mut crate::src::ext::rtree::rtree::u32_0).offset(4 as ::core::ffi::c_int as isize)
+                (&raw mut sqlite3Prng.s as *mut crate::src::ext::rtree::rtree::u32_0).offset(4 as isize)
                     as *mut crate::src::ext::rtree::rtree::u32_0 as *mut ::core::ffi::c_void,
                 0 as ::core::ffi::c_int,
                 44 as crate::__stddef_size_t_h::size_t,
@@ -316,7 +316,7 @@ pub unsafe extern "C" fn sqlite3_randomness(
                 
                 pVfs as *mut crate::sqlite3_h::sqlite3_vfs,
                 44 as ::core::ffi::c_int,
-                (&raw mut sqlite3Prng.s as *mut crate::src::ext::rtree::rtree::u32_0).offset(4 as ::core::ffi::c_int as isize)
+                (&raw mut sqlite3Prng.s as *mut crate::src::ext::rtree::rtree::u32_0).offset(4 as isize)
                     as *mut crate::src::ext::rtree::rtree::u32_0 as *mut ::core::ffi::c_char,
             );
         }

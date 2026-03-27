@@ -187,10 +187,10 @@ pub unsafe extern "C" fn sqlite3MaterializeView(
     *mut crate::sqliteInt_h::SrcList;
     if !pFrom.is_null() {
         let ref mut fresh3 =
-            (*(&raw mut (*pFrom).a as *mut crate::sqliteInt_h::SrcItem).offset(0 as ::core::ffi::c_int as isize)).zName;
+            (*(&raw mut (*pFrom).a as *mut crate::sqliteInt_h::SrcItem).offset(0 as isize)).zName;
         *fresh3 = crate::src::src::malloc::sqlite3DbStrDup(db as *mut crate::sqliteInt_h::sqlite3, (*pView).zName);
         let ref mut fresh4 = (*(&raw mut (*pFrom).a as *mut crate::sqliteInt_h::SrcItem)
-            .offset(0 as ::core::ffi::c_int as isize))
+            .offset(0 as isize))
         .u4
         .zDatabase;
         *fresh4 = crate::src::src::malloc::sqlite3DbStrDup(db as *mut crate::sqliteInt_h::sqlite3, (*(*db).aDb.offset(iDb as isize)).zDbSName);
@@ -304,7 +304,7 @@ pub unsafe extern "C" fn sqlite3DeleteFrom(
                         let fresh0 = (*pParse).nTab;
                         (*pParse).nTab = (*pParse).nTab + 1;
                         let ref mut fresh1 = (*(&raw mut (*pTabList).a as *mut crate::sqliteInt_h::SrcItem)
-                            .offset(0 as ::core::ffi::c_int as isize))
+                            .offset(0 as isize))
                         .iCursor;
                         *fresh1 = fresh0;
                         iTabCur = *fresh1;

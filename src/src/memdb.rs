@@ -591,8 +591,8 @@ unsafe extern "C" fn memdbOpen(
     );
     szName = crate::src::src::util::sqlite3Strlen30(zName);
     if szName > 1 as ::core::ffi::c_int
-        && (*zName.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == '/' as i32
-            || *zName.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == '\\' as i32)
+        && (*zName.offset(0 as isize) as ::core::ffi::c_int == '/' as i32
+            || *zName.offset(0 as isize) as ::core::ffi::c_int == '\\' as i32)
     {
         let mut i: ::core::ffi::c_int = 0;
         let mut pVfsMutex: *mut crate::src::src::mutex_unix::sqlite3_mutex = crate::src::src::mutex::sqlite3MutexAlloc(crate::sqlite3_h::SQLITE_MUTEX_STATIC_VFS1);
@@ -642,7 +642,7 @@ unsafe extern "C" fn memdbOpen(
             (*p).mFlags = (crate::sqlite3_h::SQLITE_DESERIALIZE_RESIZEABLE | crate::sqlite3_h::SQLITE_DESERIALIZE_FREEONCLOSE)
                 as ::core::ffi::c_uint;
             (*p).szMax = crate::src::src::global::sqlite3Config.mxMemdbSize;
-            (*p).zFName = p.offset(1 as ::core::ffi::c_int as isize) as *mut MemStore
+            (*p).zFName = p.offset(1 as isize) as *mut MemStore
                 as *mut ::core::ffi::c_char;
             ::libc::memcpy(
                 (*p).zFName as *mut ::core::ffi::c_void,
@@ -842,7 +842,7 @@ pub unsafe extern "C" fn sqlite3_serialize(
     let mut zSql: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
     let mut rc: ::core::ffi::c_int = 0;
     if zSchema.is_null() {
-        zSchema = (*(*db).aDb.offset(0 as ::core::ffi::c_int as isize)).zDbSName;
+        zSchema = (*(*db).aDb.offset(0 as isize)).zDbSName;
     }
     p = memdbFromDbSchema(db, zSchema);
     iDb = crate::src::src::build::sqlite3FindDbName(db as *mut crate::sqliteInt_h::sqlite3, zSchema);
@@ -982,7 +982,7 @@ pub unsafe extern "C" fn sqlite3_deserialize(
     let mut iDb: ::core::ffi::c_int = 0;
     crate::src::src::mutex::sqlite3_mutex_enter((*db).mutex);
     if zSchema.is_null() {
-        zSchema = (*(*db).aDb.offset(0 as ::core::ffi::c_int as isize)).zDbSName;
+        zSchema = (*(*db).aDb.offset(0 as isize)).zDbSName;
     }
     iDb = crate::src::src::build::sqlite3FindDbName(db as *mut crate::sqliteInt_h::sqlite3, zSchema);
     if iDb < 2 as ::core::ffi::c_int && iDb != 0 as ::core::ffi::c_int {

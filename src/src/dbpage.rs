@@ -142,12 +142,12 @@ unsafe extern "C" fn dbpageBestIndex(
     if (*pIdxInfo).nOrderBy >= 1 as ::core::ffi::c_int
         && (*(*pIdxInfo)
             .aOrderBy
-            .offset(0 as ::core::ffi::c_int as isize))
+            .offset(0 as isize))
         .iColumn
             <= 0 as ::core::ffi::c_int
         && (*(*pIdxInfo)
             .aOrderBy
-            .offset(0 as ::core::ffi::c_int as isize))
+            .offset(0 as isize))
         .desc as ::core::ffi::c_int
             == 0 as ::core::ffi::c_int
     {
@@ -215,7 +215,7 @@ unsafe extern "C" fn dbpageFilter(
     (*pCsr).mxPgno = 0 as crate::src::src::pager::Pgno;
     if idxNum & 2 as ::core::ffi::c_int != 0 {
         let mut zSchema: *const ::core::ffi::c_char = ::core::ptr::null::<::core::ffi::c_char>();
-        zSchema = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as ::core::ffi::c_int as isize))
+        zSchema = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as isize))
             as *const ::core::ffi::c_char;
         (*pCsr).iDb = crate::src::src::build::sqlite3FindDbName(db as *mut crate::sqliteInt_h::sqlite3, zSchema);
         if (*pCsr).iDb < 0 as ::core::ffi::c_int {
@@ -359,13 +359,13 @@ unsafe extern "C" fn dbpageUpdate(
         zErr = b"cannot delete\0" as *const u8 as *const ::core::ffi::c_char
             as *mut ::core::ffi::c_char;
     } else {
-        if crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as ::core::ffi::c_int as isize)) == crate::sqlite3_h::SQLITE_NULL {
-            pgno = crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(2 as ::core::ffi::c_int as isize)) as crate::src::src::pager::Pgno;
+        if crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(0 as isize)) == crate::sqlite3_h::SQLITE_NULL {
+            pgno = crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(2 as isize)) as crate::src::src::pager::Pgno;
             isInsert = 1 as ::core::ffi::c_int;
             current_block = 7976072742316086414;
         } else {
-            pgno = crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(0 as ::core::ffi::c_int as isize)) as crate::src::src::pager::Pgno;
-            if crate::src::src::vdbeapi::sqlite3_value_int(*argv.offset(1 as ::core::ffi::c_int as isize)) as crate::src::src::pager::Pgno != pgno {
+            pgno = crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(0 as isize)) as crate::src::src::pager::Pgno;
+            if crate::src::src::vdbeapi::sqlite3_value_int(*argv.offset(1 as isize)) as crate::src::src::pager::Pgno != pgno {
                 zErr = b"cannot insert\0" as *const u8 as *const ::core::ffi::c_char
                     as *mut ::core::ffi::c_char;
                 current_block = 12876300494006893209;
@@ -377,13 +377,13 @@ unsafe extern "C" fn dbpageUpdate(
         match current_block {
             12876300494006893209 => {}
             _ => {
-                if crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(4 as ::core::ffi::c_int as isize)) == crate::sqlite3_h::SQLITE_NULL
+                if crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(4 as isize)) == crate::sqlite3_h::SQLITE_NULL
                 {
                     iDb = 0 as ::core::ffi::c_int;
                     current_block = 5601891728916014340;
                 } else {
                     let mut zSchema: *const ::core::ffi::c_char =
-                        crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(4 as ::core::ffi::c_int as isize))
+                        crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(4 as isize))
                             as *const ::core::ffi::c_char;
                     iDb = crate::src::src::build::sqlite3FindDbName((*pTab).db as *mut crate::sqliteInt_h::sqlite3, zSchema);
                     if iDb < 0 as ::core::ffi::c_int {
@@ -403,14 +403,14 @@ unsafe extern "C" fn dbpageUpdate(
                                 as *mut ::core::ffi::c_char;
                         } else {
                             szPage = crate::src::src::btree::sqlite3BtreeGetPageSize(pBt);
-                            if crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(3 as ::core::ffi::c_int as isize))
+                            if crate::src::src::vdbeapi::sqlite3_value_type(*argv.offset(3 as isize))
                                 != crate::sqlite3_h::SQLITE_BLOB
                                 || crate::src::src::vdbeapi::sqlite3_value_bytes(
-                                    *argv.offset(3 as ::core::ffi::c_int as isize),
+                                    *argv.offset(3 as isize),
                                 ) != szPage
                             {
                                 if crate::src::src::vdbeapi::sqlite3_value_type(
-                                    *argv.offset(3 as ::core::ffi::c_int as isize),
+                                    *argv.offset(3 as isize),
                                 ) == crate::sqlite3_h::SQLITE_NULL
                                     && isInsert != 0
                                     && pgno > 1 as crate::src::src::pager::Pgno
@@ -447,7 +447,7 @@ unsafe extern "C" fn dbpageUpdate(
                                         if rc == crate::sqlite3_h::SQLITE_OK {
                                             let mut pData: *const ::core::ffi::c_void =
                                                 crate::src::src::vdbeapi::sqlite3_value_blob(
-                                                    *argv.offset(3 as ::core::ffi::c_int as isize),
+                                                    *argv.offset(3 as isize),
                                                 );
                                             rc = crate::src::src::pager::sqlite3PagerWrite(pDbPage as *mut crate::src::src::pcache::PgHdr);
                                             if rc == crate::sqlite3_h::SQLITE_OK && !pData.is_null() {

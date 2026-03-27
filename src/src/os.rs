@@ -444,7 +444,7 @@ pub unsafe extern "C" fn sqlite3OsFullPathname(
         }
         crate::src::src::malloc::sqlite3_free(pTstAlloc);
     }
-    *zPathOut.offset(0 as ::core::ffi::c_int as isize) = 0 as ::core::ffi::c_char;
+    *zPathOut.offset(0 as isize) = 0 as ::core::ffi::c_char;
     return (*pVfs).xFullPathname.expect("non-null function pointer")(
         pVfs, zPath, nPathOut, zPathOut,
     );

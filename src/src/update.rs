@@ -137,7 +137,7 @@ unsafe extern "C" fn updateFromSelect(
     let mut pOrderBy2: *mut crate::sqliteInt_h::ExprList = ::core::ptr::null_mut::<crate::sqliteInt_h::ExprList>();
     let mut db: *mut crate::sqliteInt_h::sqlite3 = (*pParse).db;
     let mut pTab: *mut crate::sqliteInt_h::Table =
-        (*(&raw mut (*pTabList).a as *mut crate::sqliteInt_h::SrcItem).offset(0 as ::core::ffi::c_int as isize)).pSTab;
+        (*(&raw mut (*pTabList).a as *mut crate::sqliteInt_h::SrcItem).offset(0 as isize)).pSTab;
     let mut pSrc: *mut crate::sqliteInt_h::SrcList = ::core::ptr::null_mut::<crate::sqliteInt_h::SrcList>();
     let mut pWhere2: *mut crate::sqliteInt_h::Expr = ::core::ptr::null_mut::<crate::sqliteInt_h::Expr>();
     let mut eDest: ::core::ffi::c_int = 0;
@@ -145,15 +145,15 @@ unsafe extern "C" fn updateFromSelect(
     pWhere2 =  crate::src::src::expr::sqlite3ExprDup(db as *mut crate::sqliteInt_h::sqlite3,  pWhere as *const crate::sqliteInt_h::Expr, 0 as ::core::ffi::c_int) as
     *mut crate::sqliteInt_h::Expr;
     if !pSrc.is_null() {
-        (*(&raw mut (*pSrc).a as *mut crate::sqliteInt_h::SrcItem).offset(0 as ::core::ffi::c_int as isize)).iCursor =
+        (*(&raw mut (*pSrc).a as *mut crate::sqliteInt_h::SrcItem).offset(0 as isize)).iCursor =
             -(1 as ::core::ffi::c_int);
         let ref mut fresh3 = (*(*(&raw mut (*pSrc).a as *mut crate::sqliteInt_h::SrcItem)
-            .offset(0 as ::core::ffi::c_int as isize))
+            .offset(0 as isize))
         .pSTab)
             .nTabRef;
         *fresh3 = (*fresh3).wrapping_sub(1);
         let ref mut fresh4 =
-            (*(&raw mut (*pSrc).a as *mut crate::sqliteInt_h::SrcItem).offset(0 as ::core::ffi::c_int as isize)).pSTab;
+            (*(&raw mut (*pSrc).a as *mut crate::sqliteInt_h::SrcItem).offset(0 as isize)).pSTab;
         *fresh4 = ::core::ptr::null_mut::<crate::sqliteInt_h::Table>();
     }
     if !pPk.is_null() {
@@ -370,7 +370,7 @@ pub unsafe extern "C" fn sqlite3Update(
                         (*pParse).nTab = iBaseCur;
                     }
                     (*(&raw mut (*pTabList).a as *mut crate::sqliteInt_h::SrcItem)
-                        .offset(0 as ::core::ffi::c_int as isize))
+                        .offset(0 as isize))
                     .iCursor = iDataCur;
                     aXRef = crate::src::src::malloc::sqlite3DbMallocRawNN(
                         
@@ -389,7 +389,7 @@ pub unsafe extern "C" fn sqlite3Update(
                         aRegIdx = aXRef.offset((*pTab).nCol as ::core::ffi::c_int as isize);
                         aToOpen = aRegIdx
                             .offset(nIdx as isize)
-                            .offset(1 as ::core::ffi::c_int as isize)
+                            .offset(1 as isize)
                             as *mut crate::src::ext::rtree::rtree::u8_0;
                         ::libc::memset(
                             aToOpen as *mut ::core::ffi::c_void,
@@ -566,7 +566,7 @@ pub unsafe extern "C" fn sqlite3Update(
                                         }
                                     }
                                     (*(&raw mut (*pTabList).a as *mut crate::sqliteInt_h::SrcItem)
-                                        .offset(0 as ::core::ffi::c_int as isize))
+                                        .offset(0 as isize))
                                     .colUsed =
                                         if (*pTab).eTabType as ::core::ffi::c_int == crate::sqliteInt_h::TABTYP_VTAB {
                                             crate::sqliteInt_h::ALLBITS
@@ -1686,7 +1686,7 @@ unsafe extern "C" fn updateVirtualTable(
     let mut regRec: ::core::ffi::c_int = 0;
     let mut regRowid: ::core::ffi::c_int = 0;
     let mut iCsr: ::core::ffi::c_int =
-        (*(&raw mut (*pSrc).a as *mut crate::sqliteInt_h::SrcItem).offset(0 as ::core::ffi::c_int as isize)).iCursor;
+        (*(&raw mut (*pSrc).a as *mut crate::sqliteInt_h::SrcItem).offset(0 as isize)).iCursor;
     let mut aDummy: [::core::ffi::c_int; 2] = [0; 2];
     let mut eOnePass: ::core::ffi::c_int = 0;
     let mut addr: ::core::ffi::c_int = 0;
@@ -1720,7 +1720,7 @@ unsafe extern "C" fn updateVirtualTable(
         } else {
             let mut iPk: crate::src::fts5::i16_0 = 0;
             pPk =  crate::src::src::build::sqlite3PrimaryKeyIndex(pTab as *mut crate::sqliteInt_h::Table) as *mut crate::sqliteInt_h::Index;
-            iPk = *(*pPk).aiColumn.offset(0 as ::core::ffi::c_int as isize);
+            iPk = *(*pPk).aiColumn.offset(0 as isize);
             if *aXRef.offset(iPk as isize) >= 0 as ::core::ffi::c_int {
                 pRow =  crate::src::src::expr::sqlite3ExprDup(
                     
@@ -1840,7 +1840,7 @@ unsafe extern "C" fn updateVirtualTable(
             let mut pPk_0: *mut crate::sqliteInt_h::Index = ::core::ptr::null_mut::<crate::sqliteInt_h::Index>();
             let mut iPk_0: crate::src::fts5::i16_0 = 0;
             pPk_0 =  crate::src::src::build::sqlite3PrimaryKeyIndex(pTab as *mut crate::sqliteInt_h::Table) as *mut crate::sqliteInt_h::Index;
-            iPk_0 = *(*pPk_0).aiColumn.offset(0 as ::core::ffi::c_int as isize);
+            iPk_0 = *(*pPk_0).aiColumn.offset(0 as isize);
             crate::src::src::vdbeaux::sqlite3VdbeAddOp3(v, crate::opcodes_h::OP_VColumn, iCsr, iPk_0 as ::core::ffi::c_int, regArg);
             crate::src::src::vdbeaux::sqlite3VdbeAddOp2(
                 v,

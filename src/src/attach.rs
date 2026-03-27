@@ -73,9 +73,9 @@ unsafe extern "C" fn attachFunc(
     let mut pNew: *mut crate::sqliteInt_h::Db = ::core::ptr::null_mut::<crate::sqliteInt_h::Db>();
     let mut zErrDyn: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
     let mut pVfs: *mut crate::sqlite3_h::sqlite3_vfs = ::core::ptr::null_mut::<crate::sqlite3_h::sqlite3_vfs>();
-    zFile = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as ::core::ffi::c_int as isize))
+    zFile = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as isize))
         as *const ::core::ffi::c_char;
-    zName = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(1 as ::core::ffi::c_int as isize))
+    zName = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(1 as isize))
         as *const ::core::ffi::c_char;
     if zFile.is_null() {
         zFile = b"\0" as *const u8 as *const ::core::ffi::c_char;
@@ -258,7 +258,7 @@ unsafe extern "C" fn attachFunc(
                 crate::src::src::btree::sqlite3BtreeSecureDelete(
                     (*pNew).pBt,
                     crate::src::src::btree::sqlite3BtreeSecureDelete(
-                        (*(*db).aDb.offset(0 as ::core::ffi::c_int as isize)).pBt,
+                        (*(*db).aDb.offset(0 as isize)).pBt,
                         -(1 as ::core::ffi::c_int),
                     ),
                 );
@@ -334,7 +334,7 @@ unsafe extern "C" fn detachFunc(
     mut argv: *mut *mut crate::vdbeInt_h::sqlite3_value,
 ) {
     let mut zName: *const ::core::ffi::c_char =
-        crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as ::core::ffi::c_int as isize))
+        crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as isize))
             as *const ::core::ffi::c_char;
     let mut db: *mut crate::sqliteInt_h::sqlite3 =  crate::src::src::vdbeapi::sqlite3_context_db_handle(context) as
     *mut crate::sqliteInt_h::sqlite3;
@@ -379,7 +379,7 @@ unsafe extern "C" fn detachFunc(
             zName,
         );
     } else {
-        pEntry = (*(*(*db).aDb.offset(1 as ::core::ffi::c_int as isize)).pSchema)
+        pEntry = (*(*(*db).aDb.offset(1 as isize)).pSchema)
             .trigHash
             .first;
         while !pEntry.is_null() {

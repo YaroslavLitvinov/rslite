@@ -298,10 +298,10 @@ unsafe extern "C" fn backupOnePage(
                     nCopy as crate::__stddef_size_t_h::size_t,
                 );
                 *(crate::src::src::pager::sqlite3PagerGetExtra(pDestPg as *mut crate::src::src::pcache::PgHdr) as *mut crate::src::ext::rtree::rtree::u8_0)
-                    .offset(0 as ::core::ffi::c_int as isize) = 0 as crate::src::ext::rtree::rtree::u8_0;
+                    .offset(0 as isize) = 0 as crate::src::ext::rtree::rtree::u8_0;
                 if iOff == 0 as crate::src::ext::rtree::rtree::i64_0 && bUpdate == 0 as ::core::ffi::c_int {
                     crate::src::src::util::sqlite3Put4byte(
-                        zOut.offset(28 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u8_0,
+                        zOut.offset(28 as isize) as *mut crate::src::ext::rtree::rtree::u8_0,
                         crate::src::src::btree::sqlite3BtreeLastPage((*p).pSrc as *mut crate::btreeInt_h::Btree) as crate::src::ext::rtree::rtree::u32_0,
                     );
                 }

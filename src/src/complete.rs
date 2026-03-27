@@ -134,21 +134,21 @@ pub unsafe extern "C" fn sqlite3_complete(
                 current_block_65 = 10512632378975961025;
             }
             47 => {
-                if *zSql.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+                if *zSql.offset(1 as isize) as ::core::ffi::c_int
                     != '*' as i32
                 {
                     token = tkOTHER as crate::src::ext::rtree::rtree::u8_0;
                 } else {
-                    zSql = zSql.offset(2 as ::core::ffi::c_int as isize);
-                    while *zSql.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int != 0
-                        && (*zSql.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+                    zSql = zSql.offset(2 as isize);
+                    while *zSql.offset(0 as isize) as ::core::ffi::c_int != 0
+                        && (*zSql.offset(0 as isize) as ::core::ffi::c_int
                             != '*' as i32
-                            || *zSql.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+                            || *zSql.offset(1 as isize) as ::core::ffi::c_int
                                 != '/' as i32)
                     {
                         zSql = zSql.offset(1);
                     }
-                    if *zSql.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+                    if *zSql.offset(0 as isize) as ::core::ffi::c_int
                         == 0 as ::core::ffi::c_int
                     {
                         return 0 as ::core::ffi::c_int;
@@ -159,7 +159,7 @@ pub unsafe extern "C" fn sqlite3_complete(
                 current_block_65 = 10512632378975961025;
             }
             45 => {
-                if *zSql.offset(1 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+                if *zSql.offset(1 as isize) as ::core::ffi::c_int
                     != '-' as i32
                 {
                     token = tkOTHER as crate::src::ext::rtree::rtree::u8_0;

@@ -65,7 +65,7 @@ unsafe extern "C" fn fts3auxConnectMethod(
     let mut rc: ::core::ffi::c_int = 0;
     let mut p: *mut Fts3auxTable = ::core::ptr::null_mut::<Fts3auxTable>();
     if !(argc != 4 as ::core::ffi::c_int && argc != 5 as ::core::ffi::c_int) {
-        zDb = *argv.offset(1 as ::core::ffi::c_int as isize);
+        zDb = *argv.offset(1 as isize);
         nDb = ::libc::strlen(zDb) as ::core::ffi::c_int;
         if argc == 5 as ::core::ffi::c_int {
             if nDb == 4 as ::core::ffi::c_int
@@ -76,15 +76,15 @@ unsafe extern "C" fn fts3auxConnectMethod(
                         4 as ::core::ffi::c_int,
                     )
             {
-                zDb = *argv.offset(3 as ::core::ffi::c_int as isize);
+                zDb = *argv.offset(3 as isize);
                 nDb = ::libc::strlen(zDb) as ::core::ffi::c_int;
-                zFts3 = *argv.offset(4 as ::core::ffi::c_int as isize);
+                zFts3 = *argv.offset(4 as isize);
                 current_block = 1856101646708284338;
             } else {
                 current_block = 10728627893248296414;
             }
         } else {
-            zFts3 = *argv.offset(3 as ::core::ffi::c_int as isize);
+            zFts3 = *argv.offset(3 as isize);
             current_block = 1856101646708284338;
         }
         match current_block {
@@ -109,9 +109,9 @@ unsafe extern "C" fn fts3auxConnectMethod(
                     0 as ::core::ffi::c_int,
                     nByte as crate::__stddef_size_t_h::size_t,
                 );
-                (*p).pFts3Tab = p.offset(1 as ::core::ffi::c_int as isize) as *mut Fts3auxTable
+                (*p).pFts3Tab = p.offset(1 as isize) as *mut Fts3auxTable
                     as *mut crate::fts3Int_h::Fts3Table;
-                (*(*p).pFts3Tab).zDb = (*p).pFts3Tab.offset(1 as ::core::ffi::c_int as isize)
+                (*(*p).pFts3Tab).zDb = (*p).pFts3Tab.offset(1 as isize)
                     as *mut crate::fts3Int_h::Fts3Table
                     as *mut ::core::ffi::c_char;
                 (*(*p).pFts3Tab).zName = (*(*p).pFts3Tab)
@@ -178,9 +178,9 @@ unsafe extern "C" fn fts3auxBestIndexMethod(
     let mut iLangid: ::core::ffi::c_int = -(1 as ::core::ffi::c_int);
     let mut iNext: ::core::ffi::c_int = 1 as ::core::ffi::c_int;
     if (*pInfo).nOrderBy == 1 as ::core::ffi::c_int
-        && (*(*pInfo).aOrderBy.offset(0 as ::core::ffi::c_int as isize)).iColumn
+        && (*(*pInfo).aOrderBy.offset(0 as isize)).iColumn
             == 0 as ::core::ffi::c_int
-        && (*(*pInfo).aOrderBy.offset(0 as ::core::ffi::c_int as isize)).desc as ::core::ffi::c_int
+        && (*(*pInfo).aOrderBy.offset(0 as isize)).desc as ::core::ffi::c_int
             == 0 as ::core::ffi::c_int
     {
         (*pInfo).orderByConsumed = 1 as ::core::ffi::c_int;
@@ -368,7 +368,7 @@ unsafe extern "C" fn fts3auxNextMethod(
             match eState {
                 0 => {
                     let ref mut fresh0 =
-                        (*(*pCsr).aStat.offset(0 as ::core::ffi::c_int as isize)).nDoc;
+                        (*(*pCsr).aStat.offset(0 as isize)).nDoc;
                     *fresh0 += 1;
                     eState = 1 as ::core::ffi::c_int;
                     iCol = 0 as ::core::ffi::c_int;
@@ -377,7 +377,7 @@ unsafe extern "C" fn fts3auxNextMethod(
                 1 => {
                     if v > 1 as crate::sqlite3_h::sqlite3_int64 {
                         let ref mut fresh1 =
-                            (*(*pCsr).aStat.offset(1 as ::core::ffi::c_int as isize)).nDoc;
+                            (*(*pCsr).aStat.offset(1 as isize)).nDoc;
                         *fresh1 += 1;
                     }
                     eState = 2 as ::core::ffi::c_int;
@@ -417,7 +417,7 @@ unsafe extern "C" fn fts3auxNextMethod(
                         .nOcc;
                         *fresh2 += 1;
                         let ref mut fresh3 =
-                            (*(*pCsr).aStat.offset(0 as ::core::ffi::c_int as isize)).nOcc;
+                            (*(*pCsr).aStat.offset(0 as isize)).nOcc;
                         *fresh3 += 1;
                     }
                 }
@@ -477,7 +477,7 @@ unsafe extern "C" fn fts3auxFilterMethod(
     ::libc::memset(
         &raw mut (*pCsr).csr as *mut ::core::ffi::c_void,
         0 as ::core::ffi::c_int,
-        (pCsr.offset(1 as ::core::ffi::c_int as isize) as *mut Fts3auxCursor as *mut crate::src::ext::rtree::rtree::u8_0)
+        (pCsr.offset(1 as isize) as *mut Fts3auxCursor as *mut crate::src::ext::rtree::rtree::u8_0)
             .offset_from(&raw mut (*pCsr).csr as *mut crate::src::ext::rtree::rtree::u8_0) as ::core::ffi::c_long
             as crate::__stddef_size_t_h::size_t,
     );
@@ -487,7 +487,7 @@ unsafe extern "C" fn fts3auxFilterMethod(
     }
     if iEq >= 0 as ::core::ffi::c_int || iGe >= 0 as ::core::ffi::c_int {
         let mut zStr: *const ::core::ffi::c_uchar =
-            crate::src::src::vdbeapi::sqlite3_value_text(*apVal.offset(0 as ::core::ffi::c_int as isize));
+            crate::src::src::vdbeapi::sqlite3_value_text(*apVal.offset(0 as isize));
         if !zStr.is_null() {
             (*pCsr).filter.zTerm =
                 crate::src::src::printf::sqlite3_mprintf(b"%s\0" as *const u8 as *const ::core::ffi::c_char, zStr);

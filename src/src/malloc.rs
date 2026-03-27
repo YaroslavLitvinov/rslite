@@ -708,7 +708,7 @@ pub unsafe extern "C" fn sqlite3DbSpanDup(
 ) -> *mut ::core::ffi::c_char {
     let mut n: ::core::ffi::c_int = 0;
     while *(&raw const crate::src::src::global::sqlite3CtypeMap as *const ::core::ffi::c_uchar)
-        .offset(*zStart.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_uchar as isize)
+        .offset(*zStart.offset(0 as isize) as ::core::ffi::c_uchar as isize)
         as ::core::ffi::c_int
         & 0x1 as ::core::ffi::c_int
         != 0

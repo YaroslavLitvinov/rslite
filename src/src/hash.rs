@@ -61,7 +61,7 @@ pub unsafe extern "C" fn sqlite3HashClear(mut pH: *mut crate::src::src::hash::Ha
 
 unsafe extern "C" fn strHash(mut z: *const ::core::ffi::c_char) -> ::core::ffi::c_uint {
     let mut h: ::core::ffi::c_uint = 0 as ::core::ffi::c_uint;
-    while *z.offset(0 as ::core::ffi::c_int as isize) != 0 {
+    while *z.offset(0 as isize) != 0 {
         let fresh0 = z;
         z = z.offset(1);
         h = h.wrapping_add(

@@ -304,7 +304,7 @@ unsafe extern "C" fn unicodeCreate(
             rc = unicodeAddExceptions(
                 pNew,
                 1 as ::core::ffi::c_int,
-                z.offset(11 as ::core::ffi::c_int as isize) as *const ::core::ffi::c_char,
+                z.offset(11 as isize) as *const ::core::ffi::c_char,
                 n - 11 as ::core::ffi::c_int,
             );
         } else if n >= 11 as ::core::ffi::c_int
@@ -318,7 +318,7 @@ unsafe extern "C" fn unicodeCreate(
             rc = unicodeAddExceptions(
                 pNew,
                 0 as ::core::ffi::c_int,
-                z.offset(11 as ::core::ffi::c_int as isize) as *const ::core::ffi::c_char,
+                z.offset(11 as isize) as *const ::core::ffi::c_char,
                 n - 11 as ::core::ffi::c_int,
             );
         } else {

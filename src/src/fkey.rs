@@ -38,7 +38,7 @@ pub unsafe extern "C" fn sqlite3FkLocateIndex(
     let mut aiCol: *mut ::core::ffi::c_int = ::core::ptr::null_mut::<::core::ffi::c_int>();
     let mut nCol: ::core::ffi::c_int = (*pFKey).nCol;
     let mut zKey: *mut ::core::ffi::c_char =
-        (*(&raw mut (*pFKey).aCol as *mut crate::sqliteInt_h::sColMap).offset(0 as ::core::ffi::c_int as isize)).zCol;
+        (*(&raw mut (*pFKey).aCol as *mut crate::sqliteInt_h::sColMap).offset(0 as isize)).zCol;
     if nCol == 1 as ::core::ffi::c_int {
         if (*pParent).iPKey as ::core::ffi::c_int >= 0 as ::core::ffi::c_int {
             if zKey.is_null() {
@@ -196,7 +196,7 @@ unsafe extern "C" fn fkLookupParent(
                 crate::src::src::build::sqlite3TableColumnToStorage(
                     
                     (*pFKey).pFrom as *mut crate::sqliteInt_h::Table,
-                    *aiCol.offset(0 as ::core::ffi::c_int as isize) as crate::src::fts5::i16_0,
+                    *aiCol.offset(0 as isize) as crate::src::fts5::i16_0,
                 ) as ::core::ffi::c_int
                     + 1 as ::core::ffi::c_int
                     + regData,
@@ -405,7 +405,7 @@ unsafe extern "C" fn fkScanChildren(
         iCol = (if !aiCol.is_null() {
             *aiCol.offset(i as isize)
         } else {
-            (*(&raw mut (*pFKey).aCol as *mut crate::sqliteInt_h::sColMap).offset(0 as ::core::ffi::c_int as isize))
+            (*(&raw mut (*pFKey).aCol as *mut crate::sqliteInt_h::sColMap).offset(0 as isize))
                 .iFrom
         }) as crate::src::fts5::i16_0;
         zCol = (*(*(*pFKey).pFrom).aCol.offset(iCol as isize)).zCnName;
@@ -424,7 +424,7 @@ unsafe extern "C" fn fkScanChildren(
             pRight_0 = exprTableColumn(
                 db,
                 pTab,
-                (*(&raw mut (*pSrc).a as *mut crate::sqliteInt_h::SrcItem).offset(0 as ::core::ffi::c_int as isize))
+                (*(&raw mut (*pSrc).a as *mut crate::sqliteInt_h::SrcItem).offset(0 as isize))
                     .iCursor,
                 -(1 as ::core::ffi::c_int) as crate::src::fts5::i16_0,
             );
@@ -759,7 +759,7 @@ pub unsafe extern "C" fn sqlite3FkCheck(
                     aiCol = aiFree;
                 } else {
                     iCol = (*(&raw mut (*pFKey).aCol as *mut crate::sqliteInt_h::sColMap)
-                        .offset(0 as ::core::ffi::c_int as isize))
+                        .offset(0 as isize))
                     .iFrom;
                     aiCol = &raw mut iCol;
                 }
@@ -1067,7 +1067,7 @@ unsafe extern "C" fn fkActionTrigger(
             iFromCol = if !aiCol.is_null() {
                 *aiCol.offset(i as isize)
             } else {
-                (*(&raw mut (*pFKey).aCol as *mut crate::sqliteInt_h::sColMap).offset(0 as ::core::ffi::c_int as isize))
+                (*(&raw mut (*pFKey).aCol as *mut crate::sqliteInt_h::sColMap).offset(0 as isize))
                     .iFrom
             };
             crate::src::src::util::sqlite3TokenInit(
@@ -1233,11 +1233,11 @@ unsafe extern "C" fn fkActionTrigger(
     *mut crate::sqliteInt_h::SrcList;
             if !pSrc.is_null() {
                 let ref mut fresh1 = (*(&raw mut (*pSrc).a as *mut crate::sqliteInt_h::SrcItem)
-                    .offset(0 as ::core::ffi::c_int as isize))
+                    .offset(0 as isize))
                 .zName;
                 *fresh1 = crate::src::src::malloc::sqlite3DbStrDup(db as *mut crate::sqliteInt_h::sqlite3, zFrom);
                 let ref mut fresh2 = (*(&raw mut (*pSrc).a as *mut crate::sqliteInt_h::SrcItem)
-                    .offset(0 as ::core::ffi::c_int as isize))
+                    .offset(0 as isize))
                 .u4
                 .zDatabase;
                 *fresh2 = crate::src::src::malloc::sqlite3DbStrDup(db as *mut crate::sqliteInt_h::sqlite3, (*(*db).aDb.offset(iDb as isize)).zDbSName);
@@ -1280,10 +1280,10 @@ unsafe extern "C" fn fkActionTrigger(
                 .wrapping_add(1 as usize) as crate::src::ext::rtree::rtree::u64_0,
         ) as *mut crate::sqliteInt_h::Trigger;
         if !pTrigger.is_null() {
-            (*pTrigger).step_list = pTrigger.offset(1 as ::core::ffi::c_int as isize)
+            (*pTrigger).step_list = pTrigger.offset(1 as isize)
                 as *mut crate::sqliteInt_h::Trigger as *mut crate::sqliteInt_h::TriggerStep;
             pStep = (*pTrigger).step_list;
-            (*pStep).zTarget = pStep.offset(1 as ::core::ffi::c_int as isize) as *mut crate::sqliteInt_h::TriggerStep
+            (*pStep).zTarget = pStep.offset(1 as isize) as *mut crate::sqliteInt_h::TriggerStep
                 as *mut ::core::ffi::c_char;
             ::libc::memcpy(
                 (*pStep).zTarget as *mut ::core::ffi::c_void,

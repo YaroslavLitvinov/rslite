@@ -34,7 +34,7 @@ unsafe extern "C" fn findNextHostParameter(
     let mut nTotal: crate::src::ext::rtree::rtree::i64_0 = 0 as crate::src::ext::rtree::rtree::i64_0;
     let mut n: crate::src::ext::rtree::rtree::i64_0 = 0;
     *pnToken = 0 as crate::src::ext::rtree::rtree::i64_0;
-    while *zSql.offset(0 as ::core::ffi::c_int as isize) != 0 {
+    while *zSql.offset(0 as isize) != 0 {
         n = crate::src::src::tokenize::sqlite3GetToken(zSql as *mut crate::src::ext::rtree::rtree::u8_0, &raw mut tokenType);
         if tokenType == crate::src::parse::TK_VARIABLE {
             *pnToken = n;
@@ -108,18 +108,18 @@ pub unsafe extern "C" fn sqlite3VdbeExpandSql(
     } else if (*p).nVar as ::core::ffi::c_int == 0 as ::core::ffi::c_int {
         crate::src::src::printf::sqlite3_str_append(&raw mut out as *mut _ as *mut crate::sqliteInt_h::sqlite3_str, zRawSql, crate::src::src::util::sqlite3Strlen30(zRawSql));
     } else {
-        while *zRawSql.offset(0 as ::core::ffi::c_int as isize) != 0 {
+        while *zRawSql.offset(0 as isize) != 0 {
             n = findNextHostParameter(zRawSql, &raw mut nToken);
             crate::src::src::printf::sqlite3_str_append(&raw mut out as *mut _ as *mut crate::sqliteInt_h::sqlite3_str, zRawSql, n as ::core::ffi::c_int);
             zRawSql = zRawSql.offset(n as isize);
             if nToken == 0 as crate::src::ext::rtree::rtree::i64_0 {
                 break;
             }
-            if *zRawSql.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int == '?' as i32
+            if *zRawSql.offset(0 as isize) as ::core::ffi::c_int == '?' as i32
             {
                 if nToken > 1 as crate::src::ext::rtree::rtree::i64_0 {
                     crate::src::src::util::sqlite3GetInt32(
-                        zRawSql.offset(1 as ::core::ffi::c_int as isize)
+                        zRawSql.offset(1 as isize)
                             as *const ::core::ffi::c_char,
                         &raw mut idx,
                     );

@@ -152,16 +152,16 @@ unsafe extern "C" fn fts3TokenizerFunc(
     let mut zName: *const ::core::ffi::c_uchar = ::core::ptr::null::<::core::ffi::c_uchar>();
     let mut nName: ::core::ffi::c_int = 0;
     pHash = crate::src::src::vdbeapi::sqlite3_user_data(context) as *mut crate::src::ext::fts3::fts3_hash::Fts3Hash;
-    zName = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as ::core::ffi::c_int as isize));
-    nName = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as ::core::ffi::c_int as isize))
+    zName = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as isize));
+    nName = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as isize))
         + 1 as ::core::ffi::c_int;
     if argc == 2 as ::core::ffi::c_int {
         if fts3TokenizerEnabled(context) != 0
-            || crate::src::src::vdbeapi::sqlite3_value_frombind(*argv.offset(1 as ::core::ffi::c_int as isize)) != 0
+            || crate::src::src::vdbeapi::sqlite3_value_frombind(*argv.offset(1 as isize)) != 0
         {
             let mut pOld: *mut ::core::ffi::c_void = ::core::ptr::null_mut::<::core::ffi::c_void>();
             let mut n: ::core::ffi::c_int =
-                crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(1 as ::core::ffi::c_int as isize));
+                crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(1 as isize));
             if zName.is_null()
                 || n as usize != ::core::mem::size_of::<*mut ::core::ffi::c_void>() as usize
             {
@@ -172,7 +172,7 @@ unsafe extern "C" fn fts3TokenizerFunc(
                 );
                 return;
             }
-            pPtr = *(crate::src::src::vdbeapi::sqlite3_value_blob(*argv.offset(1 as ::core::ffi::c_int as isize))
+            pPtr = *(crate::src::src::vdbeapi::sqlite3_value_blob(*argv.offset(1 as isize))
                 as *mut *mut ::core::ffi::c_void);
             pOld = crate::src::ext::fts3::fts3_hash::sqlite3Fts3HashInsert(pHash as *mut crate::src::ext::fts3::fts3_hash::Fts3Hash, zName as *mut ::core::ffi::c_void, nName, pPtr);
             if pOld == pPtr {
@@ -205,7 +205,7 @@ unsafe extern "C" fn fts3TokenizerFunc(
         }
     }
     if fts3TokenizerEnabled(context) != 0
-        || crate::src::src::vdbeapi::sqlite3_value_frombind(*argv.offset(0 as ::core::ffi::c_int as isize)) != 0
+        || crate::src::src::vdbeapi::sqlite3_value_frombind(*argv.offset(0 as isize)) != 0
     {
         crate::src::src::vdbeapi::sqlite3_result_blob(
             context,
@@ -383,9 +383,9 @@ pub unsafe extern "C" fn sqlite3Fts3NextToken(
                 }
             }
             91 => {
-                z2 = z1.offset(1 as ::core::ffi::c_int as isize) as *const ::core::ffi::c_char;
+                z2 = z1.offset(1 as isize) as *const ::core::ffi::c_char;
                 while *z2 as ::core::ffi::c_int != 0
-                    && *z2.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+                    && *z2.offset(0 as isize) as ::core::ffi::c_int
                         != ']' as i32
                 {
                     z2 = z2.offset(1);
@@ -396,7 +396,7 @@ pub unsafe extern "C" fn sqlite3Fts3NextToken(
             }
             _ => {
                 if sqlite3Fts3IsIdChar(*z1) != 0 {
-                    z2 = z1.offset(1 as ::core::ffi::c_int as isize) as *const ::core::ffi::c_char;
+                    z2 = z1.offset(1 as isize) as *const ::core::ffi::c_char;
                     while sqlite3Fts3IsIdChar(*z2) != 0 {
                         z2 = z2.offset(1);
                     }
@@ -527,8 +527,8 @@ unsafe extern "C" fn testFunc(
         );
         return;
     }
-    nName = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as ::core::ffi::c_int as isize));
-    zName = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as ::core::ffi::c_int as isize))
+    nName = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as isize));
+    zName = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(0 as isize))
         as *const ::core::ffi::c_char;
     nInput = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset((argc - 1 as ::core::ffi::c_int) as isize));
     zInput = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset((argc - 1 as ::core::ffi::c_int) as isize))

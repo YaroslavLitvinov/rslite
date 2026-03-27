@@ -431,7 +431,7 @@ unsafe extern "C" fn readSuperJournal(
     let mut cksum: crate::src::ext::rtree::rtree::u32_0 = 0;
     let mut u: crate::src::ext::rtree::rtree::u32_0 = 0;
     let mut aMagic: [::core::ffi::c_uchar; 8] = [0; 8];
-    *zSuper.offset(0 as ::core::ffi::c_int as isize) = '\0' as i32 as ::core::ffi::c_char;
+    *zSuper.offset(0 as isize) = '\0' as i32 as ::core::ffi::c_char;
     rc = crate::src::src::os::sqlite3OsFileSize(pJrnl as *mut crate::sqlite3_h::sqlite3_file, &raw mut szJ);
     if crate::sqlite3_h::SQLITE_OK != rc
         || szJ < 16 as crate::src::ext::rtree::rtree::i64_0
@@ -1133,10 +1133,10 @@ unsafe extern "C" fn pager_playback_one_page(
     }
     if pgno == 1 as crate::src::src::pager::Pgno
         && (*pPager).nReserve as ::core::ffi::c_int
-            != *(aData as *mut crate::src::ext::rtree::rtree::u8_0).offset(20 as ::core::ffi::c_int as isize) as ::core::ffi::c_int
+            != *(aData as *mut crate::src::ext::rtree::rtree::u8_0).offset(20 as isize) as ::core::ffi::c_int
     {
         (*pPager).nReserve =
-            *(aData as *mut crate::src::ext::rtree::rtree::u8_0).offset(20 as ::core::ffi::c_int as isize) as crate::src::fts5::i16_0;
+            *(aData as *mut crate::src::ext::rtree::rtree::u8_0).offset(20 as isize) as crate::src::fts5::i16_0;
     }
     if !(*pPager).pWal.is_null() {
         pPg = ::core::ptr::null_mut::<crate::src::src::pcache::PgHdr>();
@@ -1193,7 +1193,7 @@ unsafe extern "C" fn pager_playback_one_page(
         if pgno == 1 as crate::src::src::pager::Pgno {
             ::libc::memcpy(
                 &raw mut (*pPager).dbFileVers as *mut ::core::ffi::c_void,
-                (pData as *mut crate::src::ext::rtree::rtree::u8_0).offset(24 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u8_0
+                (pData as *mut crate::src::ext::rtree::rtree::u8_0).offset(24 as isize) as *mut crate::src::ext::rtree::rtree::u8_0
                     as *const ::core::ffi::c_void,
                 ::core::mem::size_of::<[::core::ffi::c_char; 16]>() as crate::__stddef_size_t_h::size_t,
             );
@@ -1246,15 +1246,15 @@ unsafe extern "C" fn pager_delsuper(
             if zFree.is_null() {
                 rc = crate::sqliteInt_h::SQLITE_NOMEM_BKPT;
             } else {
-                let ref mut fresh0 = *zFree.offset(3 as ::core::ffi::c_int as isize);
+                let ref mut fresh0 = *zFree.offset(3 as isize);
                 *fresh0 = 0 as ::core::ffi::c_char;
-                let ref mut fresh1 = *zFree.offset(2 as ::core::ffi::c_int as isize);
+                let ref mut fresh1 = *zFree.offset(2 as isize);
                 *fresh1 = *fresh0;
-                let ref mut fresh2 = *zFree.offset(1 as ::core::ffi::c_int as isize);
+                let ref mut fresh2 = *zFree.offset(1 as isize);
                 *fresh2 = *fresh1;
-                *zFree.offset(0 as ::core::ffi::c_int as isize) = *fresh2;
+                *zFree.offset(0 as isize) = *fresh2;
                 zSuperJournal =
-                    zFree.offset(4 as ::core::ffi::c_int as isize) as *mut ::core::ffi::c_char;
+                    zFree.offset(4 as isize) as *mut ::core::ffi::c_char;
                 zSuperPtr = zSuperJournal.offset((nSuperJournal + 2 as crate::src::ext::rtree::rtree::i64_0) as isize)
                     as *mut ::core::ffi::c_char;
                 rc = crate::src::src::os::sqlite3OsRead(
@@ -1305,7 +1305,7 @@ unsafe extern "C" fn pager_delsuper(
                                 current_block = 15518410441251332669;
                                 break;
                             }
-                            c = (*zSuperPtr.offset(0 as ::core::ffi::c_int as isize)
+                            c = (*zSuperPtr.offset(0 as isize)
                                 as ::core::ffi::c_int
                                 != 0 as ::core::ffi::c_int
                                 && ::libc::strcmp(zSuperPtr, zSuper) == 0 as ::core::ffi::c_int)
@@ -1426,7 +1426,7 @@ unsafe extern "C" fn pager_playback(
             (1 as crate::src::ext::rtree::rtree::i64_0 + (*(*pPager).pVfs).mxPathname as crate::src::ext::rtree::rtree::i64_0) as crate::src::ext::rtree::rtree::u64_0,
         );
         if rc == crate::sqlite3_h::SQLITE_OK
-            && *zSuper.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int != 0
+            && *zSuper.offset(0 as isize) as ::core::ffi::c_int != 0
         {
             rc = crate::src::src::os::sqlite3OsAccess(pVfs as *mut crate::sqlite3_h::sqlite3_vfs, zSuper, crate::sqlite3_h::SQLITE_ACCESS_EXISTS, &raw mut res);
         }
@@ -1501,7 +1501,7 @@ unsafe extern "C" fn pager_playback(
     }
     (*pPager).changeCountDone = (*pPager).tempFile;
     if rc == crate::sqlite3_h::SQLITE_OK {
-        zSuper = (*pPager).pTmpSpace.offset(4 as ::core::ffi::c_int as isize)
+        zSuper = (*pPager).pTmpSpace.offset(4 as isize)
             as *mut ::core::ffi::c_char;
         rc = readSuperJournal(
             (*pPager).jfd,
@@ -1518,13 +1518,13 @@ unsafe extern "C" fn pager_playback(
     if rc == crate::sqlite3_h::SQLITE_OK {
         rc = pager_end_transaction(
             pPager,
-            (*zSuper.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int != '\0' as i32)
+            (*zSuper.offset(0 as isize) as ::core::ffi::c_int != '\0' as i32)
                 as ::core::ffi::c_int,
             0 as ::core::ffi::c_int,
         );
     }
     if rc == crate::sqlite3_h::SQLITE_OK
-        && *zSuper.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int != 0
+        && *zSuper.offset(0 as isize) as ::core::ffi::c_int != 0
         && res != 0
     {
         ::libc::memset(
@@ -1586,7 +1586,7 @@ unsafe extern "C" fn readDbPage(mut pPg: *mut crate::src::src::pcache::PgHdr) ->
             );
         } else {
             let mut dbFileVers: *mut crate::src::ext::rtree::rtree::u8_0 =
-                ((*pPg).pData as *mut crate::src::ext::rtree::rtree::u8_0).offset(24 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u8_0;
+                ((*pPg).pData as *mut crate::src::ext::rtree::rtree::u8_0).offset(24 as isize) as *mut crate::src::ext::rtree::rtree::u8_0;
             ::libc::memcpy(
                 &raw mut (*pPager).dbFileVers as *mut ::core::ffi::c_void,
                 dbFileVers as *const ::core::ffi::c_void,
@@ -1610,17 +1610,17 @@ unsafe extern "C" fn pager_write_changecounter(mut pPg: *mut crate::src::src::pc
     .wrapping_add(1 as crate::src::ext::rtree::rtree::u32_0);
     crate::src::src::util::sqlite3Put4byte(
         ((*pPg).pData as *mut ::core::ffi::c_char as *mut crate::src::ext::rtree::rtree::u8_0)
-            .offset(24 as ::core::ffi::c_int as isize),
+            .offset(24 as isize),
         change_counter,
     );
     crate::src::src::util::sqlite3Put4byte(
         ((*pPg).pData as *mut ::core::ffi::c_char as *mut crate::src::ext::rtree::rtree::u8_0)
-            .offset(92 as ::core::ffi::c_int as isize),
+            .offset(92 as isize),
         change_counter,
     );
     crate::src::src::util::sqlite3Put4byte(
         ((*pPg).pData as *mut ::core::ffi::c_char as *mut crate::src::ext::rtree::rtree::u8_0)
-            .offset(96 as ::core::ffi::c_int as isize),
+            .offset(96 as isize),
         3051002 as crate::src::ext::rtree::rtree::u32_0,
     );
 }
@@ -2220,7 +2220,7 @@ unsafe extern "C" fn pagerAcquireMapPage(
             return crate::sqliteInt_h::SQLITE_NOMEM_BKPT;
         }
         (*p).pExtra =
-            p.offset(1 as ::core::ffi::c_int as isize) as *mut crate::src::src::pcache::PgHdr as *mut ::core::ffi::c_void;
+            p.offset(1 as isize) as *mut crate::src::src::pcache::PgHdr as *mut ::core::ffi::c_void;
         (*p).flags = crate::src::src::pcache::PGHDR_MMAP as crate::src::fts5::u16_0;
         (*p).nRef = 1 as crate::src::ext::rtree::rtree::i64_0;
         (*p).pPager = pPager;
@@ -2492,7 +2492,7 @@ unsafe extern "C" fn pager_write_pagelist(
             if pgno == 1 as crate::src::src::pager::Pgno {
                 ::libc::memcpy(
                     &raw mut (*pPager).dbFileVers as *mut ::core::ffi::c_void,
-                    pData.offset(24 as ::core::ffi::c_int as isize) as *mut ::core::ffi::c_char
+                    pData.offset(24 as isize) as *mut ::core::ffi::c_char
                         as *const ::core::ffi::c_void,
                     ::core::mem::size_of::<[::core::ffi::c_char; 16]>() as crate::__stddef_size_t_h::size_t,
                 );
@@ -2664,7 +2664,7 @@ pub unsafe extern "C" fn sqlite3PagerOpen(
     if flags & crate::src::src::pager::PAGER_MEMORY != 0 {
         memDb = 1 as ::core::ffi::c_int;
         if !zFilename.is_null()
-            && *zFilename.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int != 0
+            && *zFilename.offset(0 as isize) as ::core::ffi::c_int != 0
         {
             zPathname = crate::src::src::malloc::sqlite3DbStrDup(::core::ptr::null_mut::<crate::sqliteInt_h::sqlite3>() as
     *mut crate::sqliteInt_h::sqlite3, zFilename);
@@ -2676,7 +2676,7 @@ pub unsafe extern "C" fn sqlite3PagerOpen(
         }
     }
     if !zFilename.is_null()
-        && *zFilename.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int != 0
+        && *zFilename.offset(0 as isize) as ::core::ffi::c_int != 0
     {
         let mut z: *const ::core::ffi::c_char = ::core::ptr::null::<::core::ffi::c_char>();
         nPathname = (*pVfs).mxPathname + 1 as ::core::ffi::c_int;
@@ -2689,7 +2689,7 @@ pub unsafe extern "C" fn sqlite3PagerOpen(
         if zPathname.is_null() {
             return crate::sqliteInt_h::SQLITE_NOMEM_BKPT;
         }
-        *zPathname.offset(0 as ::core::ffi::c_int as isize) = 0 as ::core::ffi::c_char;
+        *zPathname.offset(0 as isize) = 0 as ::core::ffi::c_char;
         rc = crate::src::src::os::sqlite3OsFullPathname(pVfs as *mut crate::sqlite3_h::sqlite3_vfs, zFilename, nPathname, zPathname);
         if rc != crate::sqlite3_h::SQLITE_OK {
             if rc == crate::sqlite3_h::SQLITE_OK_SYMLINK {
@@ -2712,7 +2712,7 @@ pub unsafe extern "C" fn sqlite3PagerOpen(
             z = z.offset(::libc::strlen(z).wrapping_add(1 as crate::__stddef_size_t_h::size_t) as isize);
             z = z.offset(::libc::strlen(z).wrapping_add(1 as crate::__stddef_size_t_h::size_t) as isize);
         }
-        nUriByte = (z.offset(1 as ::core::ffi::c_int as isize) as *const ::core::ffi::c_char)
+        nUriByte = (z.offset(1 as isize) as *const ::core::ffi::c_char)
             .offset_from(zUri) as ::core::ffi::c_long as ::core::ffi::c_int;
         if rc == crate::sqlite3_h::SQLITE_OK && nPathname + 8 as ::core::ffi::c_int > (*pVfs).mxPathname {
             rc = crate::src::src::main::sqlite3CantopenError(4813 as ::core::ffi::c_int);
@@ -2780,7 +2780,7 @@ pub unsafe extern "C" fn sqlite3PagerOpen(
         crate::sqliteInt_h::SQLITE_PTRSIZE as crate::__stddef_size_t_h::size_t,
     );
     pPtr = pPtr.offset(crate::sqliteInt_h::SQLITE_PTRSIZE as isize);
-    pPtr = pPtr.offset(4 as ::core::ffi::c_int as isize);
+    pPtr = pPtr.offset(4 as isize);
     (*pPager).zFilename = pPtr as *mut ::core::ffi::c_char;
     if nPathname > 0 as ::core::ffi::c_int {
         ::libc::memcpy(
@@ -2846,7 +2846,7 @@ pub unsafe extern "C" fn sqlite3PagerOpen(
     (*pPager).vfsFlags = vfsFlags as crate::src::ext::rtree::rtree::u32_0;
     let mut current_block_121: u64;
     if !zFilename.is_null()
-        && *zFilename.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int != 0
+        && *zFilename.offset(0 as isize) as ::core::ffi::c_int != 0
     {
         let mut fout: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
         rc = crate::src::src::os::sqlite3OsOpen(
@@ -4105,7 +4105,7 @@ pub unsafe extern "C" fn sqlite3PagerFilename(
         && ((*pPager).memDb as ::core::ffi::c_int != 0 || crate::src::src::memdb::sqlite3IsMemdb((*pPager).pVfs as *const crate::sqlite3_h::sqlite3_vfs) != 0)
     {
         return (&raw const zFake as *const ::core::ffi::c_char)
-            .offset(4 as ::core::ffi::c_int as isize) as *const ::core::ffi::c_char;
+            .offset(4 as isize) as *const ::core::ffi::c_char;
     } else {
         return (*pPager).zFilename;
     };

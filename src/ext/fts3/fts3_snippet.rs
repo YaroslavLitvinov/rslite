@@ -148,12 +148,12 @@ unsafe extern "C" fn fts3MIBufferNew(
     pRet =
         crate::src::ext::fts3::fts3_expr::sqlite3Fts3MallocZero(nByte as crate::src::ext::rtree::rtree::i64_0 + nStr as crate::src::ext::rtree::rtree::i64_0 + 1 as crate::src::ext::rtree::rtree::i64_0) as *mut MatchinfoBuffer;
     if !pRet.is_null() {
-        *(&raw mut (*pRet).aMI as *mut crate::src::ext::rtree::rtree::u32_0).offset(0 as ::core::ffi::c_int as isize) =
-            ((&raw mut (*pRet).aMI as *mut crate::src::ext::rtree::rtree::u32_0).offset(1 as ::core::ffi::c_int as isize)
+        *(&raw mut (*pRet).aMI as *mut crate::src::ext::rtree::rtree::u32_0).offset(0 as isize) =
+            ((&raw mut (*pRet).aMI as *mut crate::src::ext::rtree::rtree::u32_0).offset(1 as isize)
                 as *mut crate::src::ext::rtree::rtree::u32_0 as *mut crate::src::ext::rtree::rtree::u8_0)
                 .offset_from(pRet as *mut crate::src::ext::rtree::rtree::u8_0) as ::core::ffi::c_long as crate::src::ext::rtree::rtree::u32_0;
         *(&raw mut (*pRet).aMI as *mut crate::src::ext::rtree::rtree::u32_0).offset((1 as crate::__stddef_size_t_h::size_t).wrapping_add(nElem) as isize) =
-            (*(&raw mut (*pRet).aMI as *mut crate::src::ext::rtree::rtree::u32_0).offset(0 as ::core::ffi::c_int as isize)
+            (*(&raw mut (*pRet).aMI as *mut crate::src::ext::rtree::rtree::u32_0).offset(0 as isize)
                 as usize)
                 .wrapping_add(
                     (::core::mem::size_of::<crate::src::ext::rtree::rtree::u32_0>() as usize).wrapping_mul(
@@ -177,7 +177,7 @@ unsafe extern "C" fn fts3MIBufferFree(mut p: *mut ::core::ffi::c_void) {
         .offset(-(*(p as *mut crate::src::ext::rtree::rtree::u32_0).offset(-(1 as ::core::ffi::c_int) as isize) as isize))
         as *mut MatchinfoBuffer;
     if p as *mut crate::src::ext::rtree::rtree::u32_0
-        == (&raw mut (*pBuf).aMI as *mut crate::src::ext::rtree::rtree::u32_0).offset(1 as ::core::ffi::c_int as isize)
+        == (&raw mut (*pBuf).aMI as *mut crate::src::ext::rtree::rtree::u32_0).offset(1 as isize)
             as *mut crate::src::ext::rtree::rtree::u32_0
     {
         (*pBuf).aRef[1 as ::core::ffi::c_int as usize] = 0 as crate::src::ext::rtree::rtree::u8_0;
@@ -204,7 +204,7 @@ unsafe extern "C" fn fts3MIBufferAlloc(
     if (*p).aRef[1 as ::core::ffi::c_int as usize] as ::core::ffi::c_int == 0 as ::core::ffi::c_int
     {
         (*p).aRef[1 as ::core::ffi::c_int as usize] = 1 as crate::src::ext::rtree::rtree::u8_0;
-        aOut = (&raw mut (*p).aMI as *mut crate::src::ext::rtree::rtree::u32_0).offset(1 as ::core::ffi::c_int as isize)
+        aOut = (&raw mut (*p).aMI as *mut crate::src::ext::rtree::rtree::u32_0).offset(1 as isize)
             as *mut crate::src::ext::rtree::rtree::u32_0;
         xRet = Some(fts3MIBufferFree as unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ())
             as Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()>;
@@ -227,7 +227,7 @@ unsafe extern "C" fn fts3MIBufferAlloc(
             if (*p).bGlobal != 0 {
                 ::libc::memcpy(
                     aOut as *mut ::core::ffi::c_void,
-                    (&raw mut (*p).aMI as *mut crate::src::ext::rtree::rtree::u32_0).offset(1 as ::core::ffi::c_int as isize)
+                    (&raw mut (*p).aMI as *mut crate::src::ext::rtree::rtree::u32_0).offset(1 as isize)
                         as *mut crate::src::ext::rtree::rtree::u32_0 as *const ::core::ffi::c_void,
                     ((*p).nElem as crate::__stddef_size_t_h::size_t).wrapping_mul(::core::mem::size_of::<crate::src::ext::rtree::rtree::u32_0>() as crate::__stddef_size_t_h::size_t),
                 );
@@ -243,7 +243,7 @@ unsafe extern "C" fn fts3MIBufferSetGlobal(mut p: *mut MatchinfoBuffer) {
     ::libc::memcpy(
         (&raw mut (*p).aMI as *mut crate::src::ext::rtree::rtree::u32_0).offset((2 as ::core::ffi::c_int + (*p).nElem) as isize)
             as *mut crate::src::ext::rtree::rtree::u32_0 as *mut ::core::ffi::c_void,
-        (&raw mut (*p).aMI as *mut crate::src::ext::rtree::rtree::u32_0).offset(1 as ::core::ffi::c_int as isize) as *mut crate::src::ext::rtree::rtree::u32_0
+        (&raw mut (*p).aMI as *mut crate::src::ext::rtree::rtree::u32_0).offset(1 as isize) as *mut crate::src::ext::rtree::rtree::u32_0
             as *const ::core::ffi::c_void,
         ((*p).nElem as crate::__stddef_size_t_h::size_t).wrapping_mul(::core::mem::size_of::<crate::src::ext::rtree::rtree::u32_0>() as crate::__stddef_size_t_h::size_t),
     );
@@ -1230,13 +1230,13 @@ unsafe extern "C" fn fts3MatchinfoValues(
         match *zArg.offset(i as isize) as ::core::ffi::c_int {
             FTS3_MATCHINFO_NPHRASE => {
                 if bGlobal != 0 {
-                    *(*pInfo).aMatchinfo.offset(0 as ::core::ffi::c_int as isize) =
+                    *(*pInfo).aMatchinfo.offset(0 as isize) =
                         (*pInfo).nPhrase as crate::src::ext::rtree::rtree::u32_0;
                 }
             }
             FTS3_MATCHINFO_NCOL => {
                 if bGlobal != 0 {
-                    *(*pInfo).aMatchinfo.offset(0 as ::core::ffi::c_int as isize) =
+                    *(*pInfo).aMatchinfo.offset(0 as isize) =
                         (*pInfo).nCol as crate::src::ext::rtree::rtree::u32_0;
                 }
             }
@@ -1250,7 +1250,7 @@ unsafe extern "C" fn fts3MatchinfoValues(
                         ::core::ptr::null_mut::<*const ::core::ffi::c_char>(),
                         ::core::ptr::null_mut::<*const ::core::ffi::c_char>(),
                     );
-                    *(*pInfo).aMatchinfo.offset(0 as ::core::ffi::c_int as isize) = nDoc as crate::src::ext::rtree::rtree::u32_0;
+                    *(*pInfo).aMatchinfo.offset(0 as isize) = nDoc as crate::src::ext::rtree::rtree::u32_0;
                 }
             }
             FTS3_MATCHINFO_AVGLENGTH => {

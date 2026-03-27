@@ -41,7 +41,7 @@ pub unsafe extern "C" fn sqlite3_exec(
     crate::src::src::mutex::sqlite3_mutex_enter((*db).mutex);
     crate::src::src::util::sqlite3Error(db as *mut crate::sqliteInt_h::sqlite3, crate::sqlite3_h::SQLITE_OK);
     's_32: while rc == crate::sqlite3_h::SQLITE_OK
-        && *zSql.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_int != 0
+        && *zSql.offset(0 as isize) as ::core::ffi::c_int != 0
     {
         let mut nCol: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
         let mut azVals: *mut *mut ::core::ffi::c_char =
@@ -127,7 +127,7 @@ pub unsafe extern "C" fn sqlite3_exec(
                 pStmt = ::core::ptr::null_mut::<crate::sqlite3_h::sqlite3_stmt>();
                 zSql = zLeftover;
                 while *(&raw const crate::src::src::global::sqlite3CtypeMap as *const ::core::ffi::c_uchar).offset(
-                    *zSql.offset(0 as ::core::ffi::c_int as isize) as ::core::ffi::c_uchar as isize,
+                    *zSql.offset(0 as isize) as ::core::ffi::c_uchar as isize,
                 ) as ::core::ffi::c_int
                     & 0x1 as ::core::ffi::c_int
                     != 0
