@@ -1949,11 +1949,11 @@ unsafe extern "C" fn sqlite3Fts5BufferAppendBlob(
         {
             return;
         }
-        ::libc::memcpy(
-            __pBuf_ref.p.offset(__pBuf_ref.n as isize) as *mut u8_0 as *mut ::core::ffi::c_void,
-            pData as *const ::core::ffi::c_void,
-            nData as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    pData as *const u8,
+                    __pBuf_ref.p.offset(__pBuf_ref.n as isize) as *mut u8_0 as *mut u8,
+                    nData as usize,
+                );
         __pBuf_ref.n =
             (__pBuf_ref.n as u32_0).wrapping_add(nData) as ::core::ffi::c_int as ::core::ffi::c_int;
     }
@@ -1986,11 +1986,11 @@ unsafe extern "C" fn fts5AsciiCreate(
                 0 as ::core::ffi::c_int,
                 ::core::mem::size_of::<AsciiTokenizer>() as crate::__stddef_size_t_h::size_t,
             );
-            ::libc::memcpy(
-                &raw mut (*p).aTokenChar as *mut ::core::ffi::c_uchar as *mut ::core::ffi::c_void,
-                &raw mut aAsciiTokenChar as *mut ::core::ffi::c_uchar as *const ::core::ffi::c_void,
-                ::core::mem::size_of::<[::core::ffi::c_uchar; 128]>() as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    &raw mut aAsciiTokenChar as *mut ::core::ffi::c_uchar as *const u8,
+                    &raw mut (*p).aTokenChar as *mut ::core::ffi::c_uchar as *mut u8,
+                    ::core::mem::size_of::<[::core::ffi::c_uchar; 128]>() as usize,
+                );
             i = 0 as ::core::ffi::c_int;
             while rc == crate::sqlite3_h::SQLITE_OK && i < nArg {
                 let mut zArg: *const ::core::ffi::c_char =
@@ -4092,16 +4092,16 @@ unsafe extern "C" fn fts5VocabInitVtab(
             __pRet_ref.zFts5Tbl = pRet.offset(1 as isize) as *mut Fts5VocabTable
                 as *mut ::core::ffi::c_char;
             __pRet_ref.zFts5Db = __pRet_ref.zFts5Tbl.offset(nTab as isize) as *mut ::core::ffi::c_char;
-            ::libc::memcpy(
-                __pRet_ref.zFts5Tbl as *mut ::core::ffi::c_void,
-                zTab as *const ::core::ffi::c_void,
-                nTab as crate::__stddef_size_t_h::size_t,
-            );
-            ::libc::memcpy(
-                __pRet_ref.zFts5Db as *mut ::core::ffi::c_void,
-                zDb as *const ::core::ffi::c_void,
-                nDb as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    zTab as *const u8,
+                    __pRet_ref.zFts5Tbl as *mut u8,
+                    nTab as usize,
+                );
+            ::core::ptr::copy_nonoverlapping(
+                    zDb as *const u8,
+                    __pRet_ref.zFts5Db as *mut u8,
+                    nDb as usize,
+                );
             sqlite3Fts5Dequote(__pRet_ref.zFts5Tbl);
             sqlite3Fts5Dequote(__pRet_ref.zFts5Db);
         }
@@ -4247,12 +4247,10 @@ unsafe extern "C" fn fts5HashAddPoslistSize(
             } else {
                 let mut nByte: ::core::ffi::c_int = sqlite3Fts5GetVarintLen(nPos as u32_0);
                 let __p_ref = unsafe { &*p };
-                ::libc::memmove(
-                    pPtr.offset((__p_ref.iSzPoslist + nByte) as isize) as *mut u8_0
-                        as *mut ::core::ffi::c_void,
-                    pPtr.offset((__p_ref.iSzPoslist + 1 as ::core::ffi::c_int) as isize) as *mut u8_0
-                        as *const ::core::ffi::c_void,
-                    nSz as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy(
+                    pPtr.offset((__p_ref.iSzPoslist + 1 as ::core::ffi::c_int) as isize) as *mut u8_0 as *const u8,
+                    pPtr.offset((__p_ref.iSzPoslist + nByte) as isize) as *mut u8_0 as *mut u8,
+                    nSz as usize,
                 );
                 sqlite3Fts5PutVarint(
                     pPtr.offset(__p_ref.iSzPoslist as isize) as *mut ::core::ffi::c_uchar,
@@ -4735,11 +4733,11 @@ unsafe extern "C" fn fts5ConfigParseSpecial(
                         p_0 = fts5ConfigSkipBareword(p2);
                     }
                     if !p_0.is_null() {
-                        ::libc::memcpy(
-                            pSpace as *mut ::core::ffi::c_void,
-                            p2 as *const ::core::ffi::c_void,
-                            p_0.offset_from(p2) as ::core::ffi::c_long as crate::__stddef_size_t_h::size_t,
-                        );
+                        ::core::ptr::copy_nonoverlapping(
+                    p2 as *const u8,
+                    pSpace as *mut u8,
+                    p_0.offset_from(p2) as ::core::ffi::c_long as usize,
+                );
                         let ref mut fresh2 = *azArg.offset(nArg as isize);
                         *fresh2 = pSpace;
                         sqlite3Fts5Dequote(pSpace);
@@ -5066,12 +5064,11 @@ unsafe extern "C" fn sqlite3Fts5HashWrite(
         zKey_0 = p.offset(1 as isize) as *mut Fts5HashEntry
             as *mut ::core::ffi::c_char;
         *zKey_0.offset(0 as isize) = bByte;
-        ::libc::memcpy(
-            zKey_0.offset(1 as isize) as *mut ::core::ffi::c_char
-                as *mut ::core::ffi::c_void,
-            pToken as *const ::core::ffi::c_void,
-            nToken as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    pToken as *const u8,
+                    zKey_0.offset(1 as isize) as *mut ::core::ffi::c_char as *mut u8,
+                    nToken as usize,
+                );
         (*p).nKey = nToken + 1 as ::core::ffi::c_int;
         *zKey_0.offset((nToken + 1 as ::core::ffi::c_int) as isize) =
             '\0' as i32 as ::core::ffi::c_char;
@@ -5487,17 +5484,15 @@ unsafe extern "C" fn fts5UnicodeAddExceptions(
                             }
                             i += 1;
                         }
-                        ::libc::memmove(
-                            aNew.offset((i + 1 as ::core::ffi::c_int) as isize)
-                                as *mut ::core::ffi::c_int
-                                as *mut ::core::ffi::c_void,
-                            aNew.offset(i as isize) as *mut ::core::ffi::c_int
-                                as *const ::core::ffi::c_void,
-                            ((nNew - i) as crate::__stddef_size_t_h::size_t)
+                        ::core::ptr::copy(
+                    aNew.offset(i as isize) as *mut ::core::ffi::c_int as *const u8,
+                    aNew.offset((i + 1 as ::core::ffi::c_int) as isize)
+                                as *mut ::core::ffi::c_int as *mut u8,
+                    (((nNew - i) as crate::__stddef_size_t_h::size_t)
                                 .wrapping_mul(
                                     ::core::mem::size_of::<::core::ffi::c_int>() as crate::__stddef_size_t_h::size_t
-                                ),
-                        );
+                                )) as usize,
+                );
                         *aNew.offset(i as isize) = iCode as ::core::ffi::c_int;
                         nNew += 1;
                     }
@@ -5970,11 +5965,11 @@ unsafe extern "C" fn sqlite3Fts5Strndup(
         }
         zRet = crate::src::src::malloc::sqlite3_malloc(nIn + 1 as ::core::ffi::c_int) as *mut ::core::ffi::c_char;
         if !zRet.is_null() {
-            ::libc::memcpy(
-                zRet as *mut ::core::ffi::c_void,
-                pIn as *const ::core::ffi::c_void,
-                nIn as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    pIn as *const u8,
+                    zRet as *mut u8,
+                    nIn as usize,
+                );
             *zRet.offset(nIn as isize) = '\0' as i32 as ::core::ffi::c_char;
         } else {
             *pRc = crate::sqlite3_h::SQLITE_NOMEM;
@@ -6827,10 +6822,10 @@ unsafe extern "C" fn sqlite3Fts5TermsetAdd(
                     as *mut ::core::ffi::c_char;
                 __pEntry_ref.nTerm = nTerm;
                 __pEntry_ref.iIdx = iIdx;
-                ::libc::memcpy(
-                    __pEntry_ref.pTerm as *mut ::core::ffi::c_void,
-                    pTerm as *const ::core::ffi::c_void,
-                    nTerm as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    pTerm as *const u8,
+                    __pEntry_ref.pTerm as *mut u8,
+                    nTerm as usize,
                 );
                 __pEntry_ref.pNext = (*p).apHash[hash as usize];
                 (*p).apHash[hash as usize] = pEntry;
@@ -9690,11 +9685,11 @@ unsafe extern "C" fn fts5UnicodeTokenize(
                     zOut = aFold
                         .offset(zOut.offset_from(__p_ref.aFold) as ::core::ffi::c_long as isize)
                         as *mut ::core::ffi::c_char;
-                    ::libc::memcpy(
-                        aFold as *mut ::core::ffi::c_void,
-                        __p_ref.aFold as *const ::core::ffi::c_void,
-                        nFold as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    __p_ref.aFold as *const u8,
+                    aFold as *mut u8,
+                    nFold as usize,
+                );
                     crate::src::src::malloc::sqlite3_free(__p_ref.aFold as *mut ::core::ffi::c_void);
                     __p_ref.aFold = aFold;
                     nFold *= 2 as ::core::ffi::c_int;
@@ -9842,11 +9837,11 @@ unsafe extern "C" fn fts5ConfigGobbleWord(
     if zOut.is_null() {
         *pRc = crate::sqlite3_h::SQLITE_NOMEM;
     } else {
-        ::libc::memcpy(
-            zOut as *mut ::core::ffi::c_void,
-            zIn as *const ::core::ffi::c_void,
-            (nIn + 1 as crate::sqlite3_h::sqlite3_int64) as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    zIn as *const u8,
+                    zOut as *mut u8,
+                    (nIn + 1 as crate::sqlite3_h::sqlite3_int64) as usize,
+                );
         if fts5_isopenquote(*zOut.offset(0 as isize)) != 0 {
             let mut ii: ::core::ffi::c_int = fts5Dequote(zOut);
             zRet = zIn.offset(ii as isize) as *const ::core::ffi::c_char;
@@ -9966,12 +9961,11 @@ unsafe extern "C" fn sqlite3Fts5ExprAnd(
                 sParse.rc = crate::sqlite3_h::SQLITE_NOMEM;
             } else {
                 let mut i: ::core::ffi::c_int = 0;
-                ::libc::memmove(
-                    ap.offset(__p2_ref.nPhrase as isize) as *mut *mut Fts5ExprPhrase
-                        as *mut ::core::ffi::c_void,
-                    ap as *const ::core::ffi::c_void,
-                    (__p1_ref.nPhrase as crate::__stddef_size_t_h::size_t)
-                        .wrapping_mul(::core::mem::size_of::<*mut Fts5ExprPhrase>() as crate::__stddef_size_t_h::size_t),
+                ::core::ptr::copy(
+                    ap as *const u8,
+                    ap.offset(__p2_ref.nPhrase as isize) as *mut *mut Fts5ExprPhrase as *mut u8,
+                    ((__p1_ref.nPhrase as crate::__stddef_size_t_h::size_t)
+                        .wrapping_mul(::core::mem::size_of::<*mut Fts5ExprPhrase>() as crate::__stddef_size_t_h::size_t)) as usize,
                 );
                 i = 0 as ::core::ffi::c_int;
                 while i < __p2_ref.nPhrase {
@@ -10323,12 +10317,11 @@ unsafe extern "C" fn sqlite3Fts5HashQuery(
         if !pRet.is_null() {
             let mut pFaux: *mut Fts5HashEntry =
                 pRet.offset((nPre - nHashPre) as isize) as *mut u8_0 as *mut Fts5HashEntry;
-            ::libc::memcpy(
-                pRet.offset(nPre as isize) as *mut u8_0 as *mut ::core::ffi::c_void,
-                (p as *mut u8_0).offset(nHashPre as isize) as *mut u8_0
-                    as *const ::core::ffi::c_void,
-                nList as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    (p as *mut u8_0).offset(nHashPre as isize) as *mut u8_0 as *const u8,
+                    pRet.offset(nPre as isize) as *mut u8_0 as *mut u8,
+                    nList as usize,
+                );
             nList += fts5HashAddPoslistSize(pHash, p, pFaux);
             *pnDoclist = nList;
         } else {
@@ -10640,12 +10633,12 @@ unsafe extern "C" fn fts5ExprSynonymList(
                         current_block = 13051647285283118637;
                         break;
                     } else {
-                        ::libc::memcpy(
-                            aNew as *mut ::core::ffi::c_void,
-                            aIter as *const ::core::ffi::c_void,
-                            (::core::mem::size_of::<Fts5PoslistReader>() as crate::__stddef_size_t_h::size_t)
-                                .wrapping_mul(nIter as crate::__stddef_size_t_h::size_t),
-                        );
+                        ::core::ptr::copy_nonoverlapping(
+                    aIter as *const u8,
+                    aNew as *mut u8,
+                    ((::core::mem::size_of::<Fts5PoslistReader>() as crate::__stddef_size_t_h::size_t)
+                                .wrapping_mul(nIter as crate::__stddef_size_t_h::size_t)) as usize,
+                );
                         nAlloc *= 2 as ::core::ffi::c_int;
                         if aIter != &raw mut aStatic as *mut Fts5PoslistReader {
                             crate::src::src::malloc::sqlite3_free(aIter as *mut ::core::ffi::c_void);
@@ -12865,11 +12858,11 @@ unsafe extern "C" fn fts5PorterCreate(
             ::core::ptr::null_mut::<*const ::core::ffi::c_char>()
         };
         let __pRet_ref = unsafe { &mut *pRet };
-        ::libc::memcpy(
-            &raw mut __pRet_ref.tokenizer_v2 as *mut ::core::ffi::c_void,
-            pV2 as *const ::core::ffi::c_void,
-            ::core::mem::size_of::<fts5_tokenizer_v2>() as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    pV2 as *const u8,
+                    &raw mut __pRet_ref.tokenizer_v2 as *mut u8,
+                    ::core::mem::size_of::<fts5_tokenizer_v2>() as usize,
+                );
         rc = (*pRet)
             .tokenizer_v2
             .xCreate
@@ -13460,10 +13453,10 @@ unsafe extern "C" fn fts5VocabFilterMethod(
             if __pCsr_ref.zLeTerm.is_null() {
                 rc = crate::sqlite3_h::SQLITE_NOMEM;
             } else {
-                ::libc::memcpy(
-                    __pCsr_ref.zLeTerm as *mut ::core::ffi::c_void,
-                    zCopy as *const ::core::ffi::c_void,
-                    (__pCsr_ref.nLeTerm + 1 as ::core::ffi::c_int) as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    zCopy as *const u8,
+                    __pCsr_ref.zLeTerm as *mut u8,
+                    (__pCsr_ref.nLeTerm + 1 as ::core::ffi::c_int) as usize,
                 );
             }
         }
@@ -15494,10 +15487,10 @@ unsafe extern "C" fn sqlite3Fts5ConfigParseRank(
                     .offset_from(pRank) as ::core::ffi::c_long as crate::sqlite3_h::sqlite3_int64,
             ) as *mut ::core::ffi::c_char;
             if !zRank.is_null() {
-                ::libc::memcpy(
-                    zRank as *mut ::core::ffi::c_void,
-                    pRank as *const ::core::ffi::c_void,
-                    p.offset_from(pRank) as ::core::ffi::c_long as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    pRank as *const u8,
+                    zRank as *mut u8,
+                    p.offset_from(pRank) as ::core::ffi::c_long as usize,
                 );
             }
         } else {
@@ -15526,11 +15519,11 @@ unsafe extern "C" fn sqlite3Fts5ConfigParseRank(
                             as crate::sqlite3_h::sqlite3_int64,
                     ) as *mut ::core::ffi::c_char;
                     if !zRankArgs.is_null() {
-                        ::libc::memcpy(
-                            zRankArgs as *mut ::core::ffi::c_void,
-                            pArgs as *const ::core::ffi::c_void,
-                            p.offset_from(pArgs) as ::core::ffi::c_long as crate::__stddef_size_t_h::size_t,
-                        );
+                        ::core::ptr::copy_nonoverlapping(
+                    pArgs as *const u8,
+                    zRankArgs as *mut u8,
+                    p.offset_from(pArgs) as ::core::ffi::c_long as usize,
+                );
                     }
                 }
             }
@@ -15635,12 +15628,11 @@ unsafe extern "C" fn fts5PorterStep1B2(
                         2 as crate::__stddef_size_t_h::size_t,
                     )
             {
-                ::libc::memcpy(
+                ::core::ptr::copy_nonoverlapping(
+                    b"ate\0" as *const u8 as *const ::core::ffi::c_char,
                     aBuf.offset((nBuf - 2 as ::core::ffi::c_int) as isize)
-                        as *mut ::core::ffi::c_char as *mut ::core::ffi::c_void,
-                    b"ate\0" as *const u8 as *const ::core::ffi::c_char
-                        as *const ::core::ffi::c_void,
-                    3 as crate::__stddef_size_t_h::size_t,
+                        as *mut ::core::ffi::c_char,
+                    3 as usize,
                 );
                 *pnBuf = nBuf - 2 as ::core::ffi::c_int + 3 as ::core::ffi::c_int;
                 ret = 1 as ::core::ffi::c_int;
@@ -15658,12 +15650,11 @@ unsafe extern "C" fn fts5PorterStep1B2(
                         2 as crate::__stddef_size_t_h::size_t,
                     )
             {
-                ::libc::memcpy(
+                ::core::ptr::copy_nonoverlapping(
+                    b"ble\0" as *const u8 as *const ::core::ffi::c_char,
                     aBuf.offset((nBuf - 2 as ::core::ffi::c_int) as isize)
-                        as *mut ::core::ffi::c_char as *mut ::core::ffi::c_void,
-                    b"ble\0" as *const u8 as *const ::core::ffi::c_char
-                        as *const ::core::ffi::c_void,
-                    3 as crate::__stddef_size_t_h::size_t,
+                        as *mut ::core::ffi::c_char,
+                    3 as usize,
                 );
                 *pnBuf = nBuf - 2 as ::core::ffi::c_int + 3 as ::core::ffi::c_int;
                 ret = 1 as ::core::ffi::c_int;
@@ -15681,12 +15672,11 @@ unsafe extern "C" fn fts5PorterStep1B2(
                         2 as crate::__stddef_size_t_h::size_t,
                     )
             {
-                ::libc::memcpy(
+                ::core::ptr::copy_nonoverlapping(
+                    b"ize\0" as *const u8 as *const ::core::ffi::c_char,
                     aBuf.offset((nBuf - 2 as ::core::ffi::c_int) as isize)
-                        as *mut ::core::ffi::c_char as *mut ::core::ffi::c_void,
-                    b"ize\0" as *const u8 as *const ::core::ffi::c_char
-                        as *const ::core::ffi::c_void,
-                    3 as crate::__stddef_size_t_h::size_t,
+                        as *mut ::core::ffi::c_char,
+                    3 as usize,
                 );
                 *pnBuf = nBuf - 2 as ::core::ffi::c_int + 3 as ::core::ffi::c_int;
                 ret = 1 as ::core::ffi::c_int;
@@ -15826,14 +15816,12 @@ unsafe extern "C" fn fts5PorterStep2(
                     )
             {
                 if fts5Porter_MGt0(aBuf, nBuf - 7 as ::core::ffi::c_int) != 0 {
-                    ::libc::memcpy(
-                        aBuf.offset((nBuf - 7 as ::core::ffi::c_int) as isize)
-                            as *mut ::core::ffi::c_char
-                            as *mut ::core::ffi::c_void,
-                        b"ate\0" as *const u8 as *const ::core::ffi::c_char
-                            as *const ::core::ffi::c_void,
-                        3 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    b"ate\0" as *const u8 as *const ::core::ffi::c_char,
+                    aBuf.offset((nBuf - 7 as ::core::ffi::c_int) as isize)
+                            as *mut ::core::ffi::c_char,
+                    3 as usize,
+                );
                     *pnBuf = nBuf - 7 as ::core::ffi::c_int + 3 as ::core::ffi::c_int;
                 }
             } else if nBuf > 6 as ::core::ffi::c_int
@@ -15848,14 +15836,12 @@ unsafe extern "C" fn fts5PorterStep2(
                     )
             {
                 if fts5Porter_MGt0(aBuf, nBuf - 6 as ::core::ffi::c_int) != 0 {
-                    ::libc::memcpy(
-                        aBuf.offset((nBuf - 6 as ::core::ffi::c_int) as isize)
-                            as *mut ::core::ffi::c_char
-                            as *mut ::core::ffi::c_void,
-                        b"tion\0" as *const u8 as *const ::core::ffi::c_char
-                            as *const ::core::ffi::c_void,
-                        4 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    b"tion\0" as *const u8 as *const ::core::ffi::c_char,
+                    aBuf.offset((nBuf - 6 as ::core::ffi::c_int) as isize)
+                            as *mut ::core::ffi::c_char,
+                    4 as usize,
+                );
                     *pnBuf = nBuf - 6 as ::core::ffi::c_int + 4 as ::core::ffi::c_int;
                 }
             }
@@ -15873,14 +15859,12 @@ unsafe extern "C" fn fts5PorterStep2(
                     )
             {
                 if fts5Porter_MGt0(aBuf, nBuf - 4 as ::core::ffi::c_int) != 0 {
-                    ::libc::memcpy(
-                        aBuf.offset((nBuf - 4 as ::core::ffi::c_int) as isize)
-                            as *mut ::core::ffi::c_char
-                            as *mut ::core::ffi::c_void,
-                        b"ence\0" as *const u8 as *const ::core::ffi::c_char
-                            as *const ::core::ffi::c_void,
-                        4 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    b"ence\0" as *const u8 as *const ::core::ffi::c_char,
+                    aBuf.offset((nBuf - 4 as ::core::ffi::c_int) as isize)
+                            as *mut ::core::ffi::c_char,
+                    4 as usize,
+                );
                     *pnBuf = nBuf - 4 as ::core::ffi::c_int + 4 as ::core::ffi::c_int;
                 }
             } else if nBuf > 4 as ::core::ffi::c_int
@@ -15895,14 +15879,12 @@ unsafe extern "C" fn fts5PorterStep2(
                     )
             {
                 if fts5Porter_MGt0(aBuf, nBuf - 4 as ::core::ffi::c_int) != 0 {
-                    ::libc::memcpy(
-                        aBuf.offset((nBuf - 4 as ::core::ffi::c_int) as isize)
-                            as *mut ::core::ffi::c_char
-                            as *mut ::core::ffi::c_void,
-                        b"ance\0" as *const u8 as *const ::core::ffi::c_char
-                            as *const ::core::ffi::c_void,
-                        4 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    b"ance\0" as *const u8 as *const ::core::ffi::c_char,
+                    aBuf.offset((nBuf - 4 as ::core::ffi::c_int) as isize)
+                            as *mut ::core::ffi::c_char,
+                    4 as usize,
+                );
                     *pnBuf = nBuf - 4 as ::core::ffi::c_int + 4 as ::core::ffi::c_int;
                 }
             }
@@ -15920,14 +15902,12 @@ unsafe extern "C" fn fts5PorterStep2(
                     )
             {
                 if fts5Porter_MGt0(aBuf, nBuf - 4 as ::core::ffi::c_int) != 0 {
-                    ::libc::memcpy(
-                        aBuf.offset((nBuf - 4 as ::core::ffi::c_int) as isize)
-                            as *mut ::core::ffi::c_char
-                            as *mut ::core::ffi::c_void,
-                        b"ize\0" as *const u8 as *const ::core::ffi::c_char
-                            as *const ::core::ffi::c_void,
-                        3 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    b"ize\0" as *const u8 as *const ::core::ffi::c_char,
+                    aBuf.offset((nBuf - 4 as ::core::ffi::c_int) as isize)
+                            as *mut ::core::ffi::c_char,
+                    3 as usize,
+                );
                     *pnBuf = nBuf - 4 as ::core::ffi::c_int + 3 as ::core::ffi::c_int;
                 }
             }
@@ -15945,14 +15925,12 @@ unsafe extern "C" fn fts5PorterStep2(
                     )
             {
                 if fts5Porter_MGt0(aBuf, nBuf - 4 as ::core::ffi::c_int) != 0 {
-                    ::libc::memcpy(
-                        aBuf.offset((nBuf - 4 as ::core::ffi::c_int) as isize)
-                            as *mut ::core::ffi::c_char
-                            as *mut ::core::ffi::c_void,
-                        b"log\0" as *const u8 as *const ::core::ffi::c_char
-                            as *const ::core::ffi::c_void,
-                        3 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    b"log\0" as *const u8 as *const ::core::ffi::c_char,
+                    aBuf.offset((nBuf - 4 as ::core::ffi::c_int) as isize)
+                            as *mut ::core::ffi::c_char,
+                    3 as usize,
+                );
                     *pnBuf = nBuf - 4 as ::core::ffi::c_int + 3 as ::core::ffi::c_int;
                 }
             }
@@ -15970,14 +15948,12 @@ unsafe extern "C" fn fts5PorterStep2(
                     )
             {
                 if fts5Porter_MGt0(aBuf, nBuf - 3 as ::core::ffi::c_int) != 0 {
-                    ::libc::memcpy(
-                        aBuf.offset((nBuf - 3 as ::core::ffi::c_int) as isize)
-                            as *mut ::core::ffi::c_char
-                            as *mut ::core::ffi::c_void,
-                        b"ble\0" as *const u8 as *const ::core::ffi::c_char
-                            as *const ::core::ffi::c_void,
-                        3 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    b"ble\0" as *const u8 as *const ::core::ffi::c_char,
+                    aBuf.offset((nBuf - 3 as ::core::ffi::c_int) as isize)
+                            as *mut ::core::ffi::c_char,
+                    3 as usize,
+                );
                     *pnBuf = nBuf - 3 as ::core::ffi::c_int + 3 as ::core::ffi::c_int;
                 }
             } else if nBuf > 4 as ::core::ffi::c_int
@@ -15992,14 +15968,12 @@ unsafe extern "C" fn fts5PorterStep2(
                     )
             {
                 if fts5Porter_MGt0(aBuf, nBuf - 4 as ::core::ffi::c_int) != 0 {
-                    ::libc::memcpy(
-                        aBuf.offset((nBuf - 4 as ::core::ffi::c_int) as isize)
-                            as *mut ::core::ffi::c_char
-                            as *mut ::core::ffi::c_void,
-                        b"al\0" as *const u8 as *const ::core::ffi::c_char
-                            as *const ::core::ffi::c_void,
-                        2 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    b"al\0" as *const u8 as *const ::core::ffi::c_char,
+                    aBuf.offset((nBuf - 4 as ::core::ffi::c_int) as isize)
+                            as *mut ::core::ffi::c_char,
+                    2 as usize,
+                );
                     *pnBuf = nBuf - 4 as ::core::ffi::c_int + 2 as ::core::ffi::c_int;
                 }
             } else if nBuf > 5 as ::core::ffi::c_int
@@ -16014,14 +15988,12 @@ unsafe extern "C" fn fts5PorterStep2(
                     )
             {
                 if fts5Porter_MGt0(aBuf, nBuf - 5 as ::core::ffi::c_int) != 0 {
-                    ::libc::memcpy(
-                        aBuf.offset((nBuf - 5 as ::core::ffi::c_int) as isize)
-                            as *mut ::core::ffi::c_char
-                            as *mut ::core::ffi::c_void,
-                        b"ent\0" as *const u8 as *const ::core::ffi::c_char
-                            as *const ::core::ffi::c_void,
-                        3 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    b"ent\0" as *const u8 as *const ::core::ffi::c_char,
+                    aBuf.offset((nBuf - 5 as ::core::ffi::c_int) as isize)
+                            as *mut ::core::ffi::c_char,
+                    3 as usize,
+                );
                     *pnBuf = nBuf - 5 as ::core::ffi::c_int + 3 as ::core::ffi::c_int;
                 }
             } else if nBuf > 3 as ::core::ffi::c_int
@@ -16036,14 +16008,12 @@ unsafe extern "C" fn fts5PorterStep2(
                     )
             {
                 if fts5Porter_MGt0(aBuf, nBuf - 3 as ::core::ffi::c_int) != 0 {
-                    ::libc::memcpy(
-                        aBuf.offset((nBuf - 3 as ::core::ffi::c_int) as isize)
-                            as *mut ::core::ffi::c_char
-                            as *mut ::core::ffi::c_void,
-                        b"e\0" as *const u8 as *const ::core::ffi::c_char
-                            as *const ::core::ffi::c_void,
-                        1 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    b"e\0" as *const u8 as *const ::core::ffi::c_char,
+                    aBuf.offset((nBuf - 3 as ::core::ffi::c_int) as isize)
+                            as *mut ::core::ffi::c_char,
+                    1 as usize,
+                );
                     *pnBuf = nBuf - 3 as ::core::ffi::c_int + 1 as ::core::ffi::c_int;
                 }
             } else if nBuf > 5 as ::core::ffi::c_int
@@ -16058,14 +16028,12 @@ unsafe extern "C" fn fts5PorterStep2(
                     )
             {
                 if fts5Porter_MGt0(aBuf, nBuf - 5 as ::core::ffi::c_int) != 0 {
-                    ::libc::memcpy(
-                        aBuf.offset((nBuf - 5 as ::core::ffi::c_int) as isize)
-                            as *mut ::core::ffi::c_char
-                            as *mut ::core::ffi::c_void,
-                        b"ous\0" as *const u8 as *const ::core::ffi::c_char
-                            as *const ::core::ffi::c_void,
-                        3 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    b"ous\0" as *const u8 as *const ::core::ffi::c_char,
+                    aBuf.offset((nBuf - 5 as ::core::ffi::c_int) as isize)
+                            as *mut ::core::ffi::c_char,
+                    3 as usize,
+                );
                     *pnBuf = nBuf - 5 as ::core::ffi::c_int + 3 as ::core::ffi::c_int;
                 }
             }
@@ -16083,14 +16051,12 @@ unsafe extern "C" fn fts5PorterStep2(
                     )
             {
                 if fts5Porter_MGt0(aBuf, nBuf - 7 as ::core::ffi::c_int) != 0 {
-                    ::libc::memcpy(
-                        aBuf.offset((nBuf - 7 as ::core::ffi::c_int) as isize)
-                            as *mut ::core::ffi::c_char
-                            as *mut ::core::ffi::c_void,
-                        b"ize\0" as *const u8 as *const ::core::ffi::c_char
-                            as *const ::core::ffi::c_void,
-                        3 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    b"ize\0" as *const u8 as *const ::core::ffi::c_char,
+                    aBuf.offset((nBuf - 7 as ::core::ffi::c_int) as isize)
+                            as *mut ::core::ffi::c_char,
+                    3 as usize,
+                );
                     *pnBuf = nBuf - 7 as ::core::ffi::c_int + 3 as ::core::ffi::c_int;
                 }
             } else if nBuf > 5 as ::core::ffi::c_int
@@ -16105,14 +16071,12 @@ unsafe extern "C" fn fts5PorterStep2(
                     )
             {
                 if fts5Porter_MGt0(aBuf, nBuf - 5 as ::core::ffi::c_int) != 0 {
-                    ::libc::memcpy(
-                        aBuf.offset((nBuf - 5 as ::core::ffi::c_int) as isize)
-                            as *mut ::core::ffi::c_char
-                            as *mut ::core::ffi::c_void,
-                        b"ate\0" as *const u8 as *const ::core::ffi::c_char
-                            as *const ::core::ffi::c_void,
-                        3 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    b"ate\0" as *const u8 as *const ::core::ffi::c_char,
+                    aBuf.offset((nBuf - 5 as ::core::ffi::c_int) as isize)
+                            as *mut ::core::ffi::c_char,
+                    3 as usize,
+                );
                     *pnBuf = nBuf - 5 as ::core::ffi::c_int + 3 as ::core::ffi::c_int;
                 }
             } else if nBuf > 4 as ::core::ffi::c_int
@@ -16127,14 +16091,12 @@ unsafe extern "C" fn fts5PorterStep2(
                     )
             {
                 if fts5Porter_MGt0(aBuf, nBuf - 4 as ::core::ffi::c_int) != 0 {
-                    ::libc::memcpy(
-                        aBuf.offset((nBuf - 4 as ::core::ffi::c_int) as isize)
-                            as *mut ::core::ffi::c_char
-                            as *mut ::core::ffi::c_void,
-                        b"ate\0" as *const u8 as *const ::core::ffi::c_char
-                            as *const ::core::ffi::c_void,
-                        3 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    b"ate\0" as *const u8 as *const ::core::ffi::c_char,
+                    aBuf.offset((nBuf - 4 as ::core::ffi::c_int) as isize)
+                            as *mut ::core::ffi::c_char,
+                    3 as usize,
+                );
                     *pnBuf = nBuf - 4 as ::core::ffi::c_int + 3 as ::core::ffi::c_int;
                 }
             }
@@ -16152,14 +16114,12 @@ unsafe extern "C" fn fts5PorterStep2(
                     )
             {
                 if fts5Porter_MGt0(aBuf, nBuf - 5 as ::core::ffi::c_int) != 0 {
-                    ::libc::memcpy(
-                        aBuf.offset((nBuf - 5 as ::core::ffi::c_int) as isize)
-                            as *mut ::core::ffi::c_char
-                            as *mut ::core::ffi::c_void,
-                        b"al\0" as *const u8 as *const ::core::ffi::c_char
-                            as *const ::core::ffi::c_void,
-                        2 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    b"al\0" as *const u8 as *const ::core::ffi::c_char,
+                    aBuf.offset((nBuf - 5 as ::core::ffi::c_int) as isize)
+                            as *mut ::core::ffi::c_char,
+                    2 as usize,
+                );
                     *pnBuf = nBuf - 5 as ::core::ffi::c_int + 2 as ::core::ffi::c_int;
                 }
             } else if nBuf > 7 as ::core::ffi::c_int
@@ -16174,14 +16134,12 @@ unsafe extern "C" fn fts5PorterStep2(
                     )
             {
                 if fts5Porter_MGt0(aBuf, nBuf - 7 as ::core::ffi::c_int) != 0 {
-                    ::libc::memcpy(
-                        aBuf.offset((nBuf - 7 as ::core::ffi::c_int) as isize)
-                            as *mut ::core::ffi::c_char
-                            as *mut ::core::ffi::c_void,
-                        b"ive\0" as *const u8 as *const ::core::ffi::c_char
-                            as *const ::core::ffi::c_void,
-                        3 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    b"ive\0" as *const u8 as *const ::core::ffi::c_char,
+                    aBuf.offset((nBuf - 7 as ::core::ffi::c_int) as isize)
+                            as *mut ::core::ffi::c_char,
+                    3 as usize,
+                );
                     *pnBuf = nBuf - 7 as ::core::ffi::c_int + 3 as ::core::ffi::c_int;
                 }
             } else if nBuf > 7 as ::core::ffi::c_int
@@ -16196,14 +16154,12 @@ unsafe extern "C" fn fts5PorterStep2(
                     )
             {
                 if fts5Porter_MGt0(aBuf, nBuf - 7 as ::core::ffi::c_int) != 0 {
-                    ::libc::memcpy(
-                        aBuf.offset((nBuf - 7 as ::core::ffi::c_int) as isize)
-                            as *mut ::core::ffi::c_char
-                            as *mut ::core::ffi::c_void,
-                        b"ful\0" as *const u8 as *const ::core::ffi::c_char
-                            as *const ::core::ffi::c_void,
-                        3 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    b"ful\0" as *const u8 as *const ::core::ffi::c_char,
+                    aBuf.offset((nBuf - 7 as ::core::ffi::c_int) as isize)
+                            as *mut ::core::ffi::c_char,
+                    3 as usize,
+                );
                     *pnBuf = nBuf - 7 as ::core::ffi::c_int + 3 as ::core::ffi::c_int;
                 }
             } else if nBuf > 7 as ::core::ffi::c_int
@@ -16218,14 +16174,12 @@ unsafe extern "C" fn fts5PorterStep2(
                     )
             {
                 if fts5Porter_MGt0(aBuf, nBuf - 7 as ::core::ffi::c_int) != 0 {
-                    ::libc::memcpy(
-                        aBuf.offset((nBuf - 7 as ::core::ffi::c_int) as isize)
-                            as *mut ::core::ffi::c_char
-                            as *mut ::core::ffi::c_void,
-                        b"ous\0" as *const u8 as *const ::core::ffi::c_char
-                            as *const ::core::ffi::c_void,
-                        3 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    b"ous\0" as *const u8 as *const ::core::ffi::c_char,
+                    aBuf.offset((nBuf - 7 as ::core::ffi::c_int) as isize)
+                            as *mut ::core::ffi::c_char,
+                    3 as usize,
+                );
                     *pnBuf = nBuf - 7 as ::core::ffi::c_int + 3 as ::core::ffi::c_int;
                 }
             }
@@ -16243,14 +16197,12 @@ unsafe extern "C" fn fts5PorterStep2(
                     )
             {
                 if fts5Porter_MGt0(aBuf, nBuf - 5 as ::core::ffi::c_int) != 0 {
-                    ::libc::memcpy(
-                        aBuf.offset((nBuf - 5 as ::core::ffi::c_int) as isize)
-                            as *mut ::core::ffi::c_char
-                            as *mut ::core::ffi::c_void,
-                        b"al\0" as *const u8 as *const ::core::ffi::c_char
-                            as *const ::core::ffi::c_void,
-                        2 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    b"al\0" as *const u8 as *const ::core::ffi::c_char,
+                    aBuf.offset((nBuf - 5 as ::core::ffi::c_int) as isize)
+                            as *mut ::core::ffi::c_char,
+                    2 as usize,
+                );
                     *pnBuf = nBuf - 5 as ::core::ffi::c_int + 2 as ::core::ffi::c_int;
                 }
             } else if nBuf > 5 as ::core::ffi::c_int
@@ -16265,14 +16217,12 @@ unsafe extern "C" fn fts5PorterStep2(
                     )
             {
                 if fts5Porter_MGt0(aBuf, nBuf - 5 as ::core::ffi::c_int) != 0 {
-                    ::libc::memcpy(
-                        aBuf.offset((nBuf - 5 as ::core::ffi::c_int) as isize)
-                            as *mut ::core::ffi::c_char
-                            as *mut ::core::ffi::c_void,
-                        b"ive\0" as *const u8 as *const ::core::ffi::c_char
-                            as *const ::core::ffi::c_void,
-                        3 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    b"ive\0" as *const u8 as *const ::core::ffi::c_char,
+                    aBuf.offset((nBuf - 5 as ::core::ffi::c_int) as isize)
+                            as *mut ::core::ffi::c_char,
+                    3 as usize,
+                );
                     *pnBuf = nBuf - 5 as ::core::ffi::c_int + 3 as ::core::ffi::c_int;
                 }
             } else if nBuf > 6 as ::core::ffi::c_int
@@ -16287,14 +16237,12 @@ unsafe extern "C" fn fts5PorterStep2(
                     )
             {
                 if fts5Porter_MGt0(aBuf, nBuf - 6 as ::core::ffi::c_int) != 0 {
-                    ::libc::memcpy(
-                        aBuf.offset((nBuf - 6 as ::core::ffi::c_int) as isize)
-                            as *mut ::core::ffi::c_char
-                            as *mut ::core::ffi::c_void,
-                        b"ble\0" as *const u8 as *const ::core::ffi::c_char
-                            as *const ::core::ffi::c_void,
-                        3 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    b"ble\0" as *const u8 as *const ::core::ffi::c_char,
+                    aBuf.offset((nBuf - 6 as ::core::ffi::c_int) as isize)
+                            as *mut ::core::ffi::c_char,
+                    3 as usize,
+                );
                     *pnBuf = nBuf - 6 as ::core::ffi::c_int + 3 as ::core::ffi::c_int;
                 }
             }
@@ -17790,14 +17738,12 @@ unsafe extern "C" fn fts5PorterStep3(
                     )
             {
                 if fts5Porter_MGt0(aBuf, nBuf - 4 as ::core::ffi::c_int) != 0 {
-                    ::libc::memcpy(
-                        aBuf.offset((nBuf - 4 as ::core::ffi::c_int) as isize)
-                            as *mut ::core::ffi::c_char
-                            as *mut ::core::ffi::c_void,
-                        b"ic\0" as *const u8 as *const ::core::ffi::c_char
-                            as *const ::core::ffi::c_void,
-                        2 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    b"ic\0" as *const u8 as *const ::core::ffi::c_char,
+                    aBuf.offset((nBuf - 4 as ::core::ffi::c_int) as isize)
+                            as *mut ::core::ffi::c_char,
+                    2 as usize,
+                );
                     *pnBuf = nBuf - 4 as ::core::ffi::c_int + 2 as ::core::ffi::c_int;
                 }
             }
@@ -17832,14 +17778,12 @@ unsafe extern "C" fn fts5PorterStep3(
                     )
             {
                 if fts5Porter_MGt0(aBuf, nBuf - 5 as ::core::ffi::c_int) != 0 {
-                    ::libc::memcpy(
-                        aBuf.offset((nBuf - 5 as ::core::ffi::c_int) as isize)
-                            as *mut ::core::ffi::c_char
-                            as *mut ::core::ffi::c_void,
-                        b"ic\0" as *const u8 as *const ::core::ffi::c_char
-                            as *const ::core::ffi::c_void,
-                        2 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    b"ic\0" as *const u8 as *const ::core::ffi::c_char,
+                    aBuf.offset((nBuf - 5 as ::core::ffi::c_int) as isize)
+                            as *mut ::core::ffi::c_char,
+                    2 as usize,
+                );
                     *pnBuf = nBuf - 5 as ::core::ffi::c_int + 2 as ::core::ffi::c_int;
                 }
             } else if nBuf > 5 as ::core::ffi::c_int
@@ -17854,14 +17798,12 @@ unsafe extern "C" fn fts5PorterStep3(
                     )
             {
                 if fts5Porter_MGt0(aBuf, nBuf - 5 as ::core::ffi::c_int) != 0 {
-                    ::libc::memcpy(
-                        aBuf.offset((nBuf - 5 as ::core::ffi::c_int) as isize)
-                            as *mut ::core::ffi::c_char
-                            as *mut ::core::ffi::c_void,
-                        b"ic\0" as *const u8 as *const ::core::ffi::c_char
-                            as *const ::core::ffi::c_void,
-                        2 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    b"ic\0" as *const u8 as *const ::core::ffi::c_char,
+                    aBuf.offset((nBuf - 5 as ::core::ffi::c_int) as isize)
+                            as *mut ::core::ffi::c_char,
+                    2 as usize,
+                );
                     *pnBuf = nBuf - 5 as ::core::ffi::c_int + 2 as ::core::ffi::c_int;
                 }
             }
@@ -17913,14 +17855,12 @@ unsafe extern "C" fn fts5PorterStep3(
                     )
             {
                 if fts5Porter_MGt0(aBuf, nBuf - 5 as ::core::ffi::c_int) != 0 {
-                    ::libc::memcpy(
-                        aBuf.offset((nBuf - 5 as ::core::ffi::c_int) as isize)
-                            as *mut ::core::ffi::c_char
-                            as *mut ::core::ffi::c_void,
-                        b"al\0" as *const u8 as *const ::core::ffi::c_char
-                            as *const ::core::ffi::c_void,
-                        2 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    b"al\0" as *const u8 as *const ::core::ffi::c_char,
+                    aBuf.offset((nBuf - 5 as ::core::ffi::c_int) as isize)
+                            as *mut ::core::ffi::c_char,
+                    2 as usize,
+                );
                     *pnBuf = nBuf - 5 as ::core::ffi::c_int + 2 as ::core::ffi::c_int;
                 }
             }
@@ -17944,11 +17884,11 @@ unsafe extern "C" fn fts5StructureMakeWritable(
         pNew = sqlite3Fts5MallocZero(pRc, nByte as crate::sqlite3_h::sqlite3_int64) as *mut Fts5Structure;
         if !pNew.is_null() {
             let mut i: ::core::ffi::c_int = 0;
-            ::libc::memcpy(
-                pNew as *mut ::core::ffi::c_void,
-                p as *const ::core::ffi::c_void,
-                nByte as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    p as *const u8,
+                    pNew as *mut u8,
+                    nByte as usize,
+                );
             i = 0 as ::core::ffi::c_int;
             let __p_ref = unsafe { &mut *p };
             while i < __p_ref.nLevel {
@@ -17982,11 +17922,10 @@ unsafe extern "C" fn fts5StructureMakeWritable(
                     crate::src::src::malloc::sqlite3_free(pNew as *mut ::core::ffi::c_void);
                     return;
                 }
-                ::libc::memcpy(
-                    __pLvl_ref.aSeg as *mut ::core::ffi::c_void,
-                    (*(&raw mut __p_ref.aLevel as *mut Fts5StructureLevel).offset(i as isize)).aSeg
-                        as *const ::core::ffi::c_void,
-                    nByte as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    (*(&raw mut __p_ref.aLevel as *mut Fts5StructureLevel).offset(i as isize)).aSeg as *const u8,
+                    __pLvl_ref.aSeg as *mut u8,
+                    nByte as usize,
                 );
                 i += 1;
             }
@@ -18364,14 +18303,12 @@ unsafe extern "C" fn fts5PorterStep1B(
                     )
             {
                 if fts5Porter_MGt0(aBuf, nBuf - 3 as ::core::ffi::c_int) != 0 {
-                    ::libc::memcpy(
-                        aBuf.offset((nBuf - 3 as ::core::ffi::c_int) as isize)
-                            as *mut ::core::ffi::c_char
-                            as *mut ::core::ffi::c_void,
-                        b"ee\0" as *const u8 as *const ::core::ffi::c_char
-                            as *const ::core::ffi::c_void,
-                        2 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    b"ee\0" as *const u8 as *const ::core::ffi::c_char,
+                    aBuf.offset((nBuf - 3 as ::core::ffi::c_int) as isize)
+                            as *mut ::core::ffi::c_char,
+                    2 as usize,
+                );
                     *pnBuf = nBuf - 3 as ::core::ffi::c_int + 2 as ::core::ffi::c_int;
                 }
             } else if nBuf > 2 as ::core::ffi::c_int
@@ -18733,11 +18670,11 @@ unsafe extern "C" fn fts5PorterCb(
         let __p_ref = unsafe { &mut *p };
         aBuf = __p_ref.aBuf;
         nBuf = nToken;
-        ::libc::memcpy(
-            aBuf as *mut ::core::ffi::c_void,
-            pToken as *const ::core::ffi::c_void,
-            nBuf as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    pToken as *const u8,
+                    aBuf as *mut u8,
+                    nBuf as usize,
+                );
         fts5PorterStep1A(aBuf, &raw mut nBuf);
         if fts5PorterStep1B(aBuf, &raw mut nBuf) != 0 {
             if fts5PorterStep1B2(aBuf, &raw mut nBuf) == 0 as ::core::ffi::c_int {
@@ -19101,11 +19038,10 @@ unsafe extern "C" fn fts5StructureExtendLevel(
                 let mut nMove: ::core::ffi::c_int = ((*pLvl).nSeg as usize)
                     .wrapping_mul(::core::mem::size_of::<Fts5StructureSegment>() as usize)
                     as ::core::ffi::c_int;
-                ::libc::memmove(
-                    aNew.offset(nExtra as isize) as *mut Fts5StructureSegment
-                        as *mut ::core::ffi::c_void,
-                    aNew as *const ::core::ffi::c_void,
-                    nMove as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy(
+                    aNew as *const u8,
+                    aNew.offset(nExtra as isize) as *mut Fts5StructureSegment as *mut u8,
+                    nMove as usize,
                 );
                 ::libc::memset(
                     aNew as *mut ::core::ffi::c_void,
@@ -19748,11 +19684,11 @@ unsafe extern "C" fn fts5TriTokenize(
                 z1 = z1.offset(1);
             }
         }
-        ::libc::memmove(
-            &raw mut aBuf as *mut ::core::ffi::c_char as *mut ::core::ffi::c_void,
-            z1 as *const ::core::ffi::c_void,
-            zOut.offset_from(z1) as ::core::ffi::c_long as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy(
+                    z1 as *const u8,
+                    &raw mut aBuf as *mut ::core::ffi::c_char as *mut u8,
+                    zOut.offset_from(z1) as ::core::ffi::c_long as usize,
+                );
         zOut = zOut.offset(
             -(z1.offset_from(&raw mut aBuf as *mut ::core::ffi::c_char) as ::core::ffi::c_long
                 as isize),
@@ -20073,11 +20009,10 @@ unsafe extern "C" fn fts5StructureWrite(mut p: *mut Fts5Index, mut pStruct: *mut
             buf.n = 4 as ::core::ffi::c_int;
             let __pStruct_ref = unsafe { &*pStruct };
             if __pStruct_ref.nOriginCntr > 0 as u64_0 {
-                ::libc::memcpy(
-                    buf.p.offset(buf.n as isize) as *mut u8_0 as *mut ::core::ffi::c_void,
-                    b"\xFF\0\0\x01\0" as *const u8 as *const ::core::ffi::c_char
-                        as *const ::core::ffi::c_void,
-                    4 as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    b"\xFF\0\0\x01\0" as *const u8 as *const ::core::ffi::c_char as *const u8,
+                    buf.p.offset(buf.n as isize) as *mut u8_0 as *mut u8,
+                    4 as usize,
                 );
                 buf.n += 4 as ::core::ffi::c_int;
             }
@@ -20875,11 +20810,10 @@ unsafe extern "C" fn fts5StructurePromoteTo(
                 if (*p).rc != 0 {
                     return;
                 }
-                ::libc::memcpy(
-                    (*pOut).aSeg as *mut ::core::ffi::c_void,
-                    __pLvl_ref.aSeg.offset(is as isize) as *mut Fts5StructureSegment
-                        as *const ::core::ffi::c_void,
-                    ::core::mem::size_of::<Fts5StructureSegment>() as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    __pLvl_ref.aSeg.offset(is as isize) as *mut Fts5StructureSegment as *const u8,
+                    (*pOut).aSeg as *mut u8,
+                    ::core::mem::size_of::<Fts5StructureSegment>() as usize,
                 );
                 (*pOut).nSeg += 1;
                 __pLvl_ref.nSeg -= 1;
@@ -21539,11 +21473,11 @@ unsafe extern "C" fn fts5ParseTokenize(
             if (*__pCtx_ref.pConfig).bTokendata != 0 {
                 __pSyn_ref.nQueryTerm = ::libc::strlen(__pSyn_ref.pTerm) as ::core::ffi::c_int;
             }
-            ::libc::memcpy(
-                __pSyn_ref.pTerm as *mut ::core::ffi::c_void,
-                pToken as *const ::core::ffi::c_void,
-                nToken as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    pToken as *const u8,
+                    __pSyn_ref.pTerm as *mut u8,
+                    nToken as usize,
+                );
             let __pPhrase_ref = unsafe { &mut *pPhrase };
             __pSyn_ref.pSynonym = (*(&raw mut __pPhrase_ref.aTerm as *mut Fts5ExprTerm)
                 .offset((__pPhrase_ref.nTerm - 1 as ::core::ffi::c_int) as isize))
@@ -22172,10 +22106,10 @@ unsafe extern "C" fn sqlite3Fts5ExprClonePhrase(
             ) as crate::sqlite3_h::sqlite3_int64;
             pColset = sqlite3Fts5MallocZero(&raw mut rc, nByte) as *mut Fts5Colset;
             if !pColset.is_null() {
-                ::libc::memcpy(
-                    pColset as *mut ::core::ffi::c_void,
-                    pColsetOrig as *const ::core::ffi::c_void,
-                    nByte as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    pColsetOrig as *const u8,
+                    pColset as *mut u8,
+                    nByte as usize,
                 );
             }
             (*(*(*pNew).pRoot).pNear).pColset = pColset;
@@ -23049,11 +22983,11 @@ unsafe extern "C" fn fts5CloneColset(
         ) as crate::sqlite3_h::sqlite3_int64;
         pRet = sqlite3Fts5MallocZero(pRc, nByte) as *mut Fts5Colset;
         if !pRet.is_null() {
-            ::libc::memcpy(
-                pRet as *mut ::core::ffi::c_void,
-                pOrig as *const ::core::ffi::c_void,
-                nByte as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    pOrig as *const u8,
+                    pRet as *mut u8,
+                    nByte as usize,
+                );
         }
     } else {
         pRet = ::core::ptr::null_mut::<Fts5Colset>();
@@ -23547,12 +23481,12 @@ unsafe extern "C" fn fts5ExprAddChildren(mut p: *mut Fts5ExprNode, mut pSub: *mu
         let mut nByte: ::core::ffi::c_int = (::core::mem::size_of::<*mut Fts5ExprNode>() as usize)
             .wrapping_mul(__pSub_ref.nChild as usize)
             as ::core::ffi::c_int;
-        ::libc::memcpy(
-            (&raw mut __p_ref.apChild as *mut *mut Fts5ExprNode).offset(__p_ref.nChild as isize)
-                as *mut *mut Fts5ExprNode as *mut ::core::ffi::c_void,
-            &raw mut __pSub_ref.apChild as *mut *mut Fts5ExprNode as *const ::core::ffi::c_void,
-            nByte as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    &raw mut __pSub_ref.apChild as *mut *mut Fts5ExprNode as *const u8,
+                    (&raw mut __p_ref.apChild as *mut *mut Fts5ExprNode).offset(__p_ref.nChild as isize)
+                as *mut *mut Fts5ExprNode as *mut u8,
+                    nByte as usize,
+                );
         __p_ref.nChild += __pSub_ref.nChild;
         crate::src::src::malloc::sqlite3_free(pSub as *mut ::core::ffi::c_void);
     } else {
@@ -24276,13 +24210,12 @@ unsafe extern "C" fn sqlite3Fts5ParseImplicitAnd(
             ap = __pParse_ref.apPhrase.offset(
                 (__pParse_ref.nPhrase - 1 as ::core::ffi::c_int - __pNear_ref.nPhrase) as isize,
             ) as *mut *mut Fts5ExprPhrase;
-            ::libc::memmove(
-                ap as *mut ::core::ffi::c_void,
-                ap.offset(1 as isize) as *mut *mut Fts5ExprPhrase
-                    as *const ::core::ffi::c_void,
-                (::core::mem::size_of::<*mut Fts5ExprPhrase>() as crate::__stddef_size_t_h::size_t)
-                    .wrapping_mul(__pNear_ref.nPhrase as crate::__stddef_size_t_h::size_t),
-            );
+            ::core::ptr::copy(
+                    ap.offset(1 as isize) as *mut *mut Fts5ExprPhrase as *const u8,
+                    ap as *mut u8,
+                    ((::core::mem::size_of::<*mut Fts5ExprPhrase>() as crate::__stddef_size_t_h::size_t)
+                    .wrapping_mul(__pNear_ref.nPhrase as crate::__stddef_size_t_h::size_t)) as usize,
+                );
             __pParse_ref.nPhrase -= 1;
             sqlite3Fts5ParseNodeFree(pPrev);
         } else {
@@ -26980,11 +26913,11 @@ unsafe extern "C" fn fts5CreateAux(
             let __pAux_ref = unsafe { &mut *pAux };
             __pAux_ref.zFunc = pAux.offset(1 as isize) as *mut Fts5Auxiliary
                 as *mut ::core::ffi::c_char;
-            ::libc::memcpy(
-                __pAux_ref.zFunc as *mut ::core::ffi::c_void,
-                zName as *const ::core::ffi::c_void,
-                nName as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    zName as *const u8,
+                    __pAux_ref.zFunc as *mut u8,
+                    nName as usize,
+                );
             __pAux_ref.pGlobal = pGlobal;
             __pAux_ref.pUserData = pUserData;
             __pAux_ref.xFunc = xFunc;
@@ -27079,11 +27012,11 @@ unsafe extern "C" fn fts5NewTokenizerModule(
         let __pNew_ref = unsafe { &mut *pNew };
         __pNew_ref.zName = pNew.offset(1 as isize) as *mut Fts5TokenizerModule
             as *mut ::core::ffi::c_char;
-        ::libc::memcpy(
-            __pNew_ref.zName as *mut ::core::ffi::c_void,
-            zName as *const ::core::ffi::c_void,
-            nName as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    zName as *const u8,
+                    __pNew_ref.zName as *mut u8,
+                    nName as usize,
+                );
         __pNew_ref.pUserData = pUserData;
         __pNew_ref.xDestroy = xDestroy;
         __pNew_ref.pNext = (*pGlobal).pTok;
@@ -27776,14 +27709,13 @@ unsafe extern "C" fn fts5PoslistCallback(
     mut nChunk: ::core::ffi::c_int,
 ) {
     if nChunk > 0 as ::core::ffi::c_int {
-        ::libc::memcpy(
-            (*(pContext as *mut Fts5Buffer))
+        ::core::ptr::copy_nonoverlapping(
+                    pChunk as *const u8,
+                    (*(pContext as *mut Fts5Buffer))
                 .p
-                .offset((*(pContext as *mut Fts5Buffer)).n as isize) as *mut u8_0
-                as *mut ::core::ffi::c_void,
-            pChunk as *const ::core::ffi::c_void,
-            nChunk as crate::__stddef_size_t_h::size_t,
-        );
+                .offset((*(pContext as *mut Fts5Buffer)).n as isize) as *mut u8_0 as *mut u8,
+                    nChunk as usize,
+                );
         (*(pContext as *mut Fts5Buffer)).n += nChunk;
     }
 }
@@ -27980,11 +27912,10 @@ unsafe extern "C" fn fts5PoslistFilterCallback(
             }
             if (*pCtx).eState != 0 {
                 let __pCtx_ref = unsafe { &mut *pCtx };
-                ::libc::memcpy(
-                    (*__pCtx_ref.pBuf).p.offset((*__pCtx_ref.pBuf).n as isize) as *mut u8_0
-                        as *mut ::core::ffi::c_void,
-                    pChunk.offset(iStart as isize) as *const u8_0 as *const ::core::ffi::c_void,
-                    (i - iStart) as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    pChunk.offset(iStart as isize) as *const u8_0 as *const u8,
+                    (*__pCtx_ref.pBuf).p.offset((*__pCtx_ref.pBuf).n as isize) as *mut u8_0 as *mut u8,
+                    (i - iStart) as usize,
                 );
                 (*__pCtx_ref.pBuf).n += i - iStart;
             }
@@ -28008,13 +27939,11 @@ unsafe extern "C" fn fts5PoslistFilterCallback(
                     let __pCtx_ref = unsafe { &mut *pCtx };
                     __pCtx_ref.eState = fts5IndexColsetTest(__pCtx_ref.pColset, iCol_0);
                     if __pCtx_ref.eState != 0 {
-                        ::libc::memcpy(
-                            (*__pCtx_ref.pBuf).p.offset((*__pCtx_ref.pBuf).n as isize) as *mut u8_0
-                                as *mut ::core::ffi::c_void,
-                            pChunk.offset(iStart as isize) as *const u8_0
-                                as *const ::core::ffi::c_void,
-                            (i - iStart) as crate::__stddef_size_t_h::size_t,
-                        );
+                        ::core::ptr::copy_nonoverlapping(
+                    pChunk.offset(iStart as isize) as *const u8_0 as *const u8,
+                    (*__pCtx_ref.pBuf).p.offset((*__pCtx_ref.pBuf).n as isize) as *mut u8_0 as *mut u8,
+                    (i - iStart) as usize,
+                );
                         (*__pCtx_ref.pBuf).n += i - iStart;
                         iStart = i;
                     }
@@ -28192,27 +28121,27 @@ unsafe extern "C" fn fts5LocaleFunc(
             return;
         }
         pCsr = pBlob;
-        ::libc::memcpy(
-            pCsr as *mut ::core::ffi::c_void,
-            &raw mut (*p).aLocaleHdr as *mut u32_0 as *const u8_0 as *const ::core::ffi::c_void,
-            FTS5_LOCALE_HDR_SIZE as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    &raw mut (*p).aLocaleHdr as *mut u32_0 as *const u8_0 as *const u8,
+                    pCsr as *mut u8,
+                    FTS5_LOCALE_HDR_SIZE as usize,
+                );
         pCsr = pCsr.offset(FTS5_LOCALE_HDR_SIZE as isize);
-        ::libc::memcpy(
-            pCsr as *mut ::core::ffi::c_void,
-            zLocale as *const ::core::ffi::c_void,
-            nLocale as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    zLocale as *const u8,
+                    pCsr as *mut u8,
+                    nLocale as usize,
+                );
         pCsr = pCsr.offset(nLocale as isize);
         let fresh184 = pCsr;
         pCsr = pCsr.offset(1);
         *fresh184 = 0 as u8_0;
         if !zText.is_null() {
-            ::libc::memcpy(
-                pCsr as *mut ::core::ffi::c_void,
-                zText as *const ::core::ffi::c_void,
-                nText as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    zText as *const u8,
+                    pCsr as *mut u8,
+                    nText as usize,
+                );
         }
         crate::src::src::vdbeapi::sqlite3_result_blob(
             pCtx,
@@ -28366,11 +28295,10 @@ unsafe extern "C" fn fts5IndexExtractColset(
                         p.offset_from(aCopy) as ::core::ffi::c_long as ::core::ffi::c_int;
                     return;
                 }
-                ::libc::memcpy(
-                    __pIter_ref.poslist.p.offset(__pIter_ref.poslist.n as isize) as *mut u8_0
-                        as *mut ::core::ffi::c_void,
-                    aCopy as *const ::core::ffi::c_void,
-                    p.offset_from(aCopy) as ::core::ffi::c_long as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    aCopy as *const u8,
+                    __pIter_ref.poslist.p.offset(__pIter_ref.poslist.n as isize) as *mut u8_0 as *mut u8,
+                    p.offset_from(aCopy) as ::core::ffi::c_long as usize,
                 );
                 __pIter_ref.poslist.n = (__pIter_ref.poslist.n as ::core::ffi::c_long
                     + p.offset_from(aCopy) as ::core::ffi::c_long)
@@ -30142,12 +30070,11 @@ unsafe extern "C" fn fts5IndexMergeLevel(
             let mut nMove: ::core::ffi::c_int = ((__pLvl_ref.nSeg - nInput) as usize)
                 .wrapping_mul(::core::mem::size_of::<Fts5StructureSegment>() as usize)
                 as ::core::ffi::c_int;
-            ::libc::memmove(
-                __pLvl_ref.aSeg as *mut ::core::ffi::c_void,
-                __pLvl_ref.aSeg.offset(nInput as isize) as *mut Fts5StructureSegment
-                    as *const ::core::ffi::c_void,
-                nMove as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy(
+                    __pLvl_ref.aSeg.offset(nInput as isize) as *mut Fts5StructureSegment as *const u8,
+                    __pLvl_ref.aSeg as *mut u8,
+                    nMove as usize,
+                );
         }
         (*pStruct).nSegment -= nInput;
         __pLvl_ref.nSeg -= nInput;
@@ -30475,23 +30402,21 @@ unsafe extern "C" fn fts5SecureDeleteOverflow(
                             (iFirst - nShift) as u64_0,
                         );
                         if i1 < __pLeaf_ref.nn {
-                            ::libc::memcpy(
-                                aIdx.offset(i2 as isize) as *mut u8_0 as *mut ::core::ffi::c_void,
-                                aPg.offset(i1 as isize) as *mut u8_0 as *const ::core::ffi::c_void,
-                                (__pLeaf_ref.nn - i1) as crate::__stddef_size_t_h::size_t,
-                            );
+                            ::core::ptr::copy_nonoverlapping(
+                    aPg.offset(i1 as isize) as *mut u8_0 as *const u8,
+                    aIdx.offset(i2 as isize) as *mut u8_0 as *mut u8,
+                    (__pLeaf_ref.nn - i1) as usize,
+                );
                             i2 += __pLeaf_ref.nn - i1;
                         }
                         nIdx = i2;
                     }
                 }
                 nPg = __pLeaf_ref.szLeaf - nShift;
-                ::libc::memmove(
-                    aPg.offset(4 as isize) as *mut u8_0
-                        as *mut ::core::ffi::c_void,
-                    aPg.offset((4 as ::core::ffi::c_int + nShift) as isize) as *mut u8_0
-                        as *const ::core::ffi::c_void,
-                    (nPg - 4 as ::core::ffi::c_int) as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy(
+                    aPg.offset((4 as ::core::ffi::c_int + nShift) as isize) as *mut u8_0 as *const u8,
+                    aPg.offset(4 as isize) as *mut u8_0 as *mut u8,
+                    (nPg - 4 as ::core::ffi::c_int) as usize,
                 );
                 fts5PutU16(
                     aPg.offset(2 as isize) as *mut u8_0,
@@ -30504,11 +30429,11 @@ unsafe extern "C" fn fts5SecureDeleteOverflow(
                     );
                 }
                 if nIdx > 0 as ::core::ffi::c_int {
-                    ::libc::memcpy(
-                        aPg.offset(nPg as isize) as *mut u8_0 as *mut ::core::ffi::c_void,
-                        aIdx as *const ::core::ffi::c_void,
-                        nIdx as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    aIdx as *const u8,
+                    aPg.offset(nPg as isize) as *mut u8_0 as *mut u8,
+                    nIdx as usize,
+                );
                     nPg += nIdx;
                 }
                 crate::src::src::malloc::sqlite3_free(aIdx as *mut ::core::ffi::c_void);
@@ -30546,11 +30471,11 @@ unsafe extern "C" fn fts5DoSecureDelete(mut p: *mut Fts5Index, mut pSeg: *mut Ft
     if __p_ref.rc != 0 {
         return;
     }
-    ::libc::memcpy(
-        aIdx as *mut ::core::ffi::c_void,
-        aPg.offset(iPgIdx as isize) as *mut u8_0 as *const ::core::ffi::c_void,
-        nIdx as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    aPg.offset(iPgIdx as isize) as *mut u8_0 as *const u8,
+                    aIdx as *mut u8,
+                    nIdx as usize,
+                );
     let mut iSOP: ::core::ffi::c_int = 0;
     if __pSeg_ref.iLeafPgno == __pSeg_ref.iTermLeafPgno {
         iStart = __pSeg_ref.iTermLeafOffset;
@@ -30718,18 +30643,17 @@ unsafe extern "C" fn fts5DoSecureDelete(mut p: *mut Fts5Index, mut pSeg: *mut Ft
                 if nPrefix2 > __pSeg_ref.term.n {
                     fts5IndexCorruptIdx(p);
                 } else if nPrefix2 > nPrefix {
-                    ::libc::memcpy(
-                        aPg.offset(iOff as isize) as *mut u8_0 as *mut ::core::ffi::c_void,
-                        __pSeg_ref.term.p.offset(nPrefix as isize) as *mut u8_0
-                            as *const ::core::ffi::c_void,
-                        (nPrefix2 - nPrefix) as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    __pSeg_ref.term.p.offset(nPrefix as isize) as *mut u8_0 as *const u8,
+                    aPg.offset(iOff as isize) as *mut u8_0 as *mut u8,
+                    (nPrefix2 - nPrefix) as usize,
+                );
                     iOff += nPrefix2 - nPrefix;
                 }
-                ::libc::memmove(
-                    aPg.offset(iOff as isize) as *mut u8_0 as *mut ::core::ffi::c_void,
-                    aPg.offset(iNextOff as isize) as *mut u8_0 as *const ::core::ffi::c_void,
-                    nSuffix2 as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy(
+                    aPg.offset(iNextOff as isize) as *mut u8_0 as *const u8,
+                    aPg.offset(iOff as isize) as *mut u8_0 as *mut u8,
+                    nSuffix2 as usize,
                 );
                 iOff += nSuffix2;
                 iNextOff += nSuffix2;
@@ -30782,11 +30706,10 @@ unsafe extern "C" fn fts5DoSecureDelete(mut p: *mut Fts5Index, mut pSeg: *mut Ft
                     iTermIdx += nByte;
                 }
                 nTermIdx = iTermIdx;
-                ::libc::memmove(
-                    __pTerm_ref.p.offset(iTermOff as isize) as *mut u8_0 as *mut ::core::ffi::c_void,
-                    __pTerm_ref.p.offset(__pTerm_ref.szLeaf as isize) as *mut u8_0
-                        as *const ::core::ffi::c_void,
-                    nTermIdx as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy(
+                    __pTerm_ref.p.offset(__pTerm_ref.szLeaf as isize) as *mut u8_0 as *const u8,
+                    __pTerm_ref.p.offset(iTermOff as isize) as *mut u8_0 as *mut u8,
+                    nTermIdx as usize,
                 );
                 fts5PutU16(
                     __pTerm_ref.p.offset(2 as isize) as *mut u8_0,
@@ -30805,11 +30728,11 @@ unsafe extern "C" fn fts5DoSecureDelete(mut p: *mut Fts5Index, mut pSeg: *mut Ft
         let mut nShift: ::core::ffi::c_int = iNextOff - iOff;
         let mut iPrevKeyOut: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
         let mut iKeyIn: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-        ::libc::memmove(
-            aPg.offset(iOff as isize) as *mut u8_0 as *mut ::core::ffi::c_void,
-            aPg.offset(iNextOff as isize) as *mut u8_0 as *const ::core::ffi::c_void,
-            nMove as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy(
+                    aPg.offset(iNextOff as isize) as *mut u8_0 as *const u8,
+                    aPg.offset(iOff as isize) as *mut u8_0 as *mut u8,
+                    nMove as usize,
+                );
         iPgIdx -= nShift;
         nPg = iPgIdx;
         fts5PutU16(
@@ -31007,12 +30930,11 @@ unsafe extern "C" fn fts5FlushOneHash(mut p: *mut Fts5Index) {
                     && pgsz >= (*pBuf).n + (*pPgidx).n + nDoclist + 1 as ::core::ffi::c_int
                 {
                     let __pBuf_ref = unsafe { &mut *pBuf };
-                    ::libc::memcpy(
-                        __pBuf_ref.p.offset(__pBuf_ref.n as isize) as *mut u8_0
-                            as *mut ::core::ffi::c_void,
-                        pDoclist as *const ::core::ffi::c_void,
-                        nDoclist as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    pDoclist as *const u8,
+                    __pBuf_ref.p.offset(__pBuf_ref.n as isize) as *mut u8_0 as *mut u8,
+                    nDoclist as usize,
+                );
                     __pBuf_ref.n += nDoclist;
                 } else {
                     let mut bTermWritten: ::core::ffi::c_int =
@@ -31131,13 +31053,11 @@ unsafe extern "C" fn fts5FlushOneHash(mut p: *mut Fts5Index) {
                             }
                             if (*pBuf).n + (*pPgidx).n + nCopy <= pgsz {
                                 let __pBuf_ref = unsafe { &mut *pBuf };
-                                ::libc::memcpy(
-                                    __pBuf_ref.p.offset(__pBuf_ref.n as isize) as *mut u8_0
-                                        as *mut ::core::ffi::c_void,
-                                    pDoclist.offset(iOff as isize) as *const u8_0
-                                        as *const ::core::ffi::c_void,
-                                    nCopy as crate::__stddef_size_t_h::size_t,
-                                );
+                                ::core::ptr::copy_nonoverlapping(
+                    pDoclist.offset(iOff as isize) as *const u8_0 as *const u8,
+                    __pBuf_ref.p.offset(__pBuf_ref.n as isize) as *mut u8_0 as *mut u8,
+                    nCopy as usize,
+                );
                                 __pBuf_ref.n += nCopy;
                             } else {
                                 let mut pPoslist: *const u8_0 =
@@ -31156,13 +31076,11 @@ unsafe extern "C" fn fts5FlushOneHash(mut p: *mut Fts5Index) {
                                             nSpace,
                                         );
                                     }
-                                    ::libc::memcpy(
-                                        __pBuf_ref.p.offset(__pBuf_ref.n as isize) as *mut u8_0
-                                            as *mut ::core::ffi::c_void,
-                                        pPoslist.offset(iPos as isize) as *const u8_0
-                                            as *const ::core::ffi::c_void,
-                                        n as crate::__stddef_size_t_h::size_t,
-                                    );
+                                    ::core::ptr::copy_nonoverlapping(
+                    pPoslist.offset(iPos as isize) as *const u8_0 as *const u8,
+                    __pBuf_ref.p.offset(__pBuf_ref.n as isize) as *mut u8_0 as *mut u8,
+                    n as usize,
+                );
                                     __pBuf_ref.n += n;
                                     iPos += n;
                                     if __pBuf_ref.n + (*pPgidx).n >= pgsz {
@@ -31437,11 +31355,11 @@ unsafe extern "C" fn fts5AppendPoslist(
             __pBuf_ref.p.offset(__pBuf_ref.n as isize) as *mut ::core::ffi::c_uchar,
             (nData * 2 as ::core::ffi::c_int) as u64_0,
         );
-        ::libc::memcpy(
-            __pBuf_ref.p.offset(__pBuf_ref.n as isize) as *mut u8_0 as *mut ::core::ffi::c_void,
-            (*pMulti).base.pData as *const ::core::ffi::c_void,
-            nData as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    (*pMulti).base.pData as *const u8,
+                    __pBuf_ref.p.offset(__pBuf_ref.n as isize) as *mut u8_0 as *mut u8,
+                    nData as usize,
+                );
         __pBuf_ref.n += nData;
         ::libc::memset(
             __pBuf_ref.p.offset(__pBuf_ref.n as isize) as *mut u8_0 as *mut ::core::ffi::c_void,
@@ -31719,19 +31637,18 @@ unsafe extern "C" fn fts5MergePrefixLists(
                         out.p.offset(out.n as isize) as *mut ::core::ffi::c_uchar,
                         ((tmp.n + nTail) * 2 as ::core::ffi::c_int) as u64_0,
                     );
-                    ::libc::memcpy(
-                        out.p.offset(out.n as isize) as *mut u8_0 as *mut ::core::ffi::c_void,
-                        tmp.p as *const ::core::ffi::c_void,
-                        tmp.n as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    tmp.p as *const u8,
+                    out.p.offset(out.n as isize) as *mut u8_0 as *mut u8,
+                    tmp.n as usize,
+                );
                     out.n += tmp.n;
                     if nTail > 0 as ::core::ffi::c_int {
-                        ::libc::memcpy(
-                            out.p.offset(out.n as isize) as *mut u8_0 as *mut ::core::ffi::c_void,
-                            (*pHead).aPos.offset((*pHead).iOff as isize) as *mut u8_0
-                                as *const ::core::ffi::c_void,
-                            nTail as crate::__stddef_size_t_h::size_t,
-                        );
+                        ::core::ptr::copy_nonoverlapping(
+                    (*pHead).aPos.offset((*pHead).iOff as isize) as *mut u8_0 as *const u8,
+                    out.p.offset(out.n as isize) as *mut u8_0 as *mut u8,
+                    nTail as usize,
+                );
                         out.n += nTail;
                     }
                     pHead = pSave;
@@ -31752,11 +31669,11 @@ unsafe extern "C" fn fts5MergePrefixLists(
             let mut pThis_0: *mut PrefixMerger = pHead;
             let mut pI: *mut Fts5DoclistIter = &raw mut (*pThis_0).iter;
             let __pI_ref = unsafe { &*pI };
-            ::libc::memcpy(
-                out.p.offset(out.n as isize) as *mut u8_0 as *mut ::core::ffi::c_void,
-                __pI_ref.aPoslist as *const ::core::ffi::c_void,
-                (__pI_ref.nPoslist + __pI_ref.nSize) as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    __pI_ref.aPoslist as *const u8,
+                    out.p.offset(out.n as isize) as *mut u8_0 as *mut u8,
+                    (__pI_ref.nPoslist + __pI_ref.nSize) as usize,
+                );
             out.n += __pI_ref.nPoslist + __pI_ref.nSize;
             fts5DoclistIterNext(pI);
             pHead = (*pThis_0).pNext;
@@ -31863,18 +31780,18 @@ unsafe extern "C" fn fts5TokendataMerge(
                     || (*a1.offset(i1 as isize)).iRowid == (*a2.offset(i2 as isize)).iRowid
                         && (*a1.offset(i1 as isize)).iPos <= (*a2.offset(i2 as isize)).iPos)
         {
-            ::libc::memcpy(
-                pOut as *mut ::core::ffi::c_void,
-                a1.offset(i1 as isize) as *mut Fts5TokenDataMap as *const ::core::ffi::c_void,
-                ::core::mem::size_of::<Fts5TokenDataMap>() as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    a1.offset(i1 as isize) as *mut Fts5TokenDataMap as *const u8,
+                    pOut as *mut u8,
+                    ::core::mem::size_of::<Fts5TokenDataMap>() as usize,
+                );
             i1 += 1;
         } else {
-            ::libc::memcpy(
-                pOut as *mut ::core::ffi::c_void,
-                a2.offset(i2 as isize) as *mut Fts5TokenDataMap as *const ::core::ffi::c_void,
-                ::core::mem::size_of::<Fts5TokenDataMap>() as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    a2.offset(i2 as isize) as *mut Fts5TokenDataMap as *const u8,
+                    pOut as *mut u8,
+                    ::core::mem::size_of::<Fts5TokenDataMap>() as usize,
+                );
             i2 += 1;
         }
     }
@@ -31962,12 +31879,12 @@ unsafe extern "C" fn fts5TokendataIterSortMap(
             nHalf *= 2 as i64_0;
         }
         if a1 != __pT_ref.aMap {
-            ::libc::memcpy(
-                __pT_ref.aMap as *mut ::core::ffi::c_void,
-                a1 as *const ::core::ffi::c_void,
-                (__pT_ref.nMap as crate::__stddef_size_t_h::size_t)
-                    .wrapping_mul(::core::mem::size_of::<Fts5TokenDataMap>() as crate::__stddef_size_t_h::size_t),
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    a1 as *const u8,
+                    __pT_ref.aMap as *mut u8,
+                    ((__pT_ref.nMap as crate::__stddef_size_t_h::size_t)
+                    .wrapping_mul(::core::mem::size_of::<Fts5TokenDataMap>() as crate::__stddef_size_t_h::size_t)) as usize,
+                );
         }
         crate::src::src::malloc::sqlite3_free(aTmp as *mut ::core::ffi::c_void);
     }
@@ -32274,10 +32191,10 @@ unsafe extern "C" fn fts5SetupPrefixIter(
             __pData_ref.szLeaf = s.doclist.n;
             __pData_ref.nn = __pData_ref.szLeaf;
             if s.doclist.n != 0 {
-                ::libc::memcpy(
-                    __pData_ref.p as *mut ::core::ffi::c_void,
-                    s.doclist.p as *const ::core::ffi::c_void,
-                    s.doclist.n as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    s.doclist.p as *const u8,
+                    __pData_ref.p as *mut u8,
+                    s.doclist.n as usize,
                 );
             }
             fts5MultiIterNew2(p, pData, bDesc, ppIter);
@@ -32881,11 +32798,11 @@ unsafe extern "C" fn fts5SetupTokendataIter(
                     if !pPrevIter.is_null() {
                         let __pPrevIter_ref = unsafe { &mut *pPrevIter };
                         if fts5BufferCompare(pSmall, &raw mut __pPrevIter_ref.term) != 0 {
-                            ::libc::memcpy(
-                                pNewIter as *mut ::core::ffi::c_void,
-                                pPrevIter as *const ::core::ffi::c_void,
-                                ::core::mem::size_of::<Fts5SegIter>() as crate::__stddef_size_t_h::size_t,
-                            );
+                            ::core::ptr::copy_nonoverlapping(
+                    pPrevIter as *const u8,
+                    pNewIter as *mut u8,
+                    ::core::mem::size_of::<Fts5SegIter>() as usize,
+                );
                             ::libc::memset(
                                 pPrevIter as *mut ::core::ffi::c_void,
                                 0 as ::core::ffi::c_int,
@@ -33019,12 +32936,11 @@ unsafe extern "C" fn sqlite3Fts5IndexQuery(
         let mut iPrefixIdx: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
         let mut bTokendata: ::core::ffi::c_int = (*pConfig).bTokendata;
         if nToken > 0 as ::core::ffi::c_int {
-            ::libc::memcpy(
-                buf.p.offset(1 as isize) as *mut u8_0
-                    as *mut ::core::ffi::c_void,
-                pToken as *const ::core::ffi::c_void,
-                nToken as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    pToken as *const u8,
+                    buf.p.offset(1 as isize) as *mut u8_0 as *mut u8,
+                    nToken as usize,
+                );
         }
         if flags & (FTS5INDEX_QUERY_NOTOKENDATA | FTS5INDEX_QUERY_SCAN) != 0 {
             bTokendata = 0 as ::core::ffi::c_int;
@@ -33193,12 +33109,11 @@ unsafe extern "C" fn fts5SetupPrefixIterTokendata(
     ) as *mut Fts5TokenDataIter;
     if __p_ref.rc == crate::sqlite3_h::SQLITE_OK {
         *token.p.offset(0 as isize) = FTS5_MAIN_PREFIX as u8_0;
-        ::libc::memcpy(
-            token.p.offset(1 as isize) as *mut u8_0
-                as *mut ::core::ffi::c_void,
-            pToken as *const ::core::ffi::c_void,
-            nToken as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    pToken as *const u8,
+                    token.p.offset(1 as isize) as *mut u8_0 as *mut u8,
+                    nToken as usize,
+                );
         token.n = nToken + 1 as ::core::ffi::c_int;
         fts5VisitEntries(
             p,
@@ -34693,11 +34608,11 @@ unsafe extern "C" fn fts5DecodeFunction(
     a = sqlite3Fts5MallocZero(&raw mut rc, nSpace) as *mut u8_0;
     if !a.is_null() {
         if n > 0 as ::core::ffi::c_int {
-            ::libc::memcpy(
-                a as *mut ::core::ffi::c_void,
-                aBlob as *const ::core::ffi::c_void,
-                n as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    aBlob as *const u8,
+                    a as *mut u8,
+                    n as usize,
+                );
         }
         fts5DecodeRowid(
             iRowid,

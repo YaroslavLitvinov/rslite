@@ -680,13 +680,11 @@ pub unsafe extern "C" fn sqlite3_str_vappendf(
                             s.n = 1 as ::core::ffi::c_int;
                             current_block = 12252098823794565961;
                         } else {
-                            ::libc::memcpy(
-                                &raw mut buf as *mut ::core::ffi::c_char
-                                    as *mut ::core::ffi::c_void,
-                                b"-Inf\0" as *const u8 as *const ::core::ffi::c_char
-                                    as *const ::core::ffi::c_void,
-                                5 as crate::__stddef_size_t_h::size_t,
-                            );
+                            ::core::ptr::copy_nonoverlapping(
+                    b"-Inf\0" as *const u8 as *const ::core::ffi::c_char,
+                    &raw mut buf as *mut ::core::ffi::c_char,
+                    5 as usize,
+                );
                             bufpt = &raw mut buf as *mut ::core::ffi::c_char;
                             if !(s.sign as ::core::ffi::c_int == '-' as i32) {
                                 if flag_prefix != 0 {
@@ -1196,13 +1194,11 @@ pub unsafe extern "C" fn sqlite3_str_vappendf(
                     j_0 = 0 as crate::src::ext::rtree::rtree::i64_0;
                     if needQuote != 0 {
                         if needQuote == 2 as ::core::ffi::c_int {
-                            ::libc::memcpy(
-                                bufpt.offset(j_0 as isize) as *mut ::core::ffi::c_char
-                                    as *mut ::core::ffi::c_void,
-                                b"unistr('\0" as *const u8 as *const ::core::ffi::c_char
-                                    as *const ::core::ffi::c_void,
-                                8 as crate::__stddef_size_t_h::size_t,
-                            );
+                            ::core::ptr::copy_nonoverlapping(
+                    b"unistr('\0" as *const u8 as *const ::core::ffi::c_char,
+                    bufpt.offset(j_0 as isize) as *mut ::core::ffi::c_char,
+                    8 as usize,
+                );
                             j_0 += 8 as crate::src::ext::rtree::rtree::i64_0;
                         } else {
                             let fresh25 = j_0;
@@ -1694,10 +1690,10 @@ pub unsafe extern "C" fn sqlite3StrAccumEnlarge(
                 != 0 as ::core::ffi::c_int)
                 && __p_ref.nChar > 0 as crate::src::ext::rtree::rtree::u32_0
             {
-                ::libc::memcpy(
-                    zNew as *mut ::core::ffi::c_void,
-                    __p_ref.zText as *const ::core::ffi::c_void,
-                    __p_ref.nChar as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    __p_ref.zText as *const u8,
+                    zNew as *mut u8,
+                    __p_ref.nChar as usize,
                 );
             }
             __p_ref.zText = zNew;
@@ -1747,12 +1743,11 @@ unsafe extern "C" fn enlargeAndAppend(
     N = sqlite3StrAccumEnlarge(p, N as crate::src::ext::rtree::rtree::i64_0);
     if N > 0 as ::core::ffi::c_int {
         let __p_ref = unsafe { &mut *p };
-        ::libc::memcpy(
-            __p_ref.zText.offset(__p_ref.nChar as isize) as *mut ::core::ffi::c_char
-                as *mut ::core::ffi::c_void,
-            z as *const ::core::ffi::c_void,
-            N as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    z as *const u8,
+                    __p_ref.zText.offset(__p_ref.nChar as isize) as *mut ::core::ffi::c_char as *mut u8,
+                    N as usize,
+                );
         __p_ref.nChar = __p_ref.nChar.wrapping_add(N as crate::src::ext::rtree::rtree::u32_0);
     }
 }
@@ -1768,13 +1763,13 @@ pub unsafe extern "C" fn sqlite3_str_append(
     } else if N != 0 {
         let __p_ref = unsafe { &mut *p };
         __p_ref.nChar = __p_ref.nChar.wrapping_add(N as crate::src::ext::rtree::rtree::u32_0);
-        ::libc::memcpy(
-            __p_ref.zText
+        ::core::ptr::copy_nonoverlapping(
+                    z as *const u8,
+                    __p_ref.zText
                 .offset(__p_ref.nChar.wrapping_sub(N as crate::src::ext::rtree::rtree::u32_0) as isize)
-                as *mut ::core::ffi::c_char as *mut ::core::ffi::c_void,
-            z as *const ::core::ffi::c_void,
-            N as crate::__stddef_size_t_h::size_t,
-        );
+                as *mut ::core::ffi::c_char as *mut u8,
+                    N as usize,
+                );
     }
 }
 #[no_mangle]
@@ -1793,11 +1788,11 @@ unsafe extern "C" fn strAccumFinishRealloc(mut p: *mut crate::sqliteInt_h::StrAc
     zText = crate::src::src::malloc::sqlite3DbMallocRaw(__p_ref.db as *mut crate::sqliteInt_h::sqlite3, (1 as crate::src::ext::rtree::rtree::u64_0).wrapping_add(__p_ref.nChar as crate::src::ext::rtree::rtree::u64_0))
         as *mut ::core::ffi::c_char;
     if !zText.is_null() {
-        ::libc::memcpy(
-            zText as *mut ::core::ffi::c_void,
-            __p_ref.zText as *const ::core::ffi::c_void,
-            __p_ref.nChar.wrapping_add(1 as crate::src::ext::rtree::rtree::u32_0) as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    __p_ref.zText as *const u8,
+                    zText as *mut u8,
+                    __p_ref.nChar.wrapping_add(1 as crate::src::ext::rtree::rtree::u32_0) as usize,
+                );
         __p_ref.printfFlags =
             (__p_ref.printfFlags as ::core::ffi::c_int | crate::sqliteInt_h::SQLITE_PRINTF_MALLOCED) as crate::src::ext::rtree::rtree::u8_0;
     } else {

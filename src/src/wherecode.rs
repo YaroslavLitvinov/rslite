@@ -2038,20 +2038,18 @@ pub unsafe extern "C" fn sqlite3WhereCodeOneLoopStart(
             }
             (*pOrTab).nAlloc = (nNotReady + 1 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u8_0 as crate::src::ext::rtree::rtree::u32_0;
             (*pOrTab).nSrc = (*pOrTab).nAlloc as ::core::ffi::c_int;
-            ::libc::memcpy(
-                &raw mut (*pOrTab).a as *mut crate::sqliteInt_h::SrcItem as *mut ::core::ffi::c_void,
-                pTabItem as *const ::core::ffi::c_void,
-                ::core::mem::size_of::<crate::sqliteInt_h::SrcItem>() as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    pTabItem as *const u8,
+                    &raw mut (*pOrTab).a as *mut crate::sqliteInt_h::SrcItem as *mut u8,
+                    ::core::mem::size_of::<crate::sqliteInt_h::SrcItem>() as usize,
+                );
             origSrc = &raw mut (*__pWInfo_ref.pTabList).a as *mut crate::sqliteInt_h::SrcItem;
             k = 1 as ::core::ffi::c_int;
             while k <= nNotReady {
-                ::libc::memcpy(
-                    (&raw mut (*pOrTab).a as *mut crate::sqliteInt_h::SrcItem).offset(k as isize) as *mut crate::sqliteInt_h::SrcItem
-                        as *mut ::core::ffi::c_void,
-                    origSrc.offset((*pLevel.offset(k as isize)).iFrom as isize) as *mut crate::sqliteInt_h::SrcItem
-                        as *const ::core::ffi::c_void,
-                    ::core::mem::size_of::<crate::sqliteInt_h::SrcItem>() as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    origSrc.offset((*pLevel.offset(k as isize)).iFrom as isize) as *mut crate::sqliteInt_h::SrcItem as *const u8,
+                    (&raw mut (*pOrTab).a as *mut crate::sqliteInt_h::SrcItem).offset(k as isize) as *mut crate::sqliteInt_h::SrcItem as *mut u8,
+                    ::core::mem::size_of::<crate::sqliteInt_h::SrcItem>() as usize,
                 );
                 k += 1;
             }
@@ -2719,12 +2717,12 @@ pub unsafe extern "C" fn sqlite3WhereRightJoinLoop(
     pFrom = &raw mut uSrc.sSrc;
     (*pFrom).nSrc = 1 as ::core::ffi::c_int;
     (*pFrom).nAlloc = 1 as crate::src::ext::rtree::rtree::u32_0;
-    ::libc::memcpy(
-        (&raw mut (*pFrom).a as *mut crate::sqliteInt_h::SrcItem).offset(0 as isize)
-            as *mut crate::sqliteInt_h::SrcItem as *mut ::core::ffi::c_void,
-        pTabItem as *const ::core::ffi::c_void,
-        ::core::mem::size_of::<crate::sqliteInt_h::SrcItem>() as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    pTabItem as *const u8,
+                    (&raw mut (*pFrom).a as *mut crate::sqliteInt_h::SrcItem).offset(0 as isize)
+            as *mut crate::sqliteInt_h::SrcItem as *mut u8,
+                    ::core::mem::size_of::<crate::sqliteInt_h::SrcItem>() as usize,
+                );
     (*(&raw mut (*pFrom).a as *mut crate::sqliteInt_h::SrcItem).offset(0 as isize))
         .fg
         .jointype = 0 as crate::src::ext::rtree::rtree::u8_0;

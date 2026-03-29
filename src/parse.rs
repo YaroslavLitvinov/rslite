@@ -5292,11 +5292,11 @@ unsafe extern "C" fn tokenExpr(
         __p_ref.iColumn = 0 as crate::sqliteInt_h::ynVar;
         __p_ref.u.zToken =
             p.offset(1 as isize) as *mut crate::sqliteInt_h::Expr as *mut ::core::ffi::c_char;
-        ::libc::memcpy(
-            __p_ref.u.zToken as *mut ::core::ffi::c_void,
-            t.z as *const ::core::ffi::c_void,
-            t.n as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    t.z as *const u8,
+                    __p_ref.u.zToken as *mut u8,
+                    t.n as usize,
+                );
         *__p_ref.u.zToken.offset(t.n as isize) = 0 as ::core::ffi::c_char;
         __p_ref.w.iOfst =
             t.z.offset_from((*pParse).zTail) as ::core::ffi::c_long as ::core::ffi::c_int;
@@ -7160,11 +7160,11 @@ unsafe extern "C" fn yyGrowStack(mut p: *mut yyParser) -> ::core::ffi::c_int {
         if pNew.is_null() {
             return 1 as ::core::ffi::c_int;
         }
-        ::libc::memcpy(
-            pNew as *mut ::core::ffi::c_void,
-            __p_ref.yystack as *const ::core::ffi::c_void,
-            (oldSize as crate::__stddef_size_t_h::size_t).wrapping_mul(::core::mem::size_of::<yyStackEntry>() as crate::__stddef_size_t_h::size_t),
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    __p_ref.yystack as *const u8,
+                    pNew as *mut u8,
+                    ((oldSize as crate::__stddef_size_t_h::size_t).wrapping_mul(::core::mem::size_of::<yyStackEntry>() as crate::__stddef_size_t_h::size_t)) as usize,
+                );
     } else {
         pNew = parserStackRealloc(
             __p_ref.yystack as *mut ::core::ffi::c_void,

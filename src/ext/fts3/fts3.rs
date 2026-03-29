@@ -972,10 +972,10 @@ unsafe extern "C" fn fts3ContentColumns(
                 let mut zCol_0: *const ::core::ffi::c_char = crate::src::src::vdbeapi::sqlite3_column_name(pStmt, i);
                 let mut n: ::core::ffi::c_int =
                     ::libc::strlen(zCol_0) as ::core::ffi::c_int + 1 as ::core::ffi::c_int;
-                ::libc::memcpy(
-                    p as *mut ::core::ffi::c_void,
-                    zCol_0 as *const ::core::ffi::c_void,
-                    n as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    zCol_0 as *const u8,
+                    p as *mut u8,
+                    n as usize,
                 );
                 let ref mut fresh55 = *azCol.offset(i as isize);
                 *fresh55 = p;
@@ -1368,12 +1368,12 @@ unsafe extern "C" fn fts3InitVtab(
                                 as *mut *mut ::core::ffi::c_char
                                 as *mut crate::fts3Int_h::Fts3Index
                                 as *mut crate::fts3Int_h::Fts3Index;
-                            ::libc::memcpy(
-                                __p_ref.aIndex as *mut ::core::ffi::c_void,
-                                aIndex as *const ::core::ffi::c_void,
-                                (::core::mem::size_of::<crate::fts3Int_h::Fts3Index>() as crate::__stddef_size_t_h::size_t)
-                                    .wrapping_mul(nIndex as crate::__stddef_size_t_h::size_t),
-                            );
+                            ::core::ptr::copy_nonoverlapping(
+                    aIndex as *const u8,
+                    __p_ref.aIndex as *mut u8,
+                    ((::core::mem::size_of::<crate::fts3Int_h::Fts3Index>() as crate::__stddef_size_t_h::size_t)
+                                    .wrapping_mul(nIndex as crate::__stddef_size_t_h::size_t)) as usize,
+                );
                             __p_ref.nIndex = nIndex;
                             i = 0 as ::core::ffi::c_int;
                             while i < nIndex {
@@ -1391,20 +1391,18 @@ unsafe extern "C" fn fts3InitVtab(
                             zCsr = __p_ref.abNotindexed.offset(nCol as isize) as *mut crate::src::ext::rtree::rtree::u8_0
                                 as *mut ::core::ffi::c_char;
                             __p_ref.zName = zCsr;
-                            ::libc::memcpy(
-                                zCsr as *mut ::core::ffi::c_void,
-                                *argv.offset(2 as isize)
-                                    as *const ::core::ffi::c_void,
-                                nName as crate::__stddef_size_t_h::size_t,
-                            );
+                            ::core::ptr::copy_nonoverlapping(
+                    *argv.offset(2 as isize) as *const u8,
+                    zCsr as *mut u8,
+                    nName as usize,
+                );
                             zCsr = zCsr.offset(nName as isize);
                             __p_ref.zDb = zCsr;
-                            ::libc::memcpy(
-                                zCsr as *mut ::core::ffi::c_void,
-                                *argv.offset(1 as isize)
-                                    as *const ::core::ffi::c_void,
-                                nDb as crate::__stddef_size_t_h::size_t,
-                            );
+                            ::core::ptr::copy_nonoverlapping(
+                    *argv.offset(1 as isize) as *const u8,
+                    zCsr as *mut u8,
+                    nDb as usize,
+                );
                             zCsr = zCsr.offset(nDb as isize);
                             iCol = 0 as ::core::ffi::c_int;
                             while iCol < nCol {
@@ -1414,11 +1412,11 @@ unsafe extern "C" fn fts3InitVtab(
                                 z_0 = crate::src::ext::fts3::fts3_tokenizer::sqlite3Fts3NextToken(*aCol.offset(iCol as isize), &raw mut n)
                                     as *mut ::core::ffi::c_char;
                                 if n > 0 as ::core::ffi::c_int {
-                                    ::libc::memcpy(
-                                        zCsr as *mut ::core::ffi::c_void,
-                                        z_0 as *const ::core::ffi::c_void,
-                                        n as crate::__stddef_size_t_h::size_t,
-                                    );
+                                    ::core::ptr::copy_nonoverlapping(
+                    z_0 as *const u8,
+                    zCsr as *mut u8,
+                    n as usize,
+                );
                                 }
                                 *zCsr.offset(n as isize) = '\0' as i32 as ::core::ffi::c_char;
                                 sqlite3Fts3Dequote(zCsr);
@@ -1899,12 +1897,11 @@ unsafe extern "C" fn fts3ScanInteriorNode(
                     zBuffer = zNew;
                 }
             }
-            ::libc::memcpy(
-                zBuffer.offset(nPrefix as isize) as *mut ::core::ffi::c_char
-                    as *mut ::core::ffi::c_void,
-                zCsr as *const ::core::ffi::c_void,
-                nSuffix as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    zCsr as *const u8,
+                    zBuffer.offset(nPrefix as isize) as *mut ::core::ffi::c_char as *mut u8,
+                    nSuffix as usize,
+                );
             nBuffer = nPrefix + nSuffix;
             zCsr = zCsr.offset(nSuffix as isize);
             cmp = ::libc::memcmp(
@@ -2038,11 +2035,11 @@ unsafe extern "C" fn fts3PoslistCopy(
         let mut n: ::core::ffi::c_int =
             pEnd.offset_from(*ppPoslist) as ::core::ffi::c_long as ::core::ffi::c_int;
         let mut p: *mut ::core::ffi::c_char = *pp;
-        ::libc::memcpy(
-            p as *mut ::core::ffi::c_void,
-            *ppPoslist as *const ::core::ffi::c_void,
-            n as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    *ppPoslist as *const u8,
+                    p as *mut u8,
+                    n as usize,
+                );
         p = p.offset(n as isize);
         *pp = p;
     }
@@ -2065,11 +2062,11 @@ unsafe extern "C" fn fts3ColumnlistCopy(
         let mut n: ::core::ffi::c_int =
             pEnd.offset_from(*ppPoslist) as ::core::ffi::c_long as ::core::ffi::c_int;
         let mut p: *mut ::core::ffi::c_char = *pp;
-        ::libc::memcpy(
-            p as *mut ::core::ffi::c_void,
-            *ppPoslist as *const ::core::ffi::c_void,
-            n as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    *ppPoslist as *const u8,
+                    p as *mut u8,
+                    n as usize,
+                );
         p = p.offset(n as isize);
         *pp = p;
     }
@@ -2801,11 +2798,11 @@ unsafe extern "C" fn fts3TermSelectMerge(
         ) as *mut ::core::ffi::c_char;
         __pTS_ref.anOutput[0 as ::core::ffi::c_int as usize] = nDoclist;
         if !__pTS_ref.aaOutput[0 as ::core::ffi::c_int as usize].is_null() {
-            ::libc::memcpy(
-                __pTS_ref.aaOutput[0 as ::core::ffi::c_int as usize] as *mut ::core::ffi::c_void,
-                aDoclist as *const ::core::ffi::c_void,
-                nDoclist as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    aDoclist as *const u8,
+                    __pTS_ref.aaOutput[0 as ::core::ffi::c_int as usize] as *mut u8,
+                    nDoclist as usize,
+                );
             ::libc::memset(
                 (*(&raw mut __pTS_ref.aaOutput as *mut *mut ::core::ffi::c_char)
                     .offset(0 as isize))
@@ -5001,12 +4998,11 @@ unsafe extern "C" fn fts3EvalIncrPhraseNext(
             if aDoclist.is_null() {
                 return crate::sqlite3_h::SQLITE_NOMEM;
             }
-            ::libc::memcpy(
-                aDoclist as *mut ::core::ffi::c_void,
-                a[(__p_ref.nToken - 1 as ::core::ffi::c_int) as usize].pList
-                    as *const ::core::ffi::c_void,
-                (nByte + 1 as ::core::ffi::c_int) as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    a[(__p_ref.nToken - 1 as ::core::ffi::c_int) as usize].pList as *const u8,
+                    aDoclist as *mut u8,
+                    (nByte + 1 as ::core::ffi::c_int) as usize,
+                );
             ::libc::memset(
                 aDoclist.offset(nByte as isize) as *mut ::core::ffi::c_char
                     as *mut ::core::ffi::c_void,

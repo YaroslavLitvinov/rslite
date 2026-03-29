@@ -178,11 +178,11 @@ pub unsafe extern "C" fn sqlite3VdbeSwap(mut pA: *mut crate::vdbeInt_h::Vdbe, mu
     __pB_ref.zSql = zTmp;
     __pB_ref.expmask = __pA_ref.expmask;
     __pB_ref.prepFlags = __pA_ref.prepFlags;
-    ::libc::memcpy(
-        &raw mut __pB_ref.aCounter as *mut crate::src::ext::rtree::rtree::u32_0 as *mut ::core::ffi::c_void,
-        &raw mut __pA_ref.aCounter as *mut crate::src::ext::rtree::rtree::u32_0 as *const ::core::ffi::c_void,
-        ::core::mem::size_of::<[crate::src::ext::rtree::rtree::u32_0; 9]>() as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    &raw mut __pA_ref.aCounter as *mut crate::src::ext::rtree::rtree::u32_0 as *const u8,
+                    &raw mut __pB_ref.aCounter as *mut crate::src::ext::rtree::rtree::u32_0 as *mut u8,
+                    ::core::mem::size_of::<[crate::src::ext::rtree::rtree::u32_0; 9]>() as usize,
+                );
     __pB_ref.aCounter[crate::sqlite3_h::SQLITE_STMTSTATUS_REPREPARE as usize] =
         __pB_ref.aCounter[crate::sqlite3_h::SQLITE_STMTSTATUS_REPREPARE as usize].wrapping_add(1);
 }
@@ -498,11 +498,11 @@ pub unsafe extern "C" fn sqlite3VdbeAddOp4Dup8(
     let mut p4copy: *mut ::core::ffi::c_char =
         crate::src::src::malloc::sqlite3DbMallocRawNN(sqlite3VdbeDb(p) as *mut crate::sqliteInt_h::sqlite3, 8 as crate::src::ext::rtree::rtree::u64_0) as *mut ::core::ffi::c_char;
     if !p4copy.is_null() {
-        ::libc::memcpy(
-            p4copy as *mut ::core::ffi::c_void,
-            zP4 as *const ::core::ffi::c_void,
-            8 as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    zP4 as *const u8,
+                    p4copy as *mut u8,
+                    8 as usize,
+                );
     }
     sqlite3VdbeAddOp4(p, op, p1, p2, p3, p4copy, p4type)
 }
@@ -2950,11 +2950,11 @@ unsafe extern "C" fn serialGet(
         (*pMem).u.i = *(&raw mut x as *mut crate::src::ext::rtree::rtree::i64_0);
         (*pMem).flags = crate::vdbeInt_h::MEM_Int as crate::src::fts5::u16_0;
     } else {
-        ::libc::memcpy(
-            &raw mut (*pMem).u.r as *mut ::core::ffi::c_void,
-            &raw mut x as *const ::core::ffi::c_void,
-            ::core::mem::size_of::<crate::src::ext::rtree::rtree::u64_0>() as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    &raw mut x as *const u8,
+                    &raw mut (*pMem).u.r as *mut u8,
+                    ::core::mem::size_of::<crate::src::ext::rtree::rtree::u64_0>() as usize,
+                );
         (*pMem).flags = (if x & crate::sqliteInt_h::EXP754 == crate::sqliteInt_h::EXP754 && x & crate::sqliteInt_h::MAN754 != 0 as crate::src::ext::rtree::rtree::u64_0 {
             crate::vdbeInt_h::MEM_Null
         } else {
@@ -2990,11 +2990,11 @@ unsafe extern "C" fn serialGet7(
             .offset(4 as isize)
             .offset(3 as isize) as crate::src::ext::rtree::rtree::u32_0;
     x = (x << 32 as ::core::ffi::c_int).wrapping_add(y as crate::src::ext::rtree::rtree::u64_0);
-    ::libc::memcpy(
-        &raw mut (*pMem).u.r as *mut ::core::ffi::c_void,
-        &raw mut x as *const ::core::ffi::c_void,
-        ::core::mem::size_of::<crate::src::ext::rtree::rtree::u64_0>() as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    &raw mut x as *const u8,
+                    &raw mut (*pMem).u.r as *mut u8,
+                    ::core::mem::size_of::<crate::src::ext::rtree::rtree::u64_0>() as usize,
+                );
     if x & crate::sqliteInt_h::EXP754 == crate::sqliteInt_h::EXP754 && x & crate::sqliteInt_h::MAN754 != 0 as crate::src::ext::rtree::rtree::u64_0 {
         (*pMem).flags = crate::vdbeInt_h::MEM_Null as crate::src::fts5::u16_0;
         return 1 as ::core::ffi::c_int;

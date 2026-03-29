@@ -1285,10 +1285,10 @@ unsafe extern "C" fn fts3SegReaderNext(
                 if aCopy.is_null() {
                     return crate::sqlite3_h::SQLITE_NOMEM;
                 }
-                ::libc::memcpy(
-                    aCopy as *mut ::core::ffi::c_void,
-                    (*pList).aData as *const ::core::ffi::c_void,
-                    nCopy as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    (*pList).aData as *const u8,
+                    aCopy as *mut u8,
+                    nCopy as usize,
                 );
                 __pReader_ref.nDoclist = nCopy;
                 __pReader_ref.nNode = __pReader_ref.nDoclist;
@@ -1367,12 +1367,11 @@ unsafe extern "C" fn fts3SegReaderNext(
     if rc != crate::sqlite3_h::SQLITE_OK {
         return rc;
     }
-    ::libc::memcpy(
-        __pReader_ref.zTerm.offset(nPrefix as isize) as *mut ::core::ffi::c_char
-            as *mut ::core::ffi::c_void,
-        pNext as *const ::core::ffi::c_void,
-        nSuffix as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    pNext as *const u8,
+                    __pReader_ref.zTerm.offset(nPrefix as isize) as *mut ::core::ffi::c_char as *mut u8,
+                    nSuffix as usize,
+                );
     __pReader_ref.nTerm = nPrefix + nSuffix;
     pNext = pNext.offset(nSuffix as isize);
     pNext = pNext.offset(
@@ -1614,11 +1613,11 @@ pub unsafe extern "C" fn sqlite3Fts3SegReaderNew(
         __pReader_ref.rootOnly = 1 as crate::src::ext::rtree::rtree::u8_0;
         __pReader_ref.nNode = nRoot;
         if nRoot != 0 {
-            ::libc::memcpy(
-                __pReader_ref.aNode as *mut ::core::ffi::c_void,
-                zRoot as *const ::core::ffi::c_void,
-                nRoot as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    zRoot as *const u8,
+                    __pReader_ref.aNode as *mut u8,
+                    nRoot as usize,
+                );
         }
         ::libc::memset(
             __pReader_ref.aNode.offset(nRoot as isize) as *mut ::core::ffi::c_char
@@ -1752,12 +1751,12 @@ pub unsafe extern "C" fn sqlite3Fts3SegReaderPending(
             __pReader_ref.iIdx = 0x7fffffff as ::core::ffi::c_int;
             __pReader_ref.ppNextElem = pReader.offset(1 as isize)
                 as *mut Fts3SegReader as *mut *mut crate::src::ext::fts3::fts3_hash::Fts3HashElem;
-            ::libc::memcpy(
-                __pReader_ref.ppNextElem as *mut ::core::ffi::c_void,
-                aElem as *const ::core::ffi::c_void,
-                (nElem as crate::__stddef_size_t_h::size_t)
-                    .wrapping_mul(::core::mem::size_of::<*mut crate::src::ext::fts3::fts3_hash::Fts3HashElem>() as crate::__stddef_size_t_h::size_t),
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    aElem as *const u8,
+                    __pReader_ref.ppNextElem as *mut u8,
+                    ((nElem as crate::__stddef_size_t_h::size_t)
+                    .wrapping_mul(::core::mem::size_of::<*mut crate::src::ext::fts3::fts3_hash::Fts3HashElem>() as crate::__stddef_size_t_h::size_t)) as usize,
+                );
         }
     }
     if bPrefix != 0 {
@@ -2080,13 +2079,11 @@ unsafe extern "C" fn fts3NodeAddTerm(
                 __pTree_ref.aData.offset(nData as isize) as *mut ::core::ffi::c_char,
                 nSuffix as crate::sqlite3_h::sqlite3_int64,
             );
-            ::libc::memcpy(
-                __pTree_ref.aData.offset(nData as isize) as *mut ::core::ffi::c_char
-                    as *mut ::core::ffi::c_void,
-                zTerm.offset(nPrefix as isize) as *const ::core::ffi::c_char
-                    as *const ::core::ffi::c_void,
-                nSuffix as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    zTerm.offset(nPrefix as isize) as *const ::core::ffi::c_char,
+                    __pTree_ref.aData.offset(nData as isize) as *mut ::core::ffi::c_char,
+                    nSuffix as usize,
+                );
             __pTree_ref.nData = nData + nSuffix;
             __pTree_ref.nEntry += 1;
             if isCopyTerm != 0 {
@@ -2103,10 +2100,10 @@ unsafe extern "C" fn fts3NodeAddTerm(
                     __pTree_ref.zMalloc = zNew;
                 }
                 __pTree_ref.zTerm = __pTree_ref.zMalloc;
-                ::libc::memcpy(
-                    __pTree_ref.zTerm as *mut ::core::ffi::c_void,
-                    zTerm as *const ::core::ffi::c_void,
-                    nTerm as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    zTerm as *const u8,
+                    __pTree_ref.zTerm as *mut u8,
+                    nTerm as usize,
                 );
                 __pTree_ref.nTerm = nTerm;
             } else {
@@ -2358,23 +2355,21 @@ unsafe extern "C" fn fts3SegWriterAdd(
         (*pWriter).aData.offset(nData as isize) as *mut ::core::ffi::c_char,
         nSuffix as crate::sqlite3_h::sqlite3_int64,
     );
-    ::libc::memcpy(
-        (*pWriter).aData.offset(nData as isize) as *mut ::core::ffi::c_char
-            as *mut ::core::ffi::c_void,
-        zTerm.offset(nPrefix as isize) as *const ::core::ffi::c_char as *const ::core::ffi::c_void,
-        nSuffix as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    zTerm.offset(nPrefix as isize) as *const ::core::ffi::c_char,
+                    (*pWriter).aData.offset(nData as isize) as *mut ::core::ffi::c_char,
+                    nSuffix as usize,
+                );
     nData += nSuffix;
     nData += crate::src::ext::fts3::fts3::sqlite3Fts3PutVarint(
         (*pWriter).aData.offset(nData as isize) as *mut ::core::ffi::c_char,
         nDoclist as crate::sqlite3_h::sqlite3_int64,
     );
-    ::libc::memcpy(
-        (*pWriter).aData.offset(nData as isize) as *mut ::core::ffi::c_char
-            as *mut ::core::ffi::c_void,
-        aDoclist as *const ::core::ffi::c_void,
-        nDoclist as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    aDoclist as *const u8,
+                    (*pWriter).aData.offset(nData as isize) as *mut ::core::ffi::c_char as *mut u8,
+                    nDoclist as usize,
+                );
     (*pWriter).nData = nData + nDoclist;
     if isCopyTerm != 0 {
         if nTerm > (*pWriter).nMalloc {
@@ -2390,11 +2385,11 @@ unsafe extern "C" fn fts3SegWriterAdd(
             __pWriter_ref.zMalloc = zNew;
             __pWriter_ref.zTerm = zNew;
         }
-        ::libc::memcpy(
-            (*pWriter).zTerm as *mut ::core::ffi::c_void,
-            zTerm as *const ::core::ffi::c_void,
-            nTerm as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    zTerm as *const u8,
+                    (*pWriter).zTerm as *mut u8,
+                    nTerm as usize,
+                );
     } else {
         (*pWriter).zTerm = zTerm as *mut ::core::ffi::c_char;
     }
@@ -2734,11 +2729,11 @@ unsafe extern "C" fn fts3MsrBufferData(
         __pMsr_ref.aBuffer = pNew;
         __pMsr_ref.nBuffer = nNew as crate::src::ext::rtree::rtree::i64_0;
     }
-    ::libc::memcpy(
-        __pMsr_ref.aBuffer as *mut ::core::ffi::c_void,
-        pList as *const ::core::ffi::c_void,
-        nList as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    pList as *const u8,
+                    __pMsr_ref.aBuffer as *mut u8,
+                    nList as usize,
+                );
     ::libc::memset(
         __pMsr_ref.aBuffer.offset(nList as isize) as *mut ::core::ffi::c_char
             as *mut ::core::ffi::c_void,
@@ -3222,13 +3217,12 @@ pub unsafe extern "C" fn sqlite3Fts3SegReaderStep(
                         );
                         iPrev = iDocid;
                         if isRequirePos != 0 {
-                            ::libc::memcpy(
-                                __pCsr_ref.aBuffer.offset(nDoclist as isize)
-                                    as *mut ::core::ffi::c_char
-                                    as *mut ::core::ffi::c_void,
-                                pList as *const ::core::ffi::c_void,
-                                nList as crate::__stddef_size_t_h::size_t,
-                            );
+                            ::core::ptr::copy_nonoverlapping(
+                    pList as *const u8,
+                    __pCsr_ref.aBuffer.offset(nDoclist as isize)
+                                    as *mut ::core::ffi::c_char as *mut u8,
+                    nList as usize,
+                );
                             nDoclist += nList;
                             let fresh6 = nDoclist;
                             nDoclist += 1;
@@ -4127,13 +4121,11 @@ unsafe extern "C" fn nodeReaderNext(mut p: *mut NodeReader) -> ::core::ffi::c_in
         }
         blobGrowBuffer(&raw mut __p_ref.term, nPrefix + nSuffix, &raw mut rc);
         if rc == crate::sqlite3_h::SQLITE_OK && !__p_ref.term.a.is_null() {
-            ::libc::memcpy(
-                __p_ref.term.a.offset(nPrefix as isize) as *mut ::core::ffi::c_char
-                    as *mut ::core::ffi::c_void,
-                __p_ref.aNode.offset(__p_ref.iOff as isize) as *const ::core::ffi::c_char
-                    as *const ::core::ffi::c_void,
-                nSuffix as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    __p_ref.aNode.offset(__p_ref.iOff as isize) as *const ::core::ffi::c_char,
+                    __p_ref.term.a.offset(nPrefix as isize) as *mut ::core::ffi::c_char,
+                    nSuffix as usize,
+                );
             __p_ref.term.n = nPrefix + nSuffix;
             __p_ref.iOff += nSuffix;
             if __p_ref.iChild == 0 as crate::sqlite3_h::sqlite3_int64 {
@@ -4255,18 +4247,16 @@ unsafe extern "C" fn fts3IncrmergePush(
                     __pBlk_ref.a.offset(__pBlk_ref.n as isize) as *mut ::core::ffi::c_char,
                     nSuffix as crate::sqlite3_h::sqlite3_int64,
                 );
-                ::libc::memcpy(
-                    __pBlk_ref.a.offset(__pBlk_ref.n as isize) as *mut ::core::ffi::c_char
-                        as *mut ::core::ffi::c_void,
-                    zTerm.offset(nPrefix as isize) as *const ::core::ffi::c_char
-                        as *const ::core::ffi::c_void,
-                    nSuffix as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    zTerm.offset(nPrefix as isize) as *const ::core::ffi::c_char,
+                    __pBlk_ref.a.offset(__pBlk_ref.n as isize) as *mut ::core::ffi::c_char,
+                    nSuffix as usize,
                 );
                 __pBlk_ref.n += nSuffix;
-                ::libc::memcpy(
-                    __pNode_ref.key.a as *mut ::core::ffi::c_void,
-                    zTerm as *const ::core::ffi::c_void,
-                    nTerm as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    zTerm as *const u8,
+                    __pNode_ref.key.a as *mut u8,
+                    nTerm as usize,
                 );
                 __pNode_ref.key.n = nTerm;
             }
@@ -4316,11 +4306,11 @@ unsafe extern "C" fn fts3AppendToNode(
     if nSuffix <= 0 as ::core::ffi::c_int {
         return crate::fts3Int_h::FTS_CORRUPT_VTAB;
     }
-    ::libc::memcpy(
-        __pPrev_ref.a as *mut ::core::ffi::c_void,
-        zTerm as *const ::core::ffi::c_void,
-        nTerm as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    zTerm as *const u8,
+                    __pPrev_ref.a as *mut u8,
+                    nTerm as usize,
+                );
     __pPrev_ref.n = nTerm;
     let __pNode_ref = unsafe { &mut *pNode };
     if bFirst == 0 as ::core::ffi::c_int {
@@ -4333,24 +4323,22 @@ unsafe extern "C" fn fts3AppendToNode(
         __pNode_ref.a.offset(__pNode_ref.n as isize) as *mut ::core::ffi::c_char,
         nSuffix as crate::sqlite3_h::sqlite3_int64,
     );
-    ::libc::memcpy(
-        __pNode_ref.a.offset(__pNode_ref.n as isize) as *mut ::core::ffi::c_char
-            as *mut ::core::ffi::c_void,
-        zTerm.offset(nPrefix as isize) as *const ::core::ffi::c_char as *const ::core::ffi::c_void,
-        nSuffix as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    zTerm.offset(nPrefix as isize) as *const ::core::ffi::c_char,
+                    __pNode_ref.a.offset(__pNode_ref.n as isize) as *mut ::core::ffi::c_char,
+                    nSuffix as usize,
+                );
     __pNode_ref.n += nSuffix;
     if !aDoclist.is_null() {
         __pNode_ref.n += crate::src::ext::fts3::fts3::sqlite3Fts3PutVarint(
             __pNode_ref.a.offset(__pNode_ref.n as isize) as *mut ::core::ffi::c_char,
             nDoclist as crate::sqlite3_h::sqlite3_int64,
         );
-        ::libc::memcpy(
-            __pNode_ref.a.offset(__pNode_ref.n as isize) as *mut ::core::ffi::c_char
-                as *mut ::core::ffi::c_void,
-            aDoclist as *const ::core::ffi::c_void,
-            nDoclist as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    aDoclist as *const u8,
+                    __pNode_ref.a.offset(__pNode_ref.n as isize) as *mut ::core::ffi::c_char as *mut u8,
+                    nDoclist as usize,
+                );
         __pNode_ref.n += nDoclist;
     }
     crate::sqlite3_h::SQLITE_OK
@@ -4691,10 +4679,10 @@ unsafe extern "C" fn fts3IncrmergeLoad(
             );
             if rc == crate::sqlite3_h::SQLITE_OK {
                 let __pNode_ref = unsafe { &mut *pNode };
-                ::libc::memcpy(
-                    __pNode_ref.block.a as *mut ::core::ffi::c_void,
-                    aRoot as *const ::core::ffi::c_void,
-                    nRoot as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    aRoot as *const u8,
+                    __pNode_ref.block.a as *mut u8,
+                    nRoot as usize,
                 );
                 __pNode_ref.block.n = nRoot;
                 ::libc::memset(
@@ -4717,11 +4705,11 @@ unsafe extern "C" fn fts3IncrmergeLoad(
                     blobGrowBuffer(&raw mut (*pNode).key, reader_0.term.n, &raw mut rc);
                     if rc == crate::sqlite3_h::SQLITE_OK {
                         if reader_0.term.n > 0 as ::core::ffi::c_int {
-                            ::libc::memcpy(
-                                (*pNode).key.a as *mut ::core::ffi::c_void,
-                                reader_0.term.a as *const ::core::ffi::c_void,
-                                reader_0.term.n as crate::__stddef_size_t_h::size_t,
-                            );
+                            ::core::ptr::copy_nonoverlapping(
+                    reader_0.term.a as *const u8,
+                    (*pNode).key.a as *mut u8,
+                    reader_0.term.n as usize,
+                );
                         }
                         (*pNode).key.n = reader_0.term.n;
                         if i > 0 as ::core::ffi::c_int {
@@ -4750,11 +4738,11 @@ unsafe extern "C" fn fts3IncrmergeLoad(
                             );
                             if rc == crate::sqlite3_h::SQLITE_OK {
                                 let __pNode_ref = unsafe { &mut *pNode };
-                                ::libc::memcpy(
-                                    __pNode_ref.block.a as *mut ::core::ffi::c_void,
-                                    aBlock as *const ::core::ffi::c_void,
-                                    nBlock as crate::__stddef_size_t_h::size_t,
-                                );
+                                ::core::ptr::copy_nonoverlapping(
+                    aBlock as *const u8,
+                    __pNode_ref.block.a as *mut u8,
+                    nBlock as usize,
+                );
                                 __pNode_ref.block.n = nBlock;
                                 ::libc::memset(
                                     __pNode_ref.block.a.offset(nBlock as isize)
@@ -5297,11 +5285,11 @@ unsafe extern "C" fn fts3IncrmergeHintLoad(
                 blobGrowBuffer(pHint, nHint, &raw mut rc);
                 if rc == crate::sqlite3_h::SQLITE_OK {
                     if !(*pHint).a.is_null() {
-                        ::libc::memcpy(
-                            (*pHint).a as *mut ::core::ffi::c_void,
-                            aHint as *const ::core::ffi::c_void,
-                            nHint as crate::__stddef_size_t_h::size_t,
-                        );
+                        ::core::ptr::copy_nonoverlapping(
+                    aHint as *const u8,
+                    (*pHint).a as *mut u8,
+                    nHint as usize,
+                );
                     }
                     (*pHint).n = nHint;
                 }
@@ -6195,12 +6183,11 @@ pub unsafe extern "C" fn sqlite3Fts3DeferredTokenList(
     nSkip = crate::src::ext::fts3::fts3::sqlite3Fts3GetVarint((*__p_ref.pList).aData, &raw mut dummy);
     *pnData = (*__p_ref.pList).nData - nSkip;
     *ppData = pRet;
-    ::libc::memcpy(
-        pRet as *mut ::core::ffi::c_void,
-        (*__p_ref.pList).aData.offset(nSkip as isize) as *mut ::core::ffi::c_char
-            as *const ::core::ffi::c_void,
-        *pnData as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    (*__p_ref.pList).aData.offset(nSkip as isize) as *mut ::core::ffi::c_char as *const u8,
+                    pRet as *mut u8,
+                    *pnData as usize,
+                );
     crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]

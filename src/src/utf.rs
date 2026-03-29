@@ -597,12 +597,11 @@ pub unsafe extern "C" fn sqlite3VdbeMemHandleBom(mut pMem: *mut crate::src::src:
         if rc == crate::sqlite3_h::SQLITE_OK {
             let __pMem_ref = unsafe { &mut *pMem };
             __pMem_ref.n -= 2 as ::core::ffi::c_int;
-            ::libc::memmove(
-                __pMem_ref.z as *mut ::core::ffi::c_void,
-                __pMem_ref.z.offset(2 as isize) as *mut ::core::ffi::c_char
-                    as *const ::core::ffi::c_void,
-                __pMem_ref.n as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy(
+                    __pMem_ref.z.offset(2 as isize) as *mut ::core::ffi::c_char as *const u8,
+                    __pMem_ref.z as *mut u8,
+                    __pMem_ref.n as usize,
+                );
             *__pMem_ref.z.offset(__pMem_ref.n as isize) = '\0' as i32 as ::core::ffi::c_char;
             *(*pMem)
                 .z

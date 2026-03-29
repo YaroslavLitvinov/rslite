@@ -1669,10 +1669,10 @@ pub unsafe extern "C" fn sqlite3WindowRewrite(
             if pTab2.is_null() {
                 rc = crate::sqlite3_h::SQLITE_NOMEM;
             } else {
-                ::libc::memcpy(
-                    pTab as *mut ::core::ffi::c_void,
-                    pTab2 as *const ::core::ffi::c_void,
-                    ::core::mem::size_of::<crate::sqliteInt_h::Table>() as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    pTab2 as *const u8,
+                    pTab as *mut u8,
+                    ::core::mem::size_of::<crate::sqliteInt_h::Table>() as usize,
                 );
                 (*pTab).tabFlags |= crate::sqliteInt_h::TF_Ephemeral as crate::src::ext::rtree::rtree::u32_0;
                 let ref mut fresh6 = (*(&raw mut (*__p_ref.pSrc).a as *mut crate::sqliteInt_h::SrcItem)

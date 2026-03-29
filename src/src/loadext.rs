@@ -1822,12 +1822,11 @@ unsafe extern "C" fn sqlite3LoadExtension(
                         crate::src::src::os::sqlite3OsDlClose(pVfs as *mut crate::sqlite3_h::sqlite3_vfs, handle);
                         return crate::sqliteInt_h::SQLITE_NOMEM_BKPT;
                     }
-                    ::libc::memcpy(
-                        zAltEntry as *mut ::core::ffi::c_void,
-                        b"sqlite3_\0" as *const u8 as *const ::core::ffi::c_char
-                            as *const ::core::ffi::c_void,
-                        8 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    b"sqlite3_\0" as *const u8 as *const ::core::ffi::c_char as *const u8,
+                    zAltEntry as *mut u8,
+                    8 as usize,
+                );
                     iFile = ncFile - 1 as ::core::ffi::c_int;
                     while iFile >= 0 as ::core::ffi::c_int
                         && !(*zFile.offset(iFile as isize) as ::core::ffi::c_int == '/' as i32)
@@ -1864,12 +1863,11 @@ unsafe extern "C" fn sqlite3LoadExtension(
                         }
                         iFile += 1;
                     }
-                    ::libc::memcpy(
-                        zAltEntry.offset(iEntry as isize) as *mut ::core::ffi::c_void,
-                        b"_init\0" as *const u8 as *const ::core::ffi::c_char
-                            as *const ::core::ffi::c_void,
-                        6 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    b"_init\0" as *const u8 as *const ::core::ffi::c_char as *const u8,
+                    zAltEntry.offset(iEntry as isize) as *mut u8,
+                    6 as usize,
+                );
                     zEntry = zAltEntry;
                     xInit = ::core::mem::transmute::<
                         Option<unsafe extern "C" fn() -> ()>,
@@ -1937,12 +1935,12 @@ unsafe extern "C" fn sqlite3LoadExtension(
                     return crate::sqliteInt_h::SQLITE_NOMEM_BKPT;
                 }
                 if __db_ref.nExtension > 0 as ::core::ffi::c_int {
-                    ::libc::memcpy(
-                        aHandle as *mut ::core::ffi::c_void,
-                        __db_ref.aExtension as *const ::core::ffi::c_void,
-                        (::core::mem::size_of::<*mut ::core::ffi::c_void>() as crate::__stddef_size_t_h::size_t)
-                            .wrapping_mul(__db_ref.nExtension as crate::__stddef_size_t_h::size_t),
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    __db_ref.aExtension as *const u8,
+                    aHandle as *mut u8,
+                    ((::core::mem::size_of::<*mut ::core::ffi::c_void>() as crate::__stddef_size_t_h::size_t)
+                            .wrapping_mul(__db_ref.nExtension as crate::__stddef_size_t_h::size_t)) as usize,
+                );
                 }
                 crate::src::src::malloc::sqlite3DbFree(db as *mut crate::sqliteInt_h::sqlite3, __db_ref.aExtension as *mut ::core::ffi::c_void);
                 __db_ref.aExtension = aHandle;

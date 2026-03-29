@@ -66,11 +66,11 @@ pub unsafe extern "C" fn sqlite3VtabCreateModule(
         }
         zCopy = pMod.offset(1 as isize) as *mut crate::sqliteInt_h::Module
             as *mut ::core::ffi::c_char;
-        ::libc::memcpy(
-            zCopy as *mut ::core::ffi::c_void,
-            zName as *const ::core::ffi::c_void,
-            (nName + 1 as ::core::ffi::c_int) as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    zName as *const u8,
+                    zCopy as *mut u8,
+                    (nName + 1 as ::core::ffi::c_int) as usize,
+                );
         (*pMod).zName = zCopy;
         (*pMod).pModule = pModule;
         (*pMod).pAux = pAux;
@@ -1297,12 +1297,11 @@ pub unsafe extern "C" fn sqlite3VtabOverloadFunction(
     *pNew = *pDef;
     (*pNew).zName =
         pNew.offset(1 as isize) as *mut crate::sqliteInt_h::FuncDef as *const ::core::ffi::c_char;
-    ::libc::memcpy(
-        pNew.offset(1 as isize) as *mut crate::sqliteInt_h::FuncDef as *mut ::core::ffi::c_char
-            as *mut ::core::ffi::c_void,
-        __pDef_ref.zName as *const ::core::ffi::c_void,
-        (crate::src::src::util::sqlite3Strlen30(__pDef_ref.zName) + 1 as ::core::ffi::c_int) as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    __pDef_ref.zName as *const u8,
+                    pNew.offset(1 as isize) as *mut crate::sqliteInt_h::FuncDef as *mut ::core::ffi::c_char as *mut u8,
+                    (crate::src::src::util::sqlite3Strlen30(__pDef_ref.zName) + 1 as ::core::ffi::c_int) as usize,
+                );
     (*pNew).xSFunc = xSFunc;
     (*pNew).pUserData = pArg;
     (*pNew).funcFlags |= crate::sqliteInt_h::SQLITE_FUNC_EPHEM as crate::src::ext::rtree::rtree::u32_0;

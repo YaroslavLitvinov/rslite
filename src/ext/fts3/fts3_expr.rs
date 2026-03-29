@@ -168,12 +168,12 @@ unsafe extern "C" fn getNextToken(
                 *fresh0 = (&raw mut (*__pRet_ref.pPhrase).aToken as *mut crate::fts3Int_h::Fts3PhraseToken)
                     .offset(1 as isize)
                     as *mut crate::fts3Int_h::Fts3PhraseToken as *mut ::core::ffi::c_char;
-                ::libc::memcpy(
+                ::core::ptr::copy_nonoverlapping(
+                    zToken as *const u8,
                     (*(&raw mut (*__pRet_ref.pPhrase).aToken as *mut crate::fts3Int_h::Fts3PhraseToken)
                         .offset(0 as isize))
-                    .z as *mut ::core::ffi::c_void,
-                    zToken as *const ::core::ffi::c_void,
-                    nToken as crate::__stddef_size_t_h::size_t,
+                    .z as *mut u8,
+                    nToken as usize,
                 );
                 if iEnd < n && *z.offset(iEnd as isize) as ::core::ffi::c_int == '*' as i32 {
                     (*(&raw mut (*__pRet_ref.pPhrase).aToken as *mut crate::fts3Int_h::Fts3PhraseToken)
@@ -307,12 +307,11 @@ unsafe extern "C" fn getNextString(
                         0 as ::core::ffi::c_int,
                         ::core::mem::size_of::<crate::fts3Int_h::Fts3PhraseToken>() as crate::__stddef_size_t_h::size_t,
                     );
-                    ::libc::memcpy(
-                        zTemp.offset(nTemp as isize) as *mut ::core::ffi::c_char
-                            as *mut ::core::ffi::c_void,
-                        zByte as *const ::core::ffi::c_void,
-                        nByte as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    zByte as *const u8,
+                    zTemp.offset(nTemp as isize) as *mut ::core::ffi::c_char as *mut u8,
+                    nByte as usize,
+                );
                     nTemp += nByte as crate::src::ext::rtree::rtree::i64_0;
                     (*pToken).n = nByte;
                     (*pToken).isPrefix = (iEnd < nInput
@@ -371,11 +370,11 @@ unsafe extern "C" fn getNextString(
                         .offset(nToken as isize) as *mut crate::fts3Int_h::Fts3PhraseToken
                         as *mut ::core::ffi::c_char;
                     if !zTemp.is_null() {
-                        ::libc::memcpy(
-                            zBuf as *mut ::core::ffi::c_void,
-                            zTemp as *const ::core::ffi::c_void,
-                            nTemp as crate::__stddef_size_t_h::size_t,
-                        );
+                        ::core::ptr::copy_nonoverlapping(
+                    zTemp as *const u8,
+                    zBuf as *mut u8,
+                    nTemp as usize,
+                );
                     }
                     jj = 0 as ::core::ffi::c_int;
                     while jj < (*__p_ref.pPhrase).nToken {

@@ -648,11 +648,11 @@ unsafe extern "C" fn memdbOpen(
             (*p).szMax = crate::src::src::global::sqlite3Config.mxMemdbSize;
             (*p).zFName = p.offset(1 as isize) as *mut MemStore
                 as *mut ::core::ffi::c_char;
-            ::libc::memcpy(
-                (*p).zFName as *mut ::core::ffi::c_void,
-                zName as *const ::core::ffi::c_void,
-                (szName + 1 as ::core::ffi::c_int) as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    zName as *const u8,
+                    (*p).zFName as *mut u8,
+                    (szName + 1 as ::core::ffi::c_int) as usize,
+                );
             (*p).pMutex = crate::src::src::mutex::sqlite3_mutex_alloc(crate::sqlite3_h::SQLITE_MUTEX_FAST);
             if (*p).pMutex.is_null() {
                 memdb_g.nMemStore -= 1;
@@ -866,10 +866,10 @@ pub unsafe extern "C" fn sqlite3_serialize(
         } else {
             pOut = crate::src::src::malloc::sqlite3_malloc64((*pStore).sz as crate::sqlite3_h::sqlite3_uint64) as *mut ::core::ffi::c_uchar;
             if !pOut.is_null() {
-                ::libc::memcpy(
-                    pOut as *mut ::core::ffi::c_void,
-                    (*pStore).aData as *const ::core::ffi::c_void,
-                    (*pStore).sz as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    (*pStore).aData as *const u8,
+                    pOut as *mut u8,
+                    (*pStore).sz as usize,
                 );
             }
         }

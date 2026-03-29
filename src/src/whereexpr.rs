@@ -68,11 +68,11 @@ unsafe extern "C" fn whereClauseInsert(
             __pWC_ref.a = pOld;
             return 0 as ::core::ffi::c_int;
         }
-        ::libc::memcpy(
-            __pWC_ref.a as *mut ::core::ffi::c_void,
-            pOld as *const ::core::ffi::c_void,
-            (::core::mem::size_of::<crate::whereInt_h::WhereTerm>() as crate::__stddef_size_t_h::size_t).wrapping_mul(__pWC_ref.nTerm as crate::__stddef_size_t_h::size_t),
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    pOld as *const u8,
+                    __pWC_ref.a as *mut u8,
+                    ((::core::mem::size_of::<crate::whereInt_h::WhereTerm>() as crate::__stddef_size_t_h::size_t).wrapping_mul(__pWC_ref.nTerm as crate::__stddef_size_t_h::size_t)) as usize,
+                );
         __pWC_ref.nSlot *= 2 as ::core::ffi::c_int;
     }
     let fresh0 = __pWC_ref.nTerm;

@@ -2297,11 +2297,10 @@ pub unsafe extern "C" fn sqlite3SubqueryColumnTypes(
             __pCol_ref.colFlags = (__pCol_ref.colFlags as ::core::ffi::c_int
                 & !(crate::sqliteInt_h::COLFLAG_HASTYPE | crate::sqliteInt_h::COLFLAG_HASCOLL)) as crate::src::fts5::u16_0;
             if !__pCol_ref.zCnName.is_null() {
-                ::libc::memcpy(
-                    __pCol_ref.zCnName.offset((n + 1 as crate::src::ext::rtree::rtree::i64_0) as isize) as *mut ::core::ffi::c_char
-                        as *mut ::core::ffi::c_void,
-                    zType as *const ::core::ffi::c_void,
-                    (k + 1 as crate::src::ext::rtree::rtree::i64_0) as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    zType as *const u8,
+                    __pCol_ref.zCnName.offset((n + 1 as crate::src::ext::rtree::rtree::i64_0) as isize) as *mut ::core::ffi::c_char as *mut u8,
+                    (k + 1 as crate::src::ext::rtree::rtree::i64_0) as usize,
                 );
                 __pCol_ref.colFlags =
                     (__pCol_ref.colFlags as ::core::ffi::c_int | crate::sqliteInt_h::COLFLAG_HASTYPE) as crate::src::fts5::u16_0;

@@ -240,11 +240,11 @@ unsafe extern "C" fn vdbePmaReadBlob(
             __p_ref.nAlloc = nNew as ::core::ffi::c_int;
             __p_ref.aAlloc = aNew;
         }
-        ::libc::memcpy(
-            __p_ref.aAlloc as *mut ::core::ffi::c_void,
-            __p_ref.aBuffer.offset(iBuf as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *const ::core::ffi::c_void,
-            nAvail as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    __p_ref.aBuffer.offset(iBuf as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *const u8,
+                    __p_ref.aAlloc as *mut u8,
+                    nAvail as usize,
+                );
         __p_ref.iReadOff += nAvail as crate::src::ext::rtree::rtree::i64_0;
         nRem = nByte - nAvail;
         while nRem > 0 as ::core::ffi::c_int {
@@ -259,12 +259,11 @@ unsafe extern "C" fn vdbePmaReadBlob(
             if rc_0 != crate::sqlite3_h::SQLITE_OK {
                 return rc_0;
             }
-            ::libc::memcpy(
-                __p_ref.aAlloc.offset((nByte - nRem) as isize) as *mut crate::src::ext::rtree::rtree::u8_0
-                    as *mut ::core::ffi::c_void,
-                aNext as *const ::core::ffi::c_void,
-                nCopy as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    aNext as *const u8,
+                    __p_ref.aAlloc.offset((nByte - nRem) as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    nCopy as usize,
+                );
             nRem -= nCopy;
         }
         *ppOut = __p_ref.aAlloc;
@@ -659,11 +658,11 @@ pub unsafe extern "C" fn sqlite3VdbeSorterInit(
         pKeyInfo = (pSorter as *mut crate::src::ext::rtree::rtree::u8_0).offset(sz as isize) as *mut crate::sqliteInt_h::KeyInfo;
         let __pSorter_ref = unsafe { &mut *pSorter };
         __pSorter_ref.pKeyInfo = pKeyInfo;
-        ::libc::memcpy(
-            pKeyInfo as *mut ::core::ffi::c_void,
-            (*pCsr).pKeyInfo as *const ::core::ffi::c_void,
-            szKeyInfo as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    (*pCsr).pKeyInfo as *const u8,
+                    pKeyInfo as *mut u8,
+                    szKeyInfo as usize,
+                );
         (*pKeyInfo).db = ::core::ptr::null_mut::<crate::sqliteInt_h::sqlite3>();
         if nField != 0 && nWorker == 0 as ::core::ffi::c_int {
             (*pKeyInfo).nKeyField = nField as crate::src::fts5::u16_0;
@@ -1186,11 +1185,11 @@ unsafe extern "C" fn vdbePmaWriteBlob(
         if nCopy > __p_ref.nBuffer - __p_ref.iBufEnd {
             nCopy = __p_ref.nBuffer - __p_ref.iBufEnd;
         }
-        ::libc::memcpy(
-            __p_ref.aBuffer.offset(__p_ref.iBufEnd as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut ::core::ffi::c_void,
-            pData.offset((nData - nRem) as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *const ::core::ffi::c_void,
-            nCopy as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    pData.offset((nData - nRem) as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *const u8,
+                    __p_ref.aBuffer.offset(__p_ref.iBufEnd as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    nCopy as usize,
+                );
         __p_ref.iBufEnd += nCopy;
         if __p_ref.iBufEnd == __p_ref.nBuffer {
             __p_ref.eFWErr = crate::src::src::os::sqlite3OsWrite(
@@ -1574,11 +1573,11 @@ pub unsafe extern "C" fn sqlite3VdbeSorterWrite(
         }
         (*pNew).u.pNext = (*pSorter).list.pList;
     }
-    ::libc::memcpy(
-        pNew.offset(1 as isize) as *mut ::core::ffi::c_void,
-        __pVal_ref.z as *const ::core::ffi::c_void,
-        __pVal_ref.n as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    __pVal_ref.z as *const u8,
+                    pNew.offset(1 as isize) as *mut u8,
+                    __pVal_ref.n as usize,
+                );
     (*pNew).nVal = __pVal_ref.n;
     (*pSorter).list.pList = pNew;
     rc

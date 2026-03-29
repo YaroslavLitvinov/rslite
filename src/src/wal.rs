@@ -414,19 +414,17 @@ unsafe extern "C" fn walIndexWriteHdr(mut pWal: *mut Wal) {
         ::core::ptr::null::<crate::src::ext::rtree::rtree::u32_0>(),
         &raw mut __pWal_ref.hdr.aCksum as *mut crate::src::ext::rtree::rtree::u32_0,
     );
-    ::libc::memcpy(
-        aHdr.offset(1 as isize) as *mut WalIndexHdr
-            as *mut ::core::ffi::c_void,
-        &raw mut __pWal_ref.hdr as *const ::core::ffi::c_void,
-        ::core::mem::size_of::<WalIndexHdr>() as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    &raw mut __pWal_ref.hdr as *const u8,
+                    aHdr.offset(1 as isize) as *mut WalIndexHdr as *mut u8,
+                    ::core::mem::size_of::<WalIndexHdr>() as usize,
+                );
     walShmBarrier(pWal);
-    ::libc::memcpy(
-        aHdr.offset(0 as isize) as *mut WalIndexHdr
-            as *mut ::core::ffi::c_void,
-        &raw mut __pWal_ref.hdr as *const ::core::ffi::c_void,
-        ::core::mem::size_of::<WalIndexHdr>() as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    &raw mut __pWal_ref.hdr as *const u8,
+                    aHdr.offset(0 as isize) as *mut WalIndexHdr as *mut u8,
+                    ::core::mem::size_of::<WalIndexHdr>() as usize,
+                );
 }
 
 unsafe extern "C" fn walEncodeFrame(
@@ -448,12 +446,11 @@ unsafe extern "C" fn walEncodeFrame(
     );
     if (*pWal).iReCksum == 0 as crate::src::ext::rtree::rtree::u32_0 {
         let __pWal_ref = unsafe { &mut *pWal };
-        ::libc::memcpy(
-            aFrame.offset(8 as isize) as *mut crate::src::ext::rtree::rtree::u8_0
-                as *mut ::core::ffi::c_void,
-            &raw mut __pWal_ref.hdr.aSalt as *mut crate::src::ext::rtree::rtree::u32_0 as *const ::core::ffi::c_void,
-            8 as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    &raw mut __pWal_ref.hdr.aSalt as *mut crate::src::ext::rtree::rtree::u32_0 as *const u8,
+                    aFrame.offset(8 as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    8 as usize,
+                );
         nativeCksum = (__pWal_ref.hdr.bigEndCksum as ::core::ffi::c_int == crate::sqliteInt_h::SQLITE_BIGENDIAN)
             as ::core::ffi::c_int;
         walChecksumBytes(nativeCksum, aFrame, 8 as ::core::ffi::c_int, aCksum, aCksum);
@@ -813,12 +810,12 @@ unsafe extern "C" fn walIndexRecover(mut pWal: *mut Wal) -> ::core::ffi::c_int {
                         (&raw mut aBuf as *mut crate::src::ext::rtree::rtree::u8_0).offset(12 as isize)
                             as *mut crate::src::ext::rtree::rtree::u8_0,
                     );
-                    ::libc::memcpy(
-                        &raw mut __pWal_ref.hdr.aSalt as *mut ::core::ffi::c_void,
-                        (&raw mut aBuf as *mut crate::src::ext::rtree::rtree::u8_0).offset(16 as isize)
-                            as *mut crate::src::ext::rtree::rtree::u8_0 as *const ::core::ffi::c_void,
-                        8 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    (&raw mut aBuf as *mut crate::src::ext::rtree::rtree::u8_0).offset(16 as isize)
+                            as *mut crate::src::ext::rtree::rtree::u8_0 as *const u8,
+                    &raw mut __pWal_ref.hdr.aSalt as *mut u8,
+                    8 as usize,
+                );
                     walChecksumBytes(
                         (__pWal_ref.hdr.bigEndCksum as ::core::ffi::c_int == crate::sqliteInt_h::SQLITE_BIGENDIAN)
                             as ::core::ffi::c_int,
@@ -979,13 +976,11 @@ unsafe extern "C" fn walIndexRecover(mut pWal: *mut Wal) -> ::core::ffi::c_int {
                                         (nHdr as usize)
                                             .wrapping_div(::core::mem::size_of::<crate::src::ext::rtree::rtree::u32_0>() as usize)
                                             as crate::src::ext::rtree::rtree::u32_0;
-                                    ::libc::memcpy(
-                                        aShare.offset(nHdr32 as isize) as *mut crate::src::ext::rtree::rtree::u32_0
-                                            as *mut ::core::ffi::c_void,
-                                        aPrivate.offset(nHdr32 as isize) as *mut crate::src::ext::rtree::rtree::u32_0
-                                            as *const ::core::ffi::c_void,
-                                        WALINDEX_PGSZ.wrapping_sub(nHdr as crate::__stddef_size_t_h::size_t),
-                                    );
+                                    ::core::ptr::copy_nonoverlapping(
+                    aPrivate.offset(nHdr32 as isize) as *mut crate::src::ext::rtree::rtree::u32_0 as *const u8,
+                    aShare.offset(nHdr32 as isize) as *mut crate::src::ext::rtree::rtree::u32_0 as *mut u8,
+                    (WALINDEX_PGSZ.wrapping_sub(nHdr as crate::__stddef_size_t_h::size_t)) as usize,
+                );
                                     if iFrame <= iLast {
                                         break;
                                     }
@@ -1239,11 +1234,11 @@ unsafe extern "C" fn walMerge(
     }
     *paRight = aLeft;
     *pnRight = iOut;
-    ::libc::memcpy(
-        aLeft as *mut ::core::ffi::c_void,
-        aTmp as *const ::core::ffi::c_void,
-        (::core::mem::size_of::<ht_slot>() as crate::__stddef_size_t_h::size_t).wrapping_mul(iOut as crate::__stddef_size_t_h::size_t),
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    aTmp as *const u8,
+                    aLeft as *mut u8,
+                    ((::core::mem::size_of::<ht_slot>() as crate::__stddef_size_t_h::size_t).wrapping_mul(iOut as crate::__stddef_size_t_h::size_t)) as usize,
+                );
 }
 
 unsafe extern "C" fn walMergesort(
@@ -1434,12 +1429,12 @@ unsafe extern "C" fn walRestartHdr(mut pWal: *mut Wal, mut salt1: crate::src::ex
             aSalt.offset(0 as isize) as *mut crate::src::ext::rtree::rtree::u32_0 as *mut crate::src::ext::rtree::rtree::u8_0,
         )),
     );
-    ::libc::memcpy(
-        (&raw mut __pWal_ref.hdr.aSalt as *mut crate::src::ext::rtree::rtree::u32_0).offset(1 as isize)
-            as *mut crate::src::ext::rtree::rtree::u32_0 as *mut ::core::ffi::c_void,
-        &raw mut salt1 as *const ::core::ffi::c_void,
-        4 as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    &raw mut salt1 as *const u8,
+                    (&raw mut __pWal_ref.hdr.aSalt as *mut crate::src::ext::rtree::rtree::u32_0).offset(1 as isize)
+            as *mut crate::src::ext::rtree::rtree::u32_0 as *mut u8,
+                    4 as usize,
+                );
     walIndexWriteHdr(pWal);
     let __pInfo_ref = unsafe { &mut *pInfo };
     ::core::intrinsics::atomic_store_relaxed(
@@ -1856,11 +1851,11 @@ unsafe extern "C" fn walIndexTryHdr(
     {
         *pChanged = 1 as ::core::ffi::c_int;
         let __pWal_ref = unsafe { &mut *pWal };
-        ::libc::memcpy(
-            &raw mut __pWal_ref.hdr as *mut ::core::ffi::c_void,
-            &raw mut h1 as *const ::core::ffi::c_void,
-            ::core::mem::size_of::<WalIndexHdr>() as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    &raw mut h1 as *const u8,
+                    &raw mut __pWal_ref.hdr as *mut u8,
+                    ::core::mem::size_of::<WalIndexHdr>() as usize,
+                );
         __pWal_ref.szPage = ((__pWal_ref.hdr.szPage as ::core::ffi::c_int & 0xfe00 as ::core::ffi::c_int)
             + ((__pWal_ref.hdr.szPage as ::core::ffi::c_int & 0x1 as ::core::ffi::c_int)
                 << 16 as ::core::ffi::c_int)) as crate::src::ext::rtree::rtree::u32_0;
@@ -2735,12 +2730,11 @@ unsafe extern "C" fn walFrames(
                 &raw mut __pWal_ref.hdr.aSalt as *mut crate::src::ext::rtree::rtree::u32_0 as *mut ::core::ffi::c_void,
             );
         }
-        ::libc::memcpy(
-            (&raw mut aWalHdr as *mut crate::src::ext::rtree::rtree::u8_0).offset(16 as isize) as *mut crate::src::ext::rtree::rtree::u8_0
-                as *mut ::core::ffi::c_void,
-            &raw mut __pWal_ref.hdr.aSalt as *mut crate::src::ext::rtree::rtree::u32_0 as *const ::core::ffi::c_void,
-            8 as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    &raw mut __pWal_ref.hdr.aSalt as *mut crate::src::ext::rtree::rtree::u32_0 as *const u8,
+                    (&raw mut aWalHdr as *mut crate::src::ext::rtree::rtree::u8_0).offset(16 as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    8 as usize,
+                );
         walChecksumBytes(
             1 as ::core::ffi::c_int,
             &raw mut aWalHdr as *mut crate::src::ext::rtree::rtree::u8_0,

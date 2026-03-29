@@ -178,11 +178,11 @@ pub unsafe extern "C" fn sqlite3BitvecSet(mut p: *mut Bitvec, mut i: crate::src:
                     return crate::sqliteInt_h::SQLITE_NOMEM_BKPT;
                 } else {
                     let __p_ref = unsafe { &mut *p };
-                    ::libc::memcpy(
-                        aiValues as *mut ::core::ffi::c_void,
-                        &raw mut __p_ref.u.aHash as *mut crate::src::ext::rtree::rtree::u32_0 as *const ::core::ffi::c_void,
-                        ::core::mem::size_of::<[crate::src::ext::rtree::rtree::u32_0; 124]>() as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    &raw mut __p_ref.u.aHash as *mut crate::src::ext::rtree::rtree::u32_0 as *const u8,
+                    aiValues as *mut u8,
+                    ::core::mem::size_of::<[crate::src::ext::rtree::rtree::u32_0; 124]>() as usize,
+                );
                     ::libc::memset(
                         &raw mut __p_ref.u.apSub as *mut *mut Bitvec as *mut ::core::ffi::c_void,
                         0 as ::core::ffi::c_int,
@@ -248,11 +248,11 @@ pub unsafe extern "C" fn sqlite3BitvecClear(
         let mut j: ::core::ffi::c_uint = 0;
         let mut aiValues: *mut crate::src::ext::rtree::rtree::u32_0 = pBuf as *mut crate::src::ext::rtree::rtree::u32_0;
         let __p_ref = unsafe { &mut *p };
-        ::libc::memcpy(
-            aiValues as *mut ::core::ffi::c_void,
-            &raw mut __p_ref.u.aHash as *mut crate::src::ext::rtree::rtree::u32_0 as *const ::core::ffi::c_void,
-            ::core::mem::size_of::<[crate::src::ext::rtree::rtree::u32_0; 124]>() as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    &raw mut __p_ref.u.aHash as *mut crate::src::ext::rtree::rtree::u32_0 as *const u8,
+                    aiValues as *mut u8,
+                    ::core::mem::size_of::<[crate::src::ext::rtree::rtree::u32_0; 124]>() as usize,
+                );
         ::libc::memset(
             &raw mut __p_ref.u.aHash as *mut crate::src::ext::rtree::rtree::u32_0 as *mut ::core::ffi::c_void,
             0 as ::core::ffi::c_int,

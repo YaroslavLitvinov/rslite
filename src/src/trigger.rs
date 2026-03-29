@@ -710,11 +710,11 @@ unsafe extern "C" fn triggerStepAllocate(
         let mut z: *mut ::core::ffi::c_char = pTriggerStep.offset(1 as isize)
             as *mut crate::sqliteInt_h::TriggerStep
             as *mut ::core::ffi::c_char;
-        ::libc::memcpy(
-            z as *mut ::core::ffi::c_void,
-            (*pName).z as *const ::core::ffi::c_void,
-            (*pName).n as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    (*pName).z as *const u8,
+                    z as *mut u8,
+                    (*pName).n as usize,
+                );
         crate::src::src::util::sqlite3Dequote(z);
         let __pTriggerStep_ref = unsafe { &mut *pTriggerStep };
         __pTriggerStep_ref.zTarget = z;

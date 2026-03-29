@@ -780,13 +780,13 @@ unsafe extern "C" fn jsonCacheInsert(
     if (*p).nUsed >= JSON_CACHE_SIZE {
         let __p_ref = unsafe { &mut *p };
         jsonParseFree(__p_ref.a[0 as ::core::ffi::c_int as usize]);
-        ::libc::memmove(
-            &raw mut __p_ref.a as *mut *mut JsonParse as *mut ::core::ffi::c_void,
-            (&raw mut __p_ref.a as *mut *mut JsonParse).offset(1 as isize)
-                as *mut *mut JsonParse as *const ::core::ffi::c_void,
-            ((JSON_CACHE_SIZE - 1 as ::core::ffi::c_int) as crate::__stddef_size_t_h::size_t)
-                .wrapping_mul(::core::mem::size_of::<*mut JsonParse>() as crate::__stddef_size_t_h::size_t),
-        );
+        ::core::ptr::copy(
+                    (&raw mut __p_ref.a as *mut *mut JsonParse).offset(1 as isize)
+                as *mut *mut JsonParse as *const u8,
+                    &raw mut __p_ref.a as *mut *mut JsonParse as *mut u8,
+                    (((JSON_CACHE_SIZE - 1 as ::core::ffi::c_int) as crate::__stddef_size_t_h::size_t)
+                .wrapping_mul(::core::mem::size_of::<*mut JsonParse>() as crate::__stddef_size_t_h::size_t)) as usize,
+                );
         __p_ref.nUsed = JSON_CACHE_SIZE - 1 as ::core::ffi::c_int;
     }
     let __pParse_ref = unsafe { &mut *pParse };
@@ -845,15 +845,14 @@ unsafe extern "C" fn jsonCacheSearch(
         if i < (*p).nUsed - 1 as ::core::ffi::c_int {
             let __p_ref = unsafe { &mut *p };
             let mut tmp: *mut JsonParse = __p_ref.a[i as usize];
-            ::libc::memmove(
-                (&raw mut __p_ref.a as *mut *mut JsonParse).offset(i as isize) as *mut *mut JsonParse
-                    as *mut ::core::ffi::c_void,
-                (&raw mut __p_ref.a as *mut *mut JsonParse)
+            ::core::ptr::copy(
+                    (&raw mut __p_ref.a as *mut *mut JsonParse)
                     .offset((i + 1 as ::core::ffi::c_int) as isize)
-                    as *mut *mut JsonParse as *const ::core::ffi::c_void,
-                ((__p_ref.nUsed - i - 1 as ::core::ffi::c_int) as crate::__stddef_size_t_h::size_t)
-                    .wrapping_mul(::core::mem::size_of::<*mut JsonParse>() as crate::__stddef_size_t_h::size_t),
-            );
+                    as *mut *mut JsonParse as *const u8,
+                    (&raw mut __p_ref.a as *mut *mut JsonParse).offset(i as isize) as *mut *mut JsonParse as *mut u8,
+                    (((__p_ref.nUsed - i - 1 as ::core::ffi::c_int) as crate::__stddef_size_t_h::size_t)
+                    .wrapping_mul(::core::mem::size_of::<*mut JsonParse>() as crate::__stddef_size_t_h::size_t)) as usize,
+                );
             __p_ref.a[(__p_ref.nUsed - 1 as ::core::ffi::c_int) as usize] = tmp;
             i = __p_ref.nUsed - 1 as ::core::ffi::c_int;
         }
@@ -912,11 +911,11 @@ unsafe extern "C" fn jsonStringGrow(mut p: *mut JsonString, mut N: crate::src::e
             jsonStringOom(p);
             return crate::sqlite3_h::SQLITE_NOMEM;
         }
-        ::libc::memcpy(
-            zNew as *mut ::core::ffi::c_void,
-            __p_ref.zBuf as *const ::core::ffi::c_void,
-            __p_ref.nUsed as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    __p_ref.zBuf as *const u8,
+                    zNew as *mut u8,
+                    __p_ref.nUsed as usize,
+                );
         __p_ref.zBuf = zNew;
         __p_ref.bStatic = 0 as crate::src::ext::rtree::rtree::u8_0;
     } else {
@@ -941,11 +940,11 @@ unsafe extern "C" fn jsonStringExpandAndAppend(
         return;
     }
     let __p_ref = unsafe { &mut *p };
-    ::libc::memcpy(
-        __p_ref.zBuf.offset(__p_ref.nUsed as isize) as *mut ::core::ffi::c_void,
-        zIn as *const ::core::ffi::c_void,
-        N as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    zIn as *const u8,
+                    __p_ref.zBuf.offset(__p_ref.nUsed as isize) as *mut u8,
+                    N as usize,
+                );
     __p_ref.nUsed = __p_ref.nUsed.wrapping_add(N as crate::src::ext::rtree::rtree::u64_0);
 }
 
@@ -961,11 +960,11 @@ unsafe extern "C" fn jsonAppendRaw(
         jsonStringExpandAndAppend(p, zIn, N);
     } else {
         let __p_ref = unsafe { &mut *p };
-        ::libc::memcpy(
-            __p_ref.zBuf.offset(__p_ref.nUsed as isize) as *mut ::core::ffi::c_void,
-            zIn as *const ::core::ffi::c_void,
-            N as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    zIn as *const u8,
+                    __p_ref.zBuf.offset(__p_ref.nUsed as isize) as *mut u8,
+                    N as usize,
+                );
         __p_ref.nUsed = __p_ref.nUsed.wrapping_add(N as crate::src::ext::rtree::rtree::u64_0);
     };
 }
@@ -979,11 +978,11 @@ unsafe extern "C" fn jsonAppendRawNZ(
         jsonStringExpandAndAppend(p, zIn, N);
     } else {
         let __p_ref = unsafe { &mut *p };
-        ::libc::memcpy(
-            __p_ref.zBuf.offset(__p_ref.nUsed as isize) as *mut ::core::ffi::c_void,
-            zIn as *const ::core::ffi::c_void,
-            N as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    zIn as *const u8,
+                    __p_ref.zBuf.offset(__p_ref.nUsed as isize) as *mut u8,
+                    N as usize,
+                );
         __p_ref.nUsed = __p_ref.nUsed.wrapping_add(N as crate::src::ext::rtree::rtree::u64_0);
     };
 }
@@ -1182,22 +1181,20 @@ unsafe extern "C" fn jsonAppendString(
         }
         if k >= N {
             if k > 0 as crate::src::ext::rtree::rtree::u32_0 {
-                ::libc::memcpy(
-                    __p_ref.zBuf.offset(__p_ref.nUsed as isize) as *mut ::core::ffi::c_char
-                        as *mut ::core::ffi::c_void,
-                    z as *const ::core::ffi::c_void,
-                    k as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    z as *const u8,
+                    __p_ref.zBuf.offset(__p_ref.nUsed as isize) as *mut ::core::ffi::c_char as *mut u8,
+                    k as usize,
                 );
                 __p_ref.nUsed = __p_ref.nUsed.wrapping_add(k as crate::src::ext::rtree::rtree::u64_0);
             }
             break;
         } else {
             if k > 0 as crate::src::ext::rtree::rtree::u32_0 {
-                ::libc::memcpy(
-                    __p_ref.zBuf.offset(__p_ref.nUsed as isize) as *mut ::core::ffi::c_char
-                        as *mut ::core::ffi::c_void,
-                    z as *const ::core::ffi::c_void,
-                    k as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    z as *const u8,
+                    __p_ref.zBuf.offset(__p_ref.nUsed as isize) as *mut ::core::ffi::c_char as *mut u8,
+                    k as usize,
                 );
                 __p_ref.nUsed = __p_ref.nUsed.wrapping_add(k as crate::src::ext::rtree::rtree::u64_0);
                 z = z.offset(k as isize);
@@ -1663,11 +1660,11 @@ unsafe extern "C" fn jsonBlobMakeEditable(
     if jsonBlobExpand(pParse, nSize) != 0 {
         return 0 as ::core::ffi::c_int;
     }
-    ::libc::memcpy(
-        __pParse_ref.aBlob as *mut ::core::ffi::c_void,
-        aOld as *const ::core::ffi::c_void,
-        __pParse_ref.nBlob as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    aOld as *const u8,
+                    __pParse_ref.aBlob as *mut u8,
+                    __pParse_ref.nBlob as usize,
+                );
     1 as ::core::ffi::c_int
 }
 #[inline(never)]
@@ -1817,23 +1814,19 @@ unsafe extern "C" fn jsonBlobChangePayloadSize(
                 return 0 as ::core::ffi::c_int;
             }
             a = __pParse_ref.aBlob.offset(i as isize) as *mut crate::src::ext::rtree::rtree::u8_0;
-            ::libc::memmove(
-                a.offset((1 as ::core::ffi::c_int + delta) as isize) as *mut crate::src::ext::rtree::rtree::u8_0
-                    as *mut ::core::ffi::c_void,
-                a.offset(1 as isize) as *mut crate::src::ext::rtree::rtree::u8_0
-                    as *const ::core::ffi::c_void,
-                __pParse_ref.nBlob.wrapping_sub(i.wrapping_add(1 as crate::src::ext::rtree::rtree::u32_0)) as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy(
+                    a.offset(1 as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *const u8,
+                    a.offset((1 as ::core::ffi::c_int + delta) as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    __pParse_ref.nBlob.wrapping_sub(i.wrapping_add(1 as crate::src::ext::rtree::rtree::u32_0)) as usize,
+                );
         } else {
-            ::libc::memmove(
-                a.offset(1 as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut ::core::ffi::c_void,
-                a.offset((1 as ::core::ffi::c_int - delta) as isize) as *mut crate::src::ext::rtree::rtree::u8_0
-                    as *const ::core::ffi::c_void,
-                (*pParse)
+            ::core::ptr::copy(
+                    a.offset((1 as ::core::ffi::c_int - delta) as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *const u8,
+                    a.offset(1 as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    (*pParse)
                     .nBlob
-                    .wrapping_sub(i.wrapping_add(1 as crate::src::ext::rtree::rtree::u32_0).wrapping_sub(delta as crate::src::ext::rtree::rtree::u32_0))
-                    as crate::__stddef_size_t_h::size_t,
-            );
+                    .wrapping_sub(i.wrapping_add(1 as crate::src::ext::rtree::rtree::u32_0).wrapping_sub(delta as crate::src::ext::rtree::rtree::u32_0)) as usize,
+                );
         }
         (*pParse).nBlob = newSize;
     }
@@ -3372,16 +3365,14 @@ unsafe extern "C" fn jsonTranslateBlobToText(
             {
                 let __pOut_ref = unsafe { &mut *pOut };
                 *__pOut_ref.zBuf.offset(__pOut_ref.nUsed as isize) = '"' as i32 as ::core::ffi::c_char;
-                ::libc::memcpy(
+                ::core::ptr::copy_nonoverlapping(
+                    (*pParse).aBlob.offset(i.wrapping_add(n) as isize) as *mut crate::src::ext::rtree::rtree::u8_0
+                        as *const ::core::ffi::c_char as *const u8,
                     (*pOut)
                         .zBuf
                         .offset(__pOut_ref.nUsed as isize)
-                        .offset(1 as isize)
-                        as *mut ::core::ffi::c_void,
-                    (*pParse).aBlob.offset(i.wrapping_add(n) as isize) as *mut crate::src::ext::rtree::rtree::u8_0
-                        as *const ::core::ffi::c_char
-                        as *const ::core::ffi::c_void,
-                    sz as crate::__stddef_size_t_h::size_t,
+                        .offset(1 as isize) as *mut u8,
+                    sz as usize,
                 );
                 *__pOut_ref.zBuf.offset(
                     (*pOut)
@@ -3793,11 +3784,11 @@ unsafe extern "C" fn jsonBlobOverwrite(
         (*aIns.offset(0 as isize) as ::core::ffi::c_int
             & 0xf as ::core::ffi::c_int
             | aType[i.wrapping_sub(2 as crate::src::ext::rtree::rtree::u32_0) as usize] as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u8_0;
-    ::libc::memcpy(
-        aOut.offset(i as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut ::core::ffi::c_void,
-        aIns.offset(szHdr as isize) as *const crate::src::ext::rtree::rtree::u8_0 as *const ::core::ffi::c_void,
-        nIns.wrapping_sub(szHdr as crate::src::ext::rtree::rtree::u32_0) as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    aIns.offset(szHdr as isize) as *const crate::src::ext::rtree::rtree::u8_0 as *const u8,
+                    aOut.offset(i as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    nIns.wrapping_sub(szHdr as crate::src::ext::rtree::rtree::u32_0) as usize,
+                );
     szPayload = nIns.wrapping_sub(szHdr as crate::src::ext::rtree::rtree::u32_0);
     loop {
         i = i.wrapping_sub(1);
@@ -3838,22 +3829,20 @@ unsafe extern "C" fn jsonBlobEdit(
                 return;
             }
         }
-        ::libc::memmove(
-            __pParse_ref.aBlob.offset(iDel.wrapping_add(nIns) as isize) as *mut crate::src::ext::rtree::rtree::u8_0
-                as *mut ::core::ffi::c_void,
-            __pParse_ref.aBlob.offset(iDel.wrapping_add(nDel) as isize) as *mut crate::src::ext::rtree::rtree::u8_0
-                as *const ::core::ffi::c_void,
-            __pParse_ref.nBlob.wrapping_sub(iDel.wrapping_add(nDel)) as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy(
+                    __pParse_ref.aBlob.offset(iDel.wrapping_add(nDel) as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *const u8,
+                    __pParse_ref.aBlob.offset(iDel.wrapping_add(nIns) as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    __pParse_ref.nBlob.wrapping_sub(iDel.wrapping_add(nDel)) as usize,
+                );
         __pParse_ref.nBlob = (__pParse_ref.nBlob as crate::src::ext::rtree::rtree::i64_0 + d) as crate::src::ext::rtree::rtree::u32_0;
         __pParse_ref.delta = (__pParse_ref.delta as crate::src::ext::rtree::rtree::i64_0 + d) as ::core::ffi::c_int;
     }
     if nIns != 0 && !aIns.is_null() {
-        ::libc::memcpy(
-            (*pParse).aBlob.offset(iDel as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut ::core::ffi::c_void,
-            aIns as *const ::core::ffi::c_void,
-            nIns as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    aIns as *const u8,
+                    (*pParse).aBlob.offset(iDel as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    nIns as usize,
+                );
     }
 }
 
@@ -4351,23 +4340,23 @@ unsafe extern "C" fn jsonLookupStep(
                 nIns = ix.nBlob.wrapping_add(nKey).wrapping_add(v_0.nBlob);
                 jsonBlobEdit(pParse, j, 0 as crate::src::ext::rtree::rtree::u32_0, ::core::ptr::null::<crate::src::ext::rtree::rtree::u8_0>(), nIns);
                 if __pParse_ref.oom == 0 {
-                    ::libc::memcpy(
-                        __pParse_ref.aBlob.offset(j as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut ::core::ffi::c_void,
-                        ix.aBlob as *const ::core::ffi::c_void,
-                        ix.nBlob as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    ix.aBlob as *const u8,
+                    __pParse_ref.aBlob.offset(j as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    ix.nBlob as usize,
+                );
                     k = j.wrapping_add(ix.nBlob);
-                    ::libc::memcpy(
-                        __pParse_ref.aBlob.offset(k as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut ::core::ffi::c_void,
-                        zKey as *const ::core::ffi::c_void,
-                        nKey as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    zKey as *const u8,
+                    __pParse_ref.aBlob.offset(k as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    nKey as usize,
+                );
                     k = k.wrapping_add(nKey);
-                    ::libc::memcpy(
-                        __pParse_ref.aBlob.offset(k as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut ::core::ffi::c_void,
-                        v_0.aBlob as *const ::core::ffi::c_void,
-                        v_0.nBlob as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    v_0.aBlob as *const u8,
+                    __pParse_ref.aBlob.offset(k as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    v_0.nBlob as usize,
+                );
                     if __pParse_ref.delta != 0 {
                         jsonAfterEditSizeAdjust(pParse, iRoot);
                     }
@@ -5273,11 +5262,11 @@ unsafe extern "C" fn jsonParseFuncArg(
                         current_block = 9072867501949847583;
                         break;
                     }
-                    ::libc::memcpy(
-                        zNew as *mut ::core::ffi::c_void,
-                        __p_ref.zJson as *const ::core::ffi::c_void,
-                        __p_ref.nJson as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    __p_ref.zJson as *const u8,
+                    zNew as *mut u8,
+                    __p_ref.nJson as usize,
+                );
                     __p_ref.zJson = zNew;
                     *__p_ref.zJson.offset(__p_ref.nJson as isize) = 0 as ::core::ffi::c_char;
                 } else {
@@ -5308,11 +5297,11 @@ unsafe extern "C" fn jsonParseFuncArg(
         }
         _ => {
             let __p_ref = unsafe { &mut *p };
-            ::libc::memcpy(
-                __p_ref.aBlob as *mut ::core::ffi::c_void,
-                (*pFromCache).aBlob as *const ::core::ffi::c_void,
-                nBlob as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    (*pFromCache).aBlob as *const u8,
+                    __p_ref.aBlob as *mut u8,
+                    nBlob as usize,
+                );
             __p_ref.nBlob = nBlob;
             __p_ref.nBlobAlloc = __p_ref.nBlob;
             __p_ref.hasNonstd = (*pFromCache).hasNonstd;
@@ -5899,19 +5888,15 @@ unsafe extern "C" fn jsonMergePatch(
                 if __pTarget_ref.oom != 0 {
                     return JSON_MERGE_OOM;
                 }
-                ::libc::memcpy(
-                    __pTarget_ref.aBlob.offset(iTEnd as isize) as *mut crate::src::ext::rtree::rtree::u8_0
-                        as *mut ::core::ffi::c_void,
-                    (*pPatch).aBlob.offset(iPLabel as isize) as *mut crate::src::ext::rtree::rtree::u8_0
-                        as *const ::core::ffi::c_void,
-                    szNew as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    (*pPatch).aBlob.offset(iPLabel as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *const u8,
+                    __pTarget_ref.aBlob.offset(iTEnd as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    szNew as usize,
                 );
-                ::libc::memcpy(
-                    __pTarget_ref.aBlob.offset(iTEnd.wrapping_add(szNew) as isize) as *mut crate::src::ext::rtree::rtree::u8_0
-                        as *mut ::core::ffi::c_void,
-                    (*pPatch).aBlob.offset(iPValue as isize) as *mut crate::src::ext::rtree::rtree::u8_0
-                        as *const ::core::ffi::c_void,
-                    szPValue.wrapping_add(nPValue) as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    (*pPatch).aBlob.offset(iPValue as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *const u8,
+                    __pTarget_ref.aBlob.offset(iTEnd.wrapping_add(szNew) as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    szPValue.wrapping_add(nPValue) as usize,
                 );
             } else {
                 let mut rc_0: ::core::ffi::c_int = 0;
@@ -5926,12 +5911,10 @@ unsafe extern "C" fn jsonMergePatch(
                 if __pTarget_ref.oom != 0 {
                     return JSON_MERGE_OOM;
                 }
-                ::libc::memcpy(
-                    __pTarget_ref.aBlob.offset(iTEnd as isize) as *mut crate::src::ext::rtree::rtree::u8_0
-                        as *mut ::core::ffi::c_void,
-                    (*pPatch).aBlob.offset(iPLabel as isize) as *mut crate::src::ext::rtree::rtree::u8_0
-                        as *const ::core::ffi::c_void,
-                    szNew as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    (*pPatch).aBlob.offset(iPLabel as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *const u8,
+                    __pTarget_ref.aBlob.offset(iTEnd as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    szNew as usize,
                 );
                 *__pTarget_ref.aBlob.offset(iTEnd.wrapping_add(szNew) as isize) = 0 as crate::src::ext::rtree::rtree::u8_0;
                 savedDelta_0 = __pTarget_ref.delta;
@@ -6553,13 +6536,11 @@ unsafe extern "C" fn jsonGroupInverse(
     if (i as crate::src::ext::rtree::rtree::u64_0) < (*pStr).nUsed {
         let __pStr_ref = unsafe { &mut *pStr };
         __pStr_ref.nUsed = __pStr_ref.nUsed.wrapping_sub(i as crate::src::ext::rtree::rtree::u64_0);
-        ::libc::memmove(
-            z.offset(1 as isize) as *mut ::core::ffi::c_char
-                as *mut ::core::ffi::c_void,
-            z.offset(i.wrapping_add(1 as ::core::ffi::c_uint) as isize) as *mut ::core::ffi::c_char
-                as *const ::core::ffi::c_void,
-            (__pStr_ref.nUsed as crate::__stddef_size_t_h::size_t).wrapping_sub(1 as crate::__stddef_size_t_h::size_t),
-        );
+        ::core::ptr::copy(
+                    z.offset(i.wrapping_add(1 as ::core::ffi::c_uint) as isize) as *const ::core::ffi::c_char,
+                    z.offset(1 as isize) as *mut ::core::ffi::c_char,
+                    ((__pStr_ref.nUsed as crate::__stddef_size_t_h::size_t).wrapping_sub(1 as crate::__stddef_size_t_h::size_t)) as usize,
+                );
         *z.offset(__pStr_ref.nUsed as isize) = 0 as ::core::ffi::c_char;
     } else {
         (*pStr).nUsed = 1 as crate::src::ext::rtree::rtree::u64_0;

@@ -1219,11 +1219,11 @@ unsafe extern "C" fn likeFunc(
         }
         escape = crate::src::src::utf::sqlite3Utf8Read(&raw mut zEsc);
         if escape == (*pInfo).matchAll as crate::src::ext::rtree::rtree::u32_0 || escape == (*pInfo).matchOne as crate::src::ext::rtree::rtree::u32_0 {
-            ::libc::memcpy(
-                &raw mut backupInfo as *mut ::core::ffi::c_void,
-                pInfo as *const ::core::ffi::c_void,
-                ::core::mem::size_of::<compareInfo>() as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    pInfo as *const u8,
+                    &raw mut backupInfo as *mut u8,
+                    ::core::mem::size_of::<compareInfo>() as usize,
+                );
             pInfo = &raw mut backupInfo;
             if escape == (*pInfo).matchAll as crate::src::ext::rtree::rtree::u32_0 {
                 (*pInfo).matchAll = 0 as crate::src::ext::rtree::rtree::u8_0;
@@ -1529,11 +1529,11 @@ unsafe extern "C" fn unistrFunc(
         );
         if z.is_null() {
             n = nIn - i;
-            ::libc::memmove(
-                zOut.offset(j as isize) as *mut ::core::ffi::c_char as *mut ::core::ffi::c_void,
-                zIn.offset(i as isize) as *const ::core::ffi::c_char as *const ::core::ffi::c_void,
-                n as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy(
+                    zIn.offset(i as isize) as *const ::core::ffi::c_char,
+                    zOut.offset(j as isize) as *mut ::core::ffi::c_char,
+                    n as usize,
+                );
             j += n;
             current_block = 15597372965620363352;
             break;
@@ -1541,11 +1541,10 @@ unsafe extern "C" fn unistrFunc(
             n = z.offset_from(zIn.offset(i as isize) as *const ::core::ffi::c_char)
                 as ::core::ffi::c_long as ::core::ffi::c_int;
             if n > 0 as ::core::ffi::c_int {
-                ::libc::memmove(
-                    zOut.offset(j as isize) as *mut ::core::ffi::c_char as *mut ::core::ffi::c_void,
-                    zIn.offset(i as isize) as *const ::core::ffi::c_char
-                        as *const ::core::ffi::c_void,
-                    n as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy(
+                    zIn.offset(i as isize) as *const ::core::ffi::c_char,
+                    zOut.offset(j as isize) as *mut ::core::ffi::c_char,
+                    n as usize,
                 );
                 j += n;
                 i += n;
@@ -2101,21 +2100,21 @@ unsafe extern "C" fn replaceFunc(
                     }
                 }
             }
-            ::libc::memcpy(
-                zOut.offset(j as isize) as *mut ::core::ffi::c_uchar as *mut ::core::ffi::c_void,
-                zRep as *const ::core::ffi::c_void,
-                nRep as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    zRep as *const u8,
+                    zOut.offset(j as isize) as *mut ::core::ffi::c_uchar as *mut u8,
+                    nRep as usize,
+                );
             j += nRep;
             i += nPattern - 1 as ::core::ffi::c_int;
         }
         i += 1;
     }
-    ::libc::memcpy(
-        zOut.offset(j as isize) as *mut ::core::ffi::c_uchar as *mut ::core::ffi::c_void,
-        zStr.offset(i as isize) as *const ::core::ffi::c_uchar as *const ::core::ffi::c_void,
-        (nStr - i) as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    zStr.offset(i as isize) as *const ::core::ffi::c_uchar as *const u8,
+                    zOut.offset(j as isize) as *mut ::core::ffi::c_uchar as *mut u8,
+                    (nStr - i) as usize,
+                );
     j += nStr - i;
     *zOut.offset(j as isize) = 0 as ::core::ffi::c_uchar;
     crate::src::src::vdbeapi::sqlite3_result_text(
@@ -2319,18 +2318,17 @@ unsafe extern "C" fn concatFuncCore(
                 crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(i as isize) as *mut crate::vdbeInt_h::sqlite3_value) as *const ::core::ffi::c_char;
             if !v.is_null() {
                 if bNotNull != 0 && nSep > 0 as ::core::ffi::c_int {
-                    ::libc::memcpy(
-                        z.offset(j as isize) as *mut ::core::ffi::c_char
-                            as *mut ::core::ffi::c_void,
-                        zSep as *const ::core::ffi::c_void,
-                        nSep as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    zSep as *const u8,
+                    z.offset(j as isize) as *mut ::core::ffi::c_char as *mut u8,
+                    nSep as usize,
+                );
                     j += nSep as crate::src::ext::rtree::rtree::i64_0;
                 }
-                ::libc::memcpy(
-                    z.offset(j as isize) as *mut ::core::ffi::c_char as *mut ::core::ffi::c_void,
-                    v as *const ::core::ffi::c_void,
-                    k as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    v as *const u8,
+                    z.offset(j as isize) as *mut ::core::ffi::c_char as *mut u8,
+                    k as usize,
                 );
                 j += k as crate::src::ext::rtree::rtree::i64_0;
                 bNotNull = 1 as ::core::ffi::c_int;
@@ -2886,14 +2884,13 @@ unsafe extern "C" fn groupConcatInverse(
         if !__pGCC_ref.pnSepLengths.is_null() {
             if __pGCC_ref.nAccum > 0 as ::core::ffi::c_int {
                 nVS += *__pGCC_ref.pnSepLengths;
-                ::libc::memmove(
-                    __pGCC_ref.pnSepLengths as *mut ::core::ffi::c_void,
+                ::core::ptr::copy(
                     (*pGCC)
                         .pnSepLengths
-                        .offset(1 as isize)
-                        as *const ::core::ffi::c_void,
-                    ((__pGCC_ref.nAccum - 1 as ::core::ffi::c_int) as crate::__stddef_size_t_h::size_t)
-                        .wrapping_mul(::core::mem::size_of::<::core::ffi::c_int>() as crate::__stddef_size_t_h::size_t),
+                        .offset(1 as isize) as *const u8,
+                    __pGCC_ref.pnSepLengths as *mut u8,
+                    (((__pGCC_ref.nAccum - 1 as ::core::ffi::c_int) as crate::__stddef_size_t_h::size_t)
+                        .wrapping_mul(::core::mem::size_of::<::core::ffi::c_int>() as crate::__stddef_size_t_h::size_t)) as usize,
                 );
             }
         } else {
@@ -2903,12 +2900,11 @@ unsafe extern "C" fn groupConcatInverse(
             __pGCC_ref.str_0.nChar = 0 as crate::src::ext::rtree::rtree::u32_0;
         } else {
             __pGCC_ref.str_0.nChar = __pGCC_ref.str_0.nChar.wrapping_sub(nVS as crate::src::ext::rtree::rtree::u32_0);
-            ::libc::memmove(
-                __pGCC_ref.str_0.zText as *mut ::core::ffi::c_void,
-                __pGCC_ref.str_0.zText.offset(nVS as isize) as *mut ::core::ffi::c_char
-                    as *const ::core::ffi::c_void,
-                __pGCC_ref.str_0.nChar as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy(
+                    __pGCC_ref.str_0.zText.offset(nVS as isize) as *mut ::core::ffi::c_char as *const u8,
+                    __pGCC_ref.str_0.zText as *mut u8,
+                    __pGCC_ref.str_0.nChar as usize,
+                );
         }
         if __pGCC_ref.str_0.nChar == 0 as crate::src::ext::rtree::rtree::u32_0 {
             __pGCC_ref.str_0.mxAlloc = 0 as crate::src::ext::rtree::rtree::u32_0;
@@ -3296,11 +3292,11 @@ unsafe extern "C" fn signFunc(
 
 unsafe extern "C" fn percentIsInfinity(mut r: ::core::ffi::c_double) -> ::core::ffi::c_int {
     let mut u: crate::sqlite3_h::sqlite3_uint64 = 0;
-    ::libc::memcpy(
-        &raw mut u as *mut ::core::ffi::c_void,
-        &raw mut r as *const ::core::ffi::c_void,
-        ::core::mem::size_of::<crate::sqlite3_h::sqlite3_uint64>() as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    &raw mut r as *const u8,
+                    &raw mut u as *mut u8,
+                    ::core::mem::size_of::<crate::sqlite3_h::sqlite3_uint64>() as usize,
+                );
     (u >> 52 as ::core::ffi::c_int & 0x7ff as crate::sqlite3_h::sqlite3_uint64 == 0x7ff as crate::sqlite3_h::sqlite3_uint64)
         as ::core::ffi::c_int
 }
@@ -3472,16 +3468,13 @@ unsafe extern "C" fn percentStep(
         i = percentBinarySearch(p, y, 0 as ::core::ffi::c_int);
         let __p_ref = unsafe { &mut *p };
         if i < __p_ref.nUsed as ::core::ffi::c_int as crate::src::ext::rtree::rtree::i64_0 {
-            ::libc::memmove(
-                __p_ref.a.offset((i + 1 as crate::src::ext::rtree::rtree::i64_0) as isize) as *mut ::core::ffi::c_double
-                    as *mut ::core::ffi::c_void,
-                __p_ref.a.offset(i as isize) as *mut ::core::ffi::c_double
-                    as *const ::core::ffi::c_void,
-                __p_ref.nUsed
+            ::core::ptr::copy(
+                    __p_ref.a.offset(i as isize) as *mut ::core::ffi::c_double as *const u8,
+                    __p_ref.a.offset((i + 1 as crate::src::ext::rtree::rtree::i64_0) as isize) as *mut ::core::ffi::c_double as *mut u8,
+                    __p_ref.nUsed
                     .wrapping_sub(i as crate::src::ext::rtree::rtree::u64_0)
-                    .wrapping_mul(::core::mem::size_of::<::core::ffi::c_double>() as crate::src::ext::rtree::rtree::u64_0)
-                    as crate::__stddef_size_t_h::size_t,
-            );
+                    .wrapping_mul(::core::mem::size_of::<::core::ffi::c_double>() as crate::src::ext::rtree::rtree::u64_0) as usize,
+                );
         }
         *__p_ref.a.offset(i as isize) = y;
         __p_ref.nUsed = __p_ref.nUsed.wrapping_add(1);
@@ -3602,15 +3595,13 @@ unsafe extern "C" fn percentInverse(
         let __p_ref = unsafe { &mut *p };
         __p_ref.nUsed = __p_ref.nUsed.wrapping_sub(1);
         if i < __p_ref.nUsed as ::core::ffi::c_int as crate::src::ext::rtree::rtree::i64_0 {
-            ::libc::memmove(
-                __p_ref.a.offset(i as isize) as *mut ::core::ffi::c_double as *mut ::core::ffi::c_void,
-                __p_ref.a.offset((i + 1 as crate::src::ext::rtree::rtree::i64_0) as isize) as *mut ::core::ffi::c_double
-                    as *const ::core::ffi::c_void,
-                __p_ref.nUsed
+            ::core::ptr::copy(
+                    __p_ref.a.offset((i + 1 as crate::src::ext::rtree::rtree::i64_0) as isize) as *mut ::core::ffi::c_double as *const u8,
+                    __p_ref.a.offset(i as isize) as *mut ::core::ffi::c_double as *mut u8,
+                    __p_ref.nUsed
                     .wrapping_sub(i as crate::src::ext::rtree::rtree::u64_0)
-                    .wrapping_mul(::core::mem::size_of::<::core::ffi::c_double>() as crate::src::ext::rtree::rtree::u64_0)
-                    as crate::__stddef_size_t_h::size_t,
-            );
+                    .wrapping_mul(::core::mem::size_of::<::core::ffi::c_double>() as crate::src::ext::rtree::rtree::u64_0) as usize,
+                );
         }
     }
 }

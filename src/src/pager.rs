@@ -588,11 +588,11 @@ unsafe extern "C" fn writeJournalHdr(mut pPager: *mut Pager) -> ::core::ffi::c_i
         || __pPager_ref.journalMode as ::core::ffi::c_int == crate::src::src::pager::PAGER_JOURNALMODE_MEMORY
         || crate::src::src::os::sqlite3OsDeviceCharacteristics(__pPager_ref.fd as *mut crate::sqlite3_h::sqlite3_file) & crate::sqlite3_h::SQLITE_IOCAP_SAFE_APPEND != 0
     {
-        ::libc::memcpy(
-            zHeader as *mut ::core::ffi::c_void,
-            &raw const aJournalMagic as *const ::core::ffi::c_uchar as *const ::core::ffi::c_void,
-            ::core::mem::size_of::<[::core::ffi::c_uchar; 8]>() as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    &raw const aJournalMagic as *const ::core::ffi::c_uchar as *const u8,
+                    zHeader as *mut u8,
+                    ::core::mem::size_of::<[::core::ffi::c_uchar; 8]>() as usize,
+                );
         crate::src::src::util::sqlite3Put4byte(
             zHeader.offset(::core::mem::size_of::<[::core::ffi::c_uchar; 8]>() as isize)
                 as *mut ::core::ffi::c_char as *mut crate::src::ext::rtree::rtree::u8_0,
@@ -1203,12 +1203,11 @@ unsafe extern "C" fn pager_playback_one_page(
         );
         __pPager_ref.xReiniter.expect("non-null function pointer")(pPg as *mut crate::src::src::pager::DbPage);
         if pgno == 1 as crate::src::src::pager::Pgno {
-            ::libc::memcpy(
-                &raw mut __pPager_ref.dbFileVers as *mut ::core::ffi::c_void,
-                (pData as *mut crate::src::ext::rtree::rtree::u8_0).offset(24 as isize) as *mut crate::src::ext::rtree::rtree::u8_0
-                    as *const ::core::ffi::c_void,
-                ::core::mem::size_of::<[::core::ffi::c_char; 16]>() as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    (pData as *mut crate::src::ext::rtree::rtree::u8_0).offset(24 as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *const u8,
+                    &raw mut __pPager_ref.dbFileVers as *mut u8,
+                    ::core::mem::size_of::<[::core::ffi::c_char; 16]>() as usize,
+                );
         }
         crate::src::src::pcache::sqlite3PcacheRelease(pPg as *mut crate::src::src::pcache::PgHdr);
     }
@@ -1602,11 +1601,11 @@ unsafe extern "C" fn readDbPage(mut pPg: *mut crate::src::src::pcache::PgHdr) ->
         } else {
             let mut dbFileVers: *mut crate::src::ext::rtree::rtree::u8_0 =
                 ((*pPg).pData as *mut crate::src::ext::rtree::rtree::u8_0).offset(24 as isize) as *mut crate::src::ext::rtree::rtree::u8_0;
-            ::libc::memcpy(
-                &raw mut (*pPager).dbFileVers as *mut ::core::ffi::c_void,
-                dbFileVers as *const ::core::ffi::c_void,
-                ::core::mem::size_of::<[::core::ffi::c_char; 16]>() as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    dbFileVers as *const u8,
+                    &raw mut (*pPager).dbFileVers as *mut u8,
+                    ::core::mem::size_of::<[::core::ffi::c_char; 16]>() as usize,
+                );
         }
     }
     sqlite3_pager_readdb_count += 1;
@@ -2381,11 +2380,10 @@ unsafe extern "C" fn syncJournal(
                 let mut iNextHdrOffset: crate::src::ext::rtree::rtree::i64_0 = 0;
                 let mut aMagic: [crate::src::ext::rtree::rtree::u8_0; 8] = [0; 8];
                 let mut zHeader: [crate::src::ext::rtree::rtree::u8_0; 12] = [0; 12];
-                ::libc::memcpy(
-                    &raw mut zHeader as *mut crate::src::ext::rtree::rtree::u8_0 as *mut ::core::ffi::c_void,
-                    &raw const aJournalMagic as *const ::core::ffi::c_uchar
-                        as *const ::core::ffi::c_void,
-                    ::core::mem::size_of::<[::core::ffi::c_uchar; 8]>() as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    &raw const aJournalMagic as *const ::core::ffi::c_uchar as *const u8,
+                    &raw mut zHeader as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    ::core::mem::size_of::<[::core::ffi::c_uchar; 8]>() as usize,
                 );
                 crate::src::src::util::sqlite3Put4byte(
                     (&raw mut zHeader as *mut crate::src::ext::rtree::rtree::u8_0)
@@ -2521,11 +2519,10 @@ unsafe extern "C" fn pager_write_pagelist(
                 offset,
             );
             if pgno == 1 as crate::src::src::pager::Pgno {
-                ::libc::memcpy(
-                    &raw mut __pPager_ref.dbFileVers as *mut ::core::ffi::c_void,
-                    pData.offset(24 as isize) as *mut ::core::ffi::c_char
-                        as *const ::core::ffi::c_void,
-                    ::core::mem::size_of::<[::core::ffi::c_char; 16]>() as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    pData.offset(24 as isize) as *mut ::core::ffi::c_char as *const u8,
+                    &raw mut __pPager_ref.dbFileVers as *mut u8,
+                    ::core::mem::size_of::<[::core::ffi::c_char; 16]>() as usize,
                 );
             }
             if pgno > __pPager_ref.dbFileSize {
@@ -2808,27 +2805,27 @@ pub unsafe extern "C" fn sqlite3PagerOpen(
     pPtr = pPtr.offset(journalFileSize as isize);
     (*pPager).jfd = pPtr as *mut crate::sqlite3_h::sqlite3_file;
     pPtr = pPtr.offset(journalFileSize as isize);
-    ::libc::memcpy(
-        pPtr as *mut ::core::ffi::c_void,
-        &raw mut pPager as *const ::core::ffi::c_void,
-        crate::sqliteInt_h::SQLITE_PTRSIZE as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    &raw mut pPager as *const u8,
+                    pPtr as *mut u8,
+                    crate::sqliteInt_h::SQLITE_PTRSIZE as usize,
+                );
     pPtr = pPtr.offset(crate::sqliteInt_h::SQLITE_PTRSIZE as isize);
     pPtr = pPtr.offset(4 as isize);
     (*pPager).zFilename = pPtr as *mut ::core::ffi::c_char;
     if nPathname > 0 as ::core::ffi::c_int {
-        ::libc::memcpy(
-            pPtr as *mut ::core::ffi::c_void,
-            zPathname as *const ::core::ffi::c_void,
-            nPathname as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    zPathname as *const u8,
+                    pPtr as *mut u8,
+                    nPathname as usize,
+                );
         pPtr = pPtr.offset((nPathname + 1 as ::core::ffi::c_int) as isize);
         if !zUri.is_null() {
-            ::libc::memcpy(
-                pPtr as *mut ::core::ffi::c_void,
-                zUri as *const ::core::ffi::c_void,
-                nUriByte as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    zUri as *const u8,
+                    pPtr as *mut u8,
+                    nUriByte as usize,
+                );
             pPtr = pPtr.offset(nUriByte as isize);
         } else {
             pPtr = pPtr.offset(1);
@@ -2836,34 +2833,34 @@ pub unsafe extern "C" fn sqlite3PagerOpen(
     }
     if nPathname > 0 as ::core::ffi::c_int {
         (*pPager).zJournal = pPtr as *mut ::core::ffi::c_char;
-        ::libc::memcpy(
-            pPtr as *mut ::core::ffi::c_void,
-            zPathname as *const ::core::ffi::c_void,
-            nPathname as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    zPathname as *const u8,
+                    pPtr as *mut u8,
+                    nPathname as usize,
+                );
         pPtr = pPtr.offset(nPathname as isize);
-        ::libc::memcpy(
-            pPtr as *mut ::core::ffi::c_void,
-            b"-journal\0" as *const u8 as *const ::core::ffi::c_char as *const ::core::ffi::c_void,
-            8 as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    b"-journal\0" as *const u8 as *const ::core::ffi::c_char as *const u8,
+                    pPtr as *mut u8,
+                    8 as usize,
+                );
         pPtr = pPtr.offset((8 as ::core::ffi::c_int + 1 as ::core::ffi::c_int) as isize);
     } else {
         (*pPager).zJournal = ::core::ptr::null_mut::<::core::ffi::c_char>();
     }
     if nPathname > 0 as ::core::ffi::c_int {
         (*pPager).zWal = pPtr as *mut ::core::ffi::c_char;
-        ::libc::memcpy(
-            pPtr as *mut ::core::ffi::c_void,
-            zPathname as *const ::core::ffi::c_void,
-            nPathname as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    zPathname as *const u8,
+                    pPtr as *mut u8,
+                    nPathname as usize,
+                );
         pPtr = pPtr.offset(nPathname as isize);
-        ::libc::memcpy(
-            pPtr as *mut ::core::ffi::c_void,
-            b"-wal\0" as *const u8 as *const ::core::ffi::c_char as *const ::core::ffi::c_void,
-            4 as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    b"-wal\0" as *const u8 as *const ::core::ffi::c_char as *const u8,
+                    pPtr as *mut u8,
+                    4 as usize,
+                );
         pPtr = pPtr.offset((4 as ::core::ffi::c_int + 1 as ::core::ffi::c_int) as isize);
     } else {
         (*pPager).zWal = ::core::ptr::null_mut::<::core::ffi::c_char>();

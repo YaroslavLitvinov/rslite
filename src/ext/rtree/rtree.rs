@@ -480,12 +480,12 @@ pub mod geopoly_c {
                         if !pOut.is_null() {
                             let __pOut_ref = unsafe { &mut *pOut };
                             __pOut_ref.nVertex = s.nVertex;
-                            ::libc::memcpy(
-                                &raw mut __pOut_ref.a as *mut crate::geopoly_c::GeoCoord as *mut ::core::ffi::c_void,
-                                s.a as *const ::core::ffi::c_void,
-                                ((s.nVertex * 2 as ::core::ffi::c_int) as crate::__stddef_size_t_h::size_t)
-                                    .wrapping_mul(::core::mem::size_of::<crate::geopoly_c::GeoCoord>() as crate::__stddef_size_t_h::size_t),
-                            );
+                            ::core::ptr::copy_nonoverlapping(
+                    s.a as *const u8,
+                    &raw mut __pOut_ref.a as *mut crate::geopoly_c::GeoCoord as *mut u8,
+                    (((s.nVertex * 2 as ::core::ffi::c_int) as crate::__stddef_size_t_h::size_t)
+                                    .wrapping_mul(::core::mem::size_of::<crate::geopoly_c::GeoCoord>() as crate::__stddef_size_t_h::size_t)) as usize,
+                );
                             __pOut_ref.hdr[0 as ::core::ffi::c_int as usize] =
                                 *(&raw mut x as *mut ::core::ffi::c_uchar);
                             __pOut_ref.hdr[1 as ::core::ffi::c_int as usize] = (s.nVertex
@@ -570,11 +570,11 @@ pub mod geopoly_c {
                 } else {
                     let mut x: ::core::ffi::c_int = 1 as ::core::ffi::c_int;
                     (*p).nVertex = nVertex;
-                    ::libc::memcpy(
-                        &raw mut (*p).hdr as *mut ::core::ffi::c_uchar as *mut ::core::ffi::c_void,
-                        a as *const ::core::ffi::c_void,
-                        nByte as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    a as *const u8,
+                    &raw mut (*p).hdr as *mut ::core::ffi::c_uchar as *mut u8,
+                    nByte as usize,
+                );
                     if *a.offset(0 as isize) as ::core::ffi::c_int
                         != *(&raw mut x as *mut ::core::ffi::c_uchar) as ::core::ffi::c_int
                     {
@@ -1202,10 +1202,10 @@ pub mod geopoly_c {
             }
             if (*pBBox).isInit == 0 as ::core::ffi::c_int {
                 (*pBBox).isInit = 1 as ::core::ffi::c_int;
-                ::libc::memcpy(
-                    &raw mut (*pBBox).a as *mut RtreeCoord as *mut ::core::ffi::c_void,
-                    &raw mut a as *mut RtreeCoord as *const ::core::ffi::c_void,
-                    (::core::mem::size_of::<RtreeCoord>() as crate::__stddef_size_t_h::size_t).wrapping_mul(4 as crate::__stddef_size_t_h::size_t),
+                ::core::ptr::copy_nonoverlapping(
+                    &raw mut a as *mut RtreeCoord as *const u8,
+                    &raw mut (*pBBox).a as *mut RtreeCoord as *mut u8,
+                    ((::core::mem::size_of::<RtreeCoord>() as crate::__stddef_size_t_h::size_t).wrapping_mul(4 as crate::__stddef_size_t_h::size_t)) as usize,
                 );
             } else {
                 let __pBBox_ref = unsafe { &mut *pBBox };
@@ -1861,27 +1861,26 @@ pub mod geopoly_c {
         (*pRtree).eCoordType = RTREE_COORD_REAL32 as u8_0;
         (*pRtree).nDim = 2 as u8_0;
         (*pRtree).nDim2 = 4 as u8_0;
-        ::libc::memcpy(
-            (*pRtree).zDb as *mut ::core::ffi::c_void,
-            *argv.offset(1 as isize) as *const ::core::ffi::c_void,
-            nDb as crate::__stddef_size_t_h::size_t,
-        );
-        ::libc::memcpy(
-            (*pRtree).zName as *mut ::core::ffi::c_void,
-            *argv.offset(2 as isize) as *const ::core::ffi::c_void,
-            nName as crate::__stddef_size_t_h::size_t,
-        );
-        ::libc::memcpy(
-            (*pRtree).zNodeName as *mut ::core::ffi::c_void,
-            *argv.offset(2 as isize) as *const ::core::ffi::c_void,
-            nName as crate::__stddef_size_t_h::size_t,
-        );
-        ::libc::memcpy(
-            (*pRtree).zNodeName.offset(nName as isize) as *mut ::core::ffi::c_char
-                as *mut ::core::ffi::c_void,
-            b"_node\0" as *const u8 as *const ::core::ffi::c_char as *const ::core::ffi::c_void,
-            6 as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    *argv.offset(1 as isize) as *const u8,
+                    (*pRtree).zDb as *mut u8,
+                    nDb as usize,
+                );
+        ::core::ptr::copy_nonoverlapping(
+                    *argv.offset(2 as isize) as *const u8,
+                    (*pRtree).zName as *mut u8,
+                    nName as usize,
+                );
+        ::core::ptr::copy_nonoverlapping(
+                    *argv.offset(2 as isize) as *const u8,
+                    (*pRtree).zNodeName as *mut u8,
+                    nName as usize,
+                );
+        ::core::ptr::copy_nonoverlapping(
+                    b"_node\0" as *const u8 as *const ::core::ffi::c_char,
+                    (*pRtree).zNodeName.offset(nName as isize) as *mut ::core::ffi::c_char,
+                    6 as usize,
+                );
         pSql = crate::src::src::printf::sqlite3_str_new(db);
         crate::src::src::printf::sqlite3_str_appendf(
             pSql,
@@ -3436,11 +3435,11 @@ unsafe extern "C" fn nodeDeleteCell(
             - iCell
             - 1 as ::core::ffi::c_int)
             * __pRtree_ref.nBytesPerCell as ::core::ffi::c_int;
-    ::libc::memmove(
-        pDst as *mut ::core::ffi::c_void,
-        pSrc as *const ::core::ffi::c_void,
-        nByte as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy(
+                    pSrc as *const u8,
+                    pDst as *mut u8,
+                    nByte as usize,
+                );
     writeInt16(
         __pNode_ref.zData.offset(2 as isize) as *mut u8_0,
         readInt16(__pNode_ref.zData.offset(2 as isize) as *mut u8_0)
@@ -3988,11 +3987,11 @@ unsafe extern "C" fn rtreeNonleafConstraint(
         RTREE_FALSE => {}
         RTREE_EQ => {
             let mut c: RtreeCoord = RtreeCoord { f: 0. };
-            ::libc::memcpy(
-                &raw mut c.u as *mut ::core::ffi::c_void,
-                pCellData as *const ::core::ffi::c_void,
-                4 as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    pCellData as *const u8,
+                    &raw mut c.u as *mut u8,
+                    4 as usize,
+                );
             c.u = c.u >> 24 as ::core::ffi::c_int & 0xff as u32_0
                 | c.u >> 8 as ::core::ffi::c_int & 0xff00 as u32_0
                 | (c.u & 0xff as u32_0) << 24 as ::core::ffi::c_int
@@ -4005,10 +4004,10 @@ unsafe extern "C" fn rtreeNonleafConstraint(
             if (*p).u.rValue >= val {
                 pCellData = pCellData.offset(4 as isize);
                 let mut c_0: RtreeCoord = RtreeCoord { f: 0. };
-                ::libc::memcpy(
-                    &raw mut c_0.u as *mut ::core::ffi::c_void,
-                    pCellData as *const ::core::ffi::c_void,
-                    4 as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    pCellData as *const u8,
+                    &raw mut c_0.u as *mut u8,
+                    4 as usize,
                 );
                 c_0.u = c_0.u >> 24 as ::core::ffi::c_int & 0xff as u32_0
                     | c_0.u >> 8 as ::core::ffi::c_int & 0xff00 as u32_0
@@ -4026,11 +4025,11 @@ unsafe extern "C" fn rtreeNonleafConstraint(
         }
         RTREE_LE | RTREE_LT => {
             let mut c_1: RtreeCoord = RtreeCoord { f: 0. };
-            ::libc::memcpy(
-                &raw mut c_1.u as *mut ::core::ffi::c_void,
-                pCellData as *const ::core::ffi::c_void,
-                4 as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    pCellData as *const u8,
+                    &raw mut c_1.u as *mut u8,
+                    4 as usize,
+                );
             c_1.u = c_1.u >> 24 as ::core::ffi::c_int & 0xff as u32_0
                 | c_1.u >> 8 as ::core::ffi::c_int & 0xff00 as u32_0
                 | (c_1.u & 0xff as u32_0) << 24 as ::core::ffi::c_int
@@ -4047,11 +4046,11 @@ unsafe extern "C" fn rtreeNonleafConstraint(
         _ => {
             pCellData = pCellData.offset(4 as isize);
             let mut c_2: RtreeCoord = RtreeCoord { f: 0. };
-            ::libc::memcpy(
-                &raw mut c_2.u as *mut ::core::ffi::c_void,
-                pCellData as *const ::core::ffi::c_void,
-                4 as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    pCellData as *const u8,
+                    &raw mut c_2.u as *mut u8,
+                    4 as usize,
+                );
             c_2.u = c_2.u >> 24 as ::core::ffi::c_int & 0xff as u32_0
                 | c_2.u >> 8 as ::core::ffi::c_int & 0xff00 as u32_0
                 | (c_2.u & 0xff as u32_0) << 24 as ::core::ffi::c_int
@@ -4079,11 +4078,11 @@ unsafe extern "C" fn rtreeLeafConstraint(
     pCellData = pCellData
         .offset((8 as ::core::ffi::c_int + (*p).iCoord * 4 as ::core::ffi::c_int) as isize);
     let mut c: RtreeCoord = RtreeCoord { f: 0. };
-    ::libc::memcpy(
-        &raw mut c.u as *mut ::core::ffi::c_void,
-        pCellData as *const ::core::ffi::c_void,
-        4 as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    pCellData as *const u8,
+                    &raw mut c.u as *mut u8,
+                    4 as usize,
+                );
     c.u = c.u >> 24 as ::core::ffi::c_int & 0xff as u32_0
         | c.u >> 8 as ::core::ffi::c_int & 0xff00 as u32_0
         | (c.u & 0xff as u32_0) << 24 as ::core::ffi::c_int
@@ -4673,11 +4672,11 @@ unsafe extern "C" fn deserializeGeometry(
     );
     pBlob = pInfo.offset(1 as isize) as *mut crate::sqlite3_h::sqlite3_rtree_query_info
         as *mut RtreeMatchArg;
-    ::libc::memcpy(
-        pBlob as *mut ::core::ffi::c_void,
-        pSrc as *const ::core::ffi::c_void,
-        (*pSrc).iSize as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    pSrc as *const u8,
+                    pBlob as *mut u8,
+                    (*pSrc).iSize as usize,
+                );
     (*pInfo).pContext = (*pBlob).cb.pContext;
     (*pInfo).nParam = (*pBlob).nParam;
     (*pInfo).aParam = &raw mut (*pBlob).aParam as *mut RtreeDValue as *mut crate::sqlite3_h::sqlite3_rtree_dbl;
@@ -4957,11 +4956,11 @@ unsafe extern "C" fn rtreeBestIndex(
         if __pIdxInfo_ref.idxStr.is_null() {
             return crate::sqlite3_h::SQLITE_NOMEM;
         }
-        ::libc::memcpy(
-            __pIdxInfo_ref.idxStr as *mut ::core::ffi::c_void,
-            &raw mut zIdxStr as *mut ::core::ffi::c_char as *const ::core::ffi::c_void,
-            (iIdx + 1 as ::core::ffi::c_int) as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    &raw mut zIdxStr as *mut ::core::ffi::c_char as *const u8,
+                    __pIdxInfo_ref.idxStr as *mut u8,
+                    (iIdx + 1 as ::core::ffi::c_int) as usize,
+                );
     }
     nRow = pRtree.nRowEst >> iIdx / 2 as ::core::ffi::c_int;
     __pIdxInfo_ref.estimatedCost = 6.0f64 * nRow as ::core::ffi::c_double;
@@ -5418,11 +5417,11 @@ unsafe extern "C" fn SortByDimension(
             aIdx.offset(nLeft as isize) as *mut ::core::ffi::c_int;
         SortByDimension(pRtree, aLeft, nLeft, iDim, aCell, aSpare);
         SortByDimension(pRtree, aRight, nRight, iDim, aCell, aSpare);
-        ::libc::memcpy(
-            aSpare as *mut ::core::ffi::c_void,
-            aLeft as *const ::core::ffi::c_void,
-            (::core::mem::size_of::<::core::ffi::c_int>() as crate::__stddef_size_t_h::size_t).wrapping_mul(nLeft as crate::__stddef_size_t_h::size_t),
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    aLeft as *const u8,
+                    aSpare as *mut u8,
+                    ((::core::mem::size_of::<::core::ffi::c_int>() as crate::__stddef_size_t_h::size_t).wrapping_mul(nLeft as crate::__stddef_size_t_h::size_t)) as usize,
+                );
         aLeft = aSpare;
         while iLeft < nLeft || iRight < nRight {
             let __pRtree_ref = unsafe { &*pRtree };
@@ -5565,23 +5564,23 @@ unsafe extern "C" fn splitNodeStartree(
             let mut kk: ::core::ffi::c_int = 0;
             let mut overlap: RtreeDValue = 0.;
             let mut area: RtreeDValue = 0.;
-            ::libc::memcpy(
-                &raw mut left as *mut ::core::ffi::c_void,
-                aCell.offset(
+            ::core::ptr::copy_nonoverlapping(
+                    aCell.offset(
                     *(*aaSorted.offset(ii as isize)).offset(0 as isize)
                         as isize,
-                ) as *mut RtreeCell as *const ::core::ffi::c_void,
-                ::core::mem::size_of::<RtreeCell>() as crate::__stddef_size_t_h::size_t,
-            );
-            ::libc::memcpy(
-                &raw mut right as *mut ::core::ffi::c_void,
-                aCell.offset(
+                ) as *mut RtreeCell as *const u8,
+                    &raw mut left as *mut u8,
+                    ::core::mem::size_of::<RtreeCell>() as usize,
+                );
+            ::core::ptr::copy_nonoverlapping(
+                    aCell.offset(
                     *(*aaSorted.offset(ii as isize))
                         .offset((nCell - 1 as ::core::ffi::c_int) as isize)
                         as isize,
-                ) as *mut RtreeCell as *const ::core::ffi::c_void,
-                ::core::mem::size_of::<RtreeCell>() as crate::__stddef_size_t_h::size_t,
-            );
+                ) as *mut RtreeCell as *const u8,
+                    &raw mut right as *mut u8,
+                    ::core::mem::size_of::<RtreeCell>() as usize,
+                );
             kk = 1 as ::core::ffi::c_int;
             while kk < nCell - 1 as ::core::ffi::c_int {
                 if kk < nLeft {
@@ -5630,20 +5629,20 @@ unsafe extern "C" fn splitNodeStartree(
         }
         ii += 1;
     }
-    ::libc::memcpy(
-        pBboxLeft as *mut ::core::ffi::c_void,
-        aCell.offset(
+    ::core::ptr::copy_nonoverlapping(
+                    aCell.offset(
             *(*aaSorted.offset(iBestDim as isize)).offset(0 as isize)
                 as isize,
-        ) as *mut RtreeCell as *const ::core::ffi::c_void,
-        ::core::mem::size_of::<RtreeCell>() as crate::__stddef_size_t_h::size_t,
-    );
-    ::libc::memcpy(
-        pBboxRight as *mut ::core::ffi::c_void,
-        aCell.offset(*(*aaSorted.offset(iBestDim as isize)).offset(iBestSplit as isize) as isize)
-            as *mut RtreeCell as *const ::core::ffi::c_void,
-        ::core::mem::size_of::<RtreeCell>() as crate::__stddef_size_t_h::size_t,
-    );
+        ) as *mut RtreeCell as *const u8,
+                    pBboxLeft as *mut u8,
+                    ::core::mem::size_of::<RtreeCell>() as usize,
+                );
+    ::core::ptr::copy_nonoverlapping(
+                    aCell.offset(*(*aaSorted.offset(iBestDim as isize)).offset(iBestSplit as isize) as isize)
+            as *mut RtreeCell as *const u8,
+                    pBboxRight as *mut u8,
+                    ::core::mem::size_of::<RtreeCell>() as usize,
+                );
     ii = 0 as ::core::ffi::c_int;
     while ii < nCell {
         let mut pTarget: *mut RtreeNode = if ii < iBestSplit { pLeft } else { pRight };
@@ -5766,11 +5765,11 @@ unsafe extern "C" fn SplitNode(
             i += 1;
         }
         nodeZero(pRtree, pNode);
-        ::libc::memcpy(
-            aCell.offset(nCell as isize) as *mut RtreeCell as *mut ::core::ffi::c_void,
-            pCell as *const ::core::ffi::c_void,
-            ::core::mem::size_of::<RtreeCell>() as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    pCell as *const u8,
+                    aCell.offset(nCell as isize) as *mut RtreeCell as *mut u8,
+                    ::core::mem::size_of::<RtreeCell>() as usize,
+                );
         nCell += 1;
         if (*pNode).iNode == 1 as i64_0 {
             pRight = nodeNew(pRtree, pNode);
@@ -7153,27 +7152,26 @@ unsafe extern "C" fn rtreeInit(
         .offset((nName + 1 as ::core::ffi::c_int) as isize)
         as *mut ::core::ffi::c_char;
     (*pRtree).eCoordType = eCoordType as u8_0;
-    ::libc::memcpy(
-        (*pRtree).zDb as *mut ::core::ffi::c_void,
-        *argv.offset(1 as isize) as *const ::core::ffi::c_void,
-        nDb as crate::__stddef_size_t_h::size_t,
-    );
-    ::libc::memcpy(
-        (*pRtree).zName as *mut ::core::ffi::c_void,
-        *argv.offset(2 as isize) as *const ::core::ffi::c_void,
-        nName as crate::__stddef_size_t_h::size_t,
-    );
-    ::libc::memcpy(
-        (*pRtree).zNodeName as *mut ::core::ffi::c_void,
-        *argv.offset(2 as isize) as *const ::core::ffi::c_void,
-        nName as crate::__stddef_size_t_h::size_t,
-    );
-    ::libc::memcpy(
-        (*pRtree).zNodeName.offset(nName as isize) as *mut ::core::ffi::c_char
-            as *mut ::core::ffi::c_void,
-        b"_node\0" as *const u8 as *const ::core::ffi::c_char as *const ::core::ffi::c_void,
-        6 as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    *argv.offset(1 as isize) as *const u8,
+                    (*pRtree).zDb as *mut u8,
+                    nDb as usize,
+                );
+    ::core::ptr::copy_nonoverlapping(
+                    *argv.offset(2 as isize) as *const u8,
+                    (*pRtree).zName as *mut u8,
+                    nName as usize,
+                );
+    ::core::ptr::copy_nonoverlapping(
+                    *argv.offset(2 as isize) as *const u8,
+                    (*pRtree).zNodeName as *mut u8,
+                    nName as usize,
+                );
+    ::core::ptr::copy_nonoverlapping(
+                    b"_node\0" as *const u8 as *const ::core::ffi::c_char,
+                    (*pRtree).zNodeName.offset(nName as isize) as *mut ::core::ffi::c_char,
+                    6 as usize,
+                );
     pSql = crate::src::src::printf::sqlite3_str_new(db);
     crate::src::src::printf::sqlite3_str_appendf(
         pSql,
@@ -7488,10 +7486,10 @@ unsafe extern "C" fn rtreeCheckGetNode(
             if pRet.is_null() {
                 __pCheck_ref.rc = crate::sqlite3_h::SQLITE_NOMEM;
             } else {
-                ::libc::memcpy(
-                    pRet as *mut ::core::ffi::c_void,
-                    pNode as *const ::core::ffi::c_void,
-                    nNode as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    pNode as *const u8,
+                    pRet as *mut u8,
+                    nNode as usize,
                 );
                 *pnNode = nNode;
             }

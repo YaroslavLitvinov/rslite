@@ -603,12 +603,12 @@ pub unsafe extern "C" fn sqlite3AlterBeginAddColumn(
                     );
                     if !(__pNew_ref.aCol.is_null() || __pNew_ref.zName.is_null()) {
                         let __pTab_ref = unsafe { &*pTab };
-                        ::libc::memcpy(
-                            __pNew_ref.aCol as *mut ::core::ffi::c_void,
-                            __pTab_ref.aCol as *const ::core::ffi::c_void,
-                            (::core::mem::size_of::<crate::sqliteInt_h::Column>() as crate::__stddef_size_t_h::size_t)
-                                .wrapping_mul(__pNew_ref.nCol as crate::__stddef_size_t_h::size_t),
-                        );
+                        ::core::ptr::copy_nonoverlapping(
+                    __pTab_ref.aCol as *const u8,
+                    __pNew_ref.aCol as *mut u8,
+                    ((::core::mem::size_of::<crate::sqliteInt_h::Column>() as crate::__stddef_size_t_h::size_t)
+                                .wrapping_mul(__pNew_ref.nCol as crate::__stddef_size_t_h::size_t)) as usize,
+                );
                         i = 0 as ::core::ffi::c_int;
                         while i < __pNew_ref.nCol as ::core::ffi::c_int {
                             let mut pCol: *mut crate::sqliteInt_h::Column =
@@ -1311,11 +1311,11 @@ unsafe extern "C" fn renameEditSql(
     }
     if !zOut.is_null() {
         let mut nOut: crate::src::ext::rtree::rtree::i64_0 = nSql;
-        ::libc::memcpy(
-            zOut as *mut ::core::ffi::c_void,
-            zSql as *const ::core::ffi::c_void,
-            nSql as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    zSql as *const u8,
+                    zOut as *mut u8,
+                    nSql as usize,
+                );
         while !(*pRename).pList.is_null() {
             let mut iOff: ::core::ffi::c_int = 0;
             let mut nReplace: crate::src::ext::rtree::rtree::i64_0 = 0;
@@ -1339,10 +1339,10 @@ unsafe extern "C" fn renameEditSql(
                 }
             } else {
                 let __pBest_ref = unsafe { &mut *pBest };
-                ::libc::memcpy(
-                    zBuf1 as *mut ::core::ffi::c_void,
-                    __pBest_ref.t.z as *const ::core::ffi::c_void,
-                    __pBest_ref.t.n as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    __pBest_ref.t.z as *const u8,
+                    zBuf1 as *mut u8,
+                    __pBest_ref.t.n as usize,
                 );
                 *zBuf1.offset(__pBest_ref.t.n as isize) = 0 as ::core::ffi::c_char;
                 crate::src::src::util::sqlite3Dequote(zBuf1);
@@ -1365,23 +1365,20 @@ unsafe extern "C" fn renameEditSql(
             iOff = (*pBest).t.z.offset_from(zSql) as ::core::ffi::c_long as ::core::ffi::c_int;
             if (*pBest).t.n as crate::src::ext::rtree::rtree::i64_0 != nReplace {
                 let __pBest_ref = unsafe { &*pBest };
-                ::libc::memmove(
-                    zOut.offset((iOff as crate::src::ext::rtree::rtree::i64_0 + nReplace) as isize) as *mut ::core::ffi::c_char
-                        as *mut ::core::ffi::c_void,
+                ::core::ptr::copy(
                     zOut.offset((iOff as ::core::ffi::c_uint).wrapping_add(__pBest_ref.t.n) as isize)
-                        as *mut ::core::ffi::c_char
-                        as *const ::core::ffi::c_void,
-                    (nOut - (iOff as ::core::ffi::c_uint).wrapping_add(__pBest_ref.t.n) as crate::src::ext::rtree::rtree::i64_0)
-                        as crate::__stddef_size_t_h::size_t,
+                        as *const ::core::ffi::c_char,
+                    zOut.offset((iOff as crate::src::ext::rtree::rtree::i64_0 + nReplace) as isize) as *mut ::core::ffi::c_char,
+                    (nOut - (iOff as ::core::ffi::c_uint).wrapping_add(__pBest_ref.t.n) as crate::src::ext::rtree::rtree::i64_0) as usize,
                 );
                 nOut += nReplace - __pBest_ref.t.n as crate::src::ext::rtree::rtree::i64_0;
                 *zOut.offset(nOut as isize) = '\0' as i32 as ::core::ffi::c_char;
             }
-            ::libc::memcpy(
-                zOut.offset(iOff as isize) as *mut ::core::ffi::c_char as *mut ::core::ffi::c_void,
-                zReplace as *const ::core::ffi::c_void,
-                nReplace as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    zReplace as *const u8,
+                    zOut.offset(iOff as isize) as *mut ::core::ffi::c_char as *mut u8,
+                    nReplace as usize,
+                );
             crate::src::src::malloc::sqlite3DbFree(db as *mut crate::sqliteInt_h::sqlite3, pBest as *mut ::core::ffi::c_void);
         }
         crate::src::src::vdbeapi::sqlite3_result_text(

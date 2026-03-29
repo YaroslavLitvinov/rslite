@@ -97,10 +97,10 @@ unsafe extern "C" fn fts3tokDequoteArray(
                     ::libc::strlen(*argv.offset(i as isize)) as ::core::ffi::c_int;
                 let ref mut fresh0 = *azDequote.offset(i as isize);
                 *fresh0 = pSpace;
-                ::libc::memcpy(
-                    pSpace as *mut ::core::ffi::c_void,
-                    *argv.offset(i as isize) as *const ::core::ffi::c_void,
-                    (n + 1 as ::core::ffi::c_int) as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    *argv.offset(i as isize) as *const u8,
+                    pSpace as *mut u8,
+                    (n + 1 as ::core::ffi::c_int) as usize,
                 );
                 crate::src::ext::fts3::fts3::sqlite3Fts3Dequote(pSpace);
                 pSpace = pSpace.offset((n + 1 as ::core::ffi::c_int) as isize);
@@ -319,10 +319,10 @@ unsafe extern "C" fn fts3tokFilterMethod(
         } else {
             let __pCsr_ref = unsafe { &mut *pCsr };
             if nByte > 0 as crate::sqlite3_h::sqlite3_int64 {
-                ::libc::memcpy(
-                    __pCsr_ref.zInput as *mut ::core::ffi::c_void,
-                    zByte as *const ::core::ffi::c_void,
-                    nByte as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    zByte as *const u8,
+                    __pCsr_ref.zInput as *mut u8,
+                    nByte as usize,
                 );
             }
             *__pCsr_ref.zInput.offset(nByte as isize) = 0 as ::core::ffi::c_char;

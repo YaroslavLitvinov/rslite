@@ -160,11 +160,11 @@ unsafe extern "C" fn attachFunc(
                     if aNew.is_null() {
                         return;
                     }
-                    ::libc::memcpy(
-                        aNew as *mut ::core::ffi::c_void,
-                        __db_ref.aDb as *const ::core::ffi::c_void,
-                        (::core::mem::size_of::<crate::sqliteInt_h::Db>() as crate::__stddef_size_t_h::size_t).wrapping_mul(2 as crate::__stddef_size_t_h::size_t),
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    __db_ref.aDb as *const u8,
+                    aNew as *mut u8,
+                    ((::core::mem::size_of::<crate::sqliteInt_h::Db>() as crate::__stddef_size_t_h::size_t).wrapping_mul(2 as crate::__stddef_size_t_h::size_t)) as usize,
+                );
                 } else {
                     aNew = crate::src::src::malloc::sqlite3DbRealloc(
                         

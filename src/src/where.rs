@@ -131,11 +131,11 @@ pub unsafe extern "C" fn sqlite3WhereOkOnePass(
     mut pWInfo: *mut crate::whereInt_h::WhereInfo,
     mut aiCur: *mut ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    ::libc::memcpy(
-        aiCur as *mut ::core::ffi::c_void,
-        &raw mut (*pWInfo).aiCurOnePass as *mut ::core::ffi::c_int as *const ::core::ffi::c_void,
-        (::core::mem::size_of::<::core::ffi::c_int>() as crate::__stddef_size_t_h::size_t).wrapping_mul(2 as crate::__stddef_size_t_h::size_t),
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    &raw mut (*pWInfo).aiCurOnePass as *mut ::core::ffi::c_int as *const u8,
+                    aiCur as *mut u8,
+                    ((::core::mem::size_of::<::core::ffi::c_int>() as crate::__stddef_size_t_h::size_t).wrapping_mul(2 as crate::__stddef_size_t_h::size_t)) as usize,
+                );
     (*pWInfo).eOnePass as ::core::ffi::c_int
 }
 #[no_mangle]
@@ -149,11 +149,11 @@ pub unsafe extern "C" fn sqlite3WhereUsesDeferredSeek(
 unsafe extern "C" fn whereOrMove(mut pDest: *mut crate::whereInt_h::WhereOrSet, mut pSrc: *mut crate::whereInt_h::WhereOrSet) {
     let __pDest_ref = unsafe { &mut *pDest };
     __pDest_ref.n = (*pSrc).n;
-    ::libc::memcpy(
-        &raw mut __pDest_ref.a as *mut crate::whereInt_h::WhereOrCost as *mut ::core::ffi::c_void,
-        &raw mut (*pSrc).a as *mut crate::whereInt_h::WhereOrCost as *const ::core::ffi::c_void,
-        (__pDest_ref.n as crate::__stddef_size_t_h::size_t).wrapping_mul(::core::mem::size_of::<crate::whereInt_h::WhereOrCost>() as crate::__stddef_size_t_h::size_t),
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    &raw mut (*pSrc).a as *mut crate::whereInt_h::WhereOrCost as *const u8,
+                    &raw mut __pDest_ref.a as *mut crate::whereInt_h::WhereOrCost as *mut u8,
+                    ((__pDest_ref.n as crate::__stddef_size_t_h::size_t).wrapping_mul(::core::mem::size_of::<crate::whereInt_h::WhereOrCost>() as crate::__stddef_size_t_h::size_t)) as usize,
+                );
 }
 
 unsafe extern "C" fn whereOrInsert(
@@ -1810,11 +1810,11 @@ unsafe extern "C" fn whereLoopResize(
     if paNew.is_null() {
         return crate::sqliteInt_h::SQLITE_NOMEM_BKPT;
     }
-    ::libc::memcpy(
-        paNew as *mut ::core::ffi::c_void,
-        __p_ref.aLTerm as *const ::core::ffi::c_void,
-        (::core::mem::size_of::<*mut crate::whereInt_h::WhereTerm>() as crate::__stddef_size_t_h::size_t).wrapping_mul(__p_ref.nLSlot as crate::__stddef_size_t_h::size_t),
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    __p_ref.aLTerm as *const u8,
+                    paNew as *mut u8,
+                    ((::core::mem::size_of::<*mut crate::whereInt_h::WhereTerm>() as crate::__stddef_size_t_h::size_t).wrapping_mul(__p_ref.nLSlot as crate::__stddef_size_t_h::size_t)) as usize,
+                );
     if __p_ref.aLTerm != &raw mut __p_ref.aLTermSpace as *mut *mut crate::whereInt_h::WhereTerm {
         crate::src::src::malloc::sqlite3DbFreeNN(db as *mut crate::sqliteInt_h::sqlite3, __p_ref.aLTerm as *mut ::core::ffi::c_void);
     }
@@ -1841,16 +1841,16 @@ unsafe extern "C" fn whereLoopXfer(
         );
         return crate::sqliteInt_h::SQLITE_NOMEM_BKPT;
     }
-    ::libc::memcpy(
-        pTo as *mut ::core::ffi::c_void,
-        pFrom as *const ::core::ffi::c_void,
-        crate::whereInt_h::WHERE_LOOP_XFER_SZ as crate::__stddef_size_t_h::size_t,
-    );
-    ::libc::memcpy(
-        __pTo_ref.aLTerm as *mut ::core::ffi::c_void,
-        __pFrom_ref.aLTerm as *const ::core::ffi::c_void,
-        (__pTo_ref.nLTerm as crate::__stddef_size_t_h::size_t).wrapping_mul(::core::mem::size_of::<*mut crate::whereInt_h::WhereTerm>() as crate::__stddef_size_t_h::size_t),
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    pFrom as *const u8,
+                    pTo as *mut u8,
+                    crate::whereInt_h::WHERE_LOOP_XFER_SZ as usize,
+                );
+    ::core::ptr::copy_nonoverlapping(
+                    __pFrom_ref.aLTerm as *const u8,
+                    __pTo_ref.aLTerm as *mut u8,
+                    ((__pTo_ref.nLTerm as crate::__stddef_size_t_h::size_t).wrapping_mul(::core::mem::size_of::<*mut crate::whereInt_h::WhereTerm>() as crate::__stddef_size_t_h::size_t)) as usize,
+                );
     if __pFrom_ref.wsFlags & crate::whereInt_h::WHERE_VIRTUALTABLE as crate::src::ext::rtree::rtree::u32_0 != 0 {
         __pFrom_ref.u.vtab.set_needFree(0 as crate::src::ext::rtree::rtree::u32_0 as crate::src::ext::rtree::rtree::u32_0);
     } else if __pFrom_ref.wsFlags & crate::whereInt_h::WHERE_AUTO_INDEX as crate::src::ext::rtree::rtree::u32_0 != 0 as crate::src::ext::rtree::rtree::u32_0 {
@@ -5065,12 +5065,12 @@ unsafe extern "C" fn wherePathSolver(
                                     (*pTo).rCost = rCost;
                                     (*pTo).rUnsort = rUnsort;
                                     (*pTo).isOrdered = isOrdered;
-                                    ::libc::memcpy(
-                                        (*pTo).aLoop as *mut ::core::ffi::c_void,
-                                        __pFrom_ref.aLoop as *const ::core::ffi::c_void,
-                                        (::core::mem::size_of::<*mut crate::whereInt_h::WhereLoop>() as crate::__stddef_size_t_h::size_t)
-                                            .wrapping_mul(iLoop as crate::__stddef_size_t_h::size_t),
-                                    );
+                                    ::core::ptr::copy_nonoverlapping(
+                    __pFrom_ref.aLoop as *const u8,
+                    (*pTo).aLoop as *mut u8,
+                    ((::core::mem::size_of::<*mut crate::whereInt_h::WhereLoop>() as crate::__stddef_size_t_h::size_t)
+                                            .wrapping_mul(iLoop as crate::__stddef_size_t_h::size_t)) as usize,
+                );
                                     let ref mut fresh11 = *(*pTo).aLoop.offset(iLoop as isize);
                                     *fresh11 = pWLoop;
                                     if nTo >= mxChoice {
@@ -5513,16 +5513,14 @@ unsafe extern "C" fn whereOmitNoopJoin(
                                     - i) as usize)
                                     .wrapping_mul(::core::mem::size_of::<crate::whereInt_h::WhereLevel>() as usize)
                                     as ::core::ffi::c_int;
-                            ::libc::memmove(
-                                (&raw mut __pWInfo_ref.a as *mut crate::whereInt_h::WhereLevel).offset(i as isize)
-                                    as *mut crate::whereInt_h::WhereLevel
-                                    as *mut ::core::ffi::c_void,
-                                (&raw mut __pWInfo_ref.a as *mut crate::whereInt_h::WhereLevel)
+                            ::core::ptr::copy(
+                    (&raw mut __pWInfo_ref.a as *mut crate::whereInt_h::WhereLevel)
                                     .offset((i + 1 as ::core::ffi::c_int) as isize)
-                                    as *mut crate::whereInt_h::WhereLevel
-                                    as *const ::core::ffi::c_void,
-                                nByte as crate::__stddef_size_t_h::size_t,
-                            );
+                                    as *mut crate::whereInt_h::WhereLevel as *const u8,
+                    (&raw mut __pWInfo_ref.a as *mut crate::whereInt_h::WhereLevel).offset(i as isize)
+                                    as *mut crate::whereInt_h::WhereLevel as *mut u8,
+                    nByte as usize,
+                );
                         }
                         __pWInfo_ref.nLevel = __pWInfo_ref.nLevel.wrapping_sub(1);
                     }

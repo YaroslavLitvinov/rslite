@@ -104,21 +104,21 @@ unsafe extern "C" fn resolveAlias(
             pDup =  crate::src::src::expr::sqlite3ExprAddCollateString(pParse as *const crate::sqliteInt_h::Parse,  pDup as *mut crate::sqliteInt_h::Expr, (*pExpr).u.zToken) as
     *mut crate::sqliteInt_h::Expr;
         }
-        ::libc::memcpy(
-            &raw mut temp as *mut ::core::ffi::c_void,
-            pDup as *const ::core::ffi::c_void,
-            ::core::mem::size_of::<crate::sqliteInt_h::Expr>() as crate::__stddef_size_t_h::size_t,
-        );
-        ::libc::memcpy(
-            pDup as *mut ::core::ffi::c_void,
-            pExpr as *const ::core::ffi::c_void,
-            ::core::mem::size_of::<crate::sqliteInt_h::Expr>() as crate::__stddef_size_t_h::size_t,
-        );
-        ::libc::memcpy(
-            pExpr as *mut ::core::ffi::c_void,
-            &raw mut temp as *const ::core::ffi::c_void,
-            ::core::mem::size_of::<crate::sqliteInt_h::Expr>() as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    pDup as *const u8,
+                    &raw mut temp as *mut u8,
+                    ::core::mem::size_of::<crate::sqliteInt_h::Expr>() as usize,
+                );
+        ::core::ptr::copy_nonoverlapping(
+                    pExpr as *const u8,
+                    pDup as *mut u8,
+                    ::core::mem::size_of::<crate::sqliteInt_h::Expr>() as usize,
+                );
+        ::core::ptr::copy_nonoverlapping(
+                    &raw mut temp as *const u8,
+                    pExpr as *mut u8,
+                    ::core::mem::size_of::<crate::sqliteInt_h::Expr>() as usize,
+                );
         if (*pExpr).flags & 0x1000000 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u32_0 != 0 as crate::src::ext::rtree::rtree::u32_0 {
             if !(*pExpr).y.pWin.is_null() {
                 (*(*pExpr).y.pWin).pOwner = pExpr;

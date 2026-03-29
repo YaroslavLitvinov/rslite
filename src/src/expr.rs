@@ -851,11 +851,11 @@ pub unsafe extern "C" fn sqlite3ExprAlloc(
                 __pNew_ref.u.zToken = pNew.offset(1 as isize) as *mut crate::sqliteInt_h::Expr
                     as *mut ::core::ffi::c_char;
                 if (*pToken).n != 0 {
-                    ::libc::memcpy(
-                        __pNew_ref.u.zToken as *mut ::core::ffi::c_void,
-                        (*pToken).z as *const ::core::ffi::c_void,
-                        (*pToken).n as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    (*pToken).z as *const u8,
+                    __pNew_ref.u.zToken as *mut u8,
+                    (*pToken).n as usize,
+                );
                 }
                 *__pNew_ref.u.zToken.offset((*pToken).n as isize) = 0 as ::core::ffi::c_char;
                 if dequote != 0
@@ -1487,18 +1487,18 @@ unsafe extern "C" fn exprDup(
             }
         }
         if dupFlags != 0 {
-            ::libc::memcpy(
-                sEdupBuf.zAlloc as *mut ::core::ffi::c_void,
-                p as *const ::core::ffi::c_void,
-                nNewSize as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    p as *const u8,
+                    sEdupBuf.zAlloc as *mut u8,
+                    nNewSize as usize,
+                );
         } else {
             let mut nSize: crate::src::ext::rtree::rtree::u32_0 = exprStructSize(p) as crate::src::ext::rtree::rtree::u32_0;
-            ::libc::memcpy(
-                sEdupBuf.zAlloc as *mut ::core::ffi::c_void,
-                p as *const ::core::ffi::c_void,
-                nSize as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    p as *const u8,
+                    sEdupBuf.zAlloc as *mut u8,
+                    nSize as usize,
+                );
             if (nSize as usize) < crate::sqliteInt_h::EXPR_FULLSIZE {
                 ::libc::memset(
                     sEdupBuf.zAlloc.offset(nSize as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut ::core::ffi::c_void,
@@ -1519,11 +1519,11 @@ unsafe extern "C" fn exprDup(
             __pNew_ref.u.zToken =
                 sEdupBuf.zAlloc.offset(nNewSize as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut ::core::ffi::c_char;
             let mut zToken: *mut ::core::ffi::c_char = __pNew_ref.u.zToken;
-            ::libc::memcpy(
-                zToken as *mut ::core::ffi::c_void,
-                (*p).u.zToken as *const ::core::ffi::c_void,
-                nToken as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    (*p).u.zToken as *const u8,
+                    zToken as *mut u8,
+                    nToken as usize,
+                );
             nNewSize += nToken;
         }
         sEdupBuf.zAlloc = sEdupBuf
@@ -1573,11 +1573,11 @@ unsafe extern "C" fn exprDup(
         }
     }
     if !pEdupBuf.is_null() {
-        ::libc::memcpy(
-            pEdupBuf as *mut ::core::ffi::c_void,
-            &raw mut sEdupBuf as *const ::core::ffi::c_void,
-            ::core::mem::size_of::<EdupBuf>() as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    &raw mut sEdupBuf as *const u8,
+                    pEdupBuf as *mut u8,
+                    ::core::mem::size_of::<EdupBuf>() as usize,
+                );
     }
     pNew
 }
@@ -1792,10 +1792,10 @@ pub unsafe extern "C" fn sqlite3SrcListDup(
                     .fg
                     .set_isSubquery(0 as ::core::ffi::c_uint as ::core::ffi::c_uint);
             } else {
-                ::libc::memcpy(
-                    pNewSubq as *mut ::core::ffi::c_void,
-                    (*pOldItem).u4.pSubq as *const ::core::ffi::c_void,
-                    ::core::mem::size_of::<crate::sqliteInt_h::Subquery>() as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    (*pOldItem).u4.pSubq as *const u8,
+                    pNewSubq as *mut u8,
+                    ::core::mem::size_of::<crate::sqliteInt_h::Subquery>() as usize,
                 );
                 (*pNewSubq).pSelect = sqlite3SelectDup(db, (*pNewSubq).pSelect, flags);
                 if (*pNewSubq).pSelect.is_null() {

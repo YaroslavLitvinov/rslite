@@ -1113,11 +1113,11 @@ unsafe extern "C" fn findInodeInfo(
             0 as ::core::ffi::c_int,
             ::core::mem::size_of::<unixInodeInfo>() as crate::__stddef_size_t_h::size_t,
         );
-        ::libc::memcpy(
-            &raw mut (*pInode).fileId as *mut ::core::ffi::c_void,
-            &raw mut fileId as *const ::core::ffi::c_void,
-            ::core::mem::size_of::<unixFileId>() as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    &raw mut fileId as *const u8,
+                    &raw mut (*pInode).fileId as *mut u8,
+                    ::core::mem::size_of::<unixFileId>() as usize,
+                );
         if crate::src::src::global::sqlite3Config.bCoreMutex != 0 {
             (*pInode).pLockMutex = crate::src::src::mutex::sqlite3_mutex_alloc(crate::sqlite3_h::SQLITE_MUTEX_FAST);
             if (*pInode).pLockMutex.is_null() {
@@ -4210,10 +4210,10 @@ unsafe extern "C" fn findCreateFileMode(
             && *zPath.offset(nDb as isize) as ::core::ffi::c_int != '.' as i32
         {
             if *zPath.offset(nDb as isize) as ::core::ffi::c_int == '-' as i32 {
-                ::libc::memcpy(
-                    &raw mut zDb as *mut ::core::ffi::c_char as *mut ::core::ffi::c_void,
-                    zPath as *const ::core::ffi::c_void,
-                    nDb as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    zPath as *const u8,
+                    &raw mut zDb as *mut ::core::ffi::c_char as *mut u8,
+                    nDb as usize,
                 );
                 zDb[nDb as usize] = '\0' as i32 as ::core::ffi::c_char;
                 rc = getFileMode(&raw mut zDb as *mut ::core::ffi::c_char, pMode, pUid, pGid);
@@ -4586,12 +4586,11 @@ unsafe extern "C" fn appendOnePathElement(
     let fresh1 = __pPath_ref.nUsed;
     __pPath_ref.nUsed += 1;
     *__pPath_ref.zOut.offset(fresh1 as isize) = '/' as i32 as ::core::ffi::c_char;
-    ::libc::memcpy(
-        __pPath_ref.zOut.offset(__pPath_ref.nUsed as isize) as *mut ::core::ffi::c_char
-            as *mut ::core::ffi::c_void,
-        zName as *const ::core::ffi::c_void,
-        nName as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    zName as *const u8,
+                    __pPath_ref.zOut.offset(__pPath_ref.nUsed as isize) as *mut ::core::ffi::c_char as *mut u8,
+                    nName as usize,
+                );
     __pPath_ref.nUsed += nName;
     if __pPath_ref.rc == crate::sqlite3_h::SQLITE_OK {
         let mut zIn: *const ::core::ffi::c_char = ::core::ptr::null::<::core::ffi::c_char>();

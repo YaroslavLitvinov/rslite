@@ -1296,11 +1296,11 @@ unsafe extern "C" fn fkActionTrigger(
             pStep = (*pTrigger).step_list;
             (*pStep).zTarget = pStep.offset(1 as isize) as *mut crate::sqliteInt_h::TriggerStep
                 as *mut ::core::ffi::c_char;
-            ::libc::memcpy(
-                (*pStep).zTarget as *mut ::core::ffi::c_void,
-                zFrom as *const ::core::ffi::c_void,
-                nFrom as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    zFrom as *const u8,
+                    (*pStep).zTarget as *mut u8,
+                    nFrom as usize,
+                );
             (*pStep).pWhere =  crate::src::src::expr::sqlite3ExprDup(db as *mut crate::sqliteInt_h::sqlite3,  pWhere as *const crate::sqliteInt_h::Expr, crate::sqliteInt_h::EXPRDUP_REDUCE) as *mut crate::sqliteInt_h::Expr;
             (*pStep).pExprList =  crate::src::src::expr::sqlite3ExprListDup(db as *mut crate::sqliteInt_h::sqlite3,  pList as *const crate::sqliteInt_h::ExprList, crate::sqliteInt_h::EXPRDUP_REDUCE) as
     *mut crate::sqliteInt_h::ExprList;

@@ -30,11 +30,11 @@ static mut sqlite3Prng: sqlite3PrngType = sqlite3PrngType {
 unsafe extern "C" fn chacha_block(mut out: *mut crate::src::ext::rtree::rtree::u32_0, mut in_0: *const crate::src::ext::rtree::rtree::u32_0) {
     let mut i: ::core::ffi::c_int = 0;
     let mut x: [crate::src::ext::rtree::rtree::u32_0; 16] = [0; 16];
-    ::libc::memcpy(
-        &raw mut x as *mut crate::src::ext::rtree::rtree::u32_0 as *mut ::core::ffi::c_void,
-        in_0 as *const ::core::ffi::c_void,
-        64 as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    in_0 as *const u8,
+                    &raw mut x as *mut crate::src::ext::rtree::rtree::u32_0 as *mut u8,
+                    64 as usize,
+                );
     i = 0 as ::core::ffi::c_int;
     while i < 10 as ::core::ffi::c_int {
         x[0 as ::core::ffi::c_int as usize] =
@@ -298,12 +298,12 @@ pub unsafe extern "C" fn sqlite3_randomness(
             0x79622d32 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u32_0,
             0x6b206574 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u32_0,
         ];
-        ::libc::memcpy(
-            (&raw mut sqlite3Prng.s as *mut crate::src::ext::rtree::rtree::u32_0).offset(0 as isize)
-                as *mut crate::src::ext::rtree::rtree::u32_0 as *mut ::core::ffi::c_void,
-            &raw const chacha20_init as *const crate::src::ext::rtree::rtree::u32_0 as *const ::core::ffi::c_void,
-            16 as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    &raw const chacha20_init as *const crate::src::ext::rtree::rtree::u32_0 as *const u8,
+                    (&raw mut sqlite3Prng.s as *mut crate::src::ext::rtree::rtree::u32_0).offset(0 as isize)
+                as *mut crate::src::ext::rtree::rtree::u32_0 as *mut u8,
+                    16 as usize,
+                );
         if pVfs.is_null() {
             ::libc::memset(
                 (&raw mut sqlite3Prng.s as *mut crate::src::ext::rtree::rtree::u32_0).offset(4 as isize)
@@ -327,21 +327,21 @@ pub unsafe extern "C" fn sqlite3_randomness(
     }
     loop {
         if N <= sqlite3Prng.n as ::core::ffi::c_int {
-            ::libc::memcpy(
-                zBuf as *mut ::core::ffi::c_void,
-                (&raw mut sqlite3Prng.out as *mut crate::src::ext::rtree::rtree::u8_0)
+            ::core::ptr::copy_nonoverlapping(
+                    (&raw mut sqlite3Prng.out as *mut crate::src::ext::rtree::rtree::u8_0)
                     .offset((sqlite3Prng.n as ::core::ffi::c_int - N) as isize)
-                    as *mut crate::src::ext::rtree::rtree::u8_0 as *const ::core::ffi::c_void,
-                N as crate::__stddef_size_t_h::size_t,
-            );
+                    as *mut crate::src::ext::rtree::rtree::u8_0 as *const u8,
+                    zBuf as *mut u8,
+                    N as usize,
+                );
             sqlite3Prng.n = (sqlite3Prng.n as ::core::ffi::c_int - N) as crate::src::ext::rtree::rtree::u8_0;
             break;
         } else {
             if sqlite3Prng.n as ::core::ffi::c_int > 0 as ::core::ffi::c_int {
-                ::libc::memcpy(
-                    zBuf as *mut ::core::ffi::c_void,
-                    &raw mut sqlite3Prng.out as *mut crate::src::ext::rtree::rtree::u8_0 as *const ::core::ffi::c_void,
-                    sqlite3Prng.n as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    &raw mut sqlite3Prng.out as *mut crate::src::ext::rtree::rtree::u8_0 as *const u8,
+                    zBuf as *mut u8,
+                    sqlite3Prng.n as usize,
                 );
                 N -= sqlite3Prng.n as ::core::ffi::c_int;
                 zBuf = zBuf.offset(sqlite3Prng.n as ::core::ffi::c_int as isize);
@@ -366,18 +366,18 @@ static mut sqlite3SavedPrng: sqlite3PrngType = sqlite3PrngType {
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3PrngSaveState() {
-    ::libc::memcpy(
-        &raw mut sqlite3SavedPrng as *mut ::core::ffi::c_void,
-        &raw mut sqlite3Prng as *const ::core::ffi::c_void,
-        ::core::mem::size_of::<sqlite3PrngType>() as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    &raw mut sqlite3Prng as *const u8,
+                    &raw mut sqlite3SavedPrng as *mut u8,
+                    ::core::mem::size_of::<sqlite3PrngType>() as usize,
+                );
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3PrngRestoreState() {
-    ::libc::memcpy(
-        &raw mut sqlite3Prng as *mut ::core::ffi::c_void,
-        &raw mut sqlite3SavedPrng as *const ::core::ffi::c_void,
-        ::core::mem::size_of::<sqlite3PrngType>() as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    &raw mut sqlite3SavedPrng as *const u8,
+                    &raw mut sqlite3Prng as *mut u8,
+                    ::core::mem::size_of::<sqlite3PrngType>() as usize,
+                );
 }

@@ -687,11 +687,11 @@ unsafe extern "C" fn statGetPage(
     );
     if rc == crate::sqlite3_h::SQLITE_OK {
         let mut a: *const crate::src::ext::rtree::rtree::u8_0 = crate::src::src::pager::sqlite3PagerGetData(pDbPage as *mut crate::src::src::pcache::PgHdr) as *const crate::src::ext::rtree::rtree::u8_0;
-        ::libc::memcpy(
-            (*pPg).aPg as *mut ::core::ffi::c_void,
-            a as *const ::core::ffi::c_void,
-            pgsz as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    a as *const u8,
+                    (*pPg).aPg as *mut u8,
+                    pgsz as usize,
+                );
         crate::src::src::pager::sqlite3PagerUnref(pDbPage as *mut crate::src::src::pcache::PgHdr);
     }
     rc

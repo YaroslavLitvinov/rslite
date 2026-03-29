@@ -120,15 +120,15 @@ unsafe extern "C" fn fts3auxConnectMethod(
                     as *const ::core::ffi::c_char;
                 (*(*p).pFts3Tab).db = db;
                 (*(*p).pFts3Tab).nIndex = 1 as ::core::ffi::c_int;
-                ::libc::memcpy(
-                    (*(*p).pFts3Tab).zDb as *mut ::core::ffi::c_char as *mut ::core::ffi::c_void,
-                    zDb as *const ::core::ffi::c_void,
-                    nDb as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    zDb as *const u8,
+                    (*(*p).pFts3Tab).zDb as *mut ::core::ffi::c_char as *mut u8,
+                    nDb as usize,
                 );
-                ::libc::memcpy(
-                    (*(*p).pFts3Tab).zName as *mut ::core::ffi::c_char as *mut ::core::ffi::c_void,
-                    zFts3 as *const ::core::ffi::c_void,
-                    nFts3 as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    zFts3 as *const u8,
+                    (*(*p).pFts3Tab).zName as *mut ::core::ffi::c_char as *mut u8,
+                    nFts3 as usize,
                 );
                 crate::src::ext::fts3::fts3::sqlite3Fts3Dequote((*(*p).pFts3Tab).zName as *mut ::core::ffi::c_char);
                 *ppVtab = p as *mut crate::sqlite3_h::sqlite3_vtab;

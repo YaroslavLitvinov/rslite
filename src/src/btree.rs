@@ -1211,24 +1211,20 @@ unsafe extern "C" fn defragmentPage(
                     if iFree2 + sz2 > usableSize {
                         return crate::src::src::main::sqlite3CorruptError(1665 as ::core::ffi::c_int);
                     }
-                    ::libc::memmove(
-                        data.offset((iFree + sz + sz2) as isize) as *mut ::core::ffi::c_uchar
-                            as *mut ::core::ffi::c_void,
-                        data.offset((iFree + sz) as isize) as *mut ::core::ffi::c_uchar
-                            as *const ::core::ffi::c_void,
-                        (iFree2 - (iFree + sz)) as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy(
+                    data.offset((iFree + sz) as isize) as *mut ::core::ffi::c_uchar as *const u8,
+                    data.offset((iFree + sz + sz2) as isize) as *mut ::core::ffi::c_uchar as *mut u8,
+                    (iFree2 - (iFree + sz)) as usize,
+                );
                     sz += sz2;
                 } else if iFree + sz > usableSize {
                     return crate::src::src::main::sqlite3CorruptError(1669 as ::core::ffi::c_int);
                 }
                 cbrk = top + sz;
-                ::libc::memmove(
-                    data.offset(cbrk as isize) as *mut ::core::ffi::c_uchar
-                        as *mut ::core::ffi::c_void,
-                    data.offset(top as isize) as *mut ::core::ffi::c_uchar
-                        as *const ::core::ffi::c_void,
-                    (iFree - top) as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy(
+                    data.offset(top as isize) as *mut ::core::ffi::c_uchar as *const u8,
+                    data.offset(cbrk as isize) as *mut ::core::ffi::c_uchar as *mut u8,
+                    (iFree - top) as usize,
                 );
                 pAddr = data.offset(cellOffset as isize) as *mut ::core::ffi::c_uchar as *mut crate::src::ext::rtree::rtree::u8_0;
                 while pAddr < pEnd {
@@ -1271,10 +1267,10 @@ unsafe extern "C" fn defragmentPage(
                     as ::core::ffi::c_int;
             if nCell > 0 as ::core::ffi::c_int {
                 temp = crate::src::src::pager::sqlite3PagerTempSpace((*__pPage_ref.pBt).pPager) as *mut ::core::ffi::c_uchar;
-                ::libc::memcpy(
-                    temp as *mut ::core::ffi::c_void,
-                    data as *const ::core::ffi::c_void,
-                    usableSize as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    data as *const u8,
+                    temp as *mut u8,
+                    usableSize as usize,
                 );
                 src = temp;
                 i = 0 as ::core::ffi::c_int;
@@ -1299,13 +1295,11 @@ unsafe extern "C" fn defragmentPage(
                     *pAddr_0.offset(0 as isize) =
                         (cbrk >> 8 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u8_0;
                     *pAddr_0.offset(1 as isize) = cbrk as crate::src::ext::rtree::rtree::u8_0;
-                    ::libc::memcpy(
-                        data.offset(cbrk as isize) as *mut ::core::ffi::c_uchar
-                            as *mut ::core::ffi::c_void,
-                        src.offset(pc as isize) as *mut ::core::ffi::c_uchar
-                            as *const ::core::ffi::c_void,
-                        size as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    src.offset(pc as isize) as *mut ::core::ffi::c_uchar as *const u8,
+                    data.offset(cbrk as isize) as *mut ::core::ffi::c_uchar as *mut u8,
+                    size as usize,
+                );
                     i += 1;
                 }
             }
@@ -1365,10 +1359,10 @@ unsafe extern "C" fn pageFindSlot(
                 {
                     return ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>();
                 }
-                ::libc::memcpy(
-                    aData.offset(iAddr as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut ::core::ffi::c_void,
-                    aData.offset(pc as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *const ::core::ffi::c_void,
-                    2 as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    aData.offset(pc as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *const u8,
+                    aData.offset(iAddr as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    2 as usize,
                 );
                 let ref mut fresh20 = *aData.offset((hdr + 7 as ::core::ffi::c_int) as isize);
                 *fresh20 =
@@ -2171,10 +2165,10 @@ pub unsafe extern "C" fn sqlite3BtreeOpen(
                 return crate::sqliteInt_h::SQLITE_NOMEM_BKPT;
             }
             if isMemdb != 0 {
-                ::libc::memcpy(
-                    zFullPathname as *mut ::core::ffi::c_void,
-                    zFilename as *const ::core::ffi::c_void,
-                    nFilename as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    zFilename as *const u8,
+                    zFullPathname as *mut u8,
+                    nFilename as usize,
                 );
             } else {
                 rc = crate::src::src::os::sqlite3OsFullPathname(pVfs as *mut crate::sqlite3_h::sqlite3_vfs, zFilename, nFullPathname, zFullPathname);
@@ -2971,11 +2965,11 @@ unsafe extern "C" fn newDatabase(mut pBt: *mut crate::btreeInt_h::BtShared) -> :
     if rc != 0 {
         return rc;
     }
-    ::libc::memcpy(
-        data as *mut ::core::ffi::c_void,
-        &raw const zMagicHeader as *const ::core::ffi::c_char as *const ::core::ffi::c_void,
-        ::core::mem::size_of::<[::core::ffi::c_char; 16]>() as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    &raw const zMagicHeader as *const ::core::ffi::c_char as *const u8,
+                    data as *mut u8,
+                    ::core::mem::size_of::<[::core::ffi::c_char; 16]>() as usize,
+                );
     *data.offset(16 as isize) = (__pBt_ref.pageSize >> 8 as ::core::ffi::c_int
         & 0xff as crate::src::ext::rtree::rtree::u32_0) as crate::src::ext::rtree::rtree::u8_0
         as ::core::ffi::c_uchar;
@@ -4316,11 +4310,11 @@ unsafe extern "C" fn accessPayload(
                     let mut aSave: [crate::src::ext::rtree::rtree::u8_0; 4] = [0; 4];
                     let mut aWrite: *mut crate::src::ext::rtree::rtree::u8_0 =
                         pBuf.offset(-(4 as ::core::ffi::c_int) as isize) as *mut crate::src::ext::rtree::rtree::u8_0;
-                    ::libc::memcpy(
-                        &raw mut aSave as *mut crate::src::ext::rtree::rtree::u8_0 as *mut ::core::ffi::c_void,
-                        aWrite as *const ::core::ffi::c_void,
-                        4 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    aWrite as *const u8,
+                    &raw mut aSave as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    4 as usize,
+                );
                     rc = crate::src::src::os::sqlite3OsRead(
                         
                         fd as *mut crate::sqlite3_h::sqlite3_file,
@@ -4329,11 +4323,11 @@ unsafe extern "C" fn accessPayload(
                         (*pBt).pageSize as crate::src::ext::rtree::rtree::i64_0 * nextPage.wrapping_sub(1 as crate::src::src::pager::Pgno) as crate::src::ext::rtree::rtree::i64_0,
                     );
                     nextPage = crate::src::src::util::sqlite3Get4byte(aWrite) as crate::src::src::pager::Pgno;
-                    ::libc::memcpy(
-                        aWrite as *mut ::core::ffi::c_void,
-                        &raw mut aSave as *mut crate::src::ext::rtree::rtree::u8_0 as *const ::core::ffi::c_void,
-                        4 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    &raw mut aSave as *mut crate::src::ext::rtree::rtree::u8_0 as *const u8,
+                    aWrite as *mut u8,
+                    4 as usize,
+                );
                 } else {
                     let mut pDbPage: *mut crate::src::src::pager::DbPage = ::core::ptr::null_mut::<crate::src::src::pager::DbPage>();
                     rc = crate::src::src::pager::sqlite3PagerGet(
@@ -5522,13 +5516,11 @@ unsafe extern "C" fn allocateBtreePage(
                         break;
                     }
                     *pPgno = iTrunk;
-                    ::libc::memcpy(
-                        (*pPage1).aData.offset(32 as isize) as *mut crate::src::ext::rtree::rtree::u8_0
-                            as *mut ::core::ffi::c_void,
-                        (*pTrunk).aData.offset(0 as isize) as *mut crate::src::ext::rtree::rtree::u8_0
-                            as *const ::core::ffi::c_void,
-                        4 as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    (*pTrunk).aData.offset(0 as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *const u8,
+                    (*pPage1).aData.offset(32 as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    4 as usize,
+                );
                     *ppPage = pTrunk;
                     pTrunk = ::core::ptr::null_mut::<crate::btreeInt_h::MemPage>();
                 } else if k
@@ -5552,29 +5544,25 @@ unsafe extern "C" fn allocateBtreePage(
                     }
                     if k == 0 as crate::src::ext::rtree::rtree::u32_0 {
                         if pPrevTrunk.is_null() {
-                            ::libc::memcpy(
-                                (*pPage1).aData.offset(32 as isize)
-                                    as *mut crate::src::ext::rtree::rtree::u8_0
-                                    as *mut ::core::ffi::c_void,
-                                (*pTrunk).aData.offset(0 as isize)
-                                    as *mut crate::src::ext::rtree::rtree::u8_0
-                                    as *const ::core::ffi::c_void,
-                                4 as crate::__stddef_size_t_h::size_t,
-                            );
+                            ::core::ptr::copy_nonoverlapping(
+                    (*pTrunk).aData.offset(0 as isize)
+                                    as *mut crate::src::ext::rtree::rtree::u8_0 as *const u8,
+                    (*pPage1).aData.offset(32 as isize)
+                                    as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    4 as usize,
+                );
                         } else {
                             rc = crate::src::src::pager::sqlite3PagerWrite((*pPrevTrunk).pDbPage as *mut crate::src::src::pcache::PgHdr);
                             if rc != crate::sqlite3_h::SQLITE_OK {
                                 break;
                             }
-                            ::libc::memcpy(
-                                (*pPrevTrunk).aData.offset(0 as isize)
-                                    as *mut crate::src::ext::rtree::rtree::u8_0
-                                    as *mut ::core::ffi::c_void,
-                                (*pTrunk).aData.offset(0 as isize)
-                                    as *mut crate::src::ext::rtree::rtree::u8_0
-                                    as *const ::core::ffi::c_void,
-                                4 as crate::__stddef_size_t_h::size_t,
-                            );
+                            ::core::ptr::copy_nonoverlapping(
+                    (*pTrunk).aData.offset(0 as isize)
+                                    as *mut crate::src::ext::rtree::rtree::u8_0 as *const u8,
+                    (*pPrevTrunk).aData.offset(0 as isize)
+                                    as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    4 as usize,
+                );
                         }
                     } else {
                         let mut pNewTrunk: *mut crate::btreeInt_h::MemPage = ::core::ptr::null_mut::<crate::btreeInt_h::MemPage>();
@@ -5600,29 +5588,25 @@ unsafe extern "C" fn allocateBtreePage(
                                 break;
                             } else {
                                 let __pNewTrunk_ref = unsafe { &mut *pNewTrunk };
-                                ::libc::memcpy(
-                                    __pNewTrunk_ref.aData.offset(0 as isize)
-                                        as *mut crate::src::ext::rtree::rtree::u8_0
-                                        as *mut ::core::ffi::c_void,
-                                    (*pTrunk).aData.offset(0 as isize)
-                                        as *mut crate::src::ext::rtree::rtree::u8_0
-                                        as *const ::core::ffi::c_void,
-                                    4 as crate::__stddef_size_t_h::size_t,
-                                );
+                                ::core::ptr::copy_nonoverlapping(
+                    (*pTrunk).aData.offset(0 as isize)
+                                        as *mut crate::src::ext::rtree::rtree::u8_0 as *const u8,
+                    __pNewTrunk_ref.aData.offset(0 as isize)
+                                        as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    4 as usize,
+                );
                                 crate::src::src::util::sqlite3Put4byte(
                                     __pNewTrunk_ref.aData.offset(4 as isize)
                                         as *mut crate::src::ext::rtree::rtree::u8_0,
                                     k.wrapping_sub(1 as crate::src::ext::rtree::rtree::u32_0),
                                 );
-                                ::libc::memcpy(
-                                    __pNewTrunk_ref.aData.offset(8 as isize)
-                                        as *mut crate::src::ext::rtree::rtree::u8_0
-                                        as *mut ::core::ffi::c_void,
-                                    (*pTrunk).aData.offset(12 as isize)
-                                        as *mut crate::src::ext::rtree::rtree::u8_0
-                                        as *const ::core::ffi::c_void,
-                                    k.wrapping_sub(1 as crate::src::ext::rtree::rtree::u32_0).wrapping_mul(4 as crate::src::ext::rtree::rtree::u32_0) as crate::__stddef_size_t_h::size_t,
-                                );
+                                ::core::ptr::copy_nonoverlapping(
+                    (*pTrunk).aData.offset(12 as isize)
+                                        as *mut crate::src::ext::rtree::rtree::u8_0 as *const u8,
+                    __pNewTrunk_ref.aData.offset(8 as isize)
+                                        as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    k.wrapping_sub(1 as crate::src::ext::rtree::rtree::u32_0).wrapping_mul(4 as crate::src::ext::rtree::rtree::u32_0) as usize,
+                );
                                 releasePage(pNewTrunk);
                                 if pPrevTrunk.is_null() {
                                     crate::src::src::util::sqlite3Put4byte(
@@ -5718,19 +5702,17 @@ unsafe extern "C" fn allocateBtreePage(
                             break;
                         }
                         if closest < k.wrapping_sub(1 as crate::src::ext::rtree::rtree::u32_0) {
-                            ::libc::memcpy(
-                                aData.offset(
-                                    (8 as crate::src::ext::rtree::rtree::u32_0).wrapping_add(closest.wrapping_mul(4 as crate::src::ext::rtree::rtree::u32_0))
-                                        as isize,
-                                ) as *mut ::core::ffi::c_uchar
-                                    as *mut ::core::ffi::c_void,
-                                aData
+                            ::core::ptr::copy_nonoverlapping(
+                    aData
                                     .offset((4 as crate::src::ext::rtree::rtree::u32_0).wrapping_add(k.wrapping_mul(4 as crate::src::ext::rtree::rtree::u32_0))
                                         as isize)
-                                    as *mut ::core::ffi::c_uchar
-                                    as *const ::core::ffi::c_void,
-                                4 as crate::__stddef_size_t_h::size_t,
-                            );
+                                    as *mut ::core::ffi::c_uchar as *const u8,
+                    aData.offset(
+                                    (8 as crate::src::ext::rtree::rtree::u32_0).wrapping_add(closest.wrapping_mul(4 as crate::src::ext::rtree::rtree::u32_0))
+                                        as isize,
+                                ) as *mut ::core::ffi::c_uchar as *mut u8,
+                    4 as usize,
+                );
                         }
                         crate::src::src::util::sqlite3Put4byte(
                             aData.offset(4 as isize) as *mut crate::src::ext::rtree::rtree::u8_0,
@@ -6137,11 +6119,11 @@ unsafe extern "C" fn fillInCell(
             *pPayload.offset(nPayload as isize) = 0 as ::core::ffi::c_uchar;
         }
         *pnSize = n;
-        ::libc::memcpy(
-            pPayload as *mut ::core::ffi::c_void,
-            pSrc as *const ::core::ffi::c_void,
-            nSrc as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    pSrc as *const u8,
+                    pPayload as *mut u8,
+                    nSrc as usize,
+                );
         ::libc::memset(
             pPayload.offset(nSrc as isize) as *mut ::core::ffi::c_void,
             0 as ::core::ffi::c_int,
@@ -6169,18 +6151,18 @@ unsafe extern "C" fn fillInCell(
             n = spaceLeft;
         }
         if nSrc >= n {
-            ::libc::memcpy(
-                pPayload as *mut ::core::ffi::c_void,
-                pSrc as *const ::core::ffi::c_void,
-                n as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    pSrc as *const u8,
+                    pPayload as *mut u8,
+                    n as usize,
+                );
         } else if nSrc > 0 as ::core::ffi::c_int {
             n = nSrc;
-            ::libc::memcpy(
-                pPayload as *mut ::core::ffi::c_void,
-                pSrc as *const ::core::ffi::c_void,
-                n as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    pSrc as *const u8,
+                    pPayload as *mut u8,
+                    n as usize,
+                );
         } else {
             ::libc::memset(
                 pPayload as *mut ::core::ffi::c_void,
@@ -6295,11 +6277,11 @@ unsafe extern "C" fn dropCell(
             .wrapping_sub(__pPage_ref.childPtrSize as crate::src::ext::rtree::rtree::u32_0)
             .wrapping_sub(8 as crate::src::ext::rtree::rtree::u32_0) as ::core::ffi::c_int;
     } else {
-        ::libc::memmove(
-            ptr as *mut ::core::ffi::c_void,
-            ptr.offset(2 as isize) as *const ::core::ffi::c_void,
-            (2 as ::core::ffi::c_int * (__pPage_ref.nCell as ::core::ffi::c_int - idx)) as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy(
+                    ptr.offset(2 as isize) as *const u8,
+                    ptr as *mut u8,
+                    (2 as ::core::ffi::c_int * (__pPage_ref.nCell as ::core::ffi::c_int - idx)) as usize,
+                );
         *(data.offset((hdr + 3 as ::core::ffi::c_int) as isize) as *mut crate::src::ext::rtree::rtree::u8_0)
             .offset(0 as isize) =
             (__pPage_ref.nCell as ::core::ffi::c_int >> 8 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u8_0;
@@ -6325,11 +6307,11 @@ unsafe extern "C" fn insertCell(
         || sz + 2 as ::core::ffi::c_int > (*pPage).nFree
     {
         if !pTemp.is_null() {
-            ::libc::memcpy(
-                pTemp as *mut ::core::ffi::c_void,
-                pCell as *const ::core::ffi::c_void,
-                sz as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    pCell as *const u8,
+                    pTemp as *mut u8,
+                    sz as usize,
+                );
             pCell = pTemp;
         }
         crate::src::src::util::sqlite3Put4byte(pCell, iChild as crate::src::ext::rtree::rtree::u32_0);
@@ -6351,21 +6333,20 @@ unsafe extern "C" fn insertCell(
             return rc;
         }
         __pPage_ref.nFree -= (2 as ::core::ffi::c_int + sz) as crate::src::fts5::u16_0 as ::core::ffi::c_int;
-        ::libc::memcpy(
-            data.offset((idx + 4 as ::core::ffi::c_int) as isize) as *mut crate::src::ext::rtree::rtree::u8_0
-                as *mut ::core::ffi::c_void,
-            pCell.offset(4 as isize) as *const ::core::ffi::c_void,
-            (sz - 4 as ::core::ffi::c_int) as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    pCell.offset(4 as isize) as *const u8,
+                    data.offset((idx + 4 as ::core::ffi::c_int) as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    (sz - 4 as ::core::ffi::c_int) as usize,
+                );
         crate::src::src::util::sqlite3Put4byte(data.offset(idx as isize) as *mut crate::src::ext::rtree::rtree::u8_0, iChild as crate::src::ext::rtree::rtree::u32_0);
         pIns = (*pPage)
             .aCellIdx
             .offset((i * 2 as ::core::ffi::c_int) as isize);
-        ::libc::memmove(
-            pIns.offset(2 as isize) as *mut ::core::ffi::c_void,
-            pIns as *const ::core::ffi::c_void,
-            (2 as ::core::ffi::c_int * (__pPage_ref.nCell as ::core::ffi::c_int - i)) as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy(
+                    pIns as *const u8,
+                    pIns.offset(2 as isize) as *mut u8,
+                    (2 as ::core::ffi::c_int * (__pPage_ref.nCell as ::core::ffi::c_int - i)) as usize,
+                );
         *pIns.offset(0 as isize) = (idx >> 8 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u8_0;
         *pIns.offset(1 as isize) = idx as crate::src::ext::rtree::rtree::u8_0;
         __pPage_ref.nCell = __pPage_ref.nCell.wrapping_add(1);
@@ -6418,19 +6399,19 @@ unsafe extern "C" fn insertCellFast(
             return rc;
         }
         __pPage_ref.nFree -= (2 as ::core::ffi::c_int + sz) as crate::src::fts5::u16_0 as ::core::ffi::c_int;
-        ::libc::memcpy(
-            data.offset(idx as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut ::core::ffi::c_void,
-            pCell as *const ::core::ffi::c_void,
-            sz as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    pCell as *const u8,
+                    data.offset(idx as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    sz as usize,
+                );
         pIns = (*pPage)
             .aCellIdx
             .offset((i * 2 as ::core::ffi::c_int) as isize);
-        ::libc::memmove(
-            pIns.offset(2 as isize) as *mut ::core::ffi::c_void,
-            pIns as *const ::core::ffi::c_void,
-            (2 as ::core::ffi::c_int * (__pPage_ref.nCell as ::core::ffi::c_int - i)) as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy(
+                    pIns as *const u8,
+                    pIns.offset(2 as isize) as *mut u8,
+                    (2 as ::core::ffi::c_int * (__pPage_ref.nCell as ::core::ffi::c_int - i)) as usize,
+                );
         *pIns.offset(0 as isize) = (idx >> 8 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u8_0;
         *pIns.offset(1 as isize) = idx as crate::src::ext::rtree::rtree::u8_0;
         __pPage_ref.nCell = __pPage_ref.nCell.wrapping_add(1);
@@ -6519,11 +6500,11 @@ unsafe extern "C" fn rebuildPage(
     if j > usableSize as crate::src::ext::rtree::rtree::u32_0 {
         j = 0 as crate::src::ext::rtree::rtree::u32_0;
     }
-    ::libc::memcpy(
-        pTmp.offset(j as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut ::core::ffi::c_void,
-        aData.offset(j as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *const ::core::ffi::c_void,
-        (usableSize as crate::src::ext::rtree::rtree::u32_0).wrapping_sub(j) as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    aData.offset(j as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *const u8,
+                    pTmp.offset(j as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    (usableSize as crate::src::ext::rtree::rtree::u32_0).wrapping_sub(j) as usize,
+                );
     k = 0 as ::core::ffi::c_int;
     while (*pCArray).ixNx[k as usize] <= i {
         k += 1;
@@ -6554,11 +6535,11 @@ unsafe extern "C" fn rebuildPage(
         if pData < pCellptr {
             return crate::src::src::main::sqlite3CorruptError(7651 as ::core::ffi::c_int);
         }
-        ::libc::memmove(
-            pData as *mut ::core::ffi::c_void,
-            pCell as *const ::core::ffi::c_void,
-            sz as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy(
+                    pCell as *const u8,
+                    pData as *mut u8,
+                    sz as usize,
+                );
         i += 1;
         if i >= iEnd {
             break;
@@ -6640,11 +6621,11 @@ unsafe extern "C" fn pageInsertArray(
             crate::src::src::main::sqlite3CorruptError(7738 as ::core::ffi::c_int);
             return 1 as ::core::ffi::c_int;
         }
-        ::libc::memmove(
-            pSlot as *mut ::core::ffi::c_void,
-            *__pCArray_ref.apCell.offset(i as isize) as *const ::core::ffi::c_void,
-            sz as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy(
+                    *__pCArray_ref.apCell.offset(i as isize) as *const u8,
+                    pSlot as *mut u8,
+                    sz as usize,
+                );
         *pCellptr.offset(0 as isize) =
             (pSlot.offset_from(aData) as ::core::ffi::c_long >> 8 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u8_0;
         *pCellptr.offset(1 as isize) =
@@ -6773,14 +6754,13 @@ unsafe extern "C" fn editPage(
         if nShift > nCell {
             return crate::src::src::main::sqlite3CorruptError(7860 as ::core::ffi::c_int);
         }
-        ::libc::memmove(
-            __pPg_ref.aCellIdx as *mut ::core::ffi::c_void,
-            (*pPg)
+        ::core::ptr::copy(
+                    (*pPg)
                 .aCellIdx
-                .offset((nShift * 2 as ::core::ffi::c_int) as isize) as *mut crate::src::ext::rtree::rtree::u8_0
-                as *const ::core::ffi::c_void,
-            (nCell * 2 as ::core::ffi::c_int) as crate::__stddef_size_t_h::size_t,
-        );
+                .offset((nShift * 2 as ::core::ffi::c_int) as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *const u8,
+                    __pPg_ref.aCellIdx as *mut u8,
+                    (nCell * 2 as ::core::ffi::c_int) as usize,
+                );
         nCell -= nShift;
     }
     if iNewEnd < iOldEnd {
@@ -6803,11 +6783,10 @@ unsafe extern "C" fn editPage(
                     iOld - iNew
                 };
                 pCellptr = __pPg_ref.aCellIdx;
-                ::libc::memmove(
-                    pCellptr.offset((nAdd * 2 as ::core::ffi::c_int) as isize) as *mut crate::src::ext::rtree::rtree::u8_0
-                        as *mut ::core::ffi::c_void,
-                    pCellptr as *const ::core::ffi::c_void,
-                    (nCell * 2 as ::core::ffi::c_int) as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy(
+                    pCellptr as *const u8,
+                    pCellptr.offset((nAdd * 2 as ::core::ffi::c_int) as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    (nCell * 2 as ::core::ffi::c_int) as usize,
                 );
                 if pageInsertArray(pPg, pBegin, &raw mut pData, pCellptr, iNew, nAdd, pCArray) != 0
                 {
@@ -6836,12 +6815,11 @@ unsafe extern "C" fn editPage(
                                 .offset((iCell * 2 as ::core::ffi::c_int) as isize)
                                 as *mut crate::src::ext::rtree::rtree::u8_0;
                             if nCell > iCell {
-                                ::libc::memmove(
-                                    pCellptr.offset(2 as isize) as *mut crate::src::ext::rtree::rtree::u8_0
-                                        as *mut ::core::ffi::c_void,
-                                    pCellptr as *const ::core::ffi::c_void,
-                                    ((nCell - iCell) * 2 as ::core::ffi::c_int) as crate::__stddef_size_t_h::size_t,
-                                );
+                                ::core::ptr::copy(
+                    pCellptr as *const u8,
+                    pCellptr.offset(2 as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    ((nCell - iCell) * 2 as ::core::ffi::c_int) as usize,
+                );
                             }
                             nCell += 1;
                             cachedCellSize(pCArray, iCell + iNew);
@@ -7062,18 +7040,17 @@ unsafe extern "C" fn copyNodeContent(
             << 8 as ::core::ffi::c_int
             | *(aFrom.offset((iFromHdr + 5 as ::core::ffi::c_int) as isize) as *mut crate::src::ext::rtree::rtree::u8_0)
                 .offset(1 as isize) as ::core::ffi::c_int;
-        ::libc::memcpy(
-            aTo.offset(iData as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut ::core::ffi::c_void,
-            aFrom.offset(iData as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *const ::core::ffi::c_void,
-            (*pBt).usableSize.wrapping_sub(iData as crate::src::ext::rtree::rtree::u32_0) as crate::__stddef_size_t_h::size_t,
-        );
-        ::libc::memcpy(
-            aTo.offset(iToHdr as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut ::core::ffi::c_void,
-            aFrom.offset(iFromHdr as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *const ::core::ffi::c_void,
-            (__pFrom_ref.cellOffset as ::core::ffi::c_int
-                + 2 as ::core::ffi::c_int * __pFrom_ref.nCell as ::core::ffi::c_int)
-                as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    aFrom.offset(iData as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *const u8,
+                    aTo.offset(iData as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    (*pBt).usableSize.wrapping_sub(iData as crate::src::ext::rtree::rtree::u32_0) as usize,
+                );
+        ::core::ptr::copy_nonoverlapping(
+                    aFrom.offset(iFromHdr as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *const u8,
+                    aTo.offset(iToHdr as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    (__pFrom_ref.cellOffset as ::core::ffi::c_int
+                + 2 as ::core::ffi::c_int * __pFrom_ref.nCell as ::core::ffi::c_int) as usize,
+                );
         __pTo_ref.isInit = 0 as crate::src::ext::rtree::rtree::u8_0;
         rc = btreeInitPage(pTo);
         if rc == crate::sqlite3_h::SQLITE_OK {
@@ -7250,12 +7227,11 @@ unsafe extern "C" fn balance_nonroot(
                     iOff = apDiv[i as usize] as crate::stdlib::intptr_t as ::core::ffi::c_int
                         - __pParent_ref.aData as crate::stdlib::intptr_t as ::core::ffi::c_int;
                     if iOff + szNew[i as usize] <= (*pBt).usableSize as ::core::ffi::c_int {
-                        ::libc::memcpy(
-                            aOvflSpace.offset(iOff as isize) as *mut crate::src::ext::rtree::rtree::u8_0
-                                as *mut ::core::ffi::c_void,
-                            apDiv[i as usize] as *const ::core::ffi::c_void,
-                            szNew[i as usize] as crate::__stddef_size_t_h::size_t,
-                        );
+                        ::core::ptr::copy_nonoverlapping(
+                    apDiv[i as usize] as *const u8,
+                    aOvflSpace.offset(iOff as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    szNew[i as usize] as usize,
+                );
                         apDiv[i as usize] = aOvflSpace.offset(
                             (*(&raw mut apDiv as *mut *mut crate::src::ext::rtree::rtree::u8_0).offset(i as isize))
                                 .offset_from(__pParent_ref.aData)
@@ -7388,11 +7364,11 @@ unsafe extern "C" fn balance_nonroot(
                             *b.szCell.offset(b.nCell as isize) = sz;
                             pTemp = aSpace1.offset(iSpace1 as isize) as *mut crate::src::ext::rtree::rtree::u8_0;
                             iSpace1 += sz as ::core::ffi::c_int;
-                            ::libc::memcpy(
-                                pTemp as *mut ::core::ffi::c_void,
-                                apDiv[i as usize] as *const ::core::ffi::c_void,
-                                sz as crate::__stddef_size_t_h::size_t,
-                            );
+                            ::core::ptr::copy_nonoverlapping(
+                    apDiv[i as usize] as *const u8,
+                    pTemp as *mut u8,
+                    sz as usize,
+                );
                             let ref mut fresh17 = *b.apCell.offset(b.nCell as isize);
                             *fresh17 = pTemp.offset(leafCorrection as ::core::ffi::c_int as isize);
                             *b.szCell.offset(b.nCell as isize) = (*b.szCell.offset(b.nCell as isize)
@@ -7400,13 +7376,12 @@ unsafe extern "C" fn balance_nonroot(
                                 - leafCorrection as ::core::ffi::c_int)
                                 as crate::src::fts5::u16_0;
                             if __pOld_ref.leaf == 0 {
-                                ::libc::memcpy(
-                                    *b.apCell.offset(b.nCell as isize) as *mut ::core::ffi::c_void,
-                                    __pOld_ref.aData.offset(8 as isize)
-                                        as *mut crate::src::ext::rtree::rtree::u8_0
-                                        as *const ::core::ffi::c_void,
-                                    4 as crate::__stddef_size_t_h::size_t,
-                                );
+                                ::core::ptr::copy_nonoverlapping(
+                    __pOld_ref.aData.offset(8 as isize)
+                                        as *mut crate::src::ext::rtree::rtree::u8_0 as *const u8,
+                    *b.apCell.offset(b.nCell as isize) as *mut u8,
+                    4 as usize,
+                );
                             } else {
                                 while (*b.szCell.offset(b.nCell as isize) as ::core::ffi::c_int)
                                     < 4 as ::core::ffi::c_int
@@ -7745,23 +7720,21 @@ unsafe extern "C" fn balance_nonroot(
                                                             - 1 as ::core::ffi::c_int)
                                                             as usize];
                                                     }
-                                                    ::libc::memcpy(
-                                                        (**(&raw mut apNew as *mut *mut crate::btreeInt_h::MemPage)
+                                                    ::core::ptr::copy_nonoverlapping(
+                    (*pOld_0).aData.offset(
+                                                            8 as isize,
+                                                        )
+                                                            as *mut crate::src::ext::rtree::rtree::u8_0 as *const u8,
+                    (**(&raw mut apNew as *mut *mut crate::btreeInt_h::MemPage)
                                                             .offset(
                                                                 (nNew - 1 as ::core::ffi::c_int)
                                                                     as isize,
                                                             ))
                                                         .aData
                                                         .offset(8 as isize)
-                                                            as *mut crate::src::ext::rtree::rtree::u8_0
-                                                            as *mut ::core::ffi::c_void,
-                                                        (*pOld_0).aData.offset(
-                                                            8 as isize,
-                                                        )
-                                                            as *mut crate::src::ext::rtree::rtree::u8_0
-                                                            as *const ::core::ffi::c_void,
-                                                        4 as crate::__stddef_size_t_h::size_t,
-                                                    );
+                                                            as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    4 as usize,
+                );
                                                 }
                                                 if (*pBt).autoVacuum != 0 {
                                                     let mut pOld_1: *mut crate::btreeInt_h::MemPage =
@@ -7889,12 +7862,12 @@ unsafe extern "C" fn balance_nonroot(
                                                                 .offset(iOvflSpace as isize)
                                                                 as *mut crate::src::ext::rtree::rtree::u8_0;
                                                             if (*pNew_1).leaf == 0 {
-                                                                ::libc::memcpy(
-                                                                    (*pNew_1).aData.offset(8 as isize)
-                                                                        as *mut crate::src::ext::rtree::rtree::u8_0 as *mut ::core::ffi::c_void,
-                                                                    pCell_0 as *const ::core::ffi::c_void,
-                                                                    4 as crate::__stddef_size_t_h::size_t,
-                                                                );
+                                                                ::core::ptr::copy_nonoverlapping(
+                    pCell_0 as *const u8,
+                    (*pNew_1).aData.offset(8 as isize)
+                                                                        as *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    4 as usize,
+                );
                                                             } else if leafData != 0 {
                                                                 let mut info: crate::btreeInt_h::CellInfo = crate::btreeInt_h::CellInfo {
     nKey:  0,
@@ -8156,16 +8129,16 @@ unsafe extern "C" fn balance_deeper(
         return rc;
     }
     let __pChild_ref = unsafe { &mut *pChild };
-    ::libc::memcpy(
-        &raw mut __pChild_ref.aiOvfl as *mut crate::src::fts5::u16_0 as *mut ::core::ffi::c_void,
-        &raw mut __pRoot_ref.aiOvfl as *mut crate::src::fts5::u16_0 as *const ::core::ffi::c_void,
-        (__pRoot_ref.nOverflow as crate::__stddef_size_t_h::size_t).wrapping_mul(::core::mem::size_of::<crate::src::fts5::u16_0>() as crate::__stddef_size_t_h::size_t),
-    );
-    ::libc::memcpy(
-        &raw mut __pChild_ref.apOvfl as *mut *mut crate::src::ext::rtree::rtree::u8_0 as *mut ::core::ffi::c_void,
-        &raw mut __pRoot_ref.apOvfl as *mut *mut crate::src::ext::rtree::rtree::u8_0 as *const ::core::ffi::c_void,
-        (__pRoot_ref.nOverflow as crate::__stddef_size_t_h::size_t).wrapping_mul(::core::mem::size_of::<*mut crate::src::ext::rtree::rtree::u8_0>() as crate::__stddef_size_t_h::size_t),
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    &raw mut __pRoot_ref.aiOvfl as *mut crate::src::fts5::u16_0 as *const u8,
+                    &raw mut __pChild_ref.aiOvfl as *mut crate::src::fts5::u16_0 as *mut u8,
+                    ((__pRoot_ref.nOverflow as crate::__stddef_size_t_h::size_t).wrapping_mul(::core::mem::size_of::<crate::src::fts5::u16_0>() as crate::__stddef_size_t_h::size_t)) as usize,
+                );
+    ::core::ptr::copy_nonoverlapping(
+                    &raw mut __pRoot_ref.apOvfl as *mut *mut crate::src::ext::rtree::rtree::u8_0 as *const u8,
+                    &raw mut __pChild_ref.apOvfl as *mut *mut crate::src::ext::rtree::rtree::u8_0 as *mut u8,
+                    ((__pRoot_ref.nOverflow as crate::__stddef_size_t_h::size_t).wrapping_mul(::core::mem::size_of::<*mut crate::src::ext::rtree::rtree::u8_0>() as crate::__stddef_size_t_h::size_t)) as usize,
+                );
     __pChild_ref.nOverflow = __pRoot_ref.nOverflow;
     zeroPage(
         pRoot,
@@ -8336,11 +8309,11 @@ unsafe extern "C" fn btreeOverwriteContent(
             if rc_1 != 0 {
                 return rc_1;
             }
-            ::libc::memmove(
-                pDest as *mut ::core::ffi::c_void,
-                ((*pX).pData as *mut crate::src::ext::rtree::rtree::u8_0).offset(iOffset as isize) as *const ::core::ffi::c_void,
-                iAmt as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy(
+                    ((*pX).pData as *mut crate::src::ext::rtree::rtree::u8_0).offset(iOffset as isize) as *const u8,
+                    pDest as *mut u8,
+                    iAmt as usize,
+                );
         }
     }
     crate::sqlite3_h::SQLITE_OK
@@ -8661,11 +8634,11 @@ pub unsafe extern "C" fn sqlite3BtreeInsert(
                                     as ::core::ffi::c_int)) as isize,
                     ) as *mut ::core::ffi::c_uchar;
                     if __pPage_ref.leaf == 0 {
-                        ::libc::memcpy(
-                            newCell as *mut ::core::ffi::c_void,
-                            oldCell as *const ::core::ffi::c_void,
-                            4 as crate::__stddef_size_t_h::size_t,
-                        );
+                        ::core::ptr::copy_nonoverlapping(
+                    oldCell as *const u8,
+                    newCell as *mut u8,
+                    4 as usize,
+                );
                     }
                     __pPage_ref.xParseCell.expect("non-null function pointer")(
                         pPage,
@@ -8695,11 +8668,11 @@ pub unsafe extern "C" fn sqlite3BtreeInsert(
                         if oldCell.offset(szNew as isize) > __pPage_ref.aDataEnd {
                             return crate::src::src::main::sqlite3CorruptError(9603 as ::core::ffi::c_int);
                         }
-                        ::libc::memcpy(
-                            oldCell as *mut ::core::ffi::c_void,
-                            newCell as *const ::core::ffi::c_void,
-                            szNew as crate::__stddef_size_t_h::size_t,
-                        );
+                        ::core::ptr::copy_nonoverlapping(
+                    newCell as *const u8,
+                    oldCell as *mut u8,
+                    szNew as usize,
+                );
                         return crate::sqlite3_h::SQLITE_OK;
                     }
                     dropCell(pPage, idx, info_0.nSize as ::core::ffi::c_int, &raw mut rc);
@@ -8789,11 +8762,11 @@ pub unsafe extern "C" fn sqlite3BtreeTransferRow(
     }
     nRem = __pSrc_ref.info.nPayload;
     if nIn == nRem && nIn < (*__pDest_ref.pPage).maxLocal as crate::src::ext::rtree::rtree::u32_0 {
-        ::libc::memcpy(
-            aOut as *mut ::core::ffi::c_void,
-            aIn as *const ::core::ffi::c_void,
-            nIn as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    aIn as *const u8,
+                    aOut as *mut u8,
+                    nIn as usize,
+                );
         (*pBt).nPreformatSize =
             nIn.wrapping_add(aOut.offset_from((*pBt).pTmpSpace) as ::core::ffi::c_long
                 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u32_0) as ::core::ffi::c_int;
@@ -8830,11 +8803,11 @@ pub unsafe extern "C" fn sqlite3BtreeTransferRow(
                 if nIn > 0 as crate::src::ext::rtree::rtree::u32_0 {
                     let mut nCopy: ::core::ffi::c_int =
                         (if nOut < nIn { nOut } else { nIn }) as ::core::ffi::c_int;
-                    ::libc::memcpy(
-                        aOut as *mut ::core::ffi::c_void,
-                        aIn as *const ::core::ffi::c_void,
-                        nCopy as crate::__stddef_size_t_h::size_t,
-                    );
+                    ::core::ptr::copy_nonoverlapping(
+                    aIn as *const u8,
+                    aOut as *mut u8,
+                    nCopy as usize,
+                );
                     nOut = nOut.wrapping_sub(nCopy as crate::src::ext::rtree::rtree::u32_0);
                     nIn = nIn.wrapping_sub(nCopy as crate::src::ext::rtree::rtree::u32_0);
                     aOut = aOut.offset(nCopy as isize);

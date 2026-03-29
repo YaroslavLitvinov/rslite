@@ -163,11 +163,11 @@ unsafe extern "C" fn fts3MIBufferNew(
                 ) as crate::src::ext::rtree::rtree::u32_0;
         __pRet_ref.nElem = nElem as ::core::ffi::c_int;
         __pRet_ref.zMatchinfo = (pRet as *mut ::core::ffi::c_char).offset(nByte as isize);
-        ::libc::memcpy(
-            __pRet_ref.zMatchinfo as *mut ::core::ffi::c_void,
-            zMatchinfo as *const ::core::ffi::c_void,
-            (nStr + 1 as crate::sqlite3_h::sqlite3_int64) as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    zMatchinfo as *const u8,
+                    __pRet_ref.zMatchinfo as *mut u8,
+                    (nStr + 1 as crate::sqlite3_h::sqlite3_int64) as usize,
+                );
         __pRet_ref.aRef[0 as ::core::ffi::c_int as usize] = 1 as crate::src::ext::rtree::rtree::u8_0;
     }
     pRet
@@ -228,11 +228,11 @@ unsafe extern "C" fn fts3MIBufferAlloc(
             xRet = Some(crate::src::src::malloc::sqlite3_free as unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ())
                 as Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()>;
             if (*p).bGlobal != 0 {
-                ::libc::memcpy(
-                    aOut as *mut ::core::ffi::c_void,
+                ::core::ptr::copy_nonoverlapping(
                     (&raw mut (*p).aMI as *mut crate::src::ext::rtree::rtree::u32_0).offset(1 as isize)
-                        as *mut crate::src::ext::rtree::rtree::u32_0 as *const ::core::ffi::c_void,
-                    ((*p).nElem as crate::__stddef_size_t_h::size_t).wrapping_mul(::core::mem::size_of::<crate::src::ext::rtree::rtree::u32_0>() as crate::__stddef_size_t_h::size_t),
+                        as *mut crate::src::ext::rtree::rtree::u32_0 as *const u8,
+                    aOut as *mut u8,
+                    (((*p).nElem as crate::__stddef_size_t_h::size_t).wrapping_mul(::core::mem::size_of::<crate::src::ext::rtree::rtree::u32_0>() as crate::__stddef_size_t_h::size_t)) as usize,
                 );
             }
         }
@@ -244,13 +244,12 @@ unsafe extern "C" fn fts3MIBufferAlloc(
 unsafe extern "C" fn fts3MIBufferSetGlobal(mut p: *mut MatchinfoBuffer) {
     let __p_ref = unsafe { &mut *p };
     __p_ref.bGlobal = 1 as ::core::ffi::c_int;
-    ::libc::memcpy(
-        (&raw mut __p_ref.aMI as *mut crate::src::ext::rtree::rtree::u32_0).offset((2 as ::core::ffi::c_int + __p_ref.nElem) as isize)
-            as *mut crate::src::ext::rtree::rtree::u32_0 as *mut ::core::ffi::c_void,
-        (&raw mut __p_ref.aMI as *mut crate::src::ext::rtree::rtree::u32_0).offset(1 as isize) as *mut crate::src::ext::rtree::rtree::u32_0
-            as *const ::core::ffi::c_void,
-        (__p_ref.nElem as crate::__stddef_size_t_h::size_t).wrapping_mul(::core::mem::size_of::<crate::src::ext::rtree::rtree::u32_0>() as crate::__stddef_size_t_h::size_t),
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    (&raw mut __p_ref.aMI as *mut crate::src::ext::rtree::rtree::u32_0).offset(1 as isize) as *mut crate::src::ext::rtree::rtree::u32_0 as *const u8,
+                    (&raw mut __p_ref.aMI as *mut crate::src::ext::rtree::rtree::u32_0).offset((2 as ::core::ffi::c_int + __p_ref.nElem) as isize)
+            as *mut crate::src::ext::rtree::rtree::u32_0 as *mut u8,
+                    ((__p_ref.nElem as crate::__stddef_size_t_h::size_t).wrapping_mul(::core::mem::size_of::<crate::src::ext::rtree::rtree::u32_0>() as crate::__stddef_size_t_h::size_t)) as usize,
+                );
 }
 #[no_mangle]
 
@@ -665,12 +664,11 @@ unsafe extern "C" fn fts3StringAppend(
         __pStr_ref.z = zNew;
         __pStr_ref.nAlloc = nAlloc as ::core::ffi::c_int;
     }
-    ::libc::memcpy(
-        __pStr_ref.z.offset(__pStr_ref.n as isize) as *mut ::core::ffi::c_char
-            as *mut ::core::ffi::c_void,
-        zAppend as *const ::core::ffi::c_void,
-        nAppend as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    zAppend as *const u8,
+                    __pStr_ref.z.offset(__pStr_ref.n as isize) as *mut ::core::ffi::c_char as *mut u8,
+                    nAppend as usize,
+                );
     __pStr_ref.n += nAppend;
     *__pStr_ref.z.offset(__pStr_ref.n as isize) = '\0' as i32 as ::core::ffi::c_char;
     crate::sqlite3_h::SQLITE_OK

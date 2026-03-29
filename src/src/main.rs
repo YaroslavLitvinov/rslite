@@ -3026,11 +3026,11 @@ pub unsafe extern "C" fn sqlite3ParseUri(
         );
         zFile = zFile.offset(4 as isize);
         if nUri != 0 {
-            ::libc::memcpy(
-                zFile as *mut ::core::ffi::c_void,
-                zUri as *const ::core::ffi::c_void,
-                nUri as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    zUri as *const u8,
+                    zFile as *mut u8,
+                    nUri as usize,
+                );
         }
         ::libc::memset(
             zFile.offset(nUri as isize) as *mut ::core::ffi::c_void,
@@ -3159,11 +3159,10 @@ unsafe extern "C" fn openDatabase(
                 __db_ref.aDb = &raw mut __db_ref.aDbStatic as *mut crate::sqliteInt_h::Db;
                 __db_ref.lookaside.bDisable = 1 as crate::src::ext::rtree::rtree::u32_0;
                 __db_ref.lookaside.sz = 0 as crate::src::fts5::u16_0;
-                ::libc::memcpy(
-                    &raw mut __db_ref.aLimit as *mut ::core::ffi::c_int as *mut ::core::ffi::c_void,
-                    &raw const aHardLimit as *const ::core::ffi::c_int
-                        as *const ::core::ffi::c_void,
-                    ::core::mem::size_of::<[::core::ffi::c_int; 12]>() as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    &raw const aHardLimit as *const ::core::ffi::c_int as *const u8,
+                    &raw mut __db_ref.aLimit as *mut ::core::ffi::c_int as *mut u8,
+                    ::core::mem::size_of::<[::core::ffi::c_int; 12]>() as usize,
                 );
                 __db_ref.aLimit[crate::sqlite3_h::SQLITE_LIMIT_WORKER_THREADS as usize] = crate::sqliteInt_h::SQLITE_DEFAULT_WORKER_THREADS;
                 __db_ref.autoCommit = 1 as crate::src::ext::rtree::rtree::u8_0;
@@ -3710,11 +3709,11 @@ pub unsafe extern "C" fn sqlite3_set_clientdata(
             crate::src::src::mutex::sqlite3_mutex_leave(__db_ref.mutex);
             return crate::sqlite3_h::SQLITE_NOMEM;
         }
-        ::libc::memcpy(
-            &raw mut (*p).zName as *mut ::core::ffi::c_char as *mut ::core::ffi::c_void,
-            zName as *const ::core::ffi::c_void,
-            n.wrapping_add(1 as crate::__stddef_size_t_h::size_t),
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    zName as *const u8,
+                    &raw mut (*p).zName as *mut ::core::ffi::c_char as *mut u8,
+                    (n.wrapping_add(1 as crate::__stddef_size_t_h::size_t)) as usize,
+                );
         (*p).pNext = __db_ref.pDbData;
         __db_ref.pDbData = p;
     }
@@ -4238,11 +4237,11 @@ unsafe extern "C" fn appendText(
     mut z: *const ::core::ffi::c_char,
 ) -> *mut ::core::ffi::c_char {
     let mut n: crate::__stddef_size_t_h::size_t = ::libc::strlen(z);
-    ::libc::memcpy(
-        p as *mut ::core::ffi::c_void,
-        z as *const ::core::ffi::c_void,
-        n.wrapping_add(1 as crate::__stddef_size_t_h::size_t),
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    z as *const u8,
+                    p as *mut u8,
+                    (n.wrapping_add(1 as crate::__stddef_size_t_h::size_t)) as usize,
+                );
     p
         .offset(n as isize)
         .offset(1 as isize)

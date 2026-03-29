@@ -293,10 +293,10 @@ unsafe extern "C" fn backupOnePage(
                 let mut zDestData: *mut crate::src::ext::rtree::rtree::u8_0 = crate::src::src::pager::sqlite3PagerGetData(pDestPg as *mut crate::src::src::pcache::PgHdr) as *mut crate::src::ext::rtree::rtree::u8_0;
                 let mut zOut: *mut crate::src::ext::rtree::rtree::u8_0 =
                     zDestData.offset((iOff % nDestPgsz as crate::src::ext::rtree::rtree::i64_0) as isize) as *mut crate::src::ext::rtree::rtree::u8_0;
-                ::libc::memcpy(
-                    zOut as *mut ::core::ffi::c_void,
-                    zIn as *const ::core::ffi::c_void,
-                    nCopy as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    zIn as *const u8,
+                    zOut as *mut u8,
+                    nCopy as usize,
                 );
                 *(crate::src::src::pager::sqlite3PagerGetExtra(pDestPg as *mut crate::src::src::pcache::PgHdr) as *mut crate::src::ext::rtree::rtree::u8_0)
                     .offset(0 as isize) = 0 as crate::src::ext::rtree::rtree::u8_0;

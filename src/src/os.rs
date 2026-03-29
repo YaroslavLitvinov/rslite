@@ -499,11 +499,11 @@ pub unsafe extern "C" fn sqlite3OsRandomness(
         if nByte > ::core::mem::size_of::<::core::ffi::c_uint>() as ::core::ffi::c_int {
             nByte = ::core::mem::size_of::<::core::ffi::c_uint>() as ::core::ffi::c_int;
         }
-        ::libc::memcpy(
-            zBufOut as *mut ::core::ffi::c_void,
-            &raw mut crate::src::src::global::sqlite3Config.iPrngSeed as *const ::core::ffi::c_void,
-            nByte as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    &raw mut crate::src::src::global::sqlite3Config.iPrngSeed as *const u8,
+                    zBufOut as *mut u8,
+                    nByte as usize,
+                );
         return crate::sqlite3_h::SQLITE_OK;
     } else {
         return (*pVfs).xRandomness.expect("non-null function pointer")(pVfs, nByte, zBufOut);

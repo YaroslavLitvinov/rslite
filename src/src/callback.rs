@@ -82,11 +82,11 @@ unsafe extern "C" fn synthCollSeq(
     while i < 3 as ::core::ffi::c_int {
         pColl2 = sqlite3FindCollSeq(db, aEnc[i as usize], z, 0 as ::core::ffi::c_int);
         if (*pColl2).xCmp.is_some() {
-            ::libc::memcpy(
-                pColl as *mut ::core::ffi::c_void,
-                pColl2 as *const ::core::ffi::c_void,
-                ::core::mem::size_of::<crate::sqliteInt_h::CollSeq>() as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    pColl2 as *const u8,
+                    pColl as *mut u8,
+                    ::core::mem::size_of::<crate::sqliteInt_h::CollSeq>() as usize,
+                );
             (*pColl).xDel = None;
             return crate::sqlite3_h::SQLITE_OK;
         }
@@ -141,11 +141,11 @@ unsafe extern "C" fn findCollSeqEntry(
             *fresh5 = pColl.offset(3 as isize) as *mut crate::sqliteInt_h::CollSeq
                 as *mut ::core::ffi::c_char;
             (*pColl.offset(2 as isize)).enc = crate::sqlite3_h::SQLITE_UTF16BE as crate::src::ext::rtree::rtree::u8_0;
-            ::libc::memcpy(
-                (*pColl.offset(0 as isize)).zName as *mut ::core::ffi::c_void,
-                zName as *const ::core::ffi::c_void,
-                nName as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    zName as *const u8,
+                    (*pColl.offset(0 as isize)).zName as *mut u8,
+                    nName as usize,
+                );
             pDel = crate::src::src::hash::sqlite3HashInsert(
                 
                 &raw mut (*db).aCollSeq as *mut _ as *mut crate::src::src::hash::Hash,
@@ -385,12 +385,12 @@ pub unsafe extern "C" fn sqlite3FindFunction(
             as *const ::core::ffi::c_char;
         __pBest_ref.nArg = nArg as crate::src::fts5::u16_0 as crate::src::fts5::i16_0;
         __pBest_ref.funcFlags = enc as crate::src::ext::rtree::rtree::u32_0;
-        ::libc::memcpy(
-            pBest.offset(1 as isize) as *mut crate::sqliteInt_h::FuncDef
-                as *mut ::core::ffi::c_char as *mut ::core::ffi::c_void,
-            zName as *const ::core::ffi::c_void,
-            (nName + 1 as ::core::ffi::c_int) as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    zName as *const u8,
+                    pBest.offset(1 as isize) as *mut crate::sqliteInt_h::FuncDef
+                as *mut ::core::ffi::c_char as *mut u8,
+                    (nName + 1 as ::core::ffi::c_int) as usize,
+                );
         z = __pBest_ref.zName as *mut crate::src::ext::rtree::rtree::u8_0;
         while *z != 0 {
             *z = *(&raw const crate::src::src::global::sqlite3UpperToLower as *const ::core::ffi::c_uchar)

@@ -210,11 +210,11 @@ unsafe extern "C" fn stmtFilter(
         if !zSql.is_null() {
             __pNew_ref.zSql = pNew.offset(1 as isize) as *mut StmtRow
                 as *mut ::core::ffi::c_char;
-            ::libc::memcpy(
-                __pNew_ref.zSql as *mut ::core::ffi::c_void,
-                zSql as *const ::core::ffi::c_void,
-                nSql as crate::__stddef_size_t_h::size_t,
-            );
+            ::core::ptr::copy_nonoverlapping(
+                    zSql as *const u8,
+                    __pNew_ref.zSql as *mut u8,
+                    nSql as usize,
+                );
         }
         __pNew_ref.aCol[STMT_COLUMN_NCOL as usize] = crate::src::src::vdbeapi::sqlite3_column_count(p);
         __pNew_ref.aCol[STMT_COLUMN_RO as usize] = crate::src::src::vdbeapi::sqlite3_stmt_readonly(p);

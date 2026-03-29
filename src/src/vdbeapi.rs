@@ -376,11 +376,11 @@ pub unsafe extern "C" fn sqlite3_value_dup(mut pOrig: *const crate::vdbeInt_h::s
         0 as ::core::ffi::c_int,
         ::core::mem::size_of::<crate::vdbeInt_h::sqlite3_value>() as crate::__stddef_size_t_h::size_t,
     );
-    ::libc::memcpy(
-        pNew as *mut ::core::ffi::c_void,
-        pOrig as *const ::core::ffi::c_void,
-        crate::vdbeInt_h::MEMCELLSIZE as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    pOrig as *const u8,
+                    pNew as *mut u8,
+                    crate::vdbeInt_h::MEMCELLSIZE as usize,
+                );
     (*pNew).flags = ((*pNew).flags as ::core::ffi::c_int & !crate::vdbeInt_h::MEM_Dyn) as crate::src::fts5::u16_0;
     (*pNew).db = ::core::ptr::null_mut::<crate::sqliteInt_h::sqlite3>();
     if (*pNew).flags as ::core::ffi::c_int & (crate::vdbeInt_h::MEM_Str | crate::vdbeInt_h::MEM_Blob) != 0 {

@@ -563,11 +563,11 @@ pub unsafe extern "C" fn sqlite3_carray_bind(
                                 let ref mut fresh1 = *az.offset(i as isize);
                                 *fresh1 = z_0;
                                 n = ::libc::strlen(zData) as crate::sqlite3_h::sqlite3_int64;
-                                ::libc::memcpy(
-                                    z_0 as *mut ::core::ffi::c_void,
-                                    zData as *const ::core::ffi::c_void,
-                                    (n + 1 as crate::sqlite3_h::sqlite3_int64) as crate::__stddef_size_t_h::size_t,
-                                );
+                                ::core::ptr::copy_nonoverlapping(
+                    zData as *const u8,
+                    z_0 as *mut u8,
+                    (n + 1 as crate::sqlite3_h::sqlite3_int64) as usize,
+                );
                                 z_0 = z_0.offset((n + 1 as crate::sqlite3_h::sqlite3_int64) as isize);
                             }
                             i += 1;

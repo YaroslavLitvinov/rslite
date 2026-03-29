@@ -672,11 +672,11 @@ pub unsafe extern "C" fn sqlite3DbStrDup(
     n = ::libc::strlen(z).wrapping_add(1 as crate::__stddef_size_t_h::size_t);
     zNew = sqlite3DbMallocRaw(db, n as crate::src::ext::rtree::rtree::u64_0) as *mut ::core::ffi::c_char;
     if !zNew.is_null() {
-        ::libc::memcpy(
-            zNew as *mut ::core::ffi::c_void,
-            z as *const ::core::ffi::c_void,
-            n,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    z as *const u8,
+                    zNew as *mut u8,
+                    (n) as usize,
+                );
     }
     zNew
 }
@@ -694,11 +694,11 @@ pub unsafe extern "C" fn sqlite3DbStrNDup(
         ::core::ptr::null_mut::<::core::ffi::c_void>()
     }) as *mut ::core::ffi::c_char;
     if !zNew.is_null() {
-        ::libc::memcpy(
-            zNew as *mut ::core::ffi::c_void,
-            z as *const ::core::ffi::c_void,
-            n as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    z as *const u8,
+                    zNew as *mut u8,
+                    n as usize,
+                );
         *zNew.offset(n as isize) = 0 as ::core::ffi::c_char;
     }
     zNew

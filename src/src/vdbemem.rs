@@ -142,11 +142,11 @@ pub unsafe extern "C" fn sqlite3VdbeMemGrow(
             crate::src::src::malloc::sqlite3DbMallocSize(__pMem_ref.db as *mut crate::sqliteInt_h::sqlite3, __pMem_ref.zMalloc as *const ::core::ffi::c_void);
     }
     if bPreserve != 0 && !__pMem_ref.z.is_null() {
-        ::libc::memcpy(
-            __pMem_ref.zMalloc as *mut ::core::ffi::c_void,
-            __pMem_ref.z as *const ::core::ffi::c_void,
-            __pMem_ref.n as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    __pMem_ref.z as *const u8,
+                    __pMem_ref.zMalloc as *mut u8,
+                    __pMem_ref.n as usize,
+                );
     }
     if __pMem_ref.flags as ::core::ffi::c_int & crate::vdbeInt_h::MEM_Dyn != 0 as ::core::ffi::c_int {
         __pMem_ref.xDel.expect("non-null function pointer")(__pMem_ref.z as *mut ::core::ffi::c_void);
@@ -325,11 +325,11 @@ pub unsafe extern "C" fn sqlite3VdbeMemFinalize(
     if (*pMem).szMalloc > 0 as ::core::ffi::c_int {
         crate::src::src::malloc::sqlite3DbFreeNN((*pMem).db as *mut crate::sqliteInt_h::sqlite3, (*pMem).zMalloc as *mut ::core::ffi::c_void);
     }
-    ::libc::memcpy(
-        pMem as *mut ::core::ffi::c_void,
-        &raw mut t as *const ::core::ffi::c_void,
-        ::core::mem::size_of::<crate::src::src::vdbe::Mem>() as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    &raw mut t as *const u8,
+                    pMem as *mut u8,
+                    ::core::mem::size_of::<crate::src::src::vdbe::Mem>() as usize,
+                );
     ctx.isError
 }
 #[no_mangle]
@@ -760,11 +760,11 @@ pub unsafe extern "C" fn sqlite3VdbeMemShallowCopy(
         vdbeClrCopy(pTo, pFrom, srcType);
         return;
     }
-    ::libc::memcpy(
-        pTo as *mut ::core::ffi::c_void,
-        pFrom as *const ::core::ffi::c_void,
-        crate::vdbeInt_h::MEMCELLSIZE as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    pFrom as *const u8,
+                    pTo as *mut u8,
+                    crate::vdbeInt_h::MEMCELLSIZE as usize,
+                );
     if (*pFrom).flags as ::core::ffi::c_int & crate::vdbeInt_h::MEM_Static == 0 as ::core::ffi::c_int {
         let __pTo_ref = unsafe { &mut *pTo };
         __pTo_ref.flags =
@@ -783,11 +783,11 @@ pub unsafe extern "C" fn sqlite3VdbeMemCopy(
     if __pTo_ref.flags as ::core::ffi::c_int & (crate::vdbeInt_h::MEM_Agg | crate::vdbeInt_h::MEM_Dyn) != 0 as ::core::ffi::c_int {
         vdbeMemClearExternAndSetNull(pTo);
     }
-    ::libc::memcpy(
-        pTo as *mut ::core::ffi::c_void,
-        pFrom as *const ::core::ffi::c_void,
-        crate::vdbeInt_h::MEMCELLSIZE as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    pFrom as *const u8,
+                    pTo as *mut u8,
+                    crate::vdbeInt_h::MEMCELLSIZE as usize,
+                );
     __pTo_ref.flags = (__pTo_ref.flags as ::core::ffi::c_int & !crate::vdbeInt_h::MEM_Dyn) as crate::src::fts5::u16_0;
     if __pTo_ref.flags as ::core::ffi::c_int & (crate::vdbeInt_h::MEM_Str | crate::vdbeInt_h::MEM_Blob) != 0 {
         if 0 as ::core::ffi::c_int == (*pFrom).flags as ::core::ffi::c_int & crate::vdbeInt_h::MEM_Static {
@@ -801,11 +801,11 @@ pub unsafe extern "C" fn sqlite3VdbeMemCopy(
 
 pub unsafe extern "C" fn sqlite3VdbeMemMove(mut pTo: *mut crate::src::src::vdbe::Mem, mut pFrom: *mut crate::src::src::vdbe::Mem) {
     sqlite3VdbeMemRelease(pTo);
-    ::libc::memcpy(
-        pTo as *mut ::core::ffi::c_void,
-        pFrom as *const ::core::ffi::c_void,
-        ::core::mem::size_of::<crate::src::src::vdbe::Mem>() as crate::__stddef_size_t_h::size_t,
-    );
+    ::core::ptr::copy_nonoverlapping(
+                    pFrom as *const u8,
+                    pTo as *mut u8,
+                    ::core::mem::size_of::<crate::src::src::vdbe::Mem>() as usize,
+                );
     (*pFrom).flags = crate::vdbeInt_h::MEM_Null as crate::src::fts5::u16_0;
     (*pFrom).szMalloc = 0 as ::core::ffi::c_int;
 }
@@ -898,11 +898,11 @@ pub unsafe extern "C" fn sqlite3VdbeMemSetStr(
         {
             return crate::sqliteInt_h::SQLITE_NOMEM_BKPT;
         }
-        ::libc::memcpy(
-            __pMem_ref.z as *mut ::core::ffi::c_void,
-            z as *const ::core::ffi::c_void,
-            nAlloc as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    z as *const u8,
+                    __pMem_ref.z as *mut u8,
+                    nAlloc as usize,
+                );
     } else {
         sqlite3VdbeMemRelease(pMem);
         __pMem_ref.z = z as *mut ::core::ffi::c_char;

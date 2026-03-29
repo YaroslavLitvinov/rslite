@@ -76,12 +76,11 @@ unsafe extern "C" fn memjrnlRead(
         } else {
             __p_ref.nChunkSize - iChunkOffset
         };
-        ::libc::memcpy(
-            zOut as *mut ::core::ffi::c_void,
-            (&raw mut (*pChunk).zChunk as *mut crate::src::ext::rtree::rtree::u8_0).offset(iChunkOffset as isize)
-                as *const ::core::ffi::c_void,
-            nCopy as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    (&raw mut (*pChunk).zChunk as *mut crate::src::ext::rtree::rtree::u8_0).offset(iChunkOffset as isize) as *const u8,
+                    zOut as *mut u8,
+                    nCopy as usize,
+                );
         zOut = zOut.offset(nCopy as isize);
         nRead -= iSpace;
         iChunkOffset = 0 as ::core::ffi::c_int;
@@ -223,11 +222,10 @@ unsafe extern "C" fn memjrnlWrite(
                     __p_ref.endpoint.pChunk = pNew;
                     pChunk = __p_ref.endpoint.pChunk;
                 }
-                ::libc::memcpy(
-                    (&raw mut (*pChunk).zChunk as *mut crate::src::ext::rtree::rtree::u8_0).offset(iChunkOffset as isize)
-                        as *mut ::core::ffi::c_void,
-                    zWrite as *const ::core::ffi::c_void,
-                    iSpace as crate::__stddef_size_t_h::size_t,
+                ::core::ptr::copy_nonoverlapping(
+                    zWrite as *const u8,
+                    (&raw mut (*pChunk).zChunk as *mut crate::src::ext::rtree::rtree::u8_0).offset(iChunkOffset as isize) as *mut u8,
+                    iSpace as usize,
                 );
                 zWrite = zWrite.offset(iSpace as isize);
                 nWrite -= iSpace;

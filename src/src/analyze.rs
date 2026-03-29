@@ -483,12 +483,11 @@ unsafe extern "C" fn analyzeOneTable(
         }
         (*pStat1).zName = pStat1.offset(1 as isize) as *mut crate::sqliteInt_h::Table
             as *mut ::core::ffi::c_char;
-        ::libc::memcpy(
-            (*pStat1).zName as *mut ::core::ffi::c_void,
-            b"sqlite_stat1\0" as *const u8 as *const ::core::ffi::c_char
-                as *const ::core::ffi::c_void,
-            13 as crate::__stddef_size_t_h::size_t,
-        );
+        ::core::ptr::copy_nonoverlapping(
+                    b"sqlite_stat1\0" as *const u8 as *const ::core::ffi::c_char as *const u8,
+                    (*pStat1).zName as *mut u8,
+                    13 as usize,
+                );
         (*pStat1).nCol = 3 as crate::src::fts5::i16_0;
         (*pStat1).iPKey = -(1 as ::core::ffi::c_int) as crate::src::fts5::i16_0;
         crate::src::src::vdbeaux::sqlite3VdbeAddOp4(

@@ -132,11 +132,11 @@ unsafe extern "C" fn sqlite3_get_table_cb(
                                     current_block = 6187690635698806885;
                                     break;
                                 }
-                                ::libc::memcpy(
-                                    z as *mut ::core::ffi::c_void,
-                                    *argv.offset(i as isize) as *const ::core::ffi::c_void,
-                                    n as crate::__stddef_size_t_h::size_t,
-                                );
+                                ::core::ptr::copy_nonoverlapping(
+                    *argv.offset(i as isize) as *const u8,
+                    z as *mut u8,
+                    n as usize,
+                );
                             }
                             let fresh4 = __p_ref.nData;
                             __p_ref.nData = __p_ref.nData.wrapping_add(1);
