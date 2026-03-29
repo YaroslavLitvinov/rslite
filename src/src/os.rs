@@ -87,12 +87,12 @@ pub unsafe extern "C" fn sqlite3OsRead(
         }
         crate::src::src::malloc::sqlite3_free(pTstAlloc);
     }
-    return (*(*id).pMethods).xRead.expect("non-null function pointer")(
+    (*(*id).pMethods).xRead.expect("non-null function pointer")(
         id,
         pBuf,
         amt,
         offset as crate::sqlite3_h::sqlite3_int64,
-    );
+    )
 }
 #[no_mangle]
 
@@ -109,12 +109,12 @@ pub unsafe extern "C" fn sqlite3OsWrite(
         }
         crate::src::src::malloc::sqlite3_free(pTstAlloc);
     }
-    return (*(*id).pMethods).xWrite.expect("non-null function pointer")(
+    (*(*id).pMethods).xWrite.expect("non-null function pointer")(
         id,
         pBuf,
         amt,
         offset as crate::sqlite3_h::sqlite3_int64,
-    );
+    )
 }
 #[no_mangle]
 
@@ -122,9 +122,9 @@ pub unsafe extern "C" fn sqlite3OsTruncate(
     mut id: *mut crate::sqlite3_h::sqlite3_file,
     mut size: crate::src::ext::rtree::rtree::i64_0,
 ) -> ::core::ffi::c_int {
-    return (*(*id).pMethods)
+    (*(*id).pMethods)
         .xTruncate
-        .expect("non-null function pointer")(id, size as crate::sqlite3_h::sqlite3_int64);
+        .expect("non-null function pointer")(id, size as crate::sqlite3_h::sqlite3_int64)
 }
 #[no_mangle]
 
@@ -139,11 +139,11 @@ pub unsafe extern "C" fn sqlite3OsSync(
         }
         crate::src::src::malloc::sqlite3_free(pTstAlloc);
     }
-    return if flags != 0 {
+    if flags != 0 {
         (*(*id).pMethods).xSync.expect("non-null function pointer")(id, flags)
     } else {
         crate::sqlite3_h::SQLITE_OK
-    };
+    }
 }
 #[no_mangle]
 
@@ -158,9 +158,9 @@ pub unsafe extern "C" fn sqlite3OsFileSize(
         }
         crate::src::src::malloc::sqlite3_free(pTstAlloc);
     }
-    return (*(*id).pMethods)
+    (*(*id).pMethods)
         .xFileSize
-        .expect("non-null function pointer")(id, pSize as *mut crate::sqlite3_h::sqlite3_int64);
+        .expect("non-null function pointer")(id, pSize as *mut crate::sqlite3_h::sqlite3_int64)
 }
 #[no_mangle]
 
@@ -175,7 +175,7 @@ pub unsafe extern "C" fn sqlite3OsLock(
         }
         crate::src::src::malloc::sqlite3_free(pTstAlloc);
     }
-    return (*(*id).pMethods).xLock.expect("non-null function pointer")(id, lockType);
+    (*(*id).pMethods).xLock.expect("non-null function pointer")(id, lockType)
 }
 #[no_mangle]
 
@@ -183,9 +183,9 @@ pub unsafe extern "C" fn sqlite3OsUnlock(
     mut id: *mut crate::sqlite3_h::sqlite3_file,
     mut lockType: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    return (*(*id).pMethods)
+    (*(*id).pMethods)
         .xUnlock
-        .expect("non-null function pointer")(id, lockType);
+        .expect("non-null function pointer")(id, lockType)
 }
 #[no_mangle]
 
@@ -200,9 +200,9 @@ pub unsafe extern "C" fn sqlite3OsCheckReservedLock(
         }
         crate::src::src::malloc::sqlite3_free(pTstAlloc);
     }
-    return (*(*id).pMethods)
+    (*(*id).pMethods)
         .xCheckReservedLock
-        .expect("non-null function pointer")(id, pResOut);
+        .expect("non-null function pointer")(id, pResOut)
 }
 #[no_mangle]
 
@@ -228,9 +228,9 @@ pub unsafe extern "C" fn sqlite3OsFileControl(
             crate::src::src::malloc::sqlite3_free(pTstAlloc);
         }
     }
-    return (*(*id).pMethods)
+    (*(*id).pMethods)
         .xFileControl
-        .expect("non-null function pointer")(id, op, pArg);
+        .expect("non-null function pointer")(id, op, pArg)
 }
 #[no_mangle]
 
@@ -250,11 +250,11 @@ pub unsafe extern "C" fn sqlite3OsFileControlHint(
 pub unsafe extern "C" fn sqlite3OsSectorSize(mut id: *mut crate::sqlite3_h::sqlite3_file) -> ::core::ffi::c_int {
     let mut xSectorSize: Option<unsafe extern "C" fn(*mut crate::sqlite3_h::sqlite3_file) -> ::core::ffi::c_int> =
         (*(*id).pMethods).xSectorSize;
-    return if xSectorSize.is_some() {
+    if xSectorSize.is_some() {
         xSectorSize.expect("non-null function pointer")(id)
     } else {
         crate::src::src::os::SQLITE_DEFAULT_SECTOR_SIZE
-    };
+    }
 }
 #[no_mangle]
 
@@ -264,9 +264,9 @@ pub unsafe extern "C" fn sqlite3OsDeviceCharacteristics(
     if (*id).pMethods.is_null() {
         return 0 as ::core::ffi::c_int;
     }
-    return (*(*id).pMethods)
+    (*(*id).pMethods)
         .xDeviceCharacteristics
-        .expect("non-null function pointer")(id);
+        .expect("non-null function pointer")(id)
 }
 #[no_mangle]
 
@@ -276,9 +276,9 @@ pub unsafe extern "C" fn sqlite3OsShmLock(
     mut n: ::core::ffi::c_int,
     mut flags: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    return (*(*id).pMethods)
+    (*(*id).pMethods)
         .xShmLock
-        .expect("non-null function pointer")(id, offset, n, flags);
+        .expect("non-null function pointer")(id, offset, n, flags)
 }
 #[no_mangle]
 
@@ -293,9 +293,9 @@ pub unsafe extern "C" fn sqlite3OsShmUnmap(
     mut id: *mut crate::sqlite3_h::sqlite3_file,
     mut deleteFlag: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    return (*(*id).pMethods)
+    (*(*id).pMethods)
         .xShmUnmap
-        .expect("non-null function pointer")(id, deleteFlag);
+        .expect("non-null function pointer")(id, deleteFlag)
 }
 #[no_mangle]
 
@@ -313,9 +313,9 @@ pub unsafe extern "C" fn sqlite3OsShmMap(
         }
         crate::src::src::malloc::sqlite3_free(pTstAlloc);
     }
-    return (*(*id).pMethods)
+    (*(*id).pMethods)
         .xShmMap
-        .expect("non-null function pointer")(id, iPage, pgsz, bExtend, pp);
+        .expect("non-null function pointer")(id, iPage, pgsz, bExtend, pp)
 }
 #[no_mangle]
 
@@ -332,12 +332,12 @@ pub unsafe extern "C" fn sqlite3OsFetch(
         }
         crate::src::src::malloc::sqlite3_free(pTstAlloc);
     }
-    return (*(*id).pMethods).xFetch.expect("non-null function pointer")(
+    (*(*id).pMethods).xFetch.expect("non-null function pointer")(
         id,
         iOff as crate::sqlite3_h::sqlite3_int64,
         iAmt,
         pp,
-    );
+    )
 }
 #[no_mangle]
 
@@ -346,9 +346,9 @@ pub unsafe extern "C" fn sqlite3OsUnfetch(
     mut iOff: crate::src::ext::rtree::rtree::i64_0,
     mut p: *mut ::core::ffi::c_void,
 ) -> ::core::ffi::c_int {
-    return (*(*id).pMethods)
+    (*(*id).pMethods)
         .xUnfetch
-        .expect("non-null function pointer")(id, iOff as crate::sqlite3_h::sqlite3_int64, p);
+        .expect("non-null function pointer")(id, iOff as crate::sqlite3_h::sqlite3_int64, p)
 }
 #[no_mangle]
 
@@ -378,7 +378,7 @@ pub unsafe extern "C" fn sqlite3OsOpen(
         flags & 0x1087f7f as ::core::ffi::c_int,
         pFlagsOut,
     );
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -398,11 +398,11 @@ pub unsafe extern "C" fn sqlite3OsDelete(
         }
         crate::src::src::malloc::sqlite3_free(pTstAlloc);
     }
-    return if (*pVfs).xDelete.is_some() {
+    if (*pVfs).xDelete.is_some() {
         (*pVfs).xDelete.expect("non-null function pointer")(pVfs, zPath, dirSync)
     } else {
         crate::sqlite3_h::SQLITE_OK
-    };
+    }
 }
 #[no_mangle]
 
@@ -423,7 +423,7 @@ pub unsafe extern "C" fn sqlite3OsAccess(
         }
         crate::src::src::malloc::sqlite3_free(pTstAlloc);
     }
-    return (*pVfs).xAccess.expect("non-null function pointer")(pVfs, zPath, flags, pResOut);
+    (*pVfs).xAccess.expect("non-null function pointer")(pVfs, zPath, flags, pResOut)
 }
 #[no_mangle]
 
@@ -445,9 +445,9 @@ pub unsafe extern "C" fn sqlite3OsFullPathname(
         crate::src::src::malloc::sqlite3_free(pTstAlloc);
     }
     *zPathOut.offset(0 as isize) = 0 as ::core::ffi::c_char;
-    return (*pVfs).xFullPathname.expect("non-null function pointer")(
+    (*pVfs).xFullPathname.expect("non-null function pointer")(
         pVfs, zPath, nPathOut, zPathOut,
-    );
+    )
 }
 #[no_mangle]
 
@@ -455,7 +455,7 @@ pub unsafe extern "C" fn sqlite3OsDlOpen(
     mut pVfs: *mut crate::sqlite3_h::sqlite3_vfs,
     mut zPath: *const ::core::ffi::c_char,
 ) -> *mut ::core::ffi::c_void {
-    return (*pVfs).xDlOpen.expect("non-null function pointer")(pVfs, zPath);
+    (*pVfs).xDlOpen.expect("non-null function pointer")(pVfs, zPath)
 }
 #[no_mangle]
 
@@ -473,7 +473,7 @@ pub unsafe extern "C" fn sqlite3OsDlSym(
     mut pHdle: *mut ::core::ffi::c_void,
     mut zSym: *const ::core::ffi::c_char,
 ) -> Option<unsafe extern "C" fn() -> ()> {
-    return (*pVfs).xDlSym.expect("non-null function pointer")(pVfs, pHdle, zSym);
+    (*pVfs).xDlSym.expect("non-null function pointer")(pVfs, pHdle, zSym)
 }
 #[no_mangle]
 
@@ -515,12 +515,12 @@ pub unsafe extern "C" fn sqlite3OsSleep(
     mut pVfs: *mut crate::sqlite3_h::sqlite3_vfs,
     mut nMicro: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    return (*pVfs).xSleep.expect("non-null function pointer")(pVfs, nMicro);
+    (*pVfs).xSleep.expect("non-null function pointer")(pVfs, nMicro)
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3OsGetLastError(mut pVfs: *mut crate::sqlite3_h::sqlite3_vfs) -> ::core::ffi::c_int {
-    return if (*pVfs).xGetLastError.is_some() {
+    if (*pVfs).xGetLastError.is_some() {
         (*pVfs).xGetLastError.expect("non-null function pointer")(
             pVfs,
             0 as ::core::ffi::c_int,
@@ -528,7 +528,7 @@ pub unsafe extern "C" fn sqlite3OsGetLastError(mut pVfs: *mut crate::sqlite3_h::
         )
     } else {
         0 as ::core::ffi::c_int
-    };
+    }
 }
 #[no_mangle]
 
@@ -546,7 +546,7 @@ pub unsafe extern "C" fn sqlite3OsCurrentTimeInt64(
         rc = (*pVfs).xCurrentTime.expect("non-null function pointer")(pVfs, &raw mut r);
         *pTimeOut = (r * 86400000.0f64) as crate::sqlite3_h::sqlite3_int64;
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -572,7 +572,7 @@ pub unsafe extern "C" fn sqlite3OsOpenMalloc(
         *ppFile = ::core::ptr::null_mut::<crate::sqlite3_h::sqlite3_file>();
         rc = crate::sqliteInt_h::SQLITE_NOMEM_BKPT;
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -588,7 +588,7 @@ pub unsafe extern "C" fn sqlite3OsInit() -> ::core::ffi::c_int {
         return crate::sqliteInt_h::SQLITE_NOMEM_BKPT;
     }
     crate::src::src::malloc::sqlite3_free(p);
-    return crate::src::src::os_unix::sqlite3_os_init();
+    crate::src::src::os_unix::sqlite3_os_init()
 }
 
 static mut vfsList: *mut crate::sqlite3_h::sqlite3_vfs = ::core::ptr::null::<crate::sqlite3_h::sqlite3_vfs>() as *mut crate::sqlite3_h::sqlite3_vfs;
@@ -616,7 +616,7 @@ pub unsafe extern "C" fn sqlite3_vfs_find(
         pVfs = (*pVfs).pNext;
     }
     crate::src::src::mutex::sqlite3_mutex_leave(mutex);
-    return pVfs;
+    pVfs
 }
 
 unsafe extern "C" fn vfsUnlink(mut pVfs: *mut crate::sqlite3_h::sqlite3_vfs) {
@@ -656,7 +656,7 @@ pub unsafe extern "C" fn sqlite3_vfs_register(
         (*vfsList).pNext = pVfs;
     }
     crate::src::src::mutex::sqlite3_mutex_leave(mutex);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -670,5 +670,5 @@ pub unsafe extern "C" fn sqlite3_vfs_unregister(mut pVfs: *mut crate::sqlite3_h:
     crate::src::src::mutex::sqlite3_mutex_enter(mutex);
     vfsUnlink(pVfs);
     crate::src::src::mutex::sqlite3_mutex_leave(mutex);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }

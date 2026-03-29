@@ -56,7 +56,7 @@ pub unsafe extern "C" fn sqlite3UpsertDup(mut db: *mut crate::sqliteInt_h::sqlit
         return ::core::ptr::null_mut::<crate::sqliteInt_h::Upsert>();
     }
     let __p_ref = unsafe { &*p };
-    return sqlite3UpsertNew(
+    sqlite3UpsertNew(
         db,
         
         crate::src::src::expr::sqlite3ExprListDup(db as *mut crate::sqliteInt_h::sqlite3,  __p_ref.pUpsertTarget as *const crate::sqliteInt_h::ExprList, 0 as ::core::ffi::c_int) as *mut crate::sqliteInt_h::ExprList,
@@ -67,7 +67,7 @@ pub unsafe extern "C" fn sqlite3UpsertDup(mut db: *mut crate::sqliteInt_h::sqlit
         
         crate::src::src::expr::sqlite3ExprDup(db as *mut crate::sqliteInt_h::sqlite3,  __p_ref.pUpsertWhere as *const crate::sqliteInt_h::Expr, 0 as ::core::ffi::c_int) as *mut crate::sqliteInt_h::Expr,
         sqlite3UpsertDup(db, __p_ref.pNextUpsert),
-    );
+    )
 }
 #[no_mangle]
 
@@ -98,7 +98,7 @@ pub unsafe extern "C" fn sqlite3UpsertNew(
             (pSet != ::core::ptr::null_mut::<crate::sqliteInt_h::ExprList>()) as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0;
         __pNew_ref.pNextUpsert = pNext;
     }
-    return pNew;
+    pNew
 }
 #[no_mangle]
 
@@ -276,7 +276,7 @@ pub unsafe extern "C" fn sqlite3UpsertAnalyzeTarget(
         pUpsert = (*pUpsert).pNextUpsert;
         nClause += 1;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -312,7 +312,7 @@ pub unsafe extern "C" fn sqlite3UpsertOfIndex(
     {
         pUpsert = (*pUpsert).pNextUpsert;
     }
-    return pUpsert;
+    pUpsert
 }
 #[no_mangle]
 

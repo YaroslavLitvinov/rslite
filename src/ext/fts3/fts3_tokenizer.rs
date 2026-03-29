@@ -139,7 +139,7 @@ unsafe extern "C" fn fts3TokenizerEnabled(mut context: *mut crate::vdbeInt_h::sq
         -(1 as ::core::ffi::c_int),
         &raw mut isEnabled,
     );
-    return isEnabled;
+    isEnabled
 }
 
 unsafe extern "C" fn fts3TokenizerFunc(
@@ -351,9 +351,9 @@ pub unsafe extern "C" fn sqlite3Fts3IsIdChar(mut c: ::core::ffi::c_char) -> ::co
         0 as ::core::ffi::c_int as ::core::ffi::c_char,
         0 as ::core::ffi::c_int as ::core::ffi::c_char,
     ];
-    return (c as ::core::ffi::c_int & 0x80 as ::core::ffi::c_int != 0
+    (c as ::core::ffi::c_int & 0x80 as ::core::ffi::c_int != 0
         || isFtsIdChar[c as ::core::ffi::c_int as usize] as ::core::ffi::c_int != 0)
-        as ::core::ffi::c_int;
+        as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -407,7 +407,7 @@ pub unsafe extern "C" fn sqlite3Fts3NextToken(
         }
     }
     *pn = z2.offset_from(z1) as ::core::ffi::c_long as ::core::ffi::c_int;
-    return z1;
+    z1
 }
 #[no_mangle]
 
@@ -472,7 +472,7 @@ pub unsafe extern "C" fn sqlite3Fts3InitTokenizer(
             }
             aArg = aNew;
             let fresh1 = iArg;
-            iArg = iArg + 1;
+            iArg += 1;
             let ref mut fresh2 = *aArg.offset(fresh1 as isize);
             *fresh2 = z;
             *z.offset(n as isize) = '\0' as i32 as ::core::ffi::c_char;
@@ -491,7 +491,7 @@ pub unsafe extern "C" fn sqlite3Fts3InitTokenizer(
         crate::src::src::malloc::sqlite3_free(aArg as *mut ::core::ffi::c_void);
     }
     crate::src::src::malloc::sqlite3_free(zCopy as *mut ::core::ffi::c_void);
-    return rc;
+    rc
 }
 
 #[cfg(feature = "test")]
@@ -632,7 +632,7 @@ unsafe extern "C" fn testFunc(
     let mut _objPtr: *mut crate::stdlib::Tcl_Obj = pRet;
     let ___objPtr_ref = unsafe { &mut *_objPtr };
     let fresh0 = ___objPtr_ref.refCount;
-    ___objPtr_ref.refCount = ___objPtr_ref.refCount - 1;
+    ___objPtr_ref.refCount -= 1;
     if fresh0 <= 1 as crate::stdlib::Tcl_Size {
         crate::stdlib::TclFreeObj(_objPtr);
     }
@@ -674,7 +674,7 @@ unsafe extern "C" fn registerTokenizer(
         crate::sqlite3_h::SQLITE_STATIC,
     );
     crate::src::src::vdbeapi::sqlite3_step(pStmt);
-    return crate::src::src::vdbeapi::sqlite3_finalize(pStmt);
+    crate::src::src::vdbeapi::sqlite3_finalize(pStmt)
 }
 
 unsafe extern "C" fn queryTokenizer(
@@ -718,7 +718,7 @@ unsafe extern "C" fn queryTokenizer(
             );
         }
     }
-    return crate::src::src::vdbeapi::sqlite3_finalize(pStmt);
+    crate::src::src::vdbeapi::sqlite3_finalize(pStmt)
 }
 
 unsafe extern "C" fn intTestFunc(
@@ -881,5 +881,5 @@ pub unsafe extern "C" fn sqlite3Fts3InitHashTable(
     }
     crate::src::src::malloc::sqlite3_free(zTest as *mut ::core::ffi::c_void);
     crate::src::src::malloc::sqlite3_free(zTest2 as *mut ::core::ffi::c_void);
-    return rc;
+    rc
 }

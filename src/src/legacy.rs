@@ -156,5 +156,5 @@ pub unsafe extern "C" fn sqlite3_exec(
         *pzErrMsg = ::core::ptr::null_mut::<::core::ffi::c_char>();
     }
     crate::src::src::mutex::sqlite3_mutex_leave((*db).mutex);
-    return rc;
+    rc
 }

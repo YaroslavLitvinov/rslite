@@ -304,7 +304,7 @@ pub unsafe extern "C" fn sqlite3_complete(
         state = trans[state as usize][token as usize];
         zSql = zSql.offset(1);
     }
-    return (state as ::core::ffi::c_int == 1 as ::core::ffi::c_int) as ::core::ffi::c_int;
+    (state as ::core::ffi::c_int == 1 as ::core::ffi::c_int) as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -334,5 +334,5 @@ pub unsafe extern "C" fn sqlite3_complete16(
         rc = crate::sqliteInt_h::SQLITE_NOMEM_BKPT;
     }
     crate::src::src::vdbemem::sqlite3ValueFree(pVal);
-    return rc & 0xff as ::core::ffi::c_int;
+    rc & 0xff as ::core::ffi::c_int
 }

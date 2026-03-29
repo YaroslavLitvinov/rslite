@@ -82,7 +82,7 @@ pub unsafe extern "C" fn sqlite3TriggerList(
         }
         p = (*p).next;
     }
-    return pList;
+    pList
 }
 #[no_mangle]
 
@@ -663,7 +663,7 @@ unsafe extern "C" fn triggerSpanDup(
             i += 1;
         }
     }
-    return z;
+    z
 }
 #[no_mangle]
 
@@ -684,7 +684,7 @@ pub unsafe extern "C" fn sqlite3TriggerSelectStep(
     __pTriggerStep_ref.pSelect = pSelect;
     __pTriggerStep_ref.orconf = crate::sqliteInt_h::OE_Default as crate::src::ext::rtree::rtree::u8_0;
     __pTriggerStep_ref.zSpan = triggerSpanDup(db, zStart, zEnd);
-    return pTriggerStep;
+    pTriggerStep
 }
 
 unsafe extern "C" fn triggerStepAllocate(
@@ -730,7 +730,7 @@ unsafe extern "C" fn triggerStepAllocate(
             );
         }
     }
-    return pTriggerStep;
+    pTriggerStep
 }
 #[no_mangle]
 
@@ -766,7 +766,7 @@ pub unsafe extern "C" fn sqlite3TriggerInsertStep(
         crate::src::src::upsert::sqlite3UpsertDelete(db as *mut crate::sqliteInt_h::sqlite3,  pUpsert as *mut crate::sqliteInt_h::Upsert);
     }
     crate::src::src::select::sqlite3SelectDelete(db as *mut crate::sqliteInt_h::sqlite3,  pSelect as *mut crate::sqliteInt_h::Select);
-    return pTriggerStep;
+    pTriggerStep
 }
 #[no_mangle]
 
@@ -805,7 +805,7 @@ pub unsafe extern "C" fn sqlite3TriggerUpdateStep(
     crate::src::src::expr::sqlite3ExprListDelete(db as *mut crate::sqliteInt_h::sqlite3,  pEList as *mut crate::sqliteInt_h::ExprList);
     crate::src::src::expr::sqlite3ExprDelete(db as *mut crate::sqliteInt_h::sqlite3,  pWhere as *mut crate::sqliteInt_h::Expr);
     crate::src::src::build::sqlite3SrcListDelete(db as *mut crate::sqliteInt_h::sqlite3,  pFrom as *mut crate::sqliteInt_h::SrcList);
-    return pTriggerStep;
+    pTriggerStep
 }
 #[no_mangle]
 
@@ -829,7 +829,7 @@ pub unsafe extern "C" fn sqlite3TriggerDeleteStep(
         (*pTriggerStep).orconf = crate::sqliteInt_h::OE_Default as crate::src::ext::rtree::rtree::u8_0;
     }
     crate::src::src::expr::sqlite3ExprDelete(db as *mut crate::sqliteInt_h::sqlite3,  pWhere as *mut crate::sqliteInt_h::Expr);
-    return pTriggerStep;
+    pTriggerStep
 }
 #[no_mangle]
 
@@ -906,12 +906,12 @@ pub unsafe extern "C" fn sqlite3DropTrigger(
 }
 
 unsafe extern "C" fn tableOfTrigger(mut pTrigger: *mut crate::sqliteInt_h::Trigger) -> *mut crate::sqliteInt_h::Table {
-    return crate::src::src::hash::sqlite3HashFind(
+    crate::src::src::hash::sqlite3HashFind(
         
         &raw mut (*(*pTrigger).pTabSchema).tblHash as *mut _ as
     *const crate::src::src::hash::Hash,
         (*pTrigger).table,
-    ) as *mut crate::sqliteInt_h::Table;
+    ) as *mut crate::sqliteInt_h::Table
 }
 #[no_mangle]
 
@@ -1022,7 +1022,7 @@ unsafe extern "C" fn checkColumnOverlap(
         }
         e += 1;
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn tempTriggersExist(mut db: *mut crate::sqliteInt_h::sqlite3) -> ::core::ffi::c_int {
@@ -1039,7 +1039,7 @@ unsafe extern "C" fn tempTriggersExist(mut db: *mut crate::sqliteInt_h::sqlite3)
     {
         return 0 as ::core::ffi::c_int;
     }
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 #[inline(never)]
 
@@ -1119,11 +1119,11 @@ unsafe extern "C" fn triggersReallyExist(
     if !pMask.is_null() {
         *pMask = mask;
     }
-    return if mask != 0 {
+    if mask != 0 {
         pList
     } else {
         ::core::ptr::null_mut::<crate::sqliteInt_h::Trigger>()
-    };
+    }
 }
 #[no_mangle]
 
@@ -1142,7 +1142,7 @@ pub unsafe extern "C" fn sqlite3TriggersExist(
         }
         return ::core::ptr::null_mut::<crate::sqliteInt_h::Trigger>();
     }
-    return triggersReallyExist(pParse, pTab, op, pChanges, pMask);
+    triggersReallyExist(pParse, pTab, op, pChanges, pMask)
 }
 #[no_mangle]
 
@@ -1250,7 +1250,7 @@ pub unsafe extern "C" fn sqlite3TriggerStepSrc(
     } else {
         crate::src::src::malloc::sqlite3DbFree(db as *mut crate::sqliteInt_h::sqlite3, zName as *mut ::core::ffi::c_void);
     }
-    return pSrc;
+    pSrc
 }
 
 unsafe extern "C" fn isAsteriskTerm(
@@ -1272,7 +1272,7 @@ unsafe extern "C" fn isAsteriskTerm(
         pParse as *mut crate::sqliteInt_h::Parse,
         b"RETURNING may not use \"TABLE.*\" wildcards\0" as *const u8 as *const ::core::ffi::c_char,
     );
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn sqlite3ExpandReturning(
@@ -1347,7 +1347,7 @@ unsafe extern "C" fn sqlite3ExpandReturning(
         }
         i += 1;
     }
-    return pNew;
+    pNew
 }
 
 unsafe extern "C" fn sqlite3ReturningSubqueryVarSelect(
@@ -1359,7 +1359,7 @@ unsafe extern "C" fn sqlite3ReturningSubqueryVarSelect(
     {
         (*pExpr).flags |= 0x40 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u32_0;
     }
-    return crate::sqliteInt_h::WRC_Continue;
+    crate::sqliteInt_h::WRC_Continue
 }
 
 unsafe extern "C" fn sqlite3ReturningSubqueryCorrelated(
@@ -1379,7 +1379,7 @@ unsafe extern "C" fn sqlite3ReturningSubqueryCorrelated(
             i += 1;
         }
     }
-    return crate::sqliteInt_h::WRC_Continue;
+    crate::sqliteInt_h::WRC_Continue
 }
 
 unsafe extern "C" fn sqlite3ProcessReturningSubqueries(
@@ -1465,7 +1465,7 @@ unsafe extern "C" fn codeReturningTrigger(
         if (*pReturning).nRetCol == 0 as ::core::ffi::c_int {
             (*pReturning).nRetCol = (*pNew).nExpr;
             let fresh3 = __pParse_ref.nTab;
-            __pParse_ref.nTab = __pParse_ref.nTab + 1;
+            __pParse_ref.nTab += 1;
             (*pReturning).iRetCur = fresh3;
         }
         sNC.pParse = pParse;
@@ -1627,7 +1627,7 @@ unsafe extern "C" fn codeTriggerProgram(
 }
         pStep = (*pStep).pNext;
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn transferParseError(mut pTo: *mut crate::sqliteInt_h::Parse, mut pFrom: *mut crate::sqliteInt_h::Parse) {
@@ -1830,7 +1830,7 @@ unsafe extern "C" fn codeRowTrigger(
         transferParseError(pParse, &raw mut sSubParse);
     }
     crate::src::src::prepare::sqlite3ParseObjectReset(&raw mut sSubParse as *mut _ as *mut crate::sqliteInt_h::Parse);
-    return pPrg;
+    pPrg
 }
 
 unsafe extern "C" fn getRowTrigger(
@@ -1853,7 +1853,7 @@ unsafe extern "C" fn getRowTrigger(
         pPrg = codeRowTrigger(pParse, pTrigger, pTab, orconf);
         (*(*pParse).db).errByteOffset = -(1 as ::core::ffi::c_int);
     }
-    return pPrg;
+    pPrg
 }
 #[no_mangle]
 
@@ -1957,5 +1957,5 @@ pub unsafe extern "C" fn sqlite3TriggerColmask(
         }
         p = (*p).pNext;
     }
-    return mask;
+    mask
 }

@@ -415,31 +415,31 @@ unsafe extern "C" fn analyzeOneTable(
     let mut iDb: ::core::ffi::c_int = 0;
     let mut needTableCnt: crate::src::ext::rtree::rtree::u8_0 = 1 as crate::src::ext::rtree::rtree::u8_0;
     let fresh0 = iMem;
-    iMem = iMem + 1;
+    iMem += 1;
     let mut regNewRowid: ::core::ffi::c_int = fresh0;
     let fresh1 = iMem;
-    iMem = iMem + 1;
+    iMem += 1;
     let mut regStat: ::core::ffi::c_int = fresh1;
     let fresh2 = iMem;
-    iMem = iMem + 1;
+    iMem += 1;
     let mut regChng: ::core::ffi::c_int = fresh2;
     let fresh3 = iMem;
-    iMem = iMem + 1;
+    iMem += 1;
     let mut regRowid: ::core::ffi::c_int = fresh3;
     let fresh4 = iMem;
-    iMem = iMem + 1;
+    iMem += 1;
     let mut regTemp: ::core::ffi::c_int = fresh4;
     let fresh5 = iMem;
-    iMem = iMem + 1;
+    iMem += 1;
     let mut regTemp2: ::core::ffi::c_int = fresh5;
     let fresh6 = iMem;
-    iMem = iMem + 1;
+    iMem += 1;
     let mut regTabname: ::core::ffi::c_int = fresh6;
     let fresh7 = iMem;
-    iMem = iMem + 1;
+    iMem += 1;
     let mut regIdxname: ::core::ffi::c_int = fresh7;
     let fresh8 = iMem;
-    iMem = iMem + 1;
+    iMem += 1;
     let mut regStat1: ::core::ffi::c_int = fresh8;
     let mut regPrev: ::core::ffi::c_int = iMem;
     let mut pStat1: *mut crate::sqliteInt_h::Table = ::core::ptr::null_mut::<crate::sqliteInt_h::Table>();
@@ -503,10 +503,10 @@ unsafe extern "C" fn analyzeOneTable(
     }
     crate::src::src::build::sqlite3TableLock(pParse as *mut crate::sqliteInt_h::Parse, iDb, __pTab_ref.tnum, 0 as crate::src::ext::rtree::rtree::u8_0, __pTab_ref.zName);
     let fresh9 = iTab;
-    iTab = iTab + 1;
+    iTab += 1;
     iTabCur = fresh9;
     let fresh10 = iTab;
-    iTab = iTab + 1;
+    iTab += 1;
     iIdxCur = fresh10;
     __pParse_ref.nTab = if __pParse_ref.nTab > iTab {
         __pParse_ref.nTab
@@ -1045,7 +1045,7 @@ unsafe extern "C" fn analysisLoader(
         __pTable_ref.szTabRow = fakeIdx.szIdxRow;
         __pTable_ref.tabFlags |= crate::sqliteInt_h::TF_HasStat1 as crate::src::ext::rtree::rtree::u32_0;
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -1127,5 +1127,5 @@ pub unsafe extern "C" fn sqlite3AnalysisLoad(
     if rc == crate::sqlite3_h::SQLITE_NOMEM {
         crate::src::src::malloc::sqlite3OomFault(db as *mut crate::sqliteInt_h::sqlite3);
     }
-    return rc;
+    rc
 }

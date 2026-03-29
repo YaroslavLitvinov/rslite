@@ -145,7 +145,7 @@ unsafe extern "C" fn computeIndexAffStr(
         n += 1;
     }
     *__pIdx_ref.zColAff.offset(n as isize) = 0 as ::core::ffi::c_char;
-    return __pIdx_ref.zColAff;
+    __pIdx_ref.zColAff
 }
 #[no_mangle]
 
@@ -156,7 +156,7 @@ pub unsafe extern "C" fn sqlite3IndexAffinityStr(
     if (*pIdx).zColAff.is_null() {
         return computeIndexAffStr(db, pIdx);
     }
-    return (*pIdx).zColAff;
+    (*pIdx).zColAff
 }
 #[no_mangle]
 
@@ -180,14 +180,14 @@ pub unsafe extern "C" fn sqlite3TableAffinityStr(
                 == 0 as ::core::ffi::c_int
             {
                 let fresh3 = j;
-                j = j + 1;
+                j += 1;
                 *zColAff.offset(fresh3 as isize) = (*(*pTab).aCol.offset(i as isize)).affinity;
             }
             i += 1;
         }
         loop {
             let fresh4 = j;
-            j = j - 1;
+            j -= 1;
             *zColAff.offset(fresh4 as isize) = 0 as ::core::ffi::c_char;
             if !(j >= 0 as ::core::ffi::c_int
                 && *zColAff.offset(j as isize) as ::core::ffi::c_int <= crate::sqliteInt_h::SQLITE_AFF_BLOB)
@@ -196,7 +196,7 @@ pub unsafe extern "C" fn sqlite3TableAffinityStr(
             }
         }
     }
-    return zColAff;
+    zColAff
 }
 #[no_mangle]
 
@@ -283,7 +283,7 @@ unsafe extern "C" fn readsTable(
         }
         i += 1;
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn exprColumnFlagUnion(
@@ -298,7 +298,7 @@ unsafe extern "C" fn exprColumnFlagUnion(
             | (*(*__pWalker_ref.u.pTab).aCol.offset((*pExpr).iColumn as isize)).colFlags
                 as ::core::ffi::c_int) as crate::src::fts5::u16_0;
     }
-    return crate::sqliteInt_h::WRC_Continue;
+    crate::sqliteInt_h::WRC_Continue
 }
 #[no_mangle]
 
@@ -477,7 +477,7 @@ unsafe extern "C" fn autoIncBegin(
         }
         memId = (*pInfo).regCtr;
     }
-    return memId;
+    memId
 }
 #[no_mangle]
 
@@ -745,7 +745,7 @@ unsafe extern "C" fn exprListIsConstant(
         }
         ii += 1;
     }
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn exprListIsNoAffinity(
@@ -765,7 +765,7 @@ unsafe extern "C" fn exprListIsNoAffinity(
         }
         ii += 1;
     }
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -927,7 +927,7 @@ pub unsafe extern "C" fn sqlite3MultiValues(
         }
         crate::src::src::expr::sqlite3ExprListDelete(__pParse_ref.db as *mut crate::sqliteInt_h::sqlite3,  pRow as *mut crate::sqliteInt_h::ExprList);
     }
-    return pLeft;
+    pLeft
 }
 #[no_mangle]
 
@@ -1250,7 +1250,7 @@ pub unsafe extern "C" fn sqlite3Insert(
                                                         let mut addrL: ::core::ffi::c_int = 0;
                                                         let __pParse_ref = unsafe { &mut *pParse };
                                                         let fresh0 = __pParse_ref.nTab;
-                                                        __pParse_ref.nTab = __pParse_ref.nTab + 1;
+                                                        __pParse_ref.nTab += 1;
                                                         srcTab = fresh0;
                                                         regRec = crate::src::src::expr::sqlite3GetTempReg(pParse as *mut crate::sqliteInt_h::Parse);
                                                         regTempRowid = crate::src::src::expr::sqlite3GetTempReg(pParse as *mut crate::sqliteInt_h::Parse);
@@ -2066,7 +2066,7 @@ unsafe extern "C" fn checkConstraintExprNode(
             (*pWalker).eCode = ((*pWalker).eCode as ::core::ffi::c_int | CKCNSTRNT_ROWID) as crate::src::fts5::u16_0;
         }
     }
-    return crate::sqliteInt_h::WRC_Continue;
+    crate::sqliteInt_h::WRC_Continue
 }
 #[no_mangle]
 
@@ -2087,7 +2087,7 @@ pub unsafe extern "C" fn sqlite3ExprReferencesUpdatedColumn(
     if chngRowid == 0 {
         w.eCode = (w.eCode as ::core::ffi::c_int & !CKCNSTRNT_ROWID) as crate::src::fts5::u16_0;
     }
-    return (w.eCode as ::core::ffi::c_int != 0 as ::core::ffi::c_int) as ::core::ffi::c_int;
+    (w.eCode as ::core::ffi::c_int != 0 as ::core::ffi::c_int) as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn indexIteratorFirst(
@@ -3107,7 +3107,7 @@ pub unsafe extern "C" fn sqlite3OpenTableAndIndices(
         iBase = __pParse_ref.nTab;
     }
     let fresh6 = iBase;
-    iBase = iBase + 1;
+    iBase += 1;
     iDataCur = fresh6;
     *piDataCur = iDataCur;
     if __pTab_ref.tabFlags & crate::sqliteInt_h::TF_WithoutRowid as crate::src::ext::rtree::rtree::u32_0 == 0 as crate::src::ext::rtree::rtree::u32_0
@@ -3130,7 +3130,7 @@ pub unsafe extern "C" fn sqlite3OpenTableAndIndices(
     pIdx = __pTab_ref.pIndex;
     while !pIdx.is_null() {
         let fresh7 = iBase;
-        iBase = iBase + 1;
+        iBase += 1;
         let mut iIdxCur: ::core::ffi::c_int = fresh7;
         if (*pIdx).idxType() as ::core::ffi::c_int == crate::sqliteInt_h::SQLITE_IDXTYPE_PRIMARYKEY
             && !(__pTab_ref.tabFlags & crate::sqliteInt_h::TF_WithoutRowid as crate::src::ext::rtree::rtree::u32_0 == 0 as crate::src::ext::rtree::rtree::u32_0)
@@ -3151,7 +3151,7 @@ pub unsafe extern "C" fn sqlite3OpenTableAndIndices(
     if iBase > __pParse_ref.nTab {
         __pParse_ref.nTab = iBase;
     }
-    return i;
+    i
 }
 #[no_mangle]
 
@@ -3221,7 +3221,7 @@ unsafe extern "C" fn xferCompatibleIndex(
     {
         return 0 as ::core::ffi::c_int;
     }
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn xferOptimization(
@@ -3433,10 +3433,10 @@ unsafe extern "C" fn xferOptimization(
     v = crate::src::src::select::sqlite3GetVdbe(pParse as *mut crate::sqliteInt_h::Parse);
     crate::src::src::build::sqlite3CodeVerifySchema(pParse as *mut crate::sqliteInt_h::Parse, iDbSrc);
     let fresh8 = __pParse_ref.nTab;
-    __pParse_ref.nTab = __pParse_ref.nTab + 1;
+    __pParse_ref.nTab += 1;
     iSrc = fresh8;
     let fresh9 = __pParse_ref.nTab;
-    __pParse_ref.nTab = __pParse_ref.nTab + 1;
+    __pParse_ref.nTab += 1;
     iDest = fresh9;
     regAutoinc = autoIncBegin(pParse, iDbDest, pDest);
     regData = crate::src::src::expr::sqlite3GetTempReg(pParse as *mut crate::sqliteInt_h::Parse);

@@ -5,11 +5,11 @@ pub mod stdlib_h {
     #[inline]
     
     pub unsafe extern "C" fn atoi(mut __nptr: *const ::core::ffi::c_char) -> ::core::ffi::c_int {
-        return ::libc::strtol(
+        ::libc::strtol(
             __nptr,
             crate::__stddef_null_h::NULL as *mut *mut ::core::ffi::c_char,
             10 as ::core::ffi::c_int,
-        ) as ::core::ffi::c_int;
+        ) as ::core::ffi::c_int
     }
     
     
@@ -369,7 +369,7 @@ unsafe extern "C" fn fts3SqlStmt(
         }
     }
     *pp = pStmt;
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3SelectDocsize(
@@ -399,7 +399,7 @@ unsafe extern "C" fn fts3SelectDocsize(
         }
     }
     *ppStmt = pStmt;
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -428,7 +428,7 @@ pub unsafe extern "C" fn sqlite3Fts3SelectDoctotal(
         }
     }
     *ppStmt = pStmt;
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -437,7 +437,7 @@ pub unsafe extern "C" fn sqlite3Fts3SelectDocsize(
     mut iDocid: crate::sqlite3_h::sqlite3_int64,
     mut ppStmt: *mut *mut crate::sqlite3_h::sqlite3_stmt,
 ) -> ::core::ffi::c_int {
-    return fts3SelectDocsize(pTab, iDocid, ppStmt);
+    fts3SelectDocsize(pTab, iDocid, ppStmt)
 }
 
 unsafe extern "C" fn fts3SqlExec(
@@ -475,7 +475,7 @@ unsafe extern "C" fn fts3Writelock(mut p: *mut crate::fts3Int_h::Fts3Table) -> :
             rc = crate::src::src::vdbeapi::sqlite3_reset(pStmt);
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn getAbsoluteLevel(
@@ -487,7 +487,7 @@ unsafe extern "C" fn getAbsoluteLevel(
     let mut iBase: crate::sqlite3_h::sqlite3_int64 = 0;
     iBase = (iLangid as crate::sqlite3_h::sqlite3_int64 * (*p).nIndex as crate::sqlite3_h::sqlite3_int64 + iIndex as crate::sqlite3_h::sqlite3_int64)
         * crate::fts3Int_h::FTS3_SEGDIR_MAXLEVEL as crate::sqlite3_h::sqlite3_int64;
-    return iBase + iLevel as crate::sqlite3_h::sqlite3_int64;
+    iBase + iLevel as crate::sqlite3_h::sqlite3_int64
 }
 #[no_mangle]
 
@@ -540,7 +540,7 @@ pub unsafe extern "C" fn sqlite3Fts3AllSegdirs(
         }
     }
     *ppStmt = pStmt;
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3PendingListAppendVarint(
@@ -582,7 +582,7 @@ unsafe extern "C" fn fts3PendingListAppendVarint(
     );
     *(*p).aData.offset((*p).nData as isize) = '\0' as i32 as ::core::ffi::c_char;
     *pp = p;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn fts3PendingListAppend(
@@ -658,7 +658,7 @@ unsafe extern "C" fn fts3PendingListAppend(
         *pp = p;
         return 1 as ::core::ffi::c_int;
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn fts3PendingListDelete(mut pList: *mut PendingList) {
@@ -712,7 +712,7 @@ unsafe extern "C" fn fts3PendingTermsAddOne(
                 as ::core::ffi::c_ulong,
         ) as ::core::ffi::c_int as ::core::ffi::c_int;
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3PendingTermsAdd(
@@ -807,7 +807,7 @@ unsafe extern "C" fn fts3PendingTermsAdd(
     }
     (*pModule).xClose.expect("non-null function pointer")(pCsr);
     *pnWord = (*pnWord).wrapping_add(nWord as crate::src::ext::rtree::rtree::u32_0);
-    return if rc == crate::sqlite3_h::SQLITE_DONE { crate::sqlite3_h::SQLITE_OK } else { rc };
+    if rc == crate::sqlite3_h::SQLITE_DONE { crate::sqlite3_h::SQLITE_OK } else { rc }
 }
 
 unsafe extern "C" fn fts3PendingTermsDocid(
@@ -830,7 +830,7 @@ unsafe extern "C" fn fts3PendingTermsDocid(
     __p_ref.iPrevDocid = iDocid;
     __p_ref.iPrevLangid = iLangid;
     __p_ref.bPrevDelete = bDelete;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -882,7 +882,7 @@ unsafe extern "C" fn fts3InsertTerms(
         }
         i += 1;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn fts3InsertData(
@@ -941,7 +941,7 @@ unsafe extern "C" fn fts3InsertData(
     crate::src::src::vdbeapi::sqlite3_step(pContentInsert);
     rc = crate::src::src::vdbeapi::sqlite3_reset(pContentInsert);
     *piDocid = crate::src::src::main::sqlite3_last_insert_rowid(__p_ref.db);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3DeleteAll(
@@ -986,7 +986,7 @@ unsafe extern "C" fn fts3DeleteAll(
             ::core::ptr::null_mut::<*mut crate::vdbeInt_h::sqlite3_value>(),
         );
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn langidFromSelect(
@@ -997,7 +997,7 @@ unsafe extern "C" fn langidFromSelect(
     if !(*p).zLanguageid.is_null() {
         iLangid = crate::src::src::vdbeapi::sqlite3_column_int(pSelect, (*p).nColumn + 1 as ::core::ffi::c_int);
     }
-    return iLangid;
+    iLangid
 }
 
 unsafe extern "C" fn fts3DeleteTerms(
@@ -1093,7 +1093,7 @@ unsafe extern "C" fn fts3AllocateSegdirIdx(
             *piIdx = iNext;
         }
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -1164,7 +1164,7 @@ pub unsafe extern "C" fn sqlite3Fts3ReadBlock(
     } else if rc == crate::sqlite3_h::SQLITE_ERROR {
         rc = crate::fts3Int_h::FTS_CORRUPT_VTAB;
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -1203,7 +1203,7 @@ unsafe extern "C" fn fts3SegReaderIncrRead(mut pReader: *mut Fts3SegReader) -> :
             __pReader_ref.nPopulate = 0 as ::core::ffi::c_int;
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3SegReaderRequire(
@@ -1220,7 +1220,7 @@ unsafe extern "C" fn fts3SegReaderRequire(
     {
         rc = fts3SegReaderIncrRead(pReader);
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3SegReaderSetEof(mut pSeg: *mut Fts3SegReader) {
@@ -1398,7 +1398,7 @@ unsafe extern "C" fn fts3SegReaderNext(
     {
         return crate::fts3Int_h::FTS_CORRUPT_VTAB;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn fts3SegReaderFirstDocid(
@@ -1430,7 +1430,7 @@ unsafe extern "C" fn fts3SegReaderFirstDocid(
                 __pReader_ref.aDoclist.offset(n as isize) as *mut ::core::ffi::c_char;
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3SegReaderNextDocid(
@@ -1512,7 +1512,7 @@ unsafe extern "C" fn fts3SegReaderNextDocid(
             }
         }
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -1555,7 +1555,7 @@ pub unsafe extern "C" fn sqlite3Fts3MsrOvfl(
         ii += 1;
     }
     *pnOvfl = nOvfl;
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -1630,7 +1630,7 @@ pub unsafe extern "C" fn sqlite3Fts3SegReaderNew(
         (*pReader).iCurrentBlock = iStartLeaf - 1 as crate::sqlite3_h::sqlite3_int64;
     }
     *ppReader = pReader;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn fts3CompareElemByTerm(
@@ -1652,7 +1652,7 @@ unsafe extern "C" fn fts3CompareElemByTerm(
     if c == 0 as ::core::ffi::c_int {
         c = n1 - n2;
     }
-    return c;
+    c
 }
 #[no_mangle]
 
@@ -1705,7 +1705,7 @@ pub unsafe extern "C" fn sqlite3Fts3SegReaderPending(
                     }
                 }
                 let fresh16 = nElem;
-                nElem = nElem + 1;
+                nElem += 1;
                 let ref mut fresh17 = *aElem.offset(fresh16 as isize);
                 *fresh17 = pE;
             }
@@ -1764,7 +1764,7 @@ pub unsafe extern "C" fn sqlite3Fts3SegReaderPending(
         crate::src::src::malloc::sqlite3_free(aElem as *mut ::core::ffi::c_void);
     }
     *ppReader = pReader;
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3SegReaderCmp(
@@ -1799,7 +1799,7 @@ unsafe extern "C" fn fts3SegReaderCmp(
     if rc == 0 as ::core::ffi::c_int {
         rc = (*pRhs).iIdx - (*pLhs).iIdx;
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3SegReaderDoclistCmp(
@@ -1822,7 +1822,7 @@ unsafe extern "C" fn fts3SegReaderDoclistCmp(
             };
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3SegReaderDoclistCmpRev(
@@ -1845,7 +1845,7 @@ unsafe extern "C" fn fts3SegReaderDoclistCmpRev(
             };
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3SegReaderTermCmp(
@@ -1872,7 +1872,7 @@ unsafe extern "C" fn fts3SegReaderTermCmp(
             res = (*pSeg).nTerm - nTerm;
         }
     }
-    return res;
+    res
 }
 
 unsafe extern "C" fn fts3SegReaderSort(
@@ -1937,7 +1937,7 @@ unsafe extern "C" fn fts3WriteSegment(
         rc = crate::src::src::vdbeapi::sqlite3_reset(pStmt);
         crate::src::src::vdbeapi::sqlite3_bind_null(pStmt, 2 as ::core::ffi::c_int);
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -1961,7 +1961,7 @@ pub unsafe extern "C" fn sqlite3Fts3MaxLevel(
         rc = crate::src::src::vdbeapi::sqlite3_reset(pStmt);
     }
     *pnMax = mxLevel;
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3WriteSegdir(
@@ -2017,7 +2017,7 @@ unsafe extern "C" fn fts3WriteSegdir(
         rc = crate::src::src::vdbeapi::sqlite3_reset(pStmt);
         crate::src::src::vdbeapi::sqlite3_bind_null(pStmt, 6 as ::core::ffi::c_int);
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3PrefixCompress(
@@ -2035,7 +2035,7 @@ unsafe extern "C" fn fts3PrefixCompress(
     {
         n += 1;
     }
-    return n;
+    n
 }
 
 unsafe extern "C" fn fts3NodeAddTerm(
@@ -2150,7 +2150,7 @@ unsafe extern "C" fn fts3NodeAddTerm(
         rc = fts3NodeAddTerm(p, &raw mut pNew, isCopyTerm, zTerm, nTerm);
     }
     *ppTree = pNew;
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3TreeFinishNode(
@@ -2168,7 +2168,7 @@ unsafe extern "C" fn fts3TreeFinishNode(
             as *mut ::core::ffi::c_char,
         iLeftChild,
     );
-    return nStart;
+    nStart
 }
 
 unsafe extern "C" fn fts3NodeWrite(
@@ -2218,7 +2218,7 @@ unsafe extern "C" fn fts3NodeWrite(
             );
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3NodeFree(mut pTree: *mut SegmentNode) {
@@ -2311,7 +2311,7 @@ unsafe extern "C" fn fts3SegWriterAdd(
             return crate::fts3Int_h::FTS_CORRUPT_VTAB;
         }
         let fresh5 = __pWriter_ref.iFree;
-        __pWriter_ref.iFree = __pWriter_ref.iFree + 1;
+        __pWriter_ref.iFree += 1;
         rc_0 = fts3WriteSegment(p, fresh5, __pWriter_ref.aData, nData);
         if rc_0 != crate::sqlite3_h::SQLITE_OK {
             return rc_0;
@@ -2399,7 +2399,7 @@ unsafe extern "C" fn fts3SegWriterAdd(
         (*pWriter).zTerm = zTerm as *mut ::core::ffi::c_char;
     }
     (*pWriter).nTerm = nTerm;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn fts3SegWriterFlush(
@@ -2417,7 +2417,7 @@ unsafe extern "C" fn fts3SegWriterFlush(
         let __pWriter_ref = unsafe { &mut *pWriter };
         iLastLeaf = __pWriter_ref.iFree;
         let fresh4 = __pWriter_ref.iFree;
-        __pWriter_ref.iFree = __pWriter_ref.iFree + 1;
+        __pWriter_ref.iFree += 1;
         rc = fts3WriteSegment(p, fresh4, __pWriter_ref.aData, __pWriter_ref.nData);
         if rc == crate::sqlite3_h::SQLITE_OK {
             rc = fts3NodeWrite(
@@ -2459,7 +2459,7 @@ unsafe extern "C" fn fts3SegWriterFlush(
         );
     }
     (*p).nLeafAdd = (*p).nLeafAdd.wrapping_add(1);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3SegWriterFree(mut pWriter: *mut SegmentWriter) {
@@ -2491,7 +2491,7 @@ unsafe extern "C" fn fts3IsEmpty(
             rc = crate::src::src::vdbeapi::sqlite3_reset(pStmt);
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3SegmentMaxLevel(
@@ -2529,7 +2529,7 @@ unsafe extern "C" fn fts3SegmentMaxLevel(
     if crate::sqlite3_h::SQLITE_ROW == crate::src::src::vdbeapi::sqlite3_step(pStmt) {
         *pnMax = crate::src::src::vdbeapi::sqlite3_column_int64(pStmt, 0 as ::core::ffi::c_int);
     }
-    return crate::src::src::vdbeapi::sqlite3_reset(pStmt);
+    crate::src::src::vdbeapi::sqlite3_reset(pStmt)
 }
 
 unsafe extern "C" fn fts3SegmentIsMaxLevel(
@@ -2565,7 +2565,7 @@ unsafe extern "C" fn fts3SegmentIsMaxLevel(
         *pbMax = (crate::src::src::vdbeapi::sqlite3_column_type(pStmt, 0 as ::core::ffi::c_int) == crate::sqlite3_h::SQLITE_NULL)
             as ::core::ffi::c_int;
     }
-    return crate::src::src::vdbeapi::sqlite3_reset(pStmt);
+    crate::src::src::vdbeapi::sqlite3_reset(pStmt)
 }
 
 unsafe extern "C" fn fts3DeleteSegment(
@@ -2588,7 +2588,7 @@ unsafe extern "C" fn fts3DeleteSegment(
             rc = crate::src::src::vdbeapi::sqlite3_reset(pDelete);
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3DeleteSegdir(
@@ -2653,7 +2653,7 @@ unsafe extern "C" fn fts3DeleteSegdir(
         crate::src::src::vdbeapi::sqlite3_step(pDelete);
         rc = crate::src::src::vdbeapi::sqlite3_reset(pDelete);
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3ColumnFilter(
@@ -2745,7 +2745,7 @@ unsafe extern "C" fn fts3MsrBufferData(
         0 as ::core::ffi::c_int,
         FTS3_NODE_PADDING as crate::__stddef_size_t_h::size_t,
     );
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -2847,7 +2847,7 @@ pub unsafe extern "C" fn sqlite3Fts3MsrIncrNext(
             break;
         }
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn fts3SegReaderStart(
@@ -2892,7 +2892,7 @@ unsafe extern "C" fn fts3SegReaderStart(
                 ) -> ::core::ffi::c_int,
         ),
     );
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -2902,7 +2902,7 @@ pub unsafe extern "C" fn sqlite3Fts3SegReaderStart(
     mut pFilter: *mut crate::fts3Int_h::Fts3SegFilter,
 ) -> ::core::ffi::c_int {
     (*pCsr).pFilter = pFilter;
-    return fts3SegReaderStart(p, pCsr, (*pFilter).zTerm, (*pFilter).nTerm);
+    fts3SegReaderStart(p, pCsr, (*pFilter).zTerm, (*pFilter).nTerm)
 }
 #[no_mangle]
 
@@ -2959,7 +2959,7 @@ pub unsafe extern "C" fn sqlite3Fts3MsrIncrStart(
     }
     fts3SegReaderSort(__pCsr_ref.apSegment, i, i, xCmp);
     __pCsr_ref.iColFilter = iCol;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -2978,7 +2978,7 @@ pub unsafe extern "C" fn sqlite3Fts3MsrIncrRestart(
         (**__pCsr_ref.apSegment.offset(i as isize)).iDocid = 0 as crate::sqlite3_h::sqlite3_int64;
         i += 1;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn fts3GrowSegReaderBuffer(
@@ -2998,7 +2998,7 @@ unsafe extern "C" fn fts3GrowSegReaderBuffer(
         }
         __pCsr_ref.aBuffer = aNew;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -3231,7 +3231,7 @@ pub unsafe extern "C" fn sqlite3Fts3SegReaderStep(
                             );
                             nDoclist += nList;
                             let fresh6 = nDoclist;
-                            nDoclist = nDoclist + 1;
+                            nDoclist += 1;
                             *__pCsr_ref.aBuffer.offset(fresh6 as isize) =
                                 '\0' as i32 as ::core::ffi::c_char;
                         }
@@ -3260,7 +3260,7 @@ pub unsafe extern "C" fn sqlite3Fts3SegReaderStep(
             break;
         }
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -3388,7 +3388,7 @@ unsafe extern "C" fn fts3PromoteSegments(
                 crate::src::src::vdbeapi::sqlite3_bind_int64(pRange, 1 as ::core::ffi::c_int, iAbsLevel);
                 while crate::sqlite3_h::SQLITE_ROW == crate::src::src::vdbeapi::sqlite3_step(pRange) {
                     let fresh3 = iIdx;
-                    iIdx = iIdx + 1;
+                    iIdx += 1;
                     crate::src::src::vdbeapi::sqlite3_bind_int(pUpdate1, 1 as ::core::ffi::c_int, fresh3);
                     crate::src::src::vdbeapi::sqlite3_bind_int(
                         pUpdate1,
@@ -3419,7 +3419,7 @@ unsafe extern "C" fn fts3PromoteSegments(
             }
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3SegmentMerge(
@@ -3580,7 +3580,7 @@ unsafe extern "C" fn fts3SegmentMerge(
     }
     fts3SegWriterFree(pWriter);
     sqlite3Fts3SegReaderFinish(&raw mut csr);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -3625,7 +3625,7 @@ pub unsafe extern "C" fn sqlite3Fts3PendingTermsFlush(mut p: *mut crate::fts3Int
     if rc == crate::sqlite3_h::SQLITE_OK {
         sqlite3Fts3PendingTermsClear(p);
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3EncodeIntArray(
@@ -3675,7 +3675,7 @@ unsafe extern "C" fn fts3DecodeIntArray(
     }
     while i < N {
         let fresh1 = i;
-        i = i + 1;
+        i += 1;
         *a.offset(fresh1 as isize) = 0 as crate::src::ext::rtree::rtree::u32_0;
     }
 }
@@ -3873,11 +3873,11 @@ unsafe extern "C" fn fts3DoOptimize(
         }
     }
     sqlite3Fts3SegmentsClose(p);
-    return if rc == crate::sqlite3_h::SQLITE_OK && bReturnDone != 0 && bSeenDone != 0 {
+    if rc == crate::sqlite3_h::SQLITE_OK && bReturnDone != 0 && bSeenDone != 0 {
         crate::sqlite3_h::SQLITE_DONE
     } else {
         rc
-    };
+    }
 }
 
 unsafe extern "C" fn fts3DoRebuild(mut p: *mut crate::fts3Int_h::Fts3Table) -> ::core::ffi::c_int {
@@ -3994,7 +3994,7 @@ unsafe extern "C" fn fts3DoRebuild(mut p: *mut crate::fts3Int_h::Fts3Table) -> :
             }
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3IncrmergeCsr(
@@ -4053,7 +4053,7 @@ unsafe extern "C" fn fts3IncrmergeCsr(
             rc = rc2;
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn blobGrowBuffer(
@@ -4161,7 +4161,7 @@ unsafe extern "C" fn nodeReaderNext(mut p: *mut NodeReader) -> ::core::ffi::c_in
             }
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn nodeReaderRelease(mut p: *mut NodeReader) {
@@ -4192,11 +4192,11 @@ unsafe extern "C" fn nodeReaderInit(
     } else {
         (*p).iOff = 1 as ::core::ffi::c_int;
     }
-    return if !aNode.is_null() {
+    if !aNode.is_null() {
         nodeReaderNext(p)
     } else {
         crate::sqlite3_h::SQLITE_OK
-    };
+    }
 }
 
 unsafe extern "C" fn fts3IncrmergePush(
@@ -4290,7 +4290,7 @@ unsafe extern "C" fn fts3IncrmergePush(
         iPtr = iNextPtr;
         iLayer += 1;
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn fts3AppendToNode(
@@ -4353,7 +4353,7 @@ unsafe extern "C" fn fts3AppendToNode(
         );
         __pNode_ref.n += nDoclist;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn fts3IncrmergeAppend(
@@ -4422,7 +4422,7 @@ unsafe extern "C" fn fts3IncrmergeAppend(
             nDoclist,
         );
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3IncrmergeRelease(
@@ -4528,7 +4528,7 @@ unsafe extern "C" fn fts3TermCmp(
     if res == 0 as ::core::ffi::c_int {
         res = nLhs - nRhs;
     }
-    return res;
+    res
 }
 
 unsafe extern "C" fn fts3IsAppendable(
@@ -4553,7 +4553,7 @@ unsafe extern "C" fn fts3IsAppendable(
         rc = crate::src::src::vdbeapi::sqlite3_reset(pCheck);
     }
     *pbRes = bRes;
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3IncrmergeLoad(
@@ -4597,8 +4597,7 @@ unsafe extern "C" fn fts3IncrmergeLoad(
                 &raw mut __pWriter_ref.nLeafData,
             );
             if __pWriter_ref.nLeafData < 0 as crate::sqlite3_h::sqlite3_int64 {
-                __pWriter_ref.nLeafData =
-                    __pWriter_ref.nLeafData * -(1 as ::core::ffi::c_int) as crate::sqlite3_h::sqlite3_int64;
+                __pWriter_ref.nLeafData *= -(1 as ::core::ffi::c_int) as crate::sqlite3_h::sqlite3_int64;
             }
             __pWriter_ref.bNoLeafData =
                 (__pWriter_ref.nLeafData == 0 as crate::sqlite3_h::sqlite3_int64) as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0;
@@ -4778,7 +4777,7 @@ unsafe extern "C" fn fts3IncrmergeLoad(
             rc = rc2;
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3IncrmergeOutputIdx(
@@ -4804,7 +4803,7 @@ unsafe extern "C" fn fts3IncrmergeOutputIdx(
         *piIdx = crate::src::src::vdbeapi::sqlite3_column_int(pOutputIdx, 0 as ::core::ffi::c_int);
         rc = crate::src::src::vdbeapi::sqlite3_reset(pOutputIdx);
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3IncrmergeWriter(
@@ -4876,7 +4875,7 @@ unsafe extern "C" fn fts3IncrmergeWriter(
             (__pWriter_ref.iStart as crate::src::ext::rtree::rtree::i64_0 + i as crate::src::ext::rtree::rtree::i64_0 * __pWriter_ref.nLeafEst) as crate::sqlite3_h::sqlite3_int64;
         i += 1;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn fts3RemoveSegdirEntry(
@@ -4898,7 +4897,7 @@ unsafe extern "C" fn fts3RemoveSegdirEntry(
         crate::src::src::vdbeapi::sqlite3_step(pDelete);
         rc = crate::src::src::vdbeapi::sqlite3_reset(pDelete);
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3RepackSegdirLevel(
@@ -4940,7 +4939,7 @@ unsafe extern "C" fn fts3RepackSegdirLevel(
                 }
             }
             let fresh13 = nIdx;
-            nIdx = nIdx + 1;
+            nIdx += 1;
             *aIdx.offset(fresh13 as isize) = crate::src::src::vdbeapi::sqlite3_column_int(pSelect, 0 as ::core::ffi::c_int);
         }
         rc2 = crate::src::src::vdbeapi::sqlite3_reset(pSelect);
@@ -4972,7 +4971,7 @@ unsafe extern "C" fn fts3RepackSegdirLevel(
     }
     (*p).bIgnoreSavepoint = 0 as crate::src::ext::rtree::rtree::u8_0;
     crate::src::src::malloc::sqlite3_free(aIdx as *mut ::core::ffi::c_void);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3StartNode(
@@ -5080,7 +5079,7 @@ unsafe extern "C" fn fts3TruncateNode(
     }
     nodeReaderRelease(&raw mut reader);
     crate::src::src::malloc::sqlite3_free(prev.a as *mut ::core::ffi::c_void);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3TruncateSegment(
@@ -5199,7 +5198,7 @@ unsafe extern "C" fn fts3TruncateSegment(
     }
     crate::src::src::malloc::sqlite3_free(root.a as *mut ::core::ffi::c_void);
     crate::src::src::malloc::sqlite3_free(block.a as *mut ::core::ffi::c_void);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3IncrmergeChomp(
@@ -5242,7 +5241,7 @@ unsafe extern "C" fn fts3IncrmergeChomp(
         rc = fts3RepackSegdirLevel(p, iAbsLevel);
     }
     *pnRem = nRem;
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3IncrmergeHintStore(
@@ -5270,7 +5269,7 @@ unsafe extern "C" fn fts3IncrmergeHintStore(
         rc = crate::src::src::vdbeapi::sqlite3_reset(pReplace);
         crate::src::src::vdbeapi::sqlite3_bind_null(pReplace, 2 as ::core::ffi::c_int);
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3IncrmergeHintLoad(
@@ -5313,7 +5312,7 @@ unsafe extern "C" fn fts3IncrmergeHintLoad(
             rc = rc2;
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3IncrmergeHintPush(
@@ -5392,7 +5391,7 @@ unsafe extern "C" fn fts3IncrmergeHintPop(
     if i != nHint {
         return crate::fts3Int_h::FTS_CORRUPT_VTAB;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -5564,8 +5563,7 @@ pub unsafe extern "C" fn sqlite3Fts3Incrmerge(
                     }
                 }
                 if nSeg != 0 as ::core::ffi::c_int {
-                    (*pWriter).nLeafData =
-                        (*pWriter).nLeafData * -(1 as ::core::ffi::c_int) as crate::sqlite3_h::sqlite3_int64;
+                    (*pWriter).nLeafData *= -(1 as ::core::ffi::c_int) as crate::sqlite3_h::sqlite3_int64;
                 }
                 fts3IncrmergeRelease(p, pWriter, &raw mut rc);
                 if nSeg == 0 as ::core::ffi::c_int
@@ -5582,7 +5580,7 @@ pub unsafe extern "C" fn sqlite3Fts3Incrmerge(
     }
     crate::src::src::malloc::sqlite3_free(pWriter as *mut ::core::ffi::c_void);
     crate::src::src::malloc::sqlite3_free(hint.a as *mut ::core::ffi::c_void);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3Getint(mut pz: *mut *const ::core::ffi::c_char) -> ::core::ffi::c_int {
@@ -5597,7 +5595,7 @@ unsafe extern "C" fn fts3Getint(mut pz: *mut *const ::core::ffi::c_char) -> ::co
         i = 10 as ::core::ffi::c_int * i + *fresh12 as ::core::ffi::c_int - '0' as i32;
     }
     *pz = z;
-    return i;
+    i
 }
 
 unsafe extern "C" fn fts3DoIncrmerge(
@@ -5629,7 +5627,7 @@ unsafe extern "C" fn fts3DoIncrmerge(
         }
         sqlite3Fts3SegmentsClose(p);
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3DoAutoincrmerge(
@@ -5662,7 +5660,7 @@ unsafe extern "C" fn fts3DoAutoincrmerge(
     crate::src::src::vdbeapi::sqlite3_bind_int(pStmt, 2 as ::core::ffi::c_int, __p_ref.nAutoincrmerge);
     crate::src::src::vdbeapi::sqlite3_step(pStmt);
     rc = crate::src::src::vdbeapi::sqlite3_reset(pStmt);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3ChecksumEntry(
@@ -5687,7 +5685,7 @@ unsafe extern "C" fn fts3ChecksumEntry(
         );
         i += 1;
     }
-    return ret;
+    ret
 }
 
 unsafe extern "C" fn fts3ChecksumIndex(
@@ -5753,8 +5751,7 @@ unsafe extern "C" fn fts3ChecksumIndex(
                         }
                     } else {
                         iPos = iPos.wrapping_add(iVal.wrapping_sub(2 as crate::src::ext::rtree::rtree::u64_0));
-                        cksum = cksum
-                            ^ fts3ChecksumEntry(
+                        cksum ^= fts3ChecksumEntry(
                                 csr.zTerm,
                                 csr.nTerm,
                                 iLangid,
@@ -5770,7 +5767,7 @@ unsafe extern "C" fn fts3ChecksumIndex(
     }
     sqlite3Fts3SegReaderFinish(&raw mut csr);
     *pRc = rc;
-    return cksum;
+    cksum
 }
 #[no_mangle]
 
@@ -5798,7 +5795,7 @@ pub unsafe extern "C" fn sqlite3Fts3IntegrityCheck(
             let mut i: ::core::ffi::c_int = 0;
             i = 0 as ::core::ffi::c_int;
             while i < (*p).nIndex {
-                cksum1 = cksum1 ^ fts3ChecksumIndex(p, iLangid, i, &raw mut rc);
+                cksum1 ^= fts3ChecksumIndex(p, iLangid, i, &raw mut rc);
                 i += 1;
             }
         }
@@ -5869,8 +5866,7 @@ pub unsafe extern "C" fn sqlite3Fts3IntegrityCheck(
                         );
                         if rc == crate::sqlite3_h::SQLITE_OK {
                             let mut i_0: ::core::ffi::c_int = 0;
-                            cksum2 = cksum2
-                                ^ fts3ChecksumEntry(
+                            cksum2 ^= fts3ChecksumEntry(
                                     zToken,
                                     nToken,
                                     iLang,
@@ -5882,8 +5878,7 @@ pub unsafe extern "C" fn sqlite3Fts3IntegrityCheck(
                             i_0 = 1 as ::core::ffi::c_int;
                             while i_0 < (*p).nIndex {
                                 if (*(*p).aIndex.offset(i_0 as isize)).nPrefix <= nToken {
-                                    cksum2 = cksum2
-                                        ^ fts3ChecksumEntry(
+                                    cksum2 ^= fts3ChecksumEntry(
                                             zToken,
                                             (*(*p).aIndex.offset(i_0 as isize)).nPrefix,
                                             iLang,
@@ -5915,7 +5910,7 @@ pub unsafe extern "C" fn sqlite3Fts3IntegrityCheck(
     } else {
         *pbOk = (rc == crate::sqlite3_h::SQLITE_OK && cksum1 == cksum2) as ::core::ffi::c_int;
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3DoIntegrityCheck(mut p: *mut crate::fts3Int_h::Fts3Table) -> ::core::ffi::c_int {
@@ -5925,7 +5920,7 @@ unsafe extern "C" fn fts3DoIntegrityCheck(mut p: *mut crate::fts3Int_h::Fts3Tabl
     if rc == crate::sqlite3_h::SQLITE_OK && bOk == 0 as ::core::ffi::c_int {
         rc = crate::fts3Int_h::FTS_CORRUPT_VTAB;
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3SpecialInsert(
@@ -6055,7 +6050,7 @@ unsafe extern "C" fn fts3SpecialInsert(
             rc = crate::sqlite3_h::SQLITE_OK;
         }
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -6175,7 +6170,7 @@ pub unsafe extern "C" fn sqlite3Fts3CacheDeferredDoclists(
             pDef = (*pDef).pNext;
         }
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -6206,7 +6201,7 @@ pub unsafe extern "C" fn sqlite3Fts3DeferredTokenList(
             as *const ::core::ffi::c_void,
         *pnData as crate::__stddef_size_t_h::size_t,
     );
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -6231,7 +6226,7 @@ pub unsafe extern "C" fn sqlite3Fts3DeferToken(
     (*pDeferred).iCol = iCol;
     (*pCsr).pDeferred = pDeferred;
     (*pToken).pDeferred = pDeferred;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn fts3DeleteByRowid(
@@ -6258,7 +6253,7 @@ unsafe extern "C" fn fts3DeleteByRowid(
                         .wrapping_mul(2 as crate::__stddef_size_t_h::size_t),
                 );
             } else {
-                *pnChng = *pnChng - 1 as ::core::ffi::c_int;
+                *pnChng -= 1 as ::core::ffi::c_int;
                 if (*p).zContentTbl.is_null() {
                     fts3SqlExec(&raw mut rc, p, SQL_DELETE_CONTENT, &raw mut pRowid);
                 }
@@ -6268,7 +6263,7 @@ unsafe extern "C" fn fts3DeleteByRowid(
             }
         }
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -6385,7 +6380,7 @@ pub unsafe extern "C" fn sqlite3Fts3UpdateMethod(
     }
     crate::src::src::malloc::sqlite3_free(aSzDel as *mut ::core::ffi::c_void);
     sqlite3Fts3SegmentsClose(p);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -6429,5 +6424,5 @@ pub unsafe extern "C" fn sqlite3Fts3Optimize(mut p: *mut crate::fts3Int_h::Fts3T
         }
     }
     sqlite3Fts3SegmentsClose(p);
-    return rc;
+    rc
 }

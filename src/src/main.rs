@@ -77,7 +77,7 @@ pub type sqlite3FaultFuncType =
     Option<unsafe extern "C" fn(::core::ffi::c_int) -> ::core::ffi::c_int>;
 
 unsafe extern "C" fn sqlite3TestExtInit(mut _db: *mut crate::sqliteInt_h::sqlite3) -> ::core::ffi::c_int {
-    return crate::src::src::util::sqlite3FaultSim(500 as ::core::ffi::c_int);
+    crate::src::src::util::sqlite3FaultSim(500 as ::core::ffi::c_int)
 }
 
 static mut sqlite3BuiltinExtensions: [Option<
@@ -102,22 +102,22 @@ pub static mut sqlite3_version: [::core::ffi::c_char; 7] = crate::sqlite3_h::SQL
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3_libversion() -> *const ::core::ffi::c_char {
-    return &raw const sqlite3_version as *const ::core::ffi::c_char;
+    &raw const sqlite3_version as *const ::core::ffi::c_char
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3_sourceid() -> *const ::core::ffi::c_char {
-    return crate::sqlite3_h::SQLITE_SOURCE_ID.as_ptr();
+    crate::sqlite3_h::SQLITE_SOURCE_ID.as_ptr()
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3_libversion_number() -> ::core::ffi::c_int {
-    return crate::sqlite3_h::SQLITE_VERSION_NUMBER;
+    crate::sqlite3_h::SQLITE_VERSION_NUMBER
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3_threadsafe() -> ::core::ffi::c_int {
-    return crate::internal::SQLITE_THREADSAFE;
+    crate::internal::SQLITE_THREADSAFE
 }
 
 pub const SQLITE_DEBUG_OS_TRACE: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
@@ -211,7 +211,7 @@ pub unsafe extern "C" fn sqlite3_initialize() -> ::core::ffi::c_int {
         crate::src::src::global::sqlite3Config.pInitMutex = ::core::ptr::null_mut::<crate::src::src::mutex_unix::sqlite3_mutex>();
     }
     crate::src::src::mutex::sqlite3_mutex_leave(pMainMtx);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -235,7 +235,7 @@ pub unsafe extern "C" fn sqlite3_shutdown() -> ::core::ffi::c_int {
         crate::src::src::mutex::sqlite3MutexEnd();
         crate::src::src::global::sqlite3Config.isMutexInit = 0 as ::core::ffi::c_int;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -376,7 +376,7 @@ pub unsafe extern "C" fn sqlite3_config(
             rc = crate::sqlite3_h::SQLITE_ERROR;
         }
 }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn setupLookaside(
@@ -398,7 +398,7 @@ unsafe extern "C" fn setupLookaside(
     if __db_ref.lookaside.bMalloced != 0 {
         crate::src::src::malloc::sqlite3_free(__db_ref.lookaside.pStart);
     }
-    sz = sz & !(7 as ::core::ffi::c_int);
+    sz &= !(7 as ::core::ffi::c_int);
     if sz <= ::core::mem::size_of::<*mut crate::sqliteInt_h::LookasideSlot>() as ::core::ffi::c_int {
         sz = 0 as ::core::ffi::c_int;
     }
@@ -488,12 +488,12 @@ unsafe extern "C" fn setupLookaside(
         __db_ref.lookaside.nSlot = 0 as crate::src::ext::rtree::rtree::u32_0;
     }
     __db_ref.lookaside.pTrueEnd = __db_ref.lookaside.pEnd;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3_db_mutex(mut db: *mut crate::sqliteInt_h::sqlite3) -> *mut crate::src::src::mutex_unix::sqlite3_mutex {
-    return (*db).mutex;
+    (*db).mutex
 }
 #[no_mangle]
 
@@ -513,7 +513,7 @@ pub unsafe extern "C" fn sqlite3_db_release_memory(mut db: *mut crate::sqliteInt
     }
     crate::src::src::btmutex::sqlite3BtreeLeaveAll(db as *mut crate::sqliteInt_h::sqlite3);
     crate::src::src::mutex::sqlite3_mutex_leave(__db_ref.mutex);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -539,11 +539,11 @@ pub unsafe extern "C" fn sqlite3_db_cacheflush(mut db: *mut crate::sqliteInt_h::
     }
     crate::src::src::btmutex::sqlite3BtreeLeaveAll(db as *mut crate::sqliteInt_h::sqlite3);
     crate::src::src::mutex::sqlite3_mutex_leave(__db_ref.mutex);
-    return if rc == crate::sqlite3_h::SQLITE_OK && bSeenBusy != 0 {
+    if rc == crate::sqlite3_h::SQLITE_OK && bSeenBusy != 0 {
         crate::sqlite3_h::SQLITE_BUSY
     } else {
         rc
-    };
+    }
 }
 #[no_mangle]
 
@@ -688,7 +688,7 @@ pub unsafe extern "C" fn sqlite3_db_config(
         }
 }
     crate::src::src::mutex::sqlite3_mutex_leave((*db).mutex);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn binCollFunc(
@@ -705,7 +705,7 @@ unsafe extern "C" fn binCollFunc(
     if rc == 0 as ::core::ffi::c_int {
         rc = nKey1 - nKey2;
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn rtrimCollFunc(
@@ -729,12 +729,12 @@ unsafe extern "C" fn rtrimCollFunc(
     {
         nKey2 -= 1;
     }
-    return binCollFunc(pUser, nKey1, pKey1, nKey2, pKey2);
+    binCollFunc(pUser, nKey1, pKey1, nKey2, pKey2)
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3IsBinary(mut p: *const crate::sqliteInt_h::CollSeq) -> ::core::ffi::c_int {
-    return (p.is_null()
+    (p.is_null()
         || (*p).xCmp
             == Some(
                 binCollFunc
@@ -745,7 +745,7 @@ pub unsafe extern "C" fn sqlite3IsBinary(mut p: *const crate::sqliteInt_h::CollS
                         ::core::ffi::c_int,
                         *const ::core::ffi::c_void,
                     ) -> ::core::ffi::c_int,
-            )) as ::core::ffi::c_int;
+            )) as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn nocaseCollatingFunc(
@@ -763,12 +763,12 @@ unsafe extern "C" fn nocaseCollatingFunc(
     if 0 as ::core::ffi::c_int == r {
         r = nKey1 - nKey2;
     }
-    return r;
+    r
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3_last_insert_rowid(mut db: *mut crate::sqliteInt_h::sqlite3) -> crate::sqlite3_h::sqlite3_int64 {
-    return (*db).lastRowid as crate::sqlite3_h::sqlite3_int64;
+    (*db).lastRowid as crate::sqlite3_h::sqlite3_int64
 }
 #[no_mangle]
 
@@ -784,22 +784,22 @@ pub unsafe extern "C" fn sqlite3_set_last_insert_rowid(
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3_changes64(mut db: *mut crate::sqliteInt_h::sqlite3) -> crate::sqlite3_h::sqlite3_int64 {
-    return (*db).nChange as crate::sqlite3_h::sqlite3_int64;
+    (*db).nChange as crate::sqlite3_h::sqlite3_int64
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3_changes(mut db: *mut crate::sqliteInt_h::sqlite3) -> ::core::ffi::c_int {
-    return sqlite3_changes64(db) as ::core::ffi::c_int;
+    sqlite3_changes64(db) as ::core::ffi::c_int
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3_total_changes64(mut db: *mut crate::sqliteInt_h::sqlite3) -> crate::sqlite3_h::sqlite3_int64 {
-    return (*db).nTotalChange as crate::sqlite3_h::sqlite3_int64;
+    (*db).nTotalChange as crate::sqlite3_h::sqlite3_int64
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3_total_changes(mut db: *mut crate::sqliteInt_h::sqlite3) -> ::core::ffi::c_int {
-    return sqlite3_total_changes64(db) as ::core::ffi::c_int;
+    sqlite3_total_changes64(db) as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -871,7 +871,7 @@ unsafe extern "C" fn connectionIsBusy(mut db: *mut crate::sqliteInt_h::sqlite3) 
         }
         j += 1;
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn sqlite3Close(
@@ -917,7 +917,7 @@ unsafe extern "C" fn sqlite3Close(
     }
     __db_ref.eOpenState = crate::sqliteInt_h::SQLITE_STATE_ZOMBIE as crate::src::ext::rtree::rtree::u8_0;
     sqlite3LeaveMutexAndCloseZombie(db);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -952,17 +952,17 @@ pub unsafe extern "C" fn sqlite3_txn_state(
         iDb += 1;
     }
     crate::src::src::mutex::sqlite3_mutex_leave((*db).mutex);
-    return iTxn;
+    iTxn
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3_close(mut db: *mut crate::sqliteInt_h::sqlite3) -> ::core::ffi::c_int {
-    return sqlite3Close(db, 0 as ::core::ffi::c_int);
+    sqlite3Close(db, 0 as ::core::ffi::c_int)
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3_close_v2(mut db: *mut crate::sqliteInt_h::sqlite3) -> ::core::ffi::c_int {
-    return sqlite3Close(db, 1 as ::core::ffi::c_int);
+    sqlite3Close(db, 1 as ::core::ffi::c_int)
 }
 #[no_mangle]
 
@@ -1396,7 +1396,7 @@ pub unsafe extern "C" fn sqlite3ErrName(mut rc: ::core::ffi::c_int) -> *const ::
         );
         zName = &raw mut zBuf as *mut ::core::ffi::c_char;
     }
-    return zName;
+    zName
 }
 #[no_mangle]
 
@@ -1457,7 +1457,7 @@ pub unsafe extern "C" fn sqlite3ErrStr(mut rc: ::core::ffi::c_int) -> *const ::c
             }
         }
 }
-    return zErr;
+    zErr
 }
 
 unsafe extern "C" fn sqliteDefaultBusyCallback(
@@ -1511,7 +1511,7 @@ unsafe extern "C" fn sqliteDefaultBusyCallback(
         }
     }
     crate::src::src::os::sqlite3OsSleep((*db).pVfs as *mut crate::sqlite3_h::sqlite3_vfs, delay * 1000 as ::core::ffi::c_int);
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 
 pub const NDELAY: ::core::ffi::c_int = (::core::mem::size_of::<[crate::src::ext::rtree::rtree::u8_0; 12]>() as usize)
@@ -1531,7 +1531,7 @@ pub unsafe extern "C" fn sqlite3InvokeBusyHandler(mut p: *mut crate::sqliteInt_h
     } else {
         __p_ref.nBusy += 1;
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -1549,7 +1549,7 @@ pub unsafe extern "C" fn sqlite3_busy_handler(
     __db_ref.busyHandler.nBusy = 0 as ::core::ffi::c_int;
     __db_ref.busyTimeout = 0 as ::core::ffi::c_int;
     crate::src::src::mutex::sqlite3_mutex_leave(__db_ref.mutex);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -1595,7 +1595,7 @@ pub unsafe extern "C" fn sqlite3_busy_timeout(
     } else {
         sqlite3_busy_handler(db, None, ::core::ptr::null_mut::<::core::ffi::c_void>());
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -1607,7 +1607,7 @@ pub unsafe extern "C" fn sqlite3_setlk_timeout(
     if ms < -(1 as ::core::ffi::c_int) {
         return crate::sqlite3_h::SQLITE_RANGE;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -1620,8 +1620,8 @@ pub unsafe extern "C" fn sqlite3_interrupt(mut db: *mut crate::sqliteInt_h::sqli
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3_is_interrupted(mut db: *mut crate::sqliteInt_h::sqlite3) -> ::core::ffi::c_int {
-    return (::core::intrinsics::atomic_load_relaxed(&raw mut (*db).u1.isInterrupted)
-        != 0 as ::core::ffi::c_int) as ::core::ffi::c_int;
+    (::core::intrinsics::atomic_load_relaxed(&raw mut (*db).u1.isInterrupted)
+        != 0 as ::core::ffi::c_int) as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -1759,7 +1759,7 @@ pub unsafe extern "C" fn sqlite3CreateFunc(
     (*p).xInverse = xInverse;
     (*p).pUserData = pUserData;
     (*p).nArg = nArg as crate::src::fts5::u16_0 as crate::src::fts5::i16_0;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn createFunctionApi(
@@ -1828,7 +1828,7 @@ unsafe extern "C" fn createFunctionApi(
     }
     rc = crate::src::src::malloc::sqlite3ApiExit(db as *mut crate::sqliteInt_h::sqlite3, rc);
     crate::src::src::mutex::sqlite3_mutex_leave((*db).mutex);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -1854,9 +1854,9 @@ pub unsafe extern "C" fn sqlite3_create_function(
     >,
     mut xFinal: Option<unsafe extern "C" fn(*mut crate::vdbeInt_h::sqlite3_context) -> ()>,
 ) -> ::core::ffi::c_int {
-    return createFunctionApi(
+    createFunctionApi(
         db, zFunc, nArg, enc, p, xSFunc, xStep, xFinal, None, None, None,
-    );
+    )
 }
 #[no_mangle]
 
@@ -1883,9 +1883,9 @@ pub unsafe extern "C" fn sqlite3_create_function_v2(
     mut xFinal: Option<unsafe extern "C" fn(*mut crate::vdbeInt_h::sqlite3_context) -> ()>,
     mut xDestroy: Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()>,
 ) -> ::core::ffi::c_int {
-    return createFunctionApi(
+    createFunctionApi(
         db, zFunc, nArg, enc, p, xSFunc, xStep, xFinal, None, None, xDestroy,
-    );
+    )
 }
 #[no_mangle]
 
@@ -1913,9 +1913,9 @@ pub unsafe extern "C" fn sqlite3_create_window_function(
     >,
     mut xDestroy: Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()>,
 ) -> ::core::ffi::c_int {
-    return createFunctionApi(
+    createFunctionApi(
         db, zFunc, nArg, enc, p, None, xStep, xFinal, xValue, xInverse, xDestroy,
-    );
+    )
 }
 #[no_mangle]
 
@@ -1967,7 +1967,7 @@ pub unsafe extern "C" fn sqlite3_create_function16(
     crate::src::src::malloc::sqlite3DbFree(db as *mut crate::sqliteInt_h::sqlite3, zFunc8 as *mut ::core::ffi::c_void);
     rc = crate::src::src::malloc::sqlite3ApiExit(db as *mut crate::sqliteInt_h::sqlite3, rc);
     crate::src::src::mutex::sqlite3_mutex_leave((*db).mutex);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sqlite3InvalidFunction(
@@ -2007,7 +2007,7 @@ pub unsafe extern "C" fn sqlite3_overload_function(
     if zCopy.is_null() {
         return crate::sqlite3_h::SQLITE_NOMEM;
     }
-    return sqlite3_create_function_v2(
+    sqlite3_create_function_v2(
         db,
         zName,
         nArg,
@@ -2024,7 +2024,7 @@ pub unsafe extern "C" fn sqlite3_overload_function(
         None,
         None,
         Some(crate::src::src::malloc::sqlite3_free as unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()),
-    );
+    )
 }
 #[no_mangle]
 
@@ -2047,7 +2047,7 @@ pub unsafe extern "C" fn sqlite3_trace(
     __db_ref.trace.xLegacy = xTrace;
     __db_ref.pTraceArg = pArg;
     crate::src::src::mutex::sqlite3_mutex_leave(__db_ref.mutex);
-    return pOld;
+    pOld
 }
 #[no_mangle]
 
@@ -2084,7 +2084,7 @@ pub unsafe extern "C" fn sqlite3_trace_v2(
         >;
     __db_ref.pTraceArg = pArg;
     crate::src::src::mutex::sqlite3_mutex_leave(__db_ref.mutex);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -2113,7 +2113,7 @@ pub unsafe extern "C" fn sqlite3_profile(
         __db_ref.mTrace = (__db_ref.mTrace as ::core::ffi::c_int | crate::sqliteInt_h::SQLITE_TRACE_XPROFILE) as crate::src::ext::rtree::rtree::u8_0;
     }
     crate::src::src::mutex::sqlite3_mutex_leave(__db_ref.mutex);
-    return pOld;
+    pOld
 }
 #[no_mangle]
 
@@ -2129,7 +2129,7 @@ pub unsafe extern "C" fn sqlite3_commit_hook(
     __db_ref.xCommitCallback = xCallback;
     __db_ref.pCommitArg = pArg;
     crate::src::src::mutex::sqlite3_mutex_leave(__db_ref.mutex);
-    return pOld;
+    pOld
 }
 #[no_mangle]
 
@@ -2153,7 +2153,7 @@ pub unsafe extern "C" fn sqlite3_update_hook(
     __db_ref.xUpdateCallback = xCallback;
     __db_ref.pUpdateArg = pArg;
     crate::src::src::mutex::sqlite3_mutex_leave(__db_ref.mutex);
-    return pRet;
+    pRet
 }
 #[no_mangle]
 
@@ -2169,7 +2169,7 @@ pub unsafe extern "C" fn sqlite3_rollback_hook(
     __db_ref.xRollbackCallback = xCallback;
     __db_ref.pRollbackArg = pArg;
     crate::src::src::mutex::sqlite3_mutex_leave(__db_ref.mutex);
-    return pRet;
+    pRet
 }
 #[no_mangle]
 
@@ -2195,7 +2195,7 @@ pub unsafe extern "C" fn sqlite3_preupdate_hook(
     __db_ref.xPreUpdateCallback = xCallback;
     __db_ref.pPreUpdateArg = pArg;
     crate::src::src::mutex::sqlite3_mutex_leave(__db_ref.mutex);
-    return pRet;
+    pRet
 }
 #[no_mangle]
 
@@ -2222,7 +2222,7 @@ pub unsafe extern "C" fn sqlite3_autovacuum_pages(
     __db_ref.pAutovacPagesArg = pArg;
     __db_ref.xAutovacDestr = xDestructor;
     crate::src::src::mutex::sqlite3_mutex_leave(__db_ref.mutex);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -2237,7 +2237,7 @@ pub unsafe extern "C" fn sqlite3WalDefaultHook(
         sqlite3_wal_checkpoint(db, zDb);
         crate::src::src::fault::sqlite3EndBenignMalloc();
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -2262,7 +2262,7 @@ pub unsafe extern "C" fn sqlite3_wal_autocheckpoint(
     } else {
         sqlite3_wal_hook(db, None, ::core::ptr::null_mut::<::core::ffi::c_void>());
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -2285,7 +2285,7 @@ pub unsafe extern "C" fn sqlite3_wal_hook(
     __db_ref.xWalCallback = xCallback;
     __db_ref.pWalArg = pArg;
     crate::src::src::mutex::sqlite3_mutex_leave(__db_ref.mutex);
-    return pRet;
+    pRet
 }
 #[no_mangle]
 
@@ -2336,7 +2336,7 @@ pub unsafe extern "C" fn sqlite3_wal_checkpoint_v2(
         );
     }
     crate::src::src::mutex::sqlite3_mutex_leave(__db_ref.mutex);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -2344,13 +2344,13 @@ pub unsafe extern "C" fn sqlite3_wal_checkpoint(
     mut db: *mut crate::sqliteInt_h::sqlite3,
     mut zDb: *const ::core::ffi::c_char,
 ) -> ::core::ffi::c_int {
-    return sqlite3_wal_checkpoint_v2(
+    sqlite3_wal_checkpoint_v2(
         db,
         zDb,
         crate::sqlite3_h::SQLITE_CHECKPOINT_PASSIVE,
         ::core::ptr::null_mut::<::core::ffi::c_int>(),
         ::core::ptr::null_mut::<::core::ffi::c_int>(),
-    );
+    )
 }
 #[no_mangle]
 
@@ -2377,17 +2377,17 @@ pub unsafe extern "C" fn sqlite3Checkpoint(
         }
         i += 1;
     }
-    return if rc == crate::sqlite3_h::SQLITE_OK && bBusy != 0 {
+    if rc == crate::sqlite3_h::SQLITE_OK && bBusy != 0 {
         crate::sqlite3_h::SQLITE_BUSY
     } else {
         rc
-    };
+    }
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3TempInMemory(mut db: *const crate::sqliteInt_h::sqlite3) -> ::core::ffi::c_int {
-    return ((*db).temp_store as ::core::ffi::c_int == 2 as ::core::ffi::c_int)
-        as ::core::ffi::c_int;
+    ((*db).temp_store as ::core::ffi::c_int == 2 as ::core::ffi::c_int)
+        as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -2414,7 +2414,7 @@ pub unsafe extern "C" fn sqlite3_errmsg(mut db: *mut crate::sqliteInt_h::sqlite3
         }
     }
     crate::src::src::mutex::sqlite3_mutex_leave(__db_ref.mutex);
-    return z;
+    z
 }
 #[no_mangle]
 
@@ -2441,7 +2441,7 @@ pub unsafe extern "C" fn sqlite3_set_errmsg(
     }
     rc = crate::src::src::malloc::sqlite3ApiExit(db as *mut crate::sqliteInt_h::sqlite3, rc);
     crate::src::src::mutex::sqlite3_mutex_leave((*db).mutex);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -2453,7 +2453,7 @@ pub unsafe extern "C" fn sqlite3_error_offset(mut db: *mut crate::sqliteInt_h::s
         iOffset = __db_ref.errByteOffset;
         crate::src::src::mutex::sqlite3_mutex_leave(__db_ref.mutex);
     }
-    return iOffset;
+    iOffset
 }
 #[no_mangle]
 
@@ -2530,7 +2530,7 @@ pub unsafe extern "C" fn sqlite3_errmsg16(mut db: *mut crate::sqliteInt_h::sqlit
         crate::src::src::malloc::sqlite3OomClear(db as *mut crate::sqliteInt_h::sqlite3);
     }
     crate::src::src::mutex::sqlite3_mutex_leave(__db_ref.mutex);
-    return z;
+    z
 }
 #[no_mangle]
 
@@ -2542,7 +2542,7 @@ pub unsafe extern "C" fn sqlite3_errcode(mut db: *mut crate::sqliteInt_h::sqlite
     if db.is_null() || __db_ref.mallocFailed as ::core::ffi::c_int != 0 {
         return crate::sqliteInt_h::SQLITE_NOMEM_BKPT;
     }
-    return __db_ref.errCode & __db_ref.errMask;
+    __db_ref.errCode & __db_ref.errMask
 }
 #[no_mangle]
 
@@ -2553,21 +2553,21 @@ pub unsafe extern "C" fn sqlite3_extended_errcode(mut db: *mut crate::sqliteInt_
     if db.is_null() || (*db).mallocFailed as ::core::ffi::c_int != 0 {
         return crate::sqliteInt_h::SQLITE_NOMEM_BKPT;
     }
-    return (*db).errCode;
+    (*db).errCode
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3_system_errno(mut db: *mut crate::sqliteInt_h::sqlite3) -> ::core::ffi::c_int {
-    return if !db.is_null() {
+    if !db.is_null() {
         (*db).iSysErrno
     } else {
         0 as ::core::ffi::c_int
-    };
+    }
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3_errstr(mut rc: ::core::ffi::c_int) -> *const ::core::ffi::c_char {
-    return sqlite3ErrStr(rc);
+    sqlite3ErrStr(rc)
 }
 
 unsafe extern "C" fn createCollation(
@@ -2634,7 +2634,7 @@ unsafe extern "C" fn createCollation(
     (*pColl).xDel = xDel;
     (*pColl).enc = (enc2 | enc as ::core::ffi::c_int & crate::sqlite3_h::SQLITE_UTF16_ALIGNED) as crate::src::ext::rtree::rtree::u8_0;
     crate::src::src::util::sqlite3Error(db as *mut crate::sqliteInt_h::sqlite3, crate::sqlite3_h::SQLITE_OK);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 static mut aHardLimit: [::core::ffi::c_int; 12] = [
@@ -2671,7 +2671,7 @@ pub unsafe extern "C" fn sqlite3_limit(
         }
         (*db).aLimit[limitId as usize] = newLimit;
     }
-    return oldLimit;
+    oldLimit
 }
 #[no_mangle]
 
@@ -2784,13 +2784,13 @@ pub unsafe extern "C" fn sqlite3ParseUri(
                             != 0
                     {
                         let fresh5 = iIn;
-                        iIn = iIn + 1;
+                        iIn += 1;
                         let mut octet: ::core::ffi::c_int =
                             (crate::src::src::util::sqlite3HexToInt(*zUri.offset(fresh5 as isize) as ::core::ffi::c_int)
                                 as ::core::ffi::c_int)
                                 << 4 as ::core::ffi::c_int;
                         let fresh6 = iIn;
-                        iIn = iIn + 1;
+                        iIn += 1;
                         octet += crate::src::src::util::sqlite3HexToInt(*zUri.offset(fresh6 as isize) as ::core::ffi::c_int)
                             as ::core::ffi::c_int;
                         if octet == 0 as ::core::ffi::c_int {
@@ -2834,7 +2834,7 @@ pub unsafe extern "C" fn sqlite3ParseUri(
                         } else {
                             if c as ::core::ffi::c_int == '&' as i32 {
                                 let fresh7 = iOut;
-                                iOut = iOut + 1;
+                                iOut += 1;
                                 *zFile.offset(fresh7 as isize) = '\0' as i32 as ::core::ffi::c_char;
                             } else {
                                 eState = 2 as ::core::ffi::c_int;
@@ -2850,12 +2850,12 @@ pub unsafe extern "C" fn sqlite3ParseUri(
                         eState = 1 as ::core::ffi::c_int;
                     }
                     let fresh8 = iOut;
-                    iOut = iOut + 1;
+                    iOut += 1;
                     *zFile.offset(fresh8 as isize) = c;
                 }
                 if eState == 1 as ::core::ffi::c_int {
                     let fresh9 = iOut;
-                    iOut = iOut + 1;
+                    iOut += 1;
                     *zFile.offset(fresh9 as isize) = '\0' as i32 as ::core::ffi::c_char;
                 }
                 ::libc::memset(
@@ -3060,7 +3060,7 @@ pub unsafe extern "C" fn sqlite3ParseUri(
     }
     *pFlags = flags;
     *pzFile = zFile;
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn uriParameter(
@@ -3080,7 +3080,7 @@ unsafe extern "C" fn uriParameter(
         zFilename =
             zFilename.offset((crate::src::src::util::sqlite3Strlen30(zFilename) + 1 as ::core::ffi::c_int) as isize);
     }
-    return ::core::ptr::null::<::core::ffi::c_char>();
+    ::core::ptr::null::<::core::ffi::c_char>()
 }
 
 unsafe extern "C" fn openDatabase(
@@ -3447,7 +3447,7 @@ unsafe extern "C" fn openDatabase(
     }
     *ppDb = db;
     sqlite3_free_filename(zOpen as *const ::core::ffi::c_char);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -3455,12 +3455,12 @@ pub unsafe extern "C" fn sqlite3_open(
     mut zFilename: *const ::core::ffi::c_char,
     mut ppDb: *mut *mut crate::sqliteInt_h::sqlite3,
 ) -> ::core::ffi::c_int {
-    return openDatabase(
+    openDatabase(
         zFilename,
         ppDb,
         (crate::sqlite3_h::SQLITE_OPEN_READWRITE | crate::sqlite3_h::SQLITE_OPEN_CREATE) as ::core::ffi::c_uint,
         ::core::ptr::null::<::core::ffi::c_char>(),
-    );
+    )
 }
 #[no_mangle]
 
@@ -3470,7 +3470,7 @@ pub unsafe extern "C" fn sqlite3_open_v2(
     mut flags: ::core::ffi::c_int,
     mut zVfs: *const ::core::ffi::c_char,
 ) -> ::core::ffi::c_int {
-    return openDatabase(filename, ppDb, flags as ::core::ffi::c_uint, zVfs);
+    openDatabase(filename, ppDb, flags as ::core::ffi::c_uint, zVfs)
 }
 #[no_mangle]
 
@@ -3520,7 +3520,7 @@ pub unsafe extern "C" fn sqlite3_open16(
         rc = crate::sqliteInt_h::SQLITE_NOMEM_BKPT;
     }
     crate::src::src::vdbemem::sqlite3ValueFree(pVal);
-    return rc & 0xff as ::core::ffi::c_int;
+    rc & 0xff as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -3539,7 +3539,7 @@ pub unsafe extern "C" fn sqlite3_create_collation(
         ) -> ::core::ffi::c_int,
     >,
 ) -> ::core::ffi::c_int {
-    return sqlite3_create_collation_v2(db, zName, enc, pCtx, xCompare, None);
+    sqlite3_create_collation_v2(db, zName, enc, pCtx, xCompare, None)
 }
 #[no_mangle]
 
@@ -3564,7 +3564,7 @@ pub unsafe extern "C" fn sqlite3_create_collation_v2(
     rc = createCollation(db, zName, enc as crate::src::ext::rtree::rtree::u8_0, pCtx, xCompare, xDel);
     rc = crate::src::src::malloc::sqlite3ApiExit(db as *mut crate::sqliteInt_h::sqlite3, rc);
     crate::src::src::mutex::sqlite3_mutex_leave((*db).mutex);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -3599,7 +3599,7 @@ pub unsafe extern "C" fn sqlite3_create_collation16(
     }
     rc = crate::src::src::malloc::sqlite3ApiExit(db as *mut crate::sqliteInt_h::sqlite3, rc);
     crate::src::src::mutex::sqlite3_mutex_leave((*db).mutex);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -3621,7 +3621,7 @@ pub unsafe extern "C" fn sqlite3_collation_needed(
     __db_ref.xCollNeeded16 = None;
     __db_ref.pCollNeededArg = pCollNeededArg;
     crate::src::src::mutex::sqlite3_mutex_leave(__db_ref.mutex);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -3643,7 +3643,7 @@ pub unsafe extern "C" fn sqlite3_collation_needed16(
     __db_ref.xCollNeeded16 = xCollNeeded16;
     __db_ref.pCollNeededArg = pCollNeededArg;
     crate::src::src::mutex::sqlite3_mutex_leave(__db_ref.mutex);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -3665,7 +3665,7 @@ pub unsafe extern "C" fn sqlite3_get_clientdata(
         p = (*p).pNext;
     }
     crate::src::src::mutex::sqlite3_mutex_leave(__db_ref.mutex);
-    return ::core::ptr::null_mut::<::core::ffi::c_void>();
+    ::core::ptr::null_mut::<::core::ffi::c_void>()
 }
 #[no_mangle]
 
@@ -3721,17 +3721,17 @@ pub unsafe extern "C" fn sqlite3_set_clientdata(
     (*p).pData = pData;
     (*p).xDestructor = xDestructor;
     crate::src::src::mutex::sqlite3_mutex_leave(__db_ref.mutex);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3_global_recover() -> ::core::ffi::c_int {
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3_get_autocommit(mut db: *mut crate::sqliteInt_h::sqlite3) -> ::core::ffi::c_int {
-    return (*db).autoCommit as ::core::ffi::c_int;
+    (*db).autoCommit as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -3747,36 +3747,36 @@ pub unsafe extern "C" fn sqlite3ReportError(
         lineno,
         sqlite3_sourceid().offset(20 as isize),
     );
-    return iErr;
+    iErr
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3CorruptError(mut lineno: ::core::ffi::c_int) -> ::core::ffi::c_int {
-    return sqlite3ReportError(
+    sqlite3ReportError(
         crate::sqlite3_h::SQLITE_CORRUPT,
         lineno,
         b"database corruption\0" as *const u8 as *const ::core::ffi::c_char,
-    );
+    )
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3MisuseError(mut lineno: ::core::ffi::c_int) -> ::core::ffi::c_int {
-    return sqlite3ReportError(
+    sqlite3ReportError(
         crate::sqlite3_h::SQLITE_MISUSE,
         lineno,
         b"misuse\0" as *const u8 as *const ::core::ffi::c_char,
-    );
+    )
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3CantopenError(
     mut lineno: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    return sqlite3ReportError(
+    sqlite3ReportError(
         crate::sqlite3_h::SQLITE_CANTOPEN,
         lineno,
         b"cannot open file\0" as *const u8 as *const ::core::ffi::c_char,
-    );
+    )
 }
 #[no_mangle]
 
@@ -3904,7 +3904,7 @@ pub unsafe extern "C" fn sqlite3_table_column_metadata(
     crate::src::src::malloc::sqlite3DbFree(db as *mut crate::sqliteInt_h::sqlite3, zErrMsg as *mut ::core::ffi::c_void);
     rc = crate::src::src::malloc::sqlite3ApiExit(db as *mut crate::sqliteInt_h::sqlite3, rc);
     crate::src::src::mutex::sqlite3_mutex_leave((*db).mutex);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -3925,7 +3925,7 @@ pub unsafe extern "C" fn sqlite3_sleep(mut ms: ::core::ffi::c_int) -> ::core::ff
             1000 as ::core::ffi::c_int * ms
         },
     ) / 1000 as ::core::ffi::c_int;
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -3941,7 +3941,7 @@ pub unsafe extern "C" fn sqlite3_extended_result_codes(
         0xff as ::core::ffi::c_uint
     }) as ::core::ffi::c_int;
     crate::src::src::mutex::sqlite3_mutex_leave(__db_ref.mutex);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -4003,7 +4003,7 @@ pub unsafe extern "C" fn sqlite3_file_control(
         crate::src::src::btmutex::sqlite3BtreeLeave(pBtree);
     }
     crate::src::src::mutex::sqlite3_mutex_leave((*db).mutex);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -4213,7 +4213,7 @@ pub unsafe extern "C" fn sqlite3_test_control(
     crate::sqlite3_h::SQLITE_TESTCTRL_VDBE_COVERAGE |
         crate::sqlite3_h::SQLITE_TESTCTRL_JSON_SELFCHECK | _ =>  {}
 }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn databaseName(
@@ -4230,7 +4230,7 @@ unsafe extern "C" fn databaseName(
     {
         zName = zName.offset(-1);
     }
-    return zName;
+    zName
 }
 
 unsafe extern "C" fn appendText(
@@ -4243,9 +4243,9 @@ unsafe extern "C" fn appendText(
         z as *const ::core::ffi::c_void,
         n.wrapping_add(1 as crate::__stddef_size_t_h::size_t),
     );
-    return p
+    p
         .offset(n as isize)
-        .offset(1 as isize);
+        .offset(1 as isize)
 }
 #[no_mangle]
 
@@ -4300,7 +4300,7 @@ pub unsafe extern "C" fn sqlite3_create_filename(
     let fresh13 = p;
     p = p.offset(1);
     *fresh13 = 0 as ::core::ffi::c_char;
-    return pResult.offset(4 as isize) as crate::sqlite3_h::sqlite3_filename;
+    pResult.offset(4 as isize) as crate::sqlite3_h::sqlite3_filename
 }
 #[no_mangle]
 
@@ -4324,7 +4324,7 @@ pub unsafe extern "C" fn sqlite3_uri_parameter(
         return ::core::ptr::null::<::core::ffi::c_char>();
     }
     zFilename = databaseName(zFilename);
-    return uriParameter(zFilename, zParam);
+    uriParameter(zFilename, zParam)
 }
 #[no_mangle]
 
@@ -4341,7 +4341,7 @@ pub unsafe extern "C" fn sqlite3_uri_key(
         && *zFilename.offset(0 as isize) as ::core::ffi::c_int != 0
         && {
             let fresh10 = N;
-            N = N - 1;
+            N -= 1;
             fresh10 > 0 as ::core::ffi::c_int
         }
     {
@@ -4350,11 +4350,11 @@ pub unsafe extern "C" fn sqlite3_uri_key(
         zFilename =
             zFilename.offset((crate::src::src::util::sqlite3Strlen30(zFilename) + 1 as ::core::ffi::c_int) as isize);
     }
-    return if *zFilename.offset(0 as isize) as ::core::ffi::c_int != 0 {
+    if *zFilename.offset(0 as isize) as ::core::ffi::c_int != 0 {
         zFilename
     } else {
         ::core::ptr::null::<::core::ffi::c_char>()
-    };
+    }
 }
 #[no_mangle]
 
@@ -4365,11 +4365,11 @@ pub unsafe extern "C" fn sqlite3_uri_boolean(
 ) -> ::core::ffi::c_int {
     let mut z: *const ::core::ffi::c_char = sqlite3_uri_parameter(zFilename, zParam);
     bDflt = (bDflt != 0 as ::core::ffi::c_int) as ::core::ffi::c_int;
-    return if !z.is_null() {
+    if !z.is_null() {
         crate::src::src::pragma::sqlite3GetBoolean(z, bDflt as crate::src::ext::rtree::rtree::u8_0) as ::core::ffi::c_int
     } else {
         bDflt
-    };
+    }
 }
 #[no_mangle]
 
@@ -4383,7 +4383,7 @@ pub unsafe extern "C" fn sqlite3_uri_int64(
     if !z.is_null() && crate::src::src::util::sqlite3DecOrHexToI64(z, &raw mut v) == 0 as ::core::ffi::c_int {
         bDflt = v;
     }
-    return bDflt;
+    bDflt
 }
 #[no_mangle]
 
@@ -4393,7 +4393,7 @@ pub unsafe extern "C" fn sqlite3_filename_database(
     if zFilename.is_null() {
         return ::core::ptr::null::<::core::ffi::c_char>();
     }
-    return databaseName(zFilename);
+    databaseName(zFilename)
 }
 #[no_mangle]
 
@@ -4413,7 +4413,7 @@ pub unsafe extern "C" fn sqlite3_filename_journal(
         zFilename =
             zFilename.offset((crate::src::src::util::sqlite3Strlen30(zFilename) + 1 as ::core::ffi::c_int) as isize);
     }
-    return zFilename.offset(1 as isize);
+    zFilename.offset(1 as isize)
 }
 #[no_mangle]
 
@@ -4425,7 +4425,7 @@ pub unsafe extern "C" fn sqlite3_filename_wal(
         zFilename =
             zFilename.offset((crate::src::src::util::sqlite3Strlen30(zFilename) + 1 as ::core::ffi::c_int) as isize);
     }
-    return zFilename;
+    zFilename
 }
 #[no_mangle]
 
@@ -4438,11 +4438,11 @@ pub unsafe extern "C" fn sqlite3DbNameToBtree(
     } else {
         0 as ::core::ffi::c_int
     };
-    return if iDb < 0 as ::core::ffi::c_int {
+    if iDb < 0 as ::core::ffi::c_int {
         ::core::ptr::null_mut::<crate::btreeInt_h::Btree>()
     } else {
         (*(*db).aDb.offset(iDb as isize)).pBt
-    };
+    }
 }
 #[no_mangle]
 
@@ -4464,11 +4464,11 @@ pub unsafe extern "C" fn sqlite3_db_filename(
 ) -> crate::sqlite3_h::sqlite3_filename {
     let mut pBt: *mut crate::btreeInt_h::Btree = ::core::ptr::null_mut::<crate::btreeInt_h::Btree>();
     pBt = sqlite3DbNameToBtree(db, zDbName);
-    return if !pBt.is_null() {
+    if !pBt.is_null() {
         crate::src::src::btree::sqlite3BtreeGetFilename(pBt) as crate::sqlite3_h::sqlite3_filename
     } else {
         ::core::ptr::null::<::core::ffi::c_char>()
-    };
+    }
 }
 #[no_mangle]
 
@@ -4478,11 +4478,11 @@ pub unsafe extern "C" fn sqlite3_db_readonly(
 ) -> ::core::ffi::c_int {
     let mut pBt: *mut crate::btreeInt_h::Btree = ::core::ptr::null_mut::<crate::btreeInt_h::Btree>();
     pBt = sqlite3DbNameToBtree(db, zDbName);
-    return if !pBt.is_null() {
+    if !pBt.is_null() {
         crate::src::src::btree::sqlite3BtreeIsReadonly(pBt)
     } else {
         -(1 as ::core::ffi::c_int)
-    };
+    }
 }
 #[no_mangle]
 
@@ -4515,7 +4515,7 @@ pub unsafe extern "C" fn sqlite3_compileoption_used(
         }
         i += 1;
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -4529,5 +4529,5 @@ pub unsafe extern "C" fn sqlite3_compileoption_get(
     if N >= 0 as ::core::ffi::c_int && N < nOpt {
         return *azCompileOpt.offset(N as isize);
     }
-    return ::core::ptr::null::<::core::ffi::c_char>();
+    ::core::ptr::null::<::core::ffi::c_char>()
 }

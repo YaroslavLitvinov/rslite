@@ -59,7 +59,7 @@ unsafe extern "C" fn stmtConnect(
         );
         (*pNew).db = db;
     }
-    return rc;
+    rc
 }
 
 pub const STMT_COLUMN_SQL: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
@@ -86,7 +86,7 @@ pub const STMT_COLUMN_MEM: ::core::ffi::c_int = 10 as ::core::ffi::c_int;
 
 unsafe extern "C" fn stmtDisconnect(mut pVtab: *mut crate::sqlite3_h::sqlite3_vtab) -> ::core::ffi::c_int {
     crate::src::src::malloc::sqlite3_free(pVtab as *mut ::core::ffi::c_void);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn stmtOpen(
@@ -106,7 +106,7 @@ unsafe extern "C" fn stmtOpen(
     );
     (*pCur).db = (*(p as *mut stmt_vtab)).db;
     *ppCursor = &raw mut (*pCur).base;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn stmtCsrReset(mut pCur: *mut stmt_cursor) {
@@ -124,7 +124,7 @@ unsafe extern "C" fn stmtCsrReset(mut pCur: *mut stmt_cursor) {
 unsafe extern "C" fn stmtClose(mut cur: *mut crate::sqlite3_h::sqlite3_vtab_cursor) -> ::core::ffi::c_int {
     stmtCsrReset(cur as *mut stmt_cursor);
     crate::src::src::malloc::sqlite3_free(cur as *mut ::core::ffi::c_void);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn stmtNext(mut cur: *mut crate::sqlite3_h::sqlite3_vtab_cursor) -> ::core::ffi::c_int {
@@ -133,7 +133,7 @@ unsafe extern "C" fn stmtNext(mut cur: *mut crate::sqlite3_h::sqlite3_vtab_curso
     let mut pNext: *mut StmtRow = (*__pCur_ref.pRow).pNext;
     crate::src::src::malloc::sqlite3_free(__pCur_ref.pRow as *mut ::core::ffi::c_void);
     __pCur_ref.pRow = pNext;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn stmtColumn(
@@ -156,7 +156,7 @@ unsafe extern "C" fn stmtColumn(
     } else {
         crate::src::src::vdbeapi::sqlite3_result_int(ctx, (*pRow).aCol[i as usize]);
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn stmtRowid(
@@ -165,12 +165,12 @@ unsafe extern "C" fn stmtRowid(
 ) -> ::core::ffi::c_int {
     let pCur = &*(cur as *mut stmt_cursor);
     *pRowid = (*pCur.pRow).iRowid as crate::sqlite3_h::sqlite_int64;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn stmtEof(mut cur: *mut crate::sqlite3_h::sqlite3_vtab_cursor) -> ::core::ffi::c_int {
     let pCur = &*(cur as *mut stmt_cursor);
-    return (pCur.pRow == ::core::ptr::null_mut::<StmtRow>()) as ::core::ffi::c_int;
+    (pCur.pRow == ::core::ptr::null_mut::<StmtRow>()) as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn stmtFilter(
@@ -234,13 +234,13 @@ unsafe extern "C" fn stmtFilter(
         __pNew_ref.aCol[STMT_COLUMN_MEM as usize] =
             crate::src::src::vdbeapi::sqlite3_stmt_status(p, crate::sqlite3_h::SQLITE_STMTSTATUS_MEMUSED, 0 as ::core::ffi::c_int);
         let fresh0 = iRowid;
-        iRowid = iRowid + 1;
+        iRowid += 1;
         __pNew_ref.iRowid = fresh0;
         *ppRow = pNew;
         ppRow = &raw mut __pNew_ref.pNext;
         p = crate::src::src::vdbeapi::sqlite3_next_stmt((*pCur).db, p);
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn stmtBestIndex(
@@ -249,7 +249,7 @@ unsafe extern "C" fn stmtBestIndex(
 ) -> ::core::ffi::c_int {
     (*pIdxInfo).estimatedCost = 500 as ::core::ffi::c_int as ::core::ffi::c_double;
     (*pIdxInfo).estimatedRows = 500 as crate::sqlite3_h::sqlite3_int64;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 static mut stmtModule: crate::sqlite3_h::sqlite3_module = unsafe {
@@ -342,5 +342,5 @@ pub unsafe extern "C" fn sqlite3StmtVtabInit(mut db: *mut crate::sqliteInt_h::sq
         &raw mut stmtModule as *mut _ as *const crate::sqlite3_h::sqlite3_module,
         ::core::ptr::null_mut::<::core::ffi::c_void>(),
     );
-    return rc;
+    rc
 }

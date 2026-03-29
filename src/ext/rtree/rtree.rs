@@ -288,7 +288,7 @@ pub mod geopoly_c {
         while geopolyIsSpace[*(*p).z.offset(0 as isize) as usize] != 0 {
             (*p).z = (*p).z.offset(1);
         }
-        return *(*p).z.offset(0 as isize) as ::core::ffi::c_char;
+        *(*p).z.offset(0 as isize) as ::core::ffi::c_char
     }
     
     pub unsafe extern "C" fn geopolyParseNumber(
@@ -369,7 +369,7 @@ pub mod geopoly_c {
             *pVal = atof(__p_ref.z as *const ::core::ffi::c_char) as crate::geopoly_c::GeoCoord;
         }
         __p_ref.z = __p_ref.z.offset(j as isize);
-        return 1 as ::core::ffi::c_int;
+        1 as ::core::ffi::c_int
     }
     
     pub unsafe extern "C" fn geopolyParseJson(
@@ -514,7 +514,7 @@ pub mod geopoly_c {
             *pRc = rc;
         }
         crate::src::src::malloc::sqlite3_free(s.a as *mut ::core::ffi::c_void);
-        return ::core::ptr::null_mut::<crate::geopoly_c::GeoPoly>();
+        ::core::ptr::null_mut::<crate::geopoly_c::GeoPoly>()
     }
     
     pub unsafe extern "C" fn geopolyFuncParam(
@@ -864,7 +864,7 @@ pub mod geopoly_c {
                         as isize,
                 ))) as ::core::ffi::c_double
             * 0.5f64;
-        return rArea;
+        rArea
     }
     
     pub unsafe extern "C" fn geopolyAreaFunc(
@@ -1150,7 +1150,7 @@ pub mod geopoly_c {
             }
             _ => {}
         }
-        return pOut;
+        pOut
     }
     
     pub unsafe extern "C" fn geopolyBBoxFunc(
@@ -1303,7 +1303,7 @@ pub mod geopoly_c {
         if y0 < y {
             return 1 as ::core::ffi::c_int;
         }
-        return 0 as ::core::ffi::c_int;
+        0 as ::core::ffi::c_int
     }
     
     pub unsafe extern "C" fn geopolyContainsPointFunc(
@@ -1520,7 +1520,7 @@ pub mod geopoly_c {
             }
         }
         (*pLast).pNext = if !pRight.is_null() { pRight } else { pLeft };
-        return head.pNext;
+        head.pNext
     }
     
     pub unsafe extern "C" fn geopolySortEventsByX(
@@ -1554,7 +1554,7 @@ pub mod geopoly_c {
             p = geopolyEventMerge(a[i as usize], p);
             i += 1;
         }
-        return p;
+        p
     }
     
     pub unsafe extern "C" fn geopolySegmentMerge(
@@ -1589,7 +1589,7 @@ pub mod geopoly_c {
             }
         }
         (*pLast).pNext = if !pRight.is_null() { pRight } else { pLeft };
-        return head.pNext;
+        head.pNext
     }
     
     pub unsafe extern "C" fn geopolySortSegmentsByYAndC(
@@ -1620,7 +1620,7 @@ pub mod geopoly_c {
             p = geopolySegmentMerge(a[i as usize], p);
             i += 1;
         }
-        return p;
+        p
     }
     
     pub unsafe extern "C" fn geopolyOverlap(
@@ -1774,7 +1774,7 @@ pub mod geopoly_c {
             _ => {}
         }
         crate::src::src::malloc::sqlite3_free(p as *mut ::core::ffi::c_void);
-        return rc;
+        rc
     }
     
     pub unsafe extern "C" fn geopolyOverlapFunc(
@@ -1941,7 +1941,7 @@ pub mod geopoly_c {
             rc = crate::sqlite3_h::SQLITE_ERROR;
         }
         rtreeRelease(pRtree);
-        return rc;
+        rc
     }
     
     pub unsafe extern "C" fn geopolyCreate(
@@ -1952,7 +1952,7 @@ pub mod geopoly_c {
         mut ppVtab: *mut *mut crate::sqlite3_h::sqlite3_vtab,
         mut pzErr: *mut *mut ::core::ffi::c_char,
     ) -> ::core::ffi::c_int {
-        return geopolyInit(db, pAux, argc, argv, ppVtab, pzErr, 1 as ::core::ffi::c_int);
+        geopolyInit(db, pAux, argc, argv, ppVtab, pzErr, 1 as ::core::ffi::c_int)
     }
     
     pub unsafe extern "C" fn geopolyConnect(
@@ -1963,7 +1963,7 @@ pub mod geopoly_c {
         mut ppVtab: *mut *mut crate::sqlite3_h::sqlite3_vtab,
         mut pzErr: *mut *mut ::core::ffi::c_char,
     ) -> ::core::ffi::c_int {
-        return geopolyInit(db, pAux, argc, argv, ppVtab, pzErr, 0 as ::core::ffi::c_int);
+        geopolyInit(db, pAux, argc, argv, ppVtab, pzErr, 0 as ::core::ffi::c_int)
     }
     
     pub unsafe extern "C" fn geopolyFilter(
@@ -2115,7 +2115,7 @@ pub mod geopoly_c {
         }
         nodeRelease(pRtree, pRoot);
         rtreeRelease(pRtree);
-        return rc;
+        rc
     }
     
     pub unsafe extern "C" fn geopolyBestIndex(
@@ -2178,7 +2178,7 @@ pub mod geopoly_c {
             b"fullscan\0" as *const u8 as *const ::core::ffi::c_char as *mut ::core::ffi::c_char;
         __pIdxInfo_ref.estimatedCost = 3000000.0f64;
         __pIdxInfo_ref.estimatedRows = 100000 as crate::sqlite3_h::sqlite3_int64;
-        return crate::sqlite3_h::SQLITE_OK;
+        crate::sqlite3_h::SQLITE_OK
     }
     
     pub unsafe extern "C" fn geopolyColumn(
@@ -2237,7 +2237,7 @@ pub mod geopoly_c {
                 crate::src::src::vdbeapi::sqlite3_column_value((*pCsr).pReadAux, i + 2 as ::core::ffi::c_int),
             );
         }
-        return crate::sqlite3_h::SQLITE_OK;
+        crate::sqlite3_h::SQLITE_OK
     }
     
     pub unsafe extern "C" fn geopolyUpdate(
@@ -2416,7 +2416,7 @@ pub mod geopoly_c {
             _ => {}
         }
         rtreeRelease(pRtree);
-        return rc;
+        rc
     }
     
     pub unsafe extern "C" fn geopolyFindFunction(
@@ -2478,7 +2478,7 @@ pub mod geopoly_c {
             *ppArg = ::core::ptr::null_mut::<::core::ffi::c_void>();
             return crate::sqlite3_h::SQLITE_INDEX_CONSTRAINT_FUNCTION + 1 as ::core::ffi::c_int;
         }
-        return 0 as ::core::ffi::c_int;
+        0 as ::core::ffi::c_int
     }
     
     pub static mut geopolyModule: crate::sqlite3_h::sqlite3_module = unsafe {
@@ -2863,7 +2863,7 @@ pub mod geopoly_c {
                 None,
             );
         }
-        return rc;
+        rc
     }
     
     
@@ -2878,7 +2878,7 @@ pub mod stdlib_float_h {
     #[inline]
     
     pub unsafe extern "C" fn atof(mut __nptr: *const ::core::ffi::c_char) -> ::core::ffi::c_double {
-        return ::libc::strtod(__nptr, crate::__stddef_null_h::NULL as *mut *mut ::core::ffi::c_char);
+        ::libc::strtod(__nptr, crate::__stddef_null_h::NULL as *mut *mut ::core::ffi::c_char)
     }
     
     
@@ -3119,9 +3119,9 @@ pub const RTREE_TRUE: ::core::ffi::c_int = 63;
 pub const RTREE_FALSE: ::core::ffi::c_int = 64;
 
 unsafe extern "C" fn readInt16(mut p: *mut u8_0) -> ::core::ffi::c_int {
-    return ((*p.offset(0 as isize) as ::core::ffi::c_int)
+    ((*p.offset(0 as isize) as ::core::ffi::c_int)
         << 8 as ::core::ffi::c_int)
-        + *p.offset(1 as isize) as ::core::ffi::c_int;
+        + *p.offset(1 as isize) as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn readCoord(mut p: *mut u8_0, mut pCoord: *mut RtreeCoord) {
@@ -3139,7 +3139,7 @@ unsafe extern "C" fn readCoord(mut p: *mut u8_0, mut pCoord: *mut RtreeCoord) {
 }
 
 unsafe extern "C" fn readInt64(mut p: *mut u8_0) -> i64_0 {
-    return ((*p.offset(0 as isize) as u64_0) << 56 as ::core::ffi::c_int)
+    ((*p.offset(0 as isize) as u64_0) << 56 as ::core::ffi::c_int)
         .wrapping_add(
             (*p.offset(1 as isize) as u64_0) << 48 as ::core::ffi::c_int,
         )
@@ -3160,7 +3160,7 @@ unsafe extern "C" fn readInt64(mut p: *mut u8_0) -> i64_0 {
         )
         .wrapping_add(
             (*p.offset(7 as isize) as u64_0) << 0 as ::core::ffi::c_int,
-        ) as i64_0;
+        ) as i64_0
 }
 
 unsafe extern "C" fn writeInt16(mut p: *mut u8_0, mut i: ::core::ffi::c_int) {
@@ -3184,7 +3184,7 @@ unsafe extern "C" fn writeCoord(
         (i >> 8 as ::core::ffi::c_int & 0xff as u32_0) as u8_0;
     *p.offset(3 as isize) =
         (i >> 0 as ::core::ffi::c_int & 0xff as u32_0) as u8_0;
-    return 4 as ::core::ffi::c_int;
+    4 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn writeInt64(mut p: *mut u8_0, mut i: i64_0) -> ::core::ffi::c_int {
@@ -3204,7 +3204,7 @@ unsafe extern "C" fn writeInt64(mut p: *mut u8_0, mut i: i64_0) -> ::core::ffi::
         (i >> 8 as ::core::ffi::c_int & 0xff as i64_0) as u8_0;
     *p.offset(7 as isize) =
         (i >> 0 as ::core::ffi::c_int & 0xff as i64_0) as u8_0;
-    return 8 as ::core::ffi::c_int;
+    8 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn nodeReference(mut p: *mut RtreeNode) {
@@ -3224,7 +3224,7 @@ unsafe extern "C" fn nodeZero(mut pRtree: *mut Rtree, mut p: *mut RtreeNode) {
 }
 
 unsafe extern "C" fn nodeHash(mut iNode: i64_0) -> ::core::ffi::c_uint {
-    return (iNode as ::core::ffi::c_uint).wrapping_rem(HASHSIZE as ::core::ffi::c_uint);
+    (iNode as ::core::ffi::c_uint).wrapping_rem(HASHSIZE as ::core::ffi::c_uint)
 }
 
 unsafe extern "C" fn nodeHashLookup(mut pRtree: *mut Rtree, mut iNode: i64_0) -> *mut RtreeNode {
@@ -3233,7 +3233,7 @@ unsafe extern "C" fn nodeHashLookup(mut pRtree: *mut Rtree, mut iNode: i64_0) ->
     while !p.is_null() && (*p).iNode != iNode {
         p = (*p).pNext;
     }
-    return p;
+    p
 }
 
 unsafe extern "C" fn nodeHashInsert(mut pRtree: *mut Rtree, mut pNode: *mut RtreeNode) {
@@ -3285,7 +3285,7 @@ unsafe extern "C" fn nodeNew(
         __pNode_ref.isDirty = 1 as ::core::ffi::c_int;
         nodeReference(pParent);
     }
-    return pNode;
+    pNode
 }
 
 unsafe extern "C" fn nodeBlobReset(mut pRtree: *mut Rtree) {
@@ -3395,7 +3395,7 @@ unsafe extern "C" fn nodeAcquire(
         }
         *ppNode = ::core::ptr::null_mut::<RtreeNode>();
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn nodeOverwriteCell(
@@ -3467,7 +3467,7 @@ unsafe extern "C" fn nodeInsertCell(
         );
         (*pNode).isDirty = 1 as ::core::ffi::c_int;
     }
-    return (nCell == nMaxCell) as ::core::ffi::c_int;
+    (nCell == nMaxCell) as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn nodeWrite(
@@ -3499,7 +3499,7 @@ unsafe extern "C" fn nodeWrite(
             nodeHashInsert(pRtree, pNode);
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn nodeRelease(
@@ -3524,7 +3524,7 @@ unsafe extern "C" fn nodeRelease(
             crate::src::src::malloc::sqlite3_free(pNode as *mut ::core::ffi::c_void);
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn nodeGetRowid(
@@ -3532,9 +3532,9 @@ unsafe extern "C" fn nodeGetRowid(
     mut pNode: *mut RtreeNode,
     mut iCell: ::core::ffi::c_int,
 ) -> i64_0 {
-    return readInt64((*pNode).zData.offset(
+    readInt64((*pNode).zData.offset(
         (4 as ::core::ffi::c_int + (*pRtree).nBytesPerCell as ::core::ffi::c_int * iCell) as isize,
-    ) as *mut u8_0);
+    ) as *mut u8_0)
 }
 
 unsafe extern "C" fn nodeGetCoord(
@@ -3590,7 +3590,7 @@ unsafe extern "C" fn rtreeCreate(
     mut ppVtab: *mut *mut crate::sqlite3_h::sqlite3_vtab,
     mut pzErr: *mut *mut ::core::ffi::c_char,
 ) -> ::core::ffi::c_int {
-    return rtreeInit(db, pAux, argc, argv, ppVtab, pzErr, 1 as ::core::ffi::c_int);
+    rtreeInit(db, pAux, argc, argv, ppVtab, pzErr, 1 as ::core::ffi::c_int)
 }
 
 unsafe extern "C" fn rtreeConnect(
@@ -3601,7 +3601,7 @@ unsafe extern "C" fn rtreeConnect(
     mut ppVtab: *mut *mut crate::sqlite3_h::sqlite3_vtab,
     mut pzErr: *mut *mut ::core::ffi::c_char,
 ) -> ::core::ffi::c_int {
-    return rtreeInit(db, pAux, argc, argv, ppVtab, pzErr, 0 as ::core::ffi::c_int);
+    rtreeInit(db, pAux, argc, argv, ppVtab, pzErr, 0 as ::core::ffi::c_int)
 }
 
 unsafe extern "C" fn rtreeReference(mut pRtree: *mut Rtree) {
@@ -3630,7 +3630,7 @@ unsafe extern "C" fn rtreeRelease(mut pRtree: *mut Rtree) {
 
 unsafe extern "C" fn rtreeDisconnect(mut pVtab: *mut crate::sqlite3_h::sqlite3_vtab) -> ::core::ffi::c_int {
     rtreeRelease(pVtab as *mut Rtree);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn rtreeDestroy(mut pVtab: *mut crate::sqlite3_h::sqlite3_vtab) -> ::core::ffi::c_int {
@@ -3663,7 +3663,7 @@ unsafe extern "C" fn rtreeDestroy(mut pVtab: *mut crate::sqlite3_h::sqlite3_vtab
     if rc == crate::sqlite3_h::SQLITE_OK {
         rtreeRelease(pRtree);
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn rtreeOpen(
@@ -3686,7 +3686,7 @@ unsafe extern "C" fn rtreeOpen(
         (*pRtree).nCursor = (*pRtree).nCursor.wrapping_add(1);
     }
     *ppCursor = pCsr as *mut crate::sqlite3_h::sqlite3_vtab_cursor;
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn resetCursor(mut pCsr: *mut RtreeCursor) {
@@ -3741,12 +3741,12 @@ unsafe extern "C" fn rtreeClose(mut cur: *mut crate::sqlite3_h::sqlite3_vtab_cur
     {
         nodeBlobReset(pRtree);
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn rtreeEof(mut cur: *mut crate::sqlite3_h::sqlite3_vtab_cursor) -> ::core::ffi::c_int {
     let pCsr = &*(cur as *mut RtreeCursor);
-    return pCsr.atEOF as ::core::ffi::c_int;
+    pCsr.atEOF as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn rtreeCallbackConstraint(
@@ -3968,7 +3968,7 @@ unsafe extern "C" fn rtreeCallbackConstraint(
             *prScore = __pInfo_ref.rScore;
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn rtreeNonleafConstraint(
@@ -4142,7 +4142,7 @@ unsafe extern "C" fn nodeRowidIndex(
         }
         ii += 1;
     }
-    return crate::sqlite3_h::SQLITE_CORRUPT_VTAB;
+    crate::sqlite3_h::SQLITE_CORRUPT_VTAB
 }
 
 unsafe extern "C" fn nodeParentIndex(
@@ -4177,7 +4177,7 @@ unsafe extern "C" fn rtreeSearchPointCompare(
     if __pA_ref.iLevel as ::core::ffi::c_int > __pB_ref.iLevel as ::core::ffi::c_int {
         return 1 as ::core::ffi::c_int;
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn rtreeSearchPointSwap(
@@ -4204,13 +4204,13 @@ unsafe extern "C" fn rtreeSearchPointSwap(
 }
 
 unsafe extern "C" fn rtreeSearchPointFirst(mut pCur: *mut RtreeCursor) -> *mut RtreeSearchPoint {
-    return if (*pCur).bPoint as ::core::ffi::c_int != 0 {
+    if (*pCur).bPoint as ::core::ffi::c_int != 0 {
         &raw mut (*pCur).sPoint
     } else if (*pCur).nPoint != 0 {
         (*pCur).aPoint
     } else {
         ::core::ptr::null_mut::<RtreeSearchPoint>()
-    };
+    }
 }
 
 unsafe extern "C" fn rtreeNodeOfFirstSearchPoint(
@@ -4234,7 +4234,7 @@ unsafe extern "C" fn rtreeNodeOfFirstSearchPoint(
                 as *mut *mut RtreeNode,
         );
     }
-    return __pCur_ref.aNode[ii as usize];
+    __pCur_ref.aNode[ii as usize]
 }
 
 unsafe extern "C" fn rtreeEnqueue(
@@ -4261,7 +4261,7 @@ unsafe extern "C" fn rtreeEnqueue(
         __pCur_ref.nPointAlloc = nNew;
     }
     let fresh2 = __pCur_ref.nPoint;
-    __pCur_ref.nPoint = __pCur_ref.nPoint + 1;
+    __pCur_ref.nPoint += 1;
     i = fresh2;
     pNew = __pCur_ref.aPoint.offset(i as isize);
     (*pNew).rScore = rScore;
@@ -4277,7 +4277,7 @@ unsafe extern "C" fn rtreeEnqueue(
         i = j;
         pNew = pParent;
     }
-    return pNew;
+    pNew
 }
 
 unsafe extern "C" fn rtreeSearchPointNew(
@@ -4495,7 +4495,7 @@ unsafe extern "C" fn rtreeStepToLeaf(mut pCur: *mut RtreeCursor) -> ::core::ffi:
     }
     __pCur_ref.atEOF =
         (p == ::core::ptr::null_mut::<RtreeSearchPoint>()) as ::core::ffi::c_int as u8_0;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn rtreeNext(mut pVtabCursor: *mut crate::sqlite3_h::sqlite3_vtab_cursor) -> ::core::ffi::c_int {
@@ -4507,7 +4507,7 @@ unsafe extern "C" fn rtreeNext(mut pVtabCursor: *mut crate::sqlite3_h::sqlite3_v
     }
     rtreeSearchPointPop(pCsr);
     rc = rtreeStepToLeaf(pCsr);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn rtreeRowid(
@@ -4531,7 +4531,7 @@ unsafe extern "C" fn rtreeRowid(
             ) as crate::sqlite3_h::sqlite_int64;
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn rtreeColumn(
@@ -4614,7 +4614,7 @@ unsafe extern "C" fn rtreeColumn(
             ),
         );
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn findLeafNode(
@@ -4641,7 +4641,7 @@ unsafe extern "C" fn findLeafNode(
     } else {
         rc = crate::src::src::vdbeapi::sqlite3_reset((*pRtree).pReadRowid);
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn deserializeGeometry(
@@ -4689,7 +4689,7 @@ unsafe extern "C" fn deserializeGeometry(
         (*pCons).u.xQueryFunc = (*pBlob).cb.xQueryFunc;
     }
     (*pCons).pInfo = pInfo;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn rtreeFilter(
@@ -4845,7 +4845,7 @@ unsafe extern "C" fn rtreeFilter(
     }
     nodeRelease(pRtree, pRoot);
     rtreeRelease(pRtree);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn rtreeBestIndex(
@@ -4935,10 +4935,10 @@ unsafe extern "C" fn rtreeBestIndex(
 }
             if op != 0 {
                 let fresh3 = iIdx;
-                iIdx = iIdx + 1;
+                iIdx += 1;
                 zIdxStr[fresh3 as usize] = op as ::core::ffi::c_char;
                 let fresh4 = iIdx;
-                iIdx = iIdx + 1;
+                iIdx += 1;
                 zIdxStr[fresh4 as usize] =
                     (__p_ref.iColumn - 1 as ::core::ffi::c_int + '0' as i32) as ::core::ffi::c_char;
                 (*__pIdxInfo_ref.aConstraintUsage.offset(ii as isize)).argvIndex =
@@ -4966,7 +4966,7 @@ unsafe extern "C" fn rtreeBestIndex(
     nRow = pRtree.nRowEst >> iIdx / 2 as ::core::ffi::c_int;
     __pIdxInfo_ref.estimatedCost = 6.0f64 * nRow as ::core::ffi::c_double;
     __pIdxInfo_ref.estimatedRows = nRow as crate::sqlite3_h::sqlite3_int64;
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn cellArea(mut pRtree: *mut Rtree, mut p: *mut RtreeCell) -> RtreeDValue {
@@ -5073,7 +5073,7 @@ unsafe extern "C" fn cellArea(mut pRtree: *mut Rtree, mut p: *mut RtreeCell) -> 
             - (*p).aCoord[0 as ::core::ffi::c_int as usize].i as i64_0)
             as RtreeDValue;
     }
-    return area;
+    area
 }
 
 unsafe extern "C" fn cellMargin(mut pRtree: *mut Rtree, mut p: *mut RtreeCell) -> RtreeDValue {
@@ -5095,7 +5095,7 @@ unsafe extern "C" fn cellMargin(mut pRtree: *mut Rtree, mut p: *mut RtreeCell) -
             break;
         }
     }
-    return margin;
+    margin
 }
 
 unsafe extern "C" fn cellUnion(
@@ -5190,7 +5190,7 @@ unsafe extern "C" fn cellContains(
             ii += 2 as ::core::ffi::c_int;
         }
     }
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn cellOverlap(
@@ -5258,14 +5258,14 @@ unsafe extern "C" fn cellOverlap(
                 o = 0 as ::core::ffi::c_int as RtreeDValue;
                 break;
             } else {
-                o = o * (x2 - x1);
+                o *= (x2 - x1);
                 jj += 2 as ::core::ffi::c_int;
             }
         }
         overlap += o;
         ii += 1;
     }
-    return overlap;
+    overlap
 }
 
 unsafe extern "C" fn ChooseLeaf(
@@ -5340,7 +5340,7 @@ unsafe extern "C" fn ChooseLeaf(
         ii += 1;
     }
     *ppLeaf = pNode;
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn AdjustTree(
@@ -5373,7 +5373,7 @@ unsafe extern "C" fn AdjustTree(
         }
         p = pParent;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn rowidWrite(
@@ -5385,7 +5385,7 @@ unsafe extern "C" fn rowidWrite(
     crate::src::src::vdbeapi::sqlite3_bind_int64(__pRtree_ref.pWriteRowid, 1 as ::core::ffi::c_int, iRowid);
     crate::src::src::vdbeapi::sqlite3_bind_int64(__pRtree_ref.pWriteRowid, 2 as ::core::ffi::c_int, iNode);
     crate::src::src::vdbeapi::sqlite3_step(__pRtree_ref.pWriteRowid);
-    return crate::src::src::vdbeapi::sqlite3_reset(__pRtree_ref.pWriteRowid);
+    crate::src::src::vdbeapi::sqlite3_reset(__pRtree_ref.pWriteRowid)
 }
 
 unsafe extern "C" fn parentWrite(
@@ -5397,7 +5397,7 @@ unsafe extern "C" fn parentWrite(
     crate::src::src::vdbeapi::sqlite3_bind_int64(__pRtree_ref.pWriteParent, 1 as ::core::ffi::c_int, iNode);
     crate::src::src::vdbeapi::sqlite3_bind_int64(__pRtree_ref.pWriteParent, 2 as ::core::ffi::c_int, iPar);
     crate::src::src::vdbeapi::sqlite3_step(__pRtree_ref.pWriteParent);
-    return crate::src::src::vdbeapi::sqlite3_reset(__pRtree_ref.pWriteParent);
+    crate::src::src::vdbeapi::sqlite3_reset(__pRtree_ref.pWriteParent)
 }
 
 unsafe extern "C" fn SortByDimension(
@@ -5660,7 +5660,7 @@ unsafe extern "C" fn splitNodeStartree(
         ii += 1;
     }
     crate::src::src::malloc::sqlite3_free(aaSorted as *mut ::core::ffi::c_void);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn updateMapping(
@@ -5713,11 +5713,11 @@ unsafe extern "C" fn updateMapping(
     if pNode.is_null() {
         return crate::sqlite3_h::SQLITE_ERROR;
     }
-    return xSetMapping.expect("non-null function pointer")(
+    xSetMapping.expect("non-null function pointer")(
         pRtree,
         iRowid as crate::sqlite3_h::sqlite3_int64,
         (*pNode).iNode as crate::sqlite3_h::sqlite3_int64,
-    );
+    )
 }
 
 unsafe extern "C" fn SplitNode(
@@ -5932,7 +5932,7 @@ unsafe extern "C" fn SplitNode(
     nodeRelease(pRtree, pRight);
     nodeRelease(pRtree, pLeft);
     crate::src::src::malloc::sqlite3_free(aCell as *mut ::core::ffi::c_void);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fixLeafParent(
@@ -5976,7 +5976,7 @@ unsafe extern "C" fn fixLeafParent(
         }
         pChild = (*pChild).pParent;
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn removeNode(
@@ -6028,7 +6028,7 @@ unsafe extern "C" fn removeNode(
     __pNode_ref.pNext = __pRtree_ref.pDeleted;
     __pNode_ref.nRef += 1;
     __pRtree_ref.pDeleted = pNode;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn fixBoundingBox(
@@ -6063,7 +6063,7 @@ unsafe extern "C" fn fixBoundingBox(
             rc = fixBoundingBox(pRtree, pParent);
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn deleteCell(
@@ -6091,7 +6091,7 @@ unsafe extern "C" fn deleteCell(
             rc = fixBoundingBox(pRtree, pNode);
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn rtreeInsertCell(
@@ -6129,7 +6129,7 @@ unsafe extern "C" fn rtreeInsertCell(
             }
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn reinsertNodeContent(
@@ -6169,7 +6169,7 @@ unsafe extern "C" fn reinsertNodeContent(
         }
         ii += 1;
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn rtreeNewRowid(
@@ -6183,7 +6183,7 @@ unsafe extern "C" fn rtreeNewRowid(
     crate::src::src::vdbeapi::sqlite3_step(__pRtree_ref.pWriteRowid);
     rc = crate::src::src::vdbeapi::sqlite3_reset(__pRtree_ref.pWriteRowid);
     *piRowid = crate::src::src::main::sqlite3_last_insert_rowid(__pRtree_ref.db) as i64_0;
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn rtreeDeleteRowid(
@@ -6263,7 +6263,7 @@ unsafe extern "C" fn rtreeDeleteRowid(
     } else {
         nodeRelease(pRtree, pRoot);
     }
-    return rc;
+    rc
 }
 
 pub const RNDTOWARDS: ::core::ffi::c_double = 1.0f64 - 1.0f64 / 8388608.0f64;
@@ -6281,7 +6281,7 @@ unsafe extern "C" fn rtreeValueDown(mut v: *mut crate::vdbeInt_h::sqlite3_value)
                 RNDTOWARDS
             })) as ::core::ffi::c_float;
     }
-    return f as RtreeValue;
+    f as RtreeValue
 }
 
 unsafe extern "C" fn rtreeValueUp(mut v: *mut crate::vdbeInt_h::sqlite3_value) -> RtreeValue {
@@ -6295,7 +6295,7 @@ unsafe extern "C" fn rtreeValueUp(mut v: *mut crate::vdbeInt_h::sqlite3_value) -
                 RNDAWAY
             })) as ::core::ffi::c_float;
     }
-    return f as RtreeValue;
+    f as RtreeValue
 }
 
 unsafe extern "C" fn rtreeConstraintError(
@@ -6345,11 +6345,11 @@ unsafe extern "C" fn rtreeConstraintError(
         }
     }
     crate::src::src::vdbeapi::sqlite3_finalize(pStmt);
-    return if rc == crate::sqlite3_h::SQLITE_OK {
+    if rc == crate::sqlite3_h::SQLITE_OK {
         crate::sqlite3_h::SQLITE_CONSTRAINT
     } else {
         rc
-    };
+    }
 }
 
 unsafe extern "C" fn rtreeUpdate(
@@ -6523,24 +6523,24 @@ unsafe extern "C" fn rtreeUpdate(
         _ => {}
     }
     rtreeRelease(pRtree);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn rtreeBeginTransaction(mut pVtab: *mut crate::sqlite3_h::sqlite3_vtab) -> ::core::ffi::c_int {
     let mut pRtree = &mut *(pVtab as *mut Rtree);
     pRtree.inWrTrans = 1 as u8_0;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn rtreeEndTransaction(mut pVtab: *mut crate::sqlite3_h::sqlite3_vtab) -> ::core::ffi::c_int {
     let mut pRtree: *mut Rtree = pVtab as *mut Rtree;
     (*pRtree).inWrTrans = 0 as u8_0;
     nodeBlobReset(pRtree);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn rtreeRollback(mut pVtab: *mut crate::sqlite3_h::sqlite3_vtab) -> ::core::ffi::c_int {
-    return rtreeEndTransaction(pVtab);
+    rtreeEndTransaction(pVtab)
 }
 
 unsafe extern "C" fn rtreeRename(
@@ -6574,7 +6574,7 @@ unsafe extern "C" fn rtreeRename(
         );
         crate::src::src::malloc::sqlite3_free(zSql as *mut ::core::ffi::c_void);
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn rtreeSavepoint(
@@ -6587,7 +6587,7 @@ unsafe extern "C" fn rtreeSavepoint(
     __pRtree_ref.inWrTrans = 0 as u8_0;
     nodeBlobReset(pRtree);
     __pRtree_ref.inWrTrans = iwt;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn rtreeQueryStat1(
@@ -6641,7 +6641,7 @@ unsafe extern "C" fn rtreeQueryStat1(
     } else {
         nRow
     };
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn rtreeShadowName(mut zName: *const ::core::ffi::c_char) -> ::core::ffi::c_int {
@@ -6661,7 +6661,7 @@ unsafe extern "C" fn rtreeShadowName(mut zName: *const ::core::ffi::c_char) -> :
         }
         i = i.wrapping_add(1);
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 
 static mut rtreeModule: crate::sqlite3_h::sqlite3_module = unsafe {
@@ -6988,7 +6988,7 @@ unsafe extern "C" fn rtreeSqlInit(
             }
         }
     }
-    return rc;
+    rc
 }
 
 pub const N_STATEMENT: ::core::ffi::c_int = 8 as ::core::ffi::c_int;
@@ -7015,7 +7015,7 @@ unsafe extern "C" fn getIntFromStmt(
             rc = crate::src::src::vdbeapi::sqlite3_finalize(pStmt);
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn getNodeSize(
@@ -7073,12 +7073,12 @@ unsafe extern "C" fn getNodeSize(
         }
     }
     crate::src::src::malloc::sqlite3_free(zSql as *mut ::core::ffi::c_void);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn rtreeTokenLength(mut z: *const ::core::ffi::c_char) -> ::core::ffi::c_int {
     let mut dummy: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-    return sqlite3GetToken(z as *const ::core::ffi::c_uchar, &raw mut dummy) as ::core::ffi::c_int;
+    sqlite3GetToken(z as *const ::core::ffi::c_uchar, &raw mut dummy) as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn rtreeInit(
@@ -7279,7 +7279,7 @@ unsafe extern "C" fn rtreeInit(
         rc = crate::sqlite3_h::SQLITE_ERROR;
     }
     rtreeRelease(pRtree);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn rtreenode(
@@ -7423,7 +7423,7 @@ unsafe extern "C" fn rtreeCheckPrepare(
         }
     }
     crate::src::src::malloc::sqlite3_free(z as *mut ::core::ffi::c_void);
-    return pRet;
+    pRet
 }
 
 unsafe extern "C" fn rtreeCheckAppendMsg(
@@ -7505,7 +7505,7 @@ unsafe extern "C" fn rtreeCheckGetNode(
             );
         }
     }
-    return pRet;
+    pRet
 }
 
 unsafe extern "C" fn rtreeCheckMapping(
@@ -7841,7 +7841,7 @@ unsafe extern "C" fn rtreeCheckTable(
     crate::src::src::vdbeapi::sqlite3_finalize(check.aCheckMapping[0 as ::core::ffi::c_int as usize]);
     crate::src::src::vdbeapi::sqlite3_finalize(check.aCheckMapping[1 as ::core::ffi::c_int as usize]);
     *pzReport = check.zReport;
-    return check.rc;
+    check.rc
 }
 
 unsafe extern "C" fn rtreeIntegrity(
@@ -7866,7 +7866,7 @@ unsafe extern "C" fn rtreeIntegrity(
             rc = crate::sqlite3_h::SQLITE_NOMEM;
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn rtreecheck(
@@ -8001,7 +8001,7 @@ pub unsafe extern "C" fn sqlite3RtreeInit(mut db: *mut crate::sqliteInt_h::sqlit
     if rc == crate::sqlite3_h::SQLITE_OK {
         rc = sqlite3_geopoly_init(db);
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn rtreeFreeCallback(mut p: *mut ::core::ffi::c_void) {
@@ -8097,7 +8097,7 @@ pub unsafe extern "C" fn sqlite3_rtree_geometry_callback(
     (*pGeomCtx).xQueryFunc = None;
     (*pGeomCtx).xDestructor = None;
     (*pGeomCtx).pContext = pContext;
-    return crate::src::src::main::sqlite3_create_function_v2(
+    crate::src::src::main::sqlite3_create_function_v2(
         db,
         zGeom,
         -(1 as ::core::ffi::c_int),
@@ -8114,7 +8114,7 @@ pub unsafe extern "C" fn sqlite3_rtree_geometry_callback(
         None,
         None,
         Some(rtreeFreeCallback as unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()),
-    );
+    )
 }
 #[no_mangle]
 
@@ -8140,7 +8140,7 @@ pub unsafe extern "C" fn sqlite3_rtree_query_callback(
     (*pGeomCtx).xQueryFunc = xQueryFunc;
     (*pGeomCtx).xDestructor = xDestructor;
     (*pGeomCtx).pContext = pContext;
-    return crate::src::src::main::sqlite3_create_function_v2(
+    crate::src::src::main::sqlite3_create_function_v2(
         db,
         zQueryFunc,
         -(1 as ::core::ffi::c_int),
@@ -8157,5 +8157,5 @@ pub unsafe extern "C" fn sqlite3_rtree_query_callback(
         None,
         None,
         Some(rtreeFreeCallback as unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()),
-    );
+    )
 }

@@ -57,7 +57,7 @@ unsafe extern "C" fn fts3tokQueryTokenizer(
         return crate::sqlite3_h::SQLITE_ERROR;
     }
     *pp = p;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn fts3tokDequoteArray(
@@ -108,7 +108,7 @@ unsafe extern "C" fn fts3tokDequoteArray(
             }
         }
     }
-    return rc;
+    rc
 }
 
 pub const FTS3_TOK_SCHEMA: [::core::ffi::c_char; 51] = unsafe {
@@ -190,14 +190,14 @@ unsafe extern "C" fn fts3tokConnectMethod(
         (*pMod).xDestroy.expect("non-null function pointer")(pTok);
     }
     crate::src::src::malloc::sqlite3_free(azDequote as *mut ::core::ffi::c_void);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3tokDisconnectMethod(mut pVtab: *mut crate::sqlite3_h::sqlite3_vtab) -> ::core::ffi::c_int {
     let mut pTab: *mut Fts3tokTable = pVtab as *mut Fts3tokTable;
     (*(*pTab).pMod).xDestroy.expect("non-null function pointer")((*pTab).pTok);
     crate::src::src::malloc::sqlite3_free(pTab as *mut ::core::ffi::c_void);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn fts3tokBestIndexMethod(
@@ -222,7 +222,7 @@ unsafe extern "C" fn fts3tokBestIndexMethod(
         i += 1;
     }
     (*pInfo).idxNum = 0 as ::core::ffi::c_int;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn fts3tokOpenMethod(
@@ -241,7 +241,7 @@ unsafe extern "C" fn fts3tokOpenMethod(
         ::core::mem::size_of::<Fts3tokCursor>() as crate::__stddef_size_t_h::size_t,
     );
     *ppCsr = pCsr as *mut crate::sqlite3_h::sqlite3_vtab_cursor;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn fts3tokResetCursor(mut pCsr: *mut Fts3tokCursor) {
@@ -267,7 +267,7 @@ unsafe extern "C" fn fts3tokCloseMethod(
     let mut pCsr: *mut Fts3tokCursor = pCursor as *mut Fts3tokCursor;
     fts3tokResetCursor(pCsr);
     crate::src::src::malloc::sqlite3_free(pCsr as *mut ::core::ffi::c_void);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn fts3tokNextMethod(
@@ -292,7 +292,7 @@ unsafe extern "C" fn fts3tokNextMethod(
             rc = crate::sqlite3_h::SQLITE_OK;
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3tokFilterMethod(
@@ -340,12 +340,12 @@ unsafe extern "C" fn fts3tokFilterMethod(
     if rc != crate::sqlite3_h::SQLITE_OK {
         return rc;
     }
-    return fts3tokNextMethod(pCursor);
+    fts3tokNextMethod(pCursor)
 }
 
 unsafe extern "C" fn fts3tokEofMethod(mut pCursor: *mut crate::sqlite3_h::sqlite3_vtab_cursor) -> ::core::ffi::c_int {
     let pCsr = &*(pCursor as *mut Fts3tokCursor);
-    return (pCsr.zToken == ::core::ptr::null::<::core::ffi::c_char>()) as ::core::ffi::c_int;
+    (pCsr.zToken == ::core::ptr::null::<::core::ffi::c_char>()) as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn fts3tokColumnMethod(
@@ -387,7 +387,7 @@ unsafe extern "C" fn fts3tokColumnMethod(
             crate::src::src::vdbeapi::sqlite3_result_int(pCtx, (*pCsr).iPos);
         }
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn fts3tokRowidMethod(
@@ -396,7 +396,7 @@ unsafe extern "C" fn fts3tokRowidMethod(
 ) -> ::core::ffi::c_int {
     let pCsr = &*(pCursor as *mut Fts3tokCursor);
     *pRowid = pCsr.iRowid as crate::sqlite3_h::sqlite3_int64 as crate::sqlite3_h::sqlite_int64;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -513,5 +513,5 @@ pub unsafe extern "C" fn sqlite3Fts3InitTok(
         pHash as *mut ::core::ffi::c_void,
         xDestroy,
     );
-    return rc;
+    rc
 }

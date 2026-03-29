@@ -72,7 +72,7 @@ unsafe extern "C" fn strHash(mut z: *const ::core::ffi::c_char) -> ::core::ffi::
         );
         h = h.wrapping_mul(0x9e3779b1 as ::core::ffi::c_uint);
     }
-    return h;
+    h
 }
 
 unsafe extern "C" fn insertElement(
@@ -161,7 +161,7 @@ unsafe extern "C" fn rehash(
         );
         elem = next_elem;
     }
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn findElementWithHash(
@@ -199,7 +199,7 @@ unsafe extern "C" fn findElementWithHash(
         elem = (*elem).next;
         count = count.wrapping_sub(1);
     }
-    return &raw mut nullElement;
+    &raw mut nullElement
 }
 
 unsafe extern "C" fn removeElement(mut pH: *mut crate::src::src::hash::Hash, mut elem: *mut crate::src::src::hash::HashElem) {
@@ -235,7 +235,7 @@ pub unsafe extern "C" fn sqlite3HashFind(
     mut pH: *const crate::src::src::hash::Hash,
     mut pKey: *const ::core::ffi::c_char,
 ) -> *mut ::core::ffi::c_void {
-    return (*findElementWithHash(pH, pKey, ::core::ptr::null_mut::<::core::ffi::c_uint>())).data;
+    (*findElementWithHash(pH, pKey, ::core::ptr::null_mut::<::core::ffi::c_uint>())).data
 }
 #[no_mangle]
 
@@ -286,5 +286,5 @@ pub unsafe extern "C" fn sqlite3HashInsert(
         },
         new_elem,
     );
-    return ::core::ptr::null_mut::<::core::ffi::c_void>();
+    ::core::ptr::null_mut::<::core::ffi::c_void>()
 }

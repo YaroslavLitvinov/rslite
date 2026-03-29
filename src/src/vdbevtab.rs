@@ -85,13 +85,13 @@ unsafe extern "C" fn bytecodevtabConnect(
         (*pNew).db = db;
         (*pNew).bTablesUsed = isTabUsed * 2 as ::core::ffi::c_int;
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn bytecodevtabDisconnect(mut pVtab: *mut crate::sqlite3_h::sqlite3_vtab) -> ::core::ffi::c_int {
     let mut p: *mut bytecodevtab = pVtab as *mut bytecodevtab;
     crate::src::src::malloc::sqlite3_free(p as *mut ::core::ffi::c_void);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn bytecodevtabOpen(
@@ -112,7 +112,7 @@ unsafe extern "C" fn bytecodevtabOpen(
     );
     crate::src::src::vdbemem::sqlite3VdbeMemInit(&raw mut (*pCur).sub as *mut _ as *mut crate::vdbeInt_h::sqlite3_value,  (*pVTab).db as *mut crate::sqliteInt_h::sqlite3, 1 as crate::src::fts5::u16_0);
     *ppCursor = &raw mut (*pCur).base;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn bytecodevtabCursorClear(mut pCur: *mut bytecodevtab_cursor) {
@@ -135,7 +135,7 @@ unsafe extern "C" fn bytecodevtabClose(mut cur: *mut crate::sqlite3_h::sqlite3_v
     let mut pCur: *mut bytecodevtab_cursor = cur as *mut bytecodevtab_cursor;
     bytecodevtabCursorClear(pCur);
     crate::src::src::malloc::sqlite3_free(pCur as *mut ::core::ffi::c_void);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn bytecodevtabNext(mut cur: *mut crate::sqlite3_h::sqlite3_vtab_cursor) -> ::core::ffi::c_int {
@@ -172,12 +172,12 @@ unsafe extern "C" fn bytecodevtabNext(mut cur: *mut crate::sqlite3_h::sqlite3_vt
         crate::src::src::vdbemem::sqlite3VdbeMemSetNull(&raw mut __pCur_ref.sub as *mut _ as *mut crate::vdbeInt_h::sqlite3_value);
         __pCur_ref.aOp = ::core::ptr::null_mut::<crate::vdbeInt_h::Op>();
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn bytecodevtabEof(mut cur: *mut crate::sqlite3_h::sqlite3_vtab_cursor) -> ::core::ffi::c_int {
     let pCur = &*(cur as *mut bytecodevtab_cursor);
-    return (pCur.aOp == ::core::ptr::null_mut::<crate::vdbeInt_h::Op>()) as ::core::ffi::c_int;
+    (pCur.aOp == ::core::ptr::null_mut::<crate::vdbeInt_h::Op>()) as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn bytecodevtabColumn(
@@ -330,7 +330,7 @@ unsafe extern "C" fn bytecodevtabColumn(
         }
         _ => {}
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn bytecodevtabRowid(
@@ -339,7 +339,7 @@ unsafe extern "C" fn bytecodevtabRowid(
 ) -> ::core::ffi::c_int {
     let pCur = &*(cur as *mut bytecodevtab_cursor);
     *pRowid = pCur.iRowid as crate::sqlite3_h::sqlite_int64;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn bytecodevtabFilter(
@@ -398,7 +398,7 @@ unsafe extern "C" fn bytecodevtabFilter(
     } else {
         bytecodevtabNext(pVtabCursor);
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn bytecodevtabBestIndex(
@@ -441,7 +441,7 @@ unsafe extern "C" fn bytecodevtabBestIndex(
         i += 1;
         p = p.offset(1);
     }
-    return rc;
+    rc
 }
 
 static mut bytecodevtabModule: crate::sqlite3_h::sqlite3_module = unsafe {
@@ -551,5 +551,5 @@ pub unsafe extern "C" fn sqlite3VdbeBytecodeVtabInit(mut db: *mut crate::sqliteI
             &raw mut db as *mut ::core::ffi::c_void,
         );
     }
-    return rc;
+    rc
 }

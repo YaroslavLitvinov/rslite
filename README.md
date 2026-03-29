@@ -19,3 +19,7 @@ docker run --rm \
     -v $(pwd)/../crust-sqlite/.credentials:/home/node/:Z \
     -v $(pwd)/../crust-sqlite:/workspace:Z \
     sqlite-crust -c "./build_all.sh"
+
+## Apply particular pattern plugin fix, and check if it goes well
+# from sqlite-rust-port, also doing indempotency check
+./run-docker-patterns.sh "unsafe-rust-fixer.py --match-patterns=clippy_warning_patterns --fix src/ && ./build_all.sh && unsafe-rust-fixer.py --match-patterns=clippy_warning_patterns --fix --dry-run src/"

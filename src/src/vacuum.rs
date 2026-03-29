@@ -83,7 +83,7 @@ unsafe extern "C" fn execSql(
         crate::src::src::malloc::sqlite3SetString(pzErrMsg,  db as *mut crate::sqliteInt_h::sqlite3, crate::src::src::main::sqlite3_errmsg(db as *mut crate::sqliteInt_h::sqlite3));
     }
     crate::src::src::vdbeapi::sqlite3_finalize(pStmt);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn execSqlF(
@@ -102,7 +102,7 @@ unsafe extern "C" fn execSqlF(
     }
     rc = execSql(db, pzErrMsg, z);
     crate::src::src::malloc::sqlite3DbFree(db as *mut crate::sqliteInt_h::sqlite3, z as *mut ::core::ffi::c_void);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -507,5 +507,5 @@ pub unsafe extern "C" fn sqlite3RunVacuum(
         __pDb_ref.pSchema = ::core::ptr::null_mut::<crate::sqliteInt_h::Schema>();
     }
     crate::src::src::build::sqlite3ResetAllSchemasOfConnection(db as *mut crate::sqliteInt_h::sqlite3);
-    return rc;
+    rc
 }

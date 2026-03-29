@@ -795,7 +795,7 @@ unsafe extern "C" fn jsonCacheInsert(
     __pParse_ref.bReadOnly = 1 as crate::src::ext::rtree::rtree::u8_0;
     (*p).a[(*p).nUsed as usize] = pParse;
     (*p).nUsed += 1;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn jsonCacheSearch(
@@ -928,7 +928,7 @@ unsafe extern "C" fn jsonStringGrow(mut p: *mut JsonString, mut N: crate::src::e
         }
     }
     __p_ref.nAlloc = nTotal;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[inline(never)]
 
@@ -1042,7 +1042,7 @@ unsafe extern "C" fn jsonStringTrimOneChar(mut p: *mut JsonString) {
 unsafe extern "C" fn jsonStringTerminate(mut p: *mut JsonString) -> ::core::ffi::c_int {
     jsonAppendChar(p, 0 as ::core::ffi::c_char);
     jsonStringTrimOneChar(p);
-    return ((*p).eErr as ::core::ffi::c_int == 0 as ::core::ffi::c_int) as ::core::ffi::c_int;
+    ((*p).eErr as ::core::ffi::c_int == 0 as ::core::ffi::c_int) as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn jsonAppendSeparator(mut p: *mut JsonString) {
@@ -1378,7 +1378,7 @@ unsafe extern "C" fn jsonParseFree(mut pParse: *mut JsonParse) {
 
 unsafe extern "C" fn jsonHexToInt(mut h: ::core::ffi::c_int) -> crate::src::ext::rtree::rtree::u8_0 {
     h += 9 as ::core::ffi::c_int * (1 as ::core::ffi::c_int & h >> 6 as ::core::ffi::c_int);
-    return (h & 0xf as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u8_0;
+    (h & 0xf as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u8_0
 }
 
 unsafe extern "C" fn jsonHexToInt4(mut z: *const ::core::ffi::c_char) -> crate::src::ext::rtree::rtree::u32_0 {
@@ -1394,11 +1394,11 @@ unsafe extern "C" fn jsonHexToInt4(mut z: *const ::core::ffi::c_char) -> crate::
             << 4 as ::core::ffi::c_int)
         + jsonHexToInt(*z.offset(3 as isize) as ::core::ffi::c_int)
             as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u32_0;
-    return v;
+    v
 }
 
 unsafe extern "C" fn jsonIs2Hex(mut z: *const ::core::ffi::c_char) -> ::core::ffi::c_int {
-    return (*(&raw const crate::src::src::global::sqlite3CtypeMap as *const ::core::ffi::c_uchar)
+    (*(&raw const crate::src::src::global::sqlite3CtypeMap as *const ::core::ffi::c_uchar)
         .offset(*z.offset(0 as isize) as ::core::ffi::c_uchar as isize)
         as ::core::ffi::c_int
         & 0x8 as ::core::ffi::c_int
@@ -1407,13 +1407,13 @@ unsafe extern "C" fn jsonIs2Hex(mut z: *const ::core::ffi::c_char) -> ::core::ff
             .offset(*z.offset(1 as isize) as ::core::ffi::c_uchar as isize)
             as ::core::ffi::c_int
             & 0x8 as ::core::ffi::c_int
-            != 0) as ::core::ffi::c_int;
+            != 0) as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn jsonIs4Hex(mut z: *const ::core::ffi::c_char) -> ::core::ffi::c_int {
-    return (jsonIs2Hex(z) != 0
+    (jsonIs2Hex(z) != 0
         && jsonIs2Hex(z.offset(2 as isize) as *const ::core::ffi::c_char)
-            != 0) as ::core::ffi::c_int;
+            != 0) as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn json5Whitespace(mut zIn: *const ::core::ffi::c_char) -> ::core::ffi::c_int {
@@ -1554,7 +1554,7 @@ unsafe extern "C" fn json5Whitespace(mut zIn: *const ::core::ffi::c_char) -> ::c
             }
         }
     }
-    return n;
+    n
 }
 
 static mut aNanInfName: [NanInfName; 5] = [
@@ -1641,7 +1641,7 @@ unsafe extern "C" fn jsonBlobExpand(
     }
     __pParse_ref.aBlob = aNew;
     __pParse_ref.nBlobAlloc = t as crate::src::ext::rtree::rtree::u32_0;
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn jsonBlobMakeEditable(
@@ -1668,7 +1668,7 @@ unsafe extern "C" fn jsonBlobMakeEditable(
         aOld as *const ::core::ffi::c_void,
         __pParse_ref.nBlob as crate::__stddef_size_t_h::size_t,
     );
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 #[inline(never)]
 
@@ -1869,7 +1869,7 @@ unsafe extern "C" fn jsonBlobChangePayloadSize(
             (szPayload >> 8 as ::core::ffi::c_int & 0xff as crate::src::ext::rtree::rtree::u32_0) as crate::src::ext::rtree::rtree::u8_0;
         *a.offset(4 as isize) = (szPayload & 0xff as crate::src::ext::rtree::rtree::u32_0) as crate::src::ext::rtree::rtree::u8_0;
     }
-    return delta;
+    delta
 }
 
 unsafe extern "C" fn jsonIs4HexB(
@@ -1883,7 +1883,7 @@ unsafe extern "C" fn jsonIs4HexB(
         return 0 as ::core::ffi::c_int;
     }
     *pOp = JSONB_TEXTJ;
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn jsonbValidityCheck(
@@ -3051,7 +3051,7 @@ unsafe extern "C" fn jsonTranslateTextToBlob(
         j.wrapping_sub(i),
         z.offset(i as isize) as *const ::core::ffi::c_char as *const ::core::ffi::c_void,
     );
-    return j as ::core::ffi::c_int;
+    j as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn jsonConvertTextToBlob(
@@ -3099,7 +3099,7 @@ unsafe extern "C" fn jsonConvertTextToBlob(
         jsonParseReset(pParse);
         return 1 as ::core::ffi::c_int;
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn jsonReturnStringAsBlob(mut pStr: *mut JsonString) {
@@ -3215,7 +3215,7 @@ unsafe extern "C" fn jsonbPayloadSize(
         return 0 as crate::src::ext::rtree::rtree::u32_0;
     }
     *pSz = sz;
-    return n;
+    n
 }
 
 unsafe extern "C" fn jsonTranslateBlobToText(
@@ -3567,7 +3567,7 @@ unsafe extern "C" fn jsonTranslateBlobToText(
             while j < iEnd && (*pOut).eErr as ::core::ffi::c_int == 0 as ::core::ffi::c_int {
                 j = jsonTranslateBlobToText(pParse, j, pOut);
                 let fresh4 = x;
-                x = x + 1;
+                x += 1;
                 jsonAppendChar(
                     pOut,
                     (if fresh4 & 1 as ::core::ffi::c_int != 0 {
@@ -3596,7 +3596,7 @@ unsafe extern "C" fn jsonTranslateBlobToText(
         }
         _ => {}
     }
-    return i.wrapping_add(n).wrapping_add(sz);
+    i.wrapping_add(n).wrapping_add(sz)
 }
 
 unsafe extern "C" fn jsonPrettyIndent(mut pPretty: *mut JsonPretty) {
@@ -3695,7 +3695,7 @@ unsafe extern "C" fn jsonTranslateBlobToPrettyText(
             i = jsonTranslateBlobToText(pParse, i, pOut);
         }
     }
-    return i;
+    i
 }
 
 unsafe extern "C" fn jsonbArrayCount(mut pParse: *mut JsonParse, mut iRoot: crate::src::ext::rtree::rtree::u32_0) -> crate::src::ext::rtree::rtree::u32_0 {
@@ -3712,7 +3712,7 @@ unsafe extern "C" fn jsonbArrayCount(mut pParse: *mut JsonParse, mut iRoot: crat
         i = i.wrapping_add(sz.wrapping_add(n));
         k = k.wrapping_add(1);
     }
-    return k;
+    k
 }
 
 unsafe extern "C" fn jsonAfterEditSizeAdjust(mut pParse: *mut JsonParse, mut iRoot: crate::src::ext::rtree::rtree::u32_0) {
@@ -3807,7 +3807,7 @@ unsafe extern "C" fn jsonBlobOverwrite(
         }
         szPayload >>= 8 as ::core::ffi::c_int;
     }
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn jsonBlobEdit(
@@ -3894,7 +3894,7 @@ unsafe extern "C" fn jsonBytesToBypass(mut z: *const ::core::ffi::c_char, mut n:
             i = i.wrapping_add(4 as crate::src::ext::rtree::rtree::u32_0);
         }
     }
-    return i;
+    i
 }
 
 unsafe extern "C" fn jsonUnescapeOneChar(
@@ -4151,7 +4151,7 @@ unsafe extern "C" fn jsonCreateEditSubstructure(
         __pParse_ref.oom =
             (__pParse_ref.oom as ::core::ffi::c_int | __pIns_ref.oom as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u8_0;
     }
-    return rc as crate::src::ext::rtree::rtree::u32_0;
+    rc as crate::src::ext::rtree::rtree::u32_0
 }
 
 unsafe extern "C" fn jsonLookupStep(
@@ -4509,7 +4509,7 @@ unsafe extern "C" fn jsonLookupStep(
     } else {
         return JSON_LOOKUP_PATHERROR as crate::src::ext::rtree::rtree::u32_0;
     }
-    return JSON_LOOKUP_NOTFOUND as crate::src::ext::rtree::rtree::u32_0;
+    JSON_LOOKUP_NOTFOUND as crate::src::ext::rtree::rtree::u32_0
 }
 
 unsafe extern "C" fn jsonReturnTextJsonFromBlob(
@@ -4994,7 +4994,7 @@ unsafe extern "C" fn jsonBadPathError(
     } else {
         crate::src::src::vdbeapi::sqlite3_result_error_nomem(ctx);
     }
-    return ::core::ptr::null_mut::<::core::ffi::c_char>();
+    ::core::ptr::null_mut::<::core::ffi::c_char>()
 }
 
 unsafe extern "C" fn jsonInsertIntoBlob(
@@ -5161,7 +5161,7 @@ unsafe extern "C" fn jsonArgIsJsonb(
     }
     __p_ref.aBlob = ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>();
     __p_ref.nBlob = 0 as crate::src::ext::rtree::rtree::u32_0;
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn jsonParseFuncArg(
@@ -5504,7 +5504,7 @@ unsafe extern "C" fn jsonAllAlphanum(
     {
         i += 1;
     }
-    return (i == n) as ::core::ffi::c_int;
+    (i == n) as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn jsonExtractFunc(
@@ -5947,11 +5947,11 @@ unsafe extern "C" fn jsonMergePatch(
     if __pTarget_ref.delta != 0 {
         jsonAfterEditSizeAdjust(pTarget, iTarget);
     }
-    return if __pTarget_ref.oom as ::core::ffi::c_int != 0 {
+    if __pTarget_ref.oom as ::core::ffi::c_int != 0 {
         JSON_MERGE_OOM
     } else {
         JSON_MERGE_OK
-    };
+    }
 }
 
 unsafe extern "C" fn jsonPatchFunc(
@@ -6712,7 +6712,7 @@ unsafe extern "C" fn jsonEachConnect(
             as ::core::ffi::c_int
             == 't' as i32) as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0;
     }
-    return rc;
+    rc
 }
 
 pub const JEACH_KEY: ::core::ffi::c_int = 0;
@@ -6736,7 +6736,7 @@ pub const JEACH_JSON: ::core::ffi::c_int = 8;
 unsafe extern "C" fn jsonEachDisconnect(mut pVtab: *mut crate::sqlite3_h::sqlite3_vtab) -> ::core::ffi::c_int {
     let mut p: *mut JsonEachConnection = pVtab as *mut JsonEachConnection;
     crate::src::src::malloc::sqlite3DbFree((*p).db as *mut crate::sqliteInt_h::sqlite3, pVtab as *mut ::core::ffi::c_void);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn jsonEachOpen(
@@ -6759,7 +6759,7 @@ unsafe extern "C" fn jsonEachOpen(
     (*pCur).bRecursive = __pVtab_ref.bRecursive;
     jsonStringZero(&raw mut (*pCur).path);
     *ppCursor = &raw mut (*pCur).base;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn jsonEachCursorReset(mut p: *mut JsonEachCursor) {
@@ -6780,12 +6780,12 @@ unsafe extern "C" fn jsonEachClose(mut cur: *mut crate::sqlite3_h::sqlite3_vtab_
     let mut p: *mut JsonEachCursor = cur as *mut JsonEachCursor;
     jsonEachCursorReset(p);
     crate::src::src::malloc::sqlite3DbFree((*p).db as *mut crate::sqliteInt_h::sqlite3, cur as *mut ::core::ffi::c_void);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn jsonEachEof(mut cur: *mut crate::sqlite3_h::sqlite3_vtab_cursor) -> ::core::ffi::c_int {
     let p = &*(cur as *mut JsonEachCursor);
-    return (p.i >= p.iEnd) as ::core::ffi::c_int;
+    (p.i >= p.iEnd) as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn jsonSkipLabel(mut p: *mut JsonEachCursor) -> ::core::ffi::c_int {
@@ -6957,7 +6957,7 @@ unsafe extern "C" fn jsonEachNext(mut cur: *mut crate::sqlite3_h::sqlite3_vtab_c
         *fresh21 += 1;
     }
     __p_ref.iRowid = __p_ref.iRowid.wrapping_add(1);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn jsonEachPathLength(mut p: *mut JsonEachCursor) -> ::core::ffi::c_int {
@@ -6991,7 +6991,7 @@ unsafe extern "C" fn jsonEachPathLength(mut p: *mut JsonEachCursor) -> ::core::f
             }
         }
     }
-    return n as ::core::ffi::c_int;
+    n as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn jsonEachColumn(
@@ -7176,7 +7176,7 @@ unsafe extern "C" fn jsonEachColumn(
             );
         }
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn jsonEachRowid(
@@ -7185,7 +7185,7 @@ unsafe extern "C" fn jsonEachRowid(
 ) -> ::core::ffi::c_int {
     let p = &*(cur as *mut JsonEachCursor);
     *pRowid = p.iRowid as crate::sqlite3_h::sqlite_int64;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn jsonEachBestIndex(
@@ -7253,7 +7253,7 @@ unsafe extern "C" fn jsonEachBestIndex(
             __pIdxInfo_ref.idxNum = 3 as ::core::ffi::c_int;
         }
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn jsonEachFilter(
@@ -7405,7 +7405,7 @@ unsafe extern "C" fn jsonEachFilter(
         (*__p_ref.aParent.offset(0 as isize)).iHead = __p_ref.i;
         (*__p_ref.aParent.offset(0 as isize)).iValue = i;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 static mut jsonEachModule: crate::sqlite3_h::sqlite3_module = unsafe {
@@ -8539,5 +8539,5 @@ pub unsafe extern "C" fn sqlite3JsonVtabRegister(
         }
         i = i.wrapping_add(1);
     }
-    return ::core::ptr::null_mut::<crate::sqliteInt_h::Module>();
+    ::core::ptr::null_mut::<crate::sqliteInt_h::Module>()
 }

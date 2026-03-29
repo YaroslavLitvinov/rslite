@@ -81,7 +81,7 @@ unsafe extern "C" fn carrayConnect(
             ::core::mem::size_of::<crate::sqlite3_h::sqlite3_vtab>() as crate::__stddef_size_t_h::size_t,
         );
     }
-    return rc;
+    rc
 }
 
 pub const CARRAY_COLUMN_POINTER: ::core::ffi::c_int = 1;
@@ -92,7 +92,7 @@ pub const CARRAY_COLUMN_CTYPE: ::core::ffi::c_int = 3;
 
 unsafe extern "C" fn carrayDisconnect(mut pVtab: *mut crate::sqlite3_h::sqlite3_vtab) -> ::core::ffi::c_int {
     crate::src::src::malloc::sqlite3_free(pVtab as *mut ::core::ffi::c_void);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn carrayOpen(
@@ -111,18 +111,18 @@ unsafe extern "C" fn carrayOpen(
         ::core::mem::size_of::<carray_cursor>() as crate::__stddef_size_t_h::size_t,
     );
     *ppCursor = &raw mut (*pCur).base;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn carrayClose(mut cur: *mut crate::sqlite3_h::sqlite3_vtab_cursor) -> ::core::ffi::c_int {
     crate::src::src::malloc::sqlite3_free(cur as *mut ::core::ffi::c_void);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn carrayNext(mut cur: *mut crate::sqlite3_h::sqlite3_vtab_cursor) -> ::core::ffi::c_int {
     let mut pCur: *mut carray_cursor = cur as *mut carray_cursor;
     (*pCur).iRowid += 1;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn carrayColumn(
@@ -204,7 +204,7 @@ unsafe extern "C" fn carrayColumn(
 },
     }
     crate::src::src::vdbeapi::sqlite3_result_int64(ctx, x);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn carrayRowid(
@@ -213,12 +213,12 @@ unsafe extern "C" fn carrayRowid(
 ) -> ::core::ffi::c_int {
     let pCur = &*(cur as *mut carray_cursor);
     *pRowid = pCur.iRowid as crate::sqlite3_h::sqlite_int64;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn carrayEof(mut cur: *mut crate::sqlite3_h::sqlite3_vtab_cursor) -> ::core::ffi::c_int {
     let pCur = &*(cur as *mut carray_cursor);
-    return (pCur.iRowid > pCur.iCnt) as ::core::ffi::c_int;
+    (pCur.iRowid > pCur.iCnt) as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn carrayFilter(
@@ -290,7 +290,7 @@ unsafe extern "C" fn carrayFilter(
         _ => {}
     }
     __pCur_ref.iRowid = 1 as crate::sqlite3_h::sqlite3_int64;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn carrayBestIndex(
@@ -366,7 +366,7 @@ unsafe extern "C" fn carrayBestIndex(
         __pIdxInfo_ref.estimatedRows = 2147483647 as crate::sqlite3_h::sqlite3_int64;
         __pIdxInfo_ref.idxNum = 0 as ::core::ffi::c_int;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 static mut carrayModule: crate::sqlite3_h::sqlite3_module = unsafe {
@@ -627,12 +627,12 @@ pub unsafe extern "C" fn sqlite3_carray_bind(
         xDestroy.expect("non-null function pointer")(aData);
     }
     crate::src::src::malloc::sqlite3_free(pNew as *mut ::core::ffi::c_void);
-    return rc;
+    rc
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3CarrayRegister(mut db: *mut crate::sqliteInt_h::sqlite3) -> *mut crate::sqliteInt_h::Module {
-    return  crate::src::src::vtab::sqlite3VtabCreateModule(
+    crate::src::src::vtab::sqlite3VtabCreateModule(
         
         db as *mut crate::sqliteInt_h::sqlite3,
         b"carray\0" as *const u8 as *const ::core::ffi::c_char,
@@ -641,5 +641,5 @@ pub unsafe extern "C" fn sqlite3CarrayRegister(mut db: *mut crate::sqliteInt_h::
         ::core::ptr::null_mut::<::core::ffi::c_void>(),
         None,
     ) as
-    *mut crate::sqliteInt_h::Module;
+    *mut crate::sqliteInt_h::Module
 }

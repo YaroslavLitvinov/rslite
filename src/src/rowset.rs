@@ -87,7 +87,7 @@ pub unsafe extern "C" fn sqlite3RowSetInit(mut db: *mut crate::sqliteInt_h::sqli
         __p_ref.rsFlags = ROWSET_SORTED as crate::src::fts5::u16_0;
         __p_ref.iBatch = 0 as ::core::ffi::c_int;
     }
-    return p;
+    p
 }
 #[no_mangle]
 
@@ -133,7 +133,7 @@ unsafe extern "C" fn rowSetEntryAlloc(mut p: *mut RowSet) -> *mut RowSetEntry {
     __p_ref.nFresh = __p_ref.nFresh.wrapping_sub(1);
     let fresh0 = __p_ref.pFresh;
     __p_ref.pFresh = __p_ref.pFresh.offset(1);
-    return fresh0;
+    fresh0
 }
 #[no_mangle]
 
@@ -192,7 +192,7 @@ unsafe extern "C" fn rowSetEntryMerge(
             break;
         }
     }
-    return head.pRight;
+    head.pRight
 }
 
 unsafe extern "C" fn rowSetEntrySort(mut pIn: *mut RowSetEntry) -> *mut RowSetEntry {
@@ -226,7 +226,7 @@ unsafe extern "C" fn rowSetEntrySort(mut pIn: *mut RowSetEntry) -> *mut RowSetEn
         }
         i = i.wrapping_add(1);
     }
-    return pIn;
+    pIn
 }
 
 unsafe extern "C" fn rowSetTreeToList(
@@ -272,7 +272,7 @@ unsafe extern "C" fn rowSetNDeepTree(
         (*p).pRight = ::core::ptr::null_mut::<RowSetEntry>();
         (*p).pLeft = (*p).pRight;
     }
-    return p;
+    p
 }
 
 unsafe extern "C" fn rowSetListToTree(mut pList: *mut RowSetEntry) -> *mut RowSetEntry {
@@ -292,7 +292,7 @@ unsafe extern "C" fn rowSetListToTree(mut pList: *mut RowSetEntry) -> *mut RowSe
         (*p).pRight = rowSetNDeepTree(&raw mut pList, iDepth);
         iDepth += 1;
     }
-    return p;
+    p
 }
 #[no_mangle]
 
@@ -383,5 +383,5 @@ pub unsafe extern "C" fn sqlite3RowSetTest(
         }
         pTree = (*pTree).pRight;
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }

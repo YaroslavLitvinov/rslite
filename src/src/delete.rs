@@ -51,7 +51,7 @@ pub unsafe extern "C" fn sqlite3SrcListLookup(
             pTab = ::core::ptr::null_mut::<crate::sqliteInt_h::Table>();
         }
     }
-    return pTab;
+    pTab
 }
 #[no_mangle]
 
@@ -96,7 +96,7 @@ unsafe extern "C" fn vtabIsReadOnly(
             (*pTab).zName,
         );
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn tabIsReadOnly(
@@ -117,7 +117,7 @@ unsafe extern "C" fn tabIsReadOnly(
             && (*pParse).nested as ::core::ffi::c_int == 0 as ::core::ffi::c_int)
             as ::core::ffi::c_int;
     }
-    return crate::src::src::build::sqlite3ReadOnlyShadowTables(db as *mut crate::sqliteInt_h::sqlite3);
+    crate::src::src::build::sqlite3ReadOnlyShadowTables(db as *mut crate::sqliteInt_h::sqlite3)
 }
 #[no_mangle]
 
@@ -147,7 +147,7 @@ pub unsafe extern "C" fn sqlite3IsReadOnly(
         );
         return 1 as ::core::ffi::c_int;
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -306,7 +306,7 @@ pub unsafe extern "C" fn sqlite3DeleteFrom(
                     if !(rcauth == crate::sqlite3_h::SQLITE_DENY) {
                         let __pParse_ref = unsafe { &mut *pParse };
                         let fresh0 = __pParse_ref.nTab;
-                        __pParse_ref.nTab = __pParse_ref.nTab + 1;
+                        __pParse_ref.nTab += 1;
                         let ref mut fresh1 = (*(&raw mut (*pTabList).a as *mut crate::sqliteInt_h::SrcItem)
                             .offset(0 as isize))
                         .iCursor;
@@ -441,7 +441,7 @@ pub unsafe extern "C" fn sqlite3DeleteFrom(
                                         iPk = __pParse_ref.nMem + 1 as ::core::ffi::c_int;
                                         __pParse_ref.nMem += nPk as ::core::ffi::c_int;
                                         let fresh2 = __pParse_ref.nTab;
-                                        __pParse_ref.nTab = __pParse_ref.nTab + 1;
+                                        __pParse_ref.nTab += 1;
                                         iEphCur = fresh2;
                                         addrEphOpen = crate::src::src::vdbeaux::sqlite3VdbeAddOp2(
                                             v,
@@ -1084,7 +1084,7 @@ pub unsafe extern "C" fn sqlite3GenerateIndexKey(
         crate::src::src::vdbeaux::sqlite3VdbeAddOp3(v, crate::opcodes_h::OP_MakeRecord, regBase, nCol, regOut);
     }
     crate::src::src::expr::sqlite3ReleaseTempRange(pParse as *mut crate::sqliteInt_h::Parse, regBase, nCol);
-    return regBase;
+    regBase
 }
 #[no_mangle]
 

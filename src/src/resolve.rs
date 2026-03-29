@@ -40,7 +40,7 @@ unsafe extern "C" fn incrAggDepth(
     if (*pExpr).op as ::core::ffi::c_int == crate::src::parse::TK_AGG_FUNCTION {
         (*pExpr).op2 = ((*pExpr).op2 as ::core::ffi::c_int + (*pWalker).u.n) as crate::src::ext::rtree::rtree::u8_0;
     }
-    return crate::sqliteInt_h::WRC_Continue;
+    crate::sqliteInt_h::WRC_Continue
 }
 
 unsafe extern "C" fn incrAggFunctionDepth(mut pExpr: *mut crate::sqliteInt_h::Expr, mut N: ::core::ffi::c_int) {
@@ -180,7 +180,7 @@ pub unsafe extern "C" fn sqlite3MatchEName(
     if eEName == crate::sqliteInt_h::ENAME_ROWID {
         *pbRowid = 1 as ::core::ffi::c_int;
     }
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn areDoubleQuotedStringsEnabled(
@@ -313,7 +313,7 @@ unsafe extern "C" fn isValidSchemaTableName(
     {
         return 1 as ::core::ffi::c_int;
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn lookupName(
@@ -1057,7 +1057,7 @@ pub unsafe extern "C" fn sqlite3CreateColumnExpr(
             }
         }
     }
-    return p;
+    p
 }
 
 unsafe extern "C" fn notValidImpl(
@@ -1105,7 +1105,7 @@ unsafe extern "C" fn exprProbability(mut p: *mut crate::sqliteInt_h::Expr) -> ::
     if r > 1.0f64 {
         return -(1 as ::core::ffi::c_int);
     }
-    return (r * 134217728.0f64) as ::core::ffi::c_int;
+    (r * 134217728.0f64) as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn resolveExprStep(
@@ -1663,11 +1663,11 @@ unsafe extern "C" fn resolveExprStep(
         }
         _ => {}
     }
-    return if (*pParse).nErr != 0 {
+    if (*pParse).nErr != 0 {
         crate::sqliteInt_h::WRC_Abort
     } else {
         crate::sqliteInt_h::WRC_Continue
-    };
+    }
 }
 
 unsafe extern "C" fn resolveAsName(
@@ -1695,7 +1695,7 @@ unsafe extern "C" fn resolveAsName(
             i += 1;
         }
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn resolveOrderByTermToExprList(
@@ -1740,7 +1740,7 @@ unsafe extern "C" fn resolveOrderByTermToExprList(
         }
         i += 1;
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn resolveOutOfRangeError(
@@ -1896,7 +1896,7 @@ unsafe extern "C" fn resolveCompoundOrderBy(
         }
         i += 1;
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -1954,7 +1954,7 @@ pub unsafe extern "C" fn sqlite3ResolveOrderGroupBy(
         i += 1;
         pItem = pItem.offset(1);
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn resolveRemoveWindowsCb(
@@ -1965,7 +1965,7 @@ unsafe extern "C" fn resolveRemoveWindowsCb(
         let mut pWin: *mut crate::sqliteInt_h::Window = (*pExpr).y.pWin;
         crate::src::src::window::sqlite3WindowUnlinkFromSelect(pWin as *mut crate::sqliteInt_h::Window);
     }
-    return crate::sqliteInt_h::WRC_Continue;
+    crate::sqliteInt_h::WRC_Continue
 }
 
 unsafe extern "C" fn windowRemoveExprFromSelect(mut pSelect: *mut crate::sqliteInt_h::Select, mut pExpr: *mut crate::sqliteInt_h::Expr) {
@@ -2063,7 +2063,7 @@ unsafe extern "C" fn resolveOrderGroupBy(
         i += 1;
         pItem = pItem.offset(1);
     }
-    return sqlite3ResolveOrderGroupBy(pParse, pSelect, pOrderBy, zType);
+    sqlite3ResolveOrderGroupBy(pParse, pSelect, pOrderBy, zType)
 }
 
 unsafe extern "C" fn resolveSelectStep(
@@ -2273,7 +2273,7 @@ unsafe extern "C" fn resolveSelectStep(
     if isCompound != 0 && resolveCompoundOrderBy(pParse, pLeftmost) != 0 {
         return crate::sqliteInt_h::WRC_Abort;
     }
-    return crate::sqliteInt_h::WRC_Prune;
+    crate::sqliteInt_h::WRC_Prune
 }
 #[no_mangle]
 
@@ -2325,8 +2325,8 @@ pub unsafe extern "C" fn sqlite3ResolveExprNames(
     __pExpr_ref.flags |=
         (__pNC_ref.ncFlags & (0x10 as ::core::ffi::c_int | 0x8000 as ::core::ffi::c_int)) as crate::src::ext::rtree::rtree::u32_0;
     __pNC_ref.ncFlags |= savedHasAgg;
-    return (__pNC_ref.nNcErr > 0 as ::core::ffi::c_int || (*w.pParse).nErr > 0 as ::core::ffi::c_int)
-        as ::core::ffi::c_int;
+    (__pNC_ref.nNcErr > 0 as ::core::ffi::c_int || (*w.pParse).nErr > 0 as ::core::ffi::c_int)
+        as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -2390,7 +2390,7 @@ pub unsafe extern "C" fn sqlite3ResolveExprListNames(
         i += 1;
     }
     __pNC_ref.ncFlags |= savedHasAgg;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -2464,5 +2464,5 @@ pub unsafe extern "C" fn sqlite3ResolveSelfReference(
     if !pList.is_null() {
         rc = sqlite3ResolveExprListNames(&raw mut sNC, pList);
     }
-    return rc;
+    rc
 }

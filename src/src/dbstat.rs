@@ -146,12 +146,12 @@ unsafe extern "C" fn statConnect(
         (*pTab).iDb = iDb;
     }
     *ppVtab = pTab as *mut crate::sqlite3_h::sqlite3_vtab;
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn statDisconnect(mut pVtab: *mut crate::sqlite3_h::sqlite3_vtab) -> ::core::ffi::c_int {
     crate::src::src::malloc::sqlite3_free(pVtab as *mut ::core::ffi::c_void);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn statBestIndex(
@@ -243,7 +243,7 @@ unsafe extern "C" fn statBestIndex(
         __pIdxInfo_ref.idxNum |= 0x8 as ::core::ffi::c_int;
     }
     __pIdxInfo_ref.idxFlags |= crate::sqlite3_h::SQLITE_INDEX_SCAN_HEX;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn statOpen(
@@ -266,7 +266,7 @@ unsafe extern "C" fn statOpen(
         (*pCsr).iDb = (*pTab).iDb;
     }
     *ppCursor = pCsr as *mut crate::sqlite3_h::sqlite3_vtab_cursor;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn statClearCells(mut p: *mut StatPage) {
@@ -333,7 +333,7 @@ unsafe extern "C" fn statClose(mut pCursor: *mut crate::sqlite3_h::sqlite3_vtab_
     statResetCsr(pCsr);
     crate::src::src::vdbeapi::sqlite3_finalize((*pCsr).pStmt);
     crate::src::src::malloc::sqlite3_free(pCsr as *mut ::core::ffi::c_void);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn getLocalPayload(
@@ -361,7 +361,7 @@ unsafe extern "C" fn getLocalPayload(
     if nLocal > nMaxLocal {
         nLocal = nMinLocal;
     }
-    return nLocal;
+    nLocal
 }
 
 unsafe extern "C" fn statDecodePage(
@@ -630,7 +630,7 @@ unsafe extern "C" fn statDecodePage(
     }
     __p_ref.flags = 0 as crate::src::ext::rtree::rtree::u8_0;
     statClearCells(p);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn statSizeAndOffset(mut pCsr: *mut StatCursor) {
@@ -694,7 +694,7 @@ unsafe extern "C" fn statGetPage(
         );
         crate::src::src::pager::sqlite3PagerUnref(pDbPage as *mut crate::src::src::pcache::PgHdr);
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn statNext(mut pCursor: *mut crate::sqlite3_h::sqlite3_vtab_cursor) -> ::core::ffi::c_int {
@@ -899,12 +899,12 @@ unsafe extern "C" fn statNext(mut pCursor: *mut crate::sqlite3_h::sqlite3_vtab_c
             break;
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn statEof(mut pCursor: *mut crate::sqlite3_h::sqlite3_vtab_cursor) -> ::core::ffi::c_int {
     let pCsr = &*(pCursor as *mut StatCursor);
-    return pCsr.isEof as ::core::ffi::c_int;
+    pCsr.isEof as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn statFilter(
@@ -927,7 +927,7 @@ unsafe extern "C" fn statFilter(
     __pCsr_ref.pStmt = ::core::ptr::null_mut::<crate::sqlite3_h::sqlite3_stmt>();
     if idxNum & 0x1 as ::core::ffi::c_int != 0 {
         let fresh1 = iArg;
-        iArg = iArg + 1;
+        iArg += 1;
         let mut zDbase: *const ::core::ffi::c_char =
             crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(fresh1 as isize)) as *const ::core::ffi::c_char;
         __pCsr_ref.iDb = crate::src::src::build::sqlite3FindDbName((*pTab).db as *mut crate::sqliteInt_h::sqlite3, zDbase);
@@ -941,12 +941,12 @@ unsafe extern "C" fn statFilter(
     }
     if idxNum & 0x2 as ::core::ffi::c_int != 0 {
         let fresh2 = iArg;
-        iArg = iArg + 1;
+        iArg += 1;
         zName = crate::src::src::vdbeapi::sqlite3_value_text(*argv.offset(fresh2 as isize)) as *const ::core::ffi::c_char;
     }
     if idxNum & 0x4 as ::core::ffi::c_int != 0 {
         let fresh3 = iArg;
-        iArg = iArg + 1;
+        iArg += 1;
         __pCsr_ref.isAgg = (crate::src::src::vdbeapi::sqlite3_value_double(*argv.offset(fresh3 as isize)) != 0.0f64)
             as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0;
     } else {
@@ -994,7 +994,7 @@ unsafe extern "C" fn statFilter(
         __pCsr_ref.iPage = -(1 as ::core::ffi::c_int);
         rc = statNext(pCursor);
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn statColumn(
@@ -1080,7 +1080,7 @@ unsafe extern "C" fn statColumn(
             crate::src::src::vdbeapi::sqlite3_result_int(ctx, (*pCsr).isAgg as ::core::ffi::c_int);
         }
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn statRowid(
@@ -1089,7 +1089,7 @@ unsafe extern "C" fn statRowid(
 ) -> ::core::ffi::c_int {
     let pCsr = &*(pCursor as *mut StatCursor);
     *pRowid = pCsr.iPageno as crate::sqlite3_h::sqlite_int64;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -1187,12 +1187,12 @@ pub unsafe extern "C" fn sqlite3DbstatRegister(mut db: *mut crate::sqliteInt_h::
     xIntegrity:  None,
 }
     };
-    return crate::src::src::vtab::sqlite3_create_module(
+    crate::src::src::vtab::sqlite3_create_module(
         
         db as *mut crate::sqliteInt_h::sqlite3,
         b"dbstat\0" as *const u8 as *const ::core::ffi::c_char,
         
         &raw mut dbstat_module as *mut _ as *const crate::sqlite3_h::sqlite3_module,
         ::core::ptr::null_mut::<::core::ffi::c_void>(),
-    );
+    )
 }

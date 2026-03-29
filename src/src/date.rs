@@ -99,7 +99,7 @@ unsafe extern "C" fn getDigits(
         val = 0 as ::core::ffi::c_int;
         loop {
             let fresh1 = N;
-            N = N - 1;
+            N -= 1;
             if !(fresh1 != 0) {
                 break;
             }
@@ -129,7 +129,7 @@ unsafe extern "C" fn getDigits(
             break;
         }
     }
-    return cnt;
+    cnt
 }
 
 unsafe extern "C" fn parseTimezone(
@@ -194,7 +194,7 @@ unsafe extern "C" fn parseTimezone(
     {
         zDate = zDate.offset(1);
     }
-    return (*zDate as ::core::ffi::c_int != 0 as ::core::ffi::c_int) as ::core::ffi::c_int;
+    (*zDate as ::core::ffi::c_int != 0 as ::core::ffi::c_int) as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn parseHhMmSs(
@@ -264,7 +264,7 @@ unsafe extern "C" fn parseHhMmSs(
     if parseTimezone(zDate, p) != 0 {
         return 1 as ::core::ffi::c_int;
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn datetimeError(mut p: *mut DateTime) {
@@ -400,7 +400,7 @@ unsafe extern "C" fn parseYyyyMmDd(
     if __p_ref.tz != 0 {
         computeJD(p);
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn setDateTimeToCurrent(
@@ -466,14 +466,14 @@ unsafe extern "C" fn parseDateOrTime(
         (*p).set_useSubsec(1 as ::core::ffi::c_uint as ::core::ffi::c_uint);
         return setDateTimeToCurrent(context, p);
     }
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 
 pub const INT_464269060799999: crate::src::ext::rtree::rtree::i64_0 =
     (0x1a640 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::i64_0) << 32 as ::core::ffi::c_int | 0x1072fdff as crate::src::ext::rtree::rtree::i64_0;
 
 unsafe extern "C" fn validJulianDay(mut iJD: crate::sqlite3_h::sqlite3_int64) -> ::core::ffi::c_int {
-    return (iJD >= 0 as crate::sqlite3_h::sqlite3_int64 && iJD <= INT_464269060799999) as ::core::ffi::c_int;
+    (iJD >= 0 as crate::sqlite3_h::sqlite3_int64 && iJD <= INT_464269060799999) as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn computeYMD(mut p: *mut DateTime) {
@@ -570,7 +570,7 @@ unsafe extern "C" fn osLocaltime(mut t: *mut crate::stdlib::time_t, mut pTm: *mu
         }
     }
     rc = (::libc::localtime_r(t,  pTm as *mut ::libc::tm) as *mut ::libc::tm == ::core::ptr::null_mut::<::libc::tm>()) as ::core::ffi::c_int;
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn toLocaltime(
@@ -619,7 +619,7 @@ unsafe extern "C" fn toLocaltime(
     __p_ref.set_rawS(0 as ::core::ffi::c_uint as ::core::ffi::c_uint);
     __p_ref.tz = 0 as ::core::ffi::c_int;
     __p_ref.set_isError(0 as ::core::ffi::c_uint as ::core::ffi::c_uint);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 static mut aXformType: [C2RustUnnamed; 6] = unsafe {
@@ -801,7 +801,7 @@ unsafe extern "C" fn parseModifier(
                         iErr = new.iJD as crate::src::ext::rtree::rtree::i64_0 - iOrigJD;
                         if !(iErr != 0 && {
                             let fresh0 = cnt;
-                            cnt = cnt + 1;
+                            cnt += 1;
                             fresh0 < 3 as ::core::ffi::c_int
                         }) {
                             break;
@@ -1184,7 +1184,7 @@ unsafe extern "C" fn parseModifier(
         }
         _ => {}
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn isDate(
@@ -1240,7 +1240,7 @@ unsafe extern "C" fn isDate(
     {
         __p_ref.validYMD = 0 as ::core::ffi::c_char;
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn juliandayFunc(
@@ -1596,20 +1596,20 @@ unsafe extern "C" fn daysAfterJan01(mut pDate: *mut DateTime) -> ::core::ffi::c_
     jan01.M = 1 as ::core::ffi::c_int;
     jan01.D = 1 as ::core::ffi::c_int;
     computeJD(&raw mut jan01);
-    return (((*pDate).iJD - jan01.iJD + 43200000 as crate::sqlite3_h::sqlite3_int64) / 86400000 as crate::sqlite3_h::sqlite3_int64)
-        as ::core::ffi::c_int;
+    (((*pDate).iJD - jan01.iJD + 43200000 as crate::sqlite3_h::sqlite3_int64) / 86400000 as crate::sqlite3_h::sqlite3_int64)
+        as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn daysAfterMonday(mut pDate: *mut DateTime) -> ::core::ffi::c_int {
-    return (((*pDate).iJD + 43200000 as crate::sqlite3_h::sqlite3_int64) / 86400000 as crate::sqlite3_h::sqlite3_int64)
+    (((*pDate).iJD + 43200000 as crate::sqlite3_h::sqlite3_int64) / 86400000 as crate::sqlite3_h::sqlite3_int64)
         as ::core::ffi::c_int
-        % 7 as ::core::ffi::c_int;
+        % 7 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn daysAfterSunday(mut pDate: *mut DateTime) -> ::core::ffi::c_int {
-    return (((*pDate).iJD + 129600000 as crate::sqlite3_h::sqlite3_int64) / 86400000 as crate::sqlite3_h::sqlite3_int64)
+    (((*pDate).iJD + 129600000 as crate::sqlite3_h::sqlite3_int64) / 86400000 as crate::sqlite3_h::sqlite3_int64)
         as ::core::ffi::c_int
-        % 7 as ::core::ffi::c_int;
+        % 7 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn strftimeFunc(

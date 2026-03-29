@@ -66,7 +66,7 @@ pub unsafe extern "C" fn sqlite3BitvecCreate(mut iSize: crate::src::ext::rtree::
     if !p.is_null() {
         (*p).iSize = iSize;
     }
-    return p;
+    p
 }
 #[no_mangle]
 
@@ -108,7 +108,7 @@ pub unsafe extern "C" fn sqlite3BitvecTestNotNull(
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3BitvecTest(mut p: *mut Bitvec, mut i: crate::src::ext::rtree::rtree::u32_0) -> ::core::ffi::c_int {
-    return (!p.is_null() && sqlite3BitvecTestNotNull(p, i) != 0) as ::core::ffi::c_int;
+    (!p.is_null() && sqlite3BitvecTestNotNull(p, i) != 0) as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -217,7 +217,7 @@ pub unsafe extern "C" fn sqlite3BitvecSet(mut p: *mut Bitvec, mut i: crate::src:
     }
     (*p).nSet = (*p).nSet.wrapping_add(1);
     (*p).u.aHash[h as usize] = i;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -300,7 +300,7 @@ pub unsafe extern "C" fn sqlite3BitvecDestroy(mut p: *mut Bitvec) {
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3BitvecSize(mut p: *mut Bitvec) -> crate::src::ext::rtree::rtree::u32_0 {
-    return (*p).iSize;
+    (*p).iSize
 }
 #[no_mangle]
 
@@ -429,5 +429,5 @@ pub unsafe extern "C" fn sqlite3BitvecBuiltinTest(
     crate::src::src::malloc::sqlite3_free(pTmpSpace);
     crate::src::src::malloc::sqlite3_free(pV as *mut ::core::ffi::c_void);
     sqlite3BitvecDestroy(pBitvec);
-    return rc;
+    rc
 }

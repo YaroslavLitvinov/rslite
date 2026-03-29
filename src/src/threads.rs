@@ -56,7 +56,7 @@ pub unsafe extern "C" fn sqlite3ThreadCreate(
         (*p).pOut = xTask.expect("non-null function pointer")(pIn);
     }
     *ppThread = p;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -79,5 +79,5 @@ pub unsafe extern "C" fn sqlite3ThreadJoin(
         };
     }
     crate::src::src::malloc::sqlite3_free(p as *mut ::core::ffi::c_void);
-    return rc;
+    rc
 }

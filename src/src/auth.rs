@@ -43,7 +43,7 @@ pub unsafe extern "C" fn sqlite3_set_authorizer(
         crate::src::src::vdbeaux::sqlite3ExpirePreparedStatements(db as *mut crate::sqliteInt_h::sqlite3, 1 as ::core::ffi::c_int);
     }
     crate::src::src::mutex::sqlite3_mutex_leave(__db_ref.mutex);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn sqliteAuthBadReturnCode(mut pParse: *mut crate::sqliteInt_h::Parse) {
@@ -100,7 +100,7 @@ pub unsafe extern "C" fn sqlite3AuthReadCol(
     } else if rc != crate::sqlite3_h::SQLITE_IGNORE && rc != crate::sqlite3_h::SQLITE_OK {
         sqliteAuthBadReturnCode(pParse);
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -187,7 +187,7 @@ pub unsafe extern "C" fn sqlite3AuthCheck(
         rc = crate::sqlite3_h::SQLITE_DENY;
         sqliteAuthBadReturnCode(pParse);
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 

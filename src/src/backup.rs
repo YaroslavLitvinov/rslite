@@ -172,7 +172,7 @@ unsafe extern "C" fn findBtree(
         );
         return ::core::ptr::null_mut::<crate::btreeInt_h::Btree>();
     }
-    return (*(*pDb).aDb.offset(i as isize)).pBt;
+    (*(*pDb).aDb.offset(i as isize)).pBt
 }
 
 unsafe extern "C" fn setDestPgsz(mut p: *mut sqlite3_backup) -> ::core::ffi::c_int {
@@ -184,7 +184,7 @@ unsafe extern "C" fn setDestPgsz(mut p: *mut sqlite3_backup) -> ::core::ffi::c_i
         0 as ::core::ffi::c_int,
         0 as ::core::ffi::c_int,
     );
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn checkReadTransaction(
@@ -200,7 +200,7 @@ unsafe extern "C" fn checkReadTransaction(
         );
         return crate::sqlite3_h::SQLITE_ERROR;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -248,12 +248,12 @@ pub unsafe extern "C" fn sqlite3_backup_init(
     }
     crate::src::src::mutex::sqlite3_mutex_leave((*pDestDb).mutex);
     crate::src::src::mutex::sqlite3_mutex_leave((*pSrcDb).mutex);
-    return p;
+    p
 }
 
 unsafe extern "C" fn isFatalError(mut rc: ::core::ffi::c_int) -> ::core::ffi::c_int {
-    return (rc != crate::sqlite3_h::SQLITE_OK && rc != crate::sqlite3_h::SQLITE_BUSY && rc != 6 as ::core::ffi::c_int)
-        as ::core::ffi::c_int;
+    (rc != crate::sqlite3_h::SQLITE_OK && rc != crate::sqlite3_h::SQLITE_BUSY && rc != 6 as ::core::ffi::c_int)
+        as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn backupOnePage(
@@ -311,7 +311,7 @@ unsafe extern "C" fn backupOnePage(
         }
         iOff += nDestPgsz as crate::src::ext::rtree::rtree::i64_0;
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn backupTruncateFile(
@@ -323,7 +323,7 @@ unsafe extern "C" fn backupTruncateFile(
     if rc == crate::sqlite3_h::SQLITE_OK && iCurrent > iSize {
         rc = crate::src::src::os::sqlite3OsTruncate(pFile as *mut crate::sqlite3_h::sqlite3_file, iSize);
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn attachBackupObject(mut p: *mut sqlite3_backup) {
@@ -582,7 +582,7 @@ pub unsafe extern "C" fn sqlite3_backup_step(
     }
     crate::src::src::btmutex::sqlite3BtreeLeave(__p_ref.pSrc as *mut crate::btreeInt_h::Btree);
     crate::src::src::mutex::sqlite3_mutex_leave((*__p_ref.pSrcDb).mutex);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -625,21 +625,21 @@ pub unsafe extern "C" fn sqlite3_backup_finish(mut p: *mut sqlite3_backup) -> ::
         crate::src::src::malloc::sqlite3_free(p as *mut ::core::ffi::c_void);
     }
     crate::src::src::main::sqlite3LeaveMutexAndCloseZombie(pSrcDb as *mut crate::sqliteInt_h::sqlite3);
-    return rc;
+    rc
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3_backup_remaining(
     mut p: *mut sqlite3_backup,
 ) -> ::core::ffi::c_int {
-    return (*p).nRemaining as ::core::ffi::c_int;
+    (*p).nRemaining as ::core::ffi::c_int
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3_backup_pagecount(
     mut p: *mut sqlite3_backup,
 ) -> ::core::ffi::c_int {
-    return (*p).nPagecount as ::core::ffi::c_int;
+    (*p).nPagecount as ::core::ffi::c_int
 }
 #[inline(never)]
 
@@ -740,5 +740,5 @@ pub unsafe extern "C" fn sqlite3BtreeCopyFile(
     }
     crate::src::src::btmutex::sqlite3BtreeLeave(pFrom as *mut crate::btreeInt_h::Btree);
     crate::src::src::btmutex::sqlite3BtreeLeave(pTo as *mut crate::btreeInt_h::Btree);
-    return rc;
+    rc
 }

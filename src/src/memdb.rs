@@ -291,7 +291,7 @@ unsafe extern "C" fn memdbClose(mut pFile: *mut crate::sqlite3_h::sqlite3_file) 
     } else {
         memdbLeave(p);
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn memdbRead(
@@ -320,7 +320,7 @@ unsafe extern "C" fn memdbRead(
         iAmt as crate::__stddef_size_t_h::size_t,
     );
     memdbLeave(p);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn memdbEnlarge(
@@ -349,7 +349,7 @@ unsafe extern "C" fn memdbEnlarge(
     }
     __p_ref.aData = pNew;
     __p_ref.szAlloc = newSz;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn memdbWrite(
@@ -389,7 +389,7 @@ unsafe extern "C" fn memdbWrite(
         iAmt as crate::__stddef_size_t_h::size_t,
     );
     memdbLeave(p);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn memdbTruncate(
@@ -405,14 +405,14 @@ unsafe extern "C" fn memdbTruncate(
         (*p).sz = size as crate::sqlite3_h::sqlite3_int64;
     }
     memdbLeave(p);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn memdbSync(
     mut _pFile: *mut crate::sqlite3_h::sqlite3_file,
     mut _flags: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn memdbFileSize(
@@ -423,7 +423,7 @@ unsafe extern "C" fn memdbFileSize(
     memdbEnter(p);
     *pSize = (*p).sz as crate::sqlite3_h::sqlite_int64;
     memdbLeave(p);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn memdbLock(
@@ -473,7 +473,7 @@ unsafe extern "C" fn memdbLock(
         pThis.eLock = eLock;
     }
     memdbLeave(p);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn memdbUnlock(
@@ -499,7 +499,7 @@ unsafe extern "C" fn memdbUnlock(
     }
     __pThis_ref.eLock = eLock;
     memdbLeave(p);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn memdbFileControl(
@@ -533,16 +533,16 @@ unsafe extern "C" fn memdbFileControl(
         rc = crate::sqlite3_h::SQLITE_OK;
     }
     memdbLeave(p);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn memdbDeviceCharacteristics(
     mut _pFile: *mut crate::sqlite3_h::sqlite3_file,
 ) -> ::core::ffi::c_int {
-    return crate::sqlite3_h::SQLITE_IOCAP_ATOMIC
+    crate::sqlite3_h::SQLITE_IOCAP_ATOMIC
         | crate::sqlite3_h::SQLITE_IOCAP_POWERSAFE_OVERWRITE
         | crate::sqlite3_h::SQLITE_IOCAP_SAFE_APPEND
-        | crate::sqlite3_h::SQLITE_IOCAP_SEQUENTIAL;
+        | crate::sqlite3_h::SQLITE_IOCAP_SEQUENTIAL
 }
 
 unsafe extern "C" fn memdbFetch(
@@ -563,7 +563,7 @@ unsafe extern "C" fn memdbFetch(
         *pp = (*p).aData.offset(iOfst as isize) as *mut ::core::ffi::c_void;
     }
     memdbLeave(p);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn memdbUnfetch(
@@ -575,7 +575,7 @@ unsafe extern "C" fn memdbUnfetch(
     memdbEnter(p);
     (*p).nMmap -= 1;
     memdbLeave(p);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn memdbOpen(
@@ -634,7 +634,7 @@ unsafe extern "C" fn memdbOpen(
                 return crate::sqlite3_h::SQLITE_NOMEM;
             }
             let fresh2 = memdb_g.nMemStore;
-            memdb_g.nMemStore = memdb_g.nMemStore + 1;
+            memdb_g.nMemStore += 1;
             let ref mut fresh3 = *apNew.offset(fresh2 as isize);
             *fresh3 = p;
             memdb_g.apMemStore = apNew;
@@ -687,7 +687,7 @@ unsafe extern "C" fn memdbOpen(
     }
     (*pFd).pMethods = &raw const memdb_io_methods as *const crate::sqlite3_h::sqlite3_io_methods;
     memdbLeave(p);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn memdbAccess(
@@ -697,7 +697,7 @@ unsafe extern "C" fn memdbAccess(
     mut pResOut: *mut ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
     *pResOut = 0 as ::core::ffi::c_int;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn memdbFullPathname(
@@ -712,18 +712,18 @@ unsafe extern "C" fn memdbFullPathname(
         b"%s\0" as *const u8 as *const ::core::ffi::c_char,
         zPath,
     );
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn memdbDlOpen(
     mut pVfs: *mut crate::sqlite3_h::sqlite3_vfs,
     mut zPath: *const ::core::ffi::c_char,
 ) -> *mut ::core::ffi::c_void {
-    return (*((*pVfs).pAppData as *mut crate::sqlite3_h::sqlite3_vfs))
+    (*((*pVfs).pAppData as *mut crate::sqlite3_h::sqlite3_vfs))
         .xDlOpen
         .expect("non-null function pointer")(
         (*pVfs).pAppData as *mut crate::sqlite3_h::sqlite3_vfs, zPath
-    );
+    )
 }
 
 unsafe extern "C" fn memdbDlError(
@@ -743,11 +743,11 @@ unsafe extern "C" fn memdbDlSym(
     mut p: *mut ::core::ffi::c_void,
     mut zSym: *const ::core::ffi::c_char,
 ) -> Option<unsafe extern "C" fn() -> ()> {
-    return (*((*pVfs).pAppData as *mut crate::sqlite3_h::sqlite3_vfs))
+    (*((*pVfs).pAppData as *mut crate::sqlite3_h::sqlite3_vfs))
         .xDlSym
         .expect("non-null function pointer")(
         (*pVfs).pAppData as *mut crate::sqlite3_h::sqlite3_vfs, p, zSym
-    );
+    )
 }
 
 unsafe extern "C" fn memdbDlClose(
@@ -764,22 +764,22 @@ unsafe extern "C" fn memdbRandomness(
     mut nByte: ::core::ffi::c_int,
     mut zBufOut: *mut ::core::ffi::c_char,
 ) -> ::core::ffi::c_int {
-    return (*((*pVfs).pAppData as *mut crate::sqlite3_h::sqlite3_vfs))
+    (*((*pVfs).pAppData as *mut crate::sqlite3_h::sqlite3_vfs))
         .xRandomness
         .expect("non-null function pointer")(
         (*pVfs).pAppData as *mut crate::sqlite3_h::sqlite3_vfs, nByte, zBufOut
-    );
+    )
 }
 
 unsafe extern "C" fn memdbSleep(
     mut pVfs: *mut crate::sqlite3_h::sqlite3_vfs,
     mut nMicro: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    return (*((*pVfs).pAppData as *mut crate::sqlite3_h::sqlite3_vfs))
+    (*((*pVfs).pAppData as *mut crate::sqlite3_h::sqlite3_vfs))
         .xSleep
         .expect("non-null function pointer")(
         (*pVfs).pAppData as *mut crate::sqlite3_h::sqlite3_vfs, nMicro
-    );
+    )
 }
 
 unsafe extern "C" fn memdbGetLastError(
@@ -787,18 +787,18 @@ unsafe extern "C" fn memdbGetLastError(
     mut a: ::core::ffi::c_int,
     mut b: *mut ::core::ffi::c_char,
 ) -> ::core::ffi::c_int {
-    return (*((*pVfs).pAppData as *mut crate::sqlite3_h::sqlite3_vfs))
+    (*((*pVfs).pAppData as *mut crate::sqlite3_h::sqlite3_vfs))
         .xGetLastError
-        .expect("non-null function pointer")((*pVfs).pAppData as *mut crate::sqlite3_h::sqlite3_vfs, a, b);
+        .expect("non-null function pointer")((*pVfs).pAppData as *mut crate::sqlite3_h::sqlite3_vfs, a, b)
 }
 
 unsafe extern "C" fn memdbCurrentTimeInt64(
     mut pVfs: *mut crate::sqlite3_h::sqlite3_vfs,
     mut p: *mut crate::sqlite3_h::sqlite3_int64,
 ) -> ::core::ffi::c_int {
-    return (*((*pVfs).pAppData as *mut crate::sqlite3_h::sqlite3_vfs))
+    (*((*pVfs).pAppData as *mut crate::sqlite3_h::sqlite3_vfs))
         .xCurrentTimeInt64
-        .expect("non-null function pointer")((*pVfs).pAppData as *mut crate::sqlite3_h::sqlite3_vfs, p);
+        .expect("non-null function pointer")((*pVfs).pAppData as *mut crate::sqlite3_h::sqlite3_vfs, p)
 }
 
 unsafe extern "C" fn memdbFromDbSchema(
@@ -826,7 +826,7 @@ unsafe extern "C" fn memdbFromDbSchema(
         p = ::core::ptr::null_mut::<MemFile>();
     }
     memdbLeave(pStore);
-    return p;
+    p
 }
 #[no_mangle]
 
@@ -967,7 +967,7 @@ pub unsafe extern "C" fn sqlite3_serialize(
         }
     }
     crate::src::src::vdbeapi::sqlite3_finalize(pStmt);
-    return pOut;
+    pOut
 }
 #[no_mangle]
 
@@ -1050,12 +1050,12 @@ pub unsafe extern "C" fn sqlite3_deserialize(
         crate::src::src::malloc::sqlite3_free(pData as *mut ::core::ffi::c_void);
     }
     crate::src::src::mutex::sqlite3_mutex_leave((*db).mutex);
-    return rc;
+    rc
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3IsMemdb(mut pVfs: *const crate::sqlite3_h::sqlite3_vfs) -> ::core::ffi::c_int {
-    return (pVfs == &raw mut memdb_vfs as *const crate::sqlite3_h::sqlite3_vfs) as ::core::ffi::c_int;
+    (pVfs == &raw mut memdb_vfs as *const crate::sqlite3_h::sqlite3_vfs) as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -1072,5 +1072,5 @@ pub unsafe extern "C" fn sqlite3MemdbInit() -> ::core::ffi::c_int {
         sz = ::core::mem::size_of::<MemFile>() as ::core::ffi::c_uint;
     }
     memdb_vfs.szOsFile = sz as ::core::ffi::c_int;
-    return crate::src::src::os::sqlite3_vfs_register(&raw mut memdb_vfs as *mut _ as *mut crate::sqlite3_h::sqlite3_vfs, 0 as ::core::ffi::c_int);
+    crate::src::src::os::sqlite3_vfs_register(&raw mut memdb_vfs as *mut _ as *mut crate::sqlite3_h::sqlite3_vfs, 0 as ::core::ffi::c_int)
 }

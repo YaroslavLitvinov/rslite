@@ -196,5 +196,5 @@ pub unsafe extern "C" fn sqlite3OpcodeName(
         b"Explain\0" as *const u8 as *const ::core::ffi::c_char,
         b"Abortable\0" as *const u8 as *const ::core::ffi::c_char,
     ];
-    return azName[i as usize];
+    azName[i as usize]
 }

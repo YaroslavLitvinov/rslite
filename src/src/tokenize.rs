@@ -1464,7 +1464,7 @@ pub mod keywordhash_h {
             }
             i = aKWNext[i as usize] as ::core::ffi::c_int;
         }
-        return n;
+        n
     }
     #[no_mangle]
     
@@ -1476,7 +1476,7 @@ pub mod keywordhash_h {
         if n >= 2 as ::core::ffi::c_int {
             keywordCode(z as *mut ::core::ffi::c_char, n, &raw mut id);
         }
-        return id;
+        id
     }
     
     #[no_mangle]
@@ -1493,12 +1493,12 @@ pub mod keywordhash_h {
         *pzName = (&raw const zKWText as *const ::core::ffi::c_char)
             .offset(aKWOffset[i as usize] as ::core::ffi::c_int as isize);
         *pnName = aKWLen[i as usize] as ::core::ffi::c_int;
-        return crate::sqlite3_h::SQLITE_OK;
+        crate::sqlite3_h::SQLITE_OK
     }
     #[no_mangle]
     
     pub unsafe extern "C" fn sqlite3_keyword_count() -> ::core::ffi::c_int {
-        return crate::keywordhash_h::SQLITE_N_KEYWORD;
+        crate::keywordhash_h::SQLITE_N_KEYWORD
     }
     #[no_mangle]
     
@@ -1506,8 +1506,8 @@ pub mod keywordhash_h {
         mut zName: *const ::core::ffi::c_char,
         mut nName: ::core::ffi::c_int,
     ) -> ::core::ffi::c_int {
-        return (crate::src::parse::TK_ID != sqlite3KeywordCode(zName as *const ::core::ffi::c_uchar, nName))
-            as ::core::ffi::c_int;
+        (crate::src::parse::TK_ID != sqlite3KeywordCode(zName as *const ::core::ffi::c_uchar, nName))
+            as ::core::ffi::c_int
     }
     
     
@@ -1849,10 +1849,10 @@ static mut aiClass: [::core::ffi::c_uchar; 256] = [
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3IsIdChar(mut c: crate::src::ext::rtree::rtree::u8_0) -> ::core::ffi::c_int {
-    return (*(&raw const crate::src::src::global::sqlite3CtypeMap as *const ::core::ffi::c_uchar)
+    (*(&raw const crate::src::src::global::sqlite3CtypeMap as *const ::core::ffi::c_uchar)
         .offset(c as ::core::ffi::c_uchar as isize) as ::core::ffi::c_int
         & 0x46 as ::core::ffi::c_int
-        != 0 as ::core::ffi::c_int) as ::core::ffi::c_int;
+        != 0 as ::core::ffi::c_int) as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn getToken(mut pz: *mut *const ::core::ffi::c_uchar) -> ::core::ffi::c_int {
@@ -1874,7 +1874,7 @@ unsafe extern "C" fn getToken(mut pz: *mut *const ::core::ffi::c_uchar) -> ::cor
         t = crate::src::parse::TK_ID;
     }
     *pz = z;
-    return t;
+    t
 }
 
 unsafe extern "C" fn analyzeWindowKeyword(
@@ -1889,7 +1889,7 @@ unsafe extern "C" fn analyzeWindowKeyword(
     if t != crate::src::parse::TK_AS {
         return crate::src::parse::TK_ID;
     }
-    return crate::src::parse::TK_WINDOW;
+    crate::src::parse::TK_WINDOW
 }
 
 unsafe extern "C" fn analyzeOverKeyword(
@@ -1902,7 +1902,7 @@ unsafe extern "C" fn analyzeOverKeyword(
             return crate::src::parse::TK_OVER;
         }
     }
-    return crate::src::parse::TK_ID;
+    crate::src::parse::TK_ID
 }
 
 unsafe extern "C" fn analyzeFilterKeyword(
@@ -1912,7 +1912,7 @@ unsafe extern "C" fn analyzeFilterKeyword(
     if lastToken == crate::src::parse::TK_RP && getToken(&raw mut z) == crate::src::parse::TK_LP {
         return crate::src::parse::TK_FILTER;
     }
-    return crate::src::parse::TK_ID;
+    crate::src::parse::TK_ID
 }
 #[no_mangle]
 
@@ -2400,7 +2400,7 @@ pub unsafe extern "C" fn sqlite3GetToken(
         i += 1;
     }
     *tokenType = crate::src::parse::TK_ID;
-    return i;
+    i
 }
 #[no_mangle]
 
@@ -2558,5 +2558,5 @@ pub unsafe extern "C" fn sqlite3RunParser(
         crate::src::src::malloc::sqlite3DbNNFreeNN(db as *mut crate::sqliteInt_h::sqlite3, __pParse_ref.pVList as *mut ::core::ffi::c_void);
     }
     __db_ref.pParse = pParentParse;
-    return nErr;
+    nErr
 }

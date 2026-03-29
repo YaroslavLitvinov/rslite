@@ -25,11 +25,11 @@ pub unsafe extern "C" fn sqlite3MemoryBarrier() {
 }
 
 unsafe extern "C" fn pthreadMutexInit() -> ::core::ffi::c_int {
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn pthreadMutexEnd() -> ::core::ffi::c_int {
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn pthreadMutexAlloc(mut iType: ::core::ffi::c_int) -> *mut sqlite3_mutex {
@@ -295,7 +295,7 @@ unsafe extern "C" fn pthreadMutexAlloc(mut iType: ::core::ffi::c_int) -> *mut sq
                 as *mut sqlite3_mutex;
         }
 }
-    return p;
+    p
 }
 
 unsafe extern "C" fn pthreadMutexFree(mut p: *mut sqlite3_mutex) {
@@ -314,7 +314,7 @@ unsafe extern "C" fn pthreadMutexTry(mut p: *mut sqlite3_mutex) -> ::core::ffi::
     } else {
         rc = crate::sqlite3_h::SQLITE_BUSY;
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn pthreadMutexLeave(mut p: *mut sqlite3_mutex) {
@@ -340,5 +340,5 @@ pub unsafe extern "C" fn sqlite3DefaultMutex() -> *const crate::sqlite3_h::sqlit
     xMutexNotheld:  None,
 }
     };
-    return &raw const sMutex;
+    &raw const sMutex
 }

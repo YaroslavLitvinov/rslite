@@ -44,12 +44,12 @@ unsafe extern "C" fn porterCreate(
         ::core::mem::size_of::<porter_tokenizer>() as crate::__stddef_size_t_h::size_t,
     );
     *ppTokenizer = &raw mut (*t).base;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn porterDestroy(mut pTokenizer: *mut crate::src::ext::fts3::fts3_tokenizer::sqlite3_tokenizer) -> ::core::ffi::c_int {
     crate::src::src::malloc::sqlite3_free(pTokenizer as *mut ::core::ffi::c_void);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn porterOpen(
@@ -77,14 +77,14 @@ unsafe extern "C" fn porterOpen(
     (*c).zToken = ::core::ptr::null_mut::<::core::ffi::c_char>();
     (*c).nAllocated = 0 as ::core::ffi::c_int;
     *ppCursor = &raw mut (*c).base;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn porterClose(mut pCursor: *mut crate::src::ext::fts3::fts3_tokenizer::sqlite3_tokenizer_cursor) -> ::core::ffi::c_int {
     let mut c: *mut porter_tokenizer_cursor = pCursor as *mut porter_tokenizer_cursor;
     crate::src::src::malloc::sqlite3_free((*c).zToken as *mut ::core::ffi::c_void);
     crate::src::src::malloc::sqlite3_free(c as *mut ::core::ffi::c_void);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 static mut cType: [::core::ffi::c_char; 26] = [
@@ -126,10 +126,10 @@ unsafe extern "C" fn isConsonant(mut z: *const ::core::ffi::c_char) -> ::core::f
     if j < 2 as ::core::ffi::c_int {
         return j;
     }
-    return (*z.offset(1 as isize) as ::core::ffi::c_int
+    (*z.offset(1 as isize) as ::core::ffi::c_int
         == 0 as ::core::ffi::c_int
         || isVowel(z.offset(1 as isize)) != 0)
-        as ::core::ffi::c_int;
+        as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn isVowel(mut z: *const ::core::ffi::c_char) -> ::core::ffi::c_int {
@@ -142,7 +142,7 @@ unsafe extern "C" fn isVowel(mut z: *const ::core::ffi::c_char) -> ::core::ffi::
     if j < 2 as ::core::ffi::c_int {
         return 1 as ::core::ffi::c_int - j;
     }
-    return isConsonant(z.offset(1 as isize));
+    isConsonant(z.offset(1 as isize))
 }
 
 unsafe extern "C" fn m_gt_0(mut z: *const ::core::ffi::c_char) -> ::core::ffi::c_int {
@@ -155,7 +155,7 @@ unsafe extern "C" fn m_gt_0(mut z: *const ::core::ffi::c_char) -> ::core::ffi::c
     while isConsonant(z) != 0 {
         z = z.offset(1);
     }
-    return (*z as ::core::ffi::c_int != 0 as ::core::ffi::c_int) as ::core::ffi::c_int;
+    (*z as ::core::ffi::c_int != 0 as ::core::ffi::c_int) as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn m_eq_1(mut z: *const ::core::ffi::c_char) -> ::core::ffi::c_int {
@@ -180,7 +180,7 @@ unsafe extern "C" fn m_eq_1(mut z: *const ::core::ffi::c_char) -> ::core::ffi::c
     while isConsonant(z) != 0 {
         z = z.offset(1);
     }
-    return (*z as ::core::ffi::c_int == 0 as ::core::ffi::c_int) as ::core::ffi::c_int;
+    (*z as ::core::ffi::c_int == 0 as ::core::ffi::c_int) as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn m_gt_1(mut z: *const ::core::ffi::c_char) -> ::core::ffi::c_int {
@@ -205,31 +205,31 @@ unsafe extern "C" fn m_gt_1(mut z: *const ::core::ffi::c_char) -> ::core::ffi::c
     while isConsonant(z) != 0 {
         z = z.offset(1);
     }
-    return (*z as ::core::ffi::c_int != 0 as ::core::ffi::c_int) as ::core::ffi::c_int;
+    (*z as ::core::ffi::c_int != 0 as ::core::ffi::c_int) as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn hasVowel(mut z: *const ::core::ffi::c_char) -> ::core::ffi::c_int {
     while isConsonant(z) != 0 {
         z = z.offset(1);
     }
-    return (*z as ::core::ffi::c_int != 0 as ::core::ffi::c_int) as ::core::ffi::c_int;
+    (*z as ::core::ffi::c_int != 0 as ::core::ffi::c_int) as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn doubleConsonant(mut z: *const ::core::ffi::c_char) -> ::core::ffi::c_int {
-    return (isConsonant(z) != 0
+    (isConsonant(z) != 0
         && *z.offset(0 as isize) as ::core::ffi::c_int
             == *z.offset(1 as isize) as ::core::ffi::c_int)
-        as ::core::ffi::c_int;
+        as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn star_oh(mut z: *const ::core::ffi::c_char) -> ::core::ffi::c_int {
-    return (isConsonant(z) != 0
+    (isConsonant(z) != 0
         && *z.offset(0 as isize) as ::core::ffi::c_int != 'w' as i32
         && *z.offset(0 as isize) as ::core::ffi::c_int != 'x' as i32
         && *z.offset(0 as isize) as ::core::ffi::c_int != 'y' as i32
         && isVowel(z.offset(1 as isize)) != 0
         && isConsonant(z.offset(2 as isize)) != 0)
-        as ::core::ffi::c_int;
+        as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn stem(
@@ -258,7 +258,7 @@ unsafe extern "C" fn stem(
         *z = *fresh0;
     }
     *pz = z;
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn copy_stemmer(
@@ -1116,12 +1116,12 @@ unsafe extern "C" fn porterNext(
             *piStartOffset = iStartOffset;
             *piEndOffset = __c_ref.iOffset;
             let fresh2 = __c_ref.iToken;
-            __c_ref.iToken = __c_ref.iToken + 1;
+            __c_ref.iToken += 1;
             *piPosition = fresh2;
             return crate::sqlite3_h::SQLITE_OK;
         }
     }
-    return crate::sqlite3_h::SQLITE_DONE;
+    crate::sqlite3_h::SQLITE_DONE
 }
 
 static mut porterTokenizerModule: crate::src::ext::fts3::fts3_tokenizer::sqlite3_tokenizer_module = unsafe {

@@ -90,7 +90,7 @@ unsafe extern "C" fn sqlite3GetFuncCollSeq(mut context: *mut crate::vdbeInt_h::s
         .aOp
         .offset(((*context).iOp - 1 as ::core::ffi::c_int) as isize) as *mut crate::vdbeInt_h::Op
         as *mut crate::src::src::vdbe::VdbeOp;
-    return (*pOp).p4.pColl;
+    (*pOp).p4.pColl
 }
 
 unsafe extern "C" fn sqlite3SkipAccumulatorLoad(mut context: *mut crate::vdbeInt_h::sqlite3_context) {
@@ -725,7 +725,7 @@ unsafe extern "C" fn contextMalloc(
             crate::src::src::vdbeapi::sqlite3_result_error_nomem(context as *mut crate::vdbeInt_h::sqlite3_context);
         }
     }
-    return z as *mut ::core::ffi::c_void;
+    z as *mut ::core::ffi::c_void
 }
 
 unsafe extern "C" fn upperFunc(
@@ -1119,11 +1119,11 @@ unsafe extern "C" fn patternCompare(
         }
         return SQLITE_NOMATCH;
     }
-    return if *zString as ::core::ffi::c_int == 0 as ::core::ffi::c_int {
+    if *zString as ::core::ffi::c_int == 0 as ::core::ffi::c_int {
         SQLITE_MATCH
     } else {
         SQLITE_NOMATCH
-    };
+    }
 }
 #[no_mangle]
 
@@ -1486,7 +1486,7 @@ unsafe extern "C" fn isNHex(
         i += 1;
     }
     *pVal = v;
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn unistrFunc(
@@ -1555,7 +1555,7 @@ unsafe extern "C" fn unistrFunc(
             {
                 i += 2 as ::core::ffi::c_int;
                 let fresh13 = j;
-                j = j + 1;
+                j += 1;
                 *zOut.offset(fresh13 as isize) = '\\' as i32 as ::core::ffi::c_char;
             } else if *(&raw const crate::src::src::global::sqlite3CtypeMap as *const ::core::ffi::c_uchar).offset(
                 *zIn.offset((i + 1 as ::core::ffi::c_int) as isize) as ::core::ffi::c_uchar
@@ -1877,7 +1877,7 @@ unsafe extern "C" fn strContainsChar(
             return 1 as ::core::ffi::c_int;
         }
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn unhexFunc(
@@ -2073,7 +2073,7 @@ unsafe extern "C" fn replaceFunc(
             ) != 0
         {
             let fresh12 = j;
-            j = j + 1;
+            j += 1;
             *zOut.offset(fresh12 as isize) = *zStr.offset(i as isize);
         } else {
             if nRep > nPattern {
@@ -2822,7 +2822,7 @@ unsafe extern "C" fn groupConcatStep(
                         let mut nA: ::core::ffi::c_int = __pGCC_ref.nAccum - 1 as ::core::ffi::c_int;
                         while i < nA {
                             let fresh8 = i;
-                            i = i + 1;
+                            i += 1;
                             *pnsl.offset(fresh8 as isize) = __pGCC_ref.nFirstSepLength;
                         }
                     }
@@ -3088,7 +3088,7 @@ pub unsafe extern "C" fn sqlite3IsLikeFunction(
     }
     *pIsNocase =
         ((*pDef).funcFlags & crate::sqliteInt_h::SQLITE_FUNC_CASE as crate::src::ext::rtree::rtree::u32_0 == 0 as crate::src::ext::rtree::rtree::u32_0) as ::core::ffi::c_int;
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn ceilingFunc(
@@ -3128,11 +3128,11 @@ unsafe extern "C" fn ceilingFunc(
 }
 
 unsafe extern "C" fn xCeil(mut x: ::core::ffi::c_double) -> ::core::ffi::c_double {
-    return crate::stdlib::ceil(x);
+    crate::stdlib::ceil(x)
 }
 
 unsafe extern "C" fn xFloor(mut x: ::core::ffi::c_double) -> ::core::ffi::c_double {
-    return crate::stdlib::floor(x);
+    crate::stdlib::floor(x)
 }
 
 unsafe extern "C" fn logFunc(
@@ -3188,11 +3188,11 @@ unsafe extern "C" fn logFunc(
 }
 
 unsafe extern "C" fn degToRad(mut x: ::core::ffi::c_double) -> ::core::ffi::c_double {
-    return x * (crate::stdlib::M_PI / 180.0f64);
+    x * (crate::stdlib::M_PI / 180.0f64)
 }
 
 unsafe extern "C" fn radToDeg(mut x: ::core::ffi::c_double) -> ::core::ffi::c_double {
-    return x * (180.0f64 / crate::stdlib::M_PI);
+    x * (180.0f64 / crate::stdlib::M_PI)
 }
 
 unsafe extern "C" fn math1Func(
@@ -3301,8 +3301,8 @@ unsafe extern "C" fn percentIsInfinity(mut r: ::core::ffi::c_double) -> ::core::
         &raw mut r as *const ::core::ffi::c_void,
         ::core::mem::size_of::<crate::sqlite3_h::sqlite3_uint64>() as crate::__stddef_size_t_h::size_t,
     );
-    return (u >> 52 as ::core::ffi::c_int & 0x7ff as crate::sqlite3_h::sqlite3_uint64 == 0x7ff as crate::sqlite3_h::sqlite3_uint64)
-        as ::core::ffi::c_int;
+    (u >> 52 as ::core::ffi::c_int & 0x7ff as crate::sqlite3_h::sqlite3_uint64 == 0x7ff as crate::sqlite3_h::sqlite3_uint64)
+        as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn percentSameValue(
@@ -3310,7 +3310,7 @@ unsafe extern "C" fn percentSameValue(
     mut b: ::core::ffi::c_double,
 ) -> ::core::ffi::c_int {
     a -= b;
-    return (a >= -0.001f64 && a <= 0.001f64) as ::core::ffi::c_int;
+    (a >= -0.001f64 && a <= 0.001f64) as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn percentBinarySearch(
@@ -3334,7 +3334,7 @@ unsafe extern "C" fn percentBinarySearch(
     if bExact != 0 {
         return -(1 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::i64_0;
     }
-    return iFirst;
+    iFirst
 }
 
 unsafe extern "C" fn percentError(

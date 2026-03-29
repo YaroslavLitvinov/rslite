@@ -259,23 +259,23 @@ unsafe extern "C" fn sessionVarintPut(
     mut aBuf: *mut crate::src::ext::rtree::rtree::u8_0,
     mut iVal: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    return (if (iVal as crate::src::ext::rtree::rtree::u32_0) < 0x80 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u32_0 {
+    (if (iVal as crate::src::ext::rtree::rtree::u32_0) < 0x80 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u32_0 {
         *aBuf = iVal as ::core::ffi::c_uchar as crate::src::ext::rtree::rtree::u8_0;
         1 as ::core::ffi::c_int
     } else {
         crate::src::src::util::sqlite3PutVarint(aBuf as *mut ::core::ffi::c_uchar, iVal as crate::src::ext::rtree::rtree::u64_0)
-    }) as crate::src::ext::rtree::rtree::u8_0 as ::core::ffi::c_int;
+    }) as crate::src::ext::rtree::rtree::u8_0 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn sessionVarintLen(mut iVal: ::core::ffi::c_int) -> ::core::ffi::c_int {
-    return crate::src::src::util::sqlite3VarintLen(iVal as crate::src::ext::rtree::rtree::u64_0);
+    crate::src::src::util::sqlite3VarintLen(iVal as crate::src::ext::rtree::rtree::u64_0)
 }
 
 unsafe extern "C" fn sessionVarintGet(
     mut aBuf: *const crate::src::ext::rtree::rtree::u8_0,
     mut piVal: *mut ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    return (if (*aBuf as ::core::ffi::c_int)
+    (if (*aBuf as ::core::ffi::c_int)
         < 0x80 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0 as ::core::ffi::c_int
     {
         *piVal = *aBuf as crate::src::ext::rtree::rtree::u32_0 as ::core::ffi::c_int;
@@ -283,7 +283,7 @@ unsafe extern "C" fn sessionVarintGet(
     } else {
         crate::src::src::util::sqlite3GetVarint32(aBuf as *const ::core::ffi::c_uchar, piVal as *mut crate::src::ext::rtree::rtree::u32_0)
             as ::core::ffi::c_int
-    }) as crate::src::ext::rtree::rtree::u8_0 as ::core::ffi::c_int;
+    }) as crate::src::ext::rtree::rtree::u8_0 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn sessionGetI64(mut aRec: *mut crate::src::ext::rtree::rtree::u8_0) -> crate::sqlite3_h::sqlite3_int64 {
@@ -310,7 +310,7 @@ unsafe extern "C" fn sessionGetI64(mut aRec: *mut crate::src::ext::rtree::rtree:
             .offset(4 as isize)
             .offset(3 as isize) as crate::src::ext::rtree::rtree::u32_0;
     x = (x << 32 as ::core::ffi::c_int).wrapping_add(y as crate::src::ext::rtree::rtree::u64_0);
-    return x as crate::sqlite3_h::sqlite3_int64;
+    x as crate::sqlite3_h::sqlite3_int64
 }
 
 unsafe extern "C" fn sessionPutI64(mut aBuf: *mut crate::src::ext::rtree::rtree::u8_0, mut i: crate::sqlite3_h::sqlite3_int64) {
@@ -409,7 +409,7 @@ unsafe extern "C" fn sessionSerializeValue(
     if !pnWrite.is_null() {
         *pnWrite += nByte as crate::sqlite3_h::sqlite3_int64;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn sessionMalloc64(
@@ -421,7 +421,7 @@ unsafe extern "C" fn sessionMalloc64(
         (*pSession).nMalloc = ((*pSession).nMalloc as crate::sqlite3_h::sqlite3_uint64)
             .wrapping_add(crate::src::src::malloc::sqlite3_msize(pRet)) as crate::src::ext::rtree::rtree::i64_0 as crate::src::ext::rtree::rtree::i64_0;
     }
-    return pRet;
+    pRet
 }
 
 unsafe extern "C" fn sessionFree(
@@ -440,9 +440,9 @@ unsafe extern "C" fn sessionHashAppendI64(
     mut i: crate::src::ext::rtree::rtree::i64_0,
 ) -> ::core::ffi::c_uint {
     h = h << 3 as ::core::ffi::c_int ^ h ^ (i & 0xffffffff as crate::src::ext::rtree::rtree::i64_0) as ::core::ffi::c_uint;
-    return h << 3 as ::core::ffi::c_int
+    h << 3 as ::core::ffi::c_int
         ^ h
-        ^ (i >> 32 as ::core::ffi::c_int & 0xffffffff as crate::src::ext::rtree::rtree::i64_0) as ::core::ffi::c_uint;
+        ^ (i >> 32 as ::core::ffi::c_int & 0xffffffff as crate::src::ext::rtree::rtree::i64_0) as ::core::ffi::c_uint
 }
 
 unsafe extern "C" fn sessionHashAppendBlob(
@@ -456,14 +456,14 @@ unsafe extern "C" fn sessionHashAppendBlob(
         h = h << 3 as ::core::ffi::c_int ^ h ^ *z.offset(i as isize) as ::core::ffi::c_uint;
         i += 1;
     }
-    return h;
+    h
 }
 
 unsafe extern "C" fn sessionHashAppendType(
     mut h: ::core::ffi::c_uint,
     mut eType: ::core::ffi::c_int,
 ) -> ::core::ffi::c_uint {
-    return h << 3 as ::core::ffi::c_int ^ h ^ eType as ::core::ffi::c_uint;
+    h << 3 as ::core::ffi::c_int ^ h ^ eType as ::core::ffi::c_uint
 }
 
 unsafe extern "C" fn sessionPreupdateHash(
@@ -538,7 +538,7 @@ unsafe extern "C" fn sessionPreupdateHash(
         }
     }
     *piHash = h.wrapping_rem((*pTab).nChange as ::core::ffi::c_uint) as ::core::ffi::c_int;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn sessionSerialLen(mut a: *const crate::src::ext::rtree::rtree::u8_0) -> ::core::ffi::c_int {
@@ -554,11 +554,11 @@ unsafe extern "C" fn sessionSerialLen(mut a: *const crate::src::ext::rtree::rtre
     if e == crate::sqlite3_h::SQLITE_INTEGER || e == crate::sqlite3_h::SQLITE_FLOAT_1 {
         return 9 as ::core::ffi::c_int;
     }
-    return sessionVarintGet(
+    sessionVarintGet(
         a.offset(1 as isize) as *const crate::src::ext::rtree::rtree::u8_0,
         &raw mut n,
     ) + 1 as ::core::ffi::c_int
-        + n;
+        + n
 }
 
 unsafe extern "C" fn sessionChangeHash(
@@ -593,7 +593,7 @@ unsafe extern "C" fn sessionChangeHash(
         }
         i += 1;
     }
-    return h.wrapping_rem(nBucket as ::core::ffi::c_uint);
+    h.wrapping_rem(nBucket as ::core::ffi::c_uint)
 }
 
 unsafe extern "C" fn sessionChangeEqual(
@@ -632,7 +632,7 @@ unsafe extern "C" fn sessionChangeEqual(
         }
         iCol += 1;
     }
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn sessionMergeRecord(
@@ -694,7 +694,7 @@ unsafe extern "C" fn sessionMergeValue(
         pRet = a1;
     }
     *paOne = a1.offset(n1 as isize) as *mut crate::src::ext::rtree::rtree::u8_0;
-    return pRet;
+    pRet
 }
 
 unsafe extern "C" fn sessionMergeUpdate(
@@ -787,7 +787,7 @@ unsafe extern "C" fn sessionMergeUpdate(
         i += 1;
     }
     *paOut = aOut;
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn sessionPreupdateEqual(
@@ -877,7 +877,7 @@ unsafe extern "C" fn sessionPreupdateEqual(
         }
         iCol += 1;
     }
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn sessionGrowHash(
@@ -938,7 +938,7 @@ unsafe extern "C" fn sessionGrowHash(
         __pTab_ref.nChange = nNew as ::core::ffi::c_int;
         __pTab_ref.apChange = apNew;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn sessionTableInfo(
@@ -1172,7 +1172,7 @@ unsafe extern "C" fn sessionTableInfo(
         *pbRowid = bRowid;
     }
     crate::src::src::vdbeapi::sqlite3_finalize(pStmt);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionInitTable(
@@ -1240,7 +1240,7 @@ unsafe extern "C" fn sessionInitTable(
         (*pSession).rc = rc;
         return (rc != 0 || (*pTab).abPK.is_null()) as ::core::ffi::c_int;
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionReinitTable(
@@ -1313,7 +1313,7 @@ unsafe extern "C" fn sessionReinitTable(
         }
     }
     crate::src::src::malloc::sqlite3_free(azCol as *mut ::core::ffi::c_char as *mut ::core::ffi::c_void);
-    return __pSession_ref.rc;
+    __pSession_ref.rc
 }
 
 unsafe extern "C" fn sessionUpdateOneChange(
@@ -1365,7 +1365,7 @@ unsafe extern "C" fn sessionUpdateOneChange(
                 (*pOld).nRecord as crate::__stddef_size_t_h::size_t,
             );
             let fresh4 = __pNew_ref.nRecord;
-            __pNew_ref.nRecord = __pNew_ref.nRecord + 1;
+            __pNew_ref.nRecord += 1;
             *__pNew_ref.aRecord.offset(fresh4 as isize) = eType as crate::src::ext::rtree::rtree::u8_0;
             match  eType {
     crate::sqlite3_h::SQLITE_INTEGER =>  {
@@ -1449,7 +1449,7 @@ unsafe extern "C" fn sessionBufferGrow(
             128 as ::core::ffi::c_int
         }) as crate::src::ext::rtree::rtree::i64_0;
         loop {
-            nNew = nNew * 2 as crate::src::ext::rtree::rtree::i64_0;
+            nNew *= 2 as crate::src::ext::rtree::rtree::i64_0;
             if !(nNew < nReq) {
                 break;
             }
@@ -1472,7 +1472,7 @@ unsafe extern "C" fn sessionBufferGrow(
             (*p).nAlloc = nNew as ::core::ffi::c_int;
         }
     }
-    return (*pRc != crate::sqlite3_h::SQLITE_OK) as ::core::ffi::c_int;
+    (*pRc != crate::sqlite3_h::SQLITE_OK) as ::core::ffi::c_int
 }
 
 pub const SESSION_MAX_BUFFER_SZ: ::core::ffi::c_int =
@@ -1566,7 +1566,7 @@ unsafe extern "C" fn sessionPrepareDfltStmt(
         );
     }
     crate::src::src::malloc::sqlite3_free(sql.aBuf as *mut ::core::ffi::c_void);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionUpdateChanges(
@@ -1597,7 +1597,7 @@ unsafe extern "C" fn sessionUpdateChanges(
     if __pSession_ref.rc == crate::sqlite3_h::SQLITE_OK {
         __pSession_ref.rc = rc;
     }
-    return __pSession_ref.rc;
+    __pSession_ref.rc
 }
 
 unsafe extern "C" fn sessionStat1Old(
@@ -1614,7 +1614,7 @@ unsafe extern "C" fn sessionStat1Old(
         pVal = (*(*p).pSession).pZeroBlob;
     }
     *ppVal = pVal;
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionStat1New(
@@ -1631,17 +1631,17 @@ unsafe extern "C" fn sessionStat1New(
         pVal = (*(*p).pSession).pZeroBlob;
     }
     *ppVal = pVal;
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionStat1Count(mut pCtx: *mut ::core::ffi::c_void) -> ::core::ffi::c_int {
     let mut p: *mut SessionStat1Ctx = pCtx as *mut SessionStat1Ctx;
-    return (*p).hook.xCount.expect("non-null function pointer")((*p).hook.pCtx);
+    (*p).hook.xCount.expect("non-null function pointer")((*p).hook.pCtx)
 }
 
 unsafe extern "C" fn sessionStat1Depth(mut pCtx: *mut ::core::ffi::c_void) -> ::core::ffi::c_int {
     let mut p: *mut SessionStat1Ctx = pCtx as *mut SessionStat1Ctx;
-    return (*p).hook.xDepth.expect("non-null function pointer")((*p).hook.pCtx);
+    (*p).hook.xDepth.expect("non-null function pointer")((*p).hook.pCtx)
 }
 
 unsafe extern "C" fn sessionUpdateMaxSize(
@@ -1763,7 +1763,7 @@ unsafe extern "C" fn sessionUpdateMaxSize(
         (*pC).nMaxSize = nNew as ::core::ffi::c_int;
         (*pSession).nMaxChangesetSize += nIncr as crate::src::ext::rtree::rtree::i64_0;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn sessionPreupdateOneChange(
@@ -2093,7 +2093,7 @@ unsafe extern "C" fn sessionFindTable(
         }
     }
     *ppTab = pRet;
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn xPreUpdate(
@@ -2137,7 +2137,7 @@ unsafe extern "C" fn sessionPreupdateOld(
     mut iVal: ::core::ffi::c_int,
     mut ppVal: *mut *mut crate::vdbeInt_h::sqlite3_value,
 ) -> ::core::ffi::c_int {
-    return crate::src::src::vdbeapi::sqlite3_preupdate_old(pCtx as *mut crate::sqliteInt_h::sqlite3 as *mut crate::sqliteInt_h::sqlite3, iVal,  ppVal as *mut *mut crate::vdbeInt_h::sqlite3_value);
+    crate::src::src::vdbeapi::sqlite3_preupdate_old(pCtx as *mut crate::sqliteInt_h::sqlite3 as *mut crate::sqliteInt_h::sqlite3, iVal,  ppVal as *mut *mut crate::vdbeInt_h::sqlite3_value)
 }
 
 unsafe extern "C" fn sessionPreupdateNew(
@@ -2145,19 +2145,19 @@ unsafe extern "C" fn sessionPreupdateNew(
     mut iVal: ::core::ffi::c_int,
     mut ppVal: *mut *mut crate::vdbeInt_h::sqlite3_value,
 ) -> ::core::ffi::c_int {
-    return crate::src::src::vdbeapi::sqlite3_preupdate_new(pCtx as *mut crate::sqliteInt_h::sqlite3 as *mut crate::sqliteInt_h::sqlite3, iVal,  ppVal as *mut *mut crate::vdbeInt_h::sqlite3_value);
+    crate::src::src::vdbeapi::sqlite3_preupdate_new(pCtx as *mut crate::sqliteInt_h::sqlite3 as *mut crate::sqliteInt_h::sqlite3, iVal,  ppVal as *mut *mut crate::vdbeInt_h::sqlite3_value)
 }
 
 unsafe extern "C" fn sessionPreupdateCount(
     mut pCtx: *mut ::core::ffi::c_void,
 ) -> ::core::ffi::c_int {
-    return crate::src::src::vdbeapi::sqlite3_preupdate_count(pCtx as *mut crate::sqliteInt_h::sqlite3 as *mut crate::sqliteInt_h::sqlite3);
+    crate::src::src::vdbeapi::sqlite3_preupdate_count(pCtx as *mut crate::sqliteInt_h::sqlite3 as *mut crate::sqliteInt_h::sqlite3)
 }
 
 unsafe extern "C" fn sessionPreupdateDepth(
     mut pCtx: *mut ::core::ffi::c_void,
 ) -> ::core::ffi::c_int {
-    return crate::src::src::vdbeapi::sqlite3_preupdate_depth(pCtx as *mut crate::sqliteInt_h::sqlite3 as *mut crate::sqliteInt_h::sqlite3);
+    crate::src::src::vdbeapi::sqlite3_preupdate_depth(pCtx as *mut crate::sqliteInt_h::sqlite3 as *mut crate::sqliteInt_h::sqlite3)
 }
 
 unsafe extern "C" fn sessionPreupdateHooks(mut pSession: *mut sqlite3_session) {
@@ -2214,7 +2214,7 @@ unsafe extern "C" fn sessionDiffOld(
     let __p_ref = unsafe { &*p };
     *ppVal =  crate::src::src::vdbeapi::sqlite3_column_value(__p_ref.pStmt, iVal + __p_ref.nOldOff + __p_ref.bRowid) as
     *mut crate::vdbeInt_h::sqlite3_value;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn sessionDiffNew(
@@ -2225,20 +2225,20 @@ unsafe extern "C" fn sessionDiffNew(
     let mut p: *mut SessionDiffCtx = pCtx as *mut SessionDiffCtx;
     *ppVal =  crate::src::src::vdbeapi::sqlite3_column_value((*p).pStmt, iVal + (*p).bRowid)
     as *mut crate::vdbeInt_h::sqlite3_value;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn sessionDiffCount(mut pCtx: *mut ::core::ffi::c_void) -> ::core::ffi::c_int {
     let mut p: *mut SessionDiffCtx = pCtx as *mut SessionDiffCtx;
-    return (if (*p).nOldOff != 0 {
+    (if (*p).nOldOff != 0 {
         (*p).nOldOff
     } else {
         crate::src::src::vdbeapi::sqlite3_column_count((*p).pStmt)
-    }) - (*p).bRowid;
+    }) - (*p).bRowid
 }
 
 unsafe extern "C" fn sessionDiffDepth(mut _pCtx: *mut ::core::ffi::c_void) -> ::core::ffi::c_int {
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn sessionDiffHooks(
@@ -2320,7 +2320,7 @@ unsafe extern "C" fn sessionExprComparePK(
         }
         i += 1;
     }
-    return zRet;
+    zRet
 }
 
 unsafe extern "C" fn sessionExprCompareOther(
@@ -2361,7 +2361,7 @@ unsafe extern "C" fn sessionExprCompareOther(
     if bHave == 0 as ::core::ffi::c_int {
         zRet = crate::src::src::printf::sqlite3_mprintf(b"0\0" as *const u8 as *const ::core::ffi::c_char);
     }
-    return zRet;
+    zRet
 }
 
 unsafe extern "C" fn sessionSelectFindNew(
@@ -2386,7 +2386,7 @@ unsafe extern "C" fn sessionSelectFindNew(
         zTbl,
         zExpr,
     );
-    return zRet;
+    zRet
 }
 
 unsafe extern "C" fn sessionDiffFindNew(
@@ -2430,7 +2430,7 @@ unsafe extern "C" fn sessionDiffFindNew(
         }
         crate::src::src::malloc::sqlite3_free(zStmt as *mut ::core::ffi::c_void);
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionAllCols(
@@ -2458,7 +2458,7 @@ unsafe extern "C" fn sessionAllCols(
         }
         ii += 1;
     }
-    return zRet;
+    zRet
 }
 
 unsafe extern "C" fn sessionDiffFindModified(
@@ -2526,7 +2526,7 @@ unsafe extern "C" fn sessionDiffFindModified(
         crate::src::src::malloc::sqlite3_free(z1 as *mut ::core::ffi::c_void);
         crate::src::src::malloc::sqlite3_free(z2 as *mut ::core::ffi::c_void);
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -2701,7 +2701,7 @@ pub unsafe extern "C" fn sqlite3session_diff(
     }
     sessionPreupdateHooks(pSession);
     crate::src::src::mutex::sqlite3_mutex_leave(crate::src::src::main::sqlite3_db_mutex(__pSession_ref.db as *mut crate::sqliteInt_h::sqlite3));
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -2761,7 +2761,7 @@ pub unsafe extern "C" fn sqlite3session_create(
     (*pNew).pNext = pOld;
     crate::src::src::mutex::sqlite3_mutex_leave(crate::src::src::main::sqlite3_db_mutex(db as *mut crate::sqliteInt_h::sqlite3));
     *ppSession = pNew;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn sessionDeleteTable(
@@ -2917,7 +2917,7 @@ pub unsafe extern "C" fn sqlite3session_attach(
         }
     }
     crate::src::src::mutex::sqlite3_mutex_leave(crate::src::src::main::sqlite3_db_mutex((*pSession).db as *mut crate::sqliteInt_h::sqlite3));
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionAppendValue(
@@ -2952,7 +2952,7 @@ unsafe extern "C" fn sessionAppendByte(
     if 0 as ::core::ffi::c_int == sessionBufferGrow(p, 1 as crate::src::ext::rtree::rtree::i64_0, pRc) {
         let __p_ref = unsafe { &mut *p };
         let fresh10 = __p_ref.nBuf;
-        __p_ref.nBuf = __p_ref.nBuf + 1;
+        __p_ref.nBuf += 1;
         *__p_ref.aBuf.offset(fresh10 as isize) = v;
     }
 }
@@ -3199,7 +3199,7 @@ unsafe extern "C" fn sessionAppendUpdate(
         sessionAppendBlob(pBuf, buf2.aBuf, buf2.nBuf, &raw mut rc);
     }
     crate::src::src::malloc::sqlite3_free(buf2.aBuf as *mut ::core::ffi::c_void);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionAppendDelete(
@@ -3246,7 +3246,7 @@ unsafe extern "C" fn sessionAppendDelete(
             i += 1;
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionPrepare(
@@ -3269,7 +3269,7 @@ unsafe extern "C" fn sessionPrepare(
             crate::src::src::main::sqlite3_errmsg(db as *mut crate::sqliteInt_h::sqlite3),
         );
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionSelectStmt(
@@ -3403,7 +3403,7 @@ unsafe extern "C" fn sessionSelectStmt(
     crate::src::src::malloc::sqlite3_free(pkfield.aBuf as *mut ::core::ffi::c_void);
     crate::src::src::malloc::sqlite3_free(pkvar.aBuf as *mut ::core::ffi::c_void);
     crate::src::src::malloc::sqlite3_free(cols.aBuf as *mut ::core::ffi::c_void);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionSelectBind(
@@ -3484,7 +3484,7 @@ unsafe extern "C" fn sessionSelectBind(
 }
         i += 1;
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionAppendTableHdr(
@@ -3671,7 +3671,7 @@ unsafe extern "C" fn sessionGenerateChangeset(
         ::core::ptr::null_mut::<*mut ::core::ffi::c_char>(),
     );
     crate::src::src::mutex::sqlite3_mutex_leave(crate::src::src::main::sqlite3_db_mutex(db as *mut crate::sqliteInt_h::sqlite3));
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -3692,7 +3692,7 @@ pub unsafe extern "C" fn sqlite3session_changeset(
         pnChangeset,
         ppChangeset,
     );
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -3710,14 +3710,14 @@ pub unsafe extern "C" fn sqlite3session_changeset_strm(
     if xOutput.is_none() {
         return crate::sqlite3_h::SQLITE_MISUSE;
     }
-    return sessionGenerateChangeset(
+    sessionGenerateChangeset(
         pSession,
         0 as ::core::ffi::c_int,
         xOutput,
         pOut,
         ::core::ptr::null_mut::<::core::ffi::c_int>(),
         ::core::ptr::null_mut::<*mut ::core::ffi::c_void>(),
-    );
+    )
 }
 #[no_mangle]
 
@@ -3735,14 +3735,14 @@ pub unsafe extern "C" fn sqlite3session_patchset_strm(
     if xOutput.is_none() {
         return crate::sqlite3_h::SQLITE_MISUSE;
     }
-    return sessionGenerateChangeset(
+    sessionGenerateChangeset(
         pSession,
         1 as ::core::ffi::c_int,
         xOutput,
         pOut,
         ::core::ptr::null_mut::<::core::ffi::c_int>(),
         ::core::ptr::null_mut::<*mut ::core::ffi::c_void>(),
-    );
+    )
 }
 #[no_mangle]
 
@@ -3754,14 +3754,14 @@ pub unsafe extern "C" fn sqlite3session_patchset(
     if pnPatchset.is_null() || ppPatchset.is_null() {
         return crate::sqlite3_h::SQLITE_MISUSE;
     }
-    return sessionGenerateChangeset(
+    sessionGenerateChangeset(
         pSession,
         1 as ::core::ffi::c_int,
         None,
         ::core::ptr::null_mut::<::core::ffi::c_void>(),
         pnPatchset,
         ppPatchset,
-    );
+    )
 }
 #[no_mangle]
 
@@ -3777,7 +3777,7 @@ pub unsafe extern "C" fn sqlite3session_enable(
     }
     ret = __pSession_ref.bEnable;
     crate::src::src::mutex::sqlite3_mutex_leave(crate::src::src::main::sqlite3_db_mutex(__pSession_ref.db as *mut crate::sqliteInt_h::sqlite3));
-    return ret;
+    ret
 }
 #[no_mangle]
 
@@ -3793,7 +3793,7 @@ pub unsafe extern "C" fn sqlite3session_indirect(
     }
     ret = __pSession_ref.bIndirect;
     crate::src::src::mutex::sqlite3_mutex_leave(crate::src::src::main::sqlite3_db_mutex(__pSession_ref.db as *mut crate::sqliteInt_h::sqlite3));
-    return ret;
+    ret
 }
 #[no_mangle]
 
@@ -3810,14 +3810,14 @@ pub unsafe extern "C" fn sqlite3session_isempty(
         pTab = (*pTab).pNext;
     }
     crate::src::src::mutex::sqlite3_mutex_leave(crate::src::src::main::sqlite3_db_mutex(__pSession_ref.db as *mut crate::sqliteInt_h::sqlite3));
-    return (ret == 0 as ::core::ffi::c_int) as ::core::ffi::c_int;
+    (ret == 0 as ::core::ffi::c_int) as ::core::ffi::c_int
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3session_memory_used(
     mut pSession: *mut sqlite3_session,
 ) -> crate::sqlite3_h::sqlite3_int64 {
-    return (*pSession).nMalloc as crate::sqlite3_h::sqlite3_int64;
+    (*pSession).nMalloc as crate::sqlite3_h::sqlite3_int64
 }
 #[no_mangle]
 
@@ -3858,14 +3858,14 @@ pub unsafe extern "C" fn sqlite3session_object_config(
             rc = crate::sqlite3_h::SQLITE_MISUSE;
         }
 }
-    return rc;
+    rc
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3session_changeset_size(
     mut pSession: *mut sqlite3_session,
 ) -> crate::sqlite3_h::sqlite3_int64 {
-    return (*pSession).nMaxChangesetSize as crate::sqlite3_h::sqlite3_int64;
+    (*pSession).nMaxChangesetSize as crate::sqlite3_h::sqlite3_int64
 }
 
 unsafe extern "C" fn sessionChangesetStart(
@@ -3908,7 +3908,7 @@ unsafe extern "C" fn sessionChangesetStart(
     (*pRet).bInvert = bInvert;
     (*pRet).bSkipEmpty = bSkipEmpty;
     *pp = pRet;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -3917,7 +3917,7 @@ pub unsafe extern "C" fn sqlite3changeset_start(
     mut nChangeset: ::core::ffi::c_int,
     mut pChangeset: *mut ::core::ffi::c_void,
 ) -> ::core::ffi::c_int {
-    return sessionChangesetStart(
+    sessionChangesetStart(
         pp,
         None,
         ::core::ptr::null_mut::<::core::ffi::c_void>(),
@@ -3925,7 +3925,7 @@ pub unsafe extern "C" fn sqlite3changeset_start(
         pChangeset,
         0 as ::core::ffi::c_int,
         0 as ::core::ffi::c_int,
-    );
+    )
 }
 #[no_mangle]
 
@@ -3937,7 +3937,7 @@ pub unsafe extern "C" fn sqlite3changeset_start_v2(
 ) -> ::core::ffi::c_int {
     let mut bInvert: ::core::ffi::c_int =
         (flags & crate::src::ext::session::sqlite3session::SQLITE_CHANGESETSTART_INVERT != 0) as ::core::ffi::c_int;
-    return sessionChangesetStart(
+    sessionChangesetStart(
         pp,
         None,
         ::core::ptr::null_mut::<::core::ffi::c_void>(),
@@ -3945,7 +3945,7 @@ pub unsafe extern "C" fn sqlite3changeset_start_v2(
         pChangeset,
         bInvert,
         0 as ::core::ffi::c_int,
-    );
+    )
 }
 #[no_mangle]
 
@@ -3960,7 +3960,7 @@ pub unsafe extern "C" fn sqlite3changeset_start_strm(
     >,
     mut pIn: *mut ::core::ffi::c_void,
 ) -> ::core::ffi::c_int {
-    return sessionChangesetStart(
+    sessionChangesetStart(
         pp,
         xInput,
         pIn,
@@ -3968,7 +3968,7 @@ pub unsafe extern "C" fn sqlite3changeset_start_strm(
         ::core::ptr::null_mut::<::core::ffi::c_void>(),
         0 as ::core::ffi::c_int,
         0 as ::core::ffi::c_int,
-    );
+    )
 }
 #[no_mangle]
 
@@ -3986,7 +3986,7 @@ pub unsafe extern "C" fn sqlite3changeset_start_v2_strm(
 ) -> ::core::ffi::c_int {
     let mut bInvert: ::core::ffi::c_int =
         (flags & crate::src::ext::session::sqlite3session::SQLITE_CHANGESETSTART_INVERT != 0) as ::core::ffi::c_int;
-    return sessionChangesetStart(
+    sessionChangesetStart(
         pp,
         xInput,
         pIn,
@@ -3994,7 +3994,7 @@ pub unsafe extern "C" fn sqlite3changeset_start_v2_strm(
         ::core::ptr::null_mut::<::core::ffi::c_void>(),
         bInvert,
         0 as ::core::ffi::c_int,
-    );
+    )
 }
 
 unsafe extern "C" fn sessionDiscardData(mut pIn: *mut SessionInput) {
@@ -4045,7 +4045,7 @@ unsafe extern "C" fn sessionInputBuffer(
             __pIn_ref.nData = __pIn_ref.buf.nBuf;
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionSkipRecord(mut ppRec: *mut *mut crate::src::ext::rtree::rtree::u8_0, mut nCol: ::core::ffi::c_int) {
@@ -4093,7 +4093,7 @@ unsafe extern "C" fn sessionValueSetStr(
         enc,
         Some(crate::src::src::malloc::sqlite3_free as unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()),
     );
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn sessionReadRecord(
@@ -4121,7 +4121,7 @@ unsafe extern "C" fn sessionReadRecord(
                 } else {
                     let __pIn_ref = unsafe { &mut *pIn };
                     let fresh23 = __pIn_ref.iNext;
-                    __pIn_ref.iNext = __pIn_ref.iNext + 1;
+                    __pIn_ref.iNext += 1;
                     eType = *__pIn_ref.aData.offset(fresh23 as isize) as ::core::ffi::c_int;
                     if eType != 0 {
                         if !pbEmpty.is_null() {
@@ -4190,7 +4190,7 @@ unsafe extern "C" fn sessionReadRecord(
         }
         i += 1;
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionChangesetBufferTblhdr(
@@ -4226,7 +4226,7 @@ unsafe extern "C" fn sessionChangesetBufferTblhdr(
         rc = sessionInputBuffer(pIn, nRead + 100 as ::core::ffi::c_int);
     }
     *pnByte = nRead + 1 as ::core::ffi::c_int;
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionChangesetBufferRecord(
@@ -4243,7 +4243,7 @@ unsafe extern "C" fn sessionChangesetBufferRecord(
         rc = sessionInputBuffer(pIn, nByte + 10 as ::core::ffi::c_int);
         if rc == crate::sqlite3_h::SQLITE_OK {
             let fresh25 = nByte;
-            nByte = nByte + 1;
+            nByte += 1;
             eType = *(*pIn).aData.offset(((*pIn).iNext + fresh25) as isize) as ::core::ffi::c_int;
             if eType == crate::sqlite3_h::SQLITE_TEXT || eType == crate::sqlite3_h::SQLITE_BLOB {
                 let mut n: ::core::ffi::c_int = 0;
@@ -4260,7 +4260,7 @@ unsafe extern "C" fn sessionChangesetBufferRecord(
         i += 1;
     }
     *pnByte = nByte;
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionChangesetReadTblhdr(
@@ -4323,7 +4323,7 @@ unsafe extern "C" fn sessionChangesetReadTblhdr(
         };
     }
     __p_ref.rc = rc;
-    return __p_ref.rc;
+    __p_ref.rc
 }
 
 unsafe extern "C" fn sessionChangesetNextOne(
@@ -4363,7 +4363,7 @@ unsafe extern "C" fn sessionChangesetNextOne(
         return crate::sqlite3_h::SQLITE_DONE;
     }
     let fresh17 = __p_ref.in_0.iNext;
-    __p_ref.in_0.iNext = __p_ref.in_0.iNext + 1;
+    __p_ref.in_0.iNext += 1;
     op = *__p_ref.in_0.aData.offset(fresh17 as isize);
     while op as ::core::ffi::c_int == 'T' as i32 || op as ::core::ffi::c_int == 'P' as i32 {
         if !pbNew.is_null() {
@@ -4382,7 +4382,7 @@ unsafe extern "C" fn sessionChangesetNextOne(
             return crate::sqlite3_h::SQLITE_DONE;
         }
         let fresh18 = __p_ref.in_0.iNext;
-        __p_ref.in_0.iNext = __p_ref.in_0.iNext + 1;
+        __p_ref.in_0.iNext += 1;
         op = *__p_ref.in_0.aData.offset(fresh18 as isize);
     }
     if __p_ref.zTab.is_null() || __p_ref.bPatchset != 0 && __p_ref.bInvert != 0 {
@@ -4391,7 +4391,7 @@ unsafe extern "C" fn sessionChangesetNextOne(
     }
     __p_ref.op = op as ::core::ffi::c_int;
     let fresh19 = __p_ref.in_0.iNext;
-    __p_ref.in_0.iNext = __p_ref.in_0.iNext + 1;
+    __p_ref.in_0.iNext += 1;
     __p_ref.bIndirect = *__p_ref.in_0.aData.offset(fresh19 as isize) as ::core::ffi::c_int;
     if __p_ref.op != crate::sqlite3_h::SQLITE_UPDATE && __p_ref.op != crate::sqlite3_h::SQLITE_DELETE && __p_ref.op != crate::sqlite3_h::SQLITE_INSERT {
         __p_ref.rc = crate::src::src::main::sqlite3CorruptError(3803 as ::core::ffi::c_int);
@@ -4497,7 +4497,7 @@ unsafe extern "C" fn sessionChangesetNextOne(
             }
         }
     }
-    return crate::sqlite3_h::SQLITE_ROW;
+    crate::sqlite3_h::SQLITE_ROW
 }
 
 unsafe extern "C" fn sessionChangesetNext(
@@ -4515,19 +4515,19 @@ unsafe extern "C" fn sessionChangesetNext(
             break;
         }
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3changeset_next(
     mut p: *mut sqlite3_changeset_iter,
 ) -> ::core::ffi::c_int {
-    return sessionChangesetNext(
+    sessionChangesetNext(
         p,
         ::core::ptr::null_mut::<*mut crate::src::ext::rtree::rtree::u8_0>(),
         ::core::ptr::null_mut::<::core::ffi::c_int>(),
         ::core::ptr::null_mut::<::core::ffi::c_int>(),
-    );
+    )
 }
 #[no_mangle]
 
@@ -4545,7 +4545,7 @@ pub unsafe extern "C" fn sqlite3changeset_op(
     if !pbIndirect.is_null() {
         *pbIndirect = __pIter_ref.bIndirect;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -4558,7 +4558,7 @@ pub unsafe extern "C" fn sqlite3changeset_pk(
     if !pnCol.is_null() {
         *pnCol = (*pIter).nCol;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -4575,7 +4575,7 @@ pub unsafe extern "C" fn sqlite3changeset_old(
         return crate::sqlite3_h::SQLITE_RANGE;
     }
     *ppValue = *__pIter_ref.apValue.offset(iVal as isize);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -4592,7 +4592,7 @@ pub unsafe extern "C" fn sqlite3changeset_new(
         return crate::sqlite3_h::SQLITE_RANGE;
     }
     *ppValue = *__pIter_ref.apValue.offset((__pIter_ref.nCol + iVal) as isize);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -4610,7 +4610,7 @@ pub unsafe extern "C" fn sqlite3changeset_conflict(
     }
     *ppValue =  crate::src::src::vdbeapi::sqlite3_column_value(__pIter_ref.pConflict, iVal) as
     *mut crate::vdbeInt_h::sqlite3_value;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -4623,7 +4623,7 @@ pub unsafe extern "C" fn sqlite3changeset_fk_conflicts(
         return crate::sqlite3_h::SQLITE_MISUSE;
     }
     *pnOut = __pIter_ref.nCol;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -4646,7 +4646,7 @@ pub unsafe extern "C" fn sqlite3changeset_finalize(
         crate::src::src::malloc::sqlite3_free(__p_ref.in_0.buf.aBuf as *mut ::core::ffi::c_void);
         crate::src::src::malloc::sqlite3_free(p as *mut ::core::ffi::c_void);
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionChangesetInvert(
@@ -4883,7 +4883,7 @@ unsafe extern "C" fn sessionChangesetInvert(
     crate::src::src::malloc::sqlite3_free(sOut.aBuf as *mut ::core::ffi::c_void);
     crate::src::src::malloc::sqlite3_free(apVal as *mut ::core::ffi::c_void);
     crate::src::src::malloc::sqlite3_free(sPK.aBuf as *mut ::core::ffi::c_void);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -4896,13 +4896,13 @@ pub unsafe extern "C" fn sqlite3changeset_invert(
     let mut sInput: SessionInput = unsafe { ::core::mem::zeroed() };
     sInput.nData = nChangeset;
     sInput.aData = pChangeset as *mut crate::src::ext::rtree::rtree::u8_0;
-    return sessionChangesetInvert(
+    sessionChangesetInvert(
         &raw mut sInput,
         None,
         ::core::ptr::null_mut::<::core::ffi::c_void>(),
         pnInverted,
         ppInverted,
-    );
+    )
 }
 #[no_mangle]
 
@@ -4936,7 +4936,7 @@ pub unsafe extern "C" fn sqlite3changeset_invert_strm(
         ::core::ptr::null_mut::<*mut ::core::ffi::c_void>(),
     );
     crate::src::src::malloc::sqlite3_free(sInput.buf.aBuf as *mut ::core::ffi::c_void);
-    return rc;
+    rc
 }
 
 pub const SESSION_UPDATE_CACHE_SZ: ::core::ffi::c_int = 12 as ::core::ffi::c_int;
@@ -5147,7 +5147,7 @@ unsafe extern "C" fn sessionUpdateFind(
     } else {
         *ppStmt = ::core::ptr::null_mut::<crate::sqlite3_h::sqlite3_stmt>();
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionUpdateFree(mut p: *mut SessionApplyCtx) {
@@ -5254,7 +5254,7 @@ unsafe extern "C" fn sessionDeleteRow(
         );
     }
     crate::src::src::malloc::sqlite3_free(buf.aBuf as *mut ::core::ffi::c_void);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionSelectRow(
@@ -5263,7 +5263,7 @@ unsafe extern "C" fn sessionSelectRow(
     mut p: *mut SessionApplyCtx,
 ) -> ::core::ffi::c_int {
     let __p_ref = unsafe { &mut *p };
-    return sessionSelectStmt(
+    sessionSelectStmt(
         db,
         __p_ref.bIgnoreNoop as ::core::ffi::c_int,
         b"main\0" as *const u8 as *const ::core::ffi::c_char,
@@ -5274,7 +5274,7 @@ unsafe extern "C" fn sessionSelectRow(
         __p_ref.abPK,
         &raw mut __p_ref.pSelect,
         &raw mut __p_ref.zErr,
-    );
+    )
 }
 
 unsafe extern "C" fn sessionInsertRow(
@@ -5340,7 +5340,7 @@ unsafe extern "C" fn sessionInsertRow(
         );
     }
     crate::src::src::malloc::sqlite3_free(buf.aBuf as *mut ::core::ffi::c_void);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionStat1Sql(
@@ -5370,7 +5370,7 @@ unsafe extern "C" fn sessionStat1Sql(
                 as *const u8 as *const ::core::ffi::c_char,
         );
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionBindValue(
@@ -5382,7 +5382,7 @@ unsafe extern "C" fn sessionBindValue(
     if (eType == crate::sqlite3_h::SQLITE_TEXT || eType == crate::sqlite3_h::SQLITE_BLOB) && (*pVal).z.is_null() {
         return crate::sqlite3_h::SQLITE_NOMEM;
     }
-    return crate::src::src::vdbeapi::sqlite3_bind_value(pStmt, i,  pVal as *const crate::vdbeInt_h::sqlite3_value);
+    crate::src::src::vdbeapi::sqlite3_bind_value(pStmt, i,  pVal as *const crate::vdbeInt_h::sqlite3_value)
 }
 
 unsafe extern "C" fn sessionBindRow(
@@ -5413,7 +5413,7 @@ unsafe extern "C" fn sessionBindRow(
         }
         i += 1;
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionSeekToRow(
@@ -5484,7 +5484,7 @@ unsafe extern "C" fn sessionSeekToRow(
             rc = crate::src::src::vdbeapi::sqlite3_reset(pSelect);
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionRebaseAdd(
@@ -5538,7 +5538,7 @@ unsafe extern "C" fn sessionRebaseAdd(
             i += 1;
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionConflictHandler(
@@ -5625,7 +5625,7 @@ unsafe extern "C" fn sessionConflictHandler(
             rc = sessionRebaseAdd(p, res, pIter);
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionApplyOneOp(
@@ -5786,7 +5786,7 @@ unsafe extern "C" fn sessionApplyOneOp(
             );
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionApplyOneWithRetry(
@@ -5881,7 +5881,7 @@ unsafe extern "C" fn sessionApplyOneWithRetry(
             }
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionRetryConstraints(
@@ -5952,7 +5952,7 @@ unsafe extern "C" fn sessionRetryConstraints(
             __pApply_ref.bDeferConstraints = 0 as ::core::ffi::c_int;
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionChangesetApply(
@@ -6284,7 +6284,7 @@ unsafe extern "C" fn sessionChangesetApply(
     crate::src::src::main::sqlite3_set_errmsg(db as *mut crate::sqliteInt_h::sqlite3, rc, sApply.zErr);
     crate::src::src::malloc::sqlite3_free(sApply.zErr as *mut ::core::ffi::c_void);
     crate::src::src::mutex::sqlite3_mutex_leave(crate::src::src::main::sqlite3_db_mutex(db as *mut crate::sqliteInt_h::sqlite3));
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionChangesetApplyV23(
@@ -6348,7 +6348,7 @@ unsafe extern "C" fn sessionChangesetApplyV23(
             flags,
         );
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -6374,7 +6374,7 @@ pub unsafe extern "C" fn sqlite3changeset_apply_v2(
     mut pnRebase: *mut ::core::ffi::c_int,
     mut flags: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    return sessionChangesetApplyV23(
+    sessionChangesetApplyV23(
         db,
         nChangeset,
         pChangeset,
@@ -6387,7 +6387,7 @@ pub unsafe extern "C" fn sqlite3changeset_apply_v2(
         ppRebase,
         pnRebase,
         flags,
-    );
+    )
 }
 #[no_mangle]
 
@@ -6413,7 +6413,7 @@ pub unsafe extern "C" fn sqlite3changeset_apply_v3(
     mut pnRebase: *mut ::core::ffi::c_int,
     mut flags: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    return sessionChangesetApplyV23(
+    sessionChangesetApplyV23(
         db,
         nChangeset,
         pChangeset,
@@ -6426,7 +6426,7 @@ pub unsafe extern "C" fn sqlite3changeset_apply_v3(
         ppRebase,
         pnRebase,
         flags,
-    );
+    )
 }
 #[no_mangle]
 
@@ -6449,7 +6449,7 @@ pub unsafe extern "C" fn sqlite3changeset_apply(
     >,
     mut pCtx: *mut ::core::ffi::c_void,
 ) -> ::core::ffi::c_int {
-    return sessionChangesetApplyV23(
+    sessionChangesetApplyV23(
         db,
         nChangeset,
         pChangeset,
@@ -6462,7 +6462,7 @@ pub unsafe extern "C" fn sqlite3changeset_apply(
         ::core::ptr::null_mut::<*mut ::core::ffi::c_void>(),
         ::core::ptr::null_mut::<::core::ffi::c_int>(),
         0 as ::core::ffi::c_int,
-    );
+    )
 }
 #[no_mangle]
 
@@ -6494,7 +6494,7 @@ pub unsafe extern "C" fn sqlite3changeset_apply_v3_strm(
     mut pnRebase: *mut ::core::ffi::c_int,
     mut flags: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    return sessionChangesetApplyV23(
+    sessionChangesetApplyV23(
         db,
         0 as ::core::ffi::c_int,
         ::core::ptr::null_mut::<::core::ffi::c_void>(),
@@ -6507,7 +6507,7 @@ pub unsafe extern "C" fn sqlite3changeset_apply_v3_strm(
         ppRebase,
         pnRebase,
         flags,
-    );
+    )
 }
 #[no_mangle]
 
@@ -6539,7 +6539,7 @@ pub unsafe extern "C" fn sqlite3changeset_apply_v2_strm(
     mut pnRebase: *mut ::core::ffi::c_int,
     mut flags: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    return sessionChangesetApplyV23(
+    sessionChangesetApplyV23(
         db,
         0 as ::core::ffi::c_int,
         ::core::ptr::null_mut::<::core::ffi::c_void>(),
@@ -6552,7 +6552,7 @@ pub unsafe extern "C" fn sqlite3changeset_apply_v2_strm(
         ppRebase,
         pnRebase,
         flags,
-    );
+    )
 }
 #[no_mangle]
 
@@ -6581,7 +6581,7 @@ pub unsafe extern "C" fn sqlite3changeset_apply_strm(
     >,
     mut pCtx: *mut ::core::ffi::c_void,
 ) -> ::core::ffi::c_int {
-    return sessionChangesetApplyV23(
+    sessionChangesetApplyV23(
         db,
         0 as ::core::ffi::c_int,
         ::core::ptr::null_mut::<::core::ffi::c_void>(),
@@ -6594,7 +6594,7 @@ pub unsafe extern "C" fn sqlite3changeset_apply_strm(
         ::core::ptr::null_mut::<*mut ::core::ffi::c_void>(),
         ::core::ptr::null_mut::<::core::ffi::c_int>(),
         0 as ::core::ffi::c_int,
-    );
+    )
 }
 
 unsafe extern "C" fn sessionChangeMerge(
@@ -6830,7 +6830,7 @@ unsafe extern "C" fn sessionChangeMerge(
         }
     }
     *ppNew = pNew;
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionChangesetCheckCompat(
@@ -6856,13 +6856,13 @@ unsafe extern "C" fn sessionChangesetCheckCompat(
         }
         return 1 as ::core::ffi::c_int;
     }
-    return (__pTab_ref.nCol == nCol
+    (__pTab_ref.nCol == nCol
         && 0 as ::core::ffi::c_int
             == ::libc::memcmp(
                 abPK as *const ::core::ffi::c_void,
                 __pTab_ref.abPK as *const ::core::ffi::c_void,
                 nCol as crate::__stddef_size_t_h::size_t,
-            )) as ::core::ffi::c_int;
+            )) as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn sessionChangesetExtendRecord(
@@ -6958,7 +6958,7 @@ unsafe extern "C" fn sessionChangesetExtendRecord(
     } else {
         sessionAppendBlob(pOut, aRec, nRec, &raw mut rc);
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionChangesetFindTable(
@@ -7036,7 +7036,7 @@ unsafe extern "C" fn sessionChangesetFindTable(
         rc = crate::sqlite3_h::SQLITE_SCHEMA;
     }
     *ppTab = pTab;
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionOneChangeToHash(
@@ -7140,7 +7140,7 @@ unsafe extern "C" fn sessionOneChangeToHash(
     if rc == crate::sqlite3_h::SQLITE_OK {
         rc = __pIter_ref.rc;
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionChangesetToHash(
@@ -7168,7 +7168,7 @@ unsafe extern "C" fn sessionChangesetToHash(
     if rc == crate::sqlite3_h::SQLITE_OK {
         rc = (*pIter).rc;
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionChangegroupOutput(
@@ -7238,7 +7238,7 @@ unsafe extern "C" fn sessionChangegroupOutput(
         }
     }
     crate::src::src::malloc::sqlite3_free(buf.aBuf as *mut ::core::ffi::c_void);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -7259,7 +7259,7 @@ pub unsafe extern "C" fn sqlite3changegroup_new(
         );
     }
     *pp = p;
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -7279,7 +7279,7 @@ pub unsafe extern "C" fn sqlite3changegroup_schema(
             (*pGrp).db = db;
         }
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -7295,7 +7295,7 @@ pub unsafe extern "C" fn sqlite3changegroup_add(
         rc = sessionChangesetToHash(pIter, pGrp, 0 as ::core::ffi::c_int);
     }
     sqlite3changeset_finalize(pIter);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -7314,7 +7314,7 @@ pub unsafe extern "C" fn sqlite3changegroup_add_change(
         __pIter_ref.in_0.bNoDiscard = 1 as ::core::ffi::c_int;
         rc = sessionOneChangeToHash(pGrp, pIter, 0 as ::core::ffi::c_int);
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -7323,13 +7323,13 @@ pub unsafe extern "C" fn sqlite3changegroup_output(
     mut pnData: *mut ::core::ffi::c_int,
     mut ppData: *mut *mut ::core::ffi::c_void,
 ) -> ::core::ffi::c_int {
-    return sessionChangegroupOutput(
+    sessionChangegroupOutput(
         pGrp,
         None,
         ::core::ptr::null_mut::<::core::ffi::c_void>(),
         pnData,
         ppData,
-    );
+    )
 }
 #[no_mangle]
 
@@ -7351,7 +7351,7 @@ pub unsafe extern "C" fn sqlite3changegroup_add_strm(
         rc = sessionChangesetToHash(pIter, pGrp, 0 as ::core::ffi::c_int);
     }
     sqlite3changeset_finalize(pIter);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -7366,13 +7366,13 @@ pub unsafe extern "C" fn sqlite3changegroup_output_strm(
     >,
     mut pOut: *mut ::core::ffi::c_void,
 ) -> ::core::ffi::c_int {
-    return sessionChangegroupOutput(
+    sessionChangegroupOutput(
         pGrp,
         xOutput,
         pOut,
         ::core::ptr::null_mut::<::core::ffi::c_int>(),
         ::core::ptr::null_mut::<*mut ::core::ffi::c_void>(),
-    );
+    )
 }
 #[no_mangle]
 
@@ -7408,7 +7408,7 @@ pub unsafe extern "C" fn sqlite3changeset_concat(
         rc = sqlite3changegroup_output(pGrp, pnOut, ppOut);
     }
     sqlite3changegroup_delete(pGrp);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -7451,7 +7451,7 @@ pub unsafe extern "C" fn sqlite3changeset_concat_strm(
         rc = sqlite3changegroup_output_strm(pGrp, xOutput, pOut);
     }
     sqlite3changegroup_delete(pGrp);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sessionAppendRecordMerge(
@@ -7780,7 +7780,7 @@ unsafe extern "C" fn sessionRebase(
         }
     }
     crate::src::src::malloc::sqlite3_free(sOut.aBuf as *mut ::core::ffi::c_void);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -7801,7 +7801,7 @@ pub unsafe extern "C" fn sqlite3rebaser_create(
         );
     }
     *ppNew = pNew;
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -7817,7 +7817,7 @@ pub unsafe extern "C" fn sqlite3rebaser_configure(
         rc = sessionChangesetToHash(pIter, &raw mut (*p).grp, 1 as ::core::ffi::c_int);
     }
     sqlite3changeset_finalize(pIter);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -7842,7 +7842,7 @@ pub unsafe extern "C" fn sqlite3rebaser_rebase(
         );
         sqlite3changeset_finalize(pIter);
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -7878,7 +7878,7 @@ pub unsafe extern "C" fn sqlite3rebaser_rebase_strm(
         );
         sqlite3changeset_finalize(pIter);
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -7909,5 +7909,5 @@ pub unsafe extern "C" fn sqlite3session_config(
             rc = crate::sqlite3_h::SQLITE_MISUSE;
         }
 }
-    return rc;
+    rc
 }

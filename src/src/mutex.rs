@@ -37,7 +37,7 @@ pub unsafe extern "C" fn sqlite3MutexInit() -> ::core::ffi::c_int {
         .xMutexInit
         .expect("non-null function pointer")();
     crate::src::src::mutex_unix::sqlite3MemoryBarrier();
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -49,7 +49,7 @@ pub unsafe extern "C" fn sqlite3MutexEnd() -> ::core::ffi::c_int {
             .xMutexEnd
             .expect("non-null function pointer")();
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -60,10 +60,10 @@ pub unsafe extern "C" fn sqlite3_mutex_alloc(mut id: ::core::ffi::c_int) -> *mut
     if id > crate::sqlite3_h::SQLITE_MUTEX_RECURSIVE && sqlite3MutexInit() != 0 {
         return ::core::ptr::null_mut::<crate::src::src::mutex_unix::sqlite3_mutex>();
     }
-    return crate::src::src::global::sqlite3Config
+    crate::src::src::global::sqlite3Config
         .mutex
         .xMutexAlloc
-        .expect("non-null function pointer")(id);
+        .expect("non-null function pointer")(id)
 }
 #[no_mangle]
 
@@ -71,10 +71,10 @@ pub unsafe extern "C" fn sqlite3MutexAlloc(mut id: ::core::ffi::c_int) -> *mut c
     if crate::src::src::global::sqlite3Config.bCoreMutex == 0 {
         return ::core::ptr::null_mut::<crate::src::src::mutex_unix::sqlite3_mutex>();
     }
-    return crate::src::src::global::sqlite3Config
+    crate::src::src::global::sqlite3Config
         .mutex
         .xMutexAlloc
-        .expect("non-null function pointer")(id);
+        .expect("non-null function pointer")(id)
 }
 #[no_mangle]
 
@@ -106,7 +106,7 @@ pub unsafe extern "C" fn sqlite3_mutex_try(mut p: *mut crate::src::src::mutex_un
             .xMutexTry
             .expect("non-null function pointer")(p);
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 

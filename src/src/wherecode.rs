@@ -48,7 +48,7 @@ unsafe extern "C" fn explainIndexColumnName(
     if i == crate::sqliteInt_h::XN_ROWID {
         return b"rowid\0" as *const u8 as *const ::core::ffi::c_char;
     }
-    return (*(*(*pIdx).pTable).aCol.offset(i as isize)).zCnName;
+    (*(*(*pIdx).pTable).aCol.offset(i as isize)).zCnName
 }
 
 unsafe extern "C" fn explainAppendTerm(
@@ -408,7 +408,7 @@ pub unsafe extern "C" fn sqlite3WhereExplainOneScan(
             sqlite3WhereAddExplainText(pParse, addr, pTabList, pLevel, wctrlFlags);
         }
     }
-    return ret;
+    ret
 }
 #[no_mangle]
 
@@ -507,7 +507,7 @@ pub unsafe extern "C" fn sqlite3WhereExplainBloomFilter(
         zMsg,
         crate::src::src::vdbe::P4_DYNAMIC,
     );
-    return ret;
+    ret
 }
 
 unsafe extern "C" fn disableTerm(mut pLevel: *mut crate::whereInt_h::WhereLevel, mut pTerm: *mut crate::whereInt_h::WhereTerm) {
@@ -735,7 +735,7 @@ unsafe extern "C" fn removeUnindexableInClauseTerms(
             pSelect = (*pSelect).pPrior;
         }
     }
-    return pNew;
+    pNew
 }
 #[inline(never)]
 
@@ -857,7 +857,7 @@ unsafe extern "C" fn codeINTerm(
                 } else {
                     let mut iCol: ::core::ffi::c_int = if !aiMap.is_null() {
                         let fresh7 = iMap;
-                        iMap = iMap + 1;
+                        iMap += 1;
                         *aiMap.offset(fresh7 as isize)
                     } else {
                         0 as ::core::ffi::c_int
@@ -923,7 +923,7 @@ unsafe extern "C" fn codeEqualityTerm(
     {
         disableTerm(pLevel, pTerm);
     }
-    return iReg;
+    iReg
 }
 
 unsafe extern "C" fn codeAllEqualityTerms(
@@ -1018,7 +1018,7 @@ unsafe extern "C" fn codeAllEqualityTerms(
         j += 1;
     }
     *pzAff = zAff;
-    return regBase;
+    regBase
 }
 
 unsafe extern "C" fn whereLikeOptimizationStringFixup(
@@ -1249,7 +1249,7 @@ unsafe extern "C" fn whereLoopIsOneRow(mut pLoop: *mut crate::whereInt_h::WhereL
         }
         return 1 as ::core::ffi::c_int;
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -1339,7 +1339,7 @@ pub unsafe extern "C" fn sqlite3WhereCodeOneLoopStart(
                         != 0
                     {
                         let fresh0 = (*pParse).nTab;
-                        (*pParse).nTab = (*pParse).nTab + 1;
+                        (*pParse).nTab += 1;
                         let mut iTab: ::core::ffi::c_int = fresh0;
                         (*pParse).nMem += 1;
                         let mut iCache: ::core::ffi::c_int = (*pParse).nMem;
@@ -1519,12 +1519,12 @@ pub unsafe extern "C" fn sqlite3WhereCodeOneLoopStart(
         pStart = pEnd;
         if (*pLoop).wsFlags & crate::whereInt_h::WHERE_BTM_LIMIT as crate::src::ext::rtree::rtree::u32_0 != 0 {
             let fresh1 = j;
-            j = j + 1;
+            j += 1;
             pStart = *(*pLoop).aLTerm.offset(fresh1 as isize);
         }
         if (*pLoop).wsFlags & crate::whereInt_h::WHERE_TOP_LIMIT as crate::src::ext::rtree::rtree::u32_0 != 0 {
             let fresh2 = j;
-            j = j + 1;
+            j += 1;
             pEnd = *(*pLoop).aLTerm.offset(fresh2 as isize);
         }
         if bRev != 0 {
@@ -1641,7 +1641,7 @@ pub unsafe extern "C" fn sqlite3WhereCodeOneLoopStart(
         j = nEq as ::core::ffi::c_int;
         if __pLoop_ref.wsFlags & crate::whereInt_h::WHERE_BTM_LIMIT as crate::src::ext::rtree::rtree::u32_0 != 0 {
             let fresh3 = j;
-            j = j + 1;
+            j += 1;
             pRangeStart = *__pLoop_ref.aLTerm.offset(fresh3 as isize);
             nExtraReg = if nExtraReg > __pLoop_ref.u.btree.nBtm as ::core::ffi::c_int {
                 nExtraReg
@@ -1651,7 +1651,7 @@ pub unsafe extern "C" fn sqlite3WhereCodeOneLoopStart(
         }
         if __pLoop_ref.wsFlags & crate::whereInt_h::WHERE_TOP_LIMIT as crate::src::ext::rtree::rtree::u32_0 != 0 {
             let fresh4 = j;
-            j = j + 1;
+            j += 1;
             pRangeEnd = *__pLoop_ref.aLTerm.offset(fresh4 as isize);
             nExtraReg = if nExtraReg > __pLoop_ref.u.btree.nTop as ::core::ffi::c_int {
                 nExtraReg
@@ -2005,7 +2005,7 @@ pub unsafe extern "C" fn sqlite3WhereCodeOneLoopStart(
         let mut pCov: *mut crate::sqliteInt_h::Index = ::core::ptr::null_mut::<crate::sqliteInt_h::Index>();
         let __pParse_ref = unsafe { &mut *pParse };
         let fresh5 = __pParse_ref.nTab;
-        __pParse_ref.nTab = __pParse_ref.nTab + 1;
+        __pParse_ref.nTab += 1;
         let mut iCovCur: ::core::ffi::c_int = fresh5;
         __pParse_ref.nMem += 1;
         let mut regReturn: ::core::ffi::c_int = __pParse_ref.nMem;
@@ -2068,7 +2068,7 @@ pub unsafe extern "C" fn sqlite3WhereCodeOneLoopStart(
             } else {
                 let mut pPk_0: *mut crate::sqliteInt_h::Index =  crate::src::src::build::sqlite3PrimaryKeyIndex(pTab as *mut crate::sqliteInt_h::Table) as *mut crate::sqliteInt_h::Index;
                 let fresh6 = __pParse_ref.nTab;
-                __pParse_ref.nTab = __pParse_ref.nTab + 1;
+                __pParse_ref.nTab += 1;
                 regRowset = fresh6;
                 crate::src::src::vdbeaux::sqlite3VdbeAddOp2(
                     v,
@@ -2620,7 +2620,7 @@ pub unsafe extern "C" fn sqlite3WhereCodeOneLoopStart(
         }
         _ => {}
     }
-    return __pLevel_ref.notReady;
+    __pLevel_ref.notReady
 }
 #[no_mangle]
 #[inline(never)]

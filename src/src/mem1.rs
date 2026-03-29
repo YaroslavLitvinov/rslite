@@ -18,7 +18,7 @@ unsafe extern "C" fn sqlite3MemMalloc(mut nByte: ::core::ffi::c_int) -> *mut ::c
             nByte,
         );
     }
-    return p as *mut ::core::ffi::c_void;
+    p as *mut ::core::ffi::c_void
 }
 
 unsafe extern "C" fn sqlite3MemFree(mut pPrior: *mut ::core::ffi::c_void) {
@@ -31,7 +31,7 @@ unsafe extern "C" fn sqlite3MemSize(mut pPrior: *mut ::core::ffi::c_void) -> ::c
     let mut p: *mut crate::sqlite3_h::sqlite3_int64 = ::core::ptr::null_mut::<crate::sqlite3_h::sqlite3_int64>();
     p = pPrior as *mut crate::sqlite3_h::sqlite3_int64;
     p = p.offset(-1);
-    return *p.offset(0 as isize) as ::core::ffi::c_int;
+    *p.offset(0 as isize) as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn sqlite3MemRealloc(
@@ -55,15 +55,15 @@ unsafe extern "C" fn sqlite3MemRealloc(
             nByte,
         );
     }
-    return p as *mut ::core::ffi::c_void;
+    p as *mut ::core::ffi::c_void
 }
 
 unsafe extern "C" fn sqlite3MemRoundup(mut n: ::core::ffi::c_int) -> ::core::ffi::c_int {
-    return n + 7 as ::core::ffi::c_int & !(7 as ::core::ffi::c_int);
+    n + 7 as ::core::ffi::c_int & !(7 as ::core::ffi::c_int)
 }
 
 unsafe extern "C" fn sqlite3MemInit(mut _NotUsed: *mut ::core::ffi::c_void) -> ::core::ffi::c_int {
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn sqlite3MemShutdown(mut _NotUsed: *mut ::core::ffi::c_void) {}

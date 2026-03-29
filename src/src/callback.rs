@@ -92,7 +92,7 @@ unsafe extern "C" fn synthCollSeq(
         }
         i += 1;
     }
-    return crate::sqlite3_h::SQLITE_ERROR;
+    crate::sqlite3_h::SQLITE_ERROR
 }
 #[no_mangle]
 
@@ -108,7 +108,7 @@ pub unsafe extern "C" fn sqlite3CheckCollSeq(
             return crate::sqlite3_h::SQLITE_ERROR;
         }
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn findCollSeqEntry(
@@ -159,7 +159,7 @@ unsafe extern "C" fn findCollSeqEntry(
             }
         }
     }
-    return pColl;
+    pColl
 }
 #[no_mangle]
 
@@ -178,7 +178,7 @@ pub unsafe extern "C" fn sqlite3FindCollSeq(
     } else {
         pColl = (*db).pDfltColl;
     }
-    return pColl;
+    pColl
 }
 #[no_mangle]
 
@@ -222,7 +222,7 @@ pub unsafe extern "C" fn sqlite3GetCollSeq(
         );
         (*pParse).rc = crate::sqlite3_h::SQLITE_ERROR_MISSING_COLLSEQ;
     }
-    return p;
+    p
 }
 #[no_mangle]
 
@@ -238,7 +238,7 @@ pub unsafe extern "C" fn sqlite3LocateCollSeq(
     if initbusy == 0 && (pColl.is_null() || (*pColl).xCmp.is_none()) {
         pColl = sqlite3GetCollSeq(pParse, enc, pColl, zName);
     }
-    return pColl;
+    pColl
 }
 
 pub const FUNC_PERFECT_MATCH: ::core::ffi::c_int = 6 as ::core::ffi::c_int;
@@ -277,7 +277,7 @@ unsafe extern "C" fn matchQuality(
     } else if enc as crate::src::ext::rtree::rtree::u32_0 & __p_ref.funcFlags & 2 as crate::src::ext::rtree::rtree::u32_0 != 0 as crate::src::ext::rtree::rtree::u32_0 {
         match_0 += 1 as ::core::ffi::c_int;
     }
-    return match_0;
+    match_0
 }
 #[no_mangle]
 
@@ -293,7 +293,7 @@ pub unsafe extern "C" fn sqlite3FunctionSearch(
         }
         p = (*p).u.pHash;
     }
-    return ::core::ptr::null_mut::<crate::sqliteInt_h::FuncDef>();
+    ::core::ptr::null_mut::<crate::sqliteInt_h::FuncDef>()
 }
 #[no_mangle]
 
@@ -414,7 +414,7 @@ pub unsafe extern "C" fn sqlite3FindFunction(
     if !pBest.is_null() && ((*pBest).xSFunc.is_some() || createFlag as ::core::ffi::c_int != 0) {
         return pBest;
     }
-    return ::core::ptr::null_mut::<crate::sqliteInt_h::FuncDef>();
+    ::core::ptr::null_mut::<crate::sqliteInt_h::FuncDef>()
 }
 #[no_mangle]
 
@@ -492,5 +492,5 @@ pub unsafe extern "C" fn sqlite3SchemaGet(
         crate::src::src::hash::sqlite3HashInit(&raw mut __p_ref.fkeyHash as *mut _ as *mut crate::src::src::hash::Hash);
         __p_ref.enc = crate::sqlite3_h::SQLITE_UTF8 as crate::src::ext::rtree::rtree::u8_0;
     }
-    return p;
+    p
 }

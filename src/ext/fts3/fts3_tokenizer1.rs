@@ -32,14 +32,14 @@ unsafe extern "C" fn simpleDelim(
     mut t: *mut simple_tokenizer,
     mut c: ::core::ffi::c_uchar,
 ) -> ::core::ffi::c_int {
-    return ((c as ::core::ffi::c_int) < 0x80 as ::core::ffi::c_int
-        && (*t).delim[c as usize] as ::core::ffi::c_int != 0) as ::core::ffi::c_int;
+    ((c as ::core::ffi::c_int) < 0x80 as ::core::ffi::c_int
+        && (*t).delim[c as usize] as ::core::ffi::c_int != 0) as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn fts3_isalnum(mut x: ::core::ffi::c_int) -> ::core::ffi::c_int {
-    return (x >= '0' as i32 && x <= '9' as i32
+    (x >= '0' as i32 && x <= '9' as i32
         || x >= 'A' as i32 && x <= 'Z' as i32
-        || x >= 'a' as i32 && x <= 'z' as i32) as ::core::ffi::c_int;
+        || x >= 'a' as i32 && x <= 'z' as i32) as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn simpleCreate(
@@ -87,12 +87,12 @@ unsafe extern "C" fn simpleCreate(
         }
     }
     *ppTokenizer = &raw mut (*t).base;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn simpleDestroy(mut pTokenizer: *mut crate::src::ext::fts3::fts3_tokenizer::sqlite3_tokenizer) -> ::core::ffi::c_int {
     crate::src::src::malloc::sqlite3_free(pTokenizer as *mut ::core::ffi::c_void);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn simpleOpen(
@@ -120,14 +120,14 @@ unsafe extern "C" fn simpleOpen(
     (*c).pToken = ::core::ptr::null_mut::<::core::ffi::c_char>();
     (*c).nTokenAllocated = 0 as ::core::ffi::c_int;
     *ppCursor = &raw mut (*c).base;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn simpleClose(mut pCursor: *mut crate::src::ext::fts3::fts3_tokenizer::sqlite3_tokenizer_cursor) -> ::core::ffi::c_int {
     let mut c: *mut simple_tokenizer_cursor = pCursor as *mut simple_tokenizer_cursor;
     crate::src::src::malloc::sqlite3_free((*c).pToken as *mut ::core::ffi::c_void);
     crate::src::src::malloc::sqlite3_free(c as *mut ::core::ffi::c_void);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn simpleNext(
@@ -184,12 +184,12 @@ unsafe extern "C" fn simpleNext(
             *piStartOffset = iStartOffset;
             *piEndOffset = __c_ref.iOffset;
             let fresh0 = __c_ref.iToken;
-            __c_ref.iToken = __c_ref.iToken + 1;
+            __c_ref.iToken += 1;
             *piPosition = fresh0;
             return crate::sqlite3_h::SQLITE_OK;
         }
     }
-    return crate::sqlite3_h::SQLITE_DONE;
+    crate::sqlite3_h::SQLITE_DONE
 }
 
 static mut simpleTokenizerModule: crate::src::ext::fts3::fts3_tokenizer::sqlite3_tokenizer_module = unsafe {

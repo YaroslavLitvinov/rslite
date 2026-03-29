@@ -1856,7 +1856,7 @@ unsafe extern "C" fn sqlite3LoadExtension(
                             != 0
                         {
                             let fresh0 = iEntry;
-                            iEntry = iEntry + 1;
+                            iEntry += 1;
                             *zAltEntry.offset(fresh0 as isize) = *(&raw const crate::src::src::global::sqlite3UpperToLower
                                 as *const ::core::ffi::c_uchar)
                                 .offset(c as ::core::ffi::c_uint as isize)
@@ -1947,7 +1947,7 @@ unsafe extern "C" fn sqlite3LoadExtension(
                 crate::src::src::malloc::sqlite3DbFree(db as *mut crate::sqliteInt_h::sqlite3, __db_ref.aExtension as *mut ::core::ffi::c_void);
                 __db_ref.aExtension = aHandle;
                 let fresh1 = __db_ref.nExtension;
-                __db_ref.nExtension = __db_ref.nExtension + 1;
+                __db_ref.nExtension += 1;
                 let ref mut fresh2 = *__db_ref.aExtension.offset(fresh1 as isize);
                 *fresh2 = handle;
                 return crate::sqlite3_h::SQLITE_OK;
@@ -1975,7 +1975,7 @@ unsafe extern "C" fn sqlite3LoadExtension(
             );
         }
     }
-    return crate::sqlite3_h::SQLITE_ERROR;
+    crate::sqlite3_h::SQLITE_ERROR
 }
 #[no_mangle]
 
@@ -1990,7 +1990,7 @@ pub unsafe extern "C" fn sqlite3_load_extension(
     rc = sqlite3LoadExtension(db, zFile, zProc, pzErrMsg);
     rc = crate::src::src::malloc::sqlite3ApiExit(db as *mut crate::sqliteInt_h::sqlite3, rc);
     crate::src::src::mutex::sqlite3_mutex_leave((*db).mutex);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -2016,7 +2016,7 @@ pub unsafe extern "C" fn sqlite3_enable_load_extension(
         (*db).flags &= !((crate::sqliteInt_h::SQLITE_LoadExtension | crate::sqliteInt_h::SQLITE_LoadExtFunc) as crate::src::ext::rtree::rtree::u64_0);
     }
     crate::src::src::mutex::sqlite3_mutex_leave((*db).mutex);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 static mut sqlite3Autoext: sqlite3AutoExtList = sqlite3AutoExtList {
@@ -2090,7 +2090,7 @@ pub unsafe extern "C" fn sqlite3_cancel_auto_extension(
         }
     }
     crate::src::src::mutex::sqlite3_mutex_leave(mutex);
-    return n;
+    n
 }
 #[no_mangle]
 

@@ -324,8 +324,8 @@ unsafe extern "C" fn getIntArg(mut p: *mut crate::sqliteInt_h::PrintfArguments) 
         return 0 as crate::sqlite3_h::sqlite3_int64;
     }
     let fresh42 = __p_ref.nUsed;
-    __p_ref.nUsed = __p_ref.nUsed + 1;
-    return crate::src::src::vdbeapi::sqlite3_value_int64(*__p_ref.apArg.offset(fresh42 as isize));
+    __p_ref.nUsed += 1;
+    crate::src::src::vdbeapi::sqlite3_value_int64(*__p_ref.apArg.offset(fresh42 as isize))
 }
 
 unsafe extern "C" fn getDoubleArg(mut p: *mut crate::sqliteInt_h::PrintfArguments) -> ::core::ffi::c_double {
@@ -334,8 +334,8 @@ unsafe extern "C" fn getDoubleArg(mut p: *mut crate::sqliteInt_h::PrintfArgument
         return 0.0f64;
     }
     let fresh41 = __p_ref.nUsed;
-    __p_ref.nUsed = __p_ref.nUsed + 1;
-    return crate::src::src::vdbeapi::sqlite3_value_double(*__p_ref.apArg.offset(fresh41 as isize));
+    __p_ref.nUsed += 1;
+    crate::src::src::vdbeapi::sqlite3_value_double(*__p_ref.apArg.offset(fresh41 as isize))
 }
 
 unsafe extern "C" fn getTextArg(mut p: *mut crate::sqliteInt_h::PrintfArguments) -> *mut ::core::ffi::c_char {
@@ -344,8 +344,8 @@ unsafe extern "C" fn getTextArg(mut p: *mut crate::sqliteInt_h::PrintfArguments)
         return ::core::ptr::null_mut::<::core::ffi::c_char>();
     }
     let fresh40 = __p_ref.nUsed;
-    __p_ref.nUsed = __p_ref.nUsed + 1;
-    return crate::src::src::vdbeapi::sqlite3_value_text(*__p_ref.apArg.offset(fresh40 as isize)) as *mut ::core::ffi::c_char;
+    __p_ref.nUsed += 1;
+    crate::src::src::vdbeapi::sqlite3_value_text(*__p_ref.apArg.offset(fresh40 as isize)) as *mut ::core::ffi::c_char
 }
 
 unsafe extern "C" fn printfTempBuf(
@@ -365,7 +365,7 @@ unsafe extern "C" fn printfTempBuf(
     if z.is_null() {
         sqlite3StrAccumSetError(pAccum as *mut crate::sqliteInt_h::StrAccum, crate::sqlite3_h::SQLITE_NOMEM as crate::src::ext::rtree::rtree::u8_0);
     }
-    return z;
+    z
 }
 
 pub const SQLITE_PRINT_BUF_SIZE: ::core::ffi::c_int = 70 as ::core::ffi::c_int;
@@ -726,7 +726,7 @@ pub unsafe extern "C" fn sqlite3_str_vappendf(
                                 if exp < -(4 as ::core::ffi::c_int) || exp > precision {
                                     xtype = etEXP as etByte;
                                 } else {
-                                    precision = precision - exp;
+                                    precision -= exp;
                                     xtype = etFLOAT as etByte;
                                 }
                             } else {
@@ -784,7 +784,7 @@ pub unsafe extern "C" fn sqlite3_str_vappendf(
                                     bufpt = bufpt.offset(1);
                                     *fresh3 = (if j < s.n {
                                         let fresh2 = j;
-                                        j = j + 1;
+                                        j += 1;
                                         *s.z.offset(fresh2 as isize) as ::core::ffi::c_int
                                     } else {
                                         '0' as i32
@@ -818,7 +818,7 @@ pub unsafe extern "C" fn sqlite3_str_vappendf(
                             }
                             loop {
                                 let fresh7 = precision;
-                                precision = precision - 1;
+                                precision -= 1;
                                 if !(fresh7 > 0 as ::core::ffi::c_int) {
                                     break;
                                 }
@@ -826,7 +826,7 @@ pub unsafe extern "C" fn sqlite3_str_vappendf(
                                 bufpt = bufpt.offset(1);
                                 *fresh9 = (if j < s.n {
                                     let fresh8 = j;
-                                    j = j + 1;
+                                    j += 1;
                                     *s.z.offset(fresh8 as isize) as ::core::ffi::c_int
                                 } else {
                                     '0' as i32
@@ -906,12 +906,12 @@ pub unsafe extern "C" fn sqlite3_str_vappendf(
                                     as ::core::ffi::c_int;
                                 loop {
                                     let fresh17 = nPad;
-                                    nPad = nPad - 1;
+                                    nPad -= 1;
                                     if !(fresh17 != 0) {
                                         break;
                                     }
                                     let fresh18 = i;
-                                    i = i + 1;
+                                    i += 1;
                                     *bufpt.offset(fresh18 as isize) =
                                         '0' as i32 as ::core::ffi::c_char;
                                 }
@@ -955,7 +955,7 @@ pub unsafe extern "C" fn sqlite3_str_vappendf(
                                     let fresh20 = bufpt;
                                     bufpt = bufpt.offset(1);
                                     let fresh21 = length;
-                                    length = length + 1;
+                                    length += 1;
                                     buf[fresh21 as usize] = *fresh20;
                                 }
                             }
@@ -1064,7 +1064,7 @@ pub unsafe extern "C" fn sqlite3_str_vappendf(
                                         bufpt as *mut ::core::ffi::c_uchar;
                                     loop {
                                         let fresh22 = precision;
-                                        precision = precision - 1;
+                                        precision -= 1;
                                         if !(fresh22 > 0 as ::core::ffi::c_int
                                             && *z.offset(0 as isize)
                                                 as ::core::ffi::c_int
@@ -1206,7 +1206,7 @@ pub unsafe extern "C" fn sqlite3_str_vappendf(
                             j_0 += 8 as crate::src::ext::rtree::rtree::i64_0;
                         } else {
                             let fresh25 = j_0;
-                            j_0 = j_0 + 1;
+                            j_0 += 1;
                             *bufpt.offset(fresh25 as isize) = '\'' as i32 as ::core::ffi::c_char;
                         }
                     }
@@ -1216,15 +1216,15 @@ pub unsafe extern "C" fn sqlite3_str_vappendf(
                         while i_0 < k {
                             ch_0 = *escarg.offset(i_0 as isize);
                             let fresh26 = j_0;
-                            j_0 = j_0 + 1;
+                            j_0 += 1;
                             *bufpt.offset(fresh26 as isize) = ch_0;
                             if ch_0 as ::core::ffi::c_int == q as ::core::ffi::c_int {
                                 let fresh27 = j_0;
-                                j_0 = j_0 + 1;
+                                j_0 += 1;
                                 *bufpt.offset(fresh27 as isize) = ch_0;
                             } else if ch_0 as ::core::ffi::c_int == '\\' as i32 {
                                 let fresh28 = j_0;
-                                j_0 = j_0 + 1;
+                                j_0 += 1;
                                 *bufpt.offset(fresh28 as isize) =
                                     '\\' as i32 as ::core::ffi::c_char;
                             } else if ch_0 as ::core::ffi::c_uchar as ::core::ffi::c_int
@@ -1233,16 +1233,16 @@ pub unsafe extern "C" fn sqlite3_str_vappendf(
                                 *bufpt.offset((j_0 - 1 as crate::src::ext::rtree::rtree::i64_0) as isize) =
                                     '\\' as i32 as ::core::ffi::c_char;
                                 let fresh29 = j_0;
-                                j_0 = j_0 + 1;
+                                j_0 += 1;
                                 *bufpt.offset(fresh29 as isize) = 'u' as i32 as ::core::ffi::c_char;
                                 let fresh30 = j_0;
-                                j_0 = j_0 + 1;
+                                j_0 += 1;
                                 *bufpt.offset(fresh30 as isize) = '0' as i32 as ::core::ffi::c_char;
                                 let fresh31 = j_0;
-                                j_0 = j_0 + 1;
+                                j_0 += 1;
                                 *bufpt.offset(fresh31 as isize) = '0' as i32 as ::core::ffi::c_char;
                                 let fresh32 = j_0;
-                                j_0 = j_0 + 1;
+                                j_0 += 1;
                                 *bufpt.offset(fresh32 as isize) =
                                     (if ch_0 as ::core::ffi::c_int >= 0x10 as ::core::ffi::c_int {
                                         '1' as i32
@@ -1250,7 +1250,7 @@ pub unsafe extern "C" fn sqlite3_str_vappendf(
                                         '0' as i32
                                     }) as ::core::ffi::c_char;
                                 let fresh33 = j_0;
-                                j_0 = j_0 + 1;
+                                j_0 += 1;
                                 *bufpt.offset(fresh33 as isize) =
                                     ::core::mem::transmute::<[u8; 17], [::core::ffi::c_char; 17]>(
                                         *b"0123456789abcdef\0",
@@ -1266,11 +1266,11 @@ pub unsafe extern "C" fn sqlite3_str_vappendf(
                         while i_0 < k {
                             ch_0 = *escarg.offset(i_0 as isize);
                             let fresh34 = j_0;
-                            j_0 = j_0 + 1;
+                            j_0 += 1;
                             *bufpt.offset(fresh34 as isize) = ch_0;
                             if ch_0 as ::core::ffi::c_int == q as ::core::ffi::c_int {
                                 let fresh35 = j_0;
-                                j_0 = j_0 + 1;
+                                j_0 += 1;
                                 *bufpt.offset(fresh35 as isize) = ch_0;
                             }
                             i_0 += 1;
@@ -1278,11 +1278,11 @@ pub unsafe extern "C" fn sqlite3_str_vappendf(
                     }
                     if needQuote != 0 {
                         let fresh36 = j_0;
-                        j_0 = j_0 + 1;
+                        j_0 += 1;
                         *bufpt.offset(fresh36 as isize) = '\'' as i32 as ::core::ffi::c_char;
                         if needQuote == 2 as ::core::ffi::c_int {
                             let fresh37 = j_0;
-                            j_0 = j_0 + 1;
+                            j_0 += 1;
                             *bufpt.offset(fresh37 as isize) = ')' as i32 as ::core::ffi::c_char;
                         }
                     }
@@ -1391,7 +1391,7 @@ pub unsafe extern "C" fn sqlite3_str_vappendf(
                         let mut ii: ::core::ffi::c_int = length - 1 as ::core::ffi::c_int;
                         while ii >= 0 as ::core::ffi::c_int {
                             let fresh24 = ii;
-                            ii = ii - 1;
+                            ii -= 1;
                             if *bufpt.offset(fresh24 as isize) as ::core::ffi::c_int
                                 & 0xc0 as ::core::ffi::c_int
                                 == 0x80 as ::core::ffi::c_int
@@ -1710,7 +1710,7 @@ pub unsafe extern "C" fn sqlite3StrAccumEnlarge(
             return 0 as ::core::ffi::c_int;
         }
     }
-    return N as ::core::ffi::c_int;
+    N as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -1727,7 +1727,7 @@ pub unsafe extern "C" fn sqlite3_str_appendchar(
     }
     loop {
         let fresh38 = N;
-        N = N - 1;
+        N -= 1;
         if !(fresh38 > 0 as ::core::ffi::c_int) {
             break;
         }
@@ -1804,7 +1804,7 @@ unsafe extern "C" fn strAccumFinishRealloc(mut p: *mut crate::sqliteInt_h::StrAc
         sqlite3StrAccumSetError(p, crate::sqlite3_h::SQLITE_NOMEM as crate::src::ext::rtree::rtree::u8_0);
     }
     __p_ref.zText = zText;
-    return zText;
+    zText
 }
 #[no_mangle]
 
@@ -1819,7 +1819,7 @@ pub unsafe extern "C" fn sqlite3StrAccumFinish(mut p: *mut crate::sqliteInt_h::S
             return strAccumFinishRealloc(p);
         }
     }
-    return (*p).zText;
+    (*p).zText
 }
 #[no_mangle]
 
@@ -1869,21 +1869,21 @@ pub unsafe extern "C" fn sqlite3_str_finish(mut p: *mut crate::sqliteInt_h::sqli
     } else {
         z = ::core::ptr::null_mut::<::core::ffi::c_char>();
     }
-    return z;
+    z
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3_str_errcode(mut p: *mut crate::sqliteInt_h::sqlite3_str) -> ::core::ffi::c_int {
-    return if !p.is_null() {
+    if !p.is_null() {
         (*p).accError as ::core::ffi::c_int
     } else {
         crate::sqlite3_h::SQLITE_NOMEM
-    };
+    }
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3_str_length(mut p: *mut crate::sqliteInt_h::sqlite3_str) -> ::core::ffi::c_int {
-    return (if !p.is_null() { (*p).nChar } else { 0 as crate::src::ext::rtree::rtree::u32_0 }) as ::core::ffi::c_int;
+    (if !p.is_null() { (*p).nChar } else { 0 as crate::src::ext::rtree::rtree::u32_0 }) as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -1893,7 +1893,7 @@ pub unsafe extern "C" fn sqlite3_str_value(mut p: *mut crate::sqliteInt_h::sqlit
         return ::core::ptr::null_mut::<::core::ffi::c_char>();
     }
     *__p_ref.zText.offset(__p_ref.nChar as isize) = 0 as ::core::ffi::c_char;
-    return __p_ref.zText;
+    __p_ref.zText
 }
 #[no_mangle]
 
@@ -1947,7 +1947,7 @@ pub unsafe extern "C" fn sqlite3_str_new(mut db: *mut crate::sqliteInt_h::sqlite
     } else {
         p = &raw mut sqlite3OomStr;
     }
-    return p;
+    p
 }
 #[no_mangle]
 
@@ -1980,7 +1980,7 @@ pub unsafe extern "C" fn sqlite3VMPrintf(
     if acc.accError as ::core::ffi::c_int == crate::sqlite3_h::SQLITE_NOMEM {
         crate::src::src::malloc::sqlite3OomFault(db as *mut crate::sqliteInt_h::sqlite3);
     }
-    return z;
+    z
 }
 #[no_mangle]
 
@@ -1993,7 +1993,7 @@ pub unsafe extern "C" fn sqlite3MPrintf(
     let mut z: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
     ap = args.clone();
     z = sqlite3VMPrintf(db, zFormat, ap.as_va_list());
-    return z;
+    z
 }
 #[no_mangle]
 
@@ -2024,7 +2024,7 @@ pub unsafe extern "C" fn sqlite3_vmprintf(
     );
     sqlite3_str_vappendf(&raw mut acc, zFormat, ap.as_va_list());
     z = sqlite3StrAccumFinish(&raw mut acc);
-    return z;
+    z
 }
 #[no_mangle]
 
@@ -2039,7 +2039,7 @@ pub unsafe extern "C" fn sqlite3_mprintf(
     }
     ap = args.clone();
     z = sqlite3_vmprintf(zFormat, ap.as_va_list());
-    return z;
+    z
 }
 #[no_mangle]
 
@@ -2070,7 +2070,7 @@ pub unsafe extern "C" fn sqlite3_vsnprintf(
     );
     sqlite3_str_vappendf(&raw mut acc, zFormat, ap.as_va_list());
     *zBuf.offset(acc.nChar as isize) = 0 as ::core::ffi::c_char;
-    return zBuf;
+    zBuf
 }
 #[no_mangle]
 
@@ -2103,7 +2103,7 @@ pub unsafe extern "C" fn sqlite3_snprintf(
     ap = args.clone();
     sqlite3_str_vappendf(&raw mut acc, zFormat, ap.as_va_list());
     *zBuf.offset(acc.nChar as isize) = 0 as ::core::ffi::c_char;
-    return zBuf;
+    zBuf
 }
 
 unsafe extern "C" fn renderLogMsg(
@@ -2201,7 +2201,7 @@ pub unsafe extern "C" fn sqlite3RCStrRef(
     let mut p: *mut crate::sqliteInt_h::RCStr = z as *mut crate::sqliteInt_h::RCStr;
     p = p.offset(-1);
     (*p).nRCRef = (*p).nRCRef.wrapping_add(1);
-    return z;
+    z
 }
 #[no_mangle]
 
@@ -2226,7 +2226,7 @@ pub unsafe extern "C" fn sqlite3RCStrNew(mut N: crate::src::ext::rtree::rtree::u
         return ::core::ptr::null_mut::<::core::ffi::c_char>();
     }
     (*p).nRCRef = 1 as crate::src::ext::rtree::rtree::u64_0;
-    return p.offset(1 as isize) as *mut crate::sqliteInt_h::RCStr as *mut ::core::ffi::c_char;
+    p.offset(1 as isize) as *mut crate::sqliteInt_h::RCStr as *mut ::core::ffi::c_char
 }
 #[no_mangle]
 

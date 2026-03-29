@@ -145,10 +145,10 @@ pub unsafe extern "C" fn sqlite3PcacheInitialize() -> ::core::ffi::c_int {
     if crate::src::src::global::sqlite3Config.pcache2.xInit.is_none() {
         crate::src::src::pcache1::sqlite3PCacheSetDefault();
     }
-    return crate::src::src::global::sqlite3Config
+    crate::src::src::global::sqlite3Config
         .pcache2
         .xInit
-        .expect("non-null function pointer")(crate::src::src::global::sqlite3Config.pcache2.pArg);
+        .expect("non-null function pointer")(crate::src::src::global::sqlite3Config.pcache2.pArg)
 }
 #[no_mangle]
 
@@ -163,7 +163,7 @@ pub unsafe extern "C" fn sqlite3PcacheShutdown() {
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3PcacheSize() -> ::core::ffi::c_int {
-    return ::core::mem::size_of::<PCache>() as ::core::ffi::c_int;
+    ::core::mem::size_of::<PCache>() as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -191,7 +191,7 @@ pub unsafe extern "C" fn sqlite3PcacheOpen(
     __p_ref.pStress = pStress;
     __p_ref.szCache = 100 as ::core::ffi::c_int;
     __p_ref.szSpill = 1 as ::core::ffi::c_int;
-    return sqlite3PcacheSetPageSize(p, szPage);
+    sqlite3PcacheSetPageSize(p, szPage)
 }
 #[no_mangle]
 
@@ -229,7 +229,7 @@ pub unsafe extern "C" fn sqlite3PcacheSetPageSize(
         __pCache_ref.pCache = pNew;
         __pCache_ref.szPage = szPage;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -249,7 +249,7 @@ pub unsafe extern "C" fn sqlite3PcacheFetch(
         pgno as ::core::ffi::c_uint,
         eCreate,
     );
-    return pRes;
+    pRes
 }
 #[no_mangle]
 
@@ -293,11 +293,11 @@ pub unsafe extern "C" fn sqlite3PcacheFetchStress(
         pgno as ::core::ffi::c_uint,
         2 as ::core::ffi::c_int,
     );
-    return if (*ppPage).is_null() {
+    if (*ppPage).is_null() {
         crate::sqliteInt_h::SQLITE_NOMEM_BKPT
     } else {
         crate::sqlite3_h::SQLITE_OK
-    };
+    }
 }
 #[inline(never)]
 
@@ -321,7 +321,7 @@ unsafe extern "C" fn pcacheFetchFinishWithInit(
     (*pPgHdr).pCache = pCache;
     (*pPgHdr).pgno = pgno;
     (*pPgHdr).flags = crate::src::src::pcache::PGHDR_CLEAN as crate::src::fts5::u16_0;
-    return sqlite3PcacheFetchFinish(pCache, pgno, pPage);
+    sqlite3PcacheFetchFinish(pCache, pgno, pPage)
 }
 #[no_mangle]
 
@@ -337,7 +337,7 @@ pub unsafe extern "C" fn sqlite3PcacheFetchFinish(
     }
     (*pCache).nRefSum += 1;
     (*pPgHdr).nRef += 1;
-    return pPgHdr;
+    pPgHdr
 }
 #[no_mangle]
 #[inline(never)]
@@ -569,7 +569,7 @@ unsafe extern "C" fn pcacheMergeDirtyList(mut pA: *mut crate::src::src::pcache::
             break;
         }
     }
-    return result.pDirty;
+    result.pDirty
 }
 
 pub const N_SORT_BUCKET: ::core::ffi::c_int = 32 as ::core::ffi::c_int;
@@ -609,7 +609,7 @@ unsafe extern "C" fn pcacheSortDirtyList(mut pIn: *mut crate::src::src::pcache::
         }
         i += 1;
     }
-    return p;
+    p
 }
 #[no_mangle]
 
@@ -620,30 +620,30 @@ pub unsafe extern "C" fn sqlite3PcacheDirtyList(mut pCache: *mut PCache) -> *mut
         (*p).pDirty = (*p).pDirtyNext;
         p = (*p).pDirtyNext;
     }
-    return pcacheSortDirtyList((*pCache).pDirty);
+    pcacheSortDirtyList((*pCache).pDirty)
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3PcacheRefCount(mut pCache: *mut PCache) -> crate::src::ext::rtree::rtree::i64_0 {
-    return (*pCache).nRefSum;
+    (*pCache).nRefSum
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3PcachePageRefcount(mut p: *mut crate::src::src::pcache::PgHdr) -> crate::src::ext::rtree::rtree::i64_0 {
-    return (*p).nRef;
+    (*p).nRef
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3PcachePagecount(mut pCache: *mut PCache) -> ::core::ffi::c_int {
-    return crate::src::src::global::sqlite3Config
+    crate::src::src::global::sqlite3Config
         .pcache2
         .xPagecount
-        .expect("non-null function pointer")((*pCache).pCache);
+        .expect("non-null function pointer")((*pCache).pCache)
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3PcacheGetCachesize(mut pCache: *mut PCache) -> ::core::ffi::c_int {
-    return numberOfCachePages(pCache);
+    numberOfCachePages(pCache)
 }
 #[no_mangle]
 
@@ -675,7 +675,7 @@ pub unsafe extern "C" fn sqlite3PcacheSetSpillsize(
     if res < (*p).szSpill {
         res = (*p).szSpill;
     }
-    return res;
+    res
 }
 #[no_mangle]
 
@@ -688,8 +688,8 @@ pub unsafe extern "C" fn sqlite3PcacheShrink(mut pCache: *mut PCache) {
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3HeaderSizePcache() -> ::core::ffi::c_int {
-    return ((::core::mem::size_of::<crate::src::src::pcache::PgHdr>() as usize).wrapping_add(7 as usize)
-        & !(7 as ::core::ffi::c_int) as usize) as ::core::ffi::c_int;
+    ((::core::mem::size_of::<crate::src::src::pcache::PgHdr>() as usize).wrapping_add(7 as usize)
+        & !(7 as ::core::ffi::c_int) as usize) as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -702,14 +702,14 @@ pub unsafe extern "C" fn sqlite3PCachePercentDirty(mut pCache: *mut PCache) -> :
         nDirty += 1;
         pDirty = (*pDirty).pDirtyNext;
     }
-    return if nCache != 0 {
+    if nCache != 0 {
         (nDirty as crate::src::ext::rtree::rtree::i64_0 * 100 as crate::src::ext::rtree::rtree::i64_0 / nCache as crate::src::ext::rtree::rtree::i64_0) as ::core::ffi::c_int
     } else {
         0 as ::core::ffi::c_int
-    };
+    }
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3PCacheIsDirty(mut pCache: *mut PCache) -> ::core::ffi::c_int {
-    return ((*pCache).pDirty != ::core::ptr::null_mut::<crate::src::src::pcache::PgHdr>()) as ::core::ffi::c_int;
+    ((*pCache).pDirty != ::core::ptr::null_mut::<crate::src::src::pcache::PgHdr>()) as ::core::ffi::c_int
 }

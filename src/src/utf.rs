@@ -134,7 +134,7 @@ pub unsafe extern "C" fn sqlite3AppendOneUtf8Character(
     *zOut.offset(3 as isize) = (0x80 as ::core::ffi::c_int
         + (v & 0x3f as crate::src::ext::rtree::rtree::u32_0) as crate::src::ext::rtree::rtree::u8_0 as ::core::ffi::c_int)
         as ::core::ffi::c_char;
-    return 4 as ::core::ffi::c_int;
+    4 as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -161,7 +161,7 @@ pub unsafe extern "C" fn sqlite3Utf8Read(mut pz: *mut *const ::core::ffi::c_ucha
             c = 0xfffd as ::core::ffi::c_uint;
         }
     }
-    return c as crate::src::ext::rtree::rtree::u32_0;
+    c as crate::src::ext::rtree::rtree::u32_0
 }
 #[no_mangle]
 
@@ -189,7 +189,7 @@ pub unsafe extern "C" fn sqlite3Utf8ReadLimited(
         }
     }
     *piOut = c;
-    return i;
+    i
 }
 #[no_mangle]
 #[inline(never)]
@@ -571,7 +571,7 @@ pub unsafe extern "C" fn sqlite3VdbeMemTranslate(
         __pMem_ref.zMalloc = __pMem_ref.z;
         __pMem_ref.szMalloc = crate::src::src::malloc::sqlite3DbMallocSize(__pMem_ref.db as *mut crate::sqliteInt_h::sqlite3, __pMem_ref.z as *const ::core::ffi::c_void);
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -612,7 +612,7 @@ pub unsafe extern "C" fn sqlite3VdbeMemHandleBom(mut pMem: *mut crate::src::src:
             __pMem_ref.enc = bom;
         }
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -640,7 +640,7 @@ pub unsafe extern "C" fn sqlite3Utf8CharLen(
         }
         r += 1;
     }
-    return r;
+    r
 }
 #[no_mangle]
 
@@ -665,7 +665,7 @@ pub unsafe extern "C" fn sqlite3Utf16to8(
         crate::src::src::vdbemem::sqlite3VdbeMemRelease(&raw mut m as *mut _ as *mut crate::vdbeInt_h::sqlite3_value);
         m.z = ::core::ptr::null_mut::<::core::ffi::c_char>();
     }
-    return m.z;
+    m.z
 }
 #[no_mangle]
 
@@ -697,9 +697,9 @@ pub unsafe extern "C" fn sqlite3Utf16ByteLen(
         }
         n += 1;
     }
-    return z.offset_from(zIn as *const ::core::ffi::c_uchar) as ::core::ffi::c_long
+    z.offset_from(zIn as *const ::core::ffi::c_uchar) as ::core::ffi::c_long
         as ::core::ffi::c_int
-        - (crate::sqliteInt_h::SQLITE_UTF16NATIVE == crate::sqlite3_h::SQLITE_UTF16LE) as ::core::ffi::c_int;
+        - (crate::sqliteInt_h::SQLITE_UTF16NATIVE == crate::sqlite3_h::SQLITE_UTF16LE) as ::core::ffi::c_int
 }
 #[no_mangle]
 

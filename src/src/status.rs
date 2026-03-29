@@ -71,7 +71,7 @@ static mut statMutex: [::core::ffi::c_char; 10] = [
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3StatusValue(mut op: ::core::ffi::c_int) -> crate::sqlite3_h::sqlite3_int64 {
-    return sqlite3Stat.nowValue[op as usize];
+    sqlite3Stat.nowValue[op as usize]
 }
 #[no_mangle]
 
@@ -127,7 +127,7 @@ pub unsafe extern "C" fn sqlite3_status64(
         sqlite3Stat.mxValue[op as usize] = sqlite3Stat.nowValue[op as usize];
     }
     crate::src::src::mutex::sqlite3_mutex_leave(pMutex);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -145,7 +145,7 @@ pub unsafe extern "C" fn sqlite3_status(
         *pCurrent = iCur as ::core::ffi::c_int;
         *pHighwater = iHwtr as ::core::ffi::c_int;
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn countLookasideSlots(mut p: *mut crate::sqliteInt_h::LookasideSlot) -> crate::src::ext::rtree::rtree::u32_0 {
@@ -154,7 +154,7 @@ unsafe extern "C" fn countLookasideSlots(mut p: *mut crate::sqliteInt_h::Lookasi
         p = (*p).pNext;
         cnt = cnt.wrapping_add(1);
     }
-    return cnt;
+    cnt
 }
 #[no_mangle]
 
@@ -170,10 +170,10 @@ pub unsafe extern "C" fn sqlite3LookasideUsed(
     if !pHighwater.is_null() {
         *pHighwater = __db_ref.lookaside.nSlot.wrapping_sub(nInit) as ::core::ffi::c_int;
     }
-    return (*db)
+    (*db)
         .lookaside
         .nSlot
-        .wrapping_sub(nInit.wrapping_add(nFree)) as ::core::ffi::c_int;
+        .wrapping_sub(nInit.wrapping_add(nFree)) as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -239,7 +239,7 @@ pub unsafe extern "C" fn sqlite3_db_status64(
                     let mut pPager: *mut crate::src::src::pager::Pager = crate::src::src::btree::sqlite3BtreePager(pBt) as *mut crate::src::src::pager::Pager;
                     let mut nByte: ::core::ffi::c_int = crate::src::src::pager::sqlite3PagerMemUsed(pPager);
                     if op == crate::sqlite3_h::SQLITE_DBSTATUS_CACHE_USED_SHARED {
-                        nByte = nByte / crate::src::src::btree::sqlite3BtreeConnectionCount(pBt);
+                        nByte /= crate::src::src::btree::sqlite3BtreeConnectionCount(pBt);
                     }
                     totalUsed += nByte as crate::sqlite3_h::sqlite3_int64;
                 }
@@ -391,7 +391,7 @@ pub unsafe extern "C" fn sqlite3_db_status64(
         _ => {}
     }
     crate::src::src::mutex::sqlite3_mutex_leave((*db).mutex);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -410,5 +410,5 @@ pub unsafe extern "C" fn sqlite3_db_status(
         *pCurrent = (C & 0x7fffffff as crate::sqlite3_h::sqlite3_int64) as ::core::ffi::c_int;
         *pHighwtr = (H & 0x7fffffff as crate::sqlite3_h::sqlite3_int64) as ::core::ffi::c_int;
     }
-    return rc;
+    rc
 }

@@ -624,7 +624,7 @@ unsafe extern "C" fn attachWithToSelect(
     } else {
         crate::src::src::build::sqlite3WithDelete((*pParse).db as *mut crate::sqliteInt_h::sqlite3,  pWith as *mut crate::sqliteInt_h::With);
     }
-    return pSelect;
+    pSelect
 }
 
 pub const YY_MAX_SHIFT: ::core::ffi::c_int = 582 as ::core::ffi::c_int;
@@ -635,11 +635,11 @@ unsafe extern "C" fn parserStackRealloc(
     mut pOld: *mut ::core::ffi::c_void,
     mut newSize: crate::sqlite3_h::sqlite3_uint64,
 ) -> *mut ::core::ffi::c_void {
-    return if crate::src::src::util::sqlite3FaultSim(700 as ::core::ffi::c_int) != 0 {
+    if crate::src::src::util::sqlite3FaultSim(700 as ::core::ffi::c_int) != 0 {
         ::core::ptr::null_mut::<::core::ffi::c_void>()
     } else {
         crate::src::src::malloc::sqlite3_realloc(pOld, newSize as ::core::ffi::c_int)
-    };
+    }
 }
 
 pub const YY_MAX_SHIFTREDUCE: ::core::ffi::c_int = 1253 as ::core::ffi::c_int;
@@ -5315,7 +5315,7 @@ unsafe extern "C" fn tokenExpr(
                 as *mut crate::sqliteInt_h::Expr;
         }
     }
-    return p;
+    p
 }
 
 static mut yy_shift_ofst: [::core::ffi::c_ushort; 583] = [
@@ -7139,7 +7139,7 @@ unsafe extern "C" fn parserAddExprIdListTerm(
         );
     }
     crate::src::src::expr::sqlite3ExprListSetName(pParse as *mut crate::sqliteInt_h::Parse,  p as *mut crate::sqliteInt_h::ExprList,  pIdToken as *const crate::sqliteInt_h::Token, 1 as ::core::ffi::c_int);
-    return p;
+    p
 }
 
 unsafe extern "C" fn yyGrowStack(mut p: *mut yyParser) -> ::core::ffi::c_int {
@@ -7180,7 +7180,7 @@ unsafe extern "C" fn yyGrowStack(mut p: *mut yyParser) -> ::core::ffi::c_int {
     __p_ref.yystackEnd =
         __p_ref.yystack
             .offset((newSize - 1 as ::core::ffi::c_int) as isize) as *mut yyStackEntry;
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -7221,7 +7221,7 @@ pub unsafe extern "C" fn sqlite3ParserAlloc(
         (*yypParser).pParse = pParse;
         sqlite3ParserInit(yypParser as *mut ::core::ffi::c_void, pParse);
     }
-    return yypParser as *mut ::core::ffi::c_void;
+    yypParser as *mut ::core::ffi::c_void
 }
 
 unsafe extern "C" fn yy_destructor(
@@ -7340,7 +7340,7 @@ unsafe extern "C" fn yy_find_reduce_action(
     let mut i: ::core::ffi::c_int = 0;
     i = yy_reduce_ofst[stateno as usize] as ::core::ffi::c_int;
     i += iLookAhead as ::core::ffi::c_int;
-    return yy_action[i as usize];
+    yy_action[i as usize]
 }
 
 unsafe extern "C" fn yyStackOverflow(mut yypParser: *mut yyParser) {
@@ -14408,7 +14408,7 @@ unsafe extern "C" fn yy_reduce(
     (*yypParser).yytos = yymsp;
     (*yymsp).stateno = yyact;
     (*yymsp).major = yygoto as ::core::ffi::c_ushort;
-    return yyact;
+    yyact
 }
 
 unsafe extern "C" fn yy_syntax_error(
@@ -14483,5 +14483,5 @@ pub unsafe extern "C" fn sqlite3Parser(
 pub unsafe extern "C" fn sqlite3ParserFallback(
     mut iToken: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    return yyFallback[iToken as usize] as ::core::ffi::c_int;
+    yyFallback[iToken as usize] as ::core::ffi::c_int
 }

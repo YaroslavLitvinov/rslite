@@ -44,7 +44,7 @@ unsafe extern "C" fn findNextHostParameter(
             zSql = zSql.offset(n as isize);
         }
     }
-    return nTotal;
+    nTotal
 }
 #[no_mangle]
 
@@ -226,5 +226,5 @@ pub unsafe extern "C" fn sqlite3VdbeExpandSql(
     if out.accError != 0 {
         crate::src::src::printf::sqlite3_str_reset(&raw mut out as *mut _ as *mut crate::sqliteInt_h::sqlite3_str);
     }
-    return crate::src::src::printf::sqlite3StrAccumFinish(&raw mut out as *mut _ as *mut crate::sqliteInt_h::sqlite3_str);
+    crate::src::src::printf::sqlite3StrAccumFinish(&raw mut out as *mut _ as *mut crate::sqliteInt_h::sqlite3_str)
 }

@@ -64,6 +64,6 @@ pub unsafe extern "C" fn sqlite3CompileOptions(
     *pnOpt = (::core::mem::size_of::<[*const ::core::ffi::c_char; 55]>() as usize)
         .wrapping_div(::core::mem::size_of::<*const ::core::ffi::c_char>() as usize)
         as ::core::ffi::c_int;
-    return &raw const sqlite3azCompileOpt as *const *const ::core::ffi::c_char
-        as *mut *const ::core::ffi::c_char;
+    &raw const sqlite3azCompileOpt as *const *const ::core::ffi::c_char
+        as *mut *const ::core::ffi::c_char
 }

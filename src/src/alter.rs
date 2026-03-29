@@ -68,7 +68,7 @@ unsafe extern "C" fn isAlterableTable(
         );
         return 1 as ::core::ffi::c_int;
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn renameTestSchema(
@@ -662,7 +662,7 @@ unsafe extern "C" fn isRealTable(
         );
         return 1 as ::core::ffi::c_int;
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -802,7 +802,7 @@ pub unsafe extern "C" fn sqlite3RenameTokenMap(
             (*pParse).pRename = pNew;
         }
     }
-    return pPtr;
+    pPtr
 }
 #[no_mangle]
 
@@ -840,7 +840,7 @@ unsafe extern "C" fn renameUnmapExprCb(
             &raw mut (*pExpr).y.pTab as *const ::core::ffi::c_void,
         );
     }
-    return crate::sqliteInt_h::WRC_Continue;
+    crate::sqliteInt_h::WRC_Continue
 }
 
 unsafe extern "C" fn renameWalkWith(mut pWalker: *mut crate::sqliteInt_h::Walker, mut pSelect: *mut crate::sqliteInt_h::Select) {
@@ -969,7 +969,7 @@ unsafe extern "C" fn renameUnmapSelectCb(
         }
     }
     renameWalkWith(pWalker, p);
-    return crate::sqliteInt_h::WRC_Continue;
+    crate::sqliteInt_h::WRC_Continue
 }
 #[no_mangle]
 
@@ -1059,7 +1059,7 @@ unsafe extern "C" fn renameTokenFind(
         }
         pp = &raw mut (**pp).pNext;
     }
-    return ::core::ptr::null_mut::<RenameToken>();
+    ::core::ptr::null_mut::<RenameToken>()
 }
 
 unsafe extern "C" fn renameColumnSelectCb(
@@ -1070,7 +1070,7 @@ unsafe extern "C" fn renameColumnSelectCb(
         return crate::sqliteInt_h::WRC_Prune;
     }
     renameWalkWith(pWalker, p);
-    return crate::sqliteInt_h::WRC_Continue;
+    crate::sqliteInt_h::WRC_Continue
 }
 
 unsafe extern "C" fn renameColumnExprCb(
@@ -1102,7 +1102,7 @@ unsafe extern "C" fn renameColumnExprCb(
             pExpr as *mut ::core::ffi::c_void,
         );
     }
-    return crate::sqliteInt_h::WRC_Continue;
+    crate::sqliteInt_h::WRC_Continue
 }
 
 unsafe extern "C" fn renameColumnTokenNext(mut pCtx: *mut RenameCtx) -> *mut RenameToken {
@@ -1121,7 +1121,7 @@ unsafe extern "C" fn renameColumnTokenNext(mut pCtx: *mut RenameCtx) -> *mut Ren
         pp = &raw mut (**pp).pNext;
     }
     *pp = (*pBest).pNext;
-    return pBest;
+    pBest
 }
 
 unsafe extern "C" fn renameColumnParseError(
@@ -1254,7 +1254,7 @@ unsafe extern "C" fn renameParseSql(
         rc = crate::src::src::main::sqlite3CorruptError(1167 as ::core::ffi::c_int);
     }
     __db_ref.init.iDb = 0 as crate::src::ext::rtree::rtree::u8_0;
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn renameEditSql(
@@ -1398,7 +1398,7 @@ unsafe extern "C" fn renameEditSql(
         rc = crate::sqlite3_h::SQLITE_NOMEM;
     }
     crate::src::src::malloc::sqlite3_free(zQuot as *mut ::core::ffi::c_void);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn renameSetENames(mut pEList: *mut crate::sqliteInt_h::ExprList, mut val: ::core::ffi::c_int) {
@@ -1556,7 +1556,7 @@ unsafe extern "C" fn renameResolveTrigger(mut pParse: *mut crate::sqliteInt_h::P
         }
         pStep = (*pStep).pNext;
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn renameWalkTrigger(mut pWalker: *mut crate::sqliteInt_h::Walker, mut pTrigger: *mut crate::sqliteInt_h::Trigger) {
@@ -2007,7 +2007,7 @@ unsafe extern "C" fn renameTableExprCb(
             &raw mut __pExpr_ref.y.pTab as *mut ::core::ffi::c_void,
         );
     }
-    return crate::sqliteInt_h::WRC_Continue;
+    crate::sqliteInt_h::WRC_Continue
 }
 
 unsafe extern "C" fn renameTableSelectCb(
@@ -2037,7 +2037,7 @@ unsafe extern "C" fn renameTableSelectCb(
         i += 1;
     }
     renameWalkWith(pWalker, pSelect);
-    return crate::sqliteInt_h::WRC_Continue;
+    crate::sqliteInt_h::WRC_Continue
 }
 
 unsafe extern "C" fn renameTableFunc(
@@ -2324,7 +2324,7 @@ unsafe extern "C" fn renameQuotefixExprCb(
             pExpr as *const ::core::ffi::c_void,
         );
     }
-    return crate::sqliteInt_h::WRC_Continue;
+    crate::sqliteInt_h::WRC_Continue
 }
 
 unsafe extern "C" fn renameQuotefixFunc(
@@ -3009,7 +3009,7 @@ pub unsafe extern "C" fn sqlite3AlterDropColumn(
                                     let mut v: *mut crate::vdbeInt_h::Vdbe = crate::src::src::select::sqlite3GetVdbe(pParse as *mut crate::sqliteInt_h::Parse);
                                     let __pParse_ref = unsafe { &mut *pParse };
                                     let fresh2 = __pParse_ref.nTab;
-                                    __pParse_ref.nTab = __pParse_ref.nTab + 1;
+                                    __pParse_ref.nTab += 1;
                                     iCur = fresh2;
                                     crate::src::src::insert::sqlite3OpenTable(pParse as *mut crate::sqliteInt_h::Parse, iCur, iDb,  pTab as *mut crate::sqliteInt_h::Table, crate::opcodes_h::OP_OpenWrite);
                                     addr = crate::src::src::vdbeaux::sqlite3VdbeAddOp1(v, crate::opcodes_h::OP_Rewind, iCur);

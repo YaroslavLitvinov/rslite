@@ -105,7 +105,7 @@ unsafe extern "C" fn unicodeDestroy(mut pTokenizer: *mut crate::src::ext::fts3::
         crate::src::src::malloc::sqlite3_free((*p).aiException as *mut ::core::ffi::c_void);
         crate::src::src::malloc::sqlite3_free(p as *mut ::core::ffi::c_void);
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn unicodeAddExceptions(
@@ -212,7 +212,7 @@ unsafe extern "C" fn unicodeAddExceptions(
         __p_ref.aiException = aNew;
         __p_ref.nException = nNew;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn unicodeIsException(
@@ -234,14 +234,14 @@ unsafe extern "C" fn unicodeIsException(
             }
         }
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn unicodeIsAlnum(
     mut p: *mut unicode_tokenizer,
     mut iCode: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    return crate::src::ext::fts3::fts3_unicode2::sqlite3FtsUnicodeIsalnum(iCode) ^ unicodeIsException(p, iCode);
+    crate::src::ext::fts3::fts3_unicode2::sqlite3FtsUnicodeIsalnum(iCode) ^ unicodeIsException(p, iCode)
 }
 
 unsafe extern "C" fn unicodeCreate(
@@ -332,7 +332,7 @@ unsafe extern "C" fn unicodeCreate(
         pNew = ::core::ptr::null_mut::<unicode_tokenizer>();
     }
     *pp = pNew as *mut crate::src::ext::fts3::fts3_tokenizer::sqlite3_tokenizer;
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn unicodeOpen(
@@ -363,7 +363,7 @@ unsafe extern "C" fn unicodeOpen(
         (*pCsr).nInput = nInput;
     }
     *pp = &raw mut (*pCsr).base;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn unicodeClose(
@@ -372,7 +372,7 @@ unsafe extern "C" fn unicodeClose(
     let mut pCsr: *mut unicode_cursor = pCursor as *mut unicode_cursor;
     crate::src::src::malloc::sqlite3_free((*pCsr).zToken as *mut ::core::ffi::c_void);
     crate::src::src::malloc::sqlite3_free(pCsr as *mut ::core::ffi::c_void);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn unicodeNext(
@@ -541,9 +541,9 @@ unsafe extern "C" fn unicodeNext(
     *piStart = zStart.offset_from(__pCsr_ref.aInput) as ::core::ffi::c_long as ::core::ffi::c_int;
     *piEnd = zEnd.offset_from(__pCsr_ref.aInput) as ::core::ffi::c_long as ::core::ffi::c_int;
     let fresh18 = __pCsr_ref.iToken;
-    __pCsr_ref.iToken = __pCsr_ref.iToken + 1;
+    __pCsr_ref.iToken += 1;
     *piPos = fresh18;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 

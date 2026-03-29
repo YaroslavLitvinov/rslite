@@ -52,7 +52,7 @@ unsafe extern "C" fn walkWindowList(
         }
         pWin = (*pWin).pNextWin;
     }
-    return crate::sqliteInt_h::WRC_Continue;
+    crate::sqliteInt_h::WRC_Continue
 }
 #[no_mangle]
 #[inline(never)]
@@ -98,7 +98,7 @@ pub unsafe extern "C" fn sqlite3WalkExprNN(
             break;
         }
     }
-    return crate::sqliteInt_h::WRC_Continue;
+    crate::sqliteInt_h::WRC_Continue
 }
 #[no_mangle]
 
@@ -106,11 +106,11 @@ pub unsafe extern "C" fn sqlite3WalkExpr(
     mut pWalker: *mut crate::sqliteInt_h::Walker,
     mut pExpr: *mut crate::sqliteInt_h::Expr,
 ) -> ::core::ffi::c_int {
-    return if !pExpr.is_null() {
+    if !pExpr.is_null() {
         sqlite3WalkExprNN(pWalker, pExpr)
     } else {
         crate::sqliteInt_h::WRC_Continue
-    };
+    }
 }
 #[no_mangle]
 
@@ -131,7 +131,7 @@ pub unsafe extern "C" fn sqlite3WalkExprList(
             pItem = pItem.offset(1);
         }
     }
-    return crate::sqliteInt_h::WRC_Continue;
+    crate::sqliteInt_h::WRC_Continue
 }
 #[no_mangle]
 
@@ -186,7 +186,7 @@ pub unsafe extern "C" fn sqlite3WalkSelectExpr(
             return rc;
         }
     }
-    return crate::sqliteInt_h::WRC_Continue;
+    crate::sqliteInt_h::WRC_Continue
 }
 #[no_mangle]
 
@@ -216,7 +216,7 @@ pub unsafe extern "C" fn sqlite3WalkSelectFrom(
             pItem = pItem.offset(1);
         }
     }
-    return crate::sqliteInt_h::WRC_Continue;
+    crate::sqliteInt_h::WRC_Continue
 }
 #[no_mangle]
 
@@ -251,7 +251,7 @@ pub unsafe extern "C" fn sqlite3WalkSelect(
             break;
         }
     }
-    return crate::sqliteInt_h::WRC_Continue;
+    crate::sqliteInt_h::WRC_Continue
 }
 #[no_mangle]
 
@@ -260,7 +260,7 @@ pub unsafe extern "C" fn sqlite3WalkerDepthIncrease(
     mut _pSelect: *mut crate::sqliteInt_h::Select,
 ) -> ::core::ffi::c_int {
     (*pWalker).walkerDepth += 1;
-    return crate::sqliteInt_h::WRC_Continue;
+    crate::sqliteInt_h::WRC_Continue
 }
 #[no_mangle]
 
@@ -276,7 +276,7 @@ pub unsafe extern "C" fn sqlite3ExprWalkNoop(
     mut _NotUsed: *mut crate::sqliteInt_h::Walker,
     mut _NotUsed2: *mut crate::sqliteInt_h::Expr,
 ) -> ::core::ffi::c_int {
-    return crate::sqliteInt_h::WRC_Continue;
+    crate::sqliteInt_h::WRC_Continue
 }
 #[no_mangle]
 
@@ -284,5 +284,5 @@ pub unsafe extern "C" fn sqlite3SelectWalkNoop(
     mut _NotUsed: *mut crate::sqliteInt_h::Walker,
     mut _NotUsed2: *mut crate::sqliteInt_h::Select,
 ) -> ::core::ffi::c_int {
-    return crate::sqliteInt_h::WRC_Continue;
+    crate::sqliteInt_h::WRC_Continue
 }

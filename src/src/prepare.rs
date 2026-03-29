@@ -96,7 +96,7 @@ pub unsafe extern "C" fn sqlite3IndexHasDuplicateRootPage(
         }
         p = (*p).pNext;
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -224,7 +224,7 @@ pub unsafe extern "C" fn sqlite3InitCallback(
             }
         }
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -487,7 +487,7 @@ pub unsafe extern "C" fn sqlite3InitOne(
         crate::src::src::build::sqlite3ResetOneSchema(db as *mut crate::sqliteInt_h::sqlite3, iDb);
     }
     __db_ref.init.busy = 0 as crate::src::ext::rtree::rtree::u8_0;
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -527,7 +527,7 @@ pub unsafe extern "C" fn sqlite3Init(
     if commit_internal != 0 {
         crate::src::src::build::sqlite3CommitInternalChanges(db as *mut crate::sqliteInt_h::sqlite3);
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -543,7 +543,7 @@ pub unsafe extern "C" fn sqlite3ReadSchema(mut pParse: *mut crate::sqliteInt_h::
             (*db).mDbFlags |= crate::sqliteInt_h::DBFLAG_SchemaKnownOk as crate::src::ext::rtree::rtree::u32_0;
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn schemaIsValid(mut pParse: *mut crate::sqliteInt_h::Parse) {
@@ -601,7 +601,7 @@ pub unsafe extern "C" fn sqlite3SchemaToIndex(
             i += 1;
         }
     }
-    return i;
+    i
 }
 #[no_mangle]
 
@@ -664,7 +664,7 @@ pub unsafe extern "C" fn sqlite3ParserAddCleanup(
         xCleanup.expect("non-null function pointer")((*pParse).db, pPtr);
         pPtr = ::core::ptr::null_mut::<::core::ffi::c_void>();
     }
-    return pPtr;
+    pPtr
 }
 #[no_mangle]
 
@@ -964,7 +964,7 @@ unsafe extern "C" fn sqlite3Prepare(
         }
     }
     sqlite3ParseObjectReset(&raw mut sParse);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sqlite3LockAndPrepare(
@@ -1004,7 +1004,7 @@ unsafe extern "C" fn sqlite3LockAndPrepare(
     rc = crate::src::src::malloc::sqlite3ApiExit(db as *mut crate::sqliteInt_h::sqlite3, rc);
     __db_ref.busyHandler.nBusy = 0 as ::core::ffi::c_int;
     crate::src::src::mutex::sqlite3_mutex_leave(__db_ref.mutex);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -1036,7 +1036,7 @@ pub unsafe extern "C" fn sqlite3Reprepare(mut p: *mut crate::vdbeInt_h::Vdbe) ->
     crate::src::src::vdbeapi::sqlite3TransferBindings(pNew, p as *mut crate::sqlite3_h::sqlite3_stmt);
     crate::src::src::vdbeaux::sqlite3VdbeResetStepResult(pNew as *mut crate::vdbeInt_h::Vdbe);
     crate::src::src::vdbeaux::sqlite3VdbeFinalize(pNew as *mut crate::vdbeInt_h::Vdbe);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -1057,7 +1057,7 @@ pub unsafe extern "C" fn sqlite3_prepare(
         ppStmt,
         pzTail,
     );
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -1078,7 +1078,7 @@ pub unsafe extern "C" fn sqlite3_prepare_v2(
         ppStmt,
         pzTail,
     );
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -1100,7 +1100,7 @@ pub unsafe extern "C" fn sqlite3_prepare_v3(
         ppStmt,
         pzTail,
     );
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn sqlite3Prepare16(
@@ -1167,7 +1167,7 @@ unsafe extern "C" fn sqlite3Prepare16(
     crate::src::src::malloc::sqlite3DbFree(db as *mut crate::sqliteInt_h::sqlite3, zSql8 as *mut ::core::ffi::c_void);
     rc = crate::src::src::malloc::sqlite3ApiExit(db as *mut crate::sqliteInt_h::sqlite3, rc);
     crate::src::src::mutex::sqlite3_mutex_leave((*db).mutex);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -1180,7 +1180,7 @@ pub unsafe extern "C" fn sqlite3_prepare16(
 ) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = 0;
     rc = sqlite3Prepare16(db, zSql, nBytes, 0 as crate::src::ext::rtree::rtree::u32_0, ppStmt, pzTail);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -1200,7 +1200,7 @@ pub unsafe extern "C" fn sqlite3_prepare16_v2(
         ppStmt,
         pzTail,
     );
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -1221,5 +1221,5 @@ pub unsafe extern "C" fn sqlite3_prepare16_v3(
         ppStmt,
         pzTail,
     );
-    return rc;
+    rc
 }

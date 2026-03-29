@@ -70,12 +70,12 @@ unsafe extern "C" fn indexColumnIsBeingUpdated(
     if iIdxCol as ::core::ffi::c_int >= 0 as ::core::ffi::c_int {
         return (*aXRef.offset(iIdxCol as isize) >= 0 as ::core::ffi::c_int) as ::core::ffi::c_int;
     }
-    return crate::src::src::insert::sqlite3ExprReferencesUpdatedColumn(
+    crate::src::src::insert::sqlite3ExprReferencesUpdatedColumn(
         
         (*(&raw mut (*(*pIdx).aColExpr).a as *mut crate::sqliteInt_h::ExprList_item).offset(iCol as isize)).pExpr as *mut crate::sqliteInt_h::Expr,
         aXRef,
         chngRowid,
-    );
+    )
 }
 
 unsafe extern "C" fn indexWhereClauseMightChange(
@@ -86,7 +86,7 @@ unsafe extern "C" fn indexWhereClauseMightChange(
     if (*pIdx).pPartIdxWhere.is_null() {
         return 0 as ::core::ffi::c_int;
     }
-    return crate::src::src::insert::sqlite3ExprReferencesUpdatedColumn((*pIdx).pPartIdxWhere as *mut crate::sqliteInt_h::Expr, aXRef, chngRowid);
+    crate::src::src::insert::sqlite3ExprReferencesUpdatedColumn((*pIdx).pPartIdxWhere as *mut crate::sqliteInt_h::Expr, aXRef, chngRowid)
 }
 
 unsafe extern "C" fn exprRowColumn(
@@ -107,7 +107,7 @@ unsafe extern "C" fn exprRowColumn(
     if !pRet.is_null() {
         (*pRet).iColumn = (iCol + 1 as ::core::ffi::c_int) as crate::sqliteInt_h::ynVar;
     }
-    return pRet;
+    pRet
 }
 
 unsafe extern "C" fn updateFromSelect(
@@ -346,7 +346,7 @@ pub unsafe extern "C" fn sqlite3Update(
                 if !(crate::src::src::delete::sqlite3IsReadOnly(pParse as *mut crate::sqliteInt_h::Parse,  pTab as *mut crate::sqliteInt_h::Table,  pTrigger as *mut crate::sqliteInt_h::Trigger) != 0) {
                     let __pParse_ref = unsafe { &mut *pParse };
                     let fresh0 = __pParse_ref.nTab;
-                    __pParse_ref.nTab = __pParse_ref.nTab + 1;
+                    __pParse_ref.nTab += 1;
                     iDataCur = fresh0;
                     iBaseCur = iDataCur;
                     iIdxCur = iDataCur + 1 as ::core::ffi::c_int;
@@ -737,7 +737,7 @@ pub unsafe extern "C" fn sqlite3Update(
                                                     regOldRowid,
                                                 );
                                                 let fresh1 = __pParse_ref.nTab;
-                                                __pParse_ref.nTab = __pParse_ref.nTab + 1;
+                                                __pParse_ref.nTab += 1;
                                                 iEph = fresh1;
                                                 addrOpen = crate::src::src::vdbeaux::sqlite3VdbeAddOp3(
                                                     v,
@@ -768,7 +768,7 @@ pub unsafe extern "C" fn sqlite3Update(
                                                             0 as ::core::ffi::c_int
                                                         });
                                                     let fresh2 = __pParse_ref.nTab;
-                                                    __pParse_ref.nTab = __pParse_ref.nTab + 1;
+                                                    __pParse_ref.nTab += 1;
                                                     iEph = fresh2;
                                                     if !pPk.is_null() {
                                                         crate::src::src::vdbeaux::sqlite3VdbeAddOp3(
@@ -1696,7 +1696,7 @@ unsafe extern "C" fn updateVirtualTable(
     let mut eOnePass: ::core::ffi::c_int = 0;
     let mut addr: ::core::ffi::c_int = 0;
     let fresh5 = __pParse_ref.nTab;
-    __pParse_ref.nTab = __pParse_ref.nTab + 1;
+    __pParse_ref.nTab += 1;
     ephemTab = fresh5;
     addr = crate::src::src::vdbeaux::sqlite3VdbeAddOp2(v, crate::opcodes_h::OP_OpenEphemeral, ephemTab, nArg);
     regArg = __pParse_ref.nMem + 1 as ::core::ffi::c_int;

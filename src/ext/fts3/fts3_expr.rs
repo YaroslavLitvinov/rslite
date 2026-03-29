@@ -41,12 +41,12 @@ pub static mut sqlite3_fts3_enable_parentheses: ::core::ffi::c_int = 0 as ::core
 pub const SQLITE_FTS3_DEFAULT_NEAR_PARAM: ::core::ffi::c_int = 10 as ::core::ffi::c_int;
 
 unsafe extern "C" fn fts3isspace(mut c: ::core::ffi::c_char) -> ::core::ffi::c_int {
-    return (c as ::core::ffi::c_int == ' ' as i32
+    (c as ::core::ffi::c_int == ' ' as i32
         || c as ::core::ffi::c_int == '\t' as i32
         || c as ::core::ffi::c_int == '\n' as i32
         || c as ::core::ffi::c_int == '\r' as i32
         || c as ::core::ffi::c_int == '\u{b}' as i32
-        || c as ::core::ffi::c_int == '\u{c}' as i32) as ::core::ffi::c_int;
+        || c as ::core::ffi::c_int == '\u{c}' as i32) as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -57,7 +57,7 @@ pub unsafe extern "C" fn sqlite3Fts3MallocZero(
     if !pRet.is_null() {
         ::libc::memset(pRet, 0 as ::core::ffi::c_int, nByte as crate::__stddef_size_t_h::size_t);
     }
-    return pRet;
+    pRet
 }
 #[no_mangle]
 
@@ -84,7 +84,7 @@ pub unsafe extern "C" fn sqlite3Fts3OpenTokenizer(
         }
     }
     *ppCsr = pCsr;
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn findBarredChar(
@@ -103,7 +103,7 @@ unsafe extern "C" fn findBarredChar(
         }
         ii += 1;
     }
-    return -(1 as ::core::ffi::c_int);
+    -(1 as ::core::ffi::c_int)
 }
 
 unsafe extern "C" fn getNextToken(
@@ -217,7 +217,7 @@ unsafe extern "C" fn getNextToken(
         (*pModule).xClose.expect("non-null function pointer")(pCursor);
     }
     *ppExpr = pRet;
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3ReallocOrFree(
@@ -228,7 +228,7 @@ unsafe extern "C" fn fts3ReallocOrFree(
     if pRet.is_null() {
         crate::src::src::malloc::sqlite3_free(pOrig);
     }
-    return pRet;
+    pRet
 }
 
 unsafe extern "C" fn getNextString(
@@ -406,7 +406,7 @@ unsafe extern "C" fn getNextString(
         p = ::core::ptr::null_mut::<crate::fts3Int_h::Fts3Expr>();
     }
     *ppExpr = p;
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn getNextNode(
@@ -593,7 +593,7 @@ unsafe extern "C" fn getNextNode(
         pnConsumed,
     );
     *pnConsumed += iColLen;
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn opPrecedence(mut p: *mut crate::fts3Int_h::Fts3Expr) -> ::core::ffi::c_int {
@@ -604,7 +604,7 @@ unsafe extern "C" fn opPrecedence(mut p: *mut crate::fts3Int_h::Fts3Expr) -> ::c
     } else if (*p).eType == crate::fts3Int_h::FTSQUERY_OR_1 {
         return 2 as ::core::ffi::c_int;
     }
-    return 3 as ::core::ffi::c_int;
+    3 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn insertBinaryOperator(
@@ -765,7 +765,7 @@ unsafe extern "C" fn fts3ExprParse(
         pRet = ::core::ptr::null_mut::<crate::fts3Int_h::Fts3Expr>();
     }
     *ppExpr = pRet;
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3ExprCheckDepth(
@@ -783,7 +783,7 @@ unsafe extern "C" fn fts3ExprCheckDepth(
             }
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3ExprBalance(
@@ -943,7 +943,7 @@ unsafe extern "C" fn fts3ExprBalance(
         pRoot = ::core::ptr::null_mut::<crate::fts3Int_h::Fts3Expr>();
     }
     *pp = pRoot;
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3ExprParseUnbalanced(
@@ -977,7 +977,7 @@ unsafe extern "C" fn fts3ExprParseUnbalanced(
     if rc == crate::sqlite3_h::SQLITE_OK && sParse.nNest != 0 {
         rc = crate::sqlite3_h::SQLITE_ERROR;
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -1029,7 +1029,7 @@ pub unsafe extern "C" fn sqlite3Fts3ExprParse(
             );
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3FreeExprNode(mut p: *mut crate::fts3Int_h::Fts3Expr) {
@@ -1137,7 +1137,7 @@ unsafe extern "C" fn exprToString(
     if !zBuf.is_null() {
         zBuf = crate::src::src::printf::sqlite3_mprintf(b"%z}\0" as *const u8 as *const ::core::ffi::c_char, zBuf);
     }
-    return zBuf;
+    zBuf
 }
 
 unsafe extern "C" fn fts3ExprTestCommon(
@@ -1318,5 +1318,5 @@ pub unsafe extern "C" fn sqlite3Fts3ExprInitTestInterface(
             None,
         );
     }
-    return rc;
+    rc
 }

@@ -140,7 +140,7 @@ unsafe extern "C" fn fts3auxConnectMethod(
         pzErr,
         b"invalid arguments to fts4aux constructor\0" as *const u8 as *const ::core::ffi::c_char,
     );
-    return crate::sqlite3_h::SQLITE_ERROR;
+    crate::sqlite3_h::SQLITE_ERROR
 }
 
 unsafe extern "C" fn fts3auxDisconnectMethod(mut pVtab: *mut crate::sqlite3_h::sqlite3_vtab) -> ::core::ffi::c_int {
@@ -158,7 +158,7 @@ unsafe extern "C" fn fts3auxDisconnectMethod(mut pVtab: *mut crate::sqlite3_h::s
     }
     crate::src::src::malloc::sqlite3_free((*pFts3).zSegmentsTbl as *mut ::core::ffi::c_void);
     crate::src::src::malloc::sqlite3_free(p as *mut ::core::ffi::c_void);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 pub const FTS4AUX_EQ_CONSTRAINT: ::core::ffi::c_int = 1 as ::core::ffi::c_int;
@@ -220,7 +220,7 @@ unsafe extern "C" fn fts3auxBestIndexMethod(
     if iEq >= 0 as ::core::ffi::c_int {
         __pInfo_ref.idxNum = FTS4AUX_EQ_CONSTRAINT;
         let fresh9 = iNext;
-        iNext = iNext + 1;
+        iNext += 1;
         (*__pInfo_ref.aConstraintUsage.offset(iEq as isize)).argvIndex = fresh9;
         __pInfo_ref.estimatedCost = 5 as ::core::ffi::c_int as ::core::ffi::c_double;
     } else {
@@ -229,25 +229,25 @@ unsafe extern "C" fn fts3auxBestIndexMethod(
         if iGe >= 0 as ::core::ffi::c_int {
             __pInfo_ref.idxNum += FTS4AUX_GE_CONSTRAINT;
             let fresh10 = iNext;
-            iNext = iNext + 1;
+            iNext += 1;
             (*__pInfo_ref.aConstraintUsage.offset(iGe as isize)).argvIndex = fresh10;
             __pInfo_ref.estimatedCost /= 2 as ::core::ffi::c_int as ::core::ffi::c_double;
         }
         if iLe >= 0 as ::core::ffi::c_int {
             __pInfo_ref.idxNum += FTS4AUX_LE_CONSTRAINT;
             let fresh11 = iNext;
-            iNext = iNext + 1;
+            iNext += 1;
             (*__pInfo_ref.aConstraintUsage.offset(iLe as isize)).argvIndex = fresh11;
             __pInfo_ref.estimatedCost /= 2 as ::core::ffi::c_int as ::core::ffi::c_double;
         }
     }
     if iLangid >= 0 as ::core::ffi::c_int {
         let fresh12 = iNext;
-        iNext = iNext + 1;
+        iNext += 1;
         (*__pInfo_ref.aConstraintUsage.offset(iLangid as isize)).argvIndex = fresh12;
         __pInfo_ref.estimatedCost -= 1.;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn fts3auxOpenMethod(
@@ -266,7 +266,7 @@ unsafe extern "C" fn fts3auxOpenMethod(
         ::core::mem::size_of::<Fts3auxCursor>() as crate::__stddef_size_t_h::size_t,
     );
     *ppCsr = pCsr as *mut crate::sqlite3_h::sqlite3_vtab_cursor;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn fts3auxCloseMethod(
@@ -281,7 +281,7 @@ unsafe extern "C" fn fts3auxCloseMethod(
     crate::src::src::malloc::sqlite3_free(__pCsr_ref.zStop as *mut ::core::ffi::c_void);
     crate::src::src::malloc::sqlite3_free(__pCsr_ref.aStat as *mut ::core::ffi::c_void);
     crate::src::src::malloc::sqlite3_free(pCsr as *mut ::core::ffi::c_void);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn fts3auxGrowStatArray(
@@ -308,7 +308,7 @@ unsafe extern "C" fn fts3auxGrowStatArray(
         __pCsr_ref.aStat = aNew as *mut Fts3auxColstats;
         __pCsr_ref.nStat = nSize;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn fts3auxNextMethod(
@@ -432,7 +432,7 @@ unsafe extern "C" fn fts3auxNextMethod(
     } else {
         __pCsr_ref.isEof = 1 as ::core::ffi::c_int;
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3auxFilterMethod(
@@ -454,24 +454,24 @@ unsafe extern "C" fn fts3auxFilterMethod(
     let mut iNext: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     if idxNum == FTS4AUX_EQ_CONSTRAINT {
         let fresh5 = iNext;
-        iNext = iNext + 1;
+        iNext += 1;
         iEq = fresh5;
     } else {
         isScan = 1 as ::core::ffi::c_int;
         if idxNum & FTS4AUX_GE_CONSTRAINT != 0 {
             let fresh6 = iNext;
-            iNext = iNext + 1;
+            iNext += 1;
             iGe = fresh6;
         }
         if idxNum & FTS4AUX_LE_CONSTRAINT != 0 {
             let fresh7 = iNext;
-            iNext = iNext + 1;
+            iNext += 1;
             iLe = fresh7;
         }
     }
     if iNext < nVal {
         let fresh8 = iNext;
-        iNext = iNext + 1;
+        iNext += 1;
         iLangid = fresh8;
     }
     let __pCsr_ref = unsafe { &mut *pCsr };
@@ -538,12 +538,12 @@ unsafe extern "C" fn fts3auxFilterMethod(
     if rc == crate::sqlite3_h::SQLITE_OK {
         rc = fts3auxNextMethod(pCursor);
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn fts3auxEofMethod(mut pCursor: *mut crate::sqlite3_h::sqlite3_vtab_cursor) -> ::core::ffi::c_int {
     let pCsr = &*(pCursor as *mut Fts3auxCursor);
-    return pCsr.isEof;
+    pCsr.isEof
 }
 
 unsafe extern "C" fn fts3auxColumnMethod(
@@ -586,7 +586,7 @@ unsafe extern "C" fn fts3auxColumnMethod(
             crate::src::src::vdbeapi::sqlite3_result_int(pCtx, (*p).iLangid);
         }
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn fts3auxRowidMethod(
@@ -595,7 +595,7 @@ unsafe extern "C" fn fts3auxRowidMethod(
 ) -> ::core::ffi::c_int {
     let pCsr = &*(pCursor as *mut Fts3auxCursor);
     *pRowid = pCsr.iRowid as crate::sqlite3_h::sqlite_int64;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -707,5 +707,5 @@ pub unsafe extern "C" fn sqlite3Fts3InitAux(mut db: *mut crate::sqliteInt_h::sql
     *const crate::sqlite3_h::sqlite3_module,
         ::core::ptr::null_mut::<::core::ffi::c_void>(),
     );
-    return rc;
+    rc
 }

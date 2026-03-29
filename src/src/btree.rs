@@ -131,7 +131,7 @@ pub unsafe extern "C" fn sqlite3_enable_shared_cache(
     mut enable: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
     crate::src::src::global::sqlite3Config.sharedCacheEnabled = enable;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn querySharedCacheTableLock(
@@ -163,7 +163,7 @@ unsafe extern "C" fn querySharedCacheTableLock(
         }
         pIter = (*pIter).pNext;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn setSharedCacheTableLock(
@@ -196,7 +196,7 @@ unsafe extern "C" fn setSharedCacheTableLock(
     if eLock as ::core::ffi::c_int > (*pLock).eLock as ::core::ffi::c_int {
         (*pLock).eLock = eLock;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn clearAllSharedCacheTableLocks(mut p: *mut crate::btreeInt_h::Btree) {
@@ -283,7 +283,7 @@ unsafe extern "C" fn btreeSetHasContent(
     if rc == crate::sqlite3_h::SQLITE_OK && pgno <= crate::src::src::bitvec::sqlite3BitvecSize((*pBt).pHasContent) {
         rc = crate::src::src::bitvec::sqlite3BitvecSet((*pBt).pHasContent, pgno as crate::src::ext::rtree::rtree::u32_0);
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn btreeGetHasContent(
@@ -291,9 +291,9 @@ unsafe extern "C" fn btreeGetHasContent(
     mut pgno: crate::src::src::pager::Pgno,
 ) -> ::core::ffi::c_int {
     let mut p: *mut crate::src::src::bitvec::Bitvec = (*pBt).pHasContent;
-    return (!p.is_null()
+    (!p.is_null()
         && (pgno > crate::src::src::bitvec::sqlite3BitvecSize(p) || crate::src::src::bitvec::sqlite3BitvecTestNotNull(p, pgno as crate::src::ext::rtree::rtree::u32_0) != 0))
-        as ::core::ffi::c_int;
+        as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn btreeClearHasContent(mut pBt: *mut crate::btreeInt_h::BtShared) {
@@ -344,7 +344,7 @@ unsafe extern "C" fn saveCursorKey(mut pCur: *mut crate::btreeInt_h::BtCursor) -
             rc = crate::sqliteInt_h::SQLITE_NOMEM_BKPT;
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn saveCursorPosition(mut pCur: *mut crate::btreeInt_h::BtCursor) -> ::core::ffi::c_int {
@@ -365,7 +365,7 @@ unsafe extern "C" fn saveCursorPosition(mut pCur: *mut crate::btreeInt_h::BtCurs
     }
     __pCur_ref.curFlags = (__pCur_ref.curFlags as ::core::ffi::c_int
         & !(crate::btreeInt_h::BTCF_ValidNKey | crate::btreeInt_h::BTCF_ValidOvfl | crate::btreeInt_h::BTCF_AtLast)) as crate::src::ext::rtree::rtree::u8_0;
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn saveAllCursors(
@@ -387,7 +387,7 @@ unsafe extern "C" fn saveAllCursors(
     if !pExcept.is_null() {
         (*pExcept).curFlags = ((*pExcept).curFlags as ::core::ffi::c_int & !crate::btreeInt_h::BTCF_Multiple) as crate::src::ext::rtree::rtree::u8_0;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[inline(never)]
 
@@ -414,7 +414,7 @@ unsafe extern "C" fn saveCursorsOnList(
             break;
         }
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -454,7 +454,7 @@ unsafe extern "C" fn btreeMoveto(
         pIdxKey = ::core::ptr::null_mut::<crate::sqliteInt_h::UnpackedRecord>();
         rc = sqlite3BtreeTableMoveto(pCur, nKey, bias, pRes);
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn btreeRestoreCursorPosition(mut pCur: *mut crate::btreeInt_h::BtCursor) -> ::core::ffi::c_int {
@@ -486,18 +486,18 @@ unsafe extern "C" fn btreeRestoreCursorPosition(mut pCur: *mut crate::btreeInt_h
             __pCur_ref.eState = crate::btreeInt_h::CURSOR_SKIPNEXT as crate::src::ext::rtree::rtree::u8_0;
         }
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3BtreeCursorHasMoved(mut pCur: *mut crate::btreeInt_h::BtCursor) -> ::core::ffi::c_int {
-    return (crate::btreeInt_h::CURSOR_VALID != *(pCur as *mut crate::src::ext::rtree::rtree::u8_0) as ::core::ffi::c_int) as ::core::ffi::c_int;
+    (crate::btreeInt_h::CURSOR_VALID != *(pCur as *mut crate::src::ext::rtree::rtree::u8_0) as ::core::ffi::c_int) as ::core::ffi::c_int
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3BtreeFakeValidCursor() -> *mut crate::btreeInt_h::BtCursor {
     static mut fakeCursor: crate::src::ext::rtree::rtree::u8_0 = crate::btreeInt_h::CURSOR_VALID as crate::src::ext::rtree::rtree::u8_0;
-    return &raw mut fakeCursor as *mut crate::btreeInt_h::BtCursor;
+    &raw mut fakeCursor as *mut crate::btreeInt_h::BtCursor
 }
 #[no_mangle]
 
@@ -520,7 +520,7 @@ pub unsafe extern "C" fn sqlite3BtreeCursorRestore(
     } else {
         *pDifferentRow = 0 as ::core::ffi::c_int;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -555,7 +555,7 @@ unsafe extern "C" fn ptrmapPageno(mut pBt: *mut crate::btreeInt_h::BtShared, mut
     {
         ret = ret.wrapping_add(1);
     }
-    return ret;
+    ret
 }
 
 unsafe extern "C" fn ptrmapPut(
@@ -662,7 +662,7 @@ unsafe extern "C" fn ptrmapGet(
     {
         return crate::src::src::main::sqlite3CorruptError(1146 as ::core::ffi::c_int);
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[inline(never)]
 
@@ -928,7 +928,7 @@ unsafe extern "C" fn cellSizePtr(mut pPage: *mut crate::btreeInt_h::MemPage, mut
                 as crate::src::ext::rtree::rtree::u32_0,
         );
     }
-    return nSize as crate::src::fts5::u16_0;
+    nSize as crate::src::fts5::u16_0
 }
 
 unsafe extern "C" fn cellSizePtrIdxLeaf(mut pPage: *mut crate::btreeInt_h::MemPage, mut pCell: *mut crate::src::ext::rtree::rtree::u8_0) -> crate::src::fts5::u16_0 {
@@ -971,7 +971,7 @@ unsafe extern "C" fn cellSizePtrIdxLeaf(mut pPage: *mut crate::btreeInt_h::MemPa
                 as crate::src::ext::rtree::rtree::u32_0,
         );
     }
-    return nSize as crate::src::fts5::u16_0;
+    nSize as crate::src::fts5::u16_0
 }
 
 unsafe extern "C" fn cellSizePtrNoPayload(mut _pPage: *mut crate::btreeInt_h::MemPage, mut pCell: *mut crate::src::ext::rtree::rtree::u8_0) -> crate::src::fts5::u16_0 {
@@ -985,7 +985,7 @@ unsafe extern "C" fn cellSizePtrNoPayload(mut _pPage: *mut crate::btreeInt_h::Me
             break;
         }
     }
-    return pIter.offset_from(pCell) as ::core::ffi::c_long as crate::src::fts5::u16_0;
+    pIter.offset_from(pCell) as ::core::ffi::c_long as crate::src::fts5::u16_0
 }
 
 unsafe extern "C" fn cellSizePtrTableLeaf(mut pPage: *mut crate::btreeInt_h::MemPage, mut pCell: *mut crate::src::ext::rtree::rtree::u8_0) -> crate::src::fts5::u16_0 {
@@ -1069,7 +1069,7 @@ unsafe extern "C" fn cellSizePtrTableLeaf(mut pPage: *mut crate::btreeInt_h::Mem
                 as crate::src::ext::rtree::rtree::u32_0,
         );
     }
-    return nSize as crate::src::fts5::u16_0;
+    nSize as crate::src::fts5::u16_0
 }
 
 unsafe extern "C" fn ptrmapPutOvflPtr(
@@ -1331,7 +1331,7 @@ unsafe extern "C" fn defragmentPage(
         0 as ::core::ffi::c_int,
         (cbrk - iCellFirst) as crate::__stddef_size_t_h::size_t,
     );
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn pageFindSlot(
@@ -1401,7 +1401,7 @@ unsafe extern "C" fn pageFindSlot(
     if pc > maxPC + nByte - 4 as ::core::ffi::c_int {
         *pRc = crate::src::src::main::sqlite3CorruptError(1801 as ::core::ffi::c_int);
     }
-    return ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>();
+    ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>()
 }
 #[inline(always)]
 
@@ -1477,7 +1477,7 @@ unsafe extern "C" fn allocateSpace(
     *(data.offset((hdr + 5 as ::core::ffi::c_int) as isize) as *mut crate::src::ext::rtree::rtree::u8_0)
         .offset(1 as isize) = top as crate::src::ext::rtree::rtree::u8_0;
     *pIdx = top;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn freeSpace(
@@ -1637,7 +1637,7 @@ unsafe extern "C" fn freeSpace(
             iSize as crate::src::fts5::u16_0 as crate::src::ext::rtree::rtree::u8_0 as ::core::ffi::c_uchar;
     }
     __pPage_ref.nFree += iOrigSize;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn decodeFlags(
@@ -1740,7 +1740,7 @@ unsafe extern "C" fn decodeFlags(
             return crate::src::src::main::sqlite3CorruptError(2081 as ::core::ffi::c_int);
         }
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn btreeComputeFreeSpace(mut pPage: *mut crate::btreeInt_h::MemPage) -> ::core::ffi::c_int {
@@ -1821,7 +1821,7 @@ unsafe extern "C" fn btreeComputeFreeSpace(mut pPage: *mut crate::btreeInt_h::Me
         return crate::src::src::main::sqlite3CorruptError(2163 as ::core::ffi::c_int);
     }
     __pPage_ref.nFree = (nFree - iCellFirst) as crate::src::fts5::u16_0 as ::core::ffi::c_int;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[inline(never)]
 
@@ -1863,7 +1863,7 @@ unsafe extern "C" fn btreeCellSizeCheck(mut pPage: *mut crate::btreeInt_h::MemPa
         }
         i += 1;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn btreeInitPage(mut pPage: *mut crate::btreeInt_h::MemPage) -> ::core::ffi::c_int {
@@ -1912,7 +1912,7 @@ unsafe extern "C" fn btreeInitPage(mut pPage: *mut crate::btreeInt_h::MemPage) -
     if (*(*pBt).db).flags & crate::sqliteInt_h::SQLITE_CellSizeCk as crate::src::ext::rtree::rtree::u64_0 != 0 {
         return btreeCellSizeCheck(pPage);
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn zeroPage(mut pPage: *mut crate::btreeInt_h::MemPage, mut flags: ::core::ffi::c_int) {
@@ -1981,7 +1981,7 @@ unsafe extern "C" fn btreePageFromDbPage(
             0 as ::core::ffi::c_int
         }) as crate::src::ext::rtree::rtree::u8_0;
     }
-    return pPage;
+    pPage
 }
 
 unsafe extern "C" fn btreeGetPage(
@@ -1997,7 +1997,7 @@ unsafe extern "C" fn btreeGetPage(
         return rc;
     }
     *ppPage = btreePageFromDbPage(pDbPage, pgno, pBt);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn btreePageLookup(mut pBt: *mut crate::btreeInt_h::BtShared, mut pgno: crate::src::src::pager::Pgno) -> *mut crate::btreeInt_h::MemPage {
@@ -2007,16 +2007,16 @@ unsafe extern "C" fn btreePageLookup(mut pBt: *mut crate::btreeInt_h::BtShared, 
     if !pDbPage.is_null() {
         return btreePageFromDbPage(pDbPage, pgno, pBt);
     }
-    return ::core::ptr::null_mut::<crate::btreeInt_h::MemPage>();
+    ::core::ptr::null_mut::<crate::btreeInt_h::MemPage>()
 }
 
 unsafe extern "C" fn btreePagecount(mut pBt: *mut crate::btreeInt_h::BtShared) -> crate::src::src::pager::Pgno {
-    return (*pBt).nPage as crate::src::src::pager::Pgno;
+    (*pBt).nPage as crate::src::src::pager::Pgno
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3BtreeLastPage(mut p: *mut crate::btreeInt_h::Btree) -> crate::src::src::pager::Pgno {
-    return btreePagecount((*p).pBt);
+    btreePagecount((*p).pBt)
 }
 
 unsafe extern "C" fn getAndInitPage(
@@ -2048,7 +2048,7 @@ unsafe extern "C" fn getAndInitPage(
         }
     }
     *ppPage = pPage;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn releasePageNotNull(mut pPage: *mut crate::btreeInt_h::MemPage) {
@@ -2082,7 +2082,7 @@ unsafe extern "C" fn btreeGetUnusedPage(
     } else {
         *ppPage = ::core::ptr::null_mut::<crate::btreeInt_h::MemPage>();
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn pageReinit(mut pData: *mut crate::src::src::pager::DbPage) {
@@ -2100,8 +2100,8 @@ unsafe extern "C" fn btreeInvokeBusyHandler(
     mut pArg: *mut ::core::ffi::c_void,
 ) -> ::core::ffi::c_int {
     let mut pBt: *mut crate::btreeInt_h::BtShared = pArg as *mut crate::btreeInt_h::BtShared;
-    return crate::src::src::main::sqlite3InvokeBusyHandler(&raw mut (*(*pBt).db).busyHandler as *mut _ as
-    *mut crate::sqliteInt_h::BusyHandler);
+    crate::src::src::main::sqlite3InvokeBusyHandler(&raw mut (*(*pBt).db).busyHandler as *mut _ as
+    *mut crate::sqliteInt_h::BusyHandler)
 }
 #[no_mangle]
 
@@ -2445,7 +2445,7 @@ pub unsafe extern "C" fn sqlite3BtreeOpen(
     if !mutexOpen.is_null() {
         crate::src::src::mutex::sqlite3_mutex_leave(mutexOpen);
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn removeFromSharingList(mut pBt: *mut crate::btreeInt_h::BtShared) -> ::core::ffi::c_int {
@@ -2471,7 +2471,7 @@ unsafe extern "C" fn removeFromSharingList(mut pBt: *mut crate::btreeInt_h::BtSh
         removed = 1 as ::core::ffi::c_int;
     }
     crate::src::src::mutex::sqlite3_mutex_leave(pMainMtx);
-    return removed;
+    removed
 }
 #[inline(never)]
 
@@ -2494,7 +2494,7 @@ unsafe extern "C" fn allocateTempSpace(mut pBt: *mut crate::btreeInt_h::BtShared
         8 as crate::__stddef_size_t_h::size_t,
     );
     __pBt_ref.pTmpSpace = __pBt_ref.pTmpSpace.offset(4 as isize);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn freeTempSpace(mut pBt: *mut crate::btreeInt_h::BtShared) {
@@ -2531,7 +2531,7 @@ pub unsafe extern "C" fn sqlite3BtreeClose(mut p: *mut crate::btreeInt_h::Btree)
         (*__p_ref.pNext).pPrev = __p_ref.pPrev;
     }
     crate::src::src::malloc::sqlite3_free(p as *mut ::core::ffi::c_void);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -2543,7 +2543,7 @@ pub unsafe extern "C" fn sqlite3BtreeSetCacheSize(
     crate::src::src::btmutex::sqlite3BtreeEnter(p as *mut crate::btreeInt_h::Btree);
     crate::src::src::pager::sqlite3PagerSetCachesize((*pBt).pPager, mxPage);
     crate::src::src::btmutex::sqlite3BtreeLeave(p as *mut crate::btreeInt_h::Btree);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -2556,7 +2556,7 @@ pub unsafe extern "C" fn sqlite3BtreeSetSpillSize(
     crate::src::src::btmutex::sqlite3BtreeEnter(p as *mut crate::btreeInt_h::Btree);
     res = crate::src::src::pager::sqlite3PagerSetSpillsize((*pBt).pPager, mxPage);
     crate::src::src::btmutex::sqlite3BtreeLeave(p as *mut crate::btreeInt_h::Btree);
-    return res;
+    res
 }
 #[no_mangle]
 
@@ -2568,7 +2568,7 @@ pub unsafe extern "C" fn sqlite3BtreeSetMmapLimit(
     crate::src::src::btmutex::sqlite3BtreeEnter(p as *mut crate::btreeInt_h::Btree);
     crate::src::src::pager::sqlite3PagerSetMmapLimit((*pBt).pPager, szMmap);
     crate::src::src::btmutex::sqlite3BtreeLeave(p as *mut crate::btreeInt_h::Btree);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -2580,7 +2580,7 @@ pub unsafe extern "C" fn sqlite3BtreeSetPagerFlags(
     crate::src::src::btmutex::sqlite3BtreeEnter(p as *mut crate::btreeInt_h::Btree);
     crate::src::src::pager::sqlite3PagerSetFlags((*pBt).pPager, pgFlags);
     crate::src::src::btmutex::sqlite3BtreeLeave(p as *mut crate::btreeInt_h::Btree);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -2626,12 +2626,12 @@ pub unsafe extern "C" fn sqlite3BtreeSetPageSize(
         __pBt_ref.btsFlags = (__pBt_ref.btsFlags as ::core::ffi::c_int | crate::btreeInt_h::BTS_PAGESIZE_FIXED) as crate::src::fts5::u16_0;
     }
     crate::src::src::btmutex::sqlite3BtreeLeave(p as *mut crate::btreeInt_h::Btree);
-    return rc;
+    rc
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3BtreeGetPageSize(mut p: *mut crate::btreeInt_h::Btree) -> ::core::ffi::c_int {
-    return (*(*p).pBt).pageSize as ::core::ffi::c_int;
+    (*(*p).pBt).pageSize as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -2639,7 +2639,7 @@ pub unsafe extern "C" fn sqlite3BtreeGetReserveNoMutex(mut p: *mut crate::btreeI
     let mut n: ::core::ffi::c_int = 0;
     let __pBt_ref = &*(*p).pBt;
     n = __pBt_ref.pageSize.wrapping_sub(__pBt_ref.usableSize) as ::core::ffi::c_int;
-    return n;
+    n
 }
 #[no_mangle]
 
@@ -2650,7 +2650,7 @@ pub unsafe extern "C" fn sqlite3BtreeGetRequestedReserve(mut p: *mut crate::btre
     n1 = (*(*p).pBt).nReserveWanted as ::core::ffi::c_int;
     n2 = sqlite3BtreeGetReserveNoMutex(p);
     crate::src::src::btmutex::sqlite3BtreeLeave(p as *mut crate::btreeInt_h::Btree);
-    return if n1 > n2 { n1 } else { n2 };
+    if n1 > n2 { n1 } else { n2 }
 }
 #[no_mangle]
 
@@ -2659,7 +2659,7 @@ pub unsafe extern "C" fn sqlite3BtreeMaxPageCount(mut p: *mut crate::btreeInt_h:
     crate::src::src::btmutex::sqlite3BtreeEnter(p as *mut crate::btreeInt_h::Btree);
     n = crate::src::src::pager::sqlite3PagerMaxPageCount((*(*p).pBt).pPager, mxPage);
     crate::src::src::btmutex::sqlite3BtreeLeave(p as *mut crate::btreeInt_h::Btree);
-    return n;
+    n
 }
 #[no_mangle]
 
@@ -2682,7 +2682,7 @@ pub unsafe extern "C" fn sqlite3BtreeSecureDelete(
     }
     b = ((*(*p).pBt).btsFlags as ::core::ffi::c_int & crate::btreeInt_h::BTS_FAST_SECURE) / crate::btreeInt_h::BTS_SECURE_DELETE;
     crate::src::src::btmutex::sqlite3BtreeLeave(p as *mut crate::btreeInt_h::Btree);
-    return b;
+    b
 }
 #[no_mangle]
 
@@ -2715,7 +2715,7 @@ pub unsafe extern "C" fn sqlite3BtreeSetAutoVacuum(
         }) as crate::src::ext::rtree::rtree::u8_0;
     }
     crate::src::src::btmutex::sqlite3BtreeLeave(p as *mut crate::btreeInt_h::Btree);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -2731,7 +2731,7 @@ pub unsafe extern "C" fn sqlite3BtreeGetAutoVacuum(mut p: *mut crate::btreeInt_h
         crate::src::src::btree::BTREE_AUTOVACUUM_INCR
     };
     crate::src::src::btmutex::sqlite3BtreeLeave(p as *mut crate::btreeInt_h::Btree);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn lockBtree(mut pBt: *mut crate::btreeInt_h::BtShared) -> ::core::ffi::c_int {
@@ -2946,7 +2946,7 @@ unsafe extern "C" fn lockBtree(mut pBt: *mut crate::btreeInt_h::BtShared) -> ::c
     }
     __pBt_ref.pPage1 = pPage1;
     __pBt_ref.nPage = nPage;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn unlockBtreeIfUnused(mut pBt: *mut crate::btreeInt_h::BtShared) {
@@ -3011,7 +3011,7 @@ unsafe extern "C" fn newDatabase(mut pBt: *mut crate::btreeInt_h::BtShared) -> :
     );
     __pBt_ref.nPage = 1 as crate::src::ext::rtree::rtree::u32_0;
     *data.offset(31 as isize) = 1 as ::core::ffi::c_uchar;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -3021,7 +3021,7 @@ pub unsafe extern "C" fn sqlite3BtreeNewDb(mut p: *mut crate::btreeInt_h::Btree)
     (*(*p).pBt).nPage = 0 as crate::src::ext::rtree::rtree::u32_0;
     rc = newDatabase((*p).pBt);
     crate::src::src::btmutex::sqlite3BtreeLeave(p as *mut crate::btreeInt_h::Btree);
-    return rc;
+    rc
 }
 #[inline(never)]
 
@@ -3171,7 +3171,7 @@ unsafe extern "C" fn btreeBeginTrans(
         }
     }
     crate::src::src::btmutex::sqlite3BtreeLeave(p as *mut crate::btreeInt_h::Btree);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -3251,7 +3251,7 @@ unsafe extern "C" fn setChildPtrmaps(mut pPage: *mut crate::btreeInt_h::MemPage)
             ) as *mut crate::src::ext::rtree::rtree::u8_0) as crate::src::src::pager::Pgno;
         ptrmapPut(pBt, childPgno_0, crate::btreeInt_h::PTRMAP_BTREE as crate::src::ext::rtree::rtree::u8_0, pgno, &raw mut rc);
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn modifyPagePointer(
@@ -3363,7 +3363,7 @@ unsafe extern "C" fn modifyPagePointer(
             );
         }
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn relocatePage(
@@ -3424,7 +3424,7 @@ unsafe extern "C" fn relocatePage(
             ptrmapPut(pBt, iFreePage, eType, iPtrPage, &raw mut rc);
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn incrVacuumStep(
@@ -3526,7 +3526,7 @@ unsafe extern "C" fn incrVacuumStep(
         (*pBt).bDoTruncate = 1 as crate::src::ext::rtree::rtree::u8_0;
         (*pBt).nPage = iLastPg as crate::src::ext::rtree::rtree::u32_0;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn finalDbSize(mut pBt: *mut crate::btreeInt_h::BtShared, mut nOrig: crate::src::src::pager::Pgno, mut nFree: crate::src::src::pager::Pgno) -> crate::src::src::pager::Pgno {
@@ -3560,7 +3560,7 @@ unsafe extern "C" fn finalDbSize(mut pBt: *mut crate::btreeInt_h::BtShared, mut 
     {
         nFin = nFin.wrapping_sub(1);
     }
-    return nFin;
+    nFin
 }
 #[no_mangle]
 
@@ -3601,7 +3601,7 @@ pub unsafe extern "C" fn sqlite3BtreeIncrVacuum(mut p: *mut crate::btreeInt_h::B
         }
     }
     crate::src::src::btmutex::sqlite3BtreeLeave(p as *mut crate::btreeInt_h::Btree);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn autoVacuumCommit(mut p: *mut crate::btreeInt_h::Btree) -> ::core::ffi::c_int {
@@ -3701,7 +3701,7 @@ unsafe extern "C" fn autoVacuumCommit(mut p: *mut crate::btreeInt_h::Btree) -> :
             crate::src::src::pager::sqlite3PagerRollback(pPager);
         }
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -3727,7 +3727,7 @@ pub unsafe extern "C" fn sqlite3BtreeCommitPhaseOne(
         rc = crate::src::src::pager::sqlite3PagerCommitPhaseOne(__pBt_ref.pPager, zSuperJrnl, 0 as ::core::ffi::c_int);
         crate::src::src::btmutex::sqlite3BtreeLeave(p as *mut crate::btreeInt_h::Btree);
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn btreeEndTransaction(mut p: *mut crate::btreeInt_h::Btree) {
@@ -3776,7 +3776,7 @@ pub unsafe extern "C" fn sqlite3BtreeCommitPhaseTwo(
     }
     btreeEndTransaction(p);
     crate::src::src::btmutex::sqlite3BtreeLeave(p as *mut crate::btreeInt_h::Btree);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -3788,7 +3788,7 @@ pub unsafe extern "C" fn sqlite3BtreeCommit(mut p: *mut crate::btreeInt_h::Btree
         rc = sqlite3BtreeCommitPhaseTwo(p, 0 as ::core::ffi::c_int);
     }
     crate::src::src::btmutex::sqlite3BtreeLeave(p as *mut crate::btreeInt_h::Btree);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -3825,7 +3825,7 @@ pub unsafe extern "C" fn sqlite3BtreeTripAllCursors(
         }
         crate::src::src::btmutex::sqlite3BtreeLeave(pBtree as *mut crate::btreeInt_h::Btree);
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn btreeSetNPage(mut pBt: *mut crate::btreeInt_h::BtShared, mut pPage1: *mut crate::btreeInt_h::MemPage) {
@@ -3878,7 +3878,7 @@ pub unsafe extern "C" fn sqlite3BtreeRollback(
     }
     btreeEndTransaction(p);
     crate::src::src::btmutex::sqlite3BtreeLeave(p as *mut crate::btreeInt_h::Btree);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -3891,7 +3891,7 @@ pub unsafe extern "C" fn sqlite3BtreeBeginStmt(
     crate::src::src::btmutex::sqlite3BtreeEnter(p as *mut crate::btreeInt_h::Btree);
     rc = crate::src::src::pager::sqlite3PagerOpenSavepoint((*pBt).pPager, iStatement);
     crate::src::src::btmutex::sqlite3BtreeLeave(p as *mut crate::btreeInt_h::Btree);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -3922,7 +3922,7 @@ pub unsafe extern "C" fn sqlite3BtreeSavepoint(
         }
         crate::src::src::btmutex::sqlite3BtreeLeave(p as *mut crate::btreeInt_h::Btree);
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn btreeCursor(
@@ -3969,7 +3969,7 @@ unsafe extern "C" fn btreeCursor(
     } else {
         __pCur_ref.curPagerFlags = crate::src::src::pager::PAGER_GET_READONLY as crate::src::ext::rtree::rtree::u8_0;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn btreeCursorWithLock(
@@ -3983,7 +3983,7 @@ unsafe extern "C" fn btreeCursorWithLock(
     crate::src::src::btmutex::sqlite3BtreeEnter(p as *mut crate::btreeInt_h::Btree);
     rc = btreeCursor(p, iTable, wrFlag, pKeyInfo, pCur);
     crate::src::src::btmutex::sqlite3BtreeLeave(p as *mut crate::btreeInt_h::Btree);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -4003,8 +4003,8 @@ pub unsafe extern "C" fn sqlite3BtreeCursor(
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3BtreeCursorSize() -> ::core::ffi::c_int {
-    return ((::core::mem::size_of::<crate::btreeInt_h::BtCursor>() as usize).wrapping_add(7 as usize)
-        & !(7 as ::core::ffi::c_int) as usize) as ::core::ffi::c_int;
+    ((::core::mem::size_of::<crate::btreeInt_h::BtCursor>() as usize).wrapping_add(7 as usize)
+        & !(7 as ::core::ffi::c_int) as usize) as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -4051,7 +4051,7 @@ pub unsafe extern "C" fn sqlite3BtreeCloseCursor(mut pCur: *mut crate::btreeInt_
         }
         __pCur_ref.pBtree = ::core::ptr::null_mut::<crate::btreeInt_h::Btree>();
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[inline(never)]
 
@@ -4071,13 +4071,13 @@ unsafe extern "C" fn getCellInfo(mut pCur: *mut crate::btreeInt_h::BtCursor) {
 pub unsafe extern "C" fn sqlite3BtreeCursorIsValidNN(
     mut pCur: *mut crate::btreeInt_h::BtCursor,
 ) -> ::core::ffi::c_int {
-    return ((*pCur).eState as ::core::ffi::c_int == crate::btreeInt_h::CURSOR_VALID) as ::core::ffi::c_int;
+    ((*pCur).eState as ::core::ffi::c_int == crate::btreeInt_h::CURSOR_VALID) as ::core::ffi::c_int
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3BtreeIntegerKey(mut pCur: *mut crate::btreeInt_h::BtCursor) -> crate::src::ext::rtree::rtree::i64_0 {
     getCellInfo(pCur);
-    return (*pCur).info.nKey;
+    (*pCur).info.nKey
 }
 #[no_mangle]
 
@@ -4094,21 +4094,21 @@ pub unsafe extern "C" fn sqlite3BtreeCursorUnpin(mut pCur: *mut crate::btreeInt_
 pub unsafe extern "C" fn sqlite3BtreeOffset(mut pCur: *mut crate::btreeInt_h::BtCursor) -> crate::src::ext::rtree::rtree::i64_0 {
     getCellInfo(pCur);
     let __pCur_ref = unsafe { &mut *pCur };
-    return (*__pCur_ref.pBt).pageSize as crate::src::ext::rtree::rtree::i64_0 * ((*__pCur_ref.pPage).pgno as crate::src::ext::rtree::rtree::i64_0 - 1 as crate::src::ext::rtree::rtree::i64_0)
+    (*__pCur_ref.pBt).pageSize as crate::src::ext::rtree::rtree::i64_0 * ((*__pCur_ref.pPage).pgno as crate::src::ext::rtree::rtree::i64_0 - 1 as crate::src::ext::rtree::rtree::i64_0)
         + __pCur_ref.info.pPayload.offset_from((*__pCur_ref.pPage).aData) as ::core::ffi::c_long
-            as crate::src::ext::rtree::rtree::i64_0;
+            as crate::src::ext::rtree::rtree::i64_0
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3BtreePayloadSize(mut pCur: *mut crate::btreeInt_h::BtCursor) -> crate::src::ext::rtree::rtree::u32_0 {
     getCellInfo(pCur);
-    return (*pCur).info.nPayload;
+    (*pCur).info.nPayload
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3BtreeMaxRecordSize(mut pCur: *mut crate::btreeInt_h::BtCursor) -> crate::sqlite3_h::sqlite3_int64 {
     let __pBt_ref = &*(*pCur).pBt;
-    return __pBt_ref.pageSize as crate::sqlite3_h::sqlite3_int64 * __pBt_ref.nPage as crate::sqlite3_h::sqlite3_int64;
+    __pBt_ref.pageSize as crate::sqlite3_h::sqlite3_int64 * __pBt_ref.nPage as crate::sqlite3_h::sqlite3_int64
 }
 
 unsafe extern "C" fn getOverflowPage(
@@ -4161,7 +4161,7 @@ unsafe extern "C" fn getOverflowPage(
     } else {
         releasePage(pPage);
     }
-    return if rc == crate::sqlite3_h::SQLITE_DONE { crate::sqlite3_h::SQLITE_OK } else { rc };
+    if rc == crate::sqlite3_h::SQLITE_DONE { crate::sqlite3_h::SQLITE_OK } else { rc }
 }
 
 unsafe extern "C" fn copyPayload(
@@ -4180,7 +4180,7 @@ unsafe extern "C" fn copyPayload(
     } else {
         ::libc::memcpy(pBuf, pPayload, nByte as crate::__stddef_size_t_h::size_t);
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn accessPayload(
@@ -4378,7 +4378,7 @@ unsafe extern "C" fn accessPayload(
     if rc == crate::sqlite3_h::SQLITE_OK && amt > 0 as crate::src::ext::rtree::rtree::u32_0 {
         return crate::src::src::main::sqlite3CorruptError(5287 as ::core::ffi::c_int);
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -4388,13 +4388,13 @@ pub unsafe extern "C" fn sqlite3BtreePayload(
     mut amt: crate::src::ext::rtree::rtree::u32_0,
     mut pBuf: *mut ::core::ffi::c_void,
 ) -> ::core::ffi::c_int {
-    return accessPayload(
+    accessPayload(
         pCur,
         offset,
         amt,
         pBuf as *mut ::core::ffi::c_uchar,
         0 as ::core::ffi::c_int,
-    );
+    )
 }
 #[inline(never)]
 
@@ -4409,7 +4409,7 @@ unsafe extern "C" fn accessPayloadChecked(
         return crate::sqlite3_h::SQLITE_ABORT;
     }
     rc = btreeRestoreCursorPosition(pCur);
-    return if rc != 0 {
+    if rc != 0 {
         rc
     } else {
         accessPayload(
@@ -4419,7 +4419,7 @@ unsafe extern "C" fn accessPayloadChecked(
             pBuf as *mut ::core::ffi::c_uchar,
             0 as ::core::ffi::c_int,
         )
-    };
+    }
 }
 #[no_mangle]
 
@@ -4464,7 +4464,7 @@ unsafe extern "C" fn fetchPayload(
         };
     }
     *pAmt = amt as crate::src::ext::rtree::rtree::u32_0;
-    return __pCur_ref.info.pPayload as *mut ::core::ffi::c_void;
+    __pCur_ref.info.pPayload as *mut ::core::ffi::c_void
 }
 #[no_mangle]
 
@@ -4472,7 +4472,7 @@ pub unsafe extern "C" fn sqlite3BtreePayloadFetch(
     mut pCur: *mut crate::btreeInt_h::BtCursor,
     mut pAmt: *mut crate::src::ext::rtree::rtree::u32_0,
 ) -> *const ::core::ffi::c_void {
-    return fetchPayload(pCur, pAmt);
+    fetchPayload(pCur, pAmt)
 }
 
 unsafe extern "C" fn moveToChild(
@@ -4509,7 +4509,7 @@ unsafe extern "C" fn moveToChild(
         __pCur_ref.iPage -= 1;
         __pCur_ref.pPage = __pCur_ref.apPage[__pCur_ref.iPage as usize];
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn moveToParent(mut pCur: *mut crate::btreeInt_h::BtCursor) {
@@ -4607,7 +4607,7 @@ unsafe extern "C" fn moveToRoot(mut pCur: *mut crate::btreeInt_h::BtCursor) -> :
         __pCur_ref.eState = crate::btreeInt_h::CURSOR_INVALID as crate::src::ext::rtree::rtree::u8_0;
         rc = crate::sqlite3_h::SQLITE_EMPTY;
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn moveToLeftmost(mut pCur: *mut crate::btreeInt_h::BtCursor) -> ::core::ffi::c_int {
@@ -4637,7 +4637,7 @@ unsafe extern "C" fn moveToLeftmost(mut pCur: *mut crate::btreeInt_h::BtCursor) 
         ) as crate::src::src::pager::Pgno;
         rc = moveToChild(pCur, pgno as crate::src::ext::rtree::rtree::u32_0);
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn moveToRightmost(mut pCur: *mut crate::btreeInt_h::BtCursor) -> ::core::ffi::c_int {
@@ -4660,7 +4660,7 @@ unsafe extern "C" fn moveToRightmost(mut pCur: *mut crate::btreeInt_h::BtCursor)
         }
     }
     (*pCur).ix = ((*pPage).nCell as ::core::ffi::c_int - 1 as ::core::ffi::c_int) as crate::src::fts5::u16_0;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -4677,7 +4677,7 @@ pub unsafe extern "C" fn sqlite3BtreeFirst(
         *pRes = 1 as ::core::ffi::c_int;
         rc = crate::sqlite3_h::SQLITE_OK;
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -4697,7 +4697,7 @@ pub unsafe extern "C" fn sqlite3BtreeIsEmpty(
     } else {
         *pRes = 0 as ::core::ffi::c_int;
     }
-    return rc;
+    rc
 }
 #[inline(never)]
 
@@ -4718,7 +4718,7 @@ unsafe extern "C" fn btreeLast(
         *pRes = 1 as ::core::ffi::c_int;
         rc = crate::sqlite3_h::SQLITE_OK;
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -4732,7 +4732,7 @@ pub unsafe extern "C" fn sqlite3BtreeLast(
         *pRes = 0 as ::core::ffi::c_int;
         return crate::sqlite3_h::SQLITE_OK;
     }
-    return btreeLast(pCur, pRes);
+    btreeLast(pCur, pRes)
 }
 #[no_mangle]
 
@@ -4896,7 +4896,7 @@ pub unsafe extern "C" fn sqlite3BtreeTableMoveto(
         }
     }
     __pCur_ref.info.nSize = 0 as crate::src::fts5::u16_0;
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn indexCellCompare(
@@ -4946,7 +4946,7 @@ unsafe extern "C" fn indexCellCompare(
     } else {
         c = 99 as ::core::ffi::c_int;
     }
-    return c;
+    c
 }
 
 unsafe extern "C" fn cursorOnLastPage(mut pCur: *mut crate::btreeInt_h::BtCursor) -> ::core::ffi::c_int {
@@ -4960,7 +4960,7 @@ unsafe extern "C" fn cursorOnLastPage(mut pCur: *mut crate::btreeInt_h::BtCursor
         }
         i += 1;
     }
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -5219,12 +5219,12 @@ pub unsafe extern "C" fn sqlite3BtreeIndexMoveto(
         }
     }
     __pCur_ref.info.nSize = 0 as crate::src::fts5::u16_0;
-    return rc;
+    rc
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3BtreeEof(mut pCur: *mut crate::btreeInt_h::BtCursor) -> ::core::ffi::c_int {
-    return (crate::btreeInt_h::CURSOR_VALID != (*pCur).eState as ::core::ffi::c_int) as ::core::ffi::c_int;
+    (crate::btreeInt_h::CURSOR_VALID != (*pCur).eState as ::core::ffi::c_int) as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -5245,7 +5245,7 @@ pub unsafe extern "C" fn sqlite3BtreeRowCountEst(mut pCur: *mut crate::btreeInt_
             as crate::src::ext::rtree::rtree::i64_0;
         i = i.wrapping_add(1);
     }
-    return n;
+    n
 }
 #[inline(never)]
 
@@ -5421,7 +5421,7 @@ unsafe extern "C" fn btreePrevious(mut pCur: *mut crate::btreeInt_h::BtCursor) -
             rc = crate::sqlite3_h::SQLITE_OK;
         }
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -5440,7 +5440,7 @@ pub unsafe extern "C" fn sqlite3BtreePrevious(
         return btreePrevious(pCur);
     }
     __pCur_ref.ix = __pCur_ref.ix.wrapping_sub(1);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn allocateBtreePage(
@@ -5819,7 +5819,7 @@ unsafe extern "C" fn allocateBtreePage(
     }
     releasePage(pTrunk);
     releasePage(pPrevTrunk);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn freePage2(
@@ -6002,7 +6002,7 @@ unsafe extern "C" fn freePage2(
     }
     releasePage(pPage);
     releasePage(pTrunk);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn freePage(mut pPage: *mut crate::btreeInt_h::MemPage, mut pRC: *mut ::core::ffi::c_int) {
@@ -6041,7 +6041,7 @@ unsafe extern "C" fn clearCellOverflow(
         .wrapping_div(ovflPageSize) as ::core::ffi::c_int;
     loop {
         let fresh10 = nOvfl;
-        nOvfl = nOvfl - 1;
+        nOvfl -= 1;
         if !(fresh10 != 0) {
             break;
         }
@@ -6073,7 +6073,7 @@ unsafe extern "C" fn clearCellOverflow(
         }
         ovflPgno = iNext;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn fillInCell(
@@ -6240,7 +6240,7 @@ unsafe extern "C" fn fillInCell(
         }
     }
     releasePage(pToRelease);
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn dropCell(
@@ -6386,7 +6386,7 @@ unsafe extern "C" fn insertCell(
             }
         }
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn insertCellFast(
@@ -6451,7 +6451,7 @@ unsafe extern "C" fn insertCellFast(
             }
         }
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 pub const NB: ::core::ffi::c_int = 3 as ::core::ffi::c_int;
@@ -6482,14 +6482,14 @@ unsafe extern "C" fn computeCellSize(mut p: *mut CellArray, mut N: ::core::ffi::
         __p_ref.pRef,
         *__p_ref.apCell.offset(N as isize),
     );
-    return *__p_ref.szCell.offset(N as isize);
+    *__p_ref.szCell.offset(N as isize)
 }
 
 unsafe extern "C" fn cachedCellSize(mut p: *mut CellArray, mut N: ::core::ffi::c_int) -> crate::src::fts5::u16_0 {
     if *(*p).szCell.offset(N as isize) != 0 {
         return *(*p).szCell.offset(N as isize);
     }
-    return computeCellSize(p, N);
+    computeCellSize(p, N)
 }
 
 unsafe extern "C" fn rebuildPage(
@@ -6587,7 +6587,7 @@ unsafe extern "C" fn rebuildPage(
         .offset(1 as isize) =
         pData.offset_from(aData) as ::core::ffi::c_long as crate::src::ext::rtree::rtree::u8_0;
     *aData.offset((hdr + 7 as ::core::ffi::c_int) as isize) = 0 as crate::src::ext::rtree::rtree::u8_0;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn pageInsertArray(
@@ -6660,7 +6660,7 @@ unsafe extern "C" fn pageInsertArray(
         }
     }
     *ppData = pData;
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn pageFreeArray(
@@ -6743,7 +6743,7 @@ unsafe extern "C" fn pageFreeArray(
         );
         j += 1;
     }
-    return nRet;
+    nRet
 }
 
 unsafe extern "C" fn editPage(
@@ -6911,7 +6911,7 @@ unsafe extern "C" fn editPage(
         return crate::src::src::main::sqlite3CorruptError(7938 as ::core::ffi::c_int);
     }
     populateCellCache(pCArray, iNew, nNew);
-    return rebuildPage(pCArray, iNew, nNew, pPg);
+    rebuildPage(pCArray, iNew, nNew, pPg)
 }
 
 unsafe extern "C" fn balance_quick(
@@ -7035,7 +7035,7 @@ unsafe extern "C" fn balance_quick(
         );
         releasePage(pNew);
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn copyNodeContent(
@@ -7205,7 +7205,7 @@ unsafe extern "C" fn balance_nonroot(
                     .wrapping_div(::core::mem::size_of::<*mut crate::src::ext::rtree::rtree::u8_0>() as usize)
                     as ::core::ffi::c_int;
             let fresh13 = i;
-            i = i - 1;
+            i -= 1;
             if fresh13 == 0 as ::core::ffi::c_int {
                 current_block = 13303144130133872306;
                 break;
@@ -7412,7 +7412,7 @@ unsafe extern "C" fn balance_nonroot(
                                     < 4 as ::core::ffi::c_int
                                 {
                                     let fresh18 = iSpace1;
-                                    iSpace1 = iSpace1 + 1;
+                                    iSpace1 += 1;
                                     *aSpace1.offset(fresh18 as isize) = 0 as crate::src::ext::rtree::rtree::u8_0;
                                     let ref mut fresh19 = *b.szCell.offset(b.nCell as isize);
                                     *fresh19 = (*fresh19).wrapping_add(1);
@@ -8118,7 +8118,7 @@ unsafe extern "C" fn balance_nonroot(
         releasePage(apNew[i as usize]);
         i += 1;
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn balance_deeper(
@@ -8179,7 +8179,7 @@ unsafe extern "C" fn balance_deeper(
         pgnoChild as crate::src::ext::rtree::rtree::u32_0,
     );
     *ppChild = pChild;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn anotherValidCursor(mut pCur: *mut crate::btreeInt_h::BtCursor) -> ::core::ffi::c_int {
@@ -8194,7 +8194,7 @@ unsafe extern "C" fn anotherValidCursor(mut pCur: *mut crate::btreeInt_h::BtCurs
         }
         pOther = (*pOther).pNext;
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn balance(mut pCur: *mut crate::btreeInt_h::BtCursor) -> ::core::ffi::c_int {
@@ -8283,7 +8283,7 @@ unsafe extern "C" fn balance(mut pCur: *mut crate::btreeInt_h::BtCursor) -> ::co
     if !pFree.is_null() {
         crate::src::src::pcache1::sqlite3PageFree(pFree as *mut ::core::ffi::c_void);
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn btreeOverwriteContent(
@@ -8343,7 +8343,7 @@ unsafe extern "C" fn btreeOverwriteContent(
             );
         }
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[inline(never)]
 
@@ -8407,7 +8407,7 @@ unsafe extern "C" fn btreeOverwriteOverflowCell(
             break;
         }
     }
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn btreeOverwriteCell(
@@ -8751,7 +8751,7 @@ pub unsafe extern "C" fn sqlite3BtreeInsert(
         }
         _ => {}
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -9090,7 +9090,7 @@ pub unsafe extern "C" fn sqlite3BtreeDelete(
         __pCur_ref.iPage -= 1;
         while __pCur_ref.iPage as ::core::ffi::c_int > iCellDepth {
             let fresh12 = __pCur_ref.iPage;
-            __pCur_ref.iPage = __pCur_ref.iPage - 1;
+            __pCur_ref.iPage -= 1;
             releasePage(__pCur_ref.apPage[fresh12 as usize]);
         }
         __pCur_ref.pPage = __pCur_ref.apPage[__pCur_ref.iPage as usize];
@@ -9117,7 +9117,7 @@ pub unsafe extern "C" fn sqlite3BtreeDelete(
             }
         }
     }
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn btreeCreateTable(
@@ -9233,7 +9233,7 @@ unsafe extern "C" fn btreeCreateTable(
     zeroPage(pRoot, ptfFlags);
     crate::src::src::pager::sqlite3PagerUnref((*pRoot).pDbPage as *mut crate::src::src::pcache::PgHdr);
     *piTable = pgnoRoot;
-    return crate::sqlite3_h::SQLITE_OK;
+    crate::sqlite3_h::SQLITE_OK
 }
 #[no_mangle]
 
@@ -9246,7 +9246,7 @@ pub unsafe extern "C" fn sqlite3BtreeCreateTable(
     crate::src::src::btmutex::sqlite3BtreeEnter(p as *mut crate::btreeInt_h::Btree);
     rc = btreeCreateTable(p, piTable, flags);
     crate::src::src::btmutex::sqlite3BtreeLeave(p as *mut crate::btreeInt_h::Btree);
-    return rc;
+    rc
 }
 
 unsafe extern "C" fn clearDatabasePage(
@@ -9383,7 +9383,7 @@ unsafe extern "C" fn clearDatabasePage(
         }
     }
     releasePage(pPage);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -9403,18 +9403,18 @@ pub unsafe extern "C" fn sqlite3BtreeClearTable(
         rc = clearDatabasePage(pBt, iTable as crate::src::src::pager::Pgno, 0 as ::core::ffi::c_int, pnChange);
     }
     crate::src::src::btmutex::sqlite3BtreeLeave(p as *mut crate::btreeInt_h::Btree);
-    return rc;
+    rc
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3BtreeClearTableOfCursor(
     mut pCur: *mut crate::btreeInt_h::BtCursor,
 ) -> ::core::ffi::c_int {
-    return sqlite3BtreeClearTable(
+    sqlite3BtreeClearTable(
         (*pCur).pBtree,
         (*pCur).pgnoRoot as ::core::ffi::c_int,
         ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::i64_0>(),
-    );
+    )
 }
 
 unsafe extern "C" fn btreeDropTable(
@@ -9493,7 +9493,7 @@ unsafe extern "C" fn btreeDropTable(
         freePage(pPage, &raw mut rc);
         releasePage(pPage);
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -9506,7 +9506,7 @@ pub unsafe extern "C" fn sqlite3BtreeDropTable(
     crate::src::src::btmutex::sqlite3BtreeEnter(p as *mut crate::btreeInt_h::Btree);
     rc = btreeDropTable(p, iTable as crate::src::src::pager::Pgno, piMoved);
     crate::src::src::btmutex::sqlite3BtreeLeave(p as *mut crate::btreeInt_h::Btree);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -9554,7 +9554,7 @@ pub unsafe extern "C" fn sqlite3BtreeUpdateMeta(
         }
     }
     crate::src::src::btmutex::sqlite3BtreeLeave(p as *mut crate::btreeInt_h::Btree);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -9629,12 +9629,12 @@ pub unsafe extern "C" fn sqlite3BtreeCount(
             );
         }
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3BtreePager(mut p: *mut crate::btreeInt_h::Btree) -> *mut crate::src::src::pager::Pager {
-    return (*(*p).pBt).pPager as *mut crate::src::src::pager::Pager;
+    (*(*p).pBt).pPager as *mut crate::src::src::pager::Pager
 }
 
 unsafe extern "C" fn checkOom(mut pCheck: *mut crate::btreeInt_h::IntegrityCk) {
@@ -9710,10 +9710,10 @@ unsafe extern "C" fn getPageReferenced(
     mut pCheck: *mut crate::btreeInt_h::IntegrityCk,
     mut iPg: crate::src::src::pager::Pgno,
 ) -> ::core::ffi::c_int {
-    return *(*pCheck)
+    *(*pCheck)
         .aPgRef
         .offset(iPg.wrapping_div(8 as crate::src::src::pager::Pgno) as isize) as ::core::ffi::c_int
-        & (1 as ::core::ffi::c_int) << (iPg & 0x7 as crate::src::src::pager::Pgno);
+        & (1 as ::core::ffi::c_int) << (iPg & 0x7 as crate::src::src::pager::Pgno)
 }
 
 unsafe extern "C" fn setPageReferenced(mut pCheck: *mut crate::btreeInt_h::IntegrityCk, mut iPg: crate::src::src::pager::Pgno) {
@@ -9742,7 +9742,7 @@ unsafe extern "C" fn checkRef(mut pCheck: *mut crate::btreeInt_h::IntegrityCk, m
         return 1 as ::core::ffi::c_int;
     }
     setPageReferenced(pCheck, iPage);
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn checkPtrmap(
@@ -9930,7 +9930,7 @@ unsafe extern "C" fn btreeHeapPull(
         *aHeap.offset(j as isize) = x;
         i = j;
     }
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn checkTreePage(
@@ -10300,7 +10300,7 @@ unsafe extern "C" fn checkTreePage(
     __pCheck_ref.zPfx = saved_zPfx;
     __pCheck_ref.v1 = saved_v1 as crate::src::src::pager::Pgno;
     __pCheck_ref.v2 = saved_v2;
-    return depth + 1 as ::core::ffi::c_int;
+    depth + 1 as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -10497,28 +10497,28 @@ pub unsafe extern "C" fn sqlite3BtreeIntegrityCheck(
         *pzOut = crate::src::src::printf::sqlite3StrAccumFinish(&raw mut sCheck.errMsg as *mut _ as *mut crate::sqliteInt_h::sqlite3_str);
     }
     crate::src::src::btmutex::sqlite3BtreeLeave(p as *mut crate::btreeInt_h::Btree);
-    return sCheck.rc;
+    sCheck.rc
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3BtreeGetFilename(mut p: *mut crate::btreeInt_h::Btree) -> *const ::core::ffi::c_char {
-    return crate::src::src::pager::sqlite3PagerFilename((*(*p).pBt).pPager, 1 as ::core::ffi::c_int);
+    crate::src::src::pager::sqlite3PagerFilename((*(*p).pBt).pPager, 1 as ::core::ffi::c_int)
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3BtreeGetJournalname(
     mut p: *mut crate::btreeInt_h::Btree,
 ) -> *const ::core::ffi::c_char {
-    return crate::src::src::pager::sqlite3PagerJournalname((*(*p).pBt).pPager);
+    crate::src::src::pager::sqlite3PagerJournalname((*(*p).pBt).pPager)
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3BtreeTxnState(mut p: *mut crate::btreeInt_h::Btree) -> ::core::ffi::c_int {
-    return if !p.is_null() {
+    if !p.is_null() {
         (*p).inTrans as ::core::ffi::c_int
     } else {
         0 as ::core::ffi::c_int
-    };
+    }
 }
 #[no_mangle]
 
@@ -10539,12 +10539,12 @@ pub unsafe extern "C" fn sqlite3BtreeCheckpoint(
         }
         crate::src::src::btmutex::sqlite3BtreeLeave(p as *mut crate::btreeInt_h::Btree);
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3BtreeIsInBackup(mut p: *mut crate::btreeInt_h::Btree) -> ::core::ffi::c_int {
-    return ((*p).nBackup != 0 as ::core::ffi::c_int) as ::core::ffi::c_int;
+    ((*p).nBackup != 0 as ::core::ffi::c_int) as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -10561,7 +10561,7 @@ pub unsafe extern "C" fn sqlite3BtreeSchema(
         (*pBt).xFreeSchema = xFree;
     }
     crate::src::src::btmutex::sqlite3BtreeLeave(p as *mut crate::btreeInt_h::Btree);
-    return (*pBt).pSchema;
+    (*pBt).pSchema
 }
 #[no_mangle]
 
@@ -10570,7 +10570,7 @@ pub unsafe extern "C" fn sqlite3BtreeSchemaLocked(mut p: *mut crate::btreeInt_h:
     crate::src::src::btmutex::sqlite3BtreeEnter(p as *mut crate::btreeInt_h::Btree);
     rc = querySharedCacheTableLock(p, crate::sqliteInt_h::SCHEMA_ROOT as crate::src::src::pager::Pgno, crate::btreeInt_h::READ_LOCK as crate::src::ext::rtree::rtree::u8_0);
     crate::src::src::btmutex::sqlite3BtreeLeave(p as *mut crate::btreeInt_h::Btree);
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -10589,7 +10589,7 @@ pub unsafe extern "C" fn sqlite3BtreeLockTable(
         }
         crate::src::src::btmutex::sqlite3BtreeLeave(p as *mut crate::btreeInt_h::Btree);
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -10616,13 +10616,13 @@ pub unsafe extern "C" fn sqlite3BtreePutData(
     if __pCsr_ref.curFlags as ::core::ffi::c_int & crate::btreeInt_h::BTCF_WriteFlag == 0 as ::core::ffi::c_int {
         return crate::sqlite3_h::SQLITE_READONLY;
     }
-    return accessPayload(
+    accessPayload(
         pCsr,
         offset,
         amt,
         z as *mut ::core::ffi::c_uchar,
         1 as ::core::ffi::c_int,
-    );
+    )
 }
 #[no_mangle]
 
@@ -10671,7 +10671,7 @@ pub unsafe extern "C" fn sqlite3BtreeSetVersion(
         }
     }
     __pBt_ref.btsFlags = (__pBt_ref.btsFlags as ::core::ffi::c_int & !crate::btreeInt_h::BTS_NO_WAL) as crate::src::fts5::u16_0;
-    return rc;
+    rc
 }
 #[no_mangle]
 
@@ -10679,20 +10679,20 @@ pub unsafe extern "C" fn sqlite3BtreeCursorHasHint(
     mut pCsr: *mut crate::btreeInt_h::BtCursor,
     mut mask: ::core::ffi::c_uint,
 ) -> ::core::ffi::c_int {
-    return ((*pCsr).hints as ::core::ffi::c_uint & mask != 0 as ::core::ffi::c_uint)
-        as ::core::ffi::c_int;
+    ((*pCsr).hints as ::core::ffi::c_uint & mask != 0 as ::core::ffi::c_uint)
+        as ::core::ffi::c_int
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3BtreeIsReadonly(mut p: *mut crate::btreeInt_h::Btree) -> ::core::ffi::c_int {
-    return ((*(*p).pBt).btsFlags as ::core::ffi::c_int & crate::btreeInt_h::BTS_READ_ONLY != 0 as ::core::ffi::c_int)
-        as ::core::ffi::c_int;
+    ((*(*p).pBt).btsFlags as ::core::ffi::c_int & crate::btreeInt_h::BTS_READ_ONLY != 0 as ::core::ffi::c_int)
+        as ::core::ffi::c_int
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3HeaderSizeBtree() -> ::core::ffi::c_int {
-    return ((::core::mem::size_of::<crate::btreeInt_h::MemPage>() as usize).wrapping_add(7 as usize)
-        & !(7 as ::core::ffi::c_int) as usize) as ::core::ffi::c_int;
+    ((::core::mem::size_of::<crate::btreeInt_h::MemPage>() as usize).wrapping_add(7 as usize)
+        & !(7 as ::core::ffi::c_int) as usize) as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -10705,10 +10705,10 @@ pub unsafe extern "C" fn sqlite3BtreeClearCache(mut p: *mut crate::btreeInt_h::B
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3BtreeSharable(mut p: *mut crate::btreeInt_h::Btree) -> ::core::ffi::c_int {
-    return (*p).sharable as ::core::ffi::c_int;
+    (*p).sharable as ::core::ffi::c_int
 }
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3BtreeConnectionCount(mut p: *mut crate::btreeInt_h::Btree) -> ::core::ffi::c_int {
-    return (*(*p).pBt).nRef;
+    (*(*p).pBt).nRef
 }

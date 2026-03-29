@@ -150,7 +150,7 @@ pub unsafe extern "C" fn sqlite3FkLocateIndex(
         return 1 as ::core::ffi::c_int;
     }
     *ppIdx = pIdx;
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn fkLookupParent(
@@ -345,7 +345,7 @@ unsafe extern "C" fn exprTableRegister(
             (*pExpr).affExpr = crate::sqliteInt_h::SQLITE_AFF_INTEGER as ::core::ffi::c_char;
         }
     }
-    return pExpr;
+    pExpr
 }
 
 unsafe extern "C" fn exprTableColumn(
@@ -364,7 +364,7 @@ unsafe extern "C" fn exprTableColumn(
         __pExpr_ref.iTable = iCursor;
         __pExpr_ref.iColumn = iCol as crate::sqliteInt_h::ynVar;
     }
-    return pExpr;
+    pExpr
 }
 
 unsafe extern "C" fn fkScanChildren(
@@ -494,8 +494,8 @@ unsafe extern "C" fn fkScanChildren(
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3FkReferences(mut pTab: *mut crate::sqliteInt_h::Table) -> *mut crate::sqliteInt_h::FKey {
-    return crate::src::src::hash::sqlite3HashFind(&raw mut (*(*pTab).pSchema).fkeyHash as *mut _ as
-    *const crate::src::src::hash::Hash, (*pTab).zName) as *mut crate::sqliteInt_h::FKey;
+    crate::src::src::hash::sqlite3HashFind(&raw mut (*(*pTab).pSchema).fkeyHash as *mut _ as
+    *const crate::src::src::hash::Hash, (*pTab).zName) as *mut crate::sqliteInt_h::FKey
 }
 
 unsafe extern "C" fn fkTriggerDelete(mut dbMem: *mut crate::sqliteInt_h::sqlite3, mut p: *mut crate::sqliteInt_h::Trigger) {
@@ -626,7 +626,7 @@ unsafe extern "C" fn fkChildIsModified(
         }
         i += 1;
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn fkParentIsModified(
@@ -659,7 +659,7 @@ unsafe extern "C" fn fkParentIsModified(
         }
         i += 1;
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn isSetNullAction(
@@ -684,7 +684,7 @@ unsafe extern "C" fn isSetNullAction(
             return 1 as ::core::ffi::c_int;
         }
     }
-    return 0 as ::core::ffi::c_int;
+    0 as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -864,7 +864,7 @@ pub unsafe extern "C" fn sqlite3FkCheck(
                         (*__pItem_ref.pSTab).nTabRef = (*__pItem_ref.pSTab).nTabRef.wrapping_add(1);
                         let __pParse_ref = unsafe { &mut *pParse };
                         let fresh0 = __pParse_ref.nTab;
-                        __pParse_ref.nTab = __pParse_ref.nTab + 1;
+                        __pParse_ref.nTab += 1;
                         __pItem_ref.iCursor = fresh0;
                         if regNew != 0 as ::core::ffi::c_int {
                             fkScanChildren(
@@ -968,7 +968,7 @@ pub unsafe extern "C" fn sqlite3FkOldmask(mut pParse: *mut crate::sqliteInt_h::P
             p = (*p).pNextTo;
         }
     }
-    return mask;
+    mask
 }
 #[no_mangle]
 
@@ -1013,11 +1013,11 @@ pub unsafe extern "C" fn sqlite3FkRequired(
             }
         }
     }
-    return if bHaveFK != 0 {
+    if bHaveFK != 0 {
         eRet
     } else {
         0 as ::core::ffi::c_int
-    };
+    }
 }
 
 unsafe extern "C" fn fkActionTrigger(
@@ -1359,7 +1359,7 @@ unsafe extern "C" fn fkActionTrigger(
             crate::src::parse::TK_DELETE
         }) as crate::src::ext::rtree::rtree::u8_0;
     }
-    return pTrigger;
+    pTrigger
 }
 #[no_mangle]
 

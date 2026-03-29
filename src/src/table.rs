@@ -164,7 +164,7 @@ unsafe extern "C" fn sqlite3_get_table_cb(
         _ => {}
     }
     __p_ref.rc = crate::sqliteInt_h::SQLITE_NOMEM_BKPT;
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -278,7 +278,7 @@ pub unsafe extern "C" fn sqlite3_get_table(
     if !pnRow.is_null() {
         *pnRow = res.nRow as ::core::ffi::c_int;
     }
-    return rc;
+    rc
 }
 #[no_mangle]
 

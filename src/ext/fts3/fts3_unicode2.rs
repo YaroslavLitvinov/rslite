@@ -452,7 +452,7 @@ pub unsafe extern "C" fn sqlite3FtsUnicodeIsalnum(mut c: ::core::ffi::c_int) -> 
                 .wrapping_add(aEntry[iRes as usize] & 0x3ff as ::core::ffi::c_uint))
             as ::core::ffi::c_int;
     }
-    return 1 as ::core::ffi::c_int;
+    1 as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn remove_diacritic(
@@ -737,14 +737,14 @@ unsafe extern "C" fn remove_diacritic(
     {
         return c;
     }
-    return if c
+    if c
         > (aDia[iRes as usize] as ::core::ffi::c_int >> 3 as ::core::ffi::c_int)
             + (aDia[iRes as usize] as ::core::ffi::c_int & 0x7 as ::core::ffi::c_int)
     {
         c
     } else {
         aChar[iRes as usize] as ::core::ffi::c_int & 0x7f as ::core::ffi::c_int
-    };
+    }
 }
 
 pub const HIBIT: ::core::ffi::c_uchar = 0x80 as ::core::ffi::c_int as ::core::ffi::c_uchar;
@@ -758,13 +758,13 @@ pub unsafe extern "C" fn sqlite3FtsUnicodeIsdiacritic(
     if c < 768 as ::core::ffi::c_int || c > 817 as ::core::ffi::c_int {
         return 0 as ::core::ffi::c_int;
     }
-    return (if c < 768 as ::core::ffi::c_int + 32 as ::core::ffi::c_int {
+    (if c < 768 as ::core::ffi::c_int + 32 as ::core::ffi::c_int {
         mask0 & (1 as ::core::ffi::c_int as ::core::ffi::c_uint) << c - 768 as ::core::ffi::c_int
     } else {
         mask1
             & (1 as ::core::ffi::c_int as ::core::ffi::c_uint)
                 << c - 768 as ::core::ffi::c_int - 32 as ::core::ffi::c_int
-    }) as ::core::ffi::c_int;
+    }) as ::core::ffi::c_int
 }
 #[no_mangle]
 
@@ -1713,5 +1713,5 @@ pub unsafe extern "C" fn sqlite3FtsUnicodeFold(
     } else if c >= 66560 as ::core::ffi::c_int && c < 66600 as ::core::ffi::c_int {
         ret = c + 40 as ::core::ffi::c_int;
     }
-    return ret;
+    ret
 }
