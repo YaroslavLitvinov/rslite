@@ -5555,15 +5555,16 @@ unsafe extern "C" fn fts3EvalNextRow(
                 fts3EvalNextRow(pCsr, pLeft_1, pRc);
                 let __pLeft_1_ref = unsafe { &*pLeft_1 };
                 if __pLeft_1_ref.bEof as ::core::ffi::c_int == 0 as ::core::ffi::c_int {
+                    let __pRight_1_ref = unsafe { &*pRight_1 };
                     while *pRc == 0
-                        && (*pRight_1).bEof == 0
+                        && __pRight_1_ref.bEof == 0
                         && (if bDescDoclist != 0 {
                             -(1 as ::core::ffi::c_int)
                         } else {
                             1 as ::core::ffi::c_int
-                        }) * (if __pLeft_1_ref.iDocid > (*pRight_1).iDocid {
+                        }) * (if __pLeft_1_ref.iDocid > __pRight_1_ref.iDocid {
                             1 as ::core::ffi::c_int
-                        } else if __pLeft_1_ref.iDocid == (*pRight_1).iDocid {
+                        } else if __pLeft_1_ref.iDocid == __pRight_1_ref.iDocid {
                                 0 as ::core::ffi::c_int
                             } else {
                                 -(1 as ::core::ffi::c_int)
