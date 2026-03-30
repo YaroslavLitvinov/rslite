@@ -7397,64 +7397,6 @@ unsafe extern "C" fn rtreeCheckReset(mut pCheck: *mut RtreeCheck, mut pStmt: *mu
     }
 }
 
-unsafe extern "C" fn rtreeCheckPrepare(
-    mut pCheck: *mut RtreeCheck,
-    mut zFmt: *const ::core::ffi::c_char,
-    mut args: ...
-) -> *mut crate::src::headers::sqlite3_h::sqlite3_stmt {
-    let mut ap: ::core::ffi::VaListImpl;
-    let mut z: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
-    let mut pRet: *mut crate::src::headers::sqlite3_h::sqlite3_stmt = ::core::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_stmt>();
-    ap = args.clone();
-    z = crate::src::src::printf::sqlite3_vmprintf(zFmt, ap.as_va_list());
-    if (*pCheck).rc == crate::src::headers::sqlite3_h::SQLITE_OK {
-        if z.is_null() {
-            (*pCheck).rc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
-        } else {
-            (*pCheck).rc = crate::src::src::prepare::sqlite3_prepare_v2(
-                (*pCheck).db,
-                z,
-                -(1 as ::core::ffi::c_int),
-                &raw mut pRet,
-                ::core::ptr::null_mut::<*const ::core::ffi::c_char>(),
-            );
-        }
-    }
-    crate::src::src::malloc::sqlite3_free(z as *mut ::core::ffi::c_void);
-    pRet
-}
-
-unsafe extern "C" fn rtreeCheckAppendMsg(
-    mut pCheck: *mut RtreeCheck,
-    mut zFmt: *const ::core::ffi::c_char,
-    mut args: ...
-) {
-    let mut ap: ::core::ffi::VaListImpl;
-    ap = args.clone();
-    if (*pCheck).rc == crate::src::headers::sqlite3_h::SQLITE_OK && (*pCheck).nErr < RTREE_CHECK_MAX_ERROR {
-        let mut z: *mut ::core::ffi::c_char = crate::src::src::printf::sqlite3_vmprintf(zFmt, ap.as_va_list());
-        if z.is_null() {
-            (*pCheck).rc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
-        } else {
-            let __pCheck_ref = unsafe { &mut *pCheck };
-            __pCheck_ref.zReport = crate::src::src::printf::sqlite3_mprintf(
-                b"%z%s%z\0" as *const u8 as *const ::core::ffi::c_char,
-                __pCheck_ref.zReport,
-                if !__pCheck_ref.zReport.is_null() {
-                    b"\n\0" as *const u8 as *const ::core::ffi::c_char
-                } else {
-                    b"\0" as *const u8 as *const ::core::ffi::c_char
-                },
-                z,
-            );
-            if __pCheck_ref.zReport.is_null() {
-                __pCheck_ref.rc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
-            }
-        }
-        (*pCheck).nErr += 1;
-    }
-}
-
 unsafe extern "C" fn rtreeCheckGetNode(
     mut pCheck: *mut RtreeCheck,
     mut iNode: i64_0,
@@ -8157,3 +8099,7 @@ pub unsafe extern "C" fn sqlite3_rtree_query_callback(
         Some(rtreeFreeCallback as unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()),
     )
 }
+
+// Re-export variadic functions from printf_c_variadic module
+pub use crate::src::printf_c_variadic::rtreeCheckPrepare;
+pub use crate::src::printf_c_variadic::rtreeCheckAppendMsg;

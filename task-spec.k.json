@@ -1,0 +1,54 @@
+{
+  "type": "Spec",
+  "model_version": 1,
+  "version": 1,
+  "description": "Verify c_variadic feature isolation: only in printf_c_variadic.rs",
+  "contains_unverified_constraints": false,
+  "features": {
+    "c_variadic_isolation": {
+      "type": "Feature",
+      "model_version": 1,
+      "id": "c_variadic_isolation",
+      "description": "c_variadic feature strictly isolated to printf_c_variadic.rs only",
+      "goals": [
+        "src/printf_c_variadic.rs is the only place allowed to use c_variadic feature",
+        "No other .rs files declare c_variadic feature"
+      ],
+      "constraints": {
+        "c3": {
+          "id": "no_other_c_variadic",
+          "cmd": "grep -R '#!\\[feature(c_variadic)\\]' \"$PROJECT_ROOT/src\" --include='*.rs' | grep -v 'printf_c_variadic.rs' && exit 1 || exit 0",
+          "description": "No other .rs files have c_variadic feature",
+          "fails_count": 1
+        },
+        "c4": {
+          "id": "valist_isolation",
+          "cmd": "grep -R 'VaListImpl' \"$PROJECT_ROOT\" --include='*.rs' | grep -v 'printf_c_variadic.rs' && exit 1 || exit 0",
+          "description": "VaListImpl usage only in printf_c_variadic.rs",
+          "fails_count": 1
+        },
+        "c5": {
+          "id": "valist_type_isolation",
+          "cmd": "grep -R VAList \"$PROJECT_ROOT\" --include=\"*.rs\" | grep -v \"printf_c_variadic.rs\" && exit 1 || exit 0",
+          "description": "VAList type usage only in printf_c_variadic.rs",
+          "fails_count": 1
+        }
+      }
+    },
+    "build_all": {
+      "type": "Feature",
+      "model_version": 1,
+      "id": "build_all",
+      "description": "Check that our rust codebase is healthy",
+      "goals": [],
+      "constraints": {
+        "constraint_build_all": {
+          "id": "constraint_build_all",
+          "cmd": "cd $WORKSPACE_ROOT && ./build_all.sh",
+          "description": "Ensure our rust codebase is healthy",
+          "fails_count": 1
+        }
+      }
+    }
+  }
+}

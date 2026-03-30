@@ -16,6 +16,8 @@
 
 pub use crate::stdlib::va_list;
 pub use crate::__stddef_size_t_h::size_t;
+pub use crate::src::printf_c_variadic::sqlite3ErrorMsg;
+pub use crate::src::printf_c_variadic::sqlite3ErrorWithMsg;
 
 
 pub use crate::src::src::hash::Hash;pub use crate::src::src::hash::HashElem;pub use crate::src::src::hash::_ht;pub use crate::internal::__builtin_va_list;pub use crate::internal::__va_list_tag;pub use crate::internal::__ATOMIC_RELAXED;
@@ -126,36 +128,6 @@ pub unsafe extern "C" fn sqlite3SystemError(mut db: *mut crate::src::headers::sq
         (*db).iSysErrno = crate::src::src::os::sqlite3OsGetLastError((*db).pVfs as *mut crate::src::headers::sqlite3_h::sqlite3_vfs);
     }
 }
-#[no_mangle]
-
-pub unsafe extern "C" fn sqlite3ErrorWithMsg(
-    mut db: *mut crate::src::headers::sqliteInt_h::sqlite3,
-    mut err_code: ::core::ffi::c_int,
-    mut zFormat: *const ::core::ffi::c_char,
-    mut args: ...
-) {
-    (*db).errCode = err_code;
-    sqlite3SystemError(db, err_code);
-    if zFormat.is_null() {
-        sqlite3Error(db, err_code);
-    } else if !(*db).pErr.is_null() || {
-        (*db).pErr = crate::src::src::vdbemem::sqlite3ValueNew(db as *mut crate::src::headers::sqliteInt_h::sqlite3);
-        !(*db).pErr.is_null()
-    } {
-        let mut z: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
-        let mut ap: ::core::ffi::VaListImpl;
-        ap = args.clone();
-        z = crate::src::src::printf::sqlite3VMPrintf(db, zFormat, ap.as_va_list());
-        crate::src::src::vdbemem::sqlite3ValueSetStr(
-            (*db).pErr,
-            -(1 as ::core::ffi::c_int),
-            z as *const ::core::ffi::c_void,
-            crate::src::headers::sqlite3_h::SQLITE_UTF8 as crate::src::ext::rtree::rtree::u8_0,
-            Some(crate::src::src::rowset::sqlite3RowSetClear as unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()),
-        );
-    }
-}
-#[no_mangle]
 
 pub unsafe extern "C" fn sqlite3ProgressCheck(mut p: *mut crate::src::headers::sqliteInt_h::Parse) {
     let mut db: *mut crate::src::headers::sqliteInt_h::sqlite3 = (*p).db;
@@ -179,39 +151,6 @@ pub unsafe extern "C" fn sqlite3ProgressCheck(mut p: *mut crate::src::headers::s
         }
     }
 }
-#[no_mangle]
-
-pub unsafe extern "C" fn sqlite3ErrorMsg(
-    mut pParse: *mut crate::src::headers::sqliteInt_h::Parse,
-    mut zFormat: *const ::core::ffi::c_char,
-    mut args: ...
-) {
-    let mut zMsg: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
-    let mut ap: ::core::ffi::VaListImpl;
-    let mut db: *mut crate::src::headers::sqliteInt_h::sqlite3 = (*pParse).db;
-    let __db_ref = unsafe { &mut *db };
-    __db_ref.errByteOffset = -(2 as ::core::ffi::c_int);
-    ap = args.clone();
-    zMsg = crate::src::src::printf::sqlite3VMPrintf(db, zFormat, ap.as_va_list());
-    if __db_ref.errByteOffset < -(1 as ::core::ffi::c_int) {
-        __db_ref.errByteOffset = -(1 as ::core::ffi::c_int);
-    }
-    if __db_ref.suppressErr != 0 {
-        crate::src::src::malloc::sqlite3DbFree(db as *mut crate::src::headers::sqliteInt_h::sqlite3, zMsg as *mut ::core::ffi::c_void);
-        if __db_ref.mallocFailed != 0 {
-            (*pParse).nErr += 1;
-            (*pParse).rc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
-        }
-    } else {
-        let __pParse_ref = unsafe { &mut *pParse };
-        __pParse_ref.nErr += 1;
-        crate::src::src::malloc::sqlite3DbFree(db as *mut crate::src::headers::sqliteInt_h::sqlite3, __pParse_ref.zErrMsg as *mut ::core::ffi::c_void);
-        __pParse_ref.zErrMsg = zMsg;
-        __pParse_ref.rc = crate::src::headers::sqlite3_h::SQLITE_ERROR;
-        __pParse_ref.pWith = ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::With>();
-    };
-}
-#[no_mangle]
 
 pub unsafe extern "C" fn sqlite3ErrorToParser(
     mut db: *mut crate::src::headers::sqliteInt_h::sqlite3,

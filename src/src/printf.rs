@@ -19,6 +19,11 @@
 
 pub use crate::stdlib::va_list;
 pub use crate::__stddef_size_t_h::size_t;
+pub use crate::src::printf_c_variadic::sqlite3_mprintf;
+pub use crate::src::printf_c_variadic::sqlite3_snprintf;
+pub use crate::src::printf_c_variadic::sqlite3_log;
+pub use crate::src::printf_c_variadic::sqlite3DebugPrintf;
+pub use crate::src::printf_c_variadic::sqlite3_str_appendf;
 
 
 pub use crate::src::src::hash::Hash;pub use crate::src::src::hash::HashElem;pub use crate::src::src::hash::_ht;pub use crate::internal::__builtin_va_list;pub use crate::internal::__va_list_tag;
@@ -1962,21 +1967,10 @@ pub unsafe extern "C" fn sqlite3VMPrintf(
     }
     z
 }
-#[no_mangle]
+// sqlite3MPrintf moved to printf_c_variadic.rs
+pub use crate::src::printf_c_variadic::sqlite3MPrintf;
 
-pub unsafe extern "C" fn sqlite3MPrintf(
-    mut db: *mut crate::src::headers::sqliteInt_h::sqlite3,
-    mut zFormat: *const ::core::ffi::c_char,
-    mut args: ...
-) -> *mut ::core::ffi::c_char {
-    let mut ap: ::core::ffi::VaListImpl;
-    let mut z: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
-    ap = args.clone();
-    z = sqlite3VMPrintf(db, zFormat, ap.as_va_list());
-    z
-}
 #[no_mangle]
-
 pub unsafe extern "C" fn sqlite3_vmprintf(
     mut zFormat: *const ::core::ffi::c_char,
     mut ap: ::core::ffi::VaList,
@@ -1998,23 +1992,8 @@ pub unsafe extern "C" fn sqlite3_vmprintf(
     z = sqlite3StrAccumFinish(&raw mut acc);
     z
 }
-#[no_mangle]
 
-pub unsafe extern "C" fn sqlite3_mprintf(
-    mut zFormat: *const ::core::ffi::c_char,
-    mut args: ...
-) -> *mut ::core::ffi::c_char {
-    let mut ap: ::core::ffi::VaListImpl;
-    let mut z: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
-    if crate::src::src::main::sqlite3_initialize() != 0 {
-        return ::core::ptr::null_mut::<::core::ffi::c_char>();
-    }
-    ap = args.clone();
-    z = sqlite3_vmprintf(zFormat, ap.as_va_list());
-    z
-}
 #[no_mangle]
-
 pub unsafe extern "C" fn sqlite3_vsnprintf(
     mut n: ::core::ffi::c_int,
     mut zBuf: *mut ::core::ffi::c_char,
@@ -2036,33 +2015,8 @@ pub unsafe extern "C" fn sqlite3_vsnprintf(
     *zBuf.offset(acc.nChar as isize) = 0 as ::core::ffi::c_char;
     zBuf
 }
-#[no_mangle]
 
-pub unsafe extern "C" fn sqlite3_snprintf(
-    mut n: ::core::ffi::c_int,
-    mut zBuf: *mut ::core::ffi::c_char,
-    mut zFormat: *const ::core::ffi::c_char,
-    mut args: ...
-) -> *mut ::core::ffi::c_char {
-    let mut acc: crate::src::headers::sqliteInt_h::StrAccum = unsafe { ::core::mem::zeroed() };
-    let mut ap: ::core::ffi::VaListImpl;
-    if n <= 0 as ::core::ffi::c_int {
-        return zBuf;
-    }
-    sqlite3StrAccumInit(
-        &raw mut acc,
-        ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::sqlite3>(),
-        zBuf,
-        n,
-        0 as ::core::ffi::c_int,
-    );
-    ap = args.clone();
-    sqlite3_str_vappendf(&raw mut acc, zFormat, ap.as_va_list());
-    *zBuf.offset(acc.nChar as isize) = 0 as ::core::ffi::c_char;
-    zBuf
-}
-
-unsafe extern "C" fn renderLogMsg(
+pub unsafe extern "C" fn renderLogMsg(
     mut iErrCode: ::core::ffi::c_int,
     mut zFormat: *const ::core::ffi::c_char,
     mut ap: ::core::ffi::VaList,
@@ -2083,57 +2037,6 @@ unsafe extern "C" fn renderLogMsg(
         sqlite3StrAccumFinish(&raw mut acc),
     );
 }
-#[no_mangle]
-
-pub unsafe extern "C" fn sqlite3_log(
-    mut iErrCode: ::core::ffi::c_int,
-    mut zFormat: *const ::core::ffi::c_char,
-    mut args: ...
-) {
-    let mut ap: ::core::ffi::VaListImpl;
-    if crate::src::src::global::sqlite3Config.xLog.is_some() {
-        ap = args.clone();
-        renderLogMsg(iErrCode, zFormat, ap.as_va_list());
-    }
-}
-#[no_mangle]
-
-pub unsafe extern "C" fn sqlite3DebugPrintf(
-    mut zFormat: *const ::core::ffi::c_char,
-    mut args: ...
-) {
-    let mut ap: ::core::ffi::VaListImpl;
-    let mut acc: crate::src::headers::sqliteInt_h::StrAccum = unsafe { ::core::mem::zeroed() };
-    let mut zBuf: [::core::ffi::c_char; 700] = [0; 700];
-    sqlite3StrAccumInit(
-        &raw mut acc,
-        ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::sqlite3>(),
-        &raw mut zBuf as *mut ::core::ffi::c_char,
-        ::core::mem::size_of::<[::core::ffi::c_char; 700]>() as ::core::ffi::c_int,
-        0 as ::core::ffi::c_int,
-    );
-    ap = args.clone();
-    sqlite3_str_vappendf(&raw mut acc, zFormat, ap.as_va_list());
-    sqlite3StrAccumFinish(&raw mut acc);
-    crate::stdlib::fprintf(
-        crate::stdlib::stdout,
-        b"%s\0" as *const u8 as *const ::core::ffi::c_char,
-        &raw mut zBuf as *mut ::core::ffi::c_char,
-    );
-    crate::stdlib::fflush(crate::stdlib::stdout);
-}
-#[no_mangle]
-
-pub unsafe extern "C" fn sqlite3_str_appendf(
-    mut p: *mut crate::src::headers::sqliteInt_h::StrAccum,
-    mut zFormat: *const ::core::ffi::c_char,
-    mut args: ...
-) {
-    let mut ap: ::core::ffi::VaListImpl;
-    ap = args.clone();
-    sqlite3_str_vappendf(p as *mut crate::src::headers::sqliteInt_h::sqlite3_str, zFormat, ap.as_va_list());
-}
-#[no_mangle]
 
 pub unsafe extern "C" fn sqlite3RCStrRef(
     mut z: *mut ::core::ffi::c_char,

@@ -271,58 +271,6 @@ pub unsafe extern "C" fn sqlite3FinishCoding(mut pParse: *mut crate::src::header
 }
 #[no_mangle]
 
-pub unsafe extern "C" fn sqlite3NestedParse(
-    mut pParse: *mut crate::src::headers::sqliteInt_h::Parse,
-    mut zFormat: *const ::core::ffi::c_char,
-    mut args: ...
-) {
-    let mut ap: ::core::ffi::VaListImpl;
-    let mut zSql: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
-    let __pParse_ref = unsafe { &mut *pParse };
-    let mut db: *mut crate::src::headers::sqliteInt_h::sqlite3 = __pParse_ref.db;
-    let __db_ref = unsafe { &mut *db };
-    let mut savedDbFlags: crate::src::ext::rtree::rtree::u32_0 = __db_ref.mDbFlags;
-    let mut saveBuf: [::core::ffi::c_char; 136] = [0; 136];
-    if __pParse_ref.nErr != 0 {
-        return;
-    }
-    if __pParse_ref.eParseMode != 0 {
-        return;
-    }
-    ap = args.clone();
-    zSql = crate::src::src::printf::sqlite3VMPrintf(db, zFormat, ap.as_va_list());
-    if zSql.is_null() {
-        if __db_ref.mallocFailed == 0 {
-            __pParse_ref.rc = crate::src::headers::sqlite3_h::SQLITE_TOOBIG;
-        }
-        __pParse_ref.nErr += 1;
-        return;
-    }
-    __pParse_ref.nested = __pParse_ref.nested.wrapping_add(1);
-    ::core::ptr::copy_nonoverlapping(
-                    (pParse as *mut ::core::ffi::c_char).offset(crate::src::headers::sqliteInt_h::PARSE_RECURSE_SZ as isize) as *const u8,
-                    &raw mut saveBuf as *mut ::core::ffi::c_char as *mut u8,
-                    (crate::src::headers::sqliteInt_h::PARSE_TAIL_SZ) as usize,
-                );
-    ::libc::memset(
-        (pParse as *mut ::core::ffi::c_char).offset(crate::src::headers::sqliteInt_h::PARSE_RECURSE_SZ as isize)
-            as *mut ::core::ffi::c_void,
-        0 as ::core::ffi::c_int,
-        crate::src::headers::sqliteInt_h::PARSE_TAIL_SZ,
-    );
-    __db_ref.mDbFlags |= crate::src::headers::sqliteInt_h::DBFLAG_PreferBuiltin as crate::src::ext::rtree::rtree::u32_0;
-    crate::src::src::tokenize::sqlite3RunParser(pParse as *mut crate::src::headers::sqliteInt_h::Parse, zSql);
-    __db_ref.mDbFlags = savedDbFlags;
-    crate::src::src::malloc::sqlite3DbFree(db as *mut crate::src::headers::sqliteInt_h::sqlite3, zSql as *mut ::core::ffi::c_void);
-    ::core::ptr::copy_nonoverlapping(
-                    &raw mut saveBuf as *mut ::core::ffi::c_char as *const u8,
-                    (pParse as *mut ::core::ffi::c_char).offset(crate::src::headers::sqliteInt_h::PARSE_RECURSE_SZ as isize) as *mut u8,
-                    (crate::src::headers::sqliteInt_h::PARSE_TAIL_SZ) as usize,
-                );
-    __pParse_ref.nested = __pParse_ref.nested.wrapping_sub(1);
-}
-#[no_mangle]
-
 pub unsafe extern "C" fn sqlite3FindTable(
     mut db: *mut crate::src::headers::sqliteInt_h::sqlite3,
     mut zName: *const ::core::ffi::c_char,
@@ -6964,3 +6912,6 @@ pub unsafe extern "C" fn sqlite3WithDeleteGeneric(
 ) {
     sqlite3WithDelete(db, pWith as *mut crate::src::headers::sqliteInt_h::With);
 }
+
+// Re-export variadic functions from printf_c_variadic module
+pub use crate::src::printf_c_variadic::sqlite3NestedParse;

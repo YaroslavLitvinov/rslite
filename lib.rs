@@ -3,7 +3,9 @@
 #![allow(non_upper_case_globals)]
 #![allow(unused_assignments)]
 #![allow(unused_mut)]
-#![feature(c_variadic)]
+#![feature(
+    c_variadic
+)]
 #![feature(core_intrinsics)]
 #![feature(extern_types)]
 #![feature(raw_ref_op)]
@@ -1514,6 +1516,7 @@ pub mod src {
     pub mod mutex_pl;
     pub mod opcodes;
     pub mod parse;
+    pub mod printf_c_variadic;
     pub mod src {
         pub mod alter;
         pub mod analyze;

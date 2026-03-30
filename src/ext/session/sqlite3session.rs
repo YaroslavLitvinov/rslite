@@ -1475,7 +1475,7 @@ unsafe extern "C" fn sessionBufferGrow(
 pub const SESSION_MAX_BUFFER_SZ: ::core::ffi::c_int =
     0x7fffff00 as ::core::ffi::c_int - 1 as ::core::ffi::c_int;
 
-unsafe extern "C" fn sessionAppendStr(
+pub unsafe extern "C" fn sessionAppendStr(
     mut p: *mut SessionBuffer,
     mut zStr: *const ::core::ffi::c_char,
     mut pRc: *mut ::core::ffi::c_int,
@@ -1492,26 +1492,6 @@ unsafe extern "C" fn sessionAppendStr(
                 );
         __p_ref.nBuf += nStr;
         *__p_ref.aBuf.offset(__p_ref.nBuf as isize) = 0 as crate::src::ext::rtree::rtree::u8_0;
-    }
-}
-
-unsafe extern "C" fn sessionAppendPrintf(
-    mut p: *mut SessionBuffer,
-    mut pRc: *mut ::core::ffi::c_int,
-    mut zFmt: *const ::core::ffi::c_char,
-    mut args: ...
-) {
-    if *pRc == crate::src::headers::sqlite3_h::SQLITE_OK {
-        let mut zApp: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
-        let mut ap: ::core::ffi::VaListImpl;
-        ap = args.clone();
-        zApp = crate::src::src::printf::sqlite3_vmprintf(zFmt, ap.as_va_list());
-        if zApp.is_null() {
-            *pRc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
-        } else {
-            sessionAppendStr(p, zApp, pRc);
-        }
-        crate::src::src::malloc::sqlite3_free(zApp as *mut ::core::ffi::c_void);
     }
 }
 
@@ -7862,3 +7842,6 @@ pub unsafe extern "C" fn sqlite3session_config(
 }
     rc
 }
+
+// Re-export variadic functions from printf_c_variadic module
+pub use crate::src::printf_c_variadic::sessionAppendPrintf;

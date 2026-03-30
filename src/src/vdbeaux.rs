@@ -20,6 +20,9 @@
 
 pub use crate::stdlib::va_list;
 pub use crate::__stddef_size_t_h::size_t;
+pub use crate::src::printf_c_variadic::sqlite3VdbeError;
+pub use crate::src::printf_c_variadic::sqlite3VdbeMultiLoad;
+pub use crate::src::printf_c_variadic::sqlite3VdbeExplain;
 
 
 
@@ -76,20 +79,6 @@ pub unsafe extern "C" fn sqlite3VdbeCreate(mut pParse: *mut crate::src::headers:
 pub unsafe extern "C" fn sqlite3VdbeParser(mut p: *mut crate::src::headers::vdbeInt_h::Vdbe) -> *mut crate::src::headers::sqliteInt_h::Parse {
     (*p).pParse
 }
-#[no_mangle]
-
-pub unsafe extern "C" fn sqlite3VdbeError(
-    mut p: *mut crate::src::headers::vdbeInt_h::Vdbe,
-    mut zFormat: *const ::core::ffi::c_char,
-    mut args: ...
-) {
-    let mut ap: ::core::ffi::VaListImpl;
-    let __p_ref = unsafe { &mut *p };
-    crate::src::src::malloc::sqlite3DbFree(__p_ref.db as *mut crate::src::headers::sqliteInt_h::sqlite3, __p_ref.zErrMsg as *mut ::core::ffi::c_void);
-    ap = args.clone();
-    __p_ref.zErrMsg = crate::src::src::printf::sqlite3VMPrintf(__p_ref.db, zFormat, ap.as_va_list());
-}
-#[no_mangle]
 
 pub unsafe extern "C" fn sqlite3VdbeSetSql(
     mut p: *mut crate::src::headers::vdbeInt_h::Vdbe,
@@ -326,55 +315,6 @@ pub unsafe extern "C" fn sqlite3VdbeLoadString(
         0 as ::core::ffi::c_int,
     )
 }
-#[no_mangle]
-
-pub unsafe extern "C" fn sqlite3VdbeMultiLoad(
-    mut p: *mut crate::src::headers::vdbeInt_h::Vdbe,
-    mut iDest: ::core::ffi::c_int,
-    mut zTypes: *const ::core::ffi::c_char,
-    mut args: ...
-) {
-    let mut current_block: u64;
-    let mut ap: ::core::ffi::VaListImpl;
-    let mut i: ::core::ffi::c_int = 0;
-    let mut c: ::core::ffi::c_char = 0;
-    ap = args.clone();
-    i = 0 as ::core::ffi::c_int;
-    loop {
-        c = *zTypes.offset(i as isize);
-        if !(c as ::core::ffi::c_int != 0 as ::core::ffi::c_int) {
-            current_block = 11812396948646013369;
-            break;
-        }
-        if c as ::core::ffi::c_int == 's' as i32 {
-            let mut z: *const ::core::ffi::c_char = ap.arg::<*const ::core::ffi::c_char>();
-            sqlite3VdbeAddOp4(
-                p,
-                if z.is_null() { crate::src::headers::opcodes_h::OP_Null } else { crate::src::headers::opcodes_h::OP_String8 },
-                0 as ::core::ffi::c_int,
-                iDest + i,
-                0 as ::core::ffi::c_int,
-                z,
-                0 as ::core::ffi::c_int,
-            );
-        } else {
-            if !(c as ::core::ffi::c_int == 'i' as i32) {
-                current_block = 2968425633554183086;
-                break;
-            }
-            sqlite3VdbeAddOp2(p, crate::src::headers::opcodes_h::OP_Integer, ap.arg::<::core::ffi::c_int>(), iDest + i);
-        }
-        i += 1;
-    }
-    match current_block {
-        11812396948646013369 => {
-            sqlite3VdbeAddOp2(p, crate::src::headers::opcodes_h::OP_ResultRow, iDest, i);
-        }
-        _ => {}
-    };
-}
-#[no_mangle]
-
 pub unsafe extern "C" fn sqlite3VdbeAddOp4(
     mut p: *mut crate::src::headers::vdbeInt_h::Vdbe,
     mut op: ::core::ffi::c_int,
@@ -469,43 +409,6 @@ pub unsafe extern "C" fn sqlite3VdbeExplainParent(mut pParse: *mut crate::src::h
     pOp = sqlite3VdbeGetOp(__pParse_ref.pVdbe, __pParse_ref.addrExplain);
     (*pOp).p2
 }
-#[no_mangle]
-
-pub unsafe extern "C" fn sqlite3VdbeExplain(
-    mut pParse: *mut crate::src::headers::sqliteInt_h::Parse,
-    mut bPush: crate::src::ext::rtree::rtree::u8_0,
-    mut zFmt: *const ::core::ffi::c_char,
-    mut args: ...
-) -> ::core::ffi::c_int {
-    let mut addr: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-    if (*pParse).explain as ::core::ffi::c_int == 2 as ::core::ffi::c_int
-        || 0 as ::core::ffi::c_int != 0
-    {
-        let mut zMsg: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
-        let mut v: *mut crate::src::headers::vdbeInt_h::Vdbe = ::core::ptr::null_mut::<crate::src::headers::vdbeInt_h::Vdbe>();
-        let mut ap: ::core::ffi::VaListImpl;
-        let mut iThis: ::core::ffi::c_int = 0;
-        ap = args.clone();
-        let __pParse_ref = unsafe { &mut *pParse };
-        zMsg = crate::src::src::printf::sqlite3VMPrintf(__pParse_ref.db, zFmt, ap.as_va_list());
-        v = __pParse_ref.pVdbe;
-        iThis = (*v).nOp;
-        addr = sqlite3VdbeAddOp4(
-            v,
-            crate::src::headers::opcodes_h::OP_Explain,
-            iThis,
-            __pParse_ref.addrExplain,
-            0 as ::core::ffi::c_int,
-            zMsg,
-            crate::src::src::vdbe::P4_DYNAMIC,
-        );
-        if bPush != 0 {
-            __pParse_ref.addrExplain = iThis;
-        }
-    }
-    addr
-}
-#[no_mangle]
 
 pub unsafe extern "C" fn sqlite3VdbeExplainPop(mut pParse: *mut crate::src::headers::sqliteInt_h::Parse) {
     (*pParse).addrExplain = sqlite3VdbeExplainParent(pParse);

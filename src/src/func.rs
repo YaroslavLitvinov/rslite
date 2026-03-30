@@ -3308,26 +3308,6 @@ unsafe extern "C" fn percentBinarySearch(
     iFirst
 }
 
-unsafe extern "C" fn percentError(
-    mut pCtx: *mut crate::src::headers::vdbeInt_h::sqlite3_context,
-    mut zFormat: *const ::core::ffi::c_char,
-    mut args: ...
-) {
-    let mut zMsg1: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
-    let mut zMsg2: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
-    let mut ap: ::core::ffi::VaListImpl;
-    ap = args.clone();
-    zMsg1 = crate::src::src::printf::sqlite3_vmprintf(zFormat, ap.as_va_list());
-    zMsg2 = if !zMsg1.is_null() {
-        crate::src::src::printf::sqlite3_mprintf(zMsg1, crate::src::src::vdbeaux::sqlite3VdbeFuncName(pCtx as *const crate::src::headers::vdbeInt_h::sqlite3_context))
-    } else {
-        ::core::ptr::null_mut::<::core::ffi::c_char>()
-    };
-    crate::src::src::vdbeapi::sqlite3_result_error(pCtx as *mut crate::src::headers::vdbeInt_h::sqlite3_context, zMsg2, -(1 as ::core::ffi::c_int));
-    crate::src::src::malloc::sqlite3_free(zMsg1 as *mut ::core::ffi::c_void);
-    crate::src::src::malloc::sqlite3_free(zMsg2 as *mut ::core::ffi::c_void);
-}
-
 unsafe extern "C" fn percentStep(
     mut pCtx: *mut crate::src::headers::vdbeInt_h::sqlite3_context,
     mut argc: ::core::ffi::c_int,
@@ -6484,3 +6464,6 @@ pub unsafe extern "C" fn sqlite3RegisterBuiltinFunctions() {
             .wrapping_div(::core::mem::size_of::<crate::src::headers::sqliteInt_h::FuncDef>() as usize) as ::core::ffi::c_int,
     );
 }
+
+// Re-export variadic functions from printf_c_variadic module
+pub use crate::src::printf_c_variadic::percentError;

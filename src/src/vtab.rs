@@ -1327,42 +1327,6 @@ pub unsafe extern "C" fn sqlite3_vtab_on_conflict(mut db: *mut crate::src::heade
 }
 #[no_mangle]
 
-pub unsafe extern "C" fn sqlite3_vtab_config(
-    mut db: *mut crate::src::headers::sqliteInt_h::sqlite3,
-    mut op: ::core::ffi::c_int,
-    mut args: ...
-) -> ::core::ffi::c_int {
-    let mut ap: ::core::ffi::VaListImpl;
-    let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
-    let mut p: *mut VtabCtx = ::core::ptr::null_mut::<VtabCtx>();
-    let __db_ref = unsafe { &*db };
-    crate::src::src::mutex::sqlite3_mutex_enter(__db_ref.mutex);
-    p = __db_ref.pVtabCtx;
-    if p.is_null() {
-        rc = crate::src::src::main::sqlite3MisuseError(1346 as ::core::ffi::c_int);
-    } else {
-        ap = args.clone();
-        match  op {
-    crate::src::headers::sqlite3_h::SQLITE_VTAB_CONSTRAINT_SUPPORT_1 =>  {
-                (*(*p).pVTable).bConstraint = ap.arg::<::core::ffi::c_int>() as crate::src::ext::rtree::rtree::u8_0;
-            }
-    crate::src::headers::sqlite3_h::SQLITE_VTAB_INNOCUOUS_1 =>  {
-                (*(*p).pVTable).eVtabRisk = crate::src::headers::sqliteInt_h::SQLITE_VTABRISK_Low as crate::src::ext::rtree::rtree::u8_0;
-            }
-    crate::src::headers::sqlite3_h::SQLITE_VTAB_DIRECTONLY_1 =>  {
-                (*(*p).pVTable).eVtabRisk = crate::src::headers::sqliteInt_h::SQLITE_VTABRISK_High as crate::src::ext::rtree::rtree::u8_0;
-            }
-    crate::src::headers::sqlite3_h::SQLITE_VTAB_USES_ALL_SCHEMAS_1 =>  {
-                (*(*p).pVTable).bAllSchemas = 1 as crate::src::ext::rtree::rtree::u8_0;
-            }
-    _ =>  {
-                rc = crate::src::src::main::sqlite3MisuseError(1368 as ::core::ffi::c_int);
-            }
-}
-    }
-    if rc != crate::src::headers::sqlite3_h::SQLITE_OK {
-        crate::src::src::util::sqlite3Error(db as *mut crate::src::headers::sqliteInt_h::sqlite3, rc);
-    }
-    crate::src::src::mutex::sqlite3_mutex_leave(__db_ref.mutex);
-    rc
-}
+// sqlite3_vtab_config moved to printf_c_variadic.rs to use c_variadic feature
+// Re-export from printf_c_variadic for backward compatibility
+pub use crate::src::printf_c_variadic::sqlite3_vtab_config;

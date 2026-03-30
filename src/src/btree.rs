@@ -9537,7 +9537,7 @@ pub unsafe extern "C" fn sqlite3BtreePager(mut p: *mut crate::src::headers::btre
     (*(*p).pBt).pPager as *mut crate::src::src::pager::Pager
 }
 
-unsafe extern "C" fn checkOom(mut pCheck: *mut crate::src::headers::btreeInt_h::IntegrityCk) {
+pub unsafe extern "C" fn checkOom(mut pCheck: *mut crate::src::headers::btreeInt_h::IntegrityCk) {
     let __pCheck_ref = unsafe { &mut *pCheck };
     __pCheck_ref.rc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
     __pCheck_ref.mxErr = 0 as ::core::ffi::c_int;
@@ -9546,7 +9546,7 @@ unsafe extern "C" fn checkOom(mut pCheck: *mut crate::src::headers::btreeInt_h::
     }
 }
 
-unsafe extern "C" fn checkProgress(mut pCheck: *mut crate::src::headers::btreeInt_h::IntegrityCk) {
+pub unsafe extern "C" fn checkProgress(mut pCheck: *mut crate::src::headers::btreeInt_h::IntegrityCk) {
     let mut db: *mut crate::src::headers::sqliteInt_h::sqlite3 = (*pCheck).db;
     if (*((&raw mut (*db).u1.isInterrupted) as *mut std::sync::atomic::AtomicI32)).load(std::sync::atomic::Ordering::Relaxed) != 0 {
         let __pCheck_ref = unsafe { &mut *pCheck };
@@ -9565,44 +9565,6 @@ unsafe extern "C" fn checkProgress(mut pCheck: *mut crate::src::headers::btreeIn
             __pCheck_ref.nErr += 1;
             __pCheck_ref.mxErr = 0 as ::core::ffi::c_int;
         }
-    }
-}
-
-unsafe extern "C" fn checkAppendMsg(
-    mut pCheck: *mut crate::src::headers::btreeInt_h::IntegrityCk,
-    mut zFormat: *const ::core::ffi::c_char,
-    mut args: ...
-) {
-    let mut ap: ::core::ffi::VaListImpl;
-    checkProgress(pCheck);
-    let __pCheck_ref = unsafe { &mut *pCheck };
-    if __pCheck_ref.mxErr == 0 {
-        return;
-    }
-    __pCheck_ref.mxErr -= 1;
-    __pCheck_ref.nErr += 1;
-    ap = args.clone();
-    if __pCheck_ref.errMsg.nChar != 0 {
-        crate::src::src::printf::sqlite3_str_append(
-            
-            &raw mut __pCheck_ref.errMsg as *mut _ as *mut crate::src::headers::sqliteInt_h::sqlite3_str,
-            b"\n\0" as *const u8 as *const ::core::ffi::c_char,
-            1 as ::core::ffi::c_int,
-        );
-    }
-    if !__pCheck_ref.zPfx.is_null() {
-        crate::src::src::printf::sqlite3_str_appendf(
-            
-            &raw mut __pCheck_ref.errMsg as *mut _ as *mut crate::src::headers::sqliteInt_h::sqlite3_str,
-            __pCheck_ref.zPfx,
-            __pCheck_ref.v0,
-            __pCheck_ref.v1,
-            __pCheck_ref.v2,
-        );
-    }
-    crate::src::src::printf::sqlite3_str_vappendf(&raw mut __pCheck_ref.errMsg, zFormat, ap.as_va_list());
-    if __pCheck_ref.errMsg.accError as ::core::ffi::c_int == crate::src::headers::sqlite3_h::SQLITE_NOMEM {
-        checkOom(pCheck);
     }
 }
 
@@ -10606,3 +10568,6 @@ pub unsafe extern "C" fn sqlite3BtreeSharable(mut p: *mut crate::src::headers::b
 pub unsafe extern "C" fn sqlite3BtreeConnectionCount(mut p: *mut crate::src::headers::btreeInt_h::Btree) -> ::core::ffi::c_int {
     (*(*p).pBt).nRef
 }
+
+// Re-export variadic functions from printf_c_variadic module
+pub use crate::src::printf_c_variadic::checkAppendMsg;

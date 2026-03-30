@@ -892,7 +892,7 @@ unsafe extern "C" fn jsonStringOom(mut p: *mut JsonString) {
     jsonStringReset(p);
 }
 
-unsafe extern "C" fn jsonStringGrow(mut p: *mut JsonString, mut N: crate::src::ext::rtree::rtree::u32_0) -> ::core::ffi::c_int {
+pub unsafe extern "C" fn jsonStringGrow(mut p: *mut JsonString, mut N: crate::src::ext::rtree::rtree::u32_0) -> ::core::ffi::c_int {
     let __p_ref = unsafe { &mut *p };
     let mut nTotal: crate::src::ext::rtree::rtree::u64_0 = if (N as crate::src::ext::rtree::rtree::u64_0) < __p_ref.nAlloc {
         __p_ref.nAlloc.wrapping_mul(2 as crate::src::ext::rtree::rtree::u64_0)
@@ -985,29 +985,6 @@ unsafe extern "C" fn jsonAppendRawNZ(
                 );
         __p_ref.nUsed = __p_ref.nUsed.wrapping_add(N as crate::src::ext::rtree::rtree::u64_0);
     };
-}
-
-unsafe extern "C" fn jsonPrintf(
-    mut N: ::core::ffi::c_int,
-    mut p: *mut JsonString,
-    mut zFormat: *const ::core::ffi::c_char,
-    mut args: ...
-) {
-    let mut ap: ::core::ffi::VaListImpl;
-    let __p_ref = unsafe { &mut *p };
-    if __p_ref.nUsed.wrapping_add(N as crate::src::ext::rtree::rtree::u64_0) >= __p_ref.nAlloc && jsonStringGrow(p, N as crate::src::ext::rtree::rtree::u32_0) != 0 {
-        return;
-    }
-    ap = args.clone();
-    crate::src::src::printf::sqlite3_vsnprintf(
-        N,
-        __p_ref.zBuf.offset(__p_ref.nUsed as isize),
-        zFormat,
-        ap.as_va_list(),
-    );
-    __p_ref.nUsed = (*p)
-        .nUsed
-        .wrapping_add(::libc::strlen(__p_ref.zBuf.offset(__p_ref.nUsed as isize)) as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u64_0);
 }
 #[inline(never)]
 
@@ -8406,3 +8383,6 @@ pub unsafe extern "C" fn sqlite3JsonVtabRegister(
     }
     ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Module>()
 }
+
+// Re-export variadic functions from printf_c_variadic module
+pub use crate::src::printf_c_variadic::jsonPrintf;
