@@ -89,6 +89,27 @@ impl MemStorage {
     pub fn get_table(&self, name: &str) -> Option<MemTableRef> {
         self.tables.get(name).cloned()
     }
+
+    /// Snapshot all tables as owned MemTable values (clones the underlying data).
+    pub fn snapshot_tables(&self) -> BTreeMap<String, MemTable> {
+        self.tables
+            .iter()
+            .map(|(k, v)| (k.clone(), v.borrow().clone()))
+            .collect()
+    }
+
+    /// Merge mutations from another MemStorage instance back into this one.
+    ///
+    /// Tables present in `other` overwrite the corresponding tables here.
+    /// Tables present only in `self` are left untouched.
+    pub fn merge(&mut self, other: MemStorage) {
+        for (name, tbl_ref) in other.tables {
+            let tbl = Rc::try_unwrap(tbl_ref)
+                .map(|cell| cell.into_inner())
+                .unwrap_or_else(|rc| rc.borrow().clone());
+            self.tables.insert(name, Rc::new(RefCell::new(tbl)));
+        }
+    }
 }
 
 impl StorageBackend for MemStorage {

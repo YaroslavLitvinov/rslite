@@ -21,6 +21,8 @@ pub mod sql;
 pub mod schema;
 #[path = "src/wip_db.rs"]
 pub mod wip_db;
+#[path = "src/db.rs"]
+pub mod db;
 pub mod pcache_h {
     pub use crate::src::src::pcache::PCache;
 }
