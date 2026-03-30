@@ -10,6 +10,17 @@
 #![feature(register_tool)]
 #![register_tool(c2rust)]
 #![feature(atomic_from_ptr)]
+#![feature(let_chains)]
+#![feature(result_option_inspect)]
+
+#[path = "src/vdbe/mod.rs"]
+pub mod vdbe;
+#[path = "src/sql/mod.rs"]
+pub mod sql;
+#[path = "src/schema.rs"]
+pub mod schema;
+#[path = "src/wip_db.rs"]
+pub mod wip_db;
 pub mod pcache_h {
     pub use crate::src::src::pcache::PCache;
 }
