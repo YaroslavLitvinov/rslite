@@ -162,11 +162,7 @@ unsafe extern "C" fn rowSetEntryMerge(
     mut pA: *mut RowSetEntry,
     mut pB: *mut RowSetEntry,
 ) -> *mut RowSetEntry {
-    let mut head: RowSetEntry = RowSetEntry {
-        v: 0,
-        pRight: ::core::ptr::null_mut::<RowSetEntry>(),
-        pLeft: ::core::ptr::null_mut::<RowSetEntry>(),
-    };
+    let mut head: RowSetEntry = unsafe { ::core::mem::zeroed() };
     let mut pTail: *mut RowSetEntry = ::core::ptr::null_mut::<RowSetEntry>();
     pTail = &raw mut head;
     loop {

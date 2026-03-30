@@ -532,12 +532,7 @@ unsafe extern "C" fn vtabCallConstructor(
     >,
     mut pzErr: *mut *mut ::core::ffi::c_char,
 ) -> ::core::ffi::c_int {
-    let mut sCtx: VtabCtx = VtabCtx {
-        pVTable: ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::VTable>(),
-        pTab: ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Table>(),
-        pPrior: ::core::ptr::null_mut::<VtabCtx>(),
-        bDeclared: 0,
-    };
+    let mut sCtx: VtabCtx = unsafe { ::core::mem::zeroed() };
     let mut pVTable: *mut crate::src::headers::sqliteInt_h::VTable = ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::VTable>();
     let mut rc: ::core::ffi::c_int = 0;
     let mut azArg: *const *const ::core::ffi::c_char =
@@ -845,98 +840,7 @@ pub unsafe extern "C" fn sqlite3_declare_vtab(
     let mut pCtx: *mut VtabCtx = ::core::ptr::null_mut::<VtabCtx>();
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
     let mut pTab: *mut crate::src::headers::sqliteInt_h::Table = ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Table>();
-    let mut sParse: crate::src::headers::sqliteInt_h::Parse = crate::src::headers::sqliteInt_h::Parse {
-    db:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::sqlite3>(),
-    zErrMsg:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    pVdbe:  ::core::ptr::null_mut::<crate::src::headers::vdbeInt_h::Vdbe>(),
-    rc:  0,
-    nQueryLoop:  0,
-    nested:  0,
-    nTempReg:  0,
-    isMultiWrite:  0,
-    mayAbort:  0,
-    hasCompound:  0,
-    disableLookaside:  0,
-    prepFlags:  0,
-    withinRJSubrtn:  0,
-    bHasExists:  0,
-    mSubrtnSig:  0,
-    eTriggerOp:  0,
-    bReturning:  0,
-    eOrconf:  0,
-    disableTriggers:  0,
-    colNamesSet_bHasWith_okConstFactor_checkSchema:  [0; 1],
-    c2rust_padding:  [0; 3],
-    nRangeReg:  0,
-    iRangeReg:  0,
-    nErr:  0,
-    nTab:  0,
-    nMem:  0,
-    szOpAlloc:  0,
-    iSelfTab:  0,
-    nLabel:  0,
-    nLabelAlloc:  0,
-    aLabel:  ::core::ptr::null_mut::<::core::ffi::c_int>(),
-    pConstExpr:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::ExprList>(),
-    pIdxEpr:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::IndexedExpr>(),
-    pIdxPartExpr:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::IndexedExpr>(),
-    writeMask:  0,
-    cookieMask:  0,
-    nMaxArg:  0,
-    nSelect:  0,
-    nProgressSteps:  0,
-    nTableLock:  0,
-    aTableLock:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::TableLock>(),
-    pAinc:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::AutoincInfo>(),
-    pToplevel:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Parse>(),
-    pTriggerTab:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Table>(),
-    pTriggerPrg:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::TriggerPrg>(),
-    pCleanup:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::ParseCleanup>(),
-    aTempReg:  [0; 8],
-    pOuterParse:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Parse>(),
-    sNameToken:  crate::src::headers::sqliteInt_h::Token {
-    z:  ::core::ptr::null::<::core::ffi::c_char>(),
-    n:  0,
-},
-    oldmask:  0,
-    newmask:  0,
-    u1:  crate::src::headers::sqliteInt_h::__anon_union_15 {
-    cr:  crate::src::headers::sqliteInt_h::__anon_struct_7 {
-    addrCrTab:  0,
-    regRowid:  0,
-    regRoot:  0,
-    constraintName:  crate::src::headers::sqliteInt_h::Token {
-    z:  ::core::ptr::null::<::core::ffi::c_char>(),
-    n:  0,
-},
-},
-},
-    sLastToken:  crate::src::headers::sqliteInt_h::Token {
-    z:  ::core::ptr::null::<::core::ffi::c_char>(),
-    n:  0,
-},
-    nVar:  0,
-    iPkSortOrder:  0,
-    explain:  0,
-    eParseMode:  0,
-    nVtabLock:  0,
-    nHeight:  0,
-    addrExplain:  0,
-    pVList:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::VList>(),
-    pReprepare:  ::core::ptr::null_mut::<crate::src::headers::vdbeInt_h::Vdbe>(),
-    zTail:  ::core::ptr::null::<::core::ffi::c_char>(),
-    pNewTable:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Table>(),
-    pNewIndex:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Index>(),
-    pNewTrigger:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Trigger>(),
-    zAuthContext:  ::core::ptr::null::<::core::ffi::c_char>(),
-    sArg:  crate::src::headers::sqliteInt_h::Token {
-    z:  ::core::ptr::null::<::core::ffi::c_char>(),
-    n:  0,
-},
-    apVtabLock:  ::core::ptr::null_mut::<*mut crate::src::headers::sqliteInt_h::Table>(),
-    pWith:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::With>(),
-    pRename:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::RenameToken>(),
-};
+    let mut sParse: crate::src::headers::sqliteInt_h::Parse = unsafe { ::core::mem::zeroed() };
     let mut initBusy: ::core::ffi::c_int = 0;
     let mut i: ::core::ffi::c_int = 0;
     let mut z: *const ::core::ffi::c_uchar = ::core::ptr::null::<::core::ffi::c_uchar>();

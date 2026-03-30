@@ -107,10 +107,7 @@ unsafe extern "C" fn statConnect(
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
     let mut iDb: ::core::ffi::c_int = 0;
     if argc >= 4 as ::core::ffi::c_int {
-        let mut nm: crate::src::headers::sqliteInt_h::Token = crate::src::headers::sqliteInt_h::Token {
-    z:  ::core::ptr::null::<::core::ffi::c_char>(),
-    n:  0,
-};
+        let mut nm: crate::src::headers::sqliteInt_h::Token = unsafe { ::core::mem::zeroed() };
         crate::src::src::util::sqlite3TokenInit(
             
             &raw mut nm as *mut _ as *mut crate::src::headers::sqliteInt_h::Token,

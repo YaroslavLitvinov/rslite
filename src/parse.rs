@@ -8216,7 +8216,7 @@ unsafe extern "C" fn yy_reduce(
     let mut yymsp: *mut yyStackEntry = ::core::ptr::null_mut::<yyStackEntry>();
     let mut yysize: ::core::ffi::c_int = 0;
     yymsp = (*yypParser).yytos;
-    let mut yylhsminor: YYMINORTYPE = YYMINORTYPE { yyinit: 0 };
+    let mut yylhsminor: YYMINORTYPE = unsafe { ::core::mem::zeroed() };
     match yyruleno {
         0 => {
             if (*pParse).pReprepare.is_null() {
@@ -9231,10 +9231,7 @@ unsafe extern "C" fn yy_reduce(
                 .yy637;
             if !pRhs.is_null() && !(*pRhs).pPrior.is_null() {
                 let mut pFrom: *mut crate::src::headers::sqliteInt_h::SrcList = ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::SrcList>();
-                let mut x: crate::src::headers::sqliteInt_h::Token = crate::src::headers::sqliteInt_h::Token {
-    z:  ::core::ptr::null::<::core::ffi::c_char>(),
-    n:  0,
-};
+                let mut x: crate::src::headers::sqliteInt_h::Token = unsafe { ::core::mem::zeroed() };
                 x.n = 0 as ::core::ffi::c_uint;
                 parserDoubleLinkSelect(pParse, pRhs);
                 pFrom =  crate::src::src::build::sqlite3SrcListAppendFromTerm(
@@ -10699,10 +10696,7 @@ unsafe extern "C" fn yy_reduce(
                 .yy563;
                 if (*pFromClause).nSrc > 1 as ::core::ffi::c_int {
                     let mut pSubquery_0: *mut crate::src::headers::sqliteInt_h::Select = ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Select>();
-                    let mut as_0: crate::src::headers::sqliteInt_h::Token = crate::src::headers::sqliteInt_h::Token {
-    z:  ::core::ptr::null::<::core::ffi::c_char>(),
-    n:  0,
-};
+                    let mut as_0: crate::src::headers::sqliteInt_h::Token = unsafe { ::core::mem::zeroed() };
                     pSubquery_0 =  crate::src::src::select::sqlite3SelectNew(
                         
                         pParse as *mut crate::src::headers::sqliteInt_h::Parse,
@@ -13208,10 +13202,7 @@ unsafe extern "C" fn yy_reduce(
             );
         }
         260 => {
-            let mut all: crate::src::headers::sqliteInt_h::Token = crate::src::headers::sqliteInt_h::Token {
-    z:  ::core::ptr::null::<::core::ffi::c_char>(),
-    n:  0,
-};
+            let mut all: crate::src::headers::sqliteInt_h::Token = unsafe { ::core::mem::zeroed() };
             all.z = (*yymsp.offset(-(3 as ::core::ffi::c_int) as isize))
                 .minor
                 .yy0
@@ -14440,7 +14431,7 @@ pub unsafe extern "C" fn sqlite3Parser(
     mut yymajor: ::core::ffi::c_int,
     mut yyminor: crate::src::headers::sqliteInt_h::Token,
 ) {
-    let mut yyminorunion: YYMINORTYPE = YYMINORTYPE { yyinit: 0 };
+    let mut yyminorunion: YYMINORTYPE = unsafe { ::core::mem::zeroed() };
     let mut yyact: ::core::ffi::c_ushort = 0;
     let mut yypParser: *mut yyParser = yyp as *mut yyParser;
     let mut pParse: *mut crate::src::headers::sqliteInt_h::Parse = (*yypParser).pParse;

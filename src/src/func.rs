@@ -459,20 +459,8 @@ unsafe extern "C" fn printfFunc(
     mut argc: ::core::ffi::c_int,
     mut argv: *mut *mut crate::src::headers::vdbeInt_h::sqlite3_value,
 ) {
-    let mut x: crate::src::headers::sqliteInt_h::PrintfArguments = crate::src::headers::sqliteInt_h::PrintfArguments {
-    nArg:  0,
-    nUsed:  0,
-    apArg:  ::core::ptr::null_mut::<*mut crate::src::headers::vdbeInt_h::sqlite3_value>(),
-};
-    let mut str: crate::src::headers::sqliteInt_h::StrAccum = crate::src::headers::sqliteInt_h::sqlite3_str {
-    db:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::sqlite3>(),
-    zText:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    nAlloc:  0,
-    mxAlloc:  0,
-    nChar:  0,
-    accError:  0,
-    printfFlags:  0,
-};
+    let mut x: crate::src::headers::sqliteInt_h::PrintfArguments = unsafe { ::core::mem::zeroed() };
+    let mut str: crate::src::headers::sqliteInt_h::StrAccum = unsafe { ::core::mem::zeroed() };
     let mut zFormat: *const ::core::ffi::c_char = ::core::ptr::null::<::core::ffi::c_char>();
     let mut n: ::core::ffi::c_int = 0;
     let mut db: *mut crate::src::headers::sqliteInt_h::sqlite3 =  crate::src::src::vdbeapi::sqlite3_context_db_handle(context as *mut crate::src::headers::vdbeInt_h::sqlite3_context) as
@@ -1181,12 +1169,7 @@ unsafe extern "C" fn likeFunc(
     *mut crate::src::headers::sqliteInt_h::sqlite3);
 
     let mut pInfo: *mut compareInfo = crate::src::src::vdbeapi::sqlite3_user_data(context as *mut crate::src::headers::vdbeInt_h::sqlite3_context) as *mut compareInfo;
-    let mut backupInfo: compareInfo = compareInfo {
-        matchAll: 0,
-        matchOne: 0,
-        matchSet: 0,
-        noCase: 0,
-    };
+    let mut backupInfo: compareInfo = unsafe { ::core::mem::zeroed() };
     nPat = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as isize) as
     *mut crate::src::headers::vdbeInt_h::sqlite3_value);
     if nPat > db.aLimit[crate::src::headers::sqlite3_h::SQLITE_LIMIT_LIKE_PATTERN_LENGTH as usize] {
@@ -1670,15 +1653,7 @@ unsafe extern "C" fn quoteFunc(
     mut _argc: ::core::ffi::c_int,
     mut argv: *mut *mut crate::src::headers::vdbeInt_h::sqlite3_value,
 ) {
-    let mut str: crate::src::headers::sqliteInt_h::sqlite3_str = crate::src::headers::sqliteInt_h::sqlite3_str {
-    db:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::sqlite3>(),
-    zText:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    nAlloc:  0,
-    mxAlloc:  0,
-    nChar:  0,
-    accError:  0,
-    printfFlags:  0,
-};
+    let mut str: crate::src::headers::sqliteInt_h::sqlite3_str = unsafe { ::core::mem::zeroed() };
     let mut db: *mut crate::src::headers::sqliteInt_h::sqlite3 =  crate::src::src::vdbeapi::sqlite3_context_db_handle(context as *mut crate::src::headers::vdbeInt_h::sqlite3_context) as
     *mut crate::src::headers::sqliteInt_h::sqlite3;
     crate::src::src::printf::sqlite3StrAccumInit(

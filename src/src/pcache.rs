@@ -533,19 +533,7 @@ pub unsafe extern "C" fn sqlite3PcacheClear(mut pCache: *mut PCache) {
 }
 
 unsafe extern "C" fn pcacheMergeDirtyList(mut pA: *mut crate::src::src::pcache::PgHdr, mut pB: *mut crate::src::src::pcache::PgHdr) -> *mut crate::src::src::pcache::PgHdr {
-    let mut result: crate::src::src::pcache::PgHdr = crate::src::src::pcache::PgHdr {
-    pPage:  ::core::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_pcache_page>(),
-    pData:  ::core::ptr::null_mut::<::core::ffi::c_void>(),
-    pExtra:  ::core::ptr::null_mut::<::core::ffi::c_void>(),
-    pCache:  ::core::ptr::null_mut::<PCache>(),
-    pDirty:  ::core::ptr::null_mut::<crate::src::src::pcache::PgHdr>(),
-    pPager:  ::core::ptr::null_mut::<crate::src::src::pager::Pager>(),
-    pgno:  0,
-    flags:  0,
-    nRef:  0,
-    pDirtyNext:  ::core::ptr::null_mut::<crate::src::src::pcache::PgHdr>(),
-    pDirtyPrev:  ::core::ptr::null_mut::<crate::src::src::pcache::PgHdr>(),
-};
+    let mut result: crate::src::src::pcache::PgHdr = unsafe { ::core::mem::zeroed() };
     let mut pTail: *mut crate::src::src::pcache::PgHdr = ::core::ptr::null_mut::<crate::src::src::pcache::PgHdr>();
     pTail = &raw mut result;
     loop {

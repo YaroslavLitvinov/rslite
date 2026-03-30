@@ -76,29 +76,7 @@ unsafe extern "C" fn resolveAlias(
         crate::src::src::expr::sqlite3ExprDelete(db as *mut crate::src::headers::sqliteInt_h::sqlite3,  pDup as *mut crate::src::headers::sqliteInt_h::Expr);
         pDup = ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Expr>();
     } else {
-        let mut temp: crate::src::headers::sqliteInt_h::Expr = crate::src::headers::sqliteInt_h::Expr {
-    op:  0,
-    affExpr:  0,
-    op2:  0,
-    flags:  0,
-    u:  crate::src::headers::sqliteInt_h::__anon_union_5 {
-    zToken:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-},
-    pLeft:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Expr>(),
-    pRight:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Expr>(),
-    x:  crate::src::headers::sqliteInt_h::__anon_union_6 {
-    pList:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::ExprList>(),
-},
-    nHeight:  0,
-    iTable:  0,
-    iColumn:  0,
-    iAgg:  0,
-    w:  crate::src::headers::sqliteInt_h::__anon_union_7 { iJoin:  0 },
-    pAggInfo:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::AggInfo>(),
-    y:  crate::src::headers::sqliteInt_h::__anon_union_8 {
-    pTab:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Table>(),
-},
-};
+        let mut temp: crate::src::headers::sqliteInt_h::Expr = unsafe { ::core::mem::zeroed() };
         incrAggFunctionDepth(pDup, nSubquery);
         if (*pExpr).op as ::core::ffi::c_int == crate::src::parse::TK_COLLATE {
             pDup =  crate::src::src::expr::sqlite3ExprAddCollateString(pParse as *const crate::src::headers::sqliteInt_h::Parse,  pDup as *mut crate::src::headers::sqliteInt_h::Expr, (*pExpr).u.zToken) as

@@ -1593,16 +1593,7 @@ unsafe extern "C" fn vdbeIncrPopulate(mut pIncr: *mut IncrMerger) -> ::core::ffi
         as *mut SorterFile;
     let mut pTask: *mut SortSubtask = __pIncr_ref.pTask;
     let mut pMerger: *mut MergeEngine = __pIncr_ref.pMerger;
-    let mut writer: PmaWriter = PmaWriter {
-        eFWErr: 0,
-        aBuffer: ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-        nBuffer: 0,
-        iBufStart: 0,
-        iBufEnd: 0,
-        iWriteOff: 0,
-        pFd: ::core::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_file>(),
-        nPmaSpill: 0,
-    };
+    let mut writer: PmaWriter = unsafe { ::core::mem::zeroed() };
     vdbePmaWriterInit(
         (*pOut).pFd,
         &raw mut writer,

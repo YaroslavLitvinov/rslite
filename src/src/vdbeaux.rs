@@ -110,55 +110,7 @@ pub unsafe extern "C" fn sqlite3VdbeSetSql(
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3VdbeSwap(mut pA: *mut crate::src::headers::vdbeInt_h::Vdbe, mut pB: *mut crate::src::headers::vdbeInt_h::Vdbe) {
-    let mut tmp: crate::src::headers::vdbeInt_h::Vdbe = crate::src::headers::vdbeInt_h::Vdbe {
-    db:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::sqlite3>(),
-    ppVPrev:  ::core::ptr::null_mut::<*mut crate::src::headers::vdbeInt_h::Vdbe>(),
-    pVNext:  ::core::ptr::null_mut::<crate::src::headers::vdbeInt_h::Vdbe>(),
-    pParse:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Parse>(),
-    nVar:  0,
-    nMem:  0,
-    nCursor:  0,
-    cacheCtr:  0,
-    pc:  0,
-    rc:  0,
-    nChange:  0,
-    iStatement:  0,
-    iCurrentTime:  0,
-    nFkConstraint:  0,
-    nStmtDefCons:  0,
-    nStmtDefImmCons:  0,
-    aMem:  ::core::ptr::null_mut::<crate::src::src::vdbe::Mem>(),
-    apArg:  ::core::ptr::null_mut::<*mut crate::src::src::vdbe::Mem>(),
-    apCsr:  ::core::ptr::null_mut::<*mut crate::src::headers::vdbeInt_h::VdbeCursor>(),
-    aVar:  ::core::ptr::null_mut::<crate::src::src::vdbe::Mem>(),
-    aOp:  ::core::ptr::null_mut::<crate::src::headers::vdbeInt_h::Op>(),
-    nOp:  0,
-    nOpAlloc:  0,
-    aColName:  ::core::ptr::null_mut::<crate::src::src::vdbe::Mem>(),
-    pResultRow:  ::core::ptr::null_mut::<crate::src::src::vdbe::Mem>(),
-    zErrMsg:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    pVList:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::VList>(),
-    startTime:  0,
-    nResColumn:  0,
-    nResAlloc:  0,
-    errorAction:  0,
-    minWriteFileFormat:  0,
-    prepFlags:  0,
-    eVdbeState:  0,
-    expired_explain_changeCntOn_usesStmtJournal_readOnly_bIsReader_haveEqpOps:  [0; 2],
-    c2rust_padding:  [0; 2],
-    btreeMask:  0,
-    lockMask:  0,
-    aCounter:  [0; 9],
-    zSql:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    pFree:  ::core::ptr::null_mut::<::core::ffi::c_void>(),
-    pFrame:  ::core::ptr::null_mut::<crate::src::headers::vdbeInt_h::VdbeFrame>(),
-    pDelFrame:  ::core::ptr::null_mut::<crate::src::headers::vdbeInt_h::VdbeFrame>(),
-    nFrame:  0,
-    expmask:  0,
-    pProgram:  ::core::ptr::null_mut::<crate::src::src::vdbe::SubProgram>(),
-    pAuxData:  ::core::ptr::null_mut::<crate::src::headers::vdbeInt_h::AuxData>(),
-};
+    let mut tmp: crate::src::headers::vdbeInt_h::Vdbe = unsafe { ::core::mem::zeroed() };
     let mut pTmp: *mut crate::src::headers::vdbeInt_h::Vdbe = ::core::ptr::null_mut::<crate::src::headers::vdbeInt_h::Vdbe>();
     let mut ppTmp: *mut *mut crate::src::headers::vdbeInt_h::Vdbe = ::core::ptr::null_mut::<*mut crate::src::headers::vdbeInt_h::Vdbe>();
     let mut zTmp: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
@@ -1139,15 +1091,7 @@ pub unsafe extern "C" fn sqlite3VdbeDisplayP4(
     mut pOp: *mut crate::src::headers::vdbeInt_h::Op,
 ) -> *mut ::core::ffi::c_char {
     let mut zP4: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
-    let mut x: crate::src::headers::sqliteInt_h::StrAccum = crate::src::headers::sqliteInt_h::sqlite3_str {
-    db:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::sqlite3>(),
-    zText:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    nAlloc:  0,
-    mxAlloc:  0,
-    nChar:  0,
-    accError:  0,
-    printfFlags:  0,
-};
+    let mut x: crate::src::headers::sqliteInt_h::StrAccum = unsafe { ::core::mem::zeroed() };
     crate::src::src::printf::sqlite3StrAccumInit(
         
         &raw mut x as *mut _ as *mut crate::src::headers::sqliteInt_h::sqlite3_str,
@@ -1814,11 +1758,7 @@ pub unsafe extern "C" fn sqlite3VdbeMakeReady(mut p: *mut crate::src::headers::v
     let mut nCursor: ::core::ffi::c_int = 0;
     let mut nArg: ::core::ffi::c_int = 0;
     let mut n: ::core::ffi::c_int = 0;
-    let mut x: ReusableSpace = ReusableSpace {
-        pSpace: ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-        nFree: 0,
-        nNeeded: 0,
-    };
+    let mut x: ReusableSpace = unsafe { ::core::mem::zeroed() };
     let __pParse_ref = unsafe { &mut *pParse };
     let __p_ref = unsafe { &mut *p };
     __p_ref.pVList = __pParse_ref.pVList;

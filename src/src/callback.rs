@@ -419,18 +419,8 @@ pub unsafe extern "C" fn sqlite3FindFunction(
 #[no_mangle]
 
 pub unsafe extern "C" fn sqlite3SchemaClear(mut p: *mut ::core::ffi::c_void) {
-    let mut temp1: crate::src::src::hash::Hash = crate::src::src::hash::Hash {
-    htsize:  0,
-    count:  0,
-    first:  ::core::ptr::null_mut::<crate::src::src::hash::HashElem>(),
-    ht:  ::core::ptr::null_mut::<crate::src::src::hash::_ht>(),
-};
-    let mut temp2: crate::src::src::hash::Hash = crate::src::src::hash::Hash {
-    htsize:  0,
-    count:  0,
-    first:  ::core::ptr::null_mut::<crate::src::src::hash::HashElem>(),
-    ht:  ::core::ptr::null_mut::<crate::src::src::hash::_ht>(),
-};
+    let mut temp1: crate::src::src::hash::Hash = unsafe { ::core::mem::zeroed() };
+    let mut temp2: crate::src::src::hash::Hash = unsafe { ::core::mem::zeroed() };
     let mut pElem: *mut crate::src::src::hash::HashElem = ::core::ptr::null_mut::<crate::src::src::hash::HashElem>();
     let mut pSchema: *mut crate::src::headers::sqliteInt_h::Schema = p as *mut crate::src::headers::sqliteInt_h::Schema;
     let mut xdb: crate::src::headers::sqliteInt_h::sqlite3 = unsafe { ::core::mem::zeroed() };

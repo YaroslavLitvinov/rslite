@@ -4292,27 +4292,7 @@ unsafe extern "C" fn jsonLookupStep(
         }
         if (*pParse).eEdit as ::core::ffi::c_int >= JEDIT_INS {
             let mut nIns: crate::src::ext::rtree::rtree::u32_0 = 0;
-            let mut v_0: JsonParse = JsonParse {
-                aBlob: ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-                nBlob: 0,
-                nBlobAlloc: 0,
-                zJson: ::core::ptr::null_mut::<::core::ffi::c_char>(),
-                db: ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::sqlite3>(),
-                nJson: 0,
-                nJPRef: 0,
-                iErr: 0,
-                iDepth: 0,
-                nErr: 0,
-                oom: 0,
-                bJsonIsRCStr: 0,
-                hasNonstd: 0,
-                bReadOnly: 0,
-                eEdit: 0,
-                delta: 0,
-                nIns: 0,
-                iLabel: 0,
-                aIns: ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-            };
+            let mut v_0: JsonParse = unsafe { ::core::mem::zeroed() };
             let mut ix: JsonParse = unsafe { ::core::mem::zeroed() };
             let __pParse_ref = unsafe { &mut *pParse };
             ix.db = __pParse_ref.db;
@@ -4458,27 +4438,7 @@ unsafe extern "C" fn jsonLookupStep(
             return JSON_LOOKUP_NOTFOUND as crate::src::ext::rtree::rtree::u32_0;
         }
         if (*pParse).eEdit as ::core::ffi::c_int >= JEDIT_INS {
-            let mut v_1: JsonParse = JsonParse {
-                aBlob: ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-                nBlob: 0,
-                nBlobAlloc: 0,
-                zJson: ::core::ptr::null_mut::<::core::ffi::c_char>(),
-                db: ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::sqlite3>(),
-                nJson: 0,
-                nJPRef: 0,
-                iErr: 0,
-                iDepth: 0,
-                nErr: 0,
-                oom: 0,
-                bJsonIsRCStr: 0,
-                hasNonstd: 0,
-                bReadOnly: 0,
-                eEdit: 0,
-                delta: 0,
-                nIns: 0,
-                iLabel: 0,
-                aIns: ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-            };
+            let mut v_1: JsonParse = unsafe { ::core::mem::zeroed() };
             rc = jsonCreateEditSubstructure(
                 pParse,
                 &raw mut v_1,
@@ -4507,15 +4467,7 @@ unsafe extern "C" fn jsonReturnTextJsonFromBlob(
     mut nBlob: crate::src::ext::rtree::rtree::u32_0,
 ) {
     let mut x: JsonParse = unsafe { ::core::mem::zeroed() };
-    let mut s: JsonString = JsonString {
-        pCtx: ::core::ptr::null_mut::<crate::src::headers::vdbeInt_h::sqlite3_context>(),
-        zBuf: ::core::ptr::null_mut::<::core::ffi::c_char>(),
-        nAlloc: 0,
-        nUsed: 0,
-        bStatic: 0,
-        eErr: 0,
-        zSpace: [0; 100],
-    };
+    let mut s: JsonString = unsafe { ::core::mem::zeroed() };
     if aBlob.is_null() {
         return;
     }
@@ -4998,27 +4950,7 @@ unsafe extern "C" fn jsonInsertIntoBlob(
     let mut zPath: *const ::core::ffi::c_char = ::core::ptr::null::<::core::ffi::c_char>();
     let mut flgs: ::core::ffi::c_int = 0;
     let mut p: *mut JsonParse = ::core::ptr::null_mut::<JsonParse>();
-    let mut ax: JsonParse = JsonParse {
-        aBlob: ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-        nBlob: 0,
-        nBlobAlloc: 0,
-        zJson: ::core::ptr::null_mut::<::core::ffi::c_char>(),
-        db: ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::sqlite3>(),
-        nJson: 0,
-        nJPRef: 0,
-        iErr: 0,
-        iDepth: 0,
-        nErr: 0,
-        oom: 0,
-        bJsonIsRCStr: 0,
-        hasNonstd: 0,
-        bReadOnly: 0,
-        eEdit: 0,
-        delta: 0,
-        nIns: 0,
-        iLabel: 0,
-        aIns: ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-    };
+    let mut ax: JsonParse = unsafe { ::core::mem::zeroed() };
     flgs = if argc == 1 as ::core::ffi::c_int {
         0 as ::core::ffi::c_int
     } else {
@@ -5340,15 +5272,7 @@ unsafe extern "C" fn jsonReturnParse(mut ctx: *mut crate::src::headers::vdbeInt_
             );
         }
     } else {
-        let mut s: JsonString = JsonString {
-            pCtx: ::core::ptr::null_mut::<crate::src::headers::vdbeInt_h::sqlite3_context>(),
-            zBuf: ::core::ptr::null_mut::<::core::ffi::c_char>(),
-            nAlloc: 0,
-            nUsed: 0,
-            bStatic: 0,
-            eErr: 0,
-            zSpace: [0; 100],
-        };
+        let mut s: JsonString = unsafe { ::core::mem::zeroed() };
         jsonStringInit(&raw mut s, ctx);
         (*p).delta = 0 as ::core::ffi::c_int;
         jsonTranslateBlobToText(p, 0 as crate::src::ext::rtree::rtree::u32_0, &raw mut s);
@@ -5362,15 +5286,7 @@ unsafe extern "C" fn jsonQuoteFunc(
     mut _argc: ::core::ffi::c_int,
     mut argv: *mut *mut crate::src::headers::vdbeInt_h::sqlite3_value,
 ) {
-    let mut jx: JsonString = JsonString {
-        pCtx: ::core::ptr::null_mut::<crate::src::headers::vdbeInt_h::sqlite3_context>(),
-        zBuf: ::core::ptr::null_mut::<::core::ffi::c_char>(),
-        nAlloc: 0,
-        nUsed: 0,
-        bStatic: 0,
-        eErr: 0,
-        zSpace: [0; 100],
-    };
+    let mut jx: JsonString = unsafe { ::core::mem::zeroed() };
     jsonStringInit(&raw mut jx, ctx);
     jsonAppendSqlValue(&raw mut jx, *argv.offset(0 as isize));
     jsonReturnString(
@@ -5387,15 +5303,7 @@ unsafe extern "C" fn jsonArrayFunc(
     mut argv: *mut *mut crate::src::headers::vdbeInt_h::sqlite3_value,
 ) {
     let mut i: ::core::ffi::c_int = 0;
-    let mut jx: JsonString = JsonString {
-        pCtx: ::core::ptr::null_mut::<crate::src::headers::vdbeInt_h::sqlite3_context>(),
-        zBuf: ::core::ptr::null_mut::<::core::ffi::c_char>(),
-        nAlloc: 0,
-        nUsed: 0,
-        bStatic: 0,
-        eErr: 0,
-        zSpace: [0; 100],
-    };
+    let mut jx: JsonString = unsafe { ::core::mem::zeroed() };
     jsonStringInit(&raw mut jx, ctx);
     jsonAppendChar(&raw mut jx, '[' as i32 as ::core::ffi::c_char);
     i = 0 as ::core::ffi::c_int;
@@ -5505,15 +5413,7 @@ unsafe extern "C" fn jsonExtractFunc(
     let mut p: *mut JsonParse = ::core::ptr::null_mut::<JsonParse>();
     let mut flags: ::core::ffi::c_int = 0;
     let mut i: ::core::ffi::c_int = 0;
-    let mut jx: JsonString = JsonString {
-        pCtx: ::core::ptr::null_mut::<crate::src::headers::vdbeInt_h::sqlite3_context>(),
-        zBuf: ::core::ptr::null_mut::<::core::ffi::c_char>(),
-        nAlloc: 0,
-        nUsed: 0,
-        bStatic: 0,
-        eErr: 0,
-        zSpace: [0; 100],
-    };
+    let mut jx: JsonString = unsafe { ::core::mem::zeroed() };
     if argc < 2 as ::core::ffi::c_int {
         return;
     }
@@ -5982,15 +5882,7 @@ unsafe extern "C" fn jsonObjectFunc(
     mut argv: *mut *mut crate::src::headers::vdbeInt_h::sqlite3_value,
 ) {
     let mut i: ::core::ffi::c_int = 0;
-    let mut jx: JsonString = JsonString {
-        pCtx: ::core::ptr::null_mut::<crate::src::headers::vdbeInt_h::sqlite3_context>(),
-        zBuf: ::core::ptr::null_mut::<::core::ffi::c_char>(),
-        nAlloc: 0,
-        nUsed: 0,
-        bStatic: 0,
-        eErr: 0,
-        zSpace: [0; 100],
-    };
+    let mut jx: JsonString = unsafe { ::core::mem::zeroed() };
     let mut z: *const ::core::ffi::c_char = ::core::ptr::null::<::core::ffi::c_char>();
     let mut n: crate::src::ext::rtree::rtree::u32_0 = 0;
     if argc & 1 as ::core::ffi::c_int != 0 {
@@ -6240,15 +6132,7 @@ unsafe extern "C" fn jsonPrettyFunc(
     mut argc: ::core::ffi::c_int,
     mut argv: *mut *mut crate::src::headers::vdbeInt_h::sqlite3_value,
 ) {
-    let mut s: JsonString = JsonString {
-        pCtx: ::core::ptr::null_mut::<crate::src::headers::vdbeInt_h::sqlite3_context>(),
-        zBuf: ::core::ptr::null_mut::<::core::ffi::c_char>(),
-        nAlloc: 0,
-        nUsed: 0,
-        bStatic: 0,
-        eErr: 0,
-        zSpace: [0; 100],
-    };
+    let mut s: JsonString = unsafe { ::core::mem::zeroed() };
     let mut x: JsonPretty = unsafe { ::core::mem::zeroed() };
     x.pParse = jsonParseFuncArg(
         ctx,

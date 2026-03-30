@@ -855,15 +855,7 @@ pub unsafe extern "C" fn sqlite3MultiValues(
                 crate::src::src::prepare::sqlite3ReadSchema(pParse as *mut crate::src::headers::sqliteInt_h::Parse);
             }
             if !pRet.is_null() {
-                let mut dest: crate::src::headers::sqliteInt_h::SelectDest = crate::src::headers::sqliteInt_h::SelectDest {
-    eDest:  0,
-    iSDParm:  0,
-    iSDParm2:  0,
-    iSdst:  0,
-    nSdst:  0,
-    zAffSdst:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    pOrderBy:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::ExprList>(),
-};
+                let mut dest: crate::src::headers::sqliteInt_h::SelectDest = unsafe { ::core::mem::zeroed() };
                 let mut pSubq: *mut crate::src::headers::sqliteInt_h::Subquery = ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Subquery>();
                 let __pRet_ref = unsafe { &mut *pRet };
                 (*__pRet_ref.pSrc).nSrc = 1 as ::core::ffi::c_int;
@@ -955,15 +947,7 @@ pub unsafe extern "C" fn sqlite3Insert(
     let mut srcTab: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut addrInsTop: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut addrCont: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-    let mut dest: crate::src::headers::sqliteInt_h::SelectDest = crate::src::headers::sqliteInt_h::SelectDest {
-    eDest:  0,
-    iSDParm:  0,
-    iSDParm2:  0,
-    iSdst:  0,
-    nSdst:  0,
-    zAffSdst:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    pOrderBy:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::ExprList>(),
-};
+    let mut dest: crate::src::headers::sqliteInt_h::SelectDest = unsafe { ::core::mem::zeroed() };
     let mut iDb: ::core::ffi::c_int = 0;
     let mut useTempTable: crate::src::ext::rtree::rtree::u8_0 = 0 as crate::src::ext::rtree::rtree::u8_0;
     let mut appendFlag: crate::src::ext::rtree::rtree::u8_0 = 0 as crate::src::ext::rtree::rtree::u8_0;
@@ -2163,15 +2147,7 @@ pub unsafe extern "C" fn sqlite3GenerateConstraintChecks(
     let mut lblRecheckOk: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut pTrigger: *mut crate::src::headers::sqliteInt_h::Trigger = ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Trigger>();
     let mut nReplaceTrig: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-    let mut sIdxIter: IndexIterator = IndexIterator {
-        eType: 0,
-        i: 0,
-        u: C2RustUnnamed {
-            lx: C2RustUnnamed_1 {
-                pIdx: ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Index>(),
-            },
-        },
-    };
+    let mut sIdxIter: IndexIterator = unsafe { ::core::mem::zeroed() };
     isUpdate = (regOldData != 0 as ::core::ffi::c_int) as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0;
     db = (*pParse).db;
     v = (*pParse).pVdbe;
@@ -2845,15 +2821,7 @@ pub unsafe extern "C" fn sqlite3GenerateConstraintChecks(
                                     );
                                 }
                                 while nConflictCk > 0 as ::core::ffi::c_int {
-                                    let mut x_1: crate::src::src::vdbe::VdbeOp = crate::src::src::vdbe::VdbeOp {
-    opcode:  0,
-    p4type:  0,
-    p5:  0,
-    p1:  0,
-    p2:  0,
-    p3:  0,
-    p4:  crate::src::src::vdbe::p4union { i:  0 },
-};
+                                    let mut x_1: crate::src::src::vdbe::VdbeOp = unsafe { ::core::mem::zeroed() };
                                     x_1 = *(crate::src::src::vdbeaux::sqlite3VdbeGetOp(v, addrConflictCk) as
     *mut crate::src::src::vdbe::VdbeOp);
                                     if x_1.opcode as ::core::ffi::c_int != crate::src::headers::opcodes_h::OP_IdxRowid {

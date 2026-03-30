@@ -234,15 +234,7 @@ pub unsafe extern "C" fn sqlite3WhereAddExplainText(
         let mut isSearch: ::core::ffi::c_int = 0;
         let mut pLoop: *mut crate::src::headers::whereInt_h::WhereLoop = ::core::ptr::null_mut::<crate::src::headers::whereInt_h::WhereLoop>();
         let mut flags: crate::src::ext::rtree::rtree::u32_0 = 0;
-        let mut str: crate::src::headers::sqliteInt_h::StrAccum = crate::src::headers::sqliteInt_h::sqlite3_str {
-    db:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::sqlite3>(),
-    zText:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    nAlloc:  0,
-    mxAlloc:  0,
-    nChar:  0,
-    accError:  0,
-    printfFlags:  0,
-};
+        let mut str: crate::src::headers::sqliteInt_h::StrAccum = unsafe { ::core::mem::zeroed() };
         let mut zBuf: [::core::ffi::c_char; 100] = [0; 100];
         if (*db).mallocFailed != 0 {
             return;
@@ -426,15 +418,7 @@ pub unsafe extern "C" fn sqlite3WhereExplainBloomFilter(
     let mut zMsg: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
     let mut i: ::core::ffi::c_int = 0;
     let mut pLoop: *mut crate::src::headers::whereInt_h::WhereLoop = ::core::ptr::null_mut::<crate::src::headers::whereInt_h::WhereLoop>();
-    let mut str: crate::src::headers::sqliteInt_h::StrAccum = crate::src::headers::sqliteInt_h::sqlite3_str {
-    db:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::sqlite3>(),
-    zText:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    nAlloc:  0,
-    mxAlloc:  0,
-    nChar:  0,
-    accError:  0,
-    printfFlags:  0,
-};
+    let mut str: crate::src::headers::sqliteInt_h::StrAccum = unsafe { ::core::mem::zeroed() };
     let mut zBuf: [::core::ffi::c_char; 100] = [0; 100];
     crate::src::src::printf::sqlite3StrAccumInit(
         
@@ -2413,29 +2397,7 @@ pub unsafe extern "C" fn sqlite3WhereCodeOneLoopStart(
     j = (*pWC).nBase;
     while j > 0 as ::core::ffi::c_int {
         let mut pE_0: *mut crate::src::headers::sqliteInt_h::Expr = ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Expr>();
-        let mut sEAlt: crate::src::headers::sqliteInt_h::Expr = crate::src::headers::sqliteInt_h::Expr {
-    op:  0,
-    affExpr:  0,
-    op2:  0,
-    flags:  0,
-    u:  crate::src::headers::sqliteInt_h::__anon_union_5 {
-    zToken:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-},
-    pLeft:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Expr>(),
-    pRight:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Expr>(),
-    x:  crate::src::headers::sqliteInt_h::__anon_union_6 {
-    pList:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::ExprList>(),
-},
-    nHeight:  0,
-    iTable:  0,
-    iColumn:  0,
-    iAgg:  0,
-    w:  crate::src::headers::sqliteInt_h::__anon_union_7 { iJoin:  0 },
-    pAggInfo:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::AggInfo>(),
-    y:  crate::src::headers::sqliteInt_h::__anon_union_8 {
-    pTab:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Table>(),
-},
-};
+        let mut sEAlt: crate::src::headers::sqliteInt_h::Expr = unsafe { ::core::mem::zeroed() };
         let mut pAlt: *mut crate::src::headers::whereInt_h::WhereTerm = ::core::ptr::null_mut::<crate::src::headers::whereInt_h::WhereTerm>();
         if !((*pTerm).wtFlags as ::core::ffi::c_int & (crate::src::headers::whereInt_h::TERM_VIRTUAL | crate::src::headers::whereInt_h::TERM_CODED) != 0) {
             if !((*pTerm).eOperator as ::core::ffi::c_int & (crate::src::headers::whereInt_h::WO_EQ | crate::src::headers::whereInt_h::WO_IS)
@@ -2641,9 +2603,7 @@ pub unsafe extern "C" fn sqlite3WhereRightJoinLoop(
     let mut pTabItem: *mut crate::src::headers::sqliteInt_h::SrcItem = (&raw mut (*__pWInfo_ref.pTabList).a as *mut crate::src::headers::sqliteInt_h::SrcItem)
         .offset(__pLevel_ref.iFrom as isize) as *mut crate::src::headers::sqliteInt_h::SrcItem;
     let mut pFrom: *mut crate::src::headers::sqliteInt_h::SrcList = ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::SrcList>();
-    let mut uSrc: C2RustUnnamed = C2RustUnnamed {
-        sSrc: crate::src::headers::sqliteInt_h::SrcList { nSrc:  0, nAlloc:  0, a:  [] },
-    };
+    let mut uSrc: C2RustUnnamed = unsafe { ::core::mem::zeroed() };
     let mut mAll: crate::src::headers::sqliteInt_h::Bitmask = 0 as crate::src::headers::sqliteInt_h::Bitmask;
     let mut k: ::core::ffi::c_int = 0;
     crate::src::src::vdbeaux::sqlite3VdbeExplain(

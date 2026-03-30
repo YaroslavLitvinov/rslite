@@ -346,11 +346,7 @@ unsafe extern "C" fn fts3ExprLoadDoclists(
     mut pnToken: *mut ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = 0;
-    let mut sCtx: LoadDoclistCtx = LoadDoclistCtx {
-        pCsr: ::core::ptr::null_mut::<crate::fts3Int_h::Fts3Cursor>(),
-        nPhrase: 0 as ::core::ffi::c_int,
-        nToken: 0 as ::core::ffi::c_int,
-    };
+    let mut sCtx: LoadDoclistCtx = unsafe { ::core::mem::zeroed() };
     sCtx.pCsr = pCsr;
     rc = sqlite3Fts3ExprIterate(
         (*pCsr).pExpr,
@@ -1519,11 +1515,7 @@ pub unsafe extern "C" fn sqlite3Fts3Snippet(
     let mut pTab: *mut crate::fts3Int_h::Fts3Table = (*pCsr).base.pVtab as *mut crate::fts3Int_h::Fts3Table;
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
     let mut i: ::core::ffi::c_int = 0;
-    let mut res: StrBuffer = StrBuffer {
-        z: ::core::ptr::null_mut::<::core::ffi::c_char>(),
-        n: 0 as ::core::ffi::c_int,
-        nAlloc: 0 as ::core::ffi::c_int,
-    };
+    let mut res: StrBuffer = unsafe { ::core::mem::zeroed() };
     let mut nSnippet: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut aSnippet: [SnippetFragment; 4] = [SnippetFragment {
         iCol: 0,
@@ -1571,12 +1563,7 @@ pub unsafe extern "C" fn sqlite3Fts3Snippet(
             );
             iRead = 0 as ::core::ffi::c_int;
             while iRead < (*pTab).nColumn {
-                let mut sF: SnippetFragment = SnippetFragment {
-                    iCol: 0 as ::core::ffi::c_int,
-                    iPos: 0 as ::core::ffi::c_int,
-                    covered: 0 as crate::src::ext::rtree::rtree::u64_0,
-                    hlmask: 0 as crate::src::ext::rtree::rtree::u64_0,
-                };
+                let mut sF: SnippetFragment = unsafe { ::core::mem::zeroed() };
                 let mut iS: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
                 if !(iCol >= 0 as ::core::ffi::c_int && iRead != iCol) {
                     rc = fts3BestSnippet(
@@ -1703,11 +1690,7 @@ pub unsafe extern "C" fn sqlite3Fts3Offsets(
     let mut rc: ::core::ffi::c_int = 0;
     let mut nToken: ::core::ffi::c_int = 0;
     let mut iCol: ::core::ffi::c_int = 0;
-    let mut res: StrBuffer = StrBuffer {
-        z: ::core::ptr::null_mut::<::core::ffi::c_char>(),
-        n: 0 as ::core::ffi::c_int,
-        nAlloc: 0 as ::core::ffi::c_int,
-    };
+    let mut res: StrBuffer = unsafe { ::core::mem::zeroed() };
     let mut sCtx: TermOffsetCtx = unsafe { ::core::mem::zeroed() };
     if (*pCsr).pExpr.is_null() {
         crate::src::src::vdbeapi::sqlite3_result_text(

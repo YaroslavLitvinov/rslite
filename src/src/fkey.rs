@@ -1064,14 +1064,8 @@ unsafe extern "C" fn fkActionTrigger(
     z:  b"new\0" as *const u8 as *const ::core::ffi::c_char,
     n:  3 as ::core::ffi::c_uint,
 };
-            let mut tFromCol: crate::src::headers::sqliteInt_h::Token = crate::src::headers::sqliteInt_h::Token {
-    z:  ::core::ptr::null::<::core::ffi::c_char>(),
-    n:  0,
-};
-            let mut tToCol: crate::src::headers::sqliteInt_h::Token = crate::src::headers::sqliteInt_h::Token {
-    z:  ::core::ptr::null::<::core::ffi::c_char>(),
-    n:  0,
-};
+            let mut tFromCol: crate::src::headers::sqliteInt_h::Token = unsafe { ::core::mem::zeroed() };
+            let mut tToCol: crate::src::headers::sqliteInt_h::Token = unsafe { ::core::mem::zeroed() };
             let mut iFromCol: ::core::ffi::c_int = 0;
             let mut pEq: *mut crate::src::headers::sqliteInt_h::Expr = ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Expr>();
             iFromCol = if !aiCol.is_null() {

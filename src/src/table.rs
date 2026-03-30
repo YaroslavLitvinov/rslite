@@ -177,15 +177,7 @@ pub unsafe extern "C" fn sqlite3_get_table(
     mut pzErrMsg: *mut *mut ::core::ffi::c_char,
 ) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = 0;
-    let mut res: TabResult = TabResult {
-        azResult: ::core::ptr::null_mut::<*mut ::core::ffi::c_char>(),
-        zErrMsg: ::core::ptr::null_mut::<::core::ffi::c_char>(),
-        nAlloc: 0,
-        nRow: 0,
-        nColumn: 0,
-        nData: 0,
-        rc: 0,
-    };
+    let mut res: TabResult = unsafe { ::core::mem::zeroed() };
     *pazResult = ::core::ptr::null_mut::<*mut ::core::ffi::c_char>();
     if !pnColumn.is_null() {
         *pnColumn = 0 as ::core::ffi::c_int;

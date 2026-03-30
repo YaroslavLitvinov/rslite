@@ -3428,22 +3428,7 @@ unsafe extern "C" fn fts3SegmentMerge(
     let mut iNewLevel: crate::src::headers::sqlite3_h::sqlite3_int64 = 0 as crate::src::headers::sqlite3_h::sqlite3_int64;
     let mut pWriter: *mut SegmentWriter = ::core::ptr::null_mut::<SegmentWriter>();
     let mut filter: crate::fts3Int_h::Fts3SegFilter = unsafe { ::core::mem::zeroed() };
-    let mut csr: crate::fts3Int_h::Fts3MultiSegReader = crate::fts3Int_h::Fts3MultiSegReader {
-    apSegment:  ::core::ptr::null_mut::<*mut Fts3SegReader>(),
-    nSegment:  0,
-    nAdvance:  0,
-    pFilter:  ::core::ptr::null_mut::<crate::fts3Int_h::Fts3SegFilter>(),
-    aBuffer:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    nBuffer:  0,
-    iColFilter:  0,
-    bRestart:  0,
-    nCost:  0,
-    bLookup:  0,
-    zTerm:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    nTerm:  0,
-    aDoclist:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    nDoclist:  0,
-};
+    let mut csr: crate::fts3Int_h::Fts3MultiSegReader = unsafe { ::core::mem::zeroed() };
     let mut bIgnoreEmpty: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut iMaxLevel: crate::src::ext::rtree::rtree::i64_0 = 0 as crate::src::ext::rtree::rtree::i64_0;
     rc = crate::src::ext::fts3::fts3::sqlite3Fts3SegReaderCursor(
@@ -4616,19 +4601,7 @@ unsafe extern "C" fn fts3IncrmergeLoad(
                 ::core::ptr::null_mut::<::core::ffi::c_int>(),
             );
             if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
-                let mut reader: NodeReader = NodeReader {
-                    aNode: ::core::ptr::null::<::core::ffi::c_char>(),
-                    nNode: 0,
-                    iOff: 0,
-                    iChild: 0,
-                    term: Blob {
-                        a: ::core::ptr::null_mut::<::core::ffi::c_char>(),
-                        n: 0,
-                        nAlloc: 0,
-                    },
-                    aDoclist: ::core::ptr::null::<::core::ffi::c_char>(),
-                    nDoclist: 0,
-                };
+                let mut reader: NodeReader = unsafe { ::core::mem::zeroed() };
                 rc = nodeReaderInit(&raw mut reader, aLeaf, nLeaf);
                 while rc == crate::src::headers::sqlite3_h::SQLITE_OK && !reader.aNode.is_null() {
                     rc = nodeReaderNext(&raw mut reader);
@@ -4987,24 +4960,8 @@ unsafe extern "C" fn fts3TruncateNode(
     mut nTerm: ::core::ffi::c_int,
     mut piBlock: *mut crate::src::headers::sqlite3_h::sqlite3_int64,
 ) -> ::core::ffi::c_int {
-    let mut reader: NodeReader = NodeReader {
-        aNode: ::core::ptr::null::<::core::ffi::c_char>(),
-        nNode: 0,
-        iOff: 0,
-        iChild: 0,
-        term: Blob {
-            a: ::core::ptr::null_mut::<::core::ffi::c_char>(),
-            n: 0,
-            nAlloc: 0,
-        },
-        aDoclist: ::core::ptr::null::<::core::ffi::c_char>(),
-        nDoclist: 0,
-    };
-    let mut prev: Blob = Blob {
-        a: ::core::ptr::null_mut::<::core::ffi::c_char>(),
-        n: 0 as ::core::ffi::c_int,
-        nAlloc: 0 as ::core::ffi::c_int,
-    };
+    let mut reader: NodeReader = unsafe { ::core::mem::zeroed() };
+    let mut prev: Blob = unsafe { ::core::mem::zeroed() };
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
     let mut bLeaf: ::core::ffi::c_int = 0;
     if nNode < 1 as ::core::ffi::c_int {
@@ -5078,16 +5035,8 @@ unsafe extern "C" fn fts3TruncateSegment(
     mut nTerm: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
-    let mut root: Blob = Blob {
-        a: ::core::ptr::null_mut::<::core::ffi::c_char>(),
-        n: 0 as ::core::ffi::c_int,
-        nAlloc: 0 as ::core::ffi::c_int,
-    };
-    let mut block: Blob = Blob {
-        a: ::core::ptr::null_mut::<::core::ffi::c_char>(),
-        n: 0 as ::core::ffi::c_int,
-        nAlloc: 0 as ::core::ffi::c_int,
-    };
+    let mut root: Blob = unsafe { ::core::mem::zeroed() };
+    let mut block: Blob = unsafe { ::core::mem::zeroed() };
     let mut iBlock: crate::src::headers::sqlite3_h::sqlite3_int64 = 0 as crate::src::headers::sqlite3_h::sqlite3_int64;
     let mut iNewStart: crate::src::headers::sqlite3_h::sqlite3_int64 = 0 as crate::src::headers::sqlite3_h::sqlite3_int64;
     let mut iOldStart: crate::src::headers::sqlite3_h::sqlite3_int64 = 0 as crate::src::headers::sqlite3_h::sqlite3_int64;
@@ -5395,11 +5344,7 @@ pub unsafe extern "C" fn sqlite3Fts3Incrmerge(
     let mut pWriter: *mut IncrmergeWriter = ::core::ptr::null_mut::<IncrmergeWriter>();
     let mut nSeg: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut iAbsLevel: crate::src::headers::sqlite3_h::sqlite3_int64 = 0 as crate::src::headers::sqlite3_h::sqlite3_int64;
-    let mut hint: Blob = Blob {
-        a: ::core::ptr::null_mut::<::core::ffi::c_char>(),
-        n: 0 as ::core::ffi::c_int,
-        nAlloc: 0 as ::core::ffi::c_int,
-    };
+    let mut hint: Blob = unsafe { ::core::mem::zeroed() };
     let mut bDirtyHint: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let nAlloc: ::core::ffi::c_int = (::core::mem::size_of::<crate::fts3Int_h::Fts3MultiSegReader>() as usize)
         .wrapping_add(::core::mem::size_of::<crate::fts3Int_h::Fts3SegFilter>() as usize)

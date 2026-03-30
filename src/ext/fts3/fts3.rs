@@ -3115,12 +3115,7 @@ unsafe extern "C" fn fts3TermSelect(
     let mut rc: ::core::ffi::c_int = 0;
     let mut pSegcsr: *mut crate::fts3Int_h::Fts3MultiSegReader = ::core::ptr::null_mut::<crate::fts3Int_h::Fts3MultiSegReader>();
     let mut tsc: TermSelect = unsafe { ::core::mem::zeroed() };
-    let mut filter: crate::fts3Int_h::Fts3SegFilter = crate::fts3Int_h::Fts3SegFilter {
-    zTerm:  ::core::ptr::null::<::core::ffi::c_char>(),
-    nTerm:  0,
-    iCol:  0,
-    flags:  0,
-};
+    let mut filter: crate::fts3Int_h::Fts3SegFilter = unsafe { ::core::mem::zeroed() };
     let __pTok_ref = unsafe { &mut *pTok };
     pSegcsr = __pTok_ref.pSegcsr;
     filter.flags = crate::fts3Int_h::FTS3_SEGMENT_IGNORE_EMPTY

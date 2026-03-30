@@ -2486,10 +2486,7 @@ pub unsafe extern "C" fn sqlite3RunParser(
                     zSql = zSql.offset(n as isize);
                     continue;
                 } else if tokenType != crate::src::parse::TK_QNUMBER {
-                    let mut x: crate::src::headers::sqliteInt_h::Token = crate::src::headers::sqliteInt_h::Token {
-    z:  ::core::ptr::null::<::core::ffi::c_char>(),
-    n:  0,
-};
+                    let mut x: crate::src::headers::sqliteInt_h::Token = unsafe { ::core::mem::zeroed() };
                     x.z = zSql;
                     x.n = n as crate::src::ext::rtree::rtree::u32_0 as ::core::ffi::c_uint;
                     crate::src::src::util::sqlite3ErrorMsg(

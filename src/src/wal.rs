@@ -1340,11 +1340,7 @@ unsafe extern "C" fn walIteratorInit(
     aTmp = (p as *mut crate::src::ext::rtree::rtree::u8_0).offset(nByte as isize) as *mut crate::src::ext::rtree::rtree::u8_0 as *mut ht_slot;
     i = walFramePage(nBackfill.wrapping_add(1 as crate::src::ext::rtree::rtree::u32_0));
     while rc == crate::src::headers::sqlite3_h::SQLITE_OK && i < nSegment {
-        let mut sLoc: WalHashLoc = WalHashLoc {
-            aHash: ::core::ptr::null_mut::<ht_slot>(),
-            aPgno: ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u32_0>(),
-            iZero: 0,
-        };
+        let mut sLoc: WalHashLoc = unsafe { ::core::mem::zeroed() };
         rc = walHashGet(pWal, i, &raw mut sLoc);
         if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
             let mut j: ::core::ffi::c_int = 0;
@@ -1763,32 +1759,8 @@ unsafe extern "C" fn walIndexTryHdr(
     mut pChanged: *mut ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
     let mut aCksum: [crate::src::ext::rtree::rtree::u32_0; 2] = [0; 2];
-    let mut h1: WalIndexHdr = WalIndexHdr {
-        iVersion: 0,
-        unused: 0,
-        iChange: 0,
-        isInit: 0,
-        bigEndCksum: 0,
-        szPage: 0,
-        mxFrame: 0,
-        nPage: 0,
-        aFrameCksum: [0; 2],
-        aSalt: [0; 2],
-        aCksum: [0; 2],
-    };
-    let mut h2: WalIndexHdr = WalIndexHdr {
-        iVersion: 0,
-        unused: 0,
-        iChange: 0,
-        isInit: 0,
-        bigEndCksum: 0,
-        szPage: 0,
-        mxFrame: 0,
-        nPage: 0,
-        aFrameCksum: [0; 2],
-        aSalt: [0; 2],
-        aCksum: [0; 2],
-    };
+    let mut h1: WalIndexHdr = unsafe { ::core::mem::zeroed() };
+    let mut h2: WalIndexHdr = unsafe { ::core::mem::zeroed() };
     let mut aHdr: *mut WalIndexHdr = ::core::ptr::null_mut::<WalIndexHdr>();
     aHdr = walIndexHdr(pWal);
     ::libc::memcpy(
@@ -2265,11 +2237,7 @@ unsafe extern "C" fn walFindFrame(
     iMinHash = walFramePage(__pWal_ref.minFrame);
     iHash = walFramePage(iLast);
     while iHash >= iMinHash {
-        let mut sLoc: WalHashLoc = WalHashLoc {
-            aHash: ::core::ptr::null_mut::<ht_slot>(),
-            aPgno: ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u32_0>(),
-            iZero: 0,
-        };
+        let mut sLoc: WalHashLoc = unsafe { ::core::mem::zeroed() };
         let mut iKey: ::core::ffi::c_int = 0;
         let mut nCollide: ::core::ffi::c_int = 0;
         let mut rc: ::core::ffi::c_int = 0;
@@ -2659,13 +2627,7 @@ unsafe extern "C" fn walFrames(
     let mut nExtra: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut szFrame: ::core::ffi::c_int = 0;
     let mut iOffset: crate::src::ext::rtree::rtree::i64_0 = 0;
-    let mut w: WalWriter = WalWriter {
-        pWal: ::core::ptr::null_mut::<Wal>(),
-        pFd: ::core::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_file>(),
-        iSyncPoint: 0,
-        syncFlags: 0,
-        szPage: 0,
-    };
+    let mut w: WalWriter = unsafe { ::core::mem::zeroed() };
     let mut iFirst: crate::src::ext::rtree::rtree::u32_0 = 0 as crate::src::ext::rtree::rtree::u32_0;
     let mut pLive: *mut WalIndexHdr = ::core::ptr::null_mut::<WalIndexHdr>();
     pLive = walIndexHdr(pWal) as *mut WalIndexHdr;

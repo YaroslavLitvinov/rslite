@@ -501,10 +501,7 @@ pub unsafe extern "C" fn sqlite3FinishTrigger(
     pName:  ::core::ptr::null::<crate::src::headers::sqliteInt_h::Token>(),
 };
     let mut iDb: ::core::ffi::c_int = 0;
-    let mut nameToken: crate::src::headers::sqliteInt_h::Token = crate::src::headers::sqliteInt_h::Token {
-    z:  ::core::ptr::null::<::core::ffi::c_char>(),
-    n:  0,
-};
+    let mut nameToken: crate::src::headers::sqliteInt_h::Token = unsafe { ::core::mem::zeroed() };
     __pParse_ref.pNewTrigger = ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Trigger>();
     if !(__pParse_ref.nErr != 0 || pTrig.is_null()) {
         zName = (*pTrig).zName;
@@ -1191,10 +1188,7 @@ pub unsafe extern "C" fn sqlite3TriggerStepSrc(
                 && !((*pParse).eParseMode as ::core::ffi::c_int >= crate::src::headers::sqliteInt_h::PARSE_MODE_RENAME)
             {
                 let mut pSubquery: *mut crate::src::headers::sqliteInt_h::Select = ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Select>();
-                let mut as_0: crate::src::headers::sqliteInt_h::Token = crate::src::headers::sqliteInt_h::Token {
-    z:  ::core::ptr::null::<::core::ffi::c_char>(),
-    n:  0,
-};
+                let mut as_0: crate::src::headers::sqliteInt_h::Token = unsafe { ::core::mem::zeroed() };
                 pSubquery =  crate::src::src::select::sqlite3SelectNew(
                     
                     pParse as *mut crate::src::headers::sqliteInt_h::Parse,
@@ -1608,15 +1602,7 @@ unsafe extern "C" fn codeTriggerProgram(
                 crate::src::src::vdbeaux::sqlite3VdbeAddOp0(v, crate::src::headers::opcodes_h::OP_ResetCount);
             }
     _ =>  {
-                let mut sDest: crate::src::headers::sqliteInt_h::SelectDest = crate::src::headers::sqliteInt_h::SelectDest {
-    eDest:  0,
-    iSDParm:  0,
-    iSDParm2:  0,
-    iSdst:  0,
-    nSdst:  0,
-    zAffSdst:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    pOrderBy:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::ExprList>(),
-};
+                let mut sDest: crate::src::headers::sqliteInt_h::SelectDest = unsafe { ::core::mem::zeroed() };
                 let mut pSelect: *mut crate::src::headers::sqliteInt_h::Select =
                     
                     crate::src::src::expr::sqlite3SelectDup(db as *mut crate::src::headers::sqliteInt_h::sqlite3,  (*pStep).pSelect as *const crate::src::headers::sqliteInt_h::Select, 0 as ::core::ffi::c_int) as *mut crate::src::headers::sqliteInt_h::Select;
@@ -1661,98 +1647,7 @@ unsafe extern "C" fn codeRowTrigger(
     let mut sNC: crate::src::headers::sqliteInt_h::NameContext = unsafe { ::core::mem::zeroed() };
     let mut pProgram: *mut crate::src::src::vdbe::SubProgram = ::core::ptr::null_mut::<crate::src::src::vdbe::SubProgram>();
     let mut iEndTrigger: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-    let mut sSubParse: crate::src::headers::sqliteInt_h::Parse = crate::src::headers::sqliteInt_h::Parse {
-    db:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::sqlite3>(),
-    zErrMsg:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    pVdbe:  ::core::ptr::null_mut::<crate::src::headers::vdbeInt_h::Vdbe>(),
-    rc:  0,
-    nQueryLoop:  0,
-    nested:  0,
-    nTempReg:  0,
-    isMultiWrite:  0,
-    mayAbort:  0,
-    hasCompound:  0,
-    disableLookaside:  0,
-    prepFlags:  0,
-    withinRJSubrtn:  0,
-    bHasExists:  0,
-    mSubrtnSig:  0,
-    eTriggerOp:  0,
-    bReturning:  0,
-    eOrconf:  0,
-    disableTriggers:  0,
-    colNamesSet_bHasWith_okConstFactor_checkSchema:  [0; 1],
-    c2rust_padding:  [0; 3],
-    nRangeReg:  0,
-    iRangeReg:  0,
-    nErr:  0,
-    nTab:  0,
-    nMem:  0,
-    szOpAlloc:  0,
-    iSelfTab:  0,
-    nLabel:  0,
-    nLabelAlloc:  0,
-    aLabel:  ::core::ptr::null_mut::<::core::ffi::c_int>(),
-    pConstExpr:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::ExprList>(),
-    pIdxEpr:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::IndexedExpr>(),
-    pIdxPartExpr:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::IndexedExpr>(),
-    writeMask:  0,
-    cookieMask:  0,
-    nMaxArg:  0,
-    nSelect:  0,
-    nProgressSteps:  0,
-    nTableLock:  0,
-    aTableLock:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::TableLock>(),
-    pAinc:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::AutoincInfo>(),
-    pToplevel:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Parse>(),
-    pTriggerTab:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Table>(),
-    pTriggerPrg:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::TriggerPrg>(),
-    pCleanup:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::ParseCleanup>(),
-    aTempReg:  [0; 8],
-    pOuterParse:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Parse>(),
-    sNameToken:  crate::src::headers::sqliteInt_h::Token {
-    z:  ::core::ptr::null::<::core::ffi::c_char>(),
-    n:  0,
-},
-    oldmask:  0,
-    newmask:  0,
-    u1:  crate::src::headers::sqliteInt_h::__anon_union_15 {
-    cr:  crate::src::headers::sqliteInt_h::__anon_struct_7 {
-    addrCrTab:  0,
-    regRowid:  0,
-    regRoot:  0,
-    constraintName:  crate::src::headers::sqliteInt_h::Token {
-    z:  ::core::ptr::null::<::core::ffi::c_char>(),
-    n:  0,
-},
-},
-},
-    sLastToken:  crate::src::headers::sqliteInt_h::Token {
-    z:  ::core::ptr::null::<::core::ffi::c_char>(),
-    n:  0,
-},
-    nVar:  0,
-    iPkSortOrder:  0,
-    explain:  0,
-    eParseMode:  0,
-    nVtabLock:  0,
-    nHeight:  0,
-    addrExplain:  0,
-    pVList:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::VList>(),
-    pReprepare:  ::core::ptr::null_mut::<crate::src::headers::vdbeInt_h::Vdbe>(),
-    zTail:  ::core::ptr::null::<::core::ffi::c_char>(),
-    pNewTable:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Table>(),
-    pNewIndex:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Index>(),
-    pNewTrigger:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Trigger>(),
-    zAuthContext:  ::core::ptr::null::<::core::ffi::c_char>(),
-    sArg:  crate::src::headers::sqliteInt_h::Token {
-    z:  ::core::ptr::null::<::core::ffi::c_char>(),
-    n:  0,
-},
-    apVtabLock:  ::core::ptr::null_mut::<*mut crate::src::headers::sqliteInt_h::Table>(),
-    pWith:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::With>(),
-    pRename:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::RenameToken>(),
-};
+    let mut sSubParse: crate::src::headers::sqliteInt_h::Parse = unsafe { ::core::mem::zeroed() };
     pPrg =
         crate::src::src::malloc::sqlite3DbMallocZero(db as *mut crate::src::headers::sqliteInt_h::sqlite3, ::core::mem::size_of::<crate::src::headers::sqliteInt_h::TriggerPrg>() as crate::src::ext::rtree::rtree::u64_0) as *mut crate::src::headers::sqliteInt_h::TriggerPrg;
     if pPrg.is_null() {

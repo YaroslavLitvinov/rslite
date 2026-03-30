@@ -622,14 +622,7 @@ pub unsafe extern "C" fn sqlite3_str_vappendf(
                     current_block = 9031895888649199432;
                 }
                 etFLOAT | etEXP | etGENERIC => {
-                    let mut s: crate::src::headers::sqliteInt_h::FpDecode = crate::src::headers::sqliteInt_h::FpDecode {
-    sign:  0,
-    isSpecial:  0,
-    n:  0,
-    iDP:  0,
-    z:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    zBuf:  [0; 24],
-};
+                    let mut s: crate::src::headers::sqliteInt_h::FpDecode = unsafe { ::core::mem::zeroed() };
                     let mut iRound: ::core::ffi::c_int = 0;
                     let mut j: ::core::ffi::c_int = 0;
                     if bArgList != 0 {
@@ -1953,15 +1946,7 @@ pub unsafe extern "C" fn sqlite3VMPrintf(
 ) -> *mut ::core::ffi::c_char {
     let mut z: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
     let mut zBase: [::core::ffi::c_char; 70] = [0; 70];
-    let mut acc: crate::src::headers::sqliteInt_h::StrAccum = crate::src::headers::sqliteInt_h::sqlite3_str {
-    db:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::sqlite3>(),
-    zText:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    nAlloc:  0,
-    mxAlloc:  0,
-    nChar:  0,
-    accError:  0,
-    printfFlags:  0,
-};
+    let mut acc: crate::src::headers::sqliteInt_h::StrAccum = unsafe { ::core::mem::zeroed() };
     sqlite3StrAccumInit(
         &raw mut acc,
         db,
@@ -1998,15 +1983,7 @@ pub unsafe extern "C" fn sqlite3_vmprintf(
 ) -> *mut ::core::ffi::c_char {
     let mut z: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
     let mut zBase: [::core::ffi::c_char; 70] = [0; 70];
-    let mut acc: crate::src::headers::sqliteInt_h::StrAccum = crate::src::headers::sqliteInt_h::sqlite3_str {
-    db:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::sqlite3>(),
-    zText:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    nAlloc:  0,
-    mxAlloc:  0,
-    nChar:  0,
-    accError:  0,
-    printfFlags:  0,
-};
+    let mut acc: crate::src::headers::sqliteInt_h::StrAccum = unsafe { ::core::mem::zeroed() };
     if crate::src::src::main::sqlite3_initialize() != 0 {
         return ::core::ptr::null_mut::<::core::ffi::c_char>();
     }
@@ -2044,15 +2021,7 @@ pub unsafe extern "C" fn sqlite3_vsnprintf(
     mut zFormat: *const ::core::ffi::c_char,
     mut ap: ::core::ffi::VaList,
 ) -> *mut ::core::ffi::c_char {
-    let mut acc: crate::src::headers::sqliteInt_h::StrAccum = crate::src::headers::sqliteInt_h::sqlite3_str {
-    db:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::sqlite3>(),
-    zText:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    nAlloc:  0,
-    mxAlloc:  0,
-    nChar:  0,
-    accError:  0,
-    printfFlags:  0,
-};
+    let mut acc: crate::src::headers::sqliteInt_h::StrAccum = unsafe { ::core::mem::zeroed() };
     if n <= 0 as ::core::ffi::c_int {
         return zBuf;
     }
@@ -2075,15 +2044,7 @@ pub unsafe extern "C" fn sqlite3_snprintf(
     mut zFormat: *const ::core::ffi::c_char,
     mut args: ...
 ) -> *mut ::core::ffi::c_char {
-    let mut acc: crate::src::headers::sqliteInt_h::StrAccum = crate::src::headers::sqliteInt_h::sqlite3_str {
-    db:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::sqlite3>(),
-    zText:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    nAlloc:  0,
-    mxAlloc:  0,
-    nChar:  0,
-    accError:  0,
-    printfFlags:  0,
-};
+    let mut acc: crate::src::headers::sqliteInt_h::StrAccum = unsafe { ::core::mem::zeroed() };
     let mut ap: ::core::ffi::VaListImpl;
     if n <= 0 as ::core::ffi::c_int {
         return zBuf;
@@ -2106,15 +2067,7 @@ unsafe extern "C" fn renderLogMsg(
     mut zFormat: *const ::core::ffi::c_char,
     mut ap: ::core::ffi::VaList,
 ) {
-    let mut acc: crate::src::headers::sqliteInt_h::StrAccum = crate::src::headers::sqliteInt_h::sqlite3_str {
-    db:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::sqlite3>(),
-    zText:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    nAlloc:  0,
-    mxAlloc:  0,
-    nChar:  0,
-    accError:  0,
-    printfFlags:  0,
-};
+    let mut acc: crate::src::headers::sqliteInt_h::StrAccum = unsafe { ::core::mem::zeroed() };
     let mut zMsg: [::core::ffi::c_char; 700] = [0; 700];
     sqlite3StrAccumInit(
         &raw mut acc,
@@ -2150,15 +2103,7 @@ pub unsafe extern "C" fn sqlite3DebugPrintf(
     mut args: ...
 ) {
     let mut ap: ::core::ffi::VaListImpl;
-    let mut acc: crate::src::headers::sqliteInt_h::StrAccum = crate::src::headers::sqliteInt_h::sqlite3_str {
-    db:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::sqlite3>(),
-    zText:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-    nAlloc:  0,
-    mxAlloc:  0,
-    nChar:  0,
-    accError:  0,
-    printfFlags:  0,
-};
+    let mut acc: crate::src::headers::sqliteInt_h::StrAccum = unsafe { ::core::mem::zeroed() };
     let mut zBuf: [::core::ffi::c_char; 700] = [0; 700];
     sqlite3StrAccumInit(
         &raw mut acc,

@@ -1078,13 +1078,7 @@ unsafe extern "C" fn ptrmapPutOvflPtr(
     mut pCell: *mut crate::src::ext::rtree::rtree::u8_0,
     mut pRC: *mut ::core::ffi::c_int,
 ) {
-    let mut info: crate::src::headers::btreeInt_h::CellInfo = crate::src::headers::btreeInt_h::CellInfo {
-    nKey:  0,
-    pPayload:  ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-    nPayload:  0,
-    nLocal:  0,
-    nSize:  0,
-};
+    let mut info: crate::src::headers::btreeInt_h::CellInfo = unsafe { ::core::mem::zeroed() };
     if *pRC != 0 {
         return;
     }
@@ -3292,13 +3286,7 @@ unsafe extern "C" fn modifyPagePointer(
                             as ::core::ffi::c_int)) as isize,
             );
             if eType as ::core::ffi::c_int == crate::src::headers::btreeInt_h::PTRMAP_OVERFLOW1 {
-                let mut info: crate::src::headers::btreeInt_h::CellInfo = crate::src::headers::btreeInt_h::CellInfo {
-    nKey:  0,
-    pPayload:  ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-    nPayload:  0,
-    nLocal:  0,
-    nSize:  0,
-};
+                let mut info: crate::src::headers::btreeInt_h::CellInfo = unsafe { ::core::mem::zeroed() };
                 __pPage_ref.xParseCell.expect("non-null function pointer")(
                     pPage,
                     pCell,
@@ -6912,14 +6900,7 @@ unsafe extern "C" fn balance_quick(
         let mut szCell: crate::src::fts5::u16_0 =
             __pPage_ref.xCellSize.expect("non-null function pointer")(pPage, pCell);
         let mut pStop: *mut crate::src::ext::rtree::rtree::u8_0 = ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>();
-        let mut b: CellArray = CellArray {
-            nCell: 0,
-            pRef: ::core::ptr::null_mut::<crate::src::headers::btreeInt_h::MemPage>(),
-            apCell: ::core::ptr::null_mut::<*mut crate::src::ext::rtree::rtree::u8_0>(),
-            szCell: ::core::ptr::null_mut::<crate::src::fts5::u16_0>(),
-            apEnd: [::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(); 6],
-            ixNx: [0; 6],
-        };
+        let mut b: CellArray = unsafe { ::core::mem::zeroed() };
         zeroPage(pNew, crate::src::headers::btreeInt_h::PTF_INTKEY | crate::src::headers::btreeInt_h::PTF_LEAFDATA | crate::src::headers::btreeInt_h::PTF_LEAF);
         b.nCell = 1 as ::core::ffi::c_int;
         b.pRef = pPage;
@@ -7869,16 +7850,7 @@ unsafe extern "C" fn balance_nonroot(
                     4 as usize,
                 );
                                                             } else if leafData != 0 {
-                                                                let mut info: crate::src::headers::btreeInt_h::CellInfo = crate::src::headers::btreeInt_h::CellInfo {
-    nKey:  0,
-    pPayload:  ::core::ptr::null_mut::<
-                                                                        crate::src::ext::rtree::rtree::u8_0,
-                                                                    >(
-                                                                    ),
-    nPayload:  0,
-    nLocal:  0,
-    nSize:  0,
-};
+                                                                let mut info: crate::src::headers::btreeInt_h::CellInfo = unsafe { ::core::mem::zeroed() };
                                                                 j -= 1;
                                                                 (*pNew_1).xParseCell.expect(
                                                                     "non-null function pointer",
@@ -8480,20 +8452,7 @@ pub unsafe extern "C" fn sqlite3BtreeInsert(
     } else {
         if loc == 0 as ::core::ffi::c_int && flags & crate::src::src::btree::BTREE_SAVEPOSITION == 0 as ::core::ffi::c_int {
             if (*pX).nMem != 0 {
-                let mut r: crate::src::headers::sqliteInt_h::UnpackedRecord = crate::src::headers::sqliteInt_h::UnpackedRecord {
-    pKeyInfo:  ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::KeyInfo>(),
-    aMem:  ::core::ptr::null_mut::<crate::src::src::vdbe::Mem>(),
-    u:  crate::src::headers::sqliteInt_h::__anon_union_4 {
-    z:  ::core::ptr::null_mut::<::core::ffi::c_char>(),
-},
-    n:  0,
-    nField:  0,
-    default_rc:  0,
-    errCode:  0,
-    r1:  0,
-    r2:  0,
-    eqSeen:  0,
-};
+                let mut r: crate::src::headers::sqliteInt_h::UnpackedRecord = unsafe { ::core::mem::zeroed() };
                 r.pKeyInfo = __pCur_ref.pKeyInfo as *mut crate::src::headers::sqliteInt_h::KeyInfo;
                 r.aMem = (*pX).aMem as *mut crate::src::src::vdbe::Mem;
                 r.nField = (*pX).nMem;
@@ -8516,15 +8475,7 @@ pub unsafe extern "C" fn sqlite3BtreeInsert(
         if loc == 0 as ::core::ffi::c_int {
             getCellInfo(pCur);
             if __pCur_ref.info.nKey == (*pX).nKey {
-                let mut x2: crate::src::src::btree::BtreePayload = crate::src::src::btree::BtreePayload {
-    pKey:  ::core::ptr::null::<::core::ffi::c_void>(),
-    nKey:  0,
-    pData:  ::core::ptr::null::<::core::ffi::c_void>(),
-    aMem:  ::core::ptr::null_mut::<crate::src::headers::vdbeInt_h::sqlite3_value>(),
-    nMem:  0,
-    nData:  0,
-    nZero:  0,
-};
+                let mut x2: crate::src::src::btree::BtreePayload = unsafe { ::core::mem::zeroed() };
                 x2.pData = (*pX).pKey;
                 x2.nData = (*pX).nKey as ::core::ffi::c_int;
                 x2.nZero = 0 as ::core::ffi::c_int;
@@ -8555,13 +8506,7 @@ pub unsafe extern "C" fn sqlite3BtreeInsert(
         if __pBt_ref.autoVacuum as ::core::ffi::c_int != 0
             && szNew > (*pPage).maxLocal as ::core::ffi::c_int
         {
-            let mut info: crate::src::headers::btreeInt_h::CellInfo = crate::src::headers::btreeInt_h::CellInfo {
-    nKey:  0,
-    pPayload:  ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-    nPayload:  0,
-    nLocal:  0,
-    nSize:  0,
-};
+            let mut info: crate::src::headers::btreeInt_h::CellInfo = unsafe { ::core::mem::zeroed() };
             (*pPage).xParseCell.expect("non-null function pointer")(
                 pPage,
                 newCell as *mut crate::src::ext::rtree::rtree::u8_0,
@@ -8602,13 +8547,7 @@ pub unsafe extern "C" fn sqlite3BtreeInsert(
             idx = __pCur_ref.ix as ::core::ffi::c_int;
             __pCur_ref.info.nSize = 0 as crate::src::fts5::u16_0;
             if loc == 0 as ::core::ffi::c_int {
-                let mut info_0: crate::src::headers::btreeInt_h::CellInfo = crate::src::headers::btreeInt_h::CellInfo {
-    nKey:  0,
-    pPayload:  ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-    nPayload:  0,
-    nLocal:  0,
-    nSize:  0,
-};
+                let mut info_0: crate::src::headers::btreeInt_h::CellInfo = unsafe { ::core::mem::zeroed() };
                 if idx >= (*pPage).nCell as ::core::ffi::c_int {
                     return crate::src::src::main::sqlite3CorruptError(9573 as ::core::ffi::c_int);
                 }
@@ -8878,13 +8817,7 @@ pub unsafe extern "C" fn sqlite3BtreeDelete(
     let mut pCell: *mut ::core::ffi::c_uchar = ::core::ptr::null_mut::<::core::ffi::c_uchar>();
     let mut iCellIdx: ::core::ffi::c_int = 0;
     let mut iCellDepth: ::core::ffi::c_int = 0;
-    let mut info: crate::src::headers::btreeInt_h::CellInfo = crate::src::headers::btreeInt_h::CellInfo {
-    nKey:  0,
-    pPayload:  ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-    nPayload:  0,
-    nLocal:  0,
-    nSize:  0,
-};
+    let mut info: crate::src::headers::btreeInt_h::CellInfo = unsafe { ::core::mem::zeroed() };
     let mut bPreserve: crate::src::ext::rtree::rtree::u8_0 = 0;
     if __pCur_ref.eState as ::core::ffi::c_int != crate::src::headers::btreeInt_h::CURSOR_VALID {
         if __pCur_ref.eState as ::core::ffi::c_int >= crate::src::headers::btreeInt_h::CURSOR_REQUIRESEEK {
@@ -9234,13 +9167,7 @@ unsafe extern "C" fn clearDatabasePage(
     let mut pCell: *mut ::core::ffi::c_uchar = ::core::ptr::null_mut::<::core::ffi::c_uchar>();
     let mut i: ::core::ffi::c_int = 0;
     let mut hdr: ::core::ffi::c_int = 0;
-    let mut info: crate::src::headers::btreeInt_h::CellInfo = crate::src::headers::btreeInt_h::CellInfo {
-    nKey:  0,
-    pPayload:  ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-    nPayload:  0,
-    nLocal:  0,
-    nSize:  0,
-};
+    let mut info: crate::src::headers::btreeInt_h::CellInfo = unsafe { ::core::mem::zeroed() };
     if pgno > btreePagecount(pBt) {
         return crate::src::src::main::sqlite3CorruptError(10187 as ::core::ffi::c_int);
     }
@@ -10033,13 +9960,7 @@ unsafe extern "C" fn checkTreePage(
                     }
                     i = nCell - 1 as ::core::ffi::c_int;
                     while i >= 0 as ::core::ffi::c_int && __pCheck_ref.mxErr != 0 {
-                        let mut info: crate::src::headers::btreeInt_h::CellInfo = crate::src::headers::btreeInt_h::CellInfo {
-    nKey:  0,
-    pPayload:  ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>(),
-    nPayload:  0,
-    nLocal:  0,
-    nSize:  0,
-};
+                        let mut info: crate::src::headers::btreeInt_h::CellInfo = unsafe { ::core::mem::zeroed() };
                         __pCheck_ref.v2 = i;
                         pc = ((*pCellIdx.offset(0 as isize)
                             as ::core::ffi::c_int)
