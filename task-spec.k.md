@@ -16,6 +16,10 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
       - [fts3_write_no_feature](#fts3_write_no_feature)
       - [fts3_write_no_sqlite3_mprintf](#fts3_write_no_sqlite3_mprintf)
       - [fts3_write_no_sqlite3_mprintf_use](#fts3_write_no_sqlite3_mprintf_use)
+    - [Feature: fts3_write_sqlite_printf_migration](#fts3_write_sqlite_printf_migration)
+      - [fts3_write_no_format_sql_1arg](#fts3_write_no_format_sql_1arg)
+      - [fts3_write_no_format_sql_2args](#fts3_write_no_format_sql_2args)
+      - [fts3_write_no_format_sql_3args](#fts3_write_no_format_sql_3args)
     - [Feature: memdb_c_variadic_migration](#memdb_c_variadic_migration)
       - [memdb_memdbFileControl_no_variadic](#memdb_memdbfilecontrol_no_variadic)
       - [memdb_no_feature](#memdb_no_feature)
@@ -63,6 +67,28 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
 #### fts3_write_no_sqlite3_mprintf_use
 **Description:** fts3_write.rs must not import sqlite3_mprintf
 **Command:** `grep -E "use.*sqlite3_mprintf|pub use.*sqlite3_mprintf" "$WORKSPACE_ROOT/src/ext/fts3/fts3_write.rs" 2>/dev/null && exit 1 || exit 0`
+
+### Feature: fts3_write_sqlite_printf_migration
+**Migrate fts3_write.rs from format_sql_* helpers to sqlite_printf! proc macro**
+
+**Goals:**
+- Replace all safe_format::format_sql_1arg calls with sqlite_printf! macro
+- Replace all safe_format::format_sql_2args calls with sqlite_printf! macro
+- Replace all safe_format::format_sql_3args calls with sqlite_printf! macro
+- Verify no format_sql_* functions are used in fts3_write.rs
+- All 394649 tests must pass after migration
+
+#### fts3_write_no_format_sql_1arg
+**Description:** fts3_write.rs must not use format_sql_1arg function
+**Command:** `grep -n "format_sql_1arg" "$WORKSPACE_ROOT/src/ext/fts3/fts3_write.rs" 2>/dev/null && exit 1 || exit 0`
+
+#### fts3_write_no_format_sql_2args
+**Description:** fts3_write.rs must not use format_sql_2args function
+**Command:** `grep -n "format_sql_2args" "$WORKSPACE_ROOT/src/ext/fts3/fts3_write.rs" 2>/dev/null && exit 1 || exit 0`
+
+#### fts3_write_no_format_sql_3args
+**Description:** fts3_write.rs must not use format_sql_3args function
+**Command:** `grep -n "format_sql_3args" "$WORKSPACE_ROOT/src/ext/fts3/fts3_write.rs" 2>/dev/null && exit 1 || exit 0`
 
 ### Feature: memdb_c_variadic_migration
 **Migrate memdb.rs and specific functions away from c_variadic feature**

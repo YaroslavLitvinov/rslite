@@ -130,6 +130,39 @@
           "fails_count": 1
         }
       }
+    },
+    "fts3_write_sqlite_printf_migration": {
+      "type": "Feature",
+      "model_version": 1,
+      "id": "fts3_write_sqlite_printf_migration",
+      "description": "Migrate fts3_write.rs from format_sql_* helpers to sqlite_printf! proc macro",
+      "goals": [
+        "Replace all safe_format::format_sql_1arg calls with sqlite_printf! macro",
+        "Replace all safe_format::format_sql_2args calls with sqlite_printf! macro",
+        "Replace all safe_format::format_sql_3args calls with sqlite_printf! macro",
+        "Verify no format_sql_* functions are used in fts3_write.rs",
+        "All 394649 tests must pass after migration"
+      ],
+      "constraints": {
+        "fts3_write_no_format_sql_1arg": {
+          "id": "fts3_write_no_format_sql_1arg",
+          "cmd": "grep -n \"format_sql_1arg\" \"$WORKSPACE_ROOT/src/ext/fts3/fts3_write.rs\" 2>/dev/null && exit 1 || exit 0",
+          "description": "fts3_write.rs must not use format_sql_1arg function",
+          "fails_count": 1
+        },
+        "fts3_write_no_format_sql_2args": {
+          "id": "fts3_write_no_format_sql_2args",
+          "cmd": "grep -n \"format_sql_2args\" \"$WORKSPACE_ROOT/src/ext/fts3/fts3_write.rs\" 2>/dev/null && exit 1 || exit 0",
+          "description": "fts3_write.rs must not use format_sql_2args function",
+          "fails_count": 1
+        },
+        "fts3_write_no_format_sql_3args": {
+          "id": "fts3_write_no_format_sql_3args",
+          "cmd": "grep -n \"format_sql_3args\" \"$WORKSPACE_ROOT/src/ext/fts3/fts3_write.rs\" 2>/dev/null && exit 1 || exit 0",
+          "description": "fts3_write.rs must not use format_sql_3args function",
+          "fails_count": 1
+        }
+      }
     }
   }
 }
