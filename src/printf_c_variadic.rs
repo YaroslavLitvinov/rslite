@@ -1,7 +1,3 @@
-#![feature(
-    c_variadic
-)]
-
 // C variadic functions module.
 // This module documents the organization of C variadic functions.
 // Only the minimum required functions that absolutely need c_variadic feature are here.
@@ -12,12 +8,11 @@ pub use crate::src::src::printf;
 
 // Import required types and functions from their original modules
 use crate::src::src::main::{C2RustUnnamed, LOGFUNC_t, void_function, sqlite3MisuseError, setupLookaside};
-use crate::src::src::json::{JsonString, jsonStringGrow};
 use crate::src::fts5::{Fts5Buffer, Fts5Config, Fts5FullTable, Fts5Parse, sqlite3Fts5BufferAppendString};
 use crate::src::ext::rtree::rtree::{RtreeCheck, RTREE_CHECK_MAX_ERROR};
 use crate::src::ext::session::sqlite3session::{SessionBuffer, sessionAppendStr};
 use crate::src::src::btree::{checkOom, checkProgress};
-use crate::src::src::vacuum;  // For access to execSql
+use crate::src::src::vacuum;
 
 // Variadic function implementations - these require c_variadic feature
 #[unsafe(no_mangle)]

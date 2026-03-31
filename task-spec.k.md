@@ -39,6 +39,9 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
       - [memdb_sqlite3_serialize_no_variadic](#memdb_sqlite3_serialize_no_variadic)
     - [Feature: toolchain_version](#toolchain_version)
       - [c6](#c6)
+    - [Feature: vdbevtab_loadext_c_variadic_migration](#vdbevtab_loadext_c_variadic_migration)
+      - [vdbevtab_no_printf_c_variadic](#vdbevtab_no_printf_c_variadic)
+      - [vdbevtab_no_sqlite3_mprintf](#vdbevtab_no_sqlite3_mprintf)
 
 ## Features
 
@@ -193,3 +196,18 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
 #### toolchain_nightly_version
 **Description:** rust-toolchain.toml must use channel nightly-2026-03-26
 **Command:** `grep -q "nightly-2026-03-26" "$PROJECT_ROOT/rust-toolchain.toml" && exit 0 || exit 1`
+
+### Feature: vdbevtab_loadext_c_variadic_migration
+**Migrate vdbevtab.rs away from c_variadic functions and sqlite3_mprintf**
+
+**Goals:**
+- Remove c_variadic and sqlite3_mprintf usage from src/src/vdbevtab.rs
+- Replace all format strings with compile-time validated sqlite_printf! or json_printf! macros
+
+#### vdbevtab_no_printf_c_variadic
+**Description:** vdbevtab.rs must not import from printf_c_variadic
+**Command:** `grep -n "printf_c_variadic" "$WORKSPACE_ROOT/src/src/vdbevtab.rs" 2>/dev/null && exit 1 || exit 0`
+
+#### vdbevtab_no_sqlite3_mprintf
+**Description:** vdbevtab.rs must not use sqlite3_mprintf
+**Command:** `grep -n "sqlite3_mprintf" "$WORKSPACE_ROOT/src/src/vdbevtab.rs" 2>/dev/null && exit 1 || exit 0`

@@ -5257,7 +5257,7 @@ unsafe extern "C" fn cellOverlap(
                 o = 0 as ::core::ffi::c_int as RtreeDValue;
                 break;
             } else {
-                o *= (x2 - x1);
+                o *= x2 - x1;
                 jj += 2 as ::core::ffi::c_int;
             }
         }

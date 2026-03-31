@@ -1124,8 +1124,7 @@ unsafe extern "C" fn porterNext(
     crate::src::headers::sqlite3_h::SQLITE_DONE
 }
 
-static mut porterTokenizerModule: crate::src::ext::fts3::fts3_tokenizer::sqlite3_tokenizer_module = unsafe {
-    crate::src::ext::fts3::fts3_tokenizer::sqlite3_tokenizer_module {
+static mut porterTokenizerModule: crate::src::ext::fts3::fts3_tokenizer::sqlite3_tokenizer_module = crate::src::ext::fts3::fts3_tokenizer::sqlite3_tokenizer_module {
     iVersion:  0 as ::core::ffi::c_int,
     xCreate:  Some(
             porterCreate
@@ -1163,7 +1162,6 @@ static mut porterTokenizerModule: crate::src::ext::fts3::fts3_tokenizer::sqlite3
                 ) -> ::core::ffi::c_int,
         ),
     xLanguageid:  None,
-}
 };
 #[unsafe(no_mangle)]
 

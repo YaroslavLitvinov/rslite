@@ -240,6 +240,30 @@
           "fails_count": 1
         }
       }
+    },
+    "vdbevtab_loadext_c_variadic_migration": {
+      "type": "Feature",
+      "model_version": 1,
+      "id": "vdbevtab_loadext_c_variadic_migration",
+      "description": "Migrate vdbevtab.rs away from c_variadic functions and sqlite3_mprintf",
+      "goals": [
+        "Remove c_variadic and sqlite3_mprintf usage from src/src/vdbevtab.rs",
+        "Replace all format strings with compile-time validated sqlite_printf! or json_printf! macros"
+      ],
+      "constraints": {
+        "vdbevtab_no_sqlite3_mprintf": {
+          "id": "vdbevtab_no_sqlite3_mprintf",
+          "cmd": "grep -n \"sqlite3_mprintf\" \"$WORKSPACE_ROOT/src/src/vdbevtab.rs\" 2>/dev/null && exit 1 || exit 0",
+          "description": "vdbevtab.rs must not use sqlite3_mprintf",
+          "fails_count": 1
+        },
+        "vdbevtab_no_printf_c_variadic": {
+          "id": "vdbevtab_no_printf_c_variadic",
+          "cmd": "grep -n \"printf_c_variadic\" \"$WORKSPACE_ROOT/src/src/vdbevtab.rs\" 2>/dev/null && exit 1 || exit 0",
+          "description": "vdbevtab.rs must not import from printf_c_variadic",
+          "fails_count": 1
+        }
+      }
     }
   }
 }
