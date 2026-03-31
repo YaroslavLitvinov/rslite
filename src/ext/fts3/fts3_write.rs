@@ -1924,10 +1924,17 @@ unsafe extern "C" fn fts3WriteSegdir(
             crate::src::src::vdbeapi::sqlite3_bind_int64(pStmt, 5 as ::core::ffi::c_int, iEndBlock);
         } else {
             let result = format!("{} {}", iEndBlock, nLeafData);
-            let mut zEnd: *mut ::core::ffi::c_char = crate::safe_format::allocate_string(result);
-            if zEnd.is_null() {
+            let bytes = result.into_bytes();
+            let len = bytes.len();
+            let ptr = unsafe { crate::src::src::malloc::sqlite3_malloc64((len + 1) as u64) } as *mut u8;
+            if ptr.is_null() {
                 return crate::src::headers::sqlite3_h::SQLITE_NOMEM;
             }
+            unsafe {
+                std::ptr::copy_nonoverlapping(bytes.as_ptr(), ptr, len);
+                *ptr.add(len) = 0; // null terminate
+            }
+            let mut zEnd: *mut ::core::ffi::c_char = ptr as *mut ::core::ffi::c_char;
             crate::src::src::vdbeapi::sqlite3_bind_text(
                 pStmt,
                 5 as ::core::ffi::c_int,

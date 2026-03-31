@@ -88,30 +88,48 @@ pub fn format_g15(v: f64) -> String {
         return "nan".to_string();
     }
     if v.is_infinite() {
-        return if v.is_sign_positive() { "1e999".to_string() } else { "-1e999".to_string() };
+        return if v.is_sign_positive() { "9.0e+999".to_string() } else { "-9.0e+999".to_string() };
+    }
+
+    if v == 0.0 {
+        return "0".to_string();
     }
 
     // Use exponential notation if exponent is outside [-4, 15) range
     let log10_abs = v.abs().log10();
-    let use_exp = v != 0.0 && (log10_abs < -4.0 || log10_abs >= 15.0);
+    let use_exp = log10_abs < -4.0 || log10_abs >= 15.0;
 
-    let s = if use_exp {
-        // Exponential: %.14e gives 15 significant figures total
+    let mut result = if use_exp {
+        // Exponential format with 14 decimal places = 15 significant figures
         format!("{:.14e}", v)
     } else {
-        // Fixed: format with enough precision and strip trailing zeros
-        format!("{:.15}", v)
+        // For fixed notation, calculate the number of decimal places needed
+        // to represent 15 significant figures
+        let int_digits = if v.abs() >= 1.0 {
+            (v.abs().log10().floor() as i32 + 1) as usize
+        } else {
+            1
+        };
+
+        let decimal_places = if int_digits < 15 {
+            15 - int_digits
+        } else {
+            0
+        };
+
+        let formatted = format!("{:.prec$}", v, prec = decimal_places);
+        formatted
     };
 
-    // Strip trailing zeros after decimal point
-    if s.contains('.') && !s.contains('e') && !s.contains('E') {
-        let trimmed = s.trim_end_matches('0');
-        if trimmed.ends_with('.') {
-            trimmed[..trimmed.len()-1].to_string()
-        } else {
-            trimmed.to_string()
+    // Strip trailing zeros after decimal point (but not in exponential notation)
+    if result.contains('.') && !result.contains('e') && !result.contains('E') {
+        while result.ends_with('0') {
+            result.pop();
         }
-    } else {
-        s
+        if result.ends_with('.') {
+            result.pop();
+        }
     }
+
+    result
 }

@@ -502,7 +502,16 @@ pub fn sqlite_printf(input: TokenStream) -> TokenStream {
     let expanded = quote! {
         {
             let result = format!(#rust_format, #(#arg_handlers),*);
-            crate::safe_format::allocate_string(result)
+            let bytes = result.into_bytes();
+            let len = bytes.len();
+            let ptr = unsafe { crate::src::src::malloc::sqlite3_malloc64((len + 1) as u64) } as *mut u8;
+            if !ptr.is_null() {
+                unsafe {
+                    std::ptr::copy_nonoverlapping(bytes.as_ptr(), ptr, len);
+                    *ptr.add(len) = 0; // null terminate
+                }
+            }
+            ptr as *mut ::core::ffi::c_char
         }
     };
 

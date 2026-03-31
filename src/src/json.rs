@@ -1222,7 +1222,75 @@ unsafe extern "C" fn jsonAppendSqlValue(mut p: *mut JsonString, mut pValue: *mut
         }
     crate::src::headers::sqlite3_h::SQLITE_FLOAT_1 =>  {
             let v = crate::src::src::vdbeapi::sqlite3_value_double(pValue);
-            let s = format!("{:.15}", v);
+            // Format float using SQLite's %!0.15g format (15 significant digits, strip trailing zeros)
+            let mut s = if v.is_nan() {
+                "nan".to_string()
+            } else if v.is_infinite() {
+                if v.is_sign_positive() { "9.0e+999".to_string() } else { "-9.0e+999".to_string() }
+            } else if v == 0.0 {
+                "0.0".to_string()
+            } else {
+                // Use exponential notation if exponent is outside [-4, 15) range
+                let log10_abs = v.abs().log10();
+                let use_exp = log10_abs < -4.0 || log10_abs >= 15.0;
+
+                let mut result = if use_exp {
+                    // Exponential format with 14 decimal places = 15 significant figures
+                    format!("{:.14e}", v)
+                } else {
+                    // For fixed notation, calculate the number of decimal places needed
+                    // to represent 15 significant figures
+                    let int_digits = if v.abs() >= 1.0 {
+                        (v.abs().log10().floor() as i32 + 1) as usize
+                    } else {
+                        1
+                    };
+
+                    let decimal_places = if int_digits < 15 {
+                        15 - int_digits
+                    } else {
+                        0
+                    };
+
+                    let formatted = format!("{:.prec$}", v, prec = decimal_places);
+                    formatted
+                };
+
+                // Strip trailing zeros after decimal point, but keep at least ".0" for JSON
+                if result.contains('.') {
+                    let is_exp = result.contains('e') || result.contains('E');
+
+                    if is_exp {
+                        // For exponential notation, find and strip zeros before the exponent
+                        if let Some(e_pos) = result.find(|c| c == 'e' || c == 'E') {
+                            let mut mantissa = result[..e_pos].to_string();
+                            let mut exponent = result[e_pos..].to_string();
+
+                            // Strip trailing zeros from mantissa but keep at least one digit after decimal
+                            while mantissa.ends_with('0') && !mantissa.ends_with(".0") {
+                                mantissa.pop();
+                            }
+
+                            // Ensure exponent has explicit + sign for positive exponents
+                            // e.g., "e99" -> "e+99"
+                            if exponent.starts_with('e') && !exponent.starts_with("e-") && !exponent.starts_with("e+") {
+                                exponent = format!("e+{}", &exponent[1..]);
+                            } else if exponent.starts_with('E') && !exponent.starts_with("E-") && !exponent.starts_with("E+") {
+                                exponent = format!("E+{}", &exponent[1..]);
+                            }
+
+                            result = format!("{}{}", mantissa, exponent);
+                        }
+                    } else {
+                        // For fixed notation, strip trailing zeros but keep at least ".0"
+                        while result.ends_with('0') && !result.ends_with(".0") {
+                            result.pop();
+                        }
+                    }
+                }
+
+                result
+            };
             let bytes = s.as_bytes();
             jsonAppendRaw(p, bytes.as_ptr() as *const ::core::ffi::c_char, bytes.len() as crate::src::ext::rtree::rtree::u32_0);
         }
