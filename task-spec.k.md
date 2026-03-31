@@ -39,10 +39,11 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
       - [memdb_sqlite3_serialize_no_variadic](#memdb_sqlite3_serialize_no_variadic)
     - [Feature: toolchain_version](#toolchain_version)
       - [c6](#c6)
-    - [Feature: vdbevtab_loadext_c_variadic_migration](#vdbevtab_loadext_c_variadic_migration)
-      - [vdbevtab_no_printf_c_variadic](#vdbevtab_no_printf_c_variadic)
-      - [vdbevtab_no_sqlite3_mprintf](#vdbevtab_no_sqlite3_mprintf)
-    - [Feature: vdbevtab_vdbeaux_c_variadic_migration](#vdbevtab_vdbeaux_c_variadic_migration)
+    - [Feature: vdbevtab_vdbeaux_pragma_table_c_variadic_migration](#vdbevtab_vdbeaux_pragma_table_c_variadic_migration)
+      - [pragma_no_printf_c_variadic](#pragma_no_printf_c_variadic)
+      - [pragma_no_sqlite3_mprintf](#pragma_no_sqlite3_mprintf)
+      - [table_no_printf_c_variadic](#table_no_printf_c_variadic)
+      - [table_no_sqlite3_mprintf](#table_no_sqlite3_mprintf)
       - [vdbeaux_no_printf_c_variadic](#vdbeaux_no_printf_c_variadic)
       - [vdbeaux_no_sqlite3_mprintf](#vdbeaux_no_sqlite3_mprintf)
       - [vdbevtab_no_printf_c_variadic](#vdbevtab_no_printf_c_variadic)
@@ -202,28 +203,31 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
 **Description:** rust-toolchain.toml must use channel nightly-2026-03-26
 **Command:** `grep -q "nightly-2026-03-26" "$PROJECT_ROOT/rust-toolchain.toml" && exit 0 || exit 1`
 
-### Feature: vdbevtab_loadext_c_variadic_migration
-**Migrate vdbevtab.rs away from c_variadic functions and sqlite3_mprintf**
-
-**Goals:**
-- Remove c_variadic and sqlite3_mprintf usage from src/src/vdbevtab.rs
-- Replace all format strings with compile-time validated sqlite_printf! or json_printf! macros
-
-#### vdbevtab_no_printf_c_variadic
-**Description:** vdbevtab.rs must not import from printf_c_variadic
-**Command:** `grep -n "printf_c_variadic" "$WORKSPACE_ROOT/src/src/vdbevtab.rs" 2>/dev/null && exit 1 || exit 0`
-
-#### vdbevtab_no_sqlite3_mprintf
-**Description:** vdbevtab.rs must not use sqlite3_mprintf
-**Command:** `grep -n "sqlite3_mprintf" "$WORKSPACE_ROOT/src/src/vdbevtab.rs" 2>/dev/null && exit 1 || exit 0`
-
-### Feature: vdbevtab_vdbeaux_c_variadic_migration
-**Migrate vdbevtab.rs, vdbeaux.rs away from c_variadic functions and sqlite3_mprintf**
+### Feature: vdbevtab_vdbeaux_pragma_table_c_variadic_migration
+**Migrate vdbevtab.rs, vdbeaux.rs, table.rs, pragma.rs away from c_variadic functions and sqlite3_mprintf**
 
 **Goals:**
 - Remove c_variadic and sqlite3_mprintf usage from src/src/vdbevtab.rs
 - Remove c_variadic and sqlite3_mprintf usage from src/src/vdbeaux.rs
+- Remove c_variadic and sqlite3_mprintf usage from src/src/table.rs
+- Remove c_variadic and sqlite3_mprintf usage from src/src/pragma.rs
 - Replace all format strings with compile-time validated sqlite_printf! or json_printf! macros
+
+#### pragma_no_printf_c_variadic
+**Description:** pragma.rs must not import from printf_c_variadic
+**Command:** `grep -n "printf_c_variadic" "$WORKSPACE_ROOT/src/src/pragma.rs" 2>/dev/null && exit 1 || exit 0`
+
+#### pragma_no_sqlite3_mprintf
+**Description:** pragma.rs must not use sqlite3_mprintf
+**Command:** `grep -n "sqlite3_mprintf" "$WORKSPACE_ROOT/src/src/pragma.rs" 2>/dev/null && exit 1 || exit 0`
+
+#### table_no_printf_c_variadic
+**Description:** table.rs must not import from printf_c_variadic
+**Command:** `grep -n "printf_c_variadic" "$WORKSPACE_ROOT/src/src/table.rs" 2>/dev/null && exit 1 || exit 0`
+
+#### table_no_sqlite3_mprintf
+**Description:** table.rs must not use sqlite3_mprintf
+**Command:** `grep -n "sqlite3_mprintf" "$WORKSPACE_ROOT/src/src/table.rs" 2>/dev/null && exit 1 || exit 0`
 
 #### vdbeaux_no_printf_c_variadic
 **Description:** vdbeaux.rs must not import from printf_c_variadic

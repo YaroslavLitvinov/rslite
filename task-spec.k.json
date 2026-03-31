@@ -241,38 +241,16 @@
         }
       }
     },
-    "vdbevtab_loadext_c_variadic_migration": {
+    "vdbevtab_vdbeaux_pragma_table_c_variadic_migration": {
       "type": "Feature",
       "model_version": 1,
-      "id": "vdbevtab_loadext_c_variadic_migration",
-      "description": "Migrate vdbevtab.rs away from c_variadic functions and sqlite3_mprintf",
-      "goals": [
-        "Remove c_variadic and sqlite3_mprintf usage from src/src/vdbevtab.rs",
-        "Replace all format strings with compile-time validated sqlite_printf! or json_printf! macros"
-      ],
-      "constraints": {
-        "vdbevtab_no_sqlite3_mprintf": {
-          "id": "vdbevtab_no_sqlite3_mprintf",
-          "cmd": "grep -n \"sqlite3_mprintf\" \"$WORKSPACE_ROOT/src/src/vdbevtab.rs\" 2>/dev/null && exit 1 || exit 0",
-          "description": "vdbevtab.rs must not use sqlite3_mprintf",
-          "fails_count": 1
-        },
-        "vdbevtab_no_printf_c_variadic": {
-          "id": "vdbevtab_no_printf_c_variadic",
-          "cmd": "grep -n \"printf_c_variadic\" \"$WORKSPACE_ROOT/src/src/vdbevtab.rs\" 2>/dev/null && exit 1 || exit 0",
-          "description": "vdbevtab.rs must not import from printf_c_variadic",
-          "fails_count": 1
-        }
-      }
-    },
-    "vdbevtab_vdbeaux_c_variadic_migration": {
-      "type": "Feature",
-      "model_version": 1,
-      "id": "vdbevtab_vdbeaux_c_variadic_migration",
-      "description": "Migrate vdbevtab.rs, vdbeaux.rs away from c_variadic functions and sqlite3_mprintf",
+      "id": "vdbevtab_vdbeaux_pragma_table_c_variadic_migration",
+      "description": "Migrate vdbevtab.rs, vdbeaux.rs, table.rs, pragma.rs away from c_variadic functions and sqlite3_mprintf",
       "goals": [
         "Remove c_variadic and sqlite3_mprintf usage from src/src/vdbevtab.rs",
         "Remove c_variadic and sqlite3_mprintf usage from src/src/vdbeaux.rs",
+        "Remove c_variadic and sqlite3_mprintf usage from src/src/table.rs",
+        "Remove c_variadic and sqlite3_mprintf usage from src/src/pragma.rs",
         "Replace all format strings with compile-time validated sqlite_printf! or json_printf! macros"
       ],
       "constraints": {
@@ -298,6 +276,30 @@
           "id": "vdbeaux_no_printf_c_variadic",
           "cmd": "grep -n \"printf_c_variadic\" \"$WORKSPACE_ROOT/src/src/vdbeaux.rs\" 2>/dev/null && exit 1 || exit 0",
           "description": "vdbeaux.rs must not import from printf_c_variadic",
+          "fails_count": 1
+        },
+        "table_no_sqlite3_mprintf": {
+          "id": "table_no_sqlite3_mprintf",
+          "cmd": "grep -n \"sqlite3_mprintf\" \"$WORKSPACE_ROOT/src/src/table.rs\" 2>/dev/null && exit 1 || exit 0",
+          "description": "table.rs must not use sqlite3_mprintf",
+          "fails_count": 1
+        },
+        "table_no_printf_c_variadic": {
+          "id": "table_no_printf_c_variadic",
+          "cmd": "grep -n \"printf_c_variadic\" \"$WORKSPACE_ROOT/src/src/table.rs\" 2>/dev/null && exit 1 || exit 0",
+          "description": "table.rs must not import from printf_c_variadic",
+          "fails_count": 1
+        },
+        "pragma_no_sqlite3_mprintf": {
+          "id": "pragma_no_sqlite3_mprintf",
+          "cmd": "grep -n \"sqlite3_mprintf\" \"$WORKSPACE_ROOT/src/src/pragma.rs\" 2>/dev/null && exit 1 || exit 0",
+          "description": "pragma.rs must not use sqlite3_mprintf",
+          "fails_count": 1
+        },
+        "pragma_no_printf_c_variadic": {
+          "id": "pragma_no_printf_c_variadic",
+          "cmd": "grep -n \"printf_c_variadic\" \"$WORKSPACE_ROOT/src/src/pragma.rs\" 2>/dev/null && exit 1 || exit 0",
+          "description": "pragma.rs must not import from printf_c_variadic",
           "fails_count": 1
         }
       }
