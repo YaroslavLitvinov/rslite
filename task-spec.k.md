@@ -10,6 +10,12 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
 - [Features](#features)
     - [Feature: build_all](#build_all)
       - [constraint_build_all](#constraint_build_all)
+    - [Feature: fts3_write_c_variadic_migration](#fts3_write_c_variadic_migration)
+      - [fts3_write_fts3SqlExec_no_variadic](#fts3_write_fts3sqlexec_no_variadic)
+      - [fts3_write_fts3SqlStmt_no_variadic](#fts3_write_fts3sqlstmt_no_variadic)
+      - [fts3_write_no_feature](#fts3_write_no_feature)
+      - [fts3_write_no_sqlite3_mprintf](#fts3_write_no_sqlite3_mprintf)
+      - [fts3_write_no_sqlite3_mprintf_use](#fts3_write_no_sqlite3_mprintf_use)
     - [Feature: memdb_c_variadic_migration](#memdb_c_variadic_migration)
       - [memdb_memdbFileControl_no_variadic](#memdb_memdbfilecontrol_no_variadic)
       - [memdb_no_feature](#memdb_no_feature)
@@ -28,6 +34,35 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
 #### constraint_build_all
 **Description:** Ensure our rust codebase is healthy
 **Command:** `cd $WORKSPACE_ROOT && ./build_all.sh`
+
+### Feature: fts3_write_c_variadic_migration
+**Migrate fts3_write.rs and specific functions away from c_variadic feature**
+
+**Goals:**
+- Remove c_variadic feature usage from fts3_write.rs file
+- Refactor fts3SqlStmt function to eliminate c_variadic
+- Refactor fts3SqlExec function to eliminate c_variadic
+- Replace all sqlite3_mprintf calls with compile-time validated macros
+
+#### fts3_write_fts3SqlExec_no_variadic
+**Description:** fts3SqlExec function must not use c_variadic or variadic patterns
+**Command:** `awk "/^[^/]*fn fts3SqlExec/,/^}/" "$WORKSPACE_ROOT/src/ext/fts3/fts3_write.rs" 2>/dev/null | grep -E "(va_list|VAList|VaListImpl|c_variadic|va_arg)" && exit 1 || exit 0`
+
+#### fts3_write_fts3SqlStmt_no_variadic
+**Description:** fts3SqlStmt function must not use c_variadic or variadic patterns
+**Command:** `awk "/^[^/]*fn fts3SqlStmt/,/^}/" "$WORKSPACE_ROOT/src/ext/fts3/fts3_write.rs" 2>/dev/null | grep -E "(va_list|VAList|VaListImpl|c_variadic|va_arg)" && exit 1 || exit 0`
+
+#### fts3_write_no_c_variadic_feature
+**Description:** fts3_write.rs must not have c_variadic feature declaration
+**Command:** `grep -n "#!\[feature(c_variadic)\]" "$WORKSPACE_ROOT/src/ext/fts3/fts3_write.rs" 2>/dev/null && exit 1 || exit 0`
+
+#### fts3_write_no_sqlite3_mprintf
+**Description:** fts3_write.rs must not use sqlite3_mprintf function calls
+**Command:** `grep -E "sqlite3_mprintf\(" "$WORKSPACE_ROOT/src/ext/fts3/fts3_write.rs" 2>/dev/null && exit 1 || exit 0`
+
+#### fts3_write_no_sqlite3_mprintf_use
+**Description:** fts3_write.rs must not import sqlite3_mprintf
+**Command:** `grep -E "use.*sqlite3_mprintf|pub use.*sqlite3_mprintf" "$WORKSPACE_ROOT/src/ext/fts3/fts3_write.rs" 2>/dev/null && exit 1 || exit 0`
 
 ### Feature: memdb_c_variadic_migration
 **Migrate memdb.rs and specific functions away from c_variadic feature**

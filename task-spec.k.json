@@ -86,6 +86,50 @@
           "fails_count": 1
         }
       }
+    },
+    "fts3_write_c_variadic_migration": {
+      "type": "Feature",
+      "model_version": 1,
+      "id": "fts3_write_c_variadic_migration",
+      "description": "Migrate fts3_write.rs and specific functions away from c_variadic feature",
+      "goals": [
+        "Remove c_variadic feature usage from fts3_write.rs file",
+        "Refactor fts3SqlStmt function to eliminate c_variadic",
+        "Refactor fts3SqlExec function to eliminate c_variadic",
+        "Replace all sqlite3_mprintf calls with compile-time validated macros"
+      ],
+      "constraints": {
+        "fts3_write_no_feature": {
+          "id": "fts3_write_no_c_variadic_feature",
+          "cmd": "grep -n \"#!\\[feature(c_variadic)\\]\" \"$WORKSPACE_ROOT/src/ext/fts3/fts3_write.rs\" 2>/dev/null && exit 1 || exit 0",
+          "description": "fts3_write.rs must not have c_variadic feature declaration",
+          "fails_count": 1
+        },
+        "fts3_write_fts3SqlStmt_no_variadic": {
+          "id": "fts3_write_fts3SqlStmt_no_variadic",
+          "cmd": "awk \"/^[^/]*fn fts3SqlStmt/,/^}/\" \"$WORKSPACE_ROOT/src/ext/fts3/fts3_write.rs\" 2>/dev/null | grep -E \"(va_list|VAList|VaListImpl|c_variadic|va_arg)\" && exit 1 || exit 0",
+          "description": "fts3SqlStmt function must not use c_variadic or variadic patterns",
+          "fails_count": 1
+        },
+        "fts3_write_fts3SqlExec_no_variadic": {
+          "id": "fts3_write_fts3SqlExec_no_variadic",
+          "cmd": "awk \"/^[^/]*fn fts3SqlExec/,/^}/\" \"$WORKSPACE_ROOT/src/ext/fts3/fts3_write.rs\" 2>/dev/null | grep -E \"(va_list|VAList|VaListImpl|c_variadic|va_arg)\" && exit 1 || exit 0",
+          "description": "fts3SqlExec function must not use c_variadic or variadic patterns",
+          "fails_count": 1
+        },
+        "fts3_write_no_sqlite3_mprintf": {
+          "id": "fts3_write_no_sqlite3_mprintf",
+          "cmd": "grep -E \"sqlite3_mprintf\\(\" \"$WORKSPACE_ROOT/src/ext/fts3/fts3_write.rs\" 2>/dev/null && exit 1 || exit 0",
+          "description": "fts3_write.rs must not use sqlite3_mprintf function calls",
+          "fails_count": 1
+        },
+        "fts3_write_no_sqlite3_mprintf_use": {
+          "id": "fts3_write_no_sqlite3_mprintf_use",
+          "cmd": "grep -E \"use.*sqlite3_mprintf|pub use.*sqlite3_mprintf\" \"$WORKSPACE_ROOT/src/ext/fts3/fts3_write.rs\" 2>/dev/null && exit 1 || exit 0",
+          "description": "fts3_write.rs must not import sqlite3_mprintf",
+          "fails_count": 1
+        }
+      }
     }
   }
 }
