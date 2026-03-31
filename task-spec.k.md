@@ -42,6 +42,11 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
     - [Feature: vdbevtab_loadext_c_variadic_migration](#vdbevtab_loadext_c_variadic_migration)
       - [vdbevtab_no_printf_c_variadic](#vdbevtab_no_printf_c_variadic)
       - [vdbevtab_no_sqlite3_mprintf](#vdbevtab_no_sqlite3_mprintf)
+    - [Feature: vdbevtab_vdbeaux_c_variadic_migration](#vdbevtab_vdbeaux_c_variadic_migration)
+      - [vdbeaux_no_printf_c_variadic](#vdbeaux_no_printf_c_variadic)
+      - [vdbeaux_no_sqlite3_mprintf](#vdbeaux_no_sqlite3_mprintf)
+      - [vdbevtab_no_printf_c_variadic](#vdbevtab_no_printf_c_variadic)
+      - [vdbevtab_no_sqlite3_mprintf](#vdbevtab_no_sqlite3_mprintf)
 
 ## Features
 
@@ -203,6 +208,30 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
 **Goals:**
 - Remove c_variadic and sqlite3_mprintf usage from src/src/vdbevtab.rs
 - Replace all format strings with compile-time validated sqlite_printf! or json_printf! macros
+
+#### vdbevtab_no_printf_c_variadic
+**Description:** vdbevtab.rs must not import from printf_c_variadic
+**Command:** `grep -n "printf_c_variadic" "$WORKSPACE_ROOT/src/src/vdbevtab.rs" 2>/dev/null && exit 1 || exit 0`
+
+#### vdbevtab_no_sqlite3_mprintf
+**Description:** vdbevtab.rs must not use sqlite3_mprintf
+**Command:** `grep -n "sqlite3_mprintf" "$WORKSPACE_ROOT/src/src/vdbevtab.rs" 2>/dev/null && exit 1 || exit 0`
+
+### Feature: vdbevtab_vdbeaux_c_variadic_migration
+**Migrate vdbevtab.rs, vdbeaux.rs away from c_variadic functions and sqlite3_mprintf**
+
+**Goals:**
+- Remove c_variadic and sqlite3_mprintf usage from src/src/vdbevtab.rs
+- Remove c_variadic and sqlite3_mprintf usage from src/src/vdbeaux.rs
+- Replace all format strings with compile-time validated sqlite_printf! or json_printf! macros
+
+#### vdbeaux_no_printf_c_variadic
+**Description:** vdbeaux.rs must not import from printf_c_variadic
+**Command:** `grep -n "printf_c_variadic" "$WORKSPACE_ROOT/src/src/vdbeaux.rs" 2>/dev/null && exit 1 || exit 0`
+
+#### vdbeaux_no_sqlite3_mprintf
+**Description:** vdbeaux.rs must not use sqlite3_mprintf
+**Command:** `grep -n "sqlite3_mprintf" "$WORKSPACE_ROOT/src/src/vdbeaux.rs" 2>/dev/null && exit 1 || exit 0`
 
 #### vdbevtab_no_printf_c_variadic
 **Description:** vdbevtab.rs must not import from printf_c_variadic
