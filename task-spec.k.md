@@ -37,6 +37,15 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
       - [memdb_no_sqlite3_mprintf_use](#memdb_no_sqlite3_mprintf_use)
       - [memdb_sqlite3_deserialize_no_variadic](#memdb_sqlite3_deserialize_no_variadic)
       - [memdb_sqlite3_serialize_no_variadic](#memdb_sqlite3_serialize_no_variadic)
+    - [Feature: sqlite3session_c_variadic_migration](#sqlite3session_c_variadic_migration)
+      - [sqlite3session_no_printf_c_variadic](#sqlite3session_no_printf_c_variadic)
+      - [sqlite3session_no_sqlite3_mprintf](#sqlite3session_no_sqlite3_mprintf)
+    - [Feature: sqlite_snprintf_proc_macro](#sqlite_snprintf_proc_macro)
+      - [sqlite3session_no_sqlite3_mprintf](#sqlite3session_no_sqlite3_mprintf)
+      - [sqlite3session_no_sqlite3_snprintf](#sqlite3session_no_sqlite3_snprintf)
+      - [sqlite3session_sqlite_printf_min_usage](#sqlite3session_sqlite_printf_min_usage)
+      - [sqlite_snprintf_exists](#sqlite_snprintf_exists)
+      - [sqlite_snprintf_is_proc_macro](#sqlite_snprintf_is_proc_macro)
     - [Feature: toolchain_version](#toolchain_version)
       - [c6](#c6)
     - [Feature: vdbevtab_vdbeaux_pragma_table_os_unix_loadext_c_variadic_migration](#vdbevtab_vdbeaux_pragma_table_os_unix_loadext_c_variadic_migration)
@@ -196,6 +205,50 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
 #### memdb_sqlite3_serialize_no_variadic
 **Description:** sqlite3_serialize function must not use c_variadic or variadic patterns
 **Command:** `awk '/^[^/]*fn sqlite3_serialize/,/^}/' "$WORKSPACE_ROOT/src/src/memdb.rs" 2>/dev/null | grep -E '(va_list|VAList|VaListImpl|c_variadic|va_arg)' && exit 1 || exit 0`
+
+### Feature: sqlite3session_c_variadic_migration
+**Migrate src/ext/session/sqlite3session.rs away from c_variadic functions and sqlite3_mprintf**
+
+**Goals:**
+- Remove sqlite3_mprintf usage from src/ext/session/sqlite3session.rs
+- Remove sessionAppendPrintf usage and re-export from printf_c_variadic module
+- Replace all format string calls with manual string allocation using sqlite3_malloc and libc string functions
+
+#### sqlite3session_no_printf_c_variadic
+**Description:** sqlite3session.rs must not import from printf_c_variadic or use sessionAppendPrintf
+**Command:** `grep -n "printf_c_variadic\|sessionAppendPrintf" "$WORKSPACE_ROOT/src/ext/session/sqlite3session.rs" 2>/dev/null && exit 1 || exit 0`
+
+#### sqlite3session_no_sqlite3_mprintf
+**Description:** sqlite3session.rs must not use sqlite3_mprintf
+**Command:** `grep -n "sqlite3_mprintf" "$WORKSPACE_ROOT/src/ext/session/sqlite3session.rs" 2>/dev/null && exit 1 || exit 0`
+
+### Feature: sqlite_snprintf_proc_macro
+**Add sqlite_snprintf proc macro to sqlite-printf-macros**
+
+**Goals:**
+- Implement sqlite_snprintf! proc macro in sqlite-printf-macros
+- Support buffer-safe formatting with compile-time validation
+- Remove all sqlite3_snprintf calls from sqlite3session.rs
+
+#### sqlite3session_no_sqlite3_mprintf
+**Description:** sqlite3session.rs must use sqlite_printf! proc macros
+**Command:** `grep -n "sqlite3_mprintf" "$WORKSPACE_ROOT/src/ext/session/sqlite3session.rs" 2>/dev/null && exit 1 || exit 0`
+
+#### sqlite3session_no_sqlite3_snprintf
+**Description:** sqlite3session.rs must not use sqlite3_snprintf
+**Command:** `grep -n "sqlite3_snprintf" "$WORKSPACE_ROOT/src/ext/session/sqlite3session.rs" 2>/dev/null && exit 1 || exit 0`
+
+#### sqlite3session_sqlite_printf_min_usage
+**Description:** sqlite3session.rs must have at least 13 occurrences of sqlite_printf! macro
+**Command:** `test $(grep -o "sqlite_printf\!" "$WORKSPACE_ROOT/src/ext/session/sqlite3session.rs" | wc -l) -ge 13 && exit 0 || exit 1`
+
+#### sqlite_snprintf_exists
+**Description:** sqlite_snprintf! macro must exist in sqlite-printf-macros/src/lib.rs
+**Command:** `grep -n "pub fn sqlite_snprintf" "$WORKSPACE_ROOT/sqlite-printf-macros/src/lib.rs" 2>/dev/null && exit 0 || exit 1`
+
+#### sqlite_snprintf_is_proc_macro
+**Description:** sqlite_snprintf must be a proc_macro (have #[proc_macro] attribute)
+**Command:** `grep -B 1 "pub fn sqlite_snprintf" "$WORKSPACE_ROOT/sqlite-printf-macros/src/lib.rs" 2>/dev/null | grep -q "#\[proc_macro\]" && exit 0 || exit 1`
 
 ### Feature: toolchain_version
 **Enforce Rust toolchain version nightly-2026-03-26**

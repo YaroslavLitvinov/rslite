@@ -10,7 +10,6 @@ pub use crate::src::src::printf;
 use crate::src::src::main::{C2RustUnnamed, LOGFUNC_t, void_function, sqlite3MisuseError, setupLookaside};
 use crate::src::fts5::{Fts5Buffer, Fts5Config, Fts5FullTable, Fts5Parse, sqlite3Fts5BufferAppendString};
 use crate::src::ext::rtree::rtree::{RtreeCheck, RTREE_CHECK_MAX_ERROR};
-use crate::src::ext::session::sqlite3session::{SessionBuffer, sessionAppendStr};
 use crate::src::src::btree::{checkOom, checkProgress};
 
 
@@ -997,31 +996,6 @@ pub unsafe extern "C" fn checkAppendMsg(
         checkOom(pCheck);
     }
 }
-
-
-
-
-
-pub unsafe extern "C" fn sessionAppendPrintf(
-    mut p: *mut SessionBuffer,
-    mut pRc: *mut ::core::ffi::c_int,
-    mut zFmt: *const ::core::ffi::c_char,
-    mut args: ...
-) {
-    if *pRc == crate::src::headers::sqlite3_h::SQLITE_OK {
-        let mut zApp: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
-                zApp = crate::src::src::printf::sqlite3_vmprintf(zFmt, args);
-        if zApp.is_null() {
-            *pRc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
-        } else {
-            sessionAppendStr(p, zApp, pRc);
-        }
-        crate::src::src::malloc::sqlite3_free(zApp as *mut ::core::ffi::c_void);
-    }
-}
-
-
-
 
 
 pub unsafe extern "C" fn rtreeCheckPrepare(

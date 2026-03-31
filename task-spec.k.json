@@ -329,6 +329,62 @@
           "fails_count": 1
         }
       }
+    },
+    "sqlite3session_c_variadic_migration": {
+      "type": "Feature",
+      "model_version": 1,
+      "id": "sqlite3session_c_variadic_migration",
+      "description": "Migrate src/ext/session/sqlite3session.rs away from c_variadic functions and sqlite3_mprintf",
+      "goals": [
+        "Remove sqlite3_mprintf usage from src/ext/session/sqlite3session.rs",
+        "Remove sessionAppendPrintf usage and re-export from printf_c_variadic module",
+        "Replace all format string calls with manual string allocation using sqlite3_malloc and libc string functions"
+      ],
+      "constraints": {
+        "sqlite3session_no_sqlite3_mprintf": {
+          "id": "sqlite3session_no_sqlite3_mprintf",
+          "cmd": "grep -n \"sqlite3_mprintf\" \"$WORKSPACE_ROOT/src/ext/session/sqlite3session.rs\" 2>/dev/null && exit 1 || exit 0",
+          "description": "sqlite3session.rs must not use sqlite3_mprintf",
+          "fails_count": 1
+        },
+        "sqlite3session_no_printf_c_variadic": {
+          "id": "sqlite3session_no_printf_c_variadic",
+          "cmd": "grep -n \"printf_c_variadic\\|sessionAppendPrintf\" \"$WORKSPACE_ROOT/src/ext/session/sqlite3session.rs\" 2>/dev/null && exit 1 || exit 0",
+          "description": "sqlite3session.rs must not import from printf_c_variadic or use sessionAppendPrintf",
+          "fails_count": 1
+        }
+      }
+    },
+    "sqlite_snprintf_proc_macro": {
+      "type": "Feature",
+      "model_version": 1,
+      "id": "sqlite_snprintf_proc_macro",
+      "description": "Add sqlite_snprintf proc macro to sqlite-printf-macros",
+      "goals": [
+        "Implement sqlite_snprintf! proc macro in sqlite-printf-macros",
+        "Support buffer-safe formatting with compile-time validation",
+        "Remove all sqlite3_snprintf calls from sqlite3session.rs"
+      ],
+      "constraints": {
+        "sqlite_snprintf_exists": {
+          "id": "sqlite_snprintf_exists",
+          "cmd": "grep -n \"pub fn sqlite_snprintf\" \"$WORKSPACE_ROOT/sqlite-printf-macros/src/lib.rs\" 2>/dev/null && exit 0 || exit 1",
+          "description": "sqlite_snprintf! macro must exist in sqlite-printf-macros/src/lib.rs",
+          "fails_count": 1
+        },
+        "sqlite_snprintf_is_proc_macro": {
+          "id": "sqlite_snprintf_is_proc_macro",
+          "cmd": "grep -B 1 \"pub fn sqlite_snprintf\" \"$WORKSPACE_ROOT/sqlite-printf-macros/src/lib.rs\" 2>/dev/null | grep -q \"#\\[proc_macro\\]\" && exit 0 || exit 1",
+          "description": "sqlite_snprintf must be a proc_macro (have #[proc_macro] attribute)",
+          "fails_count": 1
+        },
+        "sqlite3session_no_sqlite3_snprintf": {
+          "id": "sqlite3session_no_sqlite3_snprintf",
+          "cmd": "grep -n \"sqlite3_snprintf\" \"$WORKSPACE_ROOT/src/ext/session/sqlite3session.rs\" 2>/dev/null && exit 1 || exit 0",
+          "description": "sqlite3session.rs must not use sqlite3_snprintf",
+          "fails_count": 1
+        }
+      }
     }
   }
 }

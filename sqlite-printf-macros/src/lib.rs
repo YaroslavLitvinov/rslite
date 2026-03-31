@@ -342,7 +342,7 @@ fn gen_arg_handler(arg: &Expr, spec: &FormatSpec) -> proc_macro2::TokenStream {
             }}
         }
         FormatSpec::SqliteIdentifier => {
-            // %w: double-quote SQL identifier, escape double quotes
+            // %w: escape double quotes in SQL identifier (quotes are in format string)
             quote! {{
                 if #arg.is_null() {
                     String::new()
@@ -350,7 +350,7 @@ fn gen_arg_handler(arg: &Expr, spec: &FormatSpec) -> proc_macro2::TokenStream {
                     let s = std::ffi::CStr::from_ptr(#arg)
                         .to_str()
                         .unwrap_or("");
-                    format!("\"{}\"", s.replace('"', "\"\""))
+                    s.replace('"', "\"\"").to_string()
                 }
             }}
         }
@@ -486,22 +486,44 @@ pub fn sqlite_printf(input: TokenStream) -> TokenStream {
     let rust_format = convert_format_string(&format_str, &specs);
 
     // Generate argument handlers (original approach for now)
+    // Track which arguments are %z format (will be freed)
     let mut arg_handlers = Vec::new();
+    let mut z_args_to_free = Vec::new();
     let mut arg_iter = args.iter();
 
-    for spec in &specs {
+    for (idx, spec) in specs.iter().enumerate() {
         if spec.is_argument_consuming() {
             if let Some(arg) = arg_iter.next() {
+                // %z format specifier will free the pointer
+                if matches!(spec, FormatSpec::ZeroCopy) {
+                    z_args_to_free.push(arg.clone());
+                }
                 // Use the native gen_arg_handler (no overhead, direct type passing)
                 arg_handlers.push(gen_arg_handler(arg, spec));
             }
         }
     }
 
+    // Generate code to free %z arguments
+    let free_stmts = if !z_args_to_free.is_empty() {
+        let mut stmts = Vec::new();
+        for arg in &z_args_to_free {
+            stmts.push(quote! {
+                if !(#arg).is_null() {
+                    unsafe { crate::src::src::malloc::sqlite3_free(#arg as *mut ::core::ffi::c_void); }
+                }
+            });
+        }
+        quote! { #(#stmts)* }
+    } else {
+        quote! {}
+    };
+
     // Generate final code using format! (simpler approach)
     let expanded = quote! {
         {
             let result = format!(#rust_format, #(#arg_handlers),*);
+            #free_stmts
             let bytes = result.into_bytes();
             let len = bytes.len();
             let ptr = unsafe { crate::src::src::malloc::sqlite3_malloc64((len + 1) as u64) } as *mut u8;
@@ -627,6 +649,126 @@ pub fn json_printf(input: TokenStream) -> TokenStream {
                 bytes.as_ptr() as *const ::core::ffi::c_char,
                 bytes.len() as crate::src::ext::rtree::rtree::u32_0
             );
+        }
+    };
+
+    TokenStream::from(expanded)
+}
+
+/// sqlite_snprintf! macro
+///
+/// Compile-time validated SQLite snprintf formatting with buffer safety
+///
+/// Formats into a fixed-size buffer and returns the number of characters written.
+/// Prevents buffer overflows with compile-time format validation.
+///
+/// Supports all SQLite format specifiers like sqlite_printf!
+///
+/// # Examples
+///
+/// ```ignore
+/// let mut buf: [i8; 256] = [0; 256];
+/// let n = sqlite_snprintf!(&mut buf, "%s: %d", "value", 42);
+/// ```
+#[proc_macro]
+pub fn sqlite_snprintf(input: TokenStream) -> TokenStream {
+    let input_str = input.to_string();
+    let parts: Vec<&str> = input_str.split(',').collect();
+
+    if parts.len() < 3 {
+        return syn::Error::new(
+            proc_macro2::Span::call_site(),
+            "sqlite_snprintf! requires: buffer, size, format_string, [args...]",
+        )
+        .to_compile_error()
+        .into();
+    }
+
+    let buffer = parts[0].trim();
+    let size = parts[1].trim();
+    let format_str = parts[2].trim().trim_matches('"');
+
+    // Parse remaining args
+    let mut args = Vec::new();
+    for i in 3..parts.len() {
+        match syn::parse_str::<Expr>(parts[i].trim()) {
+            Ok(expr) => args.push(expr),
+            Err(_) => {
+                return syn::Error::new(
+                    proc_macro2::Span::call_site(),
+                    format!("Failed to parse argument: {}", parts[i]),
+                )
+                .to_compile_error()
+                .into();
+            }
+        }
+    }
+
+    // Compile-time validation
+    let specs = match parse_format_specs(format_str) {
+        Ok(s) => s,
+        Err(e) => {
+            return syn::Error::new_spanned(&format_str, e)
+                .to_compile_error()
+                .into();
+        }
+    };
+
+    // Count consuming arguments
+    let arg_count = specs.iter().filter(|s| s.is_argument_consuming()).count();
+
+    if arg_count != args.len() {
+        return syn::Error::new(
+            proc_macro2::Span::call_site(),
+            format!(
+                "format string expects {} arguments but got {}",
+                arg_count,
+                args.len()
+            ),
+        )
+        .to_compile_error()
+        .into();
+    }
+
+    // Convert to Rust format string
+    let rust_format = convert_format_string(format_str, &specs);
+
+    // Generate argument handlers
+    let mut arg_handlers = Vec::new();
+    let mut arg_iter = args.iter();
+
+    for spec in &specs {
+        if spec.is_argument_consuming() {
+            if let Some(arg) = arg_iter.next() {
+                arg_handlers.push(gen_arg_handler(arg, spec));
+            }
+        }
+    }
+
+    // Parse buffer and size as tokens
+    let buffer_tokens: proc_macro2::TokenStream = buffer.parse()
+        .unwrap_or_else(|_| quote! { buf });
+    let size_tokens: proc_macro2::TokenStream = size.parse()
+        .unwrap_or_else(|_| quote! { 256 });
+
+    // Generate final code
+    let expanded = quote! {
+        {
+            let result = format!(#rust_format, #(#arg_handlers),*);
+            let bytes = result.as_bytes();
+            let copy_len = std::cmp::min(bytes.len(), (#size_tokens as usize).saturating_sub(1));
+
+            unsafe {
+                std::ptr::copy_nonoverlapping(
+                    bytes.as_ptr(),
+                    #buffer_tokens as *mut u8,
+                    copy_len
+                );
+                // Null terminate
+                *(#buffer_tokens as *mut u8).add(copy_len) = 0;
+            }
+
+            copy_len as i32
         }
     };
 
