@@ -5356,16 +5356,15 @@ unsafe extern "C" fn fts3EvalNextRow(
                 } else {
                     fts3EvalNextRow(pCsr, pLeft, pRc);
                     fts3EvalNextRow(pCsr, pRight, pRc);
-                    let __pLeft_ref = unsafe { &mut *pLeft };
-                    while __pLeft_ref.bEof == 0 && (*pRight).bEof == 0 && *pRc == crate::src::headers::sqlite3_h::SQLITE_OK {
+                    while (*pLeft).bEof == 0 && (*pRight).bEof == 0 && *pRc == crate::src::headers::sqlite3_h::SQLITE_OK {
                         let mut iDiff: crate::src::headers::sqlite3_h::sqlite3_int64 = ((if bDescDoclist != 0 {
                             -(1 as ::core::ffi::c_int)
                         } else {
                             1 as ::core::ffi::c_int
-                        }) * (if __pLeft_ref.iDocid > (*pRight).iDocid
+                        }) * (if (*pLeft).iDocid > (*pRight).iDocid
                         {
                             1 as ::core::ffi::c_int
-                        } else if __pLeft_ref.iDocid == (*pRight).iDocid {
+                        } else if (*pLeft).iDocid == (*pRight).iDocid {
                                 0 as ::core::ffi::c_int
                             } else {
                                 -(1 as ::core::ffi::c_int)
@@ -5381,8 +5380,8 @@ unsafe extern "C" fn fts3EvalNextRow(
                         }
                     }
                     let __pExpr_ref = unsafe { &mut *pExpr };
-                    __pExpr_ref.iDocid = __pLeft_ref.iDocid;
-                    __pExpr_ref.bEof = (__pLeft_ref.bEof as ::core::ffi::c_int != 0
+                    __pExpr_ref.iDocid = (*pLeft).iDocid;
+                    __pExpr_ref.bEof = ((*pLeft).bEof as ::core::ffi::c_int != 0
                         || (*pRight).bEof as ::core::ffi::c_int != 0)
                         as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0;
                     if __pExpr_ref.eType == crate::fts3Int_h::FTSQUERY_NEAR && __pExpr_ref.bEof as ::core::ffi::c_int != 0 {
@@ -5399,12 +5398,12 @@ unsafe extern "C" fn fts3EvalNextRow(
                                 fts3EvalNextRow(pCsr, pRight, pRc);
                             }
                         }
-                        if !__pLeft_ref.pPhrase.is_null()
-                            && !(*__pLeft_ref.pPhrase).doclist.aAll.is_null()
+                        if !(*pLeft).pPhrase.is_null()
+                            && !(*(*pLeft).pPhrase).doclist.aAll.is_null()
                         {
-                            let mut pDl_0: *mut crate::fts3Int_h::Fts3Doclist = &raw mut (*__pLeft_ref.pPhrase).doclist;
+                            let mut pDl_0: *mut crate::fts3Int_h::Fts3Doclist = &raw mut (*(*pLeft).pPhrase).doclist;
                             while *pRc == crate::src::headers::sqlite3_h::SQLITE_OK
-                                && __pLeft_ref.bEof as ::core::ffi::c_int == 0 as ::core::ffi::c_int
+                                && (*pLeft).bEof as ::core::ffi::c_int == 0 as ::core::ffi::c_int
                             {
                                 ::libc::memset(
                                     (*pDl_0).pList as *mut ::core::ffi::c_void,
@@ -5414,8 +5413,8 @@ unsafe extern "C" fn fts3EvalNextRow(
                                 fts3EvalNextRow(pCsr, pLeft, pRc);
                             }
                         }
-                        __pLeft_ref.bEof = 1 as crate::src::ext::rtree::rtree::u8_0;
-                        (*pRight).bEof = __pLeft_ref.bEof;
+                        (*pLeft).bEof = 1 as crate::src::ext::rtree::rtree::u8_0;
+                        (*pRight).bEof = (*pLeft).bEof;
                     }
                 }
             }
@@ -5423,53 +5422,51 @@ unsafe extern "C" fn fts3EvalNextRow(
                 let __pExpr_ref = unsafe { &mut *pExpr };
                 let mut pLeft_0: *mut crate::fts3Int_h::Fts3Expr = __pExpr_ref.pLeft;
                 let mut pRight_0: *mut crate::fts3Int_h::Fts3Expr = __pExpr_ref.pRight;
-                let __pRight_0_ref = unsafe { &*pRight_0 };
-                let __pLeft_0_ref = unsafe { &*pLeft_0 };
                 let mut iCmp: crate::src::headers::sqlite3_h::sqlite3_int64 = ((if bDescDoclist != 0 {
                     -(1 as ::core::ffi::c_int)
                 } else {
                     1 as ::core::ffi::c_int
-                }) * (if __pLeft_0_ref.iDocid > __pRight_0_ref.iDocid {
+                }) * (if (*pLeft_0).iDocid > (*pRight_0).iDocid {
                     1 as ::core::ffi::c_int
-                } else if __pLeft_0_ref.iDocid == __pRight_0_ref.iDocid {
+                } else if (*pLeft_0).iDocid == (*pRight_0).iDocid {
                         0 as ::core::ffi::c_int
                     } else {
                         -(1 as ::core::ffi::c_int)
                     }
                 )) as crate::src::headers::sqlite3_h::sqlite3_int64;
-                if __pRight_0_ref.bEof as ::core::ffi::c_int != 0
-                    || __pLeft_0_ref.bEof as ::core::ffi::c_int == 0 as ::core::ffi::c_int
+                if (*pRight_0).bEof as ::core::ffi::c_int != 0
+                    || (*pLeft_0).bEof as ::core::ffi::c_int == 0 as ::core::ffi::c_int
                         && iCmp < 0 as crate::src::headers::sqlite3_h::sqlite3_int64
                 {
                     fts3EvalNextRow(pCsr, pLeft_0, pRc);
-                } else if __pLeft_0_ref.bEof as ::core::ffi::c_int != 0 || iCmp > 0 as crate::src::headers::sqlite3_h::sqlite3_int64 {
+                } else if (*pLeft_0).bEof as ::core::ffi::c_int != 0 || iCmp > 0 as crate::src::headers::sqlite3_h::sqlite3_int64 {
                     fts3EvalNextRow(pCsr, pRight_0, pRc);
                 } else {
                     fts3EvalNextRow(pCsr, pLeft_0, pRc);
                     fts3EvalNextRow(pCsr, pRight_0, pRc);
                 }
-                __pExpr_ref.bEof = (__pLeft_0_ref.bEof as ::core::ffi::c_int != 0
-                    && __pRight_0_ref.bEof as ::core::ffi::c_int != 0)
+                __pExpr_ref.bEof = ((*pLeft_0).bEof as ::core::ffi::c_int != 0
+                    && (*pRight_0).bEof as ::core::ffi::c_int != 0)
                     as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0;
                 iCmp = ((if bDescDoclist != 0 {
                     -(1 as ::core::ffi::c_int)
                 } else {
                     1 as ::core::ffi::c_int
-                }) * (if __pLeft_0_ref.iDocid > __pRight_0_ref.iDocid {
+                }) * (if (*pLeft_0).iDocid > (*pRight_0).iDocid {
                     1 as ::core::ffi::c_int
-                } else if __pLeft_0_ref.iDocid == __pRight_0_ref.iDocid {
+                } else if (*pLeft_0).iDocid == (*pRight_0).iDocid {
                         0 as ::core::ffi::c_int
                     } else {
                         -(1 as ::core::ffi::c_int)
                     }
                 )) as crate::src::headers::sqlite3_h::sqlite3_int64;
-                if __pRight_0_ref.bEof as ::core::ffi::c_int != 0
-                    || __pLeft_0_ref.bEof as ::core::ffi::c_int == 0 as ::core::ffi::c_int
+                if (*pRight_0).bEof as ::core::ffi::c_int != 0
+                    || (*pLeft_0).bEof as ::core::ffi::c_int == 0 as ::core::ffi::c_int
                         && iCmp < 0 as crate::src::headers::sqlite3_h::sqlite3_int64
                 {
-                    __pExpr_ref.iDocid = __pLeft_0_ref.iDocid;
+                    __pExpr_ref.iDocid = (*pLeft_0).iDocid;
                 } else {
-                    __pExpr_ref.iDocid = __pRight_0_ref.iDocid;
+                    __pExpr_ref.iDocid = (*pRight_0).iDocid;
                 }
             }
     crate::fts3Int_h::FTSQUERY_NOT =>  {
@@ -5480,18 +5477,16 @@ unsafe extern "C" fn fts3EvalNextRow(
                     fts3EvalNextRow(pCsr, pRight_1, pRc);
                 }
                 fts3EvalNextRow(pCsr, pLeft_1, pRc);
-                let __pLeft_1_ref = unsafe { &*pLeft_1 };
-                if __pLeft_1_ref.bEof as ::core::ffi::c_int == 0 as ::core::ffi::c_int {
-                    let __pRight_1_ref = unsafe { &*pRight_1 };
+                if (*pLeft_1).bEof as ::core::ffi::c_int == 0 as ::core::ffi::c_int {
                     while *pRc == 0
-                        && __pRight_1_ref.bEof == 0
+                        && (*pRight_1).bEof == 0
                         && (if bDescDoclist != 0 {
                             -(1 as ::core::ffi::c_int)
                         } else {
                             1 as ::core::ffi::c_int
-                        }) * (if __pLeft_1_ref.iDocid > __pRight_1_ref.iDocid {
+                        }) * (if (*pLeft_1).iDocid > (*pRight_1).iDocid {
                             1 as ::core::ffi::c_int
-                        } else if __pLeft_1_ref.iDocid == __pRight_1_ref.iDocid {
+                        } else if (*pLeft_1).iDocid == (*pRight_1).iDocid {
                                 0 as ::core::ffi::c_int
                             } else {
                                 -(1 as ::core::ffi::c_int)
@@ -5501,8 +5496,8 @@ unsafe extern "C" fn fts3EvalNextRow(
                         fts3EvalNextRow(pCsr, pRight_1, pRc);
                     }
                 }
-                __pExpr_ref.iDocid = __pLeft_1_ref.iDocid;
-                __pExpr_ref.bEof = __pLeft_1_ref.bEof;
+                __pExpr_ref.iDocid = (*pLeft_1).iDocid;
+                __pExpr_ref.bEof = (*pLeft_1).bEof;
             }
     _ =>  {
                 let __pExpr_ref = unsafe { &mut *pExpr };
@@ -6006,16 +6001,15 @@ pub unsafe extern "C" fn sqlite3Fts3EvalPhrasePoslist(
             pRun = (*pRun).pParent;
         }
         if __pPhrase_ref.bIncr != 0 {
-            let __pRun_ref = unsafe { &*pRun };
-            let mut bEofSave: ::core::ffi::c_int = __pRun_ref.bEof as ::core::ffi::c_int;
+            let mut bEofSave: ::core::ffi::c_int = (*pRun).bEof as ::core::ffi::c_int;
             fts3EvalRestart(pCsr, pRun, &raw mut rc);
-            while rc == crate::src::headers::sqlite3_h::SQLITE_OK && __pRun_ref.bEof == 0 {
+            while rc == crate::src::headers::sqlite3_h::SQLITE_OK && (*pRun).bEof == 0 {
                 fts3EvalNextRow(pCsr, pRun, &raw mut rc);
-                if bEofSave == 0 as ::core::ffi::c_int && __pRun_ref.iDocid == iDocid {
+                if bEofSave == 0 as ::core::ffi::c_int && (*pRun).iDocid == iDocid {
                     break;
                 }
             }
-            if rc == crate::src::headers::sqlite3_h::SQLITE_OK && __pRun_ref.bEof as ::core::ffi::c_int != bEofSave {
+            if rc == crate::src::headers::sqlite3_h::SQLITE_OK && (*pRun).bEof as ::core::ffi::c_int != bEofSave {
                 rc = crate::fts3Int_h::FTS_CORRUPT_VTAB;
             }
         }
