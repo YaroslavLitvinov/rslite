@@ -12,7 +12,7 @@ use crate::src::fts5::{Fts5Buffer, Fts5Config, Fts5FullTable, Fts5Parse, sqlite3
 use crate::src::ext::rtree::rtree::{RtreeCheck, RTREE_CHECK_MAX_ERROR};
 use crate::src::ext::session::sqlite3session::{SessionBuffer, sessionAppendStr};
 use crate::src::src::btree::{checkOom, checkProgress};
-use crate::src::src::vacuum;
+
 
 // Variadic function implementations - these require c_variadic feature
 #[unsafe(no_mangle)]
@@ -92,12 +92,12 @@ pub unsafe extern "C" fn sqlite3DebugPrintf(
     );
     crate::src::src::printf::sqlite3_str_vappendf(&raw mut acc, zFormat, args);
     crate::src::src::printf::sqlite3StrAccumFinish(&raw mut acc);
-    crate::stdlib::fprintf(
-        crate::stdlib::stdout,
+    crate::src::headers::stdlib::fprintf(
+        crate::src::headers::stdlib::stdout,
         b"%s\0" as *const u8 as *const ::core::ffi::c_char,
         &raw mut zBuf as *mut ::core::ffi::c_char,
     );
-    crate::stdlib::fflush(crate::stdlib::stdout);
+    crate::src::headers::stdlib::fflush(crate::src::headers::stdlib::stdout);
 }
 
 #[unsafe(no_mangle)]
