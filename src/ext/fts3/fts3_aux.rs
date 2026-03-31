@@ -600,8 +600,7 @@ unsafe extern "C" fn fts3auxRowidMethod(
 #[unsafe(no_mangle)]
 
 pub unsafe extern "C" fn sqlite3Fts3InitAux(mut db: *mut crate::src::headers::sqliteInt_h::sqlite3) -> ::core::ffi::c_int {
-    static mut fts3aux_module: crate::src::headers::sqlite3_h::sqlite3_module = unsafe {
-        crate::src::headers::sqlite3_h::sqlite3_module {
+    static mut fts3aux_module: crate::src::headers::sqlite3_h::sqlite3_module = crate::src::headers::sqlite3_h::sqlite3_module {
     iVersion:  0 as ::core::ffi::c_int,
     xCreate:  Some(
                 fts3auxConnectMethod
@@ -696,8 +695,7 @@ pub unsafe extern "C" fn sqlite3Fts3InitAux(mut db: *mut crate::src::headers::sq
     xRollbackTo:  None,
     xShadowName:  None,
     xIntegrity:  None,
-}
-    };
+};
     let mut rc: ::core::ffi::c_int = 0;
     rc = crate::src::src::vtab::sqlite3_create_module(
         db,

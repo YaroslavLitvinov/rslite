@@ -3982,8 +3982,7 @@ unsafe extern "C" fn fts3IntegrityMethod(
     rc
 }
 
-static mut fts3Module: crate::src::headers::sqlite3_h::sqlite3_module = unsafe {
-    crate::src::headers::sqlite3_h::sqlite3_module {
+static mut fts3Module: crate::src::headers::sqlite3_h::sqlite3_module = crate::src::headers::sqlite3_h::sqlite3_module {
     iVersion:  4 as ::core::ffi::c_int,
     xCreate:  Some(
             fts3CreateMethod
@@ -4140,7 +4139,6 @@ static mut fts3Module: crate::src::headers::sqlite3_h::sqlite3_module = unsafe {
                     *mut *mut ::core::ffi::c_char,
                 ) -> ::core::ffi::c_int,
         ),
-}
 };
 
 unsafe extern "C" fn hashDestroy(mut p: *mut ::core::ffi::c_void) {

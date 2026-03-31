@@ -8,12 +8,11 @@ pub use crate::src::src::printf;
 
 // Import required types and functions from their original modules
 use crate::src::src::main::{C2RustUnnamed, LOGFUNC_t, void_function, sqlite3MisuseError, setupLookaside};
-use crate::src::src::json::{JsonString, jsonStringGrow};
 use crate::src::fts5::{Fts5Buffer, Fts5Config, Fts5FullTable, Fts5Parse, sqlite3Fts5BufferAppendString};
 use crate::src::ext::rtree::rtree::{RtreeCheck, RTREE_CHECK_MAX_ERROR};
 use crate::src::ext::session::sqlite3session::{SessionBuffer, sessionAppendStr};
 use crate::src::src::btree::{checkOom, checkProgress};
-  // For access to execSql
+
 
 // Variadic function implementations - these require c_variadic feature
 #[unsafe(no_mangle)]
@@ -867,31 +866,6 @@ pub unsafe extern "C" fn sqlite3NestedParse(
     __pParse_ref.nested = __pParse_ref.nested.wrapping_sub(1);
 }
 
-
-
-
-
-pub unsafe extern "C" fn jsonPrintf(
-    mut N: ::core::ffi::c_int,
-    mut p: *mut JsonString,
-    mut zFormat: *const ::core::ffi::c_char,
-    mut args: ...
-) {
-    // VaListImpl type handling - using args directly
-    let __p_ref = unsafe { &mut *p };
-    if __p_ref.nUsed.wrapping_add(N as crate::src::ext::rtree::rtree::u64_0) >= __p_ref.nAlloc && jsonStringGrow(p, N as crate::src::ext::rtree::rtree::u32_0) != 0 {
-        return;
-    }
-    crate::src::src::printf::sqlite3_vsnprintf(
-        N,
-        __p_ref.zBuf.offset(__p_ref.nUsed as isize),
-        zFormat,
-        args,
-    );
-    __p_ref.nUsed = (*p)
-        .nUsed
-        .wrapping_add(::libc::strlen(__p_ref.zBuf.offset(__p_ref.nUsed as isize)) as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u64_0);
-}
 
 
 

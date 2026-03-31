@@ -1221,12 +1221,78 @@ unsafe extern "C" fn jsonAppendSqlValue(mut p: *mut JsonString, mut pValue: *mut
             );
         }
     crate::src::headers::sqlite3_h::SQLITE_FLOAT_1 =>  {
-            jsonPrintf(
-                100 as ::core::ffi::c_int,
-                p,
-                b"%!0.15g\0" as *const u8 as *const ::core::ffi::c_char,
-                crate::src::src::vdbeapi::sqlite3_value_double(pValue),
-            );
+            let v = crate::src::src::vdbeapi::sqlite3_value_double(pValue);
+            // Format float using SQLite's %!0.15g format (15 significant digits, strip trailing zeros)
+            let mut s = if v.is_nan() {
+                "nan".to_string()
+            } else if v.is_infinite() {
+                if v.is_sign_positive() { "9.0e+999".to_string() } else { "-9.0e+999".to_string() }
+            } else if v == 0.0 {
+                "0.0".to_string()
+            } else {
+                // Use exponential notation if exponent is outside [-4, 15) range
+                let log10_abs = v.abs().log10();
+                let use_exp = log10_abs < -4.0 || log10_abs >= 15.0;
+
+                let mut result = if use_exp {
+                    // Exponential format with 14 decimal places = 15 significant figures
+                    format!("{:.14e}", v)
+                } else {
+                    // For fixed notation, calculate the number of decimal places needed
+                    // to represent 15 significant figures
+                    let int_digits = if v.abs() >= 1.0 {
+                        (v.abs().log10().floor() as i32 + 1) as usize
+                    } else {
+                        1
+                    };
+
+                    let decimal_places = if int_digits < 15 {
+                        15 - int_digits
+                    } else {
+                        0
+                    };
+
+                    let formatted = format!("{:.prec$}", v, prec = decimal_places);
+                    formatted
+                };
+
+                // Strip trailing zeros after decimal point, but keep at least ".0" for JSON
+                if result.contains('.') {
+                    let is_exp = result.contains('e') || result.contains('E');
+
+                    if is_exp {
+                        // For exponential notation, find and strip zeros before the exponent
+                        if let Some(e_pos) = result.find(|c| c == 'e' || c == 'E') {
+                            let mut mantissa = result[..e_pos].to_string();
+                            let mut exponent = result[e_pos..].to_string();
+
+                            // Strip trailing zeros from mantissa but keep at least one digit after decimal
+                            while mantissa.ends_with('0') && !mantissa.ends_with(".0") {
+                                mantissa.pop();
+                            }
+
+                            // Ensure exponent has explicit + sign for positive exponents
+                            // e.g., "e99" -> "e+99"
+                            if exponent.starts_with('e') && !exponent.starts_with("e-") && !exponent.starts_with("e+") {
+                                exponent = format!("e+{}", &exponent[1..]);
+                            } else if exponent.starts_with('E') && !exponent.starts_with("E-") && !exponent.starts_with("E+") {
+                                exponent = format!("E+{}", &exponent[1..]);
+                            }
+
+                            result = format!("{}{}", mantissa, exponent);
+                        }
+                    } else {
+                        // For fixed notation, strip trailing zeros but keep at least ".0"
+                        while result.ends_with('0') && !result.ends_with(".0") {
+                            result.pop();
+                        }
+                    }
+                }
+
+                result
+            };
+            let bytes = s.as_bytes();
+            jsonAppendRaw(p, bytes.as_ptr() as *const ::core::ffi::c_char, bytes.len() as crate::src::ext::rtree::rtree::u32_0);
         }
     crate::src::headers::sqlite3_h::SQLITE_INTEGER_1 =>  {
             let mut z: *const ::core::ffi::c_char =
@@ -1584,10 +1650,7 @@ unsafe extern "C" fn jsonWrongNumArgs(
     mut pCtx: *mut crate::src::headers::vdbeInt_h::sqlite3_context,
     mut zFuncName: *const ::core::ffi::c_char,
 ) {
-    let mut zMsg: *mut ::core::ffi::c_char = crate::src::src::printf::sqlite3_mprintf(
-        b"json_%s() needs an odd number of arguments\0" as *const u8 as *const ::core::ffi::c_char,
-        zFuncName,
-    );
+    let mut zMsg: *mut ::core::ffi::c_char = crate::sqlite_printf!("json_%s() needs an odd number of arguments", zFuncName);
     crate::src::src::vdbeapi::sqlite3_result_error(pCtx, zMsg, -(1 as ::core::ffi::c_int));
     crate::src::src::malloc::sqlite3_free(zMsg as *mut ::core::ffi::c_void);
 }
@@ -3283,16 +3346,9 @@ unsafe extern "C" fn jsonTranslateBlobToText(
                         k = k.wrapping_add(1);
                     }
                 }
-                jsonPrintf(
-                    100 as ::core::ffi::c_int,
-                    pOut,
-                    if bOverflow != 0 {
-                        b"9.0e999\0" as *const u8 as *const ::core::ffi::c_char
-                    } else {
-                        b"%llu\0" as *const u8 as *const ::core::ffi::c_char
-                    },
-                    u,
-                );
+                let s = if bOverflow != 0 { "9.0e999".to_string() } else { format!("{}", u) };
+                let bytes = s.as_bytes();
+                jsonAppendRaw(pOut, bytes.as_ptr() as *const ::core::ffi::c_char, bytes.len() as crate::src::ext::rtree::rtree::u32_0);
                 current_block = 9180031981464905198;
             }
         }
@@ -4899,10 +4955,7 @@ unsafe extern "C" fn jsonBadPathError(
     mut ctx: *mut crate::src::headers::vdbeInt_h::sqlite3_context,
     mut zPath: *const ::core::ffi::c_char,
 ) -> *mut ::core::ffi::c_char {
-    let mut zMsg: *mut ::core::ffi::c_char = crate::src::src::printf::sqlite3_mprintf(
-        b"bad JSON path: %Q\0" as *const u8 as *const ::core::ffi::c_char,
-        zPath,
-    );
+    let mut zMsg: *mut ::core::ffi::c_char = crate::sqlite_printf!("bad JSON path: %Q", zPath);
     if ctx.is_null() {
         return zMsg;
     }
@@ -6644,15 +6697,13 @@ unsafe extern "C" fn jsonSkipLabel(mut p: *mut JsonEachCursor) -> ::core::ffi::c
 unsafe extern "C" fn jsonAppendPathName(mut p: *mut JsonEachCursor) {
     if (*p).eType as ::core::ffi::c_int == JSONB_ARRAY {
         let __p_ref = unsafe { &mut *p };
-        jsonPrintf(
-            30 as ::core::ffi::c_int,
-            &raw mut __p_ref.path,
-            b"[%lld]\0" as *const u8 as *const ::core::ffi::c_char,
-            (*(*p)
-                .aParent
-                .offset(__p_ref.nParent.wrapping_sub(1 as crate::src::ext::rtree::rtree::u32_0) as isize))
-            .iKey,
-        );
+        let idx = (*(*p)
+            .aParent
+            .offset(__p_ref.nParent.wrapping_sub(1 as crate::src::ext::rtree::rtree::u32_0) as isize))
+        .iKey;
+        let s = format!("[{}]", idx);
+        let bytes = s.as_bytes();
+        jsonAppendRaw(&raw mut __p_ref.path, bytes.as_ptr() as *const ::core::ffi::c_char, bytes.len() as crate::src::ext::rtree::rtree::u32_0);
     } else {
         let mut n: crate::src::ext::rtree::rtree::u32_0 = 0;
         let mut sz: crate::src::ext::rtree::rtree::u32_0 = 0 as crate::src::ext::rtree::rtree::u32_0;
@@ -6689,21 +6740,13 @@ unsafe extern "C" fn jsonAppendPathName(mut p: *mut JsonEachCursor) {
             }
         }
         if needQuote != 0 {
-            jsonPrintf(
-                sz.wrapping_add(4 as crate::src::ext::rtree::rtree::u32_0) as ::core::ffi::c_int,
-                &raw mut __p_ref.path,
-                b".\"%.*s\"\0" as *const u8 as *const ::core::ffi::c_char,
-                sz,
-                z,
-            );
+            jsonAppendChar(&raw mut __p_ref.path, b'.' as ::core::ffi::c_char);
+            jsonAppendChar(&raw mut __p_ref.path, b'"' as ::core::ffi::c_char);
+            jsonAppendRaw(&raw mut __p_ref.path, z, sz);
+            jsonAppendChar(&raw mut __p_ref.path, b'"' as ::core::ffi::c_char);
         } else {
-            jsonPrintf(
-                sz.wrapping_add(2 as crate::src::ext::rtree::rtree::u32_0) as ::core::ffi::c_int,
-                &raw mut __p_ref.path,
-                b".%.*s\0" as *const u8 as *const ::core::ffi::c_char,
-                sz,
-                z,
-            );
+            jsonAppendChar(&raw mut __p_ref.path, b'.' as ::core::ffi::c_char);
+            jsonAppendRaw(&raw mut __p_ref.path, z, sz);
         }
     };
 }
@@ -7146,7 +7189,7 @@ unsafe extern "C" fn jsonEachFilter(
             let __cur_ref = unsafe { &mut *cur };
             crate::src::src::malloc::sqlite3_free((*__cur_ref.pVtab).zErrMsg as *mut ::core::ffi::c_void);
             (*__cur_ref.pVtab).zErrMsg =
-                crate::src::src::printf::sqlite3_mprintf(b"malformed JSON\0" as *const u8 as *const ::core::ffi::c_char);
+                crate::sqlite_printf!("malformed JSON");
             jsonEachCursorReset(p);
             return if !(*__cur_ref.pVtab).zErrMsg.is_null() {
                 crate::src::headers::sqlite3_h::SQLITE_ERROR
@@ -8384,5 +8427,3 @@ pub unsafe extern "C" fn sqlite3JsonVtabRegister(
     ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Module>()
 }
 
-// Re-export variadic functions from printf_c_variadic module
-pub use crate::src::printf_c_variadic::jsonPrintf;
