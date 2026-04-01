@@ -1,0 +1,28 @@
+[package]
+name = "crust-sqlite-shell"
+version = "0.1.0"
+edition = "2021"
+authors = ["C2Rust Automated Migration"]
+build = "build.rs"
+
+[[bin]]
+name = "sqlite3"
+path = "src/main.rs"
+
+[dependencies]
+sqlite_noamalgam = { path = "../" }
+libc = "0.2"
+lazy_static = "1.4"
+parking_lot = "0.12"
+
+[build-dependencies]
+# None needed currently
+
+[dev-dependencies]
+assert_cmd = "2.0"
+predicates = "3.0"
+
+[profile.release]
+lto = true
+codegen-units = 1
+opt-level = 3
