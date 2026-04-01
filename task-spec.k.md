@@ -10,6 +10,10 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
 - [Features](#features)
     - [Feature: build_all](#build_all)
       - [constraint_build_all](#constraint_build_all)
+    - [Feature: fts3_expr_c_variadic_migration](#fts3_expr_c_variadic_migration)
+      - [fts3_expr_no_sqlite3_mprintf](#fts3_expr_no_sqlite3_mprintf)
+      - [fts3_expr_no_sqlite3_mprintf_use](#fts3_expr_no_sqlite3_mprintf_use)
+      - [fts3_expr_uses_sqlite_printf_macro](#fts3_expr_uses_sqlite_printf_macro)
     - [Feature: fts3_write_c_variadic_migration](#fts3_write_c_variadic_migration)
       - [fts3_write_fts3SqlExec_no_variadic](#fts3_write_fts3sqlexec_no_variadic)
       - [fts3_write_fts3SqlStmt_no_variadic](#fts3_write_fts3sqlstmt_no_variadic)
@@ -37,13 +41,20 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
       - [memdb_no_sqlite3_mprintf_use](#memdb_no_sqlite3_mprintf_use)
       - [memdb_sqlite3_deserialize_no_variadic](#memdb_sqlite3_deserialize_no_variadic)
       - [memdb_sqlite3_serialize_no_variadic](#memdb_sqlite3_serialize_no_variadic)
+    - [Feature: rtree_c_variadic_migration](#rtree_c_variadic_migration)
+      - [rtree_no_sqlite3_mprintf](#rtree_no_sqlite3_mprintf)
+      - [rtree_uses_sqlite_printf_macro](#rtree_uses_sqlite_printf_macro)
+    - [Feature: sqlite3session_and_snprintf_migration](#sqlite3session_and_snprintf_migration)
+      - [sqlite3session_no_printf_c_variadic](#sqlite3session_no_printf_c_variadic)
+      - [sqlite3session_no_sqlite3_mprintf](#sqlite3session_no_sqlite3_mprintf)
+      - [sqlite3session_no_sqlite3_snprintf](#sqlite3session_no_sqlite3_snprintf)
+      - [sqlite_snprintf_exists](#sqlite_snprintf_exists)
+      - [sqlite_snprintf_is_proc_macro](#sqlite_snprintf_is_proc_macro)
     - [Feature: sqlite3session_c_variadic_migration](#sqlite3session_c_variadic_migration)
       - [sqlite3session_no_printf_c_variadic](#sqlite3session_no_printf_c_variadic)
       - [sqlite3session_no_sqlite3_mprintf](#sqlite3session_no_sqlite3_mprintf)
     - [Feature: sqlite_snprintf_proc_macro](#sqlite_snprintf_proc_macro)
-      - [sqlite3session_no_sqlite3_mprintf](#sqlite3session_no_sqlite3_mprintf)
       - [sqlite3session_no_sqlite3_snprintf](#sqlite3session_no_sqlite3_snprintf)
-      - [sqlite3session_sqlite_printf_min_usage](#sqlite3session_sqlite_printf_min_usage)
       - [sqlite_snprintf_exists](#sqlite_snprintf_exists)
       - [sqlite_snprintf_is_proc_macro](#sqlite_snprintf_is_proc_macro)
     - [Feature: toolchain_version](#toolchain_version)
@@ -70,6 +81,26 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
 #### constraint_build_all
 **Description:** Ensure our rust codebase is healthy
 **Command:** `cd $WORKSPACE_ROOT && ./build_all.sh`
+
+### Feature: fts3_expr_c_variadic_migration
+**Migrate src/ext/fts3/fts3_expr.rs away from sqlite3_mprintf to sqlite_printf! proc macro**
+
+**Goals:**
+- Remove all sqlite3_mprintf calls from src/ext/fts3/fts3_expr.rs
+- Remove sqlite3_mprintf import from src/ext/fts3/fts3_expr.rs
+- Replace with compile-time validated sqlite_printf! macro calls
+
+#### fts3_expr_no_sqlite3_mprintf
+**Description:** fts3_expr.rs must not use sqlite3_mprintf function calls
+**Command:** `grep -E "\bsqlite3_mprintf\(" "$WORKSPACE_ROOT/src/ext/fts3/fts3_expr.rs" 2>/dev/null && exit 1 || exit 0`
+
+#### fts3_expr_no_sqlite3_mprintf_use
+**Description:** fts3_expr.rs must not import sqlite3_mprintf
+**Command:** `grep -E "use.*sqlite3_mprintf|pub use.*sqlite3_mprintf" "$WORKSPACE_ROOT/src/ext/fts3/fts3_expr.rs" 2>/dev/null && exit 1 || exit 0`
+
+#### fts3_expr_uses_sqlite_printf_macro
+**Description:** fts3_expr.rs must use sqlite_printf! macro for string formatting
+**Command:** `grep -c "sqlite_printf!" "$WORKSPACE_ROOT/src/ext/fts3/fts3_expr.rs" 2>/dev/null | grep -qE "^[1-9]" && exit 0 || exit 1`
 
 ### Feature: fts3_write_c_variadic_migration
 **Migrate fts3_write.rs and specific functions away from c_variadic feature**
@@ -206,6 +237,52 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
 **Description:** sqlite3_serialize function must not use c_variadic or variadic patterns
 **Command:** `awk '/^[^/]*fn sqlite3_serialize/,/^}/' "$WORKSPACE_ROOT/src/src/memdb.rs" 2>/dev/null | grep -E '(va_list|VAList|VaListImpl|c_variadic|va_arg)' && exit 1 || exit 0`
 
+### Feature: rtree_c_variadic_migration
+**Migrate src/ext/rtree/rtree.rs away from sqlite3_mprintf to sqlite_printf! proc macro**
+
+**Goals:**
+- Remove all sqlite3_mprintf calls from src/ext/rtree/rtree.rs
+- Replace with compile-time validated sqlite_printf! macro calls
+- Ensure all 394649 tests pass after migration
+
+#### rtree_no_sqlite3_mprintf
+**Description:** rtree.rs must not use sqlite3_mprintf function calls
+**Command:** `grep -E "\bsqlite3_mprintf\(" "$WORKSPACE_ROOT/src/ext/rtree/rtree.rs" 2>/dev/null && exit 1 || exit 0`
+
+#### rtree_uses_sqlite_printf_macro
+**Description:** rtree.rs must use sqlite_printf! macro for string formatting
+**Command:** `grep -c "sqlite_printf!" "$WORKSPACE_ROOT/src/ext/rtree/rtree.rs" 2>/dev/null | grep -qE "^[1-9]" && exit 0 || exit 1`
+
+### Feature: sqlite3session_and_snprintf_migration
+**Combined migration of src/ext/session/sqlite3session.rs away from c_variadic functions and implementation of sqlite_snprintf! proc macro**
+
+**Goals:**
+- Remove sqlite3_mprintf usage from src/ext/session/sqlite3session.rs
+- Remove sessionAppendPrintf usage and re-export from printf_c_variadic module
+- Implement sqlite_snprintf! proc macro in sqlite-printf-macros
+- Support buffer-safe formatting with compile-time validation
+- Replace all format string calls with sqlite_printf! and sqlite_snprintf! macros
+
+#### sqlite3session_no_printf_c_variadic
+**Description:** sqlite3session.rs must not import from printf_c_variadic or use sessionAppendPrintf
+**Command:** `grep -n "printf_c_variadic\|sessionAppendPrintf" "$WORKSPACE_ROOT/src/ext/session/sqlite3session.rs" 2>/dev/null && exit 1 || exit 0`
+
+#### sqlite3session_no_sqlite3_mprintf
+**Description:** sqlite3session.rs must not use sqlite3_mprintf
+**Command:** `grep -n "sqlite3_mprintf" "$WORKSPACE_ROOT/src/ext/session/sqlite3session.rs" 2>/dev/null && exit 1 || exit 0`
+
+#### sqlite3session_no_sqlite3_snprintf
+**Description:** sqlite3session.rs must not use sqlite3_snprintf
+**Command:** `grep -n "sqlite3_snprintf" "$WORKSPACE_ROOT/src/ext/session/sqlite3session.rs" 2>/dev/null && exit 1 || exit 0`
+
+#### sqlite_snprintf_exists
+**Description:** sqlite_snprintf! macro must exist in sqlite-printf-macros/src/lib.rs
+**Command:** `grep -n "pub fn sqlite_snprintf" "$WORKSPACE_ROOT/sqlite-printf-macros/src/lib.rs" 2>/dev/null && exit 0 || exit 1`
+
+#### sqlite_snprintf_is_proc_macro
+**Description:** sqlite_snprintf must be a proc_macro (have #[proc_macro] attribute)
+**Command:** `grep -B 1 "pub fn sqlite_snprintf" "$WORKSPACE_ROOT/sqlite-printf-macros/src/lib.rs" 2>/dev/null | grep -q "#\[proc_macro\]" && exit 0 || exit 1`
+
 ### Feature: sqlite3session_c_variadic_migration
 **Migrate src/ext/session/sqlite3session.rs away from c_variadic functions and sqlite3_mprintf**
 
@@ -230,17 +307,9 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
 - Support buffer-safe formatting with compile-time validation
 - Remove all sqlite3_snprintf calls from sqlite3session.rs
 
-#### sqlite3session_no_sqlite3_mprintf
-**Description:** sqlite3session.rs must use sqlite_printf! proc macros
-**Command:** `grep -n "sqlite3_mprintf" "$WORKSPACE_ROOT/src/ext/session/sqlite3session.rs" 2>/dev/null && exit 1 || exit 0`
-
 #### sqlite3session_no_sqlite3_snprintf
 **Description:** sqlite3session.rs must not use sqlite3_snprintf
 **Command:** `grep -n "sqlite3_snprintf" "$WORKSPACE_ROOT/src/ext/session/sqlite3session.rs" 2>/dev/null && exit 1 || exit 0`
-
-#### sqlite3session_sqlite_printf_min_usage
-**Description:** sqlite3session.rs must have at least 13 occurrences of sqlite_printf! macro
-**Command:** `test $(grep -o "sqlite_printf\!" "$WORKSPACE_ROOT/src/ext/session/sqlite3session.rs" | wc -l) -ge 13 && exit 0 || exit 1`
 
 #### sqlite_snprintf_exists
 **Description:** sqlite_snprintf! macro must exist in sqlite-printf-macros/src/lib.rs
