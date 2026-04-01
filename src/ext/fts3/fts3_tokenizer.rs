@@ -79,7 +79,7 @@ pub use crate::src::src::vdbeapi::sqlite3_column_bytes;pub use crate::src::src::
 pub use crate::src::headers::vdbeInt_h::sqlite3_context;pub use crate::src::src::vdbeapi::sqlite3_context_db_handle;
 pub use crate::src::src::main::sqlite3_create_function;pub use crate::src::src::main::sqlite3_db_config;pub use crate::src::headers::sqlite3_h::sqlite3_destructor_type;
 pub use crate::src::src::vdbeapi::sqlite3_finalize;pub use crate::src::src::malloc::sqlite3_free;pub use crate::src::headers::sqlite3_h::sqlite3_int64;
-pub use crate::src::src::printf::sqlite3_mprintf;pub use crate::src::src::prepare::sqlite3_prepare_v2;pub use crate::src::src::malloc::sqlite3_realloc64;
+pub use crate::src::src::prepare::sqlite3_prepare_v2;pub use crate::src::src::malloc::sqlite3_realloc64;
 pub use crate::src::src::vdbeapi::sqlite3_result_blob;pub use crate::src::src::vdbeapi::sqlite3_result_error;pub use crate::src::src::vdbeapi::sqlite3_result_text;
 pub use crate::src::src::vdbeapi::sqlite3_step;pub use crate::src::headers::sqlite3_h::sqlite3_stmt;pub use crate::src::headers::sqlite3_h::sqlite3_uint64;
 pub use crate::src::src::vdbeapi::sqlite3_user_data;pub use crate::src::headers::vdbeInt_h::sqlite3_value;pub use crate::src::src::vdbeapi::sqlite3_value_blob;
@@ -195,10 +195,7 @@ unsafe extern "C" fn fts3TokenizerFunc(
             pPtr = crate::src::ext::fts3::fts3_hash::sqlite3Fts3HashFind(pHash as *const crate::src::ext::fts3::fts3_hash::Fts3Hash, zName as *const ::core::ffi::c_void, nName);
         }
         if pPtr.is_null() {
-            let mut zErr: *mut ::core::ffi::c_char = crate::src::src::printf::sqlite3_mprintf(
-                b"unknown tokenizer: %s\0" as *const u8 as *const ::core::ffi::c_char,
-                zName,
-            );
+            let mut zErr: *mut ::core::ffi::c_char = crate::sqlite_printf!("unknown tokenizer: %s", (zName as *const ::core::ffi::c_char));
             crate::src::src::vdbeapi::sqlite3_result_error(context, zErr, -(1 as ::core::ffi::c_int));
             crate::src::src::malloc::sqlite3_free(zErr as *mut ::core::ffi::c_void);
             return;
@@ -423,7 +420,7 @@ pub unsafe extern "C" fn sqlite3Fts3InitTokenizer(
     let mut zCopy: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
     let mut zEnd: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
     let mut m: *mut crate::src::ext::fts3::fts3_tokenizer::sqlite3_tokenizer_module = ::core::ptr::null_mut::<crate::src::ext::fts3::fts3_tokenizer::sqlite3_tokenizer_module>();
-    zCopy = crate::src::src::printf::sqlite3_mprintf(b"%s\0" as *const u8 as *const ::core::ffi::c_char, zArg);
+    zCopy = crate::sqlite_printf!("%s", zArg);
     if zCopy.is_null() {
         return crate::src::headers::sqlite3_h::SQLITE_NOMEM;
     }
@@ -541,10 +538,7 @@ unsafe extern "C" fn testFunc(
         nName + 1 as ::core::ffi::c_int,
     ) as *mut crate::src::ext::fts3::fts3_tokenizer::sqlite3_tokenizer_module;
     if p.is_null() {
-        let mut zErr2: *mut ::core::ffi::c_char = crate::src::src::printf::sqlite3_mprintf(
-            b"unknown tokenizer: %s\0" as *const u8 as *const ::core::ffi::c_char,
-            zName,
-        );
+        let mut zErr2: *mut ::core::ffi::c_char = crate::sqlite_printf!("unknown tokenizer: %s", zName);
         crate::src::src::vdbeapi::sqlite3_result_error(context, zErr2, -(1 as ::core::ffi::c_int));
         crate::src::src::malloc::sqlite3_free(zErr2 as *mut ::core::ffi::c_void);
         return;
@@ -775,14 +769,8 @@ pub unsafe extern "C" fn sqlite3Fts3InitHashTable(
     let mut zTest: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
     let mut zTest2: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
     let mut pdb: *mut ::core::ffi::c_void = db as *mut ::core::ffi::c_void;
-    zTest = crate::src::src::printf::sqlite3_mprintf(
-        b"%s_test\0" as *const u8 as *const ::core::ffi::c_char,
-        zName,
-    );
-    zTest2 = crate::src::src::printf::sqlite3_mprintf(
-        b"%s_internal_test\0" as *const u8 as *const ::core::ffi::c_char,
-        zName,
-    );
+    zTest = crate::sqlite_printf!("%s_test", zName);
+    zTest2 = crate::sqlite_printf!("%s_internal_test", zName);
     if zTest.is_null() || zTest2.is_null() {
         rc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
     }
