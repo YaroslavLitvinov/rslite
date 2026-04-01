@@ -42,6 +42,10 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
       - [fts3_write_no_format_sql_1arg](#fts3_write_no_format_sql_1arg)
       - [fts3_write_no_format_sql_2args](#fts3_write_no_format_sql_2args)
       - [fts3_write_no_format_sql_3args](#fts3_write_no_format_sql_3args)
+    - [Feature: fts5_c_variadic_migration](#fts5_c_variadic_migration)
+      - [fts5_no_sqlite3_mprintf](#fts5_no_sqlite3_mprintf)
+      - [fts5_no_sqlite3_snprintf](#fts5_no_sqlite3_snprintf)
+      - [fts5_uses_sqlite_printf_macro](#fts5_uses_sqlite_printf_macro)
     - [Feature: json_c_variadic_migration](#json_c_variadic_migration)
       - [json_no_forbidden_functions](#json_no_forbidden_functions)
       - [json_no_jsonPrintf_call](#json_no_jsonprintf_call)
@@ -256,6 +260,26 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
 #### fts3_write_no_format_sql_3args
 **Description:** fts3_write.rs must not use format_sql_3args function
 **Command:** `grep -n "format_sql_3args" "$WORKSPACE_ROOT/src/ext/fts3/fts3_write.rs" 2>/dev/null && exit 1 || exit 0`
+
+### Feature: fts5_c_variadic_migration
+**Migrate src/fts5.rs away from sqlite3_mprintf/sqlite3_snprintf to sqlite_printf! proc macro**
+
+**Goals:**
+- Remove all sqlite3_mprintf and sqlite3_snprintf calls from src/fts5.rs
+- Replace with compile-time validated sqlite_printf! macro calls
+- Ensure all tests pass after migration
+
+#### fts5_no_sqlite3_mprintf
+**Description:** fts5.rs must not use sqlite3_mprintf function calls
+**Command:** `grep -E "\bsqlite3_mprintf\(" "$WORKSPACE_ROOT/src/fts5.rs" 2>/dev/null && exit 1 || exit 0`
+
+#### fts5_no_sqlite3_snprintf
+**Description:** fts5.rs must not use sqlite3_snprintf function calls
+**Command:** `grep -E "\bsqlite3_snprintf\(" "$WORKSPACE_ROOT/src/fts5.rs" 2>/dev/null && exit 1 || exit 0`
+
+#### fts5_uses_sqlite_printf_macro
+**Description:** fts5.rs must use sqlite_printf! macro for string formatting
+**Command:** `grep -c "sqlite_printf!" "$WORKSPACE_ROOT/src/fts5.rs" 2>/dev/null | grep -qE "^[1-9]" && exit 0 || exit 1`
 
 ### Feature: json_c_variadic_migration
 **Migrate src/src/json.rs away from c_variadic functions (jsonPrintf) and sqlite3_mprintf**

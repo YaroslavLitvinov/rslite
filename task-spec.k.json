@@ -586,6 +586,37 @@
           "fails_count": 1
         }
       }
+    },
+    "fts5_c_variadic_migration": {
+      "type": "Feature",
+      "model_version": 1,
+      "id": "fts5_c_variadic_migration",
+      "description": "Migrate src/fts5.rs away from sqlite3_mprintf/sqlite3_snprintf to sqlite_printf! proc macro",
+      "goals": [
+        "Remove all sqlite3_mprintf and sqlite3_snprintf calls from src/fts5.rs",
+        "Replace with compile-time validated sqlite_printf! macro calls",
+        "Ensure all tests pass after migration"
+      ],
+      "constraints": {
+        "fts5_no_sqlite3_mprintf": {
+          "id": "fts5_no_sqlite3_mprintf",
+          "cmd": "grep -E \"\\bsqlite3_mprintf\\(\" \"$WORKSPACE_ROOT/src/fts5.rs\" 2>/dev/null && exit 1 || exit 0",
+          "description": "fts5.rs must not use sqlite3_mprintf function calls",
+          "fails_count": 1
+        },
+        "fts5_no_sqlite3_snprintf": {
+          "id": "fts5_no_sqlite3_snprintf",
+          "cmd": "grep -E \"\\bsqlite3_snprintf\\(\" \"$WORKSPACE_ROOT/src/fts5.rs\" 2>/dev/null && exit 1 || exit 0",
+          "description": "fts5.rs must not use sqlite3_snprintf function calls",
+          "fails_count": 1
+        },
+        "fts5_uses_sqlite_printf_macro": {
+          "id": "fts5_uses_sqlite_printf_macro",
+          "cmd": "grep -c \"sqlite_printf!\" \"$WORKSPACE_ROOT/src/fts5.rs\" 2>/dev/null | grep -qE \"^[1-9]\" && exit 0 || exit 1",
+          "description": "fts5.rs must use sqlite_printf! macro for string formatting",
+          "fails_count": 1
+        }
+      }
     }
   }
 }

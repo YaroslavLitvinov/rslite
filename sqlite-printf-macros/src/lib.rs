@@ -2,6 +2,37 @@ use proc_macro::TokenStream;
 use quote::quote;
 use syn::{parse::Parse, parse_macro_input, Lit, Token, Expr, Error};
 
+/// Parse arguments for sqlite_snprintf! — buffer, size, format_str, args...
+struct SqliteSnprintf {
+    buffer: Expr,
+    size: Expr,
+    format_str: String,
+    args: Vec<Expr>,
+}
+
+impl Parse for SqliteSnprintf {
+    fn parse(input: syn::parse::ParseStream) -> syn::Result<Self> {
+        let buffer: Expr = input.parse()?;
+        input.parse::<Token![,]>()?;
+        let size: Expr = input.parse()?;
+        input.parse::<Token![,]>()?;
+        let lit: Lit = input.parse()?;
+        let format_str = match lit {
+            Lit::Str(s) => s.value(),
+            _ => return Err(Error::new_spanned(&lit, "expected string literal")),
+        };
+        let mut args = Vec::new();
+        while input.peek(Token![,]) {
+            input.parse::<Token![,]>()?;
+            if input.is_empty() {
+                break;
+            }
+            args.push(input.parse::<Expr>()?);
+        }
+        Ok(SqliteSnprintf { buffer, size, format_str, args })
+    }
+}
+
 /// Parse SQLite format string and arguments
 struct SqlitePrintf {
     format_str: String,
@@ -143,13 +174,24 @@ fn parse_format_specs(format: &str) -> Result<Vec<FormatSpec>, String> {
                             }
                         }
                     }
-                    '*' => {
-                        // Check for .*s (raw bytes with length)
+                    '.' => {
+                        // Check for %.*s (raw bytes with length prefix)
                         chars.next();
                         if let Some(&next2) = chars.peek() {
-                            if next2 == 's' || next2 == 'S' {
+                            if next2 == '*' {
                                 chars.next();
-                                specs.push(FormatSpec::RawBytes);
+                                if let Some(&next3) = chars.peek() {
+                                    if next3 == 's' || next3 == 'S' {
+                                        chars.next();
+                                        specs.push(FormatSpec::RawBytes);
+                                    } else {
+                                        return Err(format!("Unknown format specifier: %.*{}", next3));
+                                    }
+                                } else {
+                                    return Err("Incomplete format specifier: %.*".to_string());
+                                }
+                            } else {
+                                return Err(format!("Unknown format specifier: %.{}", next2));
                             }
                         }
                     }
@@ -355,9 +397,14 @@ fn gen_arg_handler(arg: &Expr, spec: &FormatSpec) -> proc_macro2::TokenStream {
             }}
         }
         FormatSpec::Percent => quote! {},
-        FormatSpec::FloatG15 | FormatSpec::RawBytes => {
-            // These are only used in json_printf, not sqlite_printf
-            quote! { compile_error!("FloatG15 and RawBytes specifiers only supported in json_printf!") }
+        FormatSpec::FloatG15 => {
+            // Only used in json_printf
+            quote! { compile_error!("FloatG15 specifier only supported in json_printf!") }
+        }
+        FormatSpec::RawBytes => {
+            // Handled specially in the generation loop (consumes 2 args)
+            // This branch should not be reached
+            quote! { compile_error!("RawBytes must be handled in the generation loop") }
         }
     }
 }
@@ -388,21 +435,31 @@ fn convert_format_string(format: &str, specs: &[FormatSpec]) -> String {
 
                 // Skip past the format specifier
                 chars.next();
-                let mut spec_chars = String::from(next);
 
-                // Handle multi-character specifiers like %lld
+                // Handle multi-character specifiers
                 if next == 'l' {
                     if let Some(&second) = chars.peek() {
                         if second == 'l' {
-                            spec_chars.push(second);
                             chars.next();
                             if let Some(&third) = chars.peek() {
-                                spec_chars.push(third);
-                                chars.next();
+                                if matches!(third, 'd' | 'i' | 'u') {
+                                    chars.next();
+                                }
                             }
                         } else if second == 'd' || second == 'i' {
-                            spec_chars.push(second);
                             chars.next();
+                        }
+                    }
+                } else if next == '.' {
+                    // %.*s: skip '*' and 's'
+                    if let Some(&second) = chars.peek() {
+                        if second == '*' {
+                            chars.next();
+                            if let Some(&third) = chars.peek() {
+                                if third == 's' || third == 'S' {
+                                    chars.next();
+                                }
+                            }
                         }
                     }
                 }
@@ -466,8 +523,8 @@ pub fn sqlite_printf(input: TokenStream) -> TokenStream {
         }
     };
 
-    // Count consuming arguments
-    let arg_count = specs.iter().filter(|s| s.is_argument_consuming()).count();
+    // Count consuming arguments (RawBytes consumes 2)
+    let arg_count: usize = specs.iter().map(|s| s.arg_count()).sum();
 
     if arg_count != args.len() {
         return syn::Error::new(
@@ -485,22 +542,45 @@ pub fn sqlite_printf(input: TokenStream) -> TokenStream {
     // Convert to Rust format string
     let rust_format = convert_format_string(&format_str, &specs);
 
-    // Generate argument handlers (original approach for now)
+    // Generate argument handlers
     // Track which arguments are %z format (will be freed)
     let mut arg_handlers = Vec::new();
     let mut z_args_to_free = Vec::new();
     let mut arg_iter = args.iter();
 
-    for (idx, spec) in specs.iter().enumerate() {
-        if spec.is_argument_consuming() {
-            if let Some(arg) = arg_iter.next() {
-                // %z format specifier will free the pointer
-                if matches!(spec, FormatSpec::ZeroCopy) {
-                    z_args_to_free.push(arg.clone());
-                }
-                // Use the native gen_arg_handler (no overhead, direct type passing)
-                arg_handlers.push(gen_arg_handler(arg, spec));
+    for spec in specs.iter() {
+        match spec {
+            FormatSpec::RawBytes => {
+                // %.*s consumes 2 args: length (int) and pointer (char*)
+                let len_arg = match arg_iter.next() {
+                    Some(a) => a,
+                    None => break,
+                };
+                let ptr_arg = match arg_iter.next() {
+                    Some(a) => a,
+                    None => break,
+                };
+                arg_handlers.push(quote! {{
+                    let __ptr = #ptr_arg as *const u8;
+                    let __len = #len_arg as usize;
+                    if !__ptr.is_null() {
+                        let __bytes = unsafe { ::std::slice::from_raw_parts(__ptr, __len) };
+                        ::std::str::from_utf8(__bytes).unwrap_or("").to_string()
+                    } else {
+                        ::std::string::String::new()
+                    }
+                }});
             }
+            _ if spec.is_argument_consuming() => {
+                if let Some(arg) = arg_iter.next() {
+                    // %z format specifier will free the pointer
+                    if matches!(spec, FormatSpec::ZeroCopy) {
+                        z_args_to_free.push(arg.clone());
+                    }
+                    arg_handlers.push(gen_arg_handler(arg, spec));
+                }
+            }
+            _ => {}
         }
     }
 
@@ -672,50 +752,21 @@ pub fn json_printf(input: TokenStream) -> TokenStream {
 /// ```
 #[proc_macro]
 pub fn sqlite_snprintf(input: TokenStream) -> TokenStream {
-    let input_str = input.to_string();
-    let parts: Vec<&str> = input_str.split(',').collect();
-
-    if parts.len() < 3 {
-        return syn::Error::new(
-            proc_macro2::Span::call_site(),
-            "sqlite_snprintf! requires: buffer, size, format_string, [args...]",
-        )
-        .to_compile_error()
-        .into();
-    }
-
-    let buffer = parts[0].trim();
-    let size = parts[1].trim();
-    let format_str = parts[2].trim().trim_matches('"');
-
-    // Parse remaining args
-    let mut args = Vec::new();
-    for i in 3..parts.len() {
-        match syn::parse_str::<Expr>(parts[i].trim()) {
-            Ok(expr) => args.push(expr),
-            Err(_) => {
-                return syn::Error::new(
-                    proc_macro2::Span::call_site(),
-                    format!("Failed to parse argument: {}", parts[i]),
-                )
-                .to_compile_error()
-                .into();
-            }
-        }
-    }
+    let SqliteSnprintf { buffer, size, format_str, args } =
+        parse_macro_input!(input as SqliteSnprintf);
 
     // Compile-time validation
-    let specs = match parse_format_specs(format_str) {
+    let specs = match parse_format_specs(&format_str) {
         Ok(s) => s,
         Err(e) => {
-            return syn::Error::new_spanned(&format_str, e)
+            return syn::Error::new(proc_macro2::Span::call_site(), e)
                 .to_compile_error()
                 .into();
         }
     };
 
-    // Count consuming arguments
-    let arg_count = specs.iter().filter(|s| s.is_argument_consuming()).count();
+    // Count consuming arguments (RawBytes consumes 2)
+    let arg_count: usize = specs.iter().map(|s| s.arg_count()).sum();
 
     if arg_count != args.len() {
         return syn::Error::new(
@@ -731,41 +782,60 @@ pub fn sqlite_snprintf(input: TokenStream) -> TokenStream {
     }
 
     // Convert to Rust format string
-    let rust_format = convert_format_string(format_str, &specs);
+    let rust_format = convert_format_string(&format_str, &specs);
 
     // Generate argument handlers
     let mut arg_handlers = Vec::new();
     let mut arg_iter = args.iter();
 
     for spec in &specs {
-        if spec.is_argument_consuming() {
-            if let Some(arg) = arg_iter.next() {
-                arg_handlers.push(gen_arg_handler(arg, spec));
+        match spec {
+            FormatSpec::RawBytes => {
+                let len_arg = match arg_iter.next() {
+                    Some(a) => a,
+                    None => break,
+                };
+                let ptr_arg = match arg_iter.next() {
+                    Some(a) => a,
+                    None => break,
+                };
+                arg_handlers.push(quote! {{
+                    let __ptr = #ptr_arg as *const u8;
+                    let __len = #len_arg as usize;
+                    if !__ptr.is_null() {
+                        let __bytes = unsafe { ::std::slice::from_raw_parts(__ptr, __len) };
+                        ::std::str::from_utf8(__bytes).unwrap_or("").to_string()
+                    } else {
+                        ::std::string::String::new()
+                    }
+                }});
             }
+            _ if spec.is_argument_consuming() => {
+                if let Some(arg) = arg_iter.next() {
+                    arg_handlers.push(gen_arg_handler(arg, spec));
+                }
+            }
+            _ => {}
         }
     }
-
-    // Parse buffer and size as tokens
-    let buffer_tokens: proc_macro2::TokenStream = buffer.parse()
-        .unwrap_or_else(|_| quote! { buf });
-    let size_tokens: proc_macro2::TokenStream = size.parse()
-        .unwrap_or_else(|_| quote! { 256 });
 
     // Generate final code
     let expanded = quote! {
         {
             let result = format!(#rust_format, #(#arg_handlers),*);
             let bytes = result.as_bytes();
-            let copy_len = std::cmp::min(bytes.len(), (#size_tokens as usize).saturating_sub(1));
+            let __snprintf_buf = #buffer;
+            let __snprintf_size = #size;
+            let copy_len = ::std::cmp::min(bytes.len(), (__snprintf_size as usize).saturating_sub(1));
 
             unsafe {
-                std::ptr::copy_nonoverlapping(
+                ::std::ptr::copy_nonoverlapping(
                     bytes.as_ptr(),
-                    #buffer_tokens as *mut u8,
+                    __snprintf_buf as *mut u8,
                     copy_len
                 );
                 // Null terminate
-                *(#buffer_tokens as *mut u8).add(copy_len) = 0;
+                *(__snprintf_buf as *mut u8).add(copy_len) = 0;
             }
 
             copy_len as i32
