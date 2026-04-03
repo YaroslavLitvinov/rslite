@@ -1,0 +1,1 @@
+cargo:rustc-env=RUSTFLAGS=-Z unstable-options -Zcrate-attr=feature(c_variadic)
