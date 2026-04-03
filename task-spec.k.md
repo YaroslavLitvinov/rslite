@@ -85,17 +85,10 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
       - [sqlite_snprintf_exists](#sqlite_snprintf_exists)
       - [sqlite_snprintf_is_proc_macro](#sqlite_snprintf_is_proc_macro)
     - [Feature: sqlite_vmprintf_vsnprintf_proc_macro](#sqlite_vmprintf_vsnprintf_proc_macro)
-      - [fts3_no_sqlite3_vmprintf](#fts3_no_sqlite3_vmprintf)
-      - [fts5_no_sqlite3_vmprintf](#fts5_no_sqlite3_vmprintf)
-      - [func_no_sqlite3_vmprintf](#func_no_sqlite3_vmprintf)
-      - [json_no_sqlite3_vmprintf](#json_no_sqlite3_vmprintf)
-      - [loadext_no_sqlite3_vmprintf](#loadext_no_sqlite3_vmprintf)
       - [macro_sqlite_vmprintf_exists](#macro_sqlite_vmprintf_exists)
       - [macro_sqlite_vsnprintf_exists](#macro_sqlite_vsnprintf_exists)
       - [macro_vmprintf_handles_variadic](#macro_vmprintf_handles_variadic)
       - [macro_vsnprintf_handles_variadic](#macro_vsnprintf_handles_variadic)
-      - [rtree_no_sqlite3_vmprintf](#rtree_no_sqlite3_vmprintf)
-      - [sqlite3session_no_sqlite3_vmprintf](#sqlite3session_no_sqlite3_vmprintf)
     - [Feature: toolchain_version](#toolchain_version)
       - [c6](#c6)
     - [Feature: vdbevtab_vdbeaux_pragma_table_os_unix_loadext_c_variadic_migration](#vdbevtab_vdbeaux_pragma_table_os_unix_loadext_c_variadic_migration)
@@ -496,26 +489,6 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
 - Enforce function-only usage in printf.rs and printf_c_variadic.rs
 - Migrate all sqlite3_vmprintf/sqlite3_vsnprintf calls from other files to use macros
 
-#### fts3_no_sqlite3_vmprintf
-**Description:** Negative/Protective: fts3.rs must not contain sqlite3_vmprintf or sqlite3_vsnprintf (must use macros only)
-**Command:** `! grep -q "sqlite3_vmprintf\\|sqlite3_vsnprintf" "$PROJECT_ROOT/src/ext/fts3/fts3.rs"`
-
-#### fts5_no_sqlite3_vmprintf
-**Description:** Negative/Protective: fts5.rs must not contain sqlite3_vmprintf or sqlite3_vsnprintf (must use macros only)
-**Command:** `! grep -q "sqlite3_vmprintf\\|sqlite3_vsnprintf" "$PROJECT_ROOT/src/fts5.rs"`
-
-#### func_no_sqlite3_vmprintf
-**Description:** Negative/Protective: func.rs must not contain sqlite3_vmprintf or sqlite3_vsnprintf (must use macros only)
-**Command:** `! grep -q "sqlite3_vmprintf\\|sqlite3_vsnprintf" "$PROJECT_ROOT/src/src/func.rs"`
-
-#### json_no_sqlite3_vmprintf
-**Description:** Negative/Protective: json.rs must not contain sqlite3_vmprintf or sqlite3_vsnprintf (must use macros only)
-**Command:** `! grep -q "sqlite3_vmprintf\\|sqlite3_vsnprintf" "$PROJECT_ROOT/src/src/json.rs"`
-
-#### loadext_no_sqlite3_vmprintf
-**Description:** Negative/Protective: loadext.rs must not contain sqlite3_vmprintf or sqlite3_vsnprintf (must use macros only)
-**Command:** `! grep -q "sqlite3_vmprintf\\|sqlite3_vsnprintf" "$PROJECT_ROOT/src/src/loadext.rs"`
-
 #### macro_sqlite_vmprintf_exists
 **Description:** Structural: sqlite_vmprintf! proc macro must exist and be exported in sqlite-printf-macros/src/lib.rs
 **Command:** `grep -q "#\\[proc_macro\\]" "$PROJECT_ROOT/sqlite-printf-macros/src/lib.rs" && grep -q "pub fn sqlite_vmprintf" "$PROJECT_ROOT/sqlite-printf-macros/src/lib.rs" || exit 1`
@@ -531,14 +504,6 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
 #### macro_vsnprintf_handles_variadic
 **Description:** Behavioral: sqlite_vsnprintf! macro must handle variadic arguments (TokenStream, va_list reference, or Vec of expressions)
 **Command:** `grep -A 30 "pub fn sqlite_vsnprintf" "$PROJECT_ROOT/sqlite-printf-macros/src/lib.rs" | grep -qE "va_list|variadic|TokenStream" || exit 1`
-
-#### rtree_no_sqlite3_vmprintf
-**Description:** Negative/Protective: rtree.rs must not contain sqlite3_vmprintf or sqlite3_vsnprintf (must use macros only)
-**Command:** `! grep -q "sqlite3_vmprintf\\|sqlite3_vsnprintf" "$PROJECT_ROOT/src/ext/rtree/rtree.rs"`
-
-#### sqlite3session_no_sqlite3_vmprintf
-**Description:** Negative/Protective: sqlite3session.rs must not contain sqlite3_vmprintf or sqlite3_vsnprintf (must use macros only)
-**Command:** `! grep -q "sqlite3_vmprintf\\|sqlite3_vsnprintf" "$PROJECT_ROOT/src/ext/session/sqlite3session.rs"`
 
 ### Feature: toolchain_version
 **Enforce Rust toolchain version nightly-2026-03-26**

@@ -7,6 +7,7 @@
 #![allow(non_snake_case)]
 #![allow(unused)]
 #![allow(warnings)]
+#![allow(static_mut_refs)]
 
 mod shell;
 

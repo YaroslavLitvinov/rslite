@@ -1,5 +1,6 @@
 use ::libc;
-extern "C" {
+use sqlite_printf_macros::sqlite_printf;
+unsafe extern "C" {
     pub type _IO_wide_data;
     pub type _IO_codecvt;
     pub type _IO_marker;
@@ -5116,8 +5117,8 @@ unsafe extern "C" fn shellFakeSchema(
         let mut zDiv: *mut ::core::ffi::c_char = b"(\0".as_ptr()
             as *const ::core::ffi::c_char as *mut ::core::ffi::c_char;
         let mut nRow: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-        zSql = sqlite3_mprintf(
-            b"PRAGMA \"%w\".table_info=%Q;\0".as_ptr() as *const ::core::ffi::c_char,
+        zSql = sqlite_printf!(
+            "PRAGMA \"%w\".table_info=%Q;",
             if !zSchema.is_null() {
                 zSchema
             } else {
@@ -5331,14 +5332,14 @@ unsafe extern "C" fn shellAddSchemaName(
                         }
                     {
                         if z.is_null() {
-                            z = sqlite3_mprintf(
-                                b"%s\n/* %s */\0".as_ptr() as *const ::core::ffi::c_char,
+                            z = sqlite_printf!(
+                                "%s\n/* %s */",
                                 zIn,
                                 zFake,
                             );
                         } else {
-                            z = sqlite3_mprintf(
-                                b"%z\n/* %s */\0".as_ptr() as *const ::core::ffi::c_char,
+                            z = sqlite_printf!(
+                                "%z\n/* %s */",
                                 z,
                                 zFake,
                             );

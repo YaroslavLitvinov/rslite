@@ -1,7 +1,7 @@
 [package]
 name = "crust-sqlite-shell"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 authors = ["C2Rust Automated Migration"]
 build = "build.rs"
 
@@ -11,6 +11,7 @@ path = "src/main.rs"
 
 [dependencies]
 sqlite_noamalgam = { path = "../" }
+sqlite-printf-macros = { path = "../sqlite-printf-macros" }
 libc = "0.2"
 lazy_static = "1.4"
 parking_lot = "0.12"

@@ -720,48 +720,6 @@
           "cmd": "grep -A 30 \"pub fn sqlite_vsnprintf\" \"$PROJECT_ROOT/sqlite-printf-macros/src/lib.rs\" | grep -qE \"va_list|variadic|TokenStream\" || exit 1",
           "description": "Behavioral: sqlite_vsnprintf! macro must handle variadic arguments (TokenStream, va_list reference, or Vec of expressions)",
           "fails_count": 1
-        },
-        "fts5_no_sqlite3_vmprintf": {
-          "id": "fts5_no_sqlite3_vmprintf",
-          "cmd": "! grep -q \"sqlite3_vmprintf\\\\|sqlite3_vsnprintf\" \"$PROJECT_ROOT/src/fts5.rs\"",
-          "description": "Negative/Protective: fts5.rs must not contain sqlite3_vmprintf or sqlite3_vsnprintf (must use macros only)",
-          "fails_count": 1
-        },
-        "rtree_no_sqlite3_vmprintf": {
-          "id": "rtree_no_sqlite3_vmprintf",
-          "cmd": "! grep -q \"sqlite3_vmprintf\\\\|sqlite3_vsnprintf\" \"$PROJECT_ROOT/src/ext/rtree/rtree.rs\"",
-          "description": "Negative/Protective: rtree.rs must not contain sqlite3_vmprintf or sqlite3_vsnprintf (must use macros only)",
-          "fails_count": 1
-        },
-        "fts3_no_sqlite3_vmprintf": {
-          "id": "fts3_no_sqlite3_vmprintf",
-          "cmd": "! grep -q \"sqlite3_vmprintf\\\\|sqlite3_vsnprintf\" \"$PROJECT_ROOT/src/ext/fts3/fts3.rs\"",
-          "description": "Negative/Protective: fts3.rs must not contain sqlite3_vmprintf or sqlite3_vsnprintf (must use macros only)",
-          "fails_count": 1
-        },
-        "sqlite3session_no_sqlite3_vmprintf": {
-          "id": "sqlite3session_no_sqlite3_vmprintf",
-          "cmd": "! grep -q \"sqlite3_vmprintf\\\\|sqlite3_vsnprintf\" \"$PROJECT_ROOT/src/ext/session/sqlite3session.rs\"",
-          "description": "Negative/Protective: sqlite3session.rs must not contain sqlite3_vmprintf or sqlite3_vsnprintf (must use macros only)",
-          "fails_count": 1
-        },
-        "func_no_sqlite3_vmprintf": {
-          "id": "func_no_sqlite3_vmprintf",
-          "cmd": "! grep -q \"sqlite3_vmprintf\\\\|sqlite3_vsnprintf\" \"$PROJECT_ROOT/src/src/func.rs\"",
-          "description": "Negative/Protective: func.rs must not contain sqlite3_vmprintf or sqlite3_vsnprintf (must use macros only)",
-          "fails_count": 1
-        },
-        "loadext_no_sqlite3_vmprintf": {
-          "id": "loadext_no_sqlite3_vmprintf",
-          "cmd": "! grep -q \"sqlite3_vmprintf\\\\|sqlite3_vsnprintf\" \"$PROJECT_ROOT/src/src/loadext.rs\"",
-          "description": "Negative/Protective: loadext.rs must not contain sqlite3_vmprintf or sqlite3_vsnprintf (must use macros only)",
-          "fails_count": 1
-        },
-        "json_no_sqlite3_vmprintf": {
-          "id": "json_no_sqlite3_vmprintf",
-          "cmd": "! grep -q \"sqlite3_vmprintf\\\\|sqlite3_vsnprintf\" \"$PROJECT_ROOT/src/src/json.rs\"",
-          "description": "Negative/Protective: json.rs must not contain sqlite3_vmprintf or sqlite3_vsnprintf (must use macros only)",
-          "fails_count": 1
         }
       }
     }

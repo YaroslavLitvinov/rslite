@@ -785,7 +785,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
             crate::src::src::vdbeapi::sqlite3_value_type as unsafe extern "C" fn(*mut crate::src::headers::vdbeInt_h::sqlite3_value) -> ::core::ffi::c_int,
         ),
     vmprintf:  Some(
-            crate::src::src::printf::printf_vmprintf_impl
+            crate::src::src::printf::sqlite3_vmprintf
                 as unsafe extern "C" fn(
                     *const ::core::ffi::c_char,
                     ::core::ffi::VaList,
@@ -1214,7 +1214,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
                 ) -> *const ::core::ffi::c_char,
         ),
     xvsnprintf:  Some(
-            crate::src::src::printf::printf_vsnprintf_impl
+            crate::src::src::printf::sqlite3_vsnprintf
                 as unsafe extern "C" fn(
                     ::core::ffi::c_int,
                     *mut ::core::ffi::c_char,

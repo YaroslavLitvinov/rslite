@@ -5,10 +5,10 @@
 # Automates the creation of a C2Rust transpiled SQLite shell from shell.c
 # 
 # Usage:
-#   ./CREATE_C2RUST_SHELL.sh [shell_c_source] [output_dir]
+#   ./CREATE_C2RUST_SHELL.sh [shell_c_source] [output_dir] [defines_shell_path]
 #
 # Example:
-#   ./CREATE_C2RUST_SHELL.sh /sqlite/shell.c ./crust-sqlite-shell
+#   ./CREATE_C2RUST_SHELL.sh /sqlite/shell.c ./crust-sqlite-shell ./defines_shell.txt
 #
 # Prerequisites:
 #   - C2Rust binary: /c2rust/target/release/c2rust
@@ -29,6 +29,7 @@ NC='\033[0m' # No Color
 C2RUST_BIN="${C2RUST_BIN:-/c2rust/target/release/c2rust}"
 SHELL_SRC="${1:-.sqlite-shell-src/shell.c}"
 OUTPUT_DIR="${2:-./crust-sqlite-shell}"
+DEFINES_SHELL="${3:-$(cd "$(dirname "$0")" && pwd)/defines_shell.txt}"
 PROJ_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 echo -e "${GREEN}═══════════════════════════════════════════════════════════${NC}"
@@ -55,11 +56,11 @@ fi
 SHELL_LINES=$(wc -l < "$SHELL_SRC")
 echo "  ✓ shell.c found: $SHELL_LINES lines"
 
-if [ ! -f "$PROJ_DIR/defines_shell.txt" ]; then
-    echo -e "${RED}ERROR: defines_shell.txt not found${NC}"
+if [ ! -f "$DEFINES_SHELL" ]; then
+    echo -e "${RED}ERROR: defines_shell.txt not found at $DEFINES_SHELL${NC}"
     exit 1
 fi
-echo "  ✓ defines_shell.txt found"
+echo "  ✓ defines_shell.txt found: $DEFINES_SHELL"
 
 if ! which cargo > /dev/null 2>&1; then
     echo -e "${RED}ERROR: Cargo not found${NC}"
@@ -86,7 +87,7 @@ echo ""
 echo -e "${YELLOW}[3/7] Generating C2Rust configuration...${NC}"
 
 # Read compilation flags
-mapfile -t FLAGS < <(sed 's/\r//' "$PROJ_DIR/defines_shell.txt" | grep -v '^$')
+mapfile -t FLAGS < <(sed 's/\r//' "$DEFINES_SHELL" | grep -v '^$')
 
 # Create c2rust config
 cat > "$PROJ_DIR/c2rust-shell.toml" << 'TOML'
