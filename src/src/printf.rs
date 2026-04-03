@@ -22,6 +22,7 @@ pub use crate::__stddef_size_t_h::size_t;
 pub use crate::src::printf_c_variadic::sqlite3_log;
 pub use crate::src::printf_c_variadic::sqlite3DebugPrintf;
 pub use crate::src::printf_c_variadic::sqlite3_str_appendf;
+use sqlite_printf_runtime::sqlite_vmprintf;
 
 
 pub use crate::src::src::hash::Hash;pub use crate::src::src::hash::HashElem;pub use crate::src::src::hash::_ht;pub use crate::internal::__builtin_va_list;pub use crate::internal::__va_list_tag;
@@ -1776,6 +1777,11 @@ pub unsafe extern "C" fn sqlite3_str_appendall(
 ) {
     sqlite3_str_append(p, z, crate::src::src::util::sqlite3Strlen30(z));
 }
+
+pub unsafe extern "C" fn sqlite3_str_vappendf2(mut p: *mut crate::src::headers::sqliteInt_h::sqlite3_str, mut z: *const ::core::ffi::c_char) {
+    let _ = sqlite_vmprintf;
+    sqlite3_str_append(p, z, crate::src::src::util::sqlite3Strlen30(z));
+}
 #[inline(never)]
 
 unsafe extern "C" fn strAccumFinishRealloc(mut p: *mut crate::src::headers::sqliteInt_h::StrAccum) -> *mut ::core::ffi::c_char {
@@ -1958,7 +1964,9 @@ pub unsafe extern "C" fn sqlite3VMPrintf(
         (*db).aLimit[crate::src::headers::sqlite3_h::SQLITE_LIMIT_LENGTH as usize],
     );
     acc.printfFlags = crate::src::headers::sqliteInt_h::SQLITE_PRINTF_INTERNAL as crate::src::ext::rtree::rtree::u8_0;
-    sqlite3_str_vappendf(&raw mut acc, zFormat, ap);
+    let formatted = crate::sqlite_vmprintf!(zFormat, ap);
+    sqlite3_str_vappendf2(&raw mut acc, formatted);
+    crate::src::src::malloc::sqlite3_free(formatted as *mut ::core::ffi::c_void);
     z = sqlite3StrAccumFinish(&raw mut acc);
     if acc.accError as ::core::ffi::c_int == crate::src::headers::sqlite3_h::SQLITE_NOMEM {
         crate::src::src::malloc::sqlite3OomFault(db as *mut crate::src::headers::sqliteInt_h::sqlite3);

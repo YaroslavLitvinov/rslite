@@ -20,7 +20,8 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
       - [no_sqlite3_snprintf_definition](#no_sqlite3_snprintf_definition)
     - [Feature: build_all](#build_all)
       - [constraint_build_all](#constraint_build_all)
-      - [constraint_cargo_test_printf](#constraint_cargo_test_printf)
+    - [Feature: cargo_test](#cargo_test)
+      - [constraint_cargo_test](#constraint_cargo_test)
     - [Feature: fts3_aux_c_variadic_migration](#fts3_aux_c_variadic_migration)
       - [fts3_aux_no_sqlite3_mprintf](#fts3_aux_no_sqlite3_mprintf)
       - [fts3_aux_no_sqlite3_mprintf_use](#fts3_aux_no_sqlite3_mprintf_use)
@@ -120,6 +121,12 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
     - [Feature: rtree_c_variadic_migration](#rtree_c_variadic_migration)
       - [rtree_no_sqlite3_mprintf](#rtree_no_sqlite3_mprintf)
       - [rtree_uses_sqlite_printf_macro](#rtree_uses_sqlite_printf_macro)
+    - [Feature: sqlite3_str_vappendf2](#sqlite3_str_vappendf2)
+      - [sqlite3VMPrintf_uses_sqlite3_str_vappendf2](#sqlite3vmprintf_uses_sqlite3_str_vappendf2)
+      - [sqlite3VMPrintf_uses_sqlite_vmprintf](#sqlite3vmprintf_uses_sqlite_vmprintf)
+      - [sqlite3_str_vappendf2_exists](#sqlite3_str_vappendf2_exists)
+      - [sqlite3_str_vappendf2_signature](#sqlite3_str_vappendf2_signature)
+      - [sqlite_printf_runtime_imported](#sqlite_printf_runtime_imported)
     - [Feature: sqlite3session_and_snprintf_migration](#sqlite3session_and_snprintf_migration)
       - [sqlite3session_no_printf_c_variadic](#sqlite3session_no_printf_c_variadic)
       - [sqlite3session_no_sqlite3_mprintf](#sqlite3session_no_sqlite3_mprintf)
@@ -206,8 +213,11 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
 **Description:** Ensure our rust codebase is healthy
 **Command:** `cd $WORKSPACE_ROOT && ./build_all.sh`
 
-#### constraint_cargo_test_printf
-**Description:** Run printf_compare integration tests to verify our sqlite_printf! macro matches sqlite3_str_vappendf output
+### Feature: cargo_test
+**Run cargo tests**
+
+#### constraint_cargo_test
+**Description:** cargo test
 **Command:** `cd $PROJECT_ROOT && cargo test --test printf_compare 2>&1 | grep -q "test result: ok" || exit 1`
 
 ### Feature: fts3_aux_c_variadic_migration
@@ -702,6 +712,39 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
 #### rtree_uses_sqlite_printf_macro
 **Description:** rtree.rs must use sqlite_printf! macro for string formatting
 **Command:** `grep -c "sqlite_printf!" "$WORKSPACE_ROOT/src/ext/rtree/rtree.rs" 2>/dev/null | grep -qE "^[1-9]" && exit 0 || exit 1`
+
+### Feature: sqlite3_str_vappendf2
+**Non-variadic string append function accepting pre-formatted C strings instead of VaList and variadic arguments**
+
+**Goals:**
+- Implement sqlite3_str_vappendf2(*mut sqlite3_str, *const c_char) with NO VaList in signature or body
+- Function accepts only pre-formatted C string (no variadic arguments, no format parsing)
+- Function uses sqlite3_str_append internally to append the pre-formatted string to buffer
+- Call sites use sqlite_printf_common::parse_format_specs to validate format strings at compile-time
+- Call sites use sqlite_printf_runtime::sqlite_vmprintf to format arguments into a string before calling sqlite3_str_vappendf2
+- sqlite3VMPrintf uses sqlite_vmprintf reference and calls sqlite3_str_vappendf2 with pre-formatted result
+- Decouples formatting (handled by sqlite-printf-* crates) from string appending (sqlite3_str_vappendf2)
+- Building block for incrementally removing VaList from printf pipeline
+
+#### sqlite3VMPrintf_uses_sqlite3_str_vappendf2
+**Description:** Behavioral: sqlite3VMPrintf must call sqlite3_str_vappendf2 to append formatted result
+**Command:** `awk "/^[^/]*fn sqlite3VMPrintf/,/^}/ { print }" "$WORKSPACE_ROOT/src/src/printf.rs" 2>/dev/null | grep -q "sqlite3_str_vappendf2" || exit 1`
+
+#### sqlite3VMPrintf_uses_sqlite_vmprintf
+**Description:** Behavioral: sqlite3VMPrintf must use sqlite_vmprintf from sqlite-printf-runtime for formatting
+**Command:** `awk "/^[^/]*fn sqlite3VMPrintf/,/^}/ { print }" "$WORKSPACE_ROOT/src/src/printf.rs" 2>/dev/null | grep -q "sqlite_vmprintf" || exit 1`
+
+#### sqlite3_str_vappendf2_exists
+**Description:** Structural: sqlite3_str_vappendf2 function must exist in printf.rs
+**Command:** `grep -q "fn sqlite3_str_vappendf2" "$WORKSPACE_ROOT/src/src/printf.rs" 2>/dev/null || exit 1`
+
+#### sqlite3_str_vappendf2_signature
+**Description:** Structural: sqlite3_str_vappendf2 must accept *mut sqlite3_str and *const c_char parameters
+**Command:** `grep -E "fn sqlite3_str_vappendf2.*\*mut.*sqlite3_str.*\*const.*c_char" "$WORKSPACE_ROOT/src/src/printf.rs" 2>/dev/null || exit 1`
+
+#### sqlite_printf_runtime_imported
+**Description:** Structural: sqlite_printf_runtime::sqlite_vmprintf must be imported in printf.rs
+**Command:** `grep -q "sqlite_printf_runtime::sqlite_vmprintf" "$WORKSPACE_ROOT/src/src/printf.rs" 2>/dev/null || exit 1`
 
 ### Feature: sqlite3session_and_snprintf_migration
 **Combined migration of src/ext/session/sqlite3session.rs away from c_variadic functions and implementation of sqlite_snprintf! proc macro**
