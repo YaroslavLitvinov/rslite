@@ -1159,15 +1159,5 @@ pub unsafe extern "C" fn fts5PrintfAppend(
 
 
 
-pub unsafe extern "C" fn fts5ResultError(
-    mut pCtx: *mut crate::src::headers::vdbeInt_h::sqlite3_context,
-    mut zFmt: *const ::core::ffi::c_char,
-    mut args: ...
-) {
-    let mut zErr: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
-    zErr = crate::src::src::printf::sqlite3_vmprintf(zFmt, args);
-    crate::src::src::vdbeapi::sqlite3_result_error(pCtx, zErr, -(1 as ::core::ffi::c_int));
-    crate::src::src::malloc::sqlite3_free(zErr as *mut ::core::ffi::c_void);
-}
 
 
