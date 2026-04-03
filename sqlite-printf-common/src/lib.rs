@@ -6,8 +6,11 @@ pub enum FormatSpec {
     Percent,
     String,
     Integer,
+    IntegerWidth(usize),
+    IntegerZeroPad(usize),
     Unsigned,
     Hex,
+    HexUpper,
     Pointer,
     Float,
     Char,
@@ -35,8 +38,11 @@ impl FormatSpec {
             FormatSpec::Percent => "%".to_string(),
             FormatSpec::String | FormatSpec::ZeroCopy => "{}".to_string(),
             FormatSpec::Integer | FormatSpec::Long | FormatSpec::Long64 => "{}".to_string(),
+            FormatSpec::IntegerWidth(w) => format!("{{:>{}}}", w),
+            FormatSpec::IntegerZeroPad(w) => format!("{{:0{}}}", w),
             FormatSpec::Unsigned | FormatSpec::ULong64 => "{}".to_string(),
             FormatSpec::Hex => "{:x}".to_string(),
+            FormatSpec::HexUpper => "{:X}".to_string(),
             FormatSpec::Pointer => "{:p}".to_string(),
             FormatSpec::Float => "{}".to_string(),
             FormatSpec::Char => "{}".to_string(),
@@ -101,9 +107,13 @@ pub fn parse_format_specs(format: &str) -> Result<Vec<FormatSpec>, String> {
                         chars.next();
                         specs.push(FormatSpec::Unsigned);
                     }
-                    'x' | 'X' => {
+                    'x' => {
                         chars.next();
                         specs.push(FormatSpec::Hex);
+                    }
+                    'X' => {
+                        chars.next();
+                        specs.push(FormatSpec::HexUpper);
                     }
                     'p' => {
                         chars.next();
@@ -307,9 +317,33 @@ pub fn parse_format_specs(format: &str) -> Result<Vec<FormatSpec>, String> {
                                         specs.push(FormatSpec::HexWidth { width, zero_pad, upper });
                                     }
                                 }
-                                'd' | 'i' | 'u' => {
+                                'd' | 'i' => {
                                     chars.next();
-                                    if ll_prefix { specs.push(FormatSpec::Long64); } else { specs.push(FormatSpec::Integer); }
+                                    if ll_prefix {
+                                        specs.push(FormatSpec::Long64);
+                                    } else if width > 0 {
+                                        if zero_pad {
+                                            specs.push(FormatSpec::IntegerZeroPad(width));
+                                        } else {
+                                            specs.push(FormatSpec::IntegerWidth(width));
+                                        }
+                                    } else {
+                                        specs.push(FormatSpec::Integer);
+                                    }
+                                }
+                                'u' => {
+                                    chars.next();
+                                    if ll_prefix {
+                                        specs.push(FormatSpec::ULong64);
+                                    } else if width > 0 {
+                                        if zero_pad {
+                                            specs.push(FormatSpec::IntegerZeroPad(width));
+                                        } else {
+                                            specs.push(FormatSpec::IntegerWidth(width));
+                                        }
+                                    } else {
+                                        specs.push(FormatSpec::Unsigned);
+                                    }
                                 }
                                 's' | 'S' => { chars.next(); specs.push(FormatSpec::String); }
                                 'f' | 'F' | 'e' | 'E' | 'g' | 'G' => { chars.next(); specs.push(FormatSpec::Float); }

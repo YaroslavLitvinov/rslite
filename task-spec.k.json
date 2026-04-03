@@ -11,6 +11,9 @@
       "id": "build_all",
       "description": "Check that our rust codebase is healthy",
       "goals": [],
+      "depends_on": [
+        "cargo_test"
+      ],
       "constraints": {
         "constraint_build_all": {
           "id": "constraint_build_all",
@@ -20,6 +23,21 @@
         }
       }
     },
+    "cargo_test": {
+      "type": "Feature",
+      "model_version": 1,
+      "id": "cargo_test",
+      "description": "Run cargo tests",
+      "goals": [],
+      "constraints": {
+        "constraint_cargo_test": {
+          "id": "constraint_cargo_test",
+          "cmd": "cd $PROJECT_ROOT && cargo test --test printf_compare 2>&1 | grep -q \"test result: ok\" || exit 1",
+          "description": "cargo test",
+          "fails_count": 1
+        }
+      }
+    },    
     "toolchain_version": {
       "type": "Feature",
       "model_version": 1,
@@ -948,6 +966,9 @@
         "Remove from printf_c_variadic.rs and pub use re-export. Define private non-variadic fn fts5ExecPrintf(db, pzErr, zSql: *mut c_char) in fts5.rs.",
         "Each call site passes sqlite_printf!(fmt, args...) as zSql. Depends on fts3_dead_code_removal being complete."
       ],
+      "depends_on": [
+        "fts3_dead_code_removal"
+      ],
       "constraints": {
         "prev_fts3_dead_code_complete": {
           "id": "prev_fts3_dead_code_complete",
@@ -973,10 +994,7 @@
           "description": "Behavioral: fts5.rs must have at least 109 sqlite_printf! calls (101 existing + 8 fts5ExecPrintf call sites)",
           "fails_count": 1
         }
-      },
-      "depends_on": [
-        "fts3_dead_code_removal"
-      ]
+      }
     },
     "fts5_ParseError_variadic_removal": {
       "type": "Feature",
@@ -987,6 +1005,9 @@
         "sqlite3Fts5ParseError in printf_c_variadic.rs: if pParse.rc==OK, sets pParse.zErr=sqlite3_vmprintf(zFmt,args) and pParse.rc=SQLITE_ERROR. 10 call sites in fts5.rs.",
         "Remove from printf_c_variadic.rs and pub use re-export. Define private non-variadic fn in fts5.rs taking *mut c_char.",
         "Each call site passes sqlite_printf!(fmt, args...) as zErr. Depends on fts5_ExecPrintf_variadic_removal being complete."
+      ],
+      "depends_on": [
+        "fts5_ExecPrintf_variadic_removal"
       ],
       "constraints": {
         "prev_fts5ExecPrintf_complete": {
@@ -1013,10 +1034,7 @@
           "description": "Behavioral: fts5.rs must have at least 119 sqlite_printf! calls (109 + 10 sqlite3Fts5ParseError call sites)",
           "fails_count": 1
         }
-      },
-      "depends_on": [
-        "fts5_ExecPrintf_variadic_removal"
-      ]
+      }
     },
     "fts5_Mprintf_variadic_removal": {
       "type": "Feature",
@@ -1027,6 +1045,9 @@
         "sqlite3Fts5Mprintf in printf_c_variadic.rs: if *pRc==OK, returns sqlite3_vmprintf(zFmt,args) or sets *pRc=NOMEM. 14 call sites in fts5.rs.",
         "Remove from printf_c_variadic.rs and pub use re-export. Define private non-variadic fn returning *mut c_char in fts5.rs.",
         "Each call site passes sqlite_printf!(fmt, args...) directly. Depends on fts5_ParseError_variadic_removal being complete."
+      ],
+      "depends_on": [
+        "fts5_ParseError_variadic_removal"
       ],
       "constraints": {
         "prev_sqlite3Fts5ParseError_complete": {
@@ -1053,10 +1074,7 @@
           "description": "Behavioral: fts5.rs must have at least 133 sqlite_printf! calls (119 + 14 sqlite3Fts5Mprintf call sites)",
           "fails_count": 1
         }
-      },
-      "depends_on": [
-        "fts5_ParseError_variadic_removal"
-      ]
+      }
     },
     "fts5_BufferAppendPrintf_variadic_removal": {
       "type": "Feature",
@@ -1067,6 +1085,9 @@
         "sqlite3Fts5BufferAppendPrintf in printf_c_variadic.rs: if *pRc==OK, formats via sqlite3_vmprintf then appends to Fts5Buffer. 26 call sites in fts5.rs.",
         "Remove from printf_c_variadic.rs and pub use re-export. Define private non-variadic fn in fts5.rs taking pre-formatted *mut c_char.",
         "Each call site passes sqlite_printf!(fmt, args...) as the string arg. Depends on fts5_Mprintf_variadic_removal being complete."
+      ],
+      "depends_on": [
+        "fts5_Mprintf_variadic_removal"
       ],
       "constraints": {
         "prev_sqlite3Fts5Mprintf_complete": {
@@ -1093,10 +1114,7 @@
           "description": "Behavioral: fts5.rs must have at least 159 sqlite_printf! calls (133 + 26 sqlite3Fts5BufferAppendPrintf call sites)",
           "fails_count": 1
         }
-      },
-      "depends_on": [
-        "fts5_Mprintf_variadic_removal"
-      ]
+      }
     }
   }
 }

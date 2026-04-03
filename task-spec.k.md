@@ -20,6 +20,7 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
       - [no_sqlite3_snprintf_definition](#no_sqlite3_snprintf_definition)
     - [Feature: build_all](#build_all)
       - [constraint_build_all](#constraint_build_all)
+      - [constraint_cargo_test_printf](#constraint_cargo_test_printf)
     - [Feature: fts3_aux_c_variadic_migration](#fts3_aux_c_variadic_migration)
       - [fts3_aux_no_sqlite3_mprintf](#fts3_aux_no_sqlite3_mprintf)
       - [fts3_aux_no_sqlite3_mprintf_use](#fts3_aux_no_sqlite3_mprintf_use)
@@ -204,6 +205,10 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
 #### constraint_build_all
 **Description:** Ensure our rust codebase is healthy
 **Command:** `cd $WORKSPACE_ROOT && ./build_all.sh`
+
+#### constraint_cargo_test_printf
+**Description:** Run printf_compare integration tests to verify our sqlite_printf! macro matches sqlite3_str_vappendf output
+**Command:** `cd $PROJECT_ROOT && cargo test --test printf_compare 2>&1 | grep -q "test result: ok" || exit 1`
 
 ### Feature: fts3_aux_c_variadic_migration
 **Migrate src/ext/fts3/fts3_aux.rs away from sqlite3_mprintf to sqlite_printf! proc macro**
