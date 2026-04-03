@@ -2231,17 +2231,12 @@ unsafe extern "C" fn fts5StorageGetStmt(
                                 as ::core::ffi::c_int
                                 != 0
                         {
-                            zBind = sqlite3Fts5Mprintf(
-                                &raw mut rc,
-                                b"%z%s?%d\0" as *const u8 as *const ::core::ffi::c_char,
-                                zBind,
-                                if !zBind.is_null() {
-                                    b",\0" as *const u8 as *const ::core::ffi::c_char
-                                } else {
-                                    b"\0" as *const u8 as *const ::core::ffi::c_char
-                                },
-                                i + 1 as ::core::ffi::c_int,
-                            );
+                            let zSep: *const ::core::ffi::c_char = if !zBind.is_null() {
+                                b",\0" as *const u8 as *const ::core::ffi::c_char
+                            } else {
+                                b"\0" as *const u8 as *const ::core::ffi::c_char
+                            };
+                            zBind = sqlite3Fts5Mprintf(&raw mut rc, sqlite_printf!("%z%s?%d", zBind, zSep, i + 1 as ::core::ffi::c_int));
                         }
                         i += 1;
                     }
@@ -2251,28 +2246,24 @@ unsafe extern "C" fn fts5StorageGetStmt(
                             if *__pC_ref.abUnindexed.offset(i as isize) as ::core::ffi::c_int
                                 == 0 as ::core::ffi::c_int
                             {
-                                zBind = sqlite3Fts5Mprintf(
-                                    &raw mut rc,
-                                    b"%z,?%d\0" as *const u8 as *const ::core::ffi::c_char,
-                                    zBind,
+                                zBind = sqlite3Fts5Mprintf(&raw mut rc, sqlite_printf!("%z,?%d", zBind,
                                     __pC_ref.nCol + i + 2 as ::core::ffi::c_int,
-                                );
+                                ));
                             }
                             i += 1;
                         }
                     }
-                    let fmt = if stmt == Fts5SqlStmt::STMT_INSERT_CONTENT {
-                        b"INSERT INTO %Q.'%q_content' VALUES(%s)\0" as *const u8 as *const ::core::ffi::c_char
+                    let zS = if stmt == Fts5SqlStmt::STMT_INSERT_CONTENT {
+                        sqlite3Fts5Mprintf(
+                            &raw mut rc,
+                            sqlite_printf!("INSERT INTO %Q.'%q_content' VALUES(%s)", __pC_ref.zDb, __pC_ref.zName, zBind),
+                        )
                     } else {
-                        b"REPLACE INTO %Q.'%q_content' VALUES(%s)\0" as *const u8 as *const ::core::ffi::c_char
+                        sqlite3Fts5Mprintf(
+                            &raw mut rc,
+                            sqlite_printf!("REPLACE INTO %Q.'%q_content' VALUES(%s)", __pC_ref.zDb, __pC_ref.zName, zBind),
+                        )
                     };
-                    let zS = sqlite3Fts5Mprintf(
-                        &raw mut rc,
-                        fmt,
-                        __pC_ref.zDb,
-                        __pC_ref.zName,
-                        zBind,
-                    );
                     crate::src::src::malloc::sqlite3_free(zBind as *mut ::core::ffi::c_void);
                     zS
                 }
@@ -4319,7 +4310,7 @@ unsafe extern "C" fn fts5ExprGetToken(
                 {
                     sqlite3Fts5ParseError(
                         pParse,
-                        b"unterminated string\0" as *const u8 as *const ::core::ffi::c_char,
+                        sqlite_printf!("unterminated string"),
                     );
                     return FTS5_EOF;
                 }
@@ -4332,12 +4323,13 @@ unsafe extern "C" fn fts5ExprGetToken(
             if sqlite3Fts5IsBareword(*z.offset(0 as isize))
                 == 0 as ::core::ffi::c_int
             {
-                sqlite3Fts5ParseError(
-                    pParse,
-                    b"fts5: syntax error near \"%.1s\"\0" as *const u8
-                        as *const ::core::ffi::c_char,
-                    z,
-                );
+                {
+                    let zTmp = sqlite_printf!("%.*s", 1, z);
+                    sqlite3Fts5ParseError(
+                        pParse,
+                        sqlite_printf!("fts5: syntax error near \"%z\"", zTmp),
+                    );
+                }
                 return FTS5_EOF;
             }
             tok = FTS5_STRING;
@@ -4719,12 +4711,9 @@ unsafe extern "C" fn fts5ConfigParseSpecial(
         } else if *zArg.offset(0 as isize) != 0 {
             let __pConfig_ref = { &mut *pConfig };
             __pConfig_ref.eContent = FTS5_CONTENT_EXTERNAL;
-            __pConfig_ref.zContent = sqlite3Fts5Mprintf(
-                &raw mut rc,
-                b"%Q.%Q\0" as *const u8 as *const ::core::ffi::c_char,
-                __pConfig_ref.zDb,
+            __pConfig_ref.zContent = sqlite3Fts5Mprintf(&raw mut rc, sqlite_printf!("%Q.%Q", __pConfig_ref.zDb,
                 zArg,
-            );
+            ));
         } else {
             (*pConfig).eContent = FTS5_CONTENT_NONE;
         }
@@ -4881,7 +4870,10 @@ unsafe extern "C" fn fts5ConfigParseSpecial(
         }
         return rc;
     }
-    *pzErr = crate::sqlite_printf!("unrecognized option: \"%.*s\"", nCmd, zCmd);
+    {
+        let zTmp = crate::sqlite_printf!("%.*s", nCmd, zCmd);
+        *pzErr = crate::sqlite_printf!("unrecognized option: \"%z\"", zTmp);
+    }
     crate::src::headers::sqlite3_h::SQLITE_ERROR
 }
 
@@ -5110,36 +5102,91 @@ pub const FTS5_BI_ORDER_ROWID: ::core::ffi::c_int = 0x40 as ::core::ffi::c_int;
 
 pub const FTS5_BI_ORDER_DESC: ::core::ffi::c_int = 0x80 as ::core::ffi::c_int;
 
+unsafe fn fts5ExecPrintf(
+    db: *mut crate::src::headers::sqliteInt_h::sqlite3,
+    pzErr: *mut *mut ::core::ffi::c_char,
+    zSql: *mut ::core::ffi::c_char,
+) -> ::core::ffi::c_int {
+    let mut rc: ::core::ffi::c_int = 0;
+    if !zSql.is_null() {
+        rc = crate::src::src::legacy::sqlite3_exec(
+            db,
+            zSql,
+            None,
+            ::core::ptr::null_mut::<::core::ffi::c_void>(),
+            pzErr,
+        );
+        crate::src::src::malloc::sqlite3_free(zSql as *mut ::core::ffi::c_void);
+    } else {
+        rc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
+    }
+    rc
+}
+
+unsafe fn sqlite3Fts5ParseError(
+    pParse: *mut Fts5Parse,
+    zErr: *mut ::core::ffi::c_char,
+) {
+    if (*pParse).rc == crate::src::headers::sqlite3_h::SQLITE_OK {
+        (*pParse).zErr = zErr;
+        (*pParse).rc = crate::src::headers::sqlite3_h::SQLITE_ERROR;
+    } else {
+        crate::src::src::malloc::sqlite3_free(zErr as *mut ::core::ffi::c_void);
+    }
+}
+
+unsafe fn sqlite3Fts5Mprintf(
+    pRc: *mut ::core::ffi::c_int,
+    zFormatted: *mut ::core::ffi::c_char,
+) -> *mut ::core::ffi::c_char {
+    let mut zRet: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
+    if *pRc == crate::src::headers::sqlite3_h::SQLITE_OK {
+        zRet = zFormatted;
+        if zRet.is_null() {
+            *pRc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
+        }
+    } else {
+        crate::src::src::malloc::sqlite3_free(zFormatted as *mut ::core::ffi::c_void);
+    }
+    zRet
+}
+
+unsafe fn sqlite3Fts5BufferAppendPrintf(
+    pRc: *mut ::core::ffi::c_int,
+    pBuf: *mut Fts5Buffer,
+    zFormatted: *mut ::core::ffi::c_char,
+) {
+    if *pRc == crate::src::headers::sqlite3_h::SQLITE_OK {
+        if zFormatted.is_null() {
+            *pRc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
+        } else {
+            sqlite3Fts5BufferAppendString(pRc, pBuf, zFormatted);
+            crate::src::src::malloc::sqlite3_free(zFormatted as *mut ::core::ffi::c_void);
+        }
+    } else {
+        crate::src::src::malloc::sqlite3_free(zFormatted as *mut ::core::ffi::c_void);
+    }
+}
+
 unsafe extern "C" fn sqlite3Fts5DropAll(mut pConfig: *mut Fts5Config) -> ::core::ffi::c_int {
     let __pConfig_ref = { &*pConfig };
     let mut rc: ::core::ffi::c_int = fts5ExecPrintf(
         __pConfig_ref.db,
         ::core::ptr::null_mut::<*mut ::core::ffi::c_char>(),
-        b"DROP TABLE IF EXISTS %Q.'%q_data';DROP TABLE IF EXISTS %Q.'%q_idx';DROP TABLE IF EXISTS %Q.'%q_config';\0"
-            as *const u8 as *const ::core::ffi::c_char,
-        __pConfig_ref.zDb,
-        __pConfig_ref.zName,
-        __pConfig_ref.zDb,
-        __pConfig_ref.zName,
-        __pConfig_ref.zDb,
-        __pConfig_ref.zName,
+        sqlite_printf!("DROP TABLE IF EXISTS %Q.'%q_data';DROP TABLE IF EXISTS %Q.'%q_idx';DROP TABLE IF EXISTS %Q.'%q_config';", __pConfig_ref.zDb, __pConfig_ref.zName, __pConfig_ref.zDb, __pConfig_ref.zName, __pConfig_ref.zDb, __pConfig_ref.zName),
     );
     if rc == crate::src::headers::sqlite3_h::SQLITE_OK && __pConfig_ref.bColumnsize != 0 {
         rc = fts5ExecPrintf(
             __pConfig_ref.db,
             ::core::ptr::null_mut::<*mut ::core::ffi::c_char>(),
-            b"DROP TABLE IF EXISTS %Q.'%q_docsize';\0" as *const u8 as *const ::core::ffi::c_char,
-            __pConfig_ref.zDb,
-            __pConfig_ref.zName,
+            sqlite_printf!("DROP TABLE IF EXISTS %Q.'%q_docsize';", __pConfig_ref.zDb, __pConfig_ref.zName),
         );
     }
     if rc == crate::src::headers::sqlite3_h::SQLITE_OK && __pConfig_ref.eContent == FTS5_CONTENT_NORMAL {
         rc = fts5ExecPrintf(
             __pConfig_ref.db,
             ::core::ptr::null_mut::<*mut ::core::ffi::c_char>(),
-            b"DROP TABLE IF EXISTS %Q.'%q_content';\0" as *const u8 as *const ::core::ffi::c_char,
-            __pConfig_ref.zDb,
-            __pConfig_ref.zName,
+            sqlite_printf!("DROP TABLE IF EXISTS %Q.'%q_content';", __pConfig_ref.zDb, __pConfig_ref.zName),
         );
     }
     rc
@@ -5729,13 +5776,7 @@ unsafe extern "C" fn fts5StorageRenameOne(
         *pRc = fts5ExecPrintf(
             __pConfig_ref.db,
             ::core::ptr::null_mut::<*mut ::core::ffi::c_char>(),
-            b"ALTER TABLE %Q.'%q_%s' RENAME TO '%q_%s';\0" as *const u8
-                as *const ::core::ffi::c_char,
-            __pConfig_ref.zDb,
-            __pConfig_ref.zName,
-            zTail,
-            zName,
-            zTail,
+            sqlite_printf!("ALTER TABLE %Q.'%q_%s' RENAME TO '%q_%s';", __pConfig_ref.zDb, __pConfig_ref.zName, zTail, zName, zTail),
         );
     }
 }
@@ -6101,16 +6142,7 @@ unsafe extern "C" fn sqlite3Fts5CreateTable(
     rc = fts5ExecPrintf(
         __pConfig_ref.db,
         &raw mut zErr,
-        b"CREATE TABLE %Q.'%q_%q'(%s)%s\0" as *const u8 as *const ::core::ffi::c_char,
-        __pConfig_ref.zDb,
-        __pConfig_ref.zName,
-        zPost,
-        zDefn,
-        if bWithout != 0 {
-            b" WITHOUT ROWID\0" as *const u8 as *const ::core::ffi::c_char
-        } else {
-            b"\0" as *const u8 as *const ::core::ffi::c_char
-        },
+        sqlite_printf!("CREATE TABLE %Q.'%q_%q'(%s)%s", __pConfig_ref.zDb, __pConfig_ref.zName, zPost, zDefn, if bWithout != 0 { b" WITHOUT ROWID\0" as *const u8 as *const ::core::ffi::c_char } else { b"\0" as *const u8 as *const ::core::ffi::c_char }),
     );
     if !zErr.is_null() {
         *pzErr = crate::sqlite_printf!("fts5: error creating shadow table %q_%s: %s",
@@ -6415,12 +6447,7 @@ unsafe extern "C" fn fts5VocabOpenMethod(
     }
     zSql = sqlite3Fts5Mprintf(
         &raw mut rc,
-        b"SELECT t.%Q FROM %Q.%Q AS t WHERE t.%Q MATCH '*id'\0" as *const u8
-            as *const ::core::ffi::c_char,
-        __pTab_ref.zFts5Tbl,
-        __pTab_ref.zFts5Db,
-        __pTab_ref.zFts5Tbl,
-        __pTab_ref.zFts5Tbl,
+        sqlite_printf!("SELECT t.%Q FROM %Q.%Q AS t WHERE t.%Q MATCH '*id'", __pTab_ref.zFts5Tbl, __pTab_ref.zFts5Db, __pTab_ref.zFts5Tbl, __pTab_ref.zFts5Tbl),
     );
     if !zSql.is_null() {
         rc = crate::src::src::prepare::sqlite3_prepare_v2(
@@ -10419,41 +10446,31 @@ unsafe extern "C" fn fts5ConfigMakeExprlist(mut p: *mut Fts5Config) -> ::core::f
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
     let mut buf: Fts5Buffer = { ::core::mem::zeroed() };
     let __p_ref = { &mut *p };
-    sqlite3Fts5BufferAppendPrintf(
+sqlite3Fts5BufferAppendPrintf(
         &raw mut rc,
         &raw mut buf,
-        b"T.%Q\0" as *const u8 as *const ::core::ffi::c_char as *mut ::core::ffi::c_char,
-        __p_ref.zContentRowid,
-    );
-    if __p_ref.eContent != FTS5_CONTENT_NONE {
+        sqlite_printf!("T.%Q", __p_ref.zContentRowid,),
+    );    if __p_ref.eContent != FTS5_CONTENT_NONE {
         i = 0 as ::core::ffi::c_int;
         while i < __p_ref.nCol {
             if __p_ref.eContent == FTS5_CONTENT_EXTERNAL {
-                sqlite3Fts5BufferAppendPrintf(
+sqlite3Fts5BufferAppendPrintf(
                     &raw mut rc,
                     &raw mut buf,
-                    b", T.%Q\0" as *const u8 as *const ::core::ffi::c_char
-                        as *mut ::core::ffi::c_char,
-                    *__p_ref.azCol.offset(i as isize),
-                );
-            } else if __p_ref.eContent == FTS5_CONTENT_NORMAL
+        sqlite_printf!(", T.%Q", *__p_ref.azCol.offset(i as isize),),
+    );            } else if __p_ref.eContent == FTS5_CONTENT_NORMAL
                 || *__p_ref.abUnindexed.offset(i as isize) as ::core::ffi::c_int != 0
             {
-                sqlite3Fts5BufferAppendPrintf(
+sqlite3Fts5BufferAppendPrintf(
                     &raw mut rc,
                     &raw mut buf,
-                    b", T.c%d\0" as *const u8 as *const ::core::ffi::c_char
-                        as *mut ::core::ffi::c_char,
-                    i,
-                );
-            } else {
-                sqlite3Fts5BufferAppendPrintf(
+        sqlite_printf!(", T.c%d", i,),
+    );            } else {
+sqlite3Fts5BufferAppendPrintf(
                     &raw mut rc,
                     &raw mut buf,
-                    b", NULL\0" as *const u8 as *const ::core::ffi::c_char
-                        as *mut ::core::ffi::c_char,
-                );
-            }
+        sqlite_printf!(", NULL"),
+    );            }
             i += 1;
         }
     }
@@ -10462,21 +10479,16 @@ unsafe extern "C" fn fts5ConfigMakeExprlist(mut p: *mut Fts5Config) -> ::core::f
         while i < __p_ref.nCol {
             if *__p_ref.abUnindexed.offset(i as isize) as ::core::ffi::c_int == 0 as ::core::ffi::c_int
             {
-                sqlite3Fts5BufferAppendPrintf(
+sqlite3Fts5BufferAppendPrintf(
                     &raw mut rc,
                     &raw mut buf,
-                    b", T.l%d\0" as *const u8 as *const ::core::ffi::c_char
-                        as *mut ::core::ffi::c_char,
-                    i,
-                );
-            } else {
-                sqlite3Fts5BufferAppendPrintf(
+        sqlite_printf!(", T.l%d", i,),
+    );            } else {
+sqlite3Fts5BufferAppendPrintf(
                     &raw mut rc,
                     &raw mut buf,
-                    b", NULL\0" as *const u8 as *const ::core::ffi::c_char
-                        as *mut ::core::ffi::c_char,
-                );
-            }
+        sqlite_printf!(", NULL"),
+    );            }
             i += 1;
         }
     }
@@ -12623,13 +12635,10 @@ unsafe extern "C" fn sqlite3Fts5ConfigParse(
             zTail = b"docsize\0" as *const u8 as *const ::core::ffi::c_char;
         }
         if !zTail.is_null() {
-            __pRet_ref.zContent = sqlite3Fts5Mprintf(
-                &raw mut rc,
-                b"%Q.'%q_%s'\0" as *const u8 as *const ::core::ffi::c_char,
-                __pRet_ref.zDb,
+            __pRet_ref.zContent = sqlite3Fts5Mprintf(&raw mut rc, sqlite_printf!("%Q.'%q_%s'", __pRet_ref.zDb,
                 __pRet_ref.zName,
                 zTail,
-            );
+            ));
         }
     }
     if rc == crate::src::headers::sqlite3_h::SQLITE_OK && (*pRet).zContentRowid.is_null() {
@@ -14508,10 +14517,7 @@ unsafe extern "C" fn sqlite3Fts5ConfigDeclareVtab(
     let mut i: ::core::ffi::c_int = 0;
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
     let mut zSql: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
-    zSql = sqlite3Fts5Mprintf(
-        &raw mut rc,
-        b"CREATE TABLE x(\0" as *const u8 as *const ::core::ffi::c_char,
-    );
+    zSql = sqlite3Fts5Mprintf(&raw mut rc, sqlite_printf!("CREATE TABLE x(",  ));
     i = 0 as ::core::ffi::c_int;
     while !zSql.is_null() && i < (*pConfig).nCol {
         let mut zSep: *const ::core::ffi::c_char = if i == 0 as ::core::ffi::c_int {
@@ -14519,22 +14525,16 @@ unsafe extern "C" fn sqlite3Fts5ConfigDeclareVtab(
         } else {
             b", \0" as *const u8 as *const ::core::ffi::c_char
         };
-        zSql = sqlite3Fts5Mprintf(
-            &raw mut rc,
-            b"%z%s%Q\0" as *const u8 as *const ::core::ffi::c_char,
-            zSql,
+        zSql = sqlite3Fts5Mprintf(&raw mut rc, sqlite_printf!("%z%s%Q", zSql,
             zSep,
             *(*pConfig).azCol.offset(i as isize),
-        );
+        ));
         i += 1;
     }
-    zSql = sqlite3Fts5Mprintf(
-        &raw mut rc,
-        b"%z, %Q HIDDEN, %s HIDDEN)\0" as *const u8 as *const ::core::ffi::c_char,
-        zSql,
+    zSql = sqlite3Fts5Mprintf(&raw mut rc, sqlite_printf!("%z, %Q HIDDEN, %s HIDDEN)", zSql,
         (*pConfig).zName,
         FTS5_RANK_NAME.as_ptr(),
-    );
+    ));
     if !zSql.is_null() {
         rc = crate::src::src::vtab::sqlite3_declare_vtab((*pConfig).db, zSql);
         crate::src::src::malloc::sqlite3_free(zSql as *mut ::core::ffi::c_void);
@@ -14920,29 +14920,20 @@ unsafe extern "C" fn sqlite3Fts5StorageDeleteAll(mut p: *mut Fts5Storage) -> ::c
     rc = fts5ExecPrintf(
         __pConfig_ref.db,
         ::core::ptr::null_mut::<*mut ::core::ffi::c_char>(),
-        b"DELETE FROM %Q.'%q_data';DELETE FROM %Q.'%q_idx';\0" as *const u8
-            as *const ::core::ffi::c_char,
-        __pConfig_ref.zDb,
-        __pConfig_ref.zName,
-        __pConfig_ref.zDb,
-        __pConfig_ref.zName,
+        sqlite_printf!("DELETE FROM %Q.'%q_data';DELETE FROM %Q.'%q_idx';", __pConfig_ref.zDb, __pConfig_ref.zName, __pConfig_ref.zDb, __pConfig_ref.zName),
     );
     if rc == crate::src::headers::sqlite3_h::SQLITE_OK && __pConfig_ref.bColumnsize != 0 {
         rc = fts5ExecPrintf(
             __pConfig_ref.db,
             ::core::ptr::null_mut::<*mut ::core::ffi::c_char>(),
-            b"DELETE FROM %Q.'%q_docsize';\0" as *const u8 as *const ::core::ffi::c_char,
-            __pConfig_ref.zDb,
-            __pConfig_ref.zName,
+            sqlite_printf!("DELETE FROM %Q.'%q_docsize';", __pConfig_ref.zDb, __pConfig_ref.zName),
         );
     }
     if rc == crate::src::headers::sqlite3_h::SQLITE_OK && __pConfig_ref.eContent == FTS5_CONTENT_UNINDEXED {
         rc = fts5ExecPrintf(
             __pConfig_ref.db,
             ::core::ptr::null_mut::<*mut ::core::ffi::c_char>(),
-            b"DELETE FROM %Q.'%q_content';\0" as *const u8 as *const ::core::ffi::c_char,
-            __pConfig_ref.zDb,
-            __pConfig_ref.zName,
+            sqlite_printf!("DELETE FROM %Q.'%q_content';", __pConfig_ref.zDb, __pConfig_ref.zName),
         );
     }
     if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
@@ -15302,7 +15293,7 @@ unsafe extern "C" fn fts5yyStackOverflow(mut fts5yypParser: *mut fts5yyParser) {
     }
     sqlite3Fts5ParseError(
         pParse,
-        b"fts5: parser stack overflow\0" as *const u8 as *const ::core::ffi::c_char,
+        sqlite_printf!("fts5: parser stack overflow"),
     );
     __fts5yypParser_ref.pParse = pParse;
 }
@@ -17383,7 +17374,7 @@ unsafe extern "C" fn sqlite3Fts5ConfigLoad(
     __pConfig_ref.nCrisisMerge = FTS5_DEFAULT_CRISISMERGE;
     __pConfig_ref.nHashSize = FTS5_DEFAULT_HASHSIZE;
     __pConfig_ref.nDeleteMerge = FTS5_DEFAULT_DELETE_AUTOMERGE;
-    zSql = sqlite3Fts5Mprintf(&raw mut rc, zSelect, __pConfig_ref.zDb, __pConfig_ref.zName);
+    zSql = sqlite3Fts5Mprintf(&raw mut rc, sqlite_printf!("SELECT k, v FROM %Q.'%q_config'", __pConfig_ref.zDb, __pConfig_ref.zName));
     if !zSql.is_null() {
         rc = crate::src::src::prepare::sqlite3_prepare_v2(
             __pConfig_ref.db,
@@ -18142,7 +18133,7 @@ unsafe extern "C" fn fts5SpecialMatch(
     {
         (*pCsr).iSpecial = (*pCsr).iCsrId;
     } else {
-        (*pTab).p.base.zErrMsg = sqlite3Fts5Mprintf(&raw mut rc, b"unknown special query: %.*s\0" as *const u8 as *const ::core::ffi::c_char, n, z);
+        (*pTab).p.base.zErrMsg = sqlite3Fts5Mprintf(&raw mut rc, sqlite_printf!("unknown special query: %.*s", n, z));
         rc = crate::src::headers::sqlite3_h::SQLITE_ERROR;
     }
     rc
@@ -18349,11 +18340,8 @@ unsafe extern "C" fn fts5FindRankFunction(mut pCsr: *mut Fts5Cursor) -> ::core::
     let mut zRank: *const ::core::ffi::c_char = __pCsr_ref.zRank;
     let mut zRankArgs: *const ::core::ffi::c_char = __pCsr_ref.zRankArgs;
     if !zRankArgs.is_null() {
-        let mut zSql: *mut ::core::ffi::c_char = sqlite3Fts5Mprintf(
-            &raw mut rc,
-            b"SELECT %s\0" as *const u8 as *const ::core::ffi::c_char,
-            zRankArgs,
-        );
+        let mut zSql: *mut ::core::ffi::c_char = sqlite3Fts5Mprintf(&raw mut rc, sqlite_printf!("SELECT %s", zRankArgs,
+        ));
         if !zSql.is_null() {
             let mut pStmt: *mut crate::src::headers::sqlite3_h::sqlite3_stmt = ::core::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_stmt>();
             rc = crate::src::src::prepare::sqlite3_prepare_v3(
@@ -19053,12 +19041,13 @@ unsafe extern "C" fn fts5yy_syntax_error(
     mut fts5yyminor: Fts5Token,
 ) {
     let mut pParse: *mut Fts5Parse = (*fts5yypParser).pParse;
-    sqlite3Fts5ParseError(
-        pParse,
-        b"fts5: syntax error near \"%.*s\"\0" as *const u8 as *const ::core::ffi::c_char,
-        fts5yyminor.n,
-        fts5yyminor.p,
-    );
+    {
+        let zTmp = sqlite_printf!("%.*s", fts5yyminor.n, fts5yyminor.p);
+        sqlite3Fts5ParseError(
+            pParse,
+            sqlite_printf!("fts5: syntax error near \"%z\"", zTmp),
+        );
+    }
     (*fts5yypParser).pParse = pParse;
 }
 
@@ -19643,12 +19632,9 @@ unsafe extern "C" fn fts5ExtractExprText(
             &raw mut pLoc,
             &raw mut nLoc,
         );
-        *pzText = sqlite3Fts5Mprintf(
-            &raw mut rc,
-            b"%.*s\0" as *const u8 as *const ::core::ffi::c_char,
-            nText,
+        *pzText = sqlite3Fts5Mprintf(&raw mut rc, sqlite_printf!("%.*s", nText,
             pText,
-        );
+        ));
         if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
             sqlite3Fts5SetLocale(pConfig, pLoc, nLoc);
         }
@@ -22297,12 +22283,13 @@ unsafe extern "C" fn sqlite3Fts5ParseNear(mut pParse: *mut Fts5Parse, mut pTok: 
             4 as crate::__stddef_size_t_h::size_t,
         ) != 0
     {
-        sqlite3Fts5ParseError(
-            pParse,
-            b"fts5: syntax error near \"%.*s\"\0" as *const u8 as *const ::core::ffi::c_char,
-            (*pTok).n,
-            (*pTok).p,
-        );
+        {
+            let zTmp = sqlite_printf!("%.*s", (*pTok).n, (*pTok).p);
+            sqlite3Fts5ParseError(
+                pParse,
+                sqlite_printf!("fts5: syntax error near \"%z\"", zTmp),
+            );
+        }
     }
 }
 
@@ -22321,10 +22308,10 @@ unsafe extern "C" fn sqlite3Fts5ParseSetDistance(
                 if (c as ::core::ffi::c_int) < '0' as i32 || c as ::core::ffi::c_int > '9' as i32 {
                     sqlite3Fts5ParseError(
                         pParse,
-                        b"expected integer, got \"%.*s\"\0" as *const u8
-                            as *const ::core::ffi::c_char,
-                        (*p).n,
-                        (*p).p,
+                        {
+                            let zTmp = sqlite_printf!("%.*s", (*p).n, (*p).p);
+                            sqlite_printf!("expected integer, got \"%z\"", zTmp)
+                        },
                     );
                     return;
                 }
@@ -22563,10 +22550,9 @@ unsafe extern "C" fn sqlite3Fts5ParseColset(
         }
         if iCol == (*pConfig).nCol {
             sqlite3Fts5ParseError(
-                pParse,
-                b"no such column: %s\0" as *const u8 as *const ::core::ffi::c_char,
-                z,
-            );
+        pParse,
+        sqlite_printf!("no such column: %s", z),
+    );
         } else {
             pRet = fts5ParseColset(pParse, pColset, iCol);
         }
@@ -23004,8 +22990,7 @@ unsafe extern "C" fn sqlite3Fts5ParseSetColset(
     if (*(*pParse).pConfig).eDetail == FTS5_DETAIL_NONE {
         sqlite3Fts5ParseError(
             pParse,
-            b"fts5: column queries are not supported (detail=none)\0" as *const u8
-                as *const ::core::ffi::c_char,
+            sqlite_printf!("fts5: column queries are not supported (detail=none)"),
         );
     } else {
         fts5ParseSetColset(pParse, pExpr, pColset, &raw mut pFree);
@@ -23681,13 +23666,7 @@ unsafe extern "C" fn sqlite3Fts5ParseNode(
                         {
                             sqlite3Fts5ParseError(
                                 pParse,
-                                b"fts5: %s queries are not supported (detail!=full)\0" as *const u8
-                                    as *const ::core::ffi::c_char,
-                                if (*pNear).nPhrase == 1 as ::core::ffi::c_int {
-                                    b"phrase\0" as *const u8 as *const ::core::ffi::c_char
-                                } else {
-                                    b"NEAR\0" as *const u8 as *const ::core::ffi::c_char
-                                },
+                                sqlite_printf!("fts5: %s queries are not supported (detail!=full)", if (*pNear).nPhrase == 1 as ::core::ffi::c_int { b"phrase\0" as *const u8 as *const ::core::ffi::c_char } else { b"NEAR\0" as *const u8 as *const ::core::ffi::c_char }),
                             );
                             sqlite3Fts5ParseNodeFree(pRet);
                             pRet = ::core::ptr::null_mut::<Fts5ExprNode>();
@@ -23701,11 +23680,9 @@ unsafe extern "C" fn sqlite3Fts5ParseNode(
                     pLeft = pRight;
                     if (*pRet).iHeight > SQLITE_FTS5_MAX_EXPR_DEPTH {
                         sqlite3Fts5ParseError(
-                            pParse,
-                            b"fts5 expression tree is too large (maximum depth %d)\0" as *const u8
-                                as *const ::core::ffi::c_char,
-                            SQLITE_FTS5_MAX_EXPR_DEPTH,
-                        );
+        pParse,
+        sqlite_printf!("fts5 expression tree is too large (maximum depth %d)", SQLITE_FTS5_MAX_EXPR_DEPTH),
+    );
                         sqlite3Fts5ParseNodeFree(pRet);
                         pRet = ::core::ptr::null_mut::<Fts5ExprNode>();
                     }
@@ -31829,11 +31806,7 @@ unsafe extern "C" fn sqlite3Fts5IndexOpen(
         let __p_ref = { &mut *p };
         __p_ref.pConfig = pConfig;
         __p_ref.nWorkUnit = FTS5_WORK_UNIT;
-        __p_ref.zDataTbl = sqlite3Fts5Mprintf(
-            &raw mut rc,
-            b"%s_data\0" as *const u8 as *const ::core::ffi::c_char,
-            (*pConfig).zName,
-        );
+        __p_ref.zDataTbl = sqlite3Fts5Mprintf(&raw mut rc, sqlite_printf!("%s_data", (*pConfig).zName));
         if !__p_ref.zDataTbl.is_null() && bCreate != 0 {
             rc = sqlite3Fts5CreateTable(
                 pConfig,
@@ -33782,38 +33755,32 @@ unsafe extern "C" fn fts5DebugRowid(
     if iSegid == 0 as ::core::ffi::c_int {
         if iKey == FTS5_AVERAGES_ROWID as i64_0 {
             sqlite3Fts5BufferAppendPrintf(
-                pRc,
-                pBuf,
-                b"{averages} \0" as *const u8 as *const ::core::ffi::c_char
-                    as *mut ::core::ffi::c_char,
-            );
+            pRc,
+            pBuf,
+            sqlite_printf!("{averages} "),
+        );
         } else {
             sqlite3Fts5BufferAppendPrintf(
-                pRc,
-                pBuf,
-                b"{structure}\0" as *const u8 as *const ::core::ffi::c_char
-                    as *mut ::core::ffi::c_char,
-            );
+            pRc,
+            pBuf,
+            sqlite_printf!("{structure}"),
+        );
         }
     } else {
+        let zDlidx: *const ::core::ffi::c_char = if bDlidx != 0 {
+            b"dlidx \0" as *const u8 as *const ::core::ffi::c_char
+        } else {
+            b"\0" as *const u8 as *const ::core::ffi::c_char
+        };
+        let zTomb: *const ::core::ffi::c_char = if bTomb != 0 {
+            b"tombstone \0" as *const u8 as *const ::core::ffi::c_char
+        } else {
+            b"\0" as *const u8 as *const ::core::ffi::c_char
+        };
         sqlite3Fts5BufferAppendPrintf(
             pRc,
             pBuf,
-            b"{%s%ssegid=%d h=%d pgno=%d}\0" as *const u8 as *const ::core::ffi::c_char
-                as *mut ::core::ffi::c_char,
-            if bDlidx != 0 {
-                b"dlidx \0" as *const u8 as *const ::core::ffi::c_char
-            } else {
-                b"\0" as *const u8 as *const ::core::ffi::c_char
-            },
-            if bTomb != 0 {
-                b"tombstone \0" as *const u8 as *const ::core::ffi::c_char
-            } else {
-                b"\0" as *const u8 as *const ::core::ffi::c_char
-            },
-            iSegid,
-            iHeight,
-            iPgno,
+            sqlite_printf!("{%s%ssegid=%d h=%d pgno=%d}", zDlidx, zTomb, iSegid, iHeight, iPgno),
         );
     };
 }
@@ -33834,11 +33801,7 @@ unsafe extern "C" fn fts5DebugStructure(
         sqlite3Fts5BufferAppendPrintf(
             pRc,
             pBuf,
-            b" {lvl=%d nMerge=%d nSeg=%d\0" as *const u8 as *const ::core::ffi::c_char
-                as *mut ::core::ffi::c_char,
-            iLvl,
-            __pLvl_ref.nMerge,
-            __pLvl_ref.nSeg,
+            sqlite_printf!(" {lvl=%d nMerge=%d nSeg=%d", iLvl, __pLvl_ref.nMerge, __pLvl_ref.nSeg),
         );
         iSeg = 0 as ::core::ffi::c_int;
         while iSeg < __pLvl_ref.nSeg {
@@ -33846,35 +33809,31 @@ unsafe extern "C" fn fts5DebugStructure(
                 __pLvl_ref.aSeg.offset(iSeg as isize) as *mut Fts5StructureSegment;
             let __pSeg_ref = { &*pSeg };
             sqlite3Fts5BufferAppendPrintf(
-                pRc,
-                pBuf,
-                b" {id=%d leaves=%d..%d\0" as *const u8 as *const ::core::ffi::c_char
-                    as *mut ::core::ffi::c_char,
-                __pSeg_ref.iSegid,
+            pRc,
+            pBuf,
+            sqlite_printf!(" {id=%d leaves=%d..%d", __pSeg_ref.iSegid,
                 __pSeg_ref.pgnoFirst,
-                __pSeg_ref.pgnoLast,
-            );
+                __pSeg_ref.pgnoLast,),
+        );
             if __pSeg_ref.iOrigin1 > 0 as u64_0 {
                 sqlite3Fts5BufferAppendPrintf(
-                    pRc,
-                    pBuf,
-                    b" origin=%lld..%lld\0" as *const u8 as *const ::core::ffi::c_char
-                        as *mut ::core::ffi::c_char,
-                    __pSeg_ref.iOrigin1,
-                    __pSeg_ref.iOrigin2,
-                );
+            pRc,
+            pBuf,
+            sqlite_printf!(" origin=%lld..%lld", __pSeg_ref.iOrigin1,
+                    __pSeg_ref.iOrigin2,),
+        );
             }
             sqlite3Fts5BufferAppendPrintf(
-                pRc,
-                pBuf,
-                b"}\0" as *const u8 as *const ::core::ffi::c_char as *mut ::core::ffi::c_char,
-            );
+            pRc,
+            pBuf,
+            sqlite_printf!("}"),
+        );
             iSeg += 1;
         }
         sqlite3Fts5BufferAppendPrintf(
             pRc,
             pBuf,
-            b"}\0" as *const u8 as *const ::core::ffi::c_char as *mut ::core::ffi::c_char,
+            sqlite_printf!("}"),
         );
         iLvl += 1;
     }
@@ -33919,9 +33878,8 @@ unsafe extern "C" fn fts5DecodeAverages(
         sqlite3Fts5BufferAppendPrintf(
             pRc,
             pBuf,
-            b"%s%d\0" as *const u8 as *const ::core::ffi::c_char as *mut ::core::ffi::c_char,
-            zSpace,
-            iVal as ::core::ffi::c_int,
+            sqlite_printf!("%s%d", zSpace,
+            iVal as ::core::ffi::c_int,),
         );
         zSpace = b" \0" as *const u8 as *const ::core::ffi::c_char;
     }
@@ -33943,8 +33901,7 @@ unsafe extern "C" fn fts5DecodePoslist(
         sqlite3Fts5BufferAppendPrintf(
             pRc,
             pBuf,
-            b" %d\0" as *const u8 as *const ::core::ffi::c_char as *mut ::core::ffi::c_char,
-            iVal,
+            sqlite_printf!(" %d", iVal,),
         );
     }
     iOff
@@ -33966,8 +33923,7 @@ unsafe extern "C" fn fts5DecodeDoclist(
         sqlite3Fts5BufferAppendPrintf(
             pRc,
             pBuf,
-            b" id=%lld\0" as *const u8 as *const ::core::ffi::c_char as *mut ::core::ffi::c_char,
-            iDocid,
+            sqlite_printf!(" id=%lld", iDocid,),
         );
     }
     while iOff < n {
@@ -33981,13 +33937,12 @@ unsafe extern "C" fn fts5DecodeDoclist(
         sqlite3Fts5BufferAppendPrintf(
             pRc,
             pBuf,
-            b" nPos=%d%s\0" as *const u8 as *const ::core::ffi::c_char as *mut ::core::ffi::c_char,
-            nPos,
+            sqlite_printf!(" nPos=%d%s", nPos,
             if bDel != 0 {
                 b"*\0" as *const u8 as *const ::core::ffi::c_char
             } else {
                 b"\0" as *const u8 as *const ::core::ffi::c_char
-            },
+            },),
         );
         iOff += fts5DecodePoslist(
             pRc,
@@ -34003,12 +33958,10 @@ unsafe extern "C" fn fts5DecodeDoclist(
             ) as ::core::ffi::c_int;
             iDocid += iDelta;
             sqlite3Fts5BufferAppendPrintf(
-                pRc,
-                pBuf,
-                b" id=%lld\0" as *const u8 as *const ::core::ffi::c_char
-                    as *mut ::core::ffi::c_char,
-                iDocid,
-            );
+            pRc,
+            pBuf,
+            sqlite_printf!(" id=%lld", iDocid,),
+        );
         }
     }
     iOff
@@ -34044,9 +33997,8 @@ unsafe extern "C" fn fts5DecodeRowidList(
         sqlite3Fts5BufferAppendPrintf(
             pRc,
             pBuf,
-            b" %lld%s\0" as *const u8 as *const ::core::ffi::c_char as *mut ::core::ffi::c_char,
-            iRowid,
-            zApp,
+            sqlite_printf!(" %lld%s", iRowid,
+            zApp,),
         );
     }
 }
@@ -34146,10 +34098,7 @@ unsafe extern "C" fn fts5DecodeFunction(
                 sqlite3Fts5BufferAppendPrintf(
                     &raw mut rc,
                     &raw mut s,
-                    b" %d(%lld)\0" as *const u8 as *const ::core::ffi::c_char
-                        as *mut ::core::ffi::c_char,
-                    lvl.iLeafPgno,
-                    lvl.iRowid,
+                    sqlite_printf!(" %d(%lld)", lvl.iLeafPgno, lvl.iRowid),
                 );
                 fts5DlidxLvlNext(&raw mut lvl);
             }
@@ -34171,15 +34120,13 @@ unsafe extern "C" fn fts5DecodeFunction(
             sqlite3Fts5BufferAppendPrintf(
                 &raw mut rc,
                 &raw mut s,
-                b" nElem=%d\0" as *const u8 as *const ::core::ffi::c_char
-                    as *mut ::core::ffi::c_char,
-                nElem as ::core::ffi::c_int,
+                sqlite_printf!(" nElem=%d", nElem as ::core::ffi::c_int),
             );
             if *aBlob.offset(1 as isize) != 0 {
                 sqlite3Fts5BufferAppendPrintf(
                     &raw mut rc,
                     &raw mut s,
-                    b" 0\0" as *const u8 as *const ::core::ffi::c_char as *mut ::core::ffi::c_char,
+                    sqlite_printf!(" 0"),
                 );
             }
             ii = 0 as ::core::ffi::c_int;
@@ -34203,9 +34150,7 @@ unsafe extern "C" fn fts5DecodeFunction(
                     sqlite3Fts5BufferAppendPrintf(
                         &raw mut rc,
                         &raw mut s,
-                        b" %lld\0" as *const u8 as *const ::core::ffi::c_char
-                            as *mut ::core::ffi::c_char,
-                        iVal as i64_0,
+                        sqlite_printf!(" %lld", iVal as i64_0),
                     );
                 }
                 ii += 1;
@@ -34256,8 +34201,7 @@ unsafe extern "C" fn fts5DecodeFunction(
                 sqlite3Fts5BufferAppendPrintf(
                     &raw mut rc,
                     &raw mut s,
-                    b" term=\0" as *const u8 as *const ::core::ffi::c_char
-                        as *mut ::core::ffi::c_char,
+                    sqlite_printf!(" term="),
                 );
                 fts5BufferAppendTerm(&raw mut rc, &raw mut s, &raw mut term);
                 iOff += nAppend;
@@ -34411,9 +34355,7 @@ unsafe extern "C" fn fts5DecodeFunction(
                                             sqlite3Fts5BufferAppendPrintf(
                                                 &raw mut rc,
                                                 &raw mut s,
-                                                b" term=\0" as *const u8
-                                                    as *const ::core::ffi::c_char
-                                                    as *mut ::core::ffi::c_char,
+                                                sqlite_printf!(" term="),
                                             );
                                             fts5BufferAppendTerm(
                                                 &raw mut rc,
@@ -34879,10 +34821,6 @@ unsafe extern "C" fn sqlite3Fts5IndexReset(mut p: *mut Fts5Index) -> ::core::ffi
 }
 
 // Re-export variadic functions from printf_c_variadic module
-pub use crate::src::printf_c_variadic::sqlite3Fts5BufferAppendPrintf;
-pub use crate::src::printf_c_variadic::sqlite3Fts5Mprintf;
-pub use crate::src::printf_c_variadic::sqlite3Fts5ParseError;
-pub use crate::src::printf_c_variadic::fts5ExecPrintf;
 unsafe fn fts5PrepareStatement(
     ppStmt: *mut *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
     pConfig: *mut Fts5Config,
