@@ -1913,14 +1913,13 @@ pub unsafe fn sqlite3_str_vappendf2_args(
             }
 
             etCHARX => {
+                // Lifted from original sqlite3_str_vappendf (lines 934-1012)
                 if let PrintfArg::Str(text_ptr) = arg {
-                    // SQLFUNC path: text arg → take first (possibly UTF-8) character
+                    // SQLFUNC path: text arg → take first UTF-8 character
                     length = 1;
                     if !text_ptr.is_null() {
-                        let first_byte = *text_ptr;
-                        buf[0] = first_byte;
-                        if first_byte as ::core::ffi::c_int & 0xc0 == 0xc0 {
-                            // Multi-byte UTF-8: copy continuation bytes
+                        buf[0] = *text_ptr;
+                        if *text_ptr as ::core::ffi::c_int & 0xc0 == 0xc0 {
                             while length < 4
                                 && *text_ptr.offset(length as isize) as ::core::ffi::c_int & 0xc0 == 0x80
                             {
@@ -1931,27 +1930,56 @@ pub unsafe fn sqlite3_str_vappendf2_args(
                     } else {
                         buf[0] = 0;
                     }
-                    bufpt = &raw mut buf as *mut ::core::ffi::c_char;
-                    // Precision controls repeat count for SQLFUNC too
-                    if precision >= 1 && precision < length { length = precision; }
-                    width = 0;
                 } else {
-                    // VaList path: integer char code
-                    let ch = match arg {
-                        PrintfArg::Char(v) => v as u8,
-                        PrintfArg::Int(v) => v as u8,
-                        _ => 0u8,
+                    // VaList path: integer char code → UTF-8
+                    let ch_val = match arg {
+                        PrintfArg::Char(v) => v,
+                        PrintfArg::Int(v) => v as ::core::ffi::c_uint,
+                        _ => 0,
                     };
-                    let mut nPad = if precision >= 0 { precision } else { 1 };
-                    if width > nPad { nPad = width; }
-                    if nPad > etBUFSIZE { nPad = etBUFSIZE; }
-                    for i in 0..nPad as usize {
-                        if i < buf.len() { buf[i] = ch as ::core::ffi::c_char; }
-                    }
-                    length = nPad;
-                    bufpt = &raw mut buf as *mut ::core::ffi::c_char;
-                    width = 0;
+                    length = crate::src::src::utf::sqlite3AppendOneUtf8Character(
+                        &raw mut buf as *mut ::core::ffi::c_char,
+                        ch_val as crate::src::ext::rtree::rtree::u32_0,
+                    );
                 }
+                // Precision > 1: repeat the character (doubling algorithm from original)
+                if precision > 1 {
+                    let mut nPrior: i64 = 1;
+                    width -= precision - 1;
+                    if width > 1 && !flag_leftjustify {
+                        sqlite3_str_appendchar(pAccum, width - 1, ' ' as ::core::ffi::c_char);
+                        width = 0;
+                    }
+                    sqlite3_str_append(pAccum, &raw mut buf as *mut ::core::ffi::c_char, length);
+                    precision -= 1;
+                    while precision > 1 {
+                        if nPrior > (precision - 1) as i64 {
+                            nPrior = (precision - 1) as i64;
+                        }
+                        let nCopyBytes = length as i64 * nPrior;
+                        // Pre-enlarge, then copy directly (NOT via sqlite3_str_append
+                        // which may re-enlarge and invalidate the self-referencing source)
+                        if nCopyBytes + (*pAccum).nChar as i64 >= (*pAccum).nAlloc as i64 {
+                            sqlite3StrAccumEnlarge(
+                                pAccum as *mut crate::src::headers::sqliteInt_h::StrAccum,
+                                nCopyBytes,
+                            );
+                        }
+                        if (*pAccum).accError != 0 { break; }
+                        // Direct memcpy from the accumulator's own buffer
+                        let src_off = (*pAccum).nChar as i64 - nCopyBytes;
+                        ::core::ptr::copy_nonoverlapping(
+                            (*pAccum).zText.offset(src_off as isize) as *const u8,
+                            (*pAccum).zText.offset((*pAccum).nChar as isize) as *mut u8,
+                            nCopyBytes as usize,
+                        );
+                        (*pAccum).nChar = (*pAccum).nChar.wrapping_add(nCopyBytes as u32);
+                        precision = (precision as i64 - nPrior) as ::core::ffi::c_int;
+                        nPrior *= 2;
+                    }
+                }
+                bufpt = &raw mut buf as *mut ::core::ffi::c_char;
+                flag_altform2 = true;
             }
 
             etSTRING | etDYNSTRING => {
@@ -1963,7 +1991,27 @@ pub unsafe fn sqlite3_str_vappendf2_args(
                     bufpt = b"\0".as_ptr() as *mut ::core::ffi::c_char;
                 }
                 length = crate::src::src::util::sqlite3Strlen30(bufpt);
-                if precision >= 0 && precision < length { length = precision; }
+                if precision >= 0 {
+                    if flag_altform2 {
+                        // %!.Ns — precision counts UTF-8 characters, not bytes
+                        let mut z_u = bufpt as *mut u8;
+                        let mut prec_left = precision;
+                        while prec_left > 0 && *z_u != 0 {
+                            if *z_u >= 0xc0 {
+                                z_u = z_u.offset(1);
+                                while *z_u as ::core::ffi::c_int & 0xc0 == 0x80 {
+                                    z_u = z_u.offset(1);
+                                }
+                            } else {
+                                z_u = z_u.offset(1);
+                            }
+                            prec_left -= 1;
+                        }
+                        length = z_u.offset_from(bufpt as *mut u8) as ::core::ffi::c_int;
+                    } else if precision < length {
+                        length = precision;
+                    }
+                }
                 if xtype == etDYNSTRING {
                     if let PrintfArg::Str(p) = arg {
                         zExtra = p; // Will be freed below
@@ -2157,7 +2205,10 @@ pub unsafe fn sqlite3_str_vappendf2_args(
             }
 
             etTOKEN => {
-                // %#T → Expr, %T → Token (matches original sqlite3_str_vappendf)
+                // %T/%#T requires INTERNAL flag; without it, stop formatting
+                if (*pAccum).printfFlags as ::core::ffi::c_int & crate::src::headers::sqliteInt_h::SQLITE_PRINTF_INTERNAL == 0 {
+                    return;
+                }
                 if flag_alternateform {
                     if let PrintfArg::Expr(pExpr) = arg {
                         if !pExpr.is_null()
@@ -2181,8 +2232,10 @@ pub unsafe fn sqlite3_str_vappendf2_args(
             }
 
             etSRCITEM => {
-                // %S — INTERNAL: print SrcItem name
-                // Matches the logic in the original sqlite3_str_vappendf (lines 1320-1370)
+                // %S requires INTERNAL flag; without it, stop formatting
+                if (*pAccum).printfFlags as ::core::ffi::c_int & crate::src::headers::sqliteInt_h::SQLITE_PRINTF_INTERNAL == 0 {
+                    return;
+                }
                 if let PrintfArg::SrcItem(pItem) = arg {
                     if !pItem.is_null() {
                         let __pItem_ref = &*pItem;
@@ -2680,7 +2733,8 @@ pub unsafe fn sqlite3_str_vappendf2_args(
             }
 
             _ => {
-                // Unknown specifier — skip the arg, output nothing
+                // Unknown/invalid specifier — stop formatting (matches original behavior)
+                return;
             }
         }
 
@@ -3393,7 +3447,7 @@ pub unsafe extern "C" fn sqlite3_mprintf(
         ::core::mem::size_of::<[::core::ffi::c_char; 70]>() as ::core::ffi::c_int,
         crate::sqliteLimit_h::SQLITE_MAX_LENGTH,
     );
-    sqlite3_str_vappendf(&raw mut acc as *mut crate::src::headers::sqliteInt_h::sqlite3_str, zFormat, args);
+    sqlite3_str_vappendf(&raw mut acc, zFormat, args);
     z = sqlite3StrAccumFinish(&raw mut acc);
     z
 }
