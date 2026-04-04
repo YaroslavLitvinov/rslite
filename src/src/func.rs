@@ -488,7 +488,6 @@ unsafe extern "C" fn printfFunc(
         crate::src::src::printf::sqlite3_str_appendf(&raw mut str as *mut _ as *mut crate::src::headers::sqliteInt_h::sqlite3_str, zFormat, &raw mut x);
         n = str.nChar as ::core::ffi::c_int;
         crate::src::src::vdbeapi::sqlite3_result_text(
-            
             context as *mut crate::src::headers::vdbeInt_h::sqlite3_context,
             crate::src::src::printf::sqlite3StrAccumFinish(&raw mut str as *mut _ as *mut crate::src::headers::sqliteInt_h::sqlite3_str),
             n,

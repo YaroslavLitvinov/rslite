@@ -69,10 +69,15 @@ pub unsafe extern "C" fn sqlite3_str_appendf(
     mut args: ...
 ) {
     if (*p).printfFlags as ::core::ffi::c_int & crate::src::headers::sqliteInt_h::SQLITE_PRINTF_SQLFUNC != 0 {
+        // SQLFUNC path: read PrintfArguments pointer, then use direct mode
         let pArgList = args.arg::<*mut crate::src::headers::sqliteInt_h::PrintfArguments>();
-        let (_s, a) = crate::src::src::printf::extract_printf_args(zFormat, args, true, pArgList);
-        crate::src::src::printf::sqlite3_str_vappendf_args(p as *mut crate::src::headers::sqliteInt_h::sqlite3_str, zFormat, &a);
+        crate::src::src::printf::sqlite3_str_vappendf_sqlfunc(
+            p as *mut crate::src::headers::sqliteInt_h::sqlite3_str,
+            zFormat,
+            pArgList,
+        );
     } else {
+        // Normal path: extract args from VaList, then format
         let (_s, a) = crate::src::src::printf::extract_printf_args(zFormat, args, false, ::core::ptr::null_mut());
         crate::src::src::printf::sqlite3_str_vappendf_args(p as *mut crate::src::headers::sqliteInt_h::sqlite3_str, zFormat, &a);
     }

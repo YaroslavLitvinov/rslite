@@ -46,7 +46,7 @@ while true; do
         echo "Tests passed"
         exit 0
     else
-        echo "FAILURE: Tests failed - found errors in test output"
+        echo "FAILURE: Tests failed"
         exit 1
     fi
 done

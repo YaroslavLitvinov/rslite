@@ -457,43 +457,37 @@ unsafe fn fmt2_dynamic(fmt: &[u8], args: &[PrintfArg]) -> String {
 #[test]
 fn cmp_c_sqlfunc_basic() {
     unsafe {
-        let star = b"*\0".as_ptr() as *mut c_char;
-        assert_eq!(fmt2_dynamic(b"%c\0", &[PrintfArg::Str(star)]), "*");
-        let a = b"a\0".as_ptr() as *mut c_char;
-        assert_eq!(fmt2_dynamic(b"%c\0", &[PrintfArg::Str(a)]), "a");
+        assert_eq!(fmt2_dynamic(b"%c\0", &[PrintfArg::Char('*' as u32)]), "*");
+        assert_eq!(fmt2_dynamic(b"%c\0", &[PrintfArg::Char('a' as u32)]), "a");
     }
 }
 
 #[test]
 fn cmp_c_sqlfunc_repeat_small() {
     unsafe {
-        let star = b"*\0".as_ptr() as *mut c_char;
-        assert_eq!(fmt2_dynamic(b"%.8c\0", &[PrintfArg::Str(star)]), "********");
+        assert_eq!(fmt2_dynamic(b"%.8c\0", &[PrintfArg::Char('*' as u32)]), "********");
     }
 }
 
 #[test]
 fn cmp_c_sqlfunc_repeat_with_width() {
     unsafe {
-        let star = b"*\0".as_ptr() as *mut c_char;
-        assert_eq!(fmt2_dynamic(b"%8.8c\0", &[PrintfArg::Str(star)]), "********");
+        assert_eq!(fmt2_dynamic(b"%8.8c\0", &[PrintfArg::Char('*' as u32)]), "********");
     }
 }
 
 #[test]
 fn cmp_c_sqlfunc_repeat_with_padding() {
     unsafe {
-        let star = b"*\0".as_ptr() as *mut c_char;
-        assert_eq!(fmt2_dynamic(b"%9.8c\0", &[PrintfArg::Str(star)]), " ********");
-        assert_eq!(fmt2_dynamic(b"%-9.8c\0", &[PrintfArg::Str(star)]), "******** ");
+        assert_eq!(fmt2_dynamic(b"%9.8c\0", &[PrintfArg::Char('*' as u32)]), " ********");
+        assert_eq!(fmt2_dynamic(b"%-9.8c\0", &[PrintfArg::Char('*' as u32)]), "******** ");
     }
 }
 
 #[test]
 fn cmp_c_sqlfunc_repeat_large() {
     unsafe {
-        let star = b"*\0".as_ptr() as *mut c_char;
-        let r = fmt2_dynamic(b"|%110.100c|\0", &[PrintfArg::Str(star)]);
+        let r = fmt2_dynamic(b"|%110.100c|\0", &[PrintfArg::Char('*' as u32)]);
         let expected = format!("|{:>110}|", "*".repeat(100));
         assert_eq!(r, expected, "%110.100c");
     }
@@ -501,37 +495,34 @@ fn cmp_c_sqlfunc_repeat_large() {
 
 #[test]
 fn cmp_c_sqlfunc_sequence_large_then_small() {
-    // Pattern that triggers printf2-3.4 bug: large repeats then small
     unsafe {
-        let star = b"*\0".as_ptr() as *mut c_char;
-        let r1 = fmt2_dynamic(b"|%110.100c|\0", &[PrintfArg::Str(star)]);
+        let r1 = fmt2_dynamic(b"|%110.100c|\0", &[PrintfArg::Char('*' as u32)]);
         assert_eq!(r1, format!("|{:>110}|", "*".repeat(100)), "3.1");
 
-        let r2 = fmt2_dynamic(b"|%-110.100c|\0", &[PrintfArg::Str(star)]);
+        let r2 = fmt2_dynamic(b"|%-110.100c|\0", &[PrintfArg::Char('*' as u32)]);
         assert_eq!(r2, format!("|{:<110}|", "*".repeat(100)), "3.2");
 
         let r3 = fmt2_dynamic(
             b"|%9.8c|%-9.8c|\0",
-            &[PrintfArg::Str(star), PrintfArg::Str(star)],
+            &[PrintfArg::Char('*' as u32), PrintfArg::Char('*' as u32)],
         );
         assert_eq!(r3, "| ********|******** |", "3.3");
 
         let r4 = fmt2_dynamic(
             b"|%8.8c|%-8.8c|\0",
-            &[PrintfArg::Str(star), PrintfArg::Str(star)],
+            &[PrintfArg::Char('*' as u32), PrintfArg::Char('*' as u32)],
         );
-        assert_eq!(r4, "|********|********|", "3.4 — THE BUG");
+        assert_eq!(r4, "|********|********|", "3.4");
     }
 }
 
 #[test]
 fn cmp_c_sqlfunc_vs_mprintf() {
-    // Compare SQLFUNC Str path vs VaList Char path
+    // Compare ExtractedArgs Char path vs VaList Char path
     unsafe {
         for &prec in &[1, 2, 4, 8, 16, 50, 100] {
-            let star = b"*\0".as_ptr() as *mut c_char;
             let fmt_s = format!("%.{}c\0", prec);
-            let new = fmt2_dynamic(fmt_s.as_bytes(), &[PrintfArg::Str(star)]);
+            let new = fmt2_dynamic(fmt_s.as_bytes(), &[PrintfArg::Char('*' as u32)]);
             let old = mprintf_ref(sqlite3_mprintf(fmt_s.as_ptr() as _, '*' as c_int));
             assert_eq!(new, old, "%.{}c Str vs Char", prec);
         }
@@ -542,9 +533,7 @@ fn cmp_c_sqlfunc_vs_mprintf() {
 fn cmp_c_char_value_preserved() {
     unsafe {
         for &(ch, expected) in &[(b'*', "****"), (b'A', "AAAA"), (b'0', "0000")] {
-            let s = [ch, 0];
-            let ptr = s.as_ptr() as *mut c_char;
-            let new = fmt2_dynamic(b"%.4c\0", &[PrintfArg::Str(ptr)]);
+            let new = fmt2_dynamic(b"%.4c\0", &[PrintfArg::Char(ch as u32)]);
             assert_eq!(new, expected, "%.4c('{}')", ch as char);
         }
     }

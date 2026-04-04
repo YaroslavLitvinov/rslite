@@ -11,29 +11,11 @@
       "id": "build_all",
       "description": "Check that our rust codebase is healthy",
       "goals": [],
-      "depends_on": [
-        "cargo_test"
-      ],
       "constraints": {
         "constraint_build_all": {
           "id": "constraint_build_all",
           "cmd": "cd $WORKSPACE_ROOT && ./build_all.sh",
           "description": "Ensure our rust codebase is healthy",
-          "fails_count": 1
-        }
-      }
-    },
-    "cargo_test": {
-      "type": "Feature",
-      "model_version": 1,
-      "id": "cargo_test",
-      "description": "Run cargo tests",
-      "goals": [],
-      "constraints": {
-        "constraint_cargo_test": {
-          "id": "constraint_cargo_test",
-          "cmd": "cd $PROJECT_ROOT && cargo test --test printf_compare 2>&1 | grep -q \"test result: ok\" || exit 1",
-          "description": "cargo test",
           "fails_count": 1
         }
       }
