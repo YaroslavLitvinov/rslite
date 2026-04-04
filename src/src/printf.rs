@@ -2004,12 +2004,14 @@ pub unsafe fn sqlite3_str_vappendf2_args(
                             && !((*pExpr).flags & 0x800 as u32 != 0)
                         {
                             sqlite3_str_appendall(pAccum, (*pExpr).u.zToken as *const ::core::ffi::c_char);
+                            sqlite3RecordErrorOffsetOfExpr((*pAccum).db, pExpr);
                         }
                     }
                 } else {
                     if let PrintfArg::Token(pToken) = arg {
                         if !pToken.is_null() && (*pToken).n != 0 {
                             sqlite3_str_append(pAccum, (*pToken).z, (*pToken).n as ::core::ffi::c_int);
+                            sqlite3RecordErrorByteOffset((*pAccum).db, (*pToken).z);
                         }
                     }
                 }
@@ -2545,7 +2547,10 @@ pub unsafe fn sqlite3_str_vappendf2_args(
 
         // Free dynamic string if %z
         if !zExtra.is_null() {
-            crate::src::src::malloc::sqlite3_free(zExtra as *mut ::core::ffi::c_void);
+            crate::src::src::malloc::sqlite3DbFree(
+                (*pAccum).db as *mut crate::src::headers::sqliteInt_h::sqlite3,
+                zExtra as *mut ::core::ffi::c_void,
+            );
         }
 
         if *fmt != 0 { fmt = fmt.offset(1); }
@@ -3194,17 +3199,10 @@ pub unsafe extern "C" fn sqlite3VMPrintf(
         (*db).aLimit[crate::src::headers::sqlite3_h::SQLITE_LIMIT_LENGTH as usize],
     );
     acc.printfFlags = crate::src::headers::sqliteInt_h::SQLITE_PRINTF_INTERNAL as crate::src::ext::rtree::rtree::u8_0;
-    // Bridge path (working, passes all 396K tests). The fully decoupled path
-    // (extract_printf_args + sqlite3_str_vappendf2_args) passes all 56 comparison
-    // tests but has a memory corruption in multi-statement db operations that needs
-    // investigation with AddressSanitizer.
-    let (formatted, fmtLen) = sqlite3_vmprintf_internal(db, zFormat, ap);
-    if !formatted.is_null() {
-        sqlite3_str_vappendf2(&raw mut acc, formatted, fmtLen);
-        crate::src::src::malloc::sqlite3DbFree(db, formatted as *mut ::core::ffi::c_void);
-    } else {
-        sqlite3StrAccumSetError(&raw mut acc, crate::src::headers::sqlite3_h::SQLITE_NOMEM as crate::src::ext::rtree::rtree::u8_0);
-    }
+    let (_specs, args) = extract_printf_args(
+        zFormat, ap, false, ::core::ptr::null_mut(),
+    );
+    sqlite3_str_vappendf2_args(&raw mut acc, zFormat, &args);
     let _ = sqlite_vmprintf;
     z = sqlite3StrAccumFinish(&raw mut acc);
     if acc.accError as ::core::ffi::c_int == crate::src::headers::sqlite3_h::SQLITE_NOMEM {
