@@ -1778,10 +1778,6 @@ pub unsafe extern "C" fn sqlite3_str_appendall(
     sqlite3_str_append(p, z, crate::src::src::util::sqlite3Strlen30(z));
 }
 
-pub unsafe extern "C" fn sqlite3_str_vappendf2(mut p: *mut crate::src::headers::sqliteInt_h::sqlite3_str, mut z: *const ::core::ffi::c_char, mut N: ::core::ffi::c_int) {
-    sqlite3_str_append(p, z, N);
-}
-
 /// Format and append to StrAccum using pre-extracted PrintfArg arguments.
 /// This is the VaList-free entry point — the real decoupled formatter.
 ///
@@ -2195,17 +2191,15 @@ pub unsafe fn sqlite3_str_vappendf2_args(
                     nOut += 1;
                 }
 
-                // Prepend alternate form prefix
+                // Prepend alternate form prefix (iterate forward, prepend each char)
                 if flag_alternateform && fmtinfo[infop_idx].prefix as ::core::ffi::c_int != 0 {
-                    let pre = (&raw const aPrefix as *const ::core::ffi::c_char)
+                    let mut pre = (&raw const aPrefix as *const ::core::ffi::c_char)
                         .offset(fmtinfo[infop_idx].prefix as isize);
-                    let mut i: isize = 0;
-                    while *pre.offset(i) != 0 { i += 1; }
-                    while i > 0 {
-                        i -= 1;
-                        *outptr = *pre.offset(i);
+                    while *pre != 0 {
+                        *outptr = *pre;
                         outptr = outptr.offset(-1);
                         nOut += 1;
+                        pre = pre.offset(1);
                     }
                 }
 
@@ -3234,6 +3228,8 @@ pub unsafe extern "C" fn sqlite3_mprintf(
         ::core::mem::size_of::<[::core::ffi::c_char; 70]>() as ::core::ffi::c_int,
         crate::sqliteLimit_h::SQLITE_MAX_LENGTH,
     );
+    // Public C API — use old sqlite3_str_vappendf for full compatibility
+    // (handles %q/%Q precision, JSON escaping, SQLFUNC path, etc.)
     sqlite3_str_vappendf(&raw mut acc as *mut crate::src::headers::sqliteInt_h::sqlite3_str, zFormat, args);
     z = sqlite3StrAccumFinish(&raw mut acc);
     z
@@ -3256,30 +3252,6 @@ pub unsafe extern "C" fn sqlite3_snprintf(
     zBuf
 }
 
-/// Internal version of sqlite3_vmprintf that sets SQLITE_PRINTF_INTERNAL flag,
-/// uses the db allocator and db length limit. Used by sqlite3VMPrintf to format
-/// with internal specifiers (%T, %r, etc.) into a malloc'd string.
-/// Returns (pointer, length) to support binary output with embedded NUL bytes.
-unsafe fn sqlite3_vmprintf_internal(
-    mut db: *mut crate::src::headers::sqliteInt_h::sqlite3,
-    mut zFormat: *const ::core::ffi::c_char,
-    mut ap: ::core::ffi::VaList,
-) -> (*mut ::core::ffi::c_char, ::core::ffi::c_int) {
-    let mut zBase: [::core::ffi::c_char; 70] = [0; 70];
-    let mut acc: crate::src::headers::sqliteInt_h::StrAccum = ::core::mem::zeroed();
-    sqlite3StrAccumInit(
-        &raw mut acc,
-        db,
-        &raw mut zBase as *mut ::core::ffi::c_char,
-        ::core::mem::size_of::<[::core::ffi::c_char; 70]>() as ::core::ffi::c_int,
-        (*db).aLimit[crate::src::headers::sqlite3_h::SQLITE_LIMIT_LENGTH as usize],
-    );
-    acc.printfFlags = crate::src::headers::sqliteInt_h::SQLITE_PRINTF_INTERNAL as crate::src::ext::rtree::rtree::u8_0;
-    sqlite3_str_vappendf(&raw mut acc, zFormat, ap);
-    let nChar = acc.nChar as ::core::ffi::c_int;
-    let z = sqlite3StrAccumFinish(&raw mut acc);
-    (z, nChar)
-}
 
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn sqlite3_vmprintf(
