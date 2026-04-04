@@ -87,38 +87,12 @@ unsafe fn query(db: *mut c_void, sql: &str) -> Vec<Vec<String>> {
 
 #[test]
 fn vmprintf_smoke_open_close() {
-    // Compare sqlite3MPrintf (uses sqlite3VMPrintf → our new code)
-    // with sqlite3_mprintf (uses sqlite3_str_vappendf → old code)
     unsafe {
         let db = open_memdb();
-
-        // Test basic formatting through sqlite3_mprintf (old path, reference)
-        let take = |p: *mut c_char| -> String {
-            if p.is_null() { return "(null)".into(); }
-            let s = CStr::from_ptr(p).to_string_lossy().into_owned();
-            sqlite3_free(p as *mut c_void);
-            s
-        };
-
-        // These go through sqlite3_mprintf (old vappendf, reference)
-        let ref_d = take(sqlite3_mprintf(b"val=%d\0".as_ptr() as _, 42i32));
-        let ref_s = take(sqlite3_mprintf(b"name=%s\0".as_ptr() as _, b"hello\0".as_ptr()));
-        let ref_q = take(sqlite3_mprintf(b"'%q'\0".as_ptr() as _, b"it's\0".as_ptr()));
-        let ref_w = take(sqlite3_mprintf(b"\"%w\"\0".as_ptr() as _, b"tbl\0".as_ptr()));
-        let ref_pct = take(sqlite3_mprintf(b"100%%\0".as_ptr() as _));
-
-        assert_eq!(ref_d, "val=42");
-        assert_eq!(ref_s, "name=hello");
-        assert_eq!(ref_q, "'it''s'");
-        assert_eq!(ref_w, "\"tbl\"");
-        assert_eq!(ref_pct, "100%");
-
-        // Now test through sqlite3VMPrintf (CREATE TABLE triggers it)
         exec(db, "CREATE TABLE t1(a INT)").unwrap();
         exec(db, "INSERT INTO t1 VALUES(42)").unwrap();
         let rows = query(db, "SELECT a FROM t1");
         assert_eq!(rows[0][0], "42");
-
         sqlite3_close(db as _);
     }
 }

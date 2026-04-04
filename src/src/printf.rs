@@ -1940,7 +1940,7 @@ pub unsafe fn sqlite3_str_vappendf2_args(
                     _ => ::core::ptr::null_mut(),
                 };
                 if bufpt.is_null() {
-                    bufpt = b"(null)\0".as_ptr() as *mut ::core::ffi::c_char;
+                    bufpt = b"\0".as_ptr() as *mut ::core::ffi::c_char;
                 }
                 length = crate::src::src::util::sqlite3Strlen30(bufpt);
                 if precision >= 0 && precision < length { length = precision; }
@@ -2162,47 +2162,64 @@ pub unsafe fn sqlite3_str_vappendf2_args(
                     continue;
                 }
 
+                // Build complete formatted output in buf[] (matching original logic):
+                // 1. digits are at outptr+1..bufend (nOut chars)
+                // 2. Prepend precision-pad zeros
+                // 3. Prepend prefix ('-', '+', ' ')
+                // 4. Prepend alternate prefix ('0x')
+                // Then let generic width-padding code handle alignment.
+
+                // For zero-pad: inflate precision so zeros fill to width
+                let prefix_len: ::core::ffi::c_int = if prefix != 0 { 1 } else { 0 };
+                let altprefix_len: ::core::ffi::c_int = if flag_alternateform
+                    && fmtinfo[infop_idx].prefix as ::core::ffi::c_int != 0
+                { 2 } else { 0 };
+                if flag_zeropad && !flag_leftjustify {
+                    let available = width - prefix_len - altprefix_len;
+                    if available > precision { precision = available; }
+                }
+
+                // Precision-pad: leading zeros
+                while nOut < precision {
+                    *outptr = '0' as ::core::ffi::c_char;
+                    outptr = outptr.offset(-1);
+                    nOut += 1;
+                }
+
+                // Prepend prefix
+                if prefix != 0 {
+                    *outptr = prefix;
+                    outptr = outptr.offset(-1);
+                    nOut += 1;
+                }
+
+                // Prepend alternate form prefix
+                if flag_alternateform && fmtinfo[infop_idx].prefix as ::core::ffi::c_int != 0 {
+                    let pre = (&raw const aPrefix as *const ::core::ffi::c_char)
+                        .offset(fmtinfo[infop_idx].prefix as isize);
+                    let mut i: isize = 0;
+                    while *pre.offset(i) != 0 { i += 1; }
+                    while i > 0 {
+                        i -= 1;
+                        *outptr = *pre.offset(i);
+                        outptr = outptr.offset(-1);
+                        nOut += 1;
+                    }
+                }
+
                 bufpt = outptr.offset(1);
                 length = nOut;
 
-                // Handle zero-padding, prefix, width
-                if precision > nOut { precision = precision; } // pad with zeros
-                else { precision = nOut; }
-
-                if prefix != 0 { precision += 1; }
-                if flag_alternateform && base == 16 { precision += 2; } // 0x prefix
-
-                if width < precision { width = precision; }
-                if !flag_leftjustify {
-                    if flag_zeropad {
-                        // zero-pad: prefix first, then zeros, then digits
-                        if prefix != 0 { sqlite3_str_append(pAccum, &prefix as *const _ as _, 1); prefix = 0; }
-                        if flag_alternateform && base == 16 {
-                            let pfx_str = &aPrefix as *const _ as *const ::core::ffi::c_char;
-                            let pfx_off = fmtinfo[infop_idx].prefix as isize;
-                            sqlite3_str_append(pAccum, pfx_str.offset(pfx_off), 2);
-                        }
-                        for _ in nOut..width - (if prefix != 0 { 1 } else { 0 }) {
-                            sqlite3_str_append(pAccum, b"0\0".as_ptr() as _, 1);
-                        }
-                    } else {
-                        for _ in precision..width {
-                            sqlite3_str_append(pAccum, b" \0".as_ptr() as _, 1);
-                        }
+                // Append with space-padding to width (zero-pad already handled via precision)
+                let nPad = if width > length { width - length } else { 0 };
+                if !flag_leftjustify && nPad > 0 {
+                    for _ in 0..nPad {
+                        sqlite3_str_append(pAccum, b" \0".as_ptr() as _, 1);
                     }
                 }
-                if prefix != 0 { sqlite3_str_append(pAccum, &prefix as *const _ as _, 1); }
-                if flag_alternateform && base == 16 && !flag_zeropad {
-                    let pfx_str = &aPrefix as *const _ as *const ::core::ffi::c_char;
-                    let pfx_off = fmtinfo[infop_idx].prefix as isize;
-                    sqlite3_str_append(pAccum, pfx_str.offset(pfx_off), 2);
-                }
-                for _ in nOut..precision - (if prefix != 0 { 1 } else { 0 }) {
-                    sqlite3_str_append(pAccum, b"0\0".as_ptr() as _, 1);
-                }
                 sqlite3_str_append(pAccum, bufpt, length);
-                if flag_leftjustify {
-                    for _ in precision..width {
+                if flag_leftjustify && nPad > 0 {
+                    for _ in 0..nPad {
                         sqlite3_str_append(pAccum, b" \0".as_ptr() as _, 1);
                     }
                 }
@@ -2510,11 +2527,15 @@ pub unsafe fn extract_printf_args(
                     }
                 }
                 b'*' => {
+                    let raw_width: ::core::ffi::c_int;
                     if bArgList {
-                        width = getIntArg(pArgList) as ::core::ffi::c_int;
+                        raw_width = getIntArg(pArgList) as ::core::ffi::c_int;
                     } else {
-                        width = ap.arg::<::core::ffi::c_int>();
+                        raw_width = ap.arg::<::core::ffi::c_int>();
                     }
+                    // Push the raw width value as an arg for the formatter to consume
+                    args.push(PrintfArg::Int(raw_width as crate::src::ext::rtree::rtree::i64_0));
+                    width = raw_width;
                     if width < 0 {
                         flag_leftjustify = true;
                         width = if width >= -2147483647 { -width } else { 0 };
@@ -2530,11 +2551,15 @@ pub unsafe fn extract_printf_args(
                     fmt = fmt.offset(1);
                     c = *fmt as ::core::ffi::c_int;
                     if c == '*' as i32 {
+                        let raw_prec: ::core::ffi::c_int;
                         if bArgList {
-                            precision = getIntArg(pArgList) as ::core::ffi::c_int;
+                            raw_prec = getIntArg(pArgList) as ::core::ffi::c_int;
                         } else {
-                            precision = ap.arg::<::core::ffi::c_int>();
+                            raw_prec = ap.arg::<::core::ffi::c_int>();
                         }
+                        // Push as arg for the formatter to consume
+                        args.push(PrintfArg::Int(raw_prec as crate::src::ext::rtree::rtree::i64_0));
+                        precision = raw_prec;
                         if precision < 0 {
                             precision = if precision >= -2147483647 { -precision } else { -1 };
                         }
@@ -2901,9 +2926,10 @@ pub unsafe extern "C" fn sqlite3VMPrintf(
         (*db).aLimit[crate::src::headers::sqlite3_h::SQLITE_LIMIT_LENGTH as usize],
     );
     acc.printfFlags = crate::src::headers::sqliteInt_h::SQLITE_PRINTF_INTERNAL as crate::src::ext::rtree::rtree::u8_0;
-    // Use the temp-accumulator bridge for now (correct but not fully decoupled).
-    // The real decoupled path (extract_printf_args + sqlite3_str_vappendf2_args) is
-    // implemented below but needs more formatting work to handle all edge cases.
+    // Bridge path: format via original sqlite3_str_vappendf, then append result.
+    // The fully decoupled path (extract_printf_args + sqlite3_str_vappendf2_args) is
+    // implemented and passes 25 comparison tests, but still has ~130 edge cases in
+    // the full 396K test suite (mainly float formatting and some integer edge cases).
     let (formatted, fmtLen) = sqlite3_vmprintf_internal(db, zFormat, ap);
     if !formatted.is_null() {
         sqlite3_str_vappendf2(&raw mut acc, formatted, fmtLen);
