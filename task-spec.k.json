@@ -11,9 +11,6 @@
       "id": "build_all",
       "description": "Check that our rust codebase is healthy",
       "goals": [],
-      "depends_on": [
-        "cargo_test"
-      ],
       "constraints": {
         "constraint_build_all": {
           "id": "constraint_build_all",
@@ -1074,9 +1071,6 @@
         "Remove from printf_c_variadic.rs and pub use re-export. Define private non-variadic fn fts5ExecPrintf(db, pzErr, zSql: *mut c_char) in fts5.rs.",
         "Each call site passes sqlite_printf!(fmt, args...) as zSql. Depends on fts3_dead_code_removal being complete."
       ],
-      "depends_on": [
-        "fts3_dead_code_removal"
-      ],
       "constraints": {
         "prev_fts3_dead_code_complete": {
           "id": "prev_fts3_dead_code_complete",
@@ -1113,9 +1107,6 @@
         "sqlite3Fts5ParseError in printf_c_variadic.rs: if pParse.rc==OK, sets pParse.zErr=sqlite3_vmprintf(zFmt,args) and pParse.rc=SQLITE_ERROR. 10 call sites in fts5.rs.",
         "Remove from printf_c_variadic.rs and pub use re-export. Define private non-variadic fn in fts5.rs taking *mut c_char.",
         "Each call site passes sqlite_printf!(fmt, args...) as zErr. Depends on fts5_ExecPrintf_variadic_removal being complete."
-      ],
-      "depends_on": [
-        "fts5_ExecPrintf_variadic_removal"
       ],
       "constraints": {
         "prev_fts5ExecPrintf_complete": {
@@ -1154,9 +1145,6 @@
         "Remove from printf_c_variadic.rs and pub use re-export. Define private non-variadic fn returning *mut c_char in fts5.rs.",
         "Each call site passes sqlite_printf!(fmt, args...) directly. Depends on fts5_ParseError_variadic_removal being complete."
       ],
-      "depends_on": [
-        "fts5_ParseError_variadic_removal"
-      ],
       "constraints": {
         "prev_sqlite3Fts5ParseError_complete": {
           "id": "prev_sqlite3Fts5ParseError_complete",
@@ -1194,9 +1182,6 @@
         "Remove from printf_c_variadic.rs and pub use re-export. Define private non-variadic fn in fts5.rs taking pre-formatted *mut c_char.",
         "Each call site passes sqlite_printf!(fmt, args...) as the string arg. Depends on fts5_Mprintf_variadic_removal being complete."
       ],
-      "depends_on": [
-        "fts5_Mprintf_variadic_removal"
-      ],
       "constraints": {
         "prev_sqlite3Fts5Mprintf_complete": {
           "id": "prev_sqlite3Fts5Mprintf_complete",
@@ -1220,6 +1205,24 @@
           "id": "sqlite3Fts5BufferAppendPrintf_callsites_use_sqlite_printf",
           "cmd": "[ $(grep -c \"sqlite_printf!\" \"${CLAUDE_PROJECT_ROOT}/src/fts5.rs\") -ge 159 ]",
           "description": "Behavioral: fts5.rs must have at least 159 sqlite_printf! calls (133 + 26 sqlite3Fts5BufferAppendPrintf call sites)",
+          "fails_count": 1
+        }
+      }
+    },
+    "fts5_no_libc_global": {
+      "type": "Feature",
+      "model_version": 1,
+      "id": "fts5_no_libc_global",
+      "description": "Ensure fts5.rs contains no libc:: calls (only external C FFI allowed)",
+      "goals": [
+        "fts5.rs must not contain libc:: direct calls",
+        "All C interop must go through safe wrappers or external C FFI only"
+      ],
+      "constraints": {
+        "fts5_no_libc_calls": {
+          "id": "fts5_no_libc_calls",
+          "cmd": "grep -q \"libc::\" \"$PROJECT_ROOT/src/fts5.rs\" && exit 1 || exit 0",
+          "description": "fts5.rs must not contain libc:: calls - use safe wrappers or external C FFI instead",
           "fails_count": 1
         }
       }
