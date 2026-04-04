@@ -51,7 +51,8 @@ pub unsafe extern "C" fn sqlite3DebugPrintf(
         ::core::mem::size_of::<[::core::ffi::c_char; 700]>() as ::core::ffi::c_int,
         0 as ::core::ffi::c_int,
     );
-    crate::src::src::printf::sqlite3_str_vappendf(&raw mut acc, zFormat, args);
+    let (_s, a) = crate::src::src::printf::extract_printf_args(zFormat, args, false, ::core::ptr::null_mut());
+    crate::src::src::printf::sqlite3_str_vappendf_args(&raw mut acc, zFormat, &a);
     crate::src::src::printf::sqlite3StrAccumFinish(&raw mut acc);
     crate::src::headers::stdlib::fprintf(
         crate::src::headers::stdlib::stdout,
@@ -67,7 +68,14 @@ pub unsafe extern "C" fn sqlite3_str_appendf(
     mut zFormat: *const ::core::ffi::c_char,
     mut args: ...
 ) {
-    crate::src::src::printf::sqlite3_str_vappendf(p as *mut crate::src::headers::sqliteInt_h::sqlite3_str, zFormat, args);
+    if (*p).printfFlags as ::core::ffi::c_int & crate::src::headers::sqliteInt_h::SQLITE_PRINTF_SQLFUNC != 0 {
+        let pArgList = args.arg::<*mut crate::src::headers::sqliteInt_h::PrintfArguments>();
+        let (_s, a) = crate::src::src::printf::extract_printf_args(zFormat, args, true, pArgList);
+        crate::src::src::printf::sqlite3_str_vappendf_args(p as *mut crate::src::headers::sqliteInt_h::sqlite3_str, zFormat, &a);
+    } else {
+        let (_s, a) = crate::src::src::printf::extract_printf_args(zFormat, args, false, ::core::ptr::null_mut());
+        crate::src::src::printf::sqlite3_str_vappendf_args(p as *mut crate::src::headers::sqliteInt_h::sqlite3_str, zFormat, &a);
+    }
 }
 
 // VaList functions below are defined in printf.rs - we re-export them here
@@ -935,7 +943,8 @@ pub unsafe extern "C" fn checkAppendMsg(
             __pCheck_ref.v2,
         );
     }
-    crate::src::src::printf::sqlite3_str_vappendf(&raw mut __pCheck_ref.errMsg, zFormat, args);
+    let (_s, a) = crate::src::src::printf::extract_printf_args(zFormat, args, false, ::core::ptr::null_mut());
+    crate::src::src::printf::sqlite3_str_vappendf_args(&raw mut __pCheck_ref.errMsg, zFormat, &a);
     if __pCheck_ref.errMsg.accError as ::core::ffi::c_int == crate::src::headers::sqlite3_h::SQLITE_NOMEM {
         checkOom(pCheck);
     }

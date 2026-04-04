@@ -1,4 +1,4 @@
-//! Comparison tests: sqlite3_str_vappendf2_args (new VaList-free formatter)
+//! Comparison tests: sqlite3_str_vappendf_args (new VaList-free formatter)
 //! vs sqlite3_mprintf (old formatter, reference).
 //!
 //! Each test constructs PrintfArg slices manually, calls the new formatter,
@@ -8,7 +8,7 @@ use core::ffi::{c_char, c_int, c_void};
 use std::ffi::CStr;
 
 use sqlite_noamalgam::src::src::printf::{
-    PrintfArg, sqlite3_str_vappendf2_args,
+    PrintfArg, sqlite3_str_vappendf_args,
     sqlite3StrAccumInit, sqlite3StrAccumFinish,
 };
 use sqlite_noamalgam::src::headers::sqliteInt_h::StrAccum;
@@ -19,7 +19,7 @@ unsafe extern "C" {
     fn sqlite3_free(p: *mut c_void);
 }
 
-/// Call sqlite3_str_vappendf2_args with format + args, return result as String.
+/// Call sqlite3_str_vappendf_args with format + args, return result as String.
 /// Uses a large stack buffer with mxAlloc=0 to avoid db-allocator issues.
 unsafe fn fmt2(fmt: &[u8], args: &[PrintfArg]) -> String {
     let mut zBase: [c_char; 8192] = [0; 8192];
@@ -31,7 +31,7 @@ unsafe fn fmt2(fmt: &[u8], args: &[PrintfArg]) -> String {
         8192,
         0, // mxAlloc=0: no dynamic growth, output truncated at 8192
     );
-    sqlite3_str_vappendf2_args(&raw mut acc, fmt.as_ptr() as _, args);
+    sqlite3_str_vappendf_args(&raw mut acc, fmt.as_ptr() as _, args);
     // NUL-terminate
     if !acc.zText.is_null() && (acc.nChar as usize) < 8192 {
         *acc.zText.offset(acc.nChar as isize) = 0;
@@ -255,7 +255,7 @@ fn cmp_c_precision() {
                 512,
                 0, // mxAlloc=0
             );
-            sqlite3_str_vappendf2_args(
+            sqlite3_str_vappendf_args(
                 &raw mut acc,
                 b"%.4c%s%.16c\0".as_ptr() as _,
                 &[
@@ -415,6 +415,138 @@ fn cmp_date_pattern() {
             15i32,
         ));
         assert_eq!(new, old, "%c%04d-%02d-%02d");
+    }
+}
+
+// ═══ %c SQLFUNC repeat — the doubling algorithm ════════════════════════
+
+unsafe extern "C" {
+    fn sqlite3_open(filename: *const c_char, ppDb: *mut *mut c_void) -> c_int;
+    fn sqlite3_close(db: *mut c_void) -> c_int;
+}
+
+/// Helper: format with mxAlloc > 0 (dynamic allocation, like real SQLFUNC path).
+/// Uses a real db so sqlite3DbMallocRaw works correctly.
+unsafe fn fmt2_dynamic(fmt: &[u8], args: &[PrintfArg]) -> String {
+    let mut db: *mut c_void = core::ptr::null_mut();
+    sqlite3_open(b":memory:\0".as_ptr() as _, &mut db as *mut _ as *mut _);
+
+    let mut zBase: [c_char; 70] = [0; 70];
+    let mut acc: StrAccum = core::mem::zeroed();
+    sqlite3StrAccumInit(
+        &raw mut acc,
+        db as _,
+        &raw mut zBase as *mut c_char,
+        70,
+        SQLITE_MAX_LENGTH,
+    );
+    sqlite3_str_vappendf_args(&raw mut acc, fmt.as_ptr() as _, args);
+    let z = sqlite3StrAccumFinish(&raw mut acc);
+    let s = if z.is_null() {
+        String::new()
+    } else {
+        CStr::from_ptr(z).to_string_lossy().into_owned()
+    };
+    if acc.printfFlags as c_int & 0x01 != 0 {
+        sqlite3_free(z as *mut c_void);
+    }
+    sqlite3_close(db);
+    s
+}
+
+#[test]
+fn cmp_c_sqlfunc_basic() {
+    unsafe {
+        let star = b"*\0".as_ptr() as *mut c_char;
+        assert_eq!(fmt2_dynamic(b"%c\0", &[PrintfArg::Str(star)]), "*");
+        let a = b"a\0".as_ptr() as *mut c_char;
+        assert_eq!(fmt2_dynamic(b"%c\0", &[PrintfArg::Str(a)]), "a");
+    }
+}
+
+#[test]
+fn cmp_c_sqlfunc_repeat_small() {
+    unsafe {
+        let star = b"*\0".as_ptr() as *mut c_char;
+        assert_eq!(fmt2_dynamic(b"%.8c\0", &[PrintfArg::Str(star)]), "********");
+    }
+}
+
+#[test]
+fn cmp_c_sqlfunc_repeat_with_width() {
+    unsafe {
+        let star = b"*\0".as_ptr() as *mut c_char;
+        assert_eq!(fmt2_dynamic(b"%8.8c\0", &[PrintfArg::Str(star)]), "********");
+    }
+}
+
+#[test]
+fn cmp_c_sqlfunc_repeat_with_padding() {
+    unsafe {
+        let star = b"*\0".as_ptr() as *mut c_char;
+        assert_eq!(fmt2_dynamic(b"%9.8c\0", &[PrintfArg::Str(star)]), " ********");
+        assert_eq!(fmt2_dynamic(b"%-9.8c\0", &[PrintfArg::Str(star)]), "******** ");
+    }
+}
+
+#[test]
+fn cmp_c_sqlfunc_repeat_large() {
+    unsafe {
+        let star = b"*\0".as_ptr() as *mut c_char;
+        let r = fmt2_dynamic(b"|%110.100c|\0", &[PrintfArg::Str(star)]);
+        let expected = format!("|{:>110}|", "*".repeat(100));
+        assert_eq!(r, expected, "%110.100c");
+    }
+}
+
+#[test]
+fn cmp_c_sqlfunc_sequence_large_then_small() {
+    // Pattern that triggers printf2-3.4 bug: large repeats then small
+    unsafe {
+        let star = b"*\0".as_ptr() as *mut c_char;
+        let r1 = fmt2_dynamic(b"|%110.100c|\0", &[PrintfArg::Str(star)]);
+        assert_eq!(r1, format!("|{:>110}|", "*".repeat(100)), "3.1");
+
+        let r2 = fmt2_dynamic(b"|%-110.100c|\0", &[PrintfArg::Str(star)]);
+        assert_eq!(r2, format!("|{:<110}|", "*".repeat(100)), "3.2");
+
+        let r3 = fmt2_dynamic(
+            b"|%9.8c|%-9.8c|\0",
+            &[PrintfArg::Str(star), PrintfArg::Str(star)],
+        );
+        assert_eq!(r3, "| ********|******** |", "3.3");
+
+        let r4 = fmt2_dynamic(
+            b"|%8.8c|%-8.8c|\0",
+            &[PrintfArg::Str(star), PrintfArg::Str(star)],
+        );
+        assert_eq!(r4, "|********|********|", "3.4 — THE BUG");
+    }
+}
+
+#[test]
+fn cmp_c_sqlfunc_vs_mprintf() {
+    // Compare SQLFUNC Str path vs VaList Char path
+    unsafe {
+        for &prec in &[1, 2, 4, 8, 16, 50, 100] {
+            let star = b"*\0".as_ptr() as *mut c_char;
+            let fmt_s = format!("%.{}c\0", prec);
+            let new = fmt2_dynamic(fmt_s.as_bytes(), &[PrintfArg::Str(star)]);
+            let old = mprintf_ref(sqlite3_mprintf(fmt_s.as_ptr() as _, '*' as c_int));
+            assert_eq!(new, old, "%.{}c Str vs Char", prec);
+        }
+    }
+}
+
+#[test]
+fn cmp_c_char_value_preserved() {
+    unsafe {
+        for &(ch, expected) in &[(b'*', "****"), (b'A', "AAAA"), (b'0', "0000")] {
+            let s = [ch, 0];
+            let ptr = s.as_ptr() as *mut c_char;
+            let new = fmt2_dynamic(b"%.4c\0", &[PrintfArg::Str(ptr)]);
+            assert_eq!(new, expected, "%.4c('{}')", ch as char);
+        }
     }
 }
 

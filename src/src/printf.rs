@@ -1787,7 +1787,7 @@ pub unsafe extern "C" fn sqlite3_str_appendall(
 ///
 /// # Safety
 /// `pAccum` and `fmt` must be valid. `args` must match the format string.
-pub unsafe fn sqlite3_str_vappendf2_args(
+pub unsafe fn sqlite3_str_vappendf_args(
     pAccum: *mut crate::src::headers::sqliteInt_h::sqlite3_str,
     fmt_start: *const ::core::ffi::c_char,
     args: &[PrintfArg],
@@ -2772,7 +2772,7 @@ pub unsafe fn sqlite3_str_vappendf2_args(
 // ─── PrintfArgCursor: reads pre-extracted args during formatting ──────────────
 
 /// Cursor over a slice of pre-extracted PrintfArg values.
-/// Used by sqlite3_str_vappendf2_args to supply arguments without VaList.
+/// Used by sqlite3_str_vappendf_args to supply arguments without VaList.
 pub struct PrintfArgCursor<'a> {
     args: &'a [PrintfArg],
     pos: usize,
@@ -2871,7 +2871,7 @@ impl<'a> PrintfArgCursor<'a> {
 //
 // PrintfArg decouples concern #1 from #2. The extraction phase walks the format
 // string and consumes VaList into a Vec<PrintfArg>. The formatting phase
-// (sqlite3_str_vappendf2_args) reads from the Vec — no VaList needed.
+// (sqlite3_str_vappendf_args) reads from the Vec — no VaList needed.
 
 /// A single extracted printf argument, typed to match what the format specifier expects.
 #[derive(Clone)]
@@ -3415,7 +3415,7 @@ pub unsafe extern "C" fn sqlite3VMPrintf(
     let (_specs, args) = extract_printf_args(
         zFormat, ap, false, ::core::ptr::null_mut(),
     );
-    sqlite3_str_vappendf2_args(&raw mut acc, zFormat, &args);
+    sqlite3_str_vappendf_args(&raw mut acc, zFormat, &args);
     let _ = sqlite_vmprintf;
     z = sqlite3StrAccumFinish(&raw mut acc);
     if acc.accError as ::core::ffi::c_int == crate::src::headers::sqlite3_h::SQLITE_NOMEM {
@@ -3447,7 +3447,8 @@ pub unsafe extern "C" fn sqlite3_mprintf(
         ::core::mem::size_of::<[::core::ffi::c_char; 70]>() as ::core::ffi::c_int,
         crate::sqliteLimit_h::SQLITE_MAX_LENGTH,
     );
-    sqlite3_str_vappendf(&raw mut acc, zFormat, args);
+    let (_s, a) = extract_printf_args(zFormat, args, false, ::core::ptr::null_mut());
+    sqlite3_str_vappendf_args(&raw mut acc, zFormat, &a);
     z = sqlite3StrAccumFinish(&raw mut acc);
     z
 }
@@ -3464,7 +3465,8 @@ pub unsafe extern "C" fn sqlite3_snprintf(
         return zBuf;
     }
     sqlite3StrAccumInit(&raw mut acc, ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::sqlite3>(), zBuf, n, 0 as ::core::ffi::c_int);
-    sqlite3_str_vappendf(&raw mut acc as *mut crate::src::headers::sqliteInt_h::sqlite3_str, zFormat, args);
+    let (_s, a) = extract_printf_args(zFormat, args, false, ::core::ptr::null_mut());
+    sqlite3_str_vappendf_args(&raw mut acc as *mut crate::src::headers::sqliteInt_h::sqlite3_str, zFormat, &a);
     sqlite3StrAccumFinish(&raw mut acc);
     zBuf
 }
@@ -3488,7 +3490,8 @@ pub unsafe extern "C" fn sqlite3_vmprintf(
         ::core::mem::size_of::<[::core::ffi::c_char; 70]>() as ::core::ffi::c_int,
         crate::sqliteLimit_h::SQLITE_MAX_LENGTH,
     );
-    sqlite3_str_vappendf(&raw mut acc, zFormat, ap);
+    let (_s, a) = extract_printf_args(zFormat, ap, false, ::core::ptr::null_mut());
+    sqlite3_str_vappendf_args(&raw mut acc, zFormat, &a);
     z = sqlite3StrAccumFinish(&raw mut acc);
     z
 }
@@ -3511,7 +3514,8 @@ pub unsafe extern "C" fn sqlite3_vsnprintf(
         n,
         0 as ::core::ffi::c_int,
     );
-    sqlite3_str_vappendf(&raw mut acc, zFormat, ap);
+    let (_s, a) = extract_printf_args(zFormat, ap, false, ::core::ptr::null_mut());
+    sqlite3_str_vappendf_args(&raw mut acc, zFormat, &a);
     *zBuf.offset(acc.nChar as isize) = 0 as ::core::ffi::c_char;
     zBuf
 }
@@ -3530,7 +3534,8 @@ pub unsafe extern "C" fn renderLogMsg(
         ::core::mem::size_of::<[::core::ffi::c_char; 700]>() as ::core::ffi::c_int,
         0 as ::core::ffi::c_int,
     );
-    sqlite3_str_vappendf(&raw mut acc, zFormat, ap);
+    let (_s, a) = extract_printf_args(zFormat, ap, false, ::core::ptr::null_mut());
+    sqlite3_str_vappendf_args(&raw mut acc, zFormat, &a);
     crate::src::src::global::sqlite3Config.xLog.expect("non-null function pointer")(
         crate::src::src::global::sqlite3Config.pLogArg,
         iErrCode,

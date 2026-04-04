@@ -1,5 +1,5 @@
 //! Tests for sqlite3VMPrintf via sqlite3MPrintf and other internal APIs.
-//! These tests exercise the extract_printf_args + sqlite3_str_vappendf2_args path
+//! These tests exercise the extract_printf_args + sqlite3_str_vappendf_args path
 //! by opening a real database and running SQL that triggers internal printf formatting.
 
 use core::ffi::{c_char, c_int, c_void};
