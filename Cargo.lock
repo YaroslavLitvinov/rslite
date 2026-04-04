@@ -448,6 +448,7 @@ dependencies = [
  "parking_lot 0.10.2",
  "snafu",
  "sqlite-printf-macros",
+ "sqlite-printf-runtime",
  "strum_macros",
 ]
 

@@ -1461,14 +1461,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
             crate::src::src::printf::sqlite3_str_appendf
                 as unsafe extern "C" fn(*mut crate::src::headers::sqliteInt_h::sqlite3_str, *const ::core::ffi::c_char, ...) -> (),
         ),
-    str_vappendf:  Some(
-            crate::src::src::printf::sqlite3_str_vappendf
-                as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqliteInt_h::sqlite3_str,
-                    *const ::core::ffi::c_char,
-                    ::core::ffi::VaList,
-                ) -> (),
-        ),
+    str_vappendf: None,
     str_append:  Some(
             crate::src::src::printf::sqlite3_str_append
                 as unsafe extern "C" fn(

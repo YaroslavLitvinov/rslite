@@ -162,8 +162,9 @@ fn gen_arg_handler(arg: &Expr, spec: &FormatSpec) -> proc_macro2::TokenStream {
         }
         // Numeric types - pass through for format! to handle
         FormatSpec::Integer | FormatSpec::Long | FormatSpec::Long64 => quote! { #arg },
+        FormatSpec::IntegerWidth(_) | FormatSpec::IntegerZeroPad(_) => quote! { #arg },
         FormatSpec::Unsigned | FormatSpec::ULong64 => quote! { #arg },
-        FormatSpec::Hex => quote! { #arg },
+        FormatSpec::Hex | FormatSpec::HexUpper => quote! { #arg },
         FormatSpec::Pointer => quote! { #arg },
         FormatSpec::Float | FormatSpec::FloatFixed(_) => quote! { #arg as f64 },
         FormatSpec::Char => quote! { #arg as u8 as char },
@@ -388,14 +389,19 @@ pub fn sqlite_printf(input: TokenStream) -> TokenStream {
         quote! {}
     };
 
-    // Generate final code using format! (simpler approach)
+    // Generate final code using format!
+    // Escape the format string and create a string literal token
+    let escaped_fmt = rust_format.replace('\\', "\\\\").replace('"', "\\\"");
+    let fmt_literal = format!("\"{}\"", escaped_fmt);
+    let fmt_token: proc_macro2::TokenStream = fmt_literal.parse().expect("Failed to parse format literal");
+
     let expanded = quote! {
         {
             unsafe extern "C" {
                 fn sqlite3_malloc64(n: u64) -> *mut ::core::ffi::c_void;
                 fn sqlite3_free(p: *mut ::core::ffi::c_void);
             }
-            let result = format!(#rust_format, #(#arg_handlers),*);
+            let result = format!(#fmt_token, #(#arg_handlers),*);
             #free_stmts
             let bytes = result.into_bytes();
             let len = bytes.len();
