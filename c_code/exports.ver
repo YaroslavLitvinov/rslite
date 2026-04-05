@@ -5,4 +5,5 @@
         sqlite3_mprintf;
         sqlite3_vsnprintf;
         sqlite3_vmprintf;
+        sqlite3_test_control;
 };

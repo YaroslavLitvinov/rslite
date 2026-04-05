@@ -559,25 +559,153 @@ pub unsafe extern "C" fn sqlite3_db_config(
 }
 
 
-#[unsafe(no_mangle)]
+// sqlite3_test_control — C wrapper is in c_code/test_control.c
+// C wrapper packs va_args into u64 slots, Rust parses into TestControlOp enum and dispatches.
 
-pub unsafe extern "C" fn sqlite3_test_control(
-    mut op: ::core::ffi::c_int,
-    mut args: ...
+use crate::src::headers::sqlite3_h::SqliteTestCtrl;
+
+type FaultCallback = Option<unsafe extern "C" fn(::core::ffi::c_int) -> ::core::ffi::c_int>;
+type LocaltimeCallback = Option<unsafe extern "C" fn(*const ::core::ffi::c_void, *mut ::core::ffi::c_void) -> ::core::ffi::c_int>;
+
+pub enum TestControlOp {
+    PrngSave,
+    PrngRestore,
+    PrngSeed(::core::ffi::c_int, *mut crate::src::headers::sqliteInt_h::sqlite3),
+    FkNoAction(*mut crate::src::headers::sqliteInt_h::sqlite3, ::core::ffi::c_int),
+    BitvecTest(::core::ffi::c_int, *mut ::core::ffi::c_int),
+    FaultInstall(FaultCallback),
+    BenignMallocHooks(void_function, void_function),
+    PendingByte(::core::ffi::c_uint),
+    Assert,
+    Always(::core::ffi::c_int),
+    ByteOrder,
+    Optimizations(*mut crate::src::headers::sqliteInt_h::sqlite3, crate::src::ext::rtree::rtree::u32_0),
+    GetOpt(*mut crate::src::headers::sqliteInt_h::sqlite3, *mut ::core::ffi::c_int),
+    LocaltimeFault(::core::ffi::c_int, LocaltimeCallback),
+    InternalFunctions(*mut crate::src::headers::sqliteInt_h::sqlite3),
+    NeverCorrupt(::core::ffi::c_int),
+    ExtraSchemaChecks(::core::ffi::c_int),
+    OnceResetThreshold(::core::ffi::c_int),
+    SorterMmap(*mut crate::src::headers::sqliteInt_h::sqlite3, ::core::ffi::c_int),
+    IsInit,
+    Imposter(*mut crate::src::headers::sqliteInt_h::sqlite3, *const ::core::ffi::c_char, ::core::ffi::c_int, ::core::ffi::c_int),
+    ResultIntReal(*mut crate::src::headers::vdbeInt_h::sqlite3_context),
+    SeekCount(*mut crate::src::headers::sqliteInt_h::sqlite3, *mut crate::src::ext::rtree::rtree::u64_0),
+    TraceFlags(::core::ffi::c_int, *mut crate::src::ext::rtree::rtree::u32_0),
+    LogEst(::core::ffi::c_double, *mut ::core::ffi::c_int, *mut crate::src::ext::rtree::rtree::u64_0, *mut ::core::ffi::c_int),
+    Noop,
+}
+
+impl TestControlOp {
+    unsafe fn from_raw(op: ::core::ffi::c_int, args: *const u64) -> Self {
+        let Some(ctrl) = SqliteTestCtrl::from_repr(op) else { return Self::Noop };
+        match ctrl {
+            SqliteTestCtrl::PRNG_SAVE => Self::PrngSave,
+            SqliteTestCtrl::PRNG_RESTORE => Self::PrngRestore,
+            SqliteTestCtrl::PRNG_SEED => Self::PrngSeed(
+                *args.offset(0) as ::core::ffi::c_int,
+                *args.offset(1) as usize as *mut _,
+            ),
+            SqliteTestCtrl::FK_NO_ACTION => Self::FkNoAction(
+                *args.offset(0) as usize as *mut _,
+                *args.offset(1) as ::core::ffi::c_int,
+            ),
+            SqliteTestCtrl::BITVEC_TEST => Self::BitvecTest(
+                *args.offset(0) as ::core::ffi::c_int,
+                *args.offset(1) as usize as *mut _,
+            ),
+            SqliteTestCtrl::FAULT_INSTALL => Self::FaultInstall(
+                ::core::mem::transmute(*args.offset(0) as usize),
+            ),
+            SqliteTestCtrl::BENIGN_MALLOC_HOOKS => Self::BenignMallocHooks(
+                ::core::mem::transmute(*args.offset(0) as usize),
+                ::core::mem::transmute(*args.offset(1) as usize),
+            ),
+            SqliteTestCtrl::PENDING_BYTE => Self::PendingByte(
+                *args.offset(0) as ::core::ffi::c_uint,
+            ),
+            SqliteTestCtrl::ASSERT => Self::Assert,
+            SqliteTestCtrl::ALWAYS => Self::Always(
+                *args.offset(0) as ::core::ffi::c_int,
+            ),
+            SqliteTestCtrl::BYTEORDER => Self::ByteOrder,
+            SqliteTestCtrl::OPTIMIZATIONS => Self::Optimizations(
+                *args.offset(0) as usize as *mut _,
+                *args.offset(1) as crate::src::ext::rtree::rtree::u32_0,
+            ),
+            SqliteTestCtrl::GETOPT => Self::GetOpt(
+                *args.offset(0) as usize as *mut _,
+                *args.offset(1) as usize as *mut _,
+            ),
+            SqliteTestCtrl::LOCALTIME_FAULT => {
+                let bFault = *args.offset(0) as ::core::ffi::c_int;
+                let xAlt = if bFault == 2 {
+                    ::core::mem::transmute(*args.offset(1) as usize)
+                } else {
+                    None
+                };
+                Self::LocaltimeFault(bFault, xAlt)
+            },
+            SqliteTestCtrl::INTERNAL_FUNCTIONS => Self::InternalFunctions(
+                *args.offset(0) as usize as *mut _,
+            ),
+            SqliteTestCtrl::NEVER_CORRUPT => Self::NeverCorrupt(
+                *args.offset(0) as ::core::ffi::c_int,
+            ),
+            SqliteTestCtrl::EXTRA_SCHEMA_CHECKS => Self::ExtraSchemaChecks(
+                *args.offset(0) as ::core::ffi::c_int,
+            ),
+            SqliteTestCtrl::ONCE_RESET_THRESHOLD => Self::OnceResetThreshold(
+                *args.offset(0) as ::core::ffi::c_int,
+            ),
+            SqliteTestCtrl::SORTER_MMAP => Self::SorterMmap(
+                *args.offset(0) as usize as *mut _,
+                *args.offset(1) as ::core::ffi::c_int,
+            ),
+            SqliteTestCtrl::ISINIT => Self::IsInit,
+            SqliteTestCtrl::IMPOSTER => Self::Imposter(
+                *args.offset(0) as usize as *mut _,
+                *args.offset(1) as usize as *const _,
+                *args.offset(2) as ::core::ffi::c_int,
+                *args.offset(3) as ::core::ffi::c_int,
+            ),
+            SqliteTestCtrl::RESULT_INTREAL => Self::ResultIntReal(
+                *args.offset(0) as usize as *mut _,
+            ),
+            SqliteTestCtrl::SEEK_COUNT => Self::SeekCount(
+                *args.offset(0) as usize as *mut _,
+                *args.offset(1) as usize as *mut _,
+            ),
+            SqliteTestCtrl::TRACEFLAGS => Self::TraceFlags(
+                *args.offset(0) as ::core::ffi::c_int,
+                *args.offset(1) as usize as *mut _,
+            ),
+            SqliteTestCtrl::LOGEST => Self::LogEst(
+                f64::from_bits(*args.offset(0)),
+                *args.offset(1) as usize as *mut _,
+                *args.offset(2) as usize as *mut _,
+                *args.offset(3) as usize as *mut _,
+            ),
+            SqliteTestCtrl::JSON_SELFCHECK | SqliteTestCtrl::VDBE_COVERAGE => Self::Noop,
+        }
+    }
+}
+
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn sqlite3_test_control_args(
+    op: ::core::ffi::c_int,
+    args: *const u64,
 ) -> ::core::ffi::c_int {
-    let mut rc: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-    // VaListImpl type handling - using args directly
-    match  op {
-    crate::src::headers::sqlite3_h::SQLITE_TESTCTRL_PRNG_SAVE =>  {
+    let mut rc: ::core::ffi::c_int = 0;
+    match TestControlOp::from_raw(op, args) {
+    TestControlOp::PrngSave => {
             crate::src::src::random::sqlite3PrngSaveState();
         }
-    crate::src::headers::sqlite3_h::SQLITE_TESTCTRL_PRNG_RESTORE =>  {
+    TestControlOp::PrngRestore => {
             crate::src::src::random::sqlite3PrngRestoreState();
         }
-    crate::src::headers::sqlite3_h::SQLITE_TESTCTRL_PRNG_SEED =>  {
-            let mut x: ::core::ffi::c_int = args.arg::<::core::ffi::c_int>();
+    TestControlOp::PrngSeed(mut x, db) => {
             let mut y: ::core::ffi::c_int = 0;
-            let mut db: *mut crate::src::headers::sqliteInt_h::sqlite3 = args.arg::<*mut crate::src::headers::sqliteInt_h::sqlite3>();
             if !db.is_null() && {
                 y = (*(*(*db).aDb.offset(0 as isize)).pSchema).schema_cookie;
                 y != 0 as ::core::ffi::c_int
@@ -590,182 +718,117 @@ pub unsafe extern "C" fn sqlite3_test_control(
                 ::core::ptr::null_mut::<::core::ffi::c_void>(),
             );
         }
-    crate::src::headers::sqlite3_h::SQLITE_TESTCTRL_FK_NO_ACTION =>  {
-            let mut db_0: *mut crate::src::headers::sqliteInt_h::sqlite3 = args.arg::<*mut crate::src::headers::sqliteInt_h::sqlite3>();
-            let mut b: ::core::ffi::c_int = args.arg::<::core::ffi::c_int>();
+    TestControlOp::FkNoAction(db, b) => {
             if b != 0 {
-                (*db_0).flags |= crate::src::headers::sqliteInt_h::SQLITE_FkNoAction;
+                (*db).flags |= crate::src::headers::sqliteInt_h::SQLITE_FkNoAction;
             } else {
-                (*db_0).flags &= !crate::src::headers::sqliteInt_h::SQLITE_FkNoAction;
+                (*db).flags &= !crate::src::headers::sqliteInt_h::SQLITE_FkNoAction;
             }
         }
-    crate::src::headers::sqlite3_h::SQLITE_TESTCTRL_BITVEC_TEST =>  {
-            let mut sz: ::core::ffi::c_int = args.arg::<::core::ffi::c_int>();
-            let mut aProg: *mut ::core::ffi::c_int = args.arg::<*mut ::core::ffi::c_int>();
+    TestControlOp::BitvecTest(sz, aProg) => {
             rc = crate::src::src::bitvec::sqlite3BitvecBuiltinTest(sz, aProg);
         }
-    crate::src::headers::sqlite3_h::SQLITE_TESTCTRL_FAULT_INSTALL =>  {
-            crate::src::src::global::sqlite3Config.xTestCallback = ::core::mem::transmute::<
-                *mut unsafe extern "C" fn(::core::ffi::c_int) -> ::core::ffi::c_int,
-                Option<unsafe extern "C" fn(::core::ffi::c_int) -> ::core::ffi::c_int>,
-            >(
-                args.arg::<*mut unsafe extern "C" fn(::core::ffi::c_int) -> ::core::ffi::c_int>(),
-            );
+    TestControlOp::FaultInstall(xCallback) => {
+            crate::src::src::global::sqlite3Config.xTestCallback = xCallback;
             rc = crate::src::src::util::sqlite3FaultSim(0 as ::core::ffi::c_int);
         }
-    crate::src::headers::sqlite3_h::SQLITE_TESTCTRL_BENIGN_MALLOC_HOOKS =>  {
-            let mut xBenignBegin: void_function = None;
-            let mut xBenignEnd: void_function = None;
-            xBenignBegin = ::core::mem::transmute(args.arg::<*mut unsafe extern "C" fn() -> ()>());
-            xBenignEnd = ::core::mem::transmute(args.arg::<*mut unsafe extern "C" fn() -> ()>());
+    TestControlOp::BenignMallocHooks(xBegin, xEnd) => {
             crate::src::src::fault::sqlite3BenignMallocHooks(
-                xBenignBegin as Option<unsafe extern "C" fn() -> ()>,
-                xBenignEnd as Option<unsafe extern "C" fn() -> ()>,
+                xBegin as Option<unsafe extern "C" fn() -> ()>,
+                xEnd as Option<unsafe extern "C" fn() -> ()>,
             );
         }
-    crate::src::headers::sqlite3_h::SQLITE_TESTCTRL_PENDING_BYTE =>  {
+    TestControlOp::PendingByte(newVal) => {
             rc = crate::src::src::global::sqlite3PendingByte;
-            let mut newVal: ::core::ffi::c_uint = args.arg::<::core::ffi::c_uint>();
             if newVal != 0 {
                 crate::src::src::global::sqlite3PendingByte = newVal as ::core::ffi::c_int;
             }
         }
-    crate::src::headers::sqlite3_h::SQLITE_TESTCTRL_ASSERT =>  {
-            let mut x_0: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-            rc = x_0;
+    TestControlOp::Assert => {
+            rc = 0;
         }
-    crate::src::headers::sqlite3_h::SQLITE_TESTCTRL_ALWAYS =>  {
-            let mut x_1: ::core::ffi::c_int = args.arg::<::core::ffi::c_int>();
-            rc = if x_1 != 0 {
-                x_1
-            } else {
-                0 as ::core::ffi::c_int
-            };
+    TestControlOp::Always(x) => {
+            rc = if x != 0 { x } else { 0 };
         }
-    crate::src::headers::sqlite3_h::SQLITE_TESTCTRL_BYTEORDER =>  {
-            rc = crate::src::headers::sqliteInt_h::SQLITE_BYTEORDER * 100 as ::core::ffi::c_int
-                + crate::src::headers::sqliteInt_h::SQLITE_LITTLEENDIAN * 10 as ::core::ffi::c_int
+    TestControlOp::ByteOrder => {
+            rc = crate::src::headers::sqliteInt_h::SQLITE_BYTEORDER * 100
+                + crate::src::headers::sqliteInt_h::SQLITE_LITTLEENDIAN * 10
                 + crate::src::headers::sqliteInt_h::SQLITE_BIGENDIAN;
         }
-    crate::src::headers::sqlite3_h::SQLITE_TESTCTRL_OPTIMIZATIONS =>  {
-            let mut db_1: *mut crate::src::headers::sqliteInt_h::sqlite3 = args.arg::<*mut crate::src::headers::sqliteInt_h::sqlite3>();
-            (*db_1).dbOptFlags = args.arg::<crate::src::ext::rtree::rtree::u32_0>();
+    TestControlOp::Optimizations(db, flags) => {
+            (*db).dbOptFlags = flags;
         }
-    crate::src::headers::sqlite3_h::SQLITE_TESTCTRL_GETOPT =>  {
-            let mut db_2: *mut crate::src::headers::sqliteInt_h::sqlite3 = args.arg::<*mut crate::src::headers::sqliteInt_h::sqlite3>();
-            let mut pN: *mut ::core::ffi::c_int = args.arg::<*mut ::core::ffi::c_int>();
-            *pN = (*db_2).dbOptFlags as ::core::ffi::c_int;
+    TestControlOp::GetOpt(db, pN) => {
+            *pN = (*db).dbOptFlags as ::core::ffi::c_int;
         }
-    crate::src::headers::sqlite3_h::SQLITE_TESTCTRL_LOCALTIME_FAULT =>  {
-            crate::src::src::global::sqlite3Config.bLocaltimeFault = args.arg::<::core::ffi::c_int>();
-            if crate::src::src::global::sqlite3Config.bLocaltimeFault == 2 as ::core::ffi::c_int {
-                crate::src::src::global::sqlite3Config.xAltLocaltime = ::core::mem::transmute::<
-                    *mut unsafe extern "C" fn(
-                        *const ::core::ffi::c_void,
-                        *mut ::core::ffi::c_void,
-                    ) -> ::core::ffi::c_int,
-                    Option<
-                        unsafe extern "C" fn(
-                            *const ::core::ffi::c_void,
-                            *mut ::core::ffi::c_void,
-                        ) -> ::core::ffi::c_int,
-                    >,
-                >(
-                    args.arg::<*mut unsafe extern "C" fn(
-                        *const ::core::ffi::c_void,
-                        *mut ::core::ffi::c_void,
-                    ) -> ::core::ffi::c_int>(),
-                );
+    TestControlOp::LocaltimeFault(bFault, xAlt) => {
+            crate::src::src::global::sqlite3Config.bLocaltimeFault = bFault;
+            if bFault == 2 {
+                crate::src::src::global::sqlite3Config.xAltLocaltime = xAlt;
             } else {
                 crate::src::src::global::sqlite3Config.xAltLocaltime = None;
             }
         }
-    crate::src::headers::sqlite3_h::SQLITE_TESTCTRL_INTERNAL_FUNCTIONS =>  {
-            let mut db_3: *mut crate::src::headers::sqliteInt_h::sqlite3 = args.arg::<*mut crate::src::headers::sqliteInt_h::sqlite3>();
-            (*db_3).mDbFlags ^= crate::src::headers::sqliteInt_h::DBFLAG_InternalFunc as crate::src::ext::rtree::rtree::u32_0;
+    TestControlOp::InternalFunctions(db) => {
+            (*db).mDbFlags ^= crate::src::headers::sqliteInt_h::DBFLAG_InternalFunc as crate::src::ext::rtree::rtree::u32_0;
         }
-    crate::src::headers::sqlite3_h::SQLITE_TESTCTRL_NEVER_CORRUPT =>  {
-            crate::src::src::global::sqlite3Config.neverCorrupt = args.arg::<::core::ffi::c_int>();
+    TestControlOp::NeverCorrupt(flag) => {
+            crate::src::src::global::sqlite3Config.neverCorrupt = flag;
         }
-    crate::src::headers::sqlite3_h::SQLITE_TESTCTRL_EXTRA_SCHEMA_CHECKS =>  {
-            crate::src::src::global::sqlite3Config.bExtraSchemaChecks = args.arg::<::core::ffi::c_int>() as crate::src::ext::rtree::rtree::u8_0;
+    TestControlOp::ExtraSchemaChecks(flag) => {
+            crate::src::src::global::sqlite3Config.bExtraSchemaChecks = flag as crate::src::ext::rtree::rtree::u8_0;
         }
-    crate::src::headers::sqlite3_h::SQLITE_TESTCTRL_ONCE_RESET_THRESHOLD =>  {
-            crate::src::src::global::sqlite3Config.iOnceResetThreshold = args.arg::<::core::ffi::c_int>();
+    TestControlOp::OnceResetThreshold(val) => {
+            crate::src::src::global::sqlite3Config.iOnceResetThreshold = val;
         }
-    crate::src::headers::sqlite3_h::SQLITE_TESTCTRL_SORTER_MMAP =>  {
-            let mut db_4: *mut crate::src::headers::sqliteInt_h::sqlite3 = args.arg::<*mut crate::src::headers::sqliteInt_h::sqlite3>();
-            (*db_4).nMaxSorterMmap = args.arg::<::core::ffi::c_int>();
+    TestControlOp::SorterMmap(db, nMax) => {
+            (*db).nMaxSorterMmap = nMax;
         }
-    crate::src::headers::sqlite3_h::SQLITE_TESTCTRL_ISINIT =>  {
+    TestControlOp::IsInit => {
             if crate::src::src::global::sqlite3Config.isInit == 0 as ::core::ffi::c_int {
                 rc = crate::src::headers::sqlite3_h::SQLITE_ERROR;
             }
         }
-    crate::src::headers::sqlite3_h::SQLITE_TESTCTRL_IMPOSTER =>  {
-            let mut db_5: *mut crate::src::headers::sqliteInt_h::sqlite3 = args.arg::<*mut crate::src::headers::sqliteInt_h::sqlite3>();
-            let mut iDb: ::core::ffi::c_int = 0;
-            crate::src::src::mutex::sqlite3_mutex_enter((*db_5).mutex);
-            iDb = crate::src::src::build::sqlite3FindDbName(db_5 as *mut crate::src::headers::sqliteInt_h::sqlite3, args.arg::<*const ::core::ffi::c_char>());
+    TestControlOp::Imposter(db, zSchema, onOff, tnum) => {
+            crate::src::src::mutex::sqlite3_mutex_enter((*db).mutex);
+            let iDb = crate::src::src::build::sqlite3FindDbName(db, zSchema);
             if iDb >= 0 as ::core::ffi::c_int {
-                let __db_5_ref = unsafe { &mut *db_5 };
-                __db_5_ref.init.iDb = iDb as crate::src::ext::rtree::rtree::u8_0;
-                (*db_5)
-                    .init
-                    .set_imposterTable(args.arg::<::core::ffi::c_int>() as ::core::ffi::c_uint
-                        as ::core::ffi::c_uint);
-                __db_5_ref.init.busy = __db_5_ref.init.imposterTable() as crate::src::ext::rtree::rtree::u8_0;
-                __db_5_ref.init.newTnum = args.arg::<::core::ffi::c_int>() as crate::src::src::pager::Pgno;
-                if __db_5_ref.init.busy as ::core::ffi::c_int == 0 as ::core::ffi::c_int
-                    && __db_5_ref.init.newTnum > 0 as crate::src::src::pager::Pgno
+                let db_ref = &mut *db;
+                db_ref.init.iDb = iDb as crate::src::ext::rtree::rtree::u8_0;
+                (*db).init.set_imposterTable(onOff as ::core::ffi::c_uint);
+                db_ref.init.busy = db_ref.init.imposterTable() as crate::src::ext::rtree::rtree::u8_0;
+                db_ref.init.newTnum = tnum as crate::src::src::pager::Pgno;
+                if db_ref.init.busy as ::core::ffi::c_int == 0 as ::core::ffi::c_int
+                    && db_ref.init.newTnum > 0 as crate::src::src::pager::Pgno
                 {
-                    crate::src::src::build::sqlite3ResetAllSchemasOfConnection(db_5 as *mut crate::src::headers::sqliteInt_h::sqlite3);
+                    crate::src::src::build::sqlite3ResetAllSchemasOfConnection(db);
                 }
             }
-            crate::src::src::mutex::sqlite3_mutex_leave((*db_5).mutex);
+            crate::src::src::mutex::sqlite3_mutex_leave((*db).mutex);
         }
-    crate::src::headers::sqlite3_h::SQLITE_TESTCTRL_RESULT_INTREAL =>  {
-            let mut pCtx: *mut crate::src::headers::vdbeInt_h::sqlite3_context =
-                args.arg::<*mut ::core::ffi::c_void>() as *mut crate::src::headers::vdbeInt_h::sqlite3_context;
+    TestControlOp::ResultIntReal(pCtx) => {
             crate::src::src::vdbeapi::sqlite3ResultIntReal(pCtx);
         }
-    crate::src::headers::sqlite3_h::SQLITE_TESTCTRL_SEEK_COUNT =>  {
-            let mut _db_6: *mut crate::src::headers::sqliteInt_h::sqlite3 = args.arg::<*mut crate::src::headers::sqliteInt_h::sqlite3>();
-            let mut pn: *mut crate::src::ext::rtree::rtree::u64_0 = args.arg::<*mut crate::src::headers::sqlite3_h::sqlite3_uint64>();
+    TestControlOp::SeekCount(_db, pn) => {
             *pn = 0 as crate::src::ext::rtree::rtree::u64_0;
         }
-    crate::src::headers::sqlite3_h::SQLITE_TESTCTRL_TRACEFLAGS =>  {
-            let mut opTrace: ::core::ffi::c_int = args.arg::<::core::ffi::c_int>();
-            let mut ptr: *mut crate::src::ext::rtree::rtree::u32_0 = args.arg::<*mut crate::src::ext::rtree::rtree::u32_0>();
+    TestControlOp::TraceFlags(opTrace, ptr) => {
             match opTrace {
-                0 => {
-                    *ptr = crate::src::src::global::sqlite3TreeTrace;
-                }
-                1 => {
-                    crate::src::src::global::sqlite3TreeTrace = *ptr;
-                }
-                2 => {
-                    *ptr = crate::src::src::global::sqlite3WhereTrace;
-                }
-                3 => {
-                    crate::src::src::global::sqlite3WhereTrace = *ptr;
-                }
+                0 => { *ptr = crate::src::src::global::sqlite3TreeTrace; }
+                1 => { crate::src::src::global::sqlite3TreeTrace = *ptr; }
+                2 => { *ptr = crate::src::src::global::sqlite3WhereTrace; }
+                3 => { crate::src::src::global::sqlite3WhereTrace = *ptr; }
                 _ => {}
             }
         }
-    crate::src::headers::sqlite3_h::SQLITE_TESTCTRL_LOGEST =>  {
-            let mut rIn: ::core::ffi::c_double = args.arg::<::core::ffi::c_double>();
-            let mut rLogEst: crate::src::headers::sqliteInt_h::LogEst = crate::src::src::util::sqlite3LogEstFromDouble(rIn);
-            let mut pI1: *mut ::core::ffi::c_int = args.arg::<*mut ::core::ffi::c_int>();
-            let mut pU64: *mut crate::src::ext::rtree::rtree::u64_0 = args.arg::<*mut crate::src::ext::rtree::rtree::u64_0>();
-            let mut pI2: *mut ::core::ffi::c_int = args.arg::<*mut ::core::ffi::c_int>();
+    TestControlOp::LogEst(rIn, pI1, pU64, pI2) => {
+            let rLogEst: crate::src::headers::sqliteInt_h::LogEst = crate::src::src::util::sqlite3LogEstFromDouble(rIn);
             *pI1 = rLogEst as ::core::ffi::c_int;
             *pU64 = crate::src::src::util::sqlite3LogEstToInt(rLogEst);
             *pI2 = crate::src::src::util::sqlite3LogEst(*pU64) as ::core::ffi::c_int;
         }
-    crate::src::headers::sqlite3_h::SQLITE_TESTCTRL_VDBE_COVERAGE |
-        crate::src::headers::sqlite3_h::SQLITE_TESTCTRL_JSON_SELFCHECK | _ =>  {}
-}
+    TestControlOp::Noop => {}
+    }
     rc
 }
 

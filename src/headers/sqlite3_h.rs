@@ -1352,59 +1352,39 @@ pub const SQLITE_MUTEX_STATIC_PMEM: ::core::ffi::c_int = 7 as ::core::ffi::c_int
 
 pub const SQLITE_MUTEX_STATIC_VFS1: ::core::ffi::c_int = 11 as ::core::ffi::c_int;
 
-pub const SQLITE_TESTCTRL_PRNG_SAVE: ::core::ffi::c_int = 5;
+#[derive(Debug, Clone, Copy, PartialEq, Eq, strum_macros::FromRepr)]
+#[repr(i32)]
+pub enum SqliteTestCtrl {
+    PRNG_SAVE = 5,
+    PRNG_RESTORE = 6,
+    FK_NO_ACTION = 7,
+    BITVEC_TEST = 8,
+    FAULT_INSTALL = 9,
+    BENIGN_MALLOC_HOOKS = 10,
+    PENDING_BYTE = 11,
+    ASSERT = 12,
+    ALWAYS = 13,
+    JSON_SELFCHECK = 14,
+    OPTIMIZATIONS = 15,
+    GETOPT = 16,
+    INTERNAL_FUNCTIONS = 17,
+    LOCALTIME_FAULT = 18,
+    ONCE_RESET_THRESHOLD = 19,
+    NEVER_CORRUPT = 20,
+    VDBE_COVERAGE = 21,
+    BYTEORDER = 22,
+    ISINIT = 23,
+    SORTER_MMAP = 24,
+    IMPOSTER = 25,
+    RESULT_INTREAL = 27,
+    PRNG_SEED = 28,
+    EXTRA_SCHEMA_CHECKS = 29,
+    SEEK_COUNT = 30,
+    TRACEFLAGS = 31,
+    LOGEST = 33,
+}
 
-pub const SQLITE_TESTCTRL_PRNG_RESTORE: ::core::ffi::c_int = 6;
 
-pub const SQLITE_TESTCTRL_FK_NO_ACTION: ::core::ffi::c_int = 7;
-
-pub const SQLITE_TESTCTRL_BITVEC_TEST: ::core::ffi::c_int = 8;
-
-pub const SQLITE_TESTCTRL_FAULT_INSTALL: ::core::ffi::c_int = 9;
-
-pub const SQLITE_TESTCTRL_BENIGN_MALLOC_HOOKS: ::core::ffi::c_int = 10;
-
-pub const SQLITE_TESTCTRL_PENDING_BYTE: ::core::ffi::c_int = 11;
-
-pub const SQLITE_TESTCTRL_ASSERT: ::core::ffi::c_int = 12;
-
-pub const SQLITE_TESTCTRL_ALWAYS: ::core::ffi::c_int = 13;
-
-pub const SQLITE_TESTCTRL_JSON_SELFCHECK: ::core::ffi::c_int = 14;
-
-pub const SQLITE_TESTCTRL_OPTIMIZATIONS: ::core::ffi::c_int = 15;
-
-pub const SQLITE_TESTCTRL_GETOPT: ::core::ffi::c_int = 16;
-
-pub const SQLITE_TESTCTRL_INTERNAL_FUNCTIONS: ::core::ffi::c_int = 17;
-
-pub const SQLITE_TESTCTRL_LOCALTIME_FAULT: ::core::ffi::c_int = 18;
-
-pub const SQLITE_TESTCTRL_ONCE_RESET_THRESHOLD: ::core::ffi::c_int = 19;
-
-pub const SQLITE_TESTCTRL_NEVER_CORRUPT: ::core::ffi::c_int = 20;
-
-pub const SQLITE_TESTCTRL_VDBE_COVERAGE: ::core::ffi::c_int = 21;
-
-pub const SQLITE_TESTCTRL_BYTEORDER: ::core::ffi::c_int = 22;
-
-pub const SQLITE_TESTCTRL_ISINIT: ::core::ffi::c_int = 23;
-
-pub const SQLITE_TESTCTRL_SORTER_MMAP: ::core::ffi::c_int = 24;
-
-pub const SQLITE_TESTCTRL_IMPOSTER: ::core::ffi::c_int = 25;
-
-pub const SQLITE_TESTCTRL_RESULT_INTREAL: ::core::ffi::c_int = 27;
-
-pub const SQLITE_TESTCTRL_PRNG_SEED: ::core::ffi::c_int = 28;
-
-pub const SQLITE_TESTCTRL_EXTRA_SCHEMA_CHECKS: ::core::ffi::c_int = 29;
-
-pub const SQLITE_TESTCTRL_SEEK_COUNT: ::core::ffi::c_int = 30;
-
-pub const SQLITE_TESTCTRL_TRACEFLAGS: ::core::ffi::c_int = 31;
-
-pub const SQLITE_TESTCTRL_LOGEST: ::core::ffi::c_int = 33;
 
 pub const SQLITE_STATUS_MEMORY_USED: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
 
