@@ -1470,35 +1470,6 @@ pub unsafe fn sqlite3_snprintf_args(
 // sqlite3MPrintf moved to printf_c_variadic.rs
 pub use crate::src::printf_c_variadic::sqlite3MPrintf;
 
-// C-exported variadic printf functions for use by external C code (e.g. shell.c).
-// These are defined here (not in printf_c_variadic.rs) so that printf_c_variadic.rs
-// remains free of these public C ABI symbols per the migration constraints.
-#[unsafe(no_mangle)]
-pub unsafe extern "C" fn sqlite3_mprintf(
-    mut zFormat: *const ::core::ffi::c_char,
-    mut args: ...
-) -> *mut ::core::ffi::c_char {
-    let mut z: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
-    let mut zBase: [::core::ffi::c_char; 70] = [0; 70];
-    let mut acc: crate::src::headers::sqliteInt_h::StrAccum = unsafe { ::core::mem::zeroed() };
-    if crate::src::src::main::sqlite3_initialize() != 0 {
-        return ::core::ptr::null_mut::<::core::ffi::c_char>();
-    }
-    sqlite3StrAccumInit(
-        &raw mut acc,
-        ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::sqlite3>(),
-        &raw mut zBase as *mut ::core::ffi::c_char,
-        ::core::mem::size_of::<[::core::ffi::c_char; 70]>() as ::core::ffi::c_int,
-        crate::sqliteLimit_h::SQLITE_MAX_LENGTH,
-    );
-    let (_s, a) = extract_printf_args(zFormat, args, false, ::core::ptr::null_mut());
-    sqlite3_str_vappendf_args(&raw mut acc, zFormat, &a);
-    z = sqlite3StrAccumFinish(&raw mut acc);
-    z
-}
-
-// sqlite3_snprintf is now implemented in c_code/printf_c.c — calls sqlite3_vsnprintf
-unsafe extern "C" { pub safe fn sqlite3_snprintf(n: ::core::ffi::c_int, zBuf: *mut ::core::ffi::c_char, zFormat: *const ::core::ffi::c_char, ...) -> *mut ::core::ffi::c_char; }
 
 
 #[unsafe(no_mangle)]

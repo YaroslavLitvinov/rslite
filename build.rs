@@ -11,12 +11,14 @@ fn main() {
     cc::Build::new()
         .file("c_code/printf_c.c")
         .file("c_code/snprintf.c")
+        .file("c_code/mprintf.c")
         .compile("printf_c");
 
     // Force the linker to pull in C symbols that are only called by external
     // clients (not by Rust code).  Without this, the linker drops unreferenced
     // objects from the static lib.
     println!("cargo:rustc-link-arg-cdylib=-Wl,--undefined=sqlite3_snprintf");
+    println!("cargo:rustc-link-arg-cdylib=-Wl,--undefined=sqlite3_mprintf");
 
     // Export C symbols from the cdylib (.so) — Rust's linker only auto-exports
     // #[no_mangle] Rust symbols, so C functions need explicit export directives.
