@@ -62,26 +62,8 @@ pub unsafe extern "C" fn sqlite3DebugPrintf(
     crate::src::headers::stdlib::fflush(crate::src::headers::stdlib::stdout);
 }
 
-#[unsafe(no_mangle)]
-pub unsafe extern "C" fn sqlite3_str_appendf(
-    mut p: *mut crate::src::headers::sqliteInt_h::StrAccum,
-    mut zFormat: *const ::core::ffi::c_char,
-    mut args: ...
-) {
-    if (*p).printfFlags as ::core::ffi::c_int & crate::src::headers::sqliteInt_h::SQLITE_PRINTF_SQLFUNC != 0 {
-        // SQLFUNC path: read PrintfArguments pointer, then use direct mode
-        let pArgList = args.arg::<*mut crate::src::headers::sqliteInt_h::PrintfArguments>();
-        crate::src::src::printf::sqlite3_str_vappendf_sqlfunc(
-            p as *mut crate::src::headers::sqliteInt_h::sqlite3_str,
-            zFormat,
-            pArgList,
-        );
-    } else {
-        // Normal path: extract args from VaList, then format
-        let (_s, a) = crate::src::src::printf::extract_printf_args(zFormat, args, false, ::core::ptr::null_mut());
-        crate::src::src::printf::sqlite3_str_vappendf_args(p as *mut crate::src::headers::sqliteInt_h::sqlite3_str, zFormat, &a);
-    }
-}
+// sqlite3_str_appendf is now implemented in c_code/printf_c.c
+// It calls sqlite3_str_vappendf_sqlfunc and sqlite3_str_vappendf_va from printf.rs
 
 // VaList functions below are defined in printf.rs - we re-export them here
 // (they don't use VaListImpl, just VaList which is already available)

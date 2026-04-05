@@ -7,6 +7,17 @@ fn main() {
         println!("cargo:rustc-env=RUSTFLAGS=-Z unstable-options -Zcrate-attr=feature(c_variadic)");
     }
 
+    // Compile C code: sqlite3_str_appendf variadic entry point
+    cc::Build::new()
+        .file("c_code/printf_c.c")
+        .compile("printf_c");
+
+    // Export C symbols from the cdylib (.so) — Rust's linker only auto-exports
+    // #[no_mangle] Rust symbols, so C functions need explicit export directives.
+    let manifest_dir = std::env::var("CARGO_MANIFEST_DIR").unwrap();
+    let ver_script = format!("{}/c_code/exports.ver", manifest_dir);
+    println!("cargo:rustc-cdylib-link-arg=-Wl,--version-script={}", ver_script);
+
     #[cfg(all(unix, not(target_os = "macos")))]
     {
         // add unix dependencies below

@@ -21,7 +21,8 @@ pub use crate::src::headers::stdlib::va_list;
 pub use crate::__stddef_size_t_h::size_t;
 pub use crate::src::printf_c_variadic::sqlite3_log;
 pub use crate::src::printf_c_variadic::sqlite3DebugPrintf;
-pub use crate::src::printf_c_variadic::sqlite3_str_appendf;
+// sqlite3_str_appendf is now provided by c_code/printf_c.c
+unsafe extern "C" { pub safe fn sqlite3_str_appendf(p: *mut sqlite3_str, zFormat: *const ::core::ffi::c_char, ...); }
 
 
 pub use crate::src::src::hash::Hash;pub use crate::src::src::hash::HashElem;pub use crate::src::src::hash::_ht;pub use crate::internal::__builtin_va_list;pub use crate::internal::__va_list_tag;
@@ -576,7 +577,8 @@ pub unsafe extern "C" fn sqlite3_str_appendall(
 /// Single-pass SQLFUNC formatter: reads arguments directly from PrintfArguments
 /// as format specifiers are encountered, avoiding the dangling-pointer problem
 /// caused by pre-extracting all sqlite3_value_text pointers.
-pub unsafe fn sqlite3_str_vappendf_sqlfunc(
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn sqlite3_str_vappendf_sqlfunc(
     pAccum: *mut crate::src::headers::sqliteInt_h::sqlite3_str,
     fmt_start: *const ::core::ffi::c_char,
     pArgList: *mut crate::src::headers::sqliteInt_h::PrintfArguments,
@@ -588,6 +590,21 @@ pub unsafe fn sqlite3_str_vappendf_sqlfunc(
     let src = DirectArgs::new(pArgList);
     let fmt = ::core::ffi::CStr::from_ptr(fmt_start).to_str().unwrap_or("");
     sqlite3_str_vappendf2(pAccum, fmt, src);
+}
+
+/// Non-variadic entry point for the normal (non-SQLFUNC) path.
+/// Called from C `sqlite3_str_appendf` with a `va_list`.
+///
+/// # Safety
+/// `pAccum` and `fmt_start` must be valid. `ap` must contain the right types.
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn sqlite3_str_vappendf_va(
+    pAccum: *mut crate::src::headers::sqliteInt_h::sqlite3_str,
+    fmt_start: *const ::core::ffi::c_char,
+    ap: ::core::ffi::VaList,
+) {
+    let (_s, a) = extract_printf_args(fmt_start, ap, false, ::core::ptr::null_mut());
+    sqlite3_str_vappendf_args(pAccum, fmt_start, &a);
 }
 
 /// Format and append to StrAccum using pre-extracted PrintfArg arguments.
