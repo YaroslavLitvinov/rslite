@@ -163,14 +163,37 @@ pub unsafe extern "C" fn sqlite3VdbeExplain(
     addr
 }
 
-// Variadic function from vtab.rs - must be defined here to use c_variadic feature
+// sqlite3_vtab_config — C wrapper is in c_code/vtab_config.c
+// C wrapper packs va_args into u64 slots, Rust parses into VtabConfigOp enum and dispatches.
+
+use crate::src::headers::sqlite3_h::SqliteVtabConfig;
+
+pub enum VtabConfigOp {
+    ConstraintSupport(::core::ffi::c_int),
+    Innocuous,
+    DirectOnly,
+    UsesAllSchemas,
+    Noop,
+}
+
+impl VtabConfigOp {
+    unsafe fn from_raw(op: ::core::ffi::c_int, args: *const u64) -> Self {
+        let Some(cfg) = SqliteVtabConfig::from_repr(op) else { return Self::Noop };
+        match cfg {
+            SqliteVtabConfig::CONSTRAINT_SUPPORT => Self::ConstraintSupport(*args.offset(0) as ::core::ffi::c_int),
+            SqliteVtabConfig::INNOCUOUS => Self::Innocuous,
+            SqliteVtabConfig::DIRECTONLY => Self::DirectOnly,
+            SqliteVtabConfig::USES_ALL_SCHEMAS => Self::UsesAllSchemas,
+        }
+    }
+}
+
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn sqlite3_vtab_config(
+pub unsafe extern "C" fn sqlite3_vtab_config_args(
     mut db: *mut crate::src::headers::sqliteInt_h::sqlite3,
-    mut op: ::core::ffi::c_int,
-    mut args: ...
+    op: ::core::ffi::c_int,
+    args: *const u64,
 ) -> ::core::ffi::c_int {
-    // VaListImpl type handling - using args directly
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
     let mut p: *mut crate::src::src::vtab::VtabCtx = ::core::ptr::null_mut::<crate::src::src::vtab::VtabCtx>();
     let __db_ref = unsafe { &*db };
@@ -179,23 +202,23 @@ pub unsafe extern "C" fn sqlite3_vtab_config(
     if p.is_null() {
         rc = crate::src::src::main::sqlite3MisuseError(1346 as ::core::ffi::c_int);
     } else {
-        match  op {
-    crate::src::headers::sqlite3_h::SQLITE_VTAB_CONSTRAINT_SUPPORT_1 =>  {
-                (*(*p).pVTable).bConstraint = args.arg::<::core::ffi::c_int>() as crate::src::ext::rtree::rtree::u8_0;
+        match VtabConfigOp::from_raw(op, args) {
+            VtabConfigOp::ConstraintSupport(val) => {
+                (*(*p).pVTable).bConstraint = val as crate::src::ext::rtree::rtree::u8_0;
             }
-    crate::src::headers::sqlite3_h::SQLITE_VTAB_INNOCUOUS_1 =>  {
+            VtabConfigOp::Innocuous => {
                 (*(*p).pVTable).eVtabRisk = crate::src::headers::sqliteInt_h::SQLITE_VTABRISK_Low as crate::src::ext::rtree::rtree::u8_0;
             }
-    crate::src::headers::sqlite3_h::SQLITE_VTAB_DIRECTONLY_1 =>  {
+            VtabConfigOp::DirectOnly => {
                 (*(*p).pVTable).eVtabRisk = crate::src::headers::sqliteInt_h::SQLITE_VTABRISK_High as crate::src::ext::rtree::rtree::u8_0;
             }
-    crate::src::headers::sqlite3_h::SQLITE_VTAB_USES_ALL_SCHEMAS_1 =>  {
+            VtabConfigOp::UsesAllSchemas => {
                 (*(*p).pVTable).bAllSchemas = 1 as crate::src::ext::rtree::rtree::u8_0;
             }
-    _ =>  {
+            VtabConfigOp::Noop => {
                 rc = crate::src::src::main::sqlite3MisuseError(1368 as ::core::ffi::c_int);
             }
-}
+        }
     }
     if rc != crate::src::headers::sqlite3_h::SQLITE_OK {
         crate::src::src::util::sqlite3Error(db as *mut crate::src::headers::sqliteInt_h::sqlite3, rc);

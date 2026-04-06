@@ -1509,21 +1509,19 @@ pub const SQLITE_CHECKPOINT_RESTART: ::core::ffi::c_int = 2 as ::core::ffi::c_in
 
 pub const SQLITE_CHECKPOINT_TRUNCATE: ::core::ffi::c_int = 3 as ::core::ffi::c_int;
 
-pub const SQLITE_VTAB_CONSTRAINT_SUPPORT: ::core::ffi::c_int = 1 as ::core::ffi::c_int;
+#[derive(Debug, Clone, Copy, PartialEq, Eq, strum_macros::FromRepr)]
+#[repr(i32)]
+pub enum SqliteVtabConfig {
+    CONSTRAINT_SUPPORT = 1,
+    INNOCUOUS = 2,
+    DIRECTONLY = 3,
+    USES_ALL_SCHEMAS = 4,
+}
 
-pub const SQLITE_VTAB_CONSTRAINT_SUPPORT_1: ::core::ffi::c_int = 1;
-
-pub const SQLITE_VTAB_INNOCUOUS: ::core::ffi::c_int = 2 as ::core::ffi::c_int;
-
-pub const SQLITE_VTAB_INNOCUOUS_1: ::core::ffi::c_int = 2;
-
-pub const SQLITE_VTAB_DIRECTONLY: ::core::ffi::c_int = 3 as ::core::ffi::c_int;
-
-pub const SQLITE_VTAB_DIRECTONLY_1: ::core::ffi::c_int = 3;
-
-pub const SQLITE_VTAB_USES_ALL_SCHEMAS: ::core::ffi::c_int = 4 as ::core::ffi::c_int;
-
-pub const SQLITE_VTAB_USES_ALL_SCHEMAS_1: ::core::ffi::c_int = 4;
+pub const SQLITE_VTAB_CONSTRAINT_SUPPORT: ::core::ffi::c_int = SqliteVtabConfig::CONSTRAINT_SUPPORT as ::core::ffi::c_int;
+pub const SQLITE_VTAB_INNOCUOUS: ::core::ffi::c_int = SqliteVtabConfig::INNOCUOUS as ::core::ffi::c_int;
+pub const SQLITE_VTAB_DIRECTONLY: ::core::ffi::c_int = SqliteVtabConfig::DIRECTONLY as ::core::ffi::c_int;
+pub const SQLITE_VTAB_USES_ALL_SCHEMAS: ::core::ffi::c_int = SqliteVtabConfig::USES_ALL_SCHEMAS as ::core::ffi::c_int;
 
 pub const SQLITE_ROLLBACK: ::core::ffi::c_int = 1 as ::core::ffi::c_int;
 
