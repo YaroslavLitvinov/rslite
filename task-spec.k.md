@@ -18,7 +18,9 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
       - [rustfixture_symbols](#rustfixture_symbols)
       - [shell_symbols](#shell_symbols)
     - [Feature: toolchain_version](#toolchain_version)
-      - [c6](#c6)
+      - [shell_nightly](#shell_nightly)
+      - [stable_toolchain](#stable_toolchain)
+      - [tclsqlite_nightly](#tclsqlite_nightly)
 
 ## Features
 
@@ -58,11 +60,11 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
 
 #### rustfixture_symbols
 **Description:** Behavioral: all 10 symbols must be global (T) in the rustfixture binary
-**Command:** `SYMS=$(nm $PROJECT_ROOT/target/release/rustfixture) && for sym in sqlite3_str_appendf sqlite3_snprintf sqlite3_mprintf sqlite3_vsnprintf sqlite3_vmprintf sqlite3_test_control sqlite3_db_config sqlite3_config sqlite3_vtab_config sqlite3_log; do echo "$SYMS" | grep -q "T ${sym}$" || { echo "missing $sym in rustfixture"; exit 1; }; done && grep -q "export_name.*sqlite3_db_config_args" $PROJECT_ROOT/src/printf_c_variadic.rs`
+**Command:** `SYMS=$(nm $PROJECT_ROOT/crust-tclsqlite/target/release/rustfixture) && for sym in sqlite3_str_appendf sqlite3_snprintf sqlite3_mprintf sqlite3_vsnprintf sqlite3_vmprintf sqlite3_test_control sqlite3_db_config sqlite3_config sqlite3_vtab_config sqlite3_log; do echo "$SYMS" | grep -q "T ${sym}$" || { echo "missing $sym in rustfixture"; exit 1; }; done && grep -q "export_name.*sqlite3_db_config_args" $PROJECT_ROOT/src/printf_c_variadic.rs`
 
 #### shell_symbols
 **Description:** Behavioral: all 10 symbols must be global (T) in the shell binary
-**Command:** `SYMS=$(nm $PROJECT_ROOT/target/release/sqlite3) && for sym in sqlite3_str_appendf sqlite3_snprintf sqlite3_mprintf sqlite3_vsnprintf sqlite3_vmprintf sqlite3_test_control sqlite3_db_config sqlite3_config sqlite3_vtab_config sqlite3_log; do echo "$SYMS" | grep -q "T ${sym}$" || { echo "missing $sym in shell"; exit 1; }; done && grep -q "export_name.*sqlite3_config_args" $PROJECT_ROOT/src/printf_c_variadic.rs`
+**Command:** `SYMS=$(nm $PROJECT_ROOT/crust-sqlite-shell/target/release/sqlite3) && for sym in sqlite3_str_appendf sqlite3_snprintf sqlite3_mprintf sqlite3_vsnprintf sqlite3_vmprintf sqlite3_test_control sqlite3_db_config sqlite3_config sqlite3_vtab_config sqlite3_log; do echo "$SYMS" | grep -q "T ${sym}$" || { echo "missing $sym in shell"; exit 1; }; done && grep -q "export_name.*sqlite3_config_args" $PROJECT_ROOT/src/printf_c_variadic.rs`
 
 ### Feature: toolchain_version
 **Enforce Rust toolchain version nightly-2026-03-26**
@@ -70,6 +72,14 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
 **Goals:**
 - rust-toolchain.toml must specify channel nightly-2026-03-26
 
-#### toolchain_nightly_version
-**Description:** rust-toolchain.toml must use channel nightly-2026-03-26
-**Command:** `grep -q "nightly-2026-03-26" "$PROJECT_ROOT/rust-toolchain.toml" && exit 0 || exit 1`
+#### shell_nightly
+**Description:** crust-sqlite-shell must use nightly toolchain (needs c_variadic, extern_types)
+**Command:** `grep -q "^channel.*=.*\"nightly" "$PROJECT_ROOT/crust-sqlite-shell/rust-toolchain.toml" && exit 0 || exit 1`
+
+#### stable_toolchain
+**Description:** rust-toolchain.toml must use stable channel (c_variadic removed from lib crate)
+**Command:** `grep -q "^channel.*=.*\"stable\"" "$PROJECT_ROOT/rust-toolchain.toml" && exit 0 || exit 1`
+
+#### tclsqlite_nightly
+**Description:** crust-tclsqlite must use nightly toolchain (needs c_variadic, extern_types)
+**Command:** `grep -q "^channel.*=.*\"nightly" "$PROJECT_ROOT/crust-tclsqlite/rust-toolchain.toml" && exit 0 || exit 1`
