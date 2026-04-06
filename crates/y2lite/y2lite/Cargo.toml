@@ -10,7 +10,7 @@ y2lite = []
 
 [dependencies]
 y2lite-sys = { workspace = true }
-sqlite_noamalgam = { workspace = true, features = ["fts4"] }
+crust-core = { workspace = true, features = ["fts4"] }
 
 [[example]]
 name = "demo"

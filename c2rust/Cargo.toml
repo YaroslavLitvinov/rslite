@@ -17,7 +17,7 @@ opt-level = 3
 
 [workspace.dependencies]
 # Internal crates
-sqlite_noamalgam = { path = "../crates/source" }
+crust-core = { path = "../crates/crust-core" }
 sqlite-printf-macros = { path = "../crates/sqlite-printf-macros" }
 
 # External dependencies
