@@ -590,18 +590,31 @@ pub unsafe extern "C" fn sqlite3_str_vappendf_sqlfunc(
     sqlite3_str_vappendf2(pAccum, fmt, src);
 }
 
-/// Non-variadic entry point for the normal (non-SQLFUNC) path.
-/// Called from C `sqlite3_str_appendf` with a `va_list`.
-///
-/// # Safety
-/// `pAccum` and `fmt_start` must be valid. `ap` must contain the right types.
+/// C FFI entry point — thin wrapper that converts raw pointer+len to a slice.
 #[unsafe(no_mangle)]
-pub unsafe extern "C" fn sqlite3_str_vappendf_va(
+pub unsafe extern "C" fn sqlite3_str_vappendf_packed(
     pAccum: *mut crate::src::headers::sqliteInt_h::sqlite3_str,
     fmt_start: *const ::core::ffi::c_char,
-    ap: ::core::ffi::VaList,
+    args: *const u64,
+    nArgs: ::core::ffi::c_int,
 ) {
-    let (_s, a) = extract_printf_args(fmt_start, ap, false, ::core::ptr::null_mut());
+    let packed: &[u64] = if args.is_null() || nArgs <= 0 {
+        &[]
+    } else {
+        ::core::slice::from_raw_parts(args, nArgs as usize)
+    };
+    sqlite3_str_vappendf_from_packed(pAccum, fmt_start, packed);
+}
+
+/// Non-variadic entry point for the normal (non-SQLFUNC) path.
+/// Called from C wrappers that pre-extract va_args into a uint64_t slice.
+/// Rust parses the format string to determine types and interprets each u64 accordingly.
+pub unsafe fn sqlite3_str_vappendf_from_packed(
+    pAccum: *mut crate::src::headers::sqliteInt_h::sqlite3_str,
+    fmt_start: *const ::core::ffi::c_char,
+    packed: &[u64],
+) {
+    let a = unpack_printf_args(fmt_start, packed);
     sqlite3_str_vappendf_args(pAccum, fmt_start, &a);
 }
 
@@ -929,72 +942,39 @@ pub struct PrintfSpec {
     pub literal_end: usize,
 }
 
-/// Walk a printf format string, parse each specifier, and extract the corresponding
-/// argument from `ap` (VaList). Returns specs + args in order.
-///
-/// If `bArgList` is true, arguments come from a PrintfArguments* (SQLFUNC path);
-/// otherwise from the VaList.
-///
-/// # Safety
-/// `fmt` must be a valid NUL-terminated C string. `ap` must contain the right types.
-pub unsafe fn extract_printf_args(
+// extract_printf_args removed — va_list extraction now happens in C (c_code/printf_c.c).
+// Rust receives pre-packed uint64_t[] via unpack_printf_args.
+
+/// Walk a printf format string, interpret each u64 from `packed` based on the specifier type.
+/// Same logic as extract_printf_args but reads from a pre-extracted uint64_t array
+/// (produced by C wrappers) instead of VaList.
+pub unsafe fn unpack_printf_args(
     fmt_start: *const ::core::ffi::c_char,
-    mut ap: ::core::ffi::VaList,
-    bArgList: bool,
-    pArgList: *mut crate::src::headers::sqliteInt_h::PrintfArguments,
-) -> (Vec<PrintfSpec>, Vec<PrintfArg>) {
-    let mut specs: Vec<PrintfSpec> = Vec::new();
+    packed: &[u64],
+) -> Vec<PrintfArg> {
     let mut args: Vec<PrintfArg> = Vec::new();
     let mut fmt = fmt_start;
-    let base_ptr = fmt_start as usize;
+    let mut pi = 0usize; // index into packed[]
 
     loop {
         let c = *fmt as ::core::ffi::c_int;
-        if c == 0 {
-            break;
-        }
+        if c == 0 { break; }
         if c != '%' as i32 {
-            // Skip to next '%' or end
-            let start = fmt;
             fmt = ::libc::strchr(fmt, '%' as i32);
-            if fmt.is_null() {
-                // Record trailing literal — no more specs
-                break;
-            }
-            // fall through to parse the '%'
+            if fmt.is_null() { break; }
         }
-
-        // Record where literal text before this '%' ends
-        let literal_end = (fmt as usize) - base_ptr;
-
         fmt = fmt.offset(1); // skip '%'
         let mut c = *fmt as ::core::ffi::c_int;
-        if c == 0 {
-            break;
-        }
+        if c == 0 { break; }
 
-        // Parse flags, width, precision, length modifier
-        let mut flag_leftjustify = false;
-        let mut flag_prefix: ::core::ffi::c_char = 0;
         let mut flag_alternateform = false;
-        let mut flag_altform2 = false;
-        let mut flag_zeropad = false;
         let mut flag_long: u8 = 0;
-        let mut cThousand: u8 = 0;
-        let mut width: ::core::ffi::c_int = 0;
-        let mut precision: ::core::ffi::c_int = -1;
         let mut done = false;
 
-        // width/precision might consume args — we push those as separate Int args
         loop {
             match c as u8 {
-                b'-' => flag_leftjustify = true,
-                b'+' => flag_prefix = '+' as ::core::ffi::c_char,
-                b' ' => flag_prefix = ' ' as ::core::ffi::c_char,
+                b'-' | b'+' | b' ' | b'!' | b'0' | b',' => {}
                 b'#' => flag_alternateform = true,
-                b'!' => flag_altform2 = true,
-                b'0' => flag_zeropad = true,
-                b',' => cThousand = b',',
                 b'l' => {
                     flag_long = 1;
                     fmt = fmt.offset(1);
@@ -1007,14 +987,11 @@ pub unsafe fn extract_printf_args(
                     done = true;
                 }
                 b'1'..=b'9' => {
-                    let mut wx: u32 = (c - '0' as i32) as u32;
                     loop {
                         fmt = fmt.offset(1);
                         c = *fmt as ::core::ffi::c_int;
                         if !(c >= '0' as i32 && c <= '9' as i32) { break; }
-                        wx = wx.wrapping_mul(10).wrapping_add(c as u32).wrapping_sub('0' as u32);
                     }
-                    width = (wx & 0x7fffffff) as ::core::ffi::c_int;
                     if c != '.' as i32 && c != 'l' as i32 {
                         done = true;
                     } else {
@@ -1022,18 +999,10 @@ pub unsafe fn extract_printf_args(
                     }
                 }
                 b'*' => {
-                    let raw_width: ::core::ffi::c_int;
-                    if bArgList {
-                        raw_width = getIntArg(pArgList) as ::core::ffi::c_int;
-                    } else {
-                        raw_width = ap.arg::<::core::ffi::c_int>();
-                    }
-                    // Push the raw width value as an arg for the formatter to consume
-                    args.push(PrintfArg::Int(raw_width as crate::src::ext::rtree::rtree::i64_0));
-                    width = raw_width;
-                    if width < 0 {
-                        flag_leftjustify = true;
-                        width = if width >= -2147483647 { -width } else { 0 };
+                    // Width from args
+                    if pi < packed.len() {
+                        args.push(PrintfArg::Int(packed[pi] as crate::src::ext::rtree::rtree::i64_0));
+                        pi += 1;
                     }
                     c = *fmt.offset(1) as ::core::ffi::c_int;
                     if c != '.' as i32 && c != 'l' as i32 {
@@ -1046,28 +1015,17 @@ pub unsafe fn extract_printf_args(
                     fmt = fmt.offset(1);
                     c = *fmt as ::core::ffi::c_int;
                     if c == '*' as i32 {
-                        let raw_prec: ::core::ffi::c_int;
-                        if bArgList {
-                            raw_prec = getIntArg(pArgList) as ::core::ffi::c_int;
-                        } else {
-                            raw_prec = ap.arg::<::core::ffi::c_int>();
-                        }
-                        // Push as arg for the formatter to consume
-                        args.push(PrintfArg::Int(raw_prec as crate::src::ext::rtree::rtree::i64_0));
-                        precision = raw_prec;
-                        if precision < 0 {
-                            precision = if precision >= -2147483647 { -precision } else { -1 };
+                        if pi < packed.len() {
+                            args.push(PrintfArg::Int(packed[pi] as crate::src::ext::rtree::rtree::i64_0));
+                            pi += 1;
                         }
                         fmt = fmt.offset(1);
                         c = *fmt as ::core::ffi::c_int;
                     } else {
-                        let mut px: u32 = 0;
                         while c >= '0' as i32 && c <= '9' as i32 {
-                            px = px.wrapping_mul(10).wrapping_add(c as u32).wrapping_sub('0' as u32);
                             fmt = fmt.offset(1);
                             c = *fmt as ::core::ffi::c_int;
                         }
-                        precision = (px & 0x7fffffff) as ::core::ffi::c_int;
                     }
                     if c == 'l' as i32 {
                         fmt = fmt.offset(-1);
@@ -1075,13 +1033,9 @@ pub unsafe fn extract_printf_args(
                         done = true;
                     }
                 }
-                _ => {
-                    done = true;
-                }
+                _ => { done = true; }
             }
-            if done {
-                break;
-            }
+            if done { break; }
             fmt = fmt.offset(1);
             c = *fmt as ::core::ffi::c_int;
             if c == 0 { break; }
@@ -1098,145 +1052,66 @@ pub unsafe fn extract_printf_args(
             (etINVALID, 0)
         };
 
-        // Extract argument based on xtype
-        let arg = match xtype {
-            etFLOAT | etEXP | etGENERIC => {
-                if bArgList {
-                    PrintfArg::Double(getDoubleArg(pArgList))
-                } else {
-                    PrintfArg::Double(ap.arg::<::core::ffi::c_double>())
+        let arg = if pi < packed.len() {
+            let v = packed[pi];
+            pi += 1;
+            match xtype {
+                etFLOAT | etEXP | etGENERIC => {
+                    PrintfArg::Double(f64::from_bits(v))
                 }
-            }
-            etCHARX => {
-                if bArgList {
-                    PrintfArg::Str(getTextArg(pArgList))
-                } else {
-                    PrintfArg::Char(ap.arg::<::core::ffi::c_uint>())
+                etCHARX => {
+                    PrintfArg::Char(v as u32)
                 }
-            }
-            etSTRING | etDYNSTRING => {
-                if bArgList {
-                    PrintfArg::Str(getTextArg(pArgList))
-                } else {
-                    PrintfArg::Str(ap.arg::<*mut ::core::ffi::c_char>())
+                etSTRING | etDYNSTRING | etESCAPE_q | etESCAPE_Q | etESCAPE_w => {
+                    PrintfArg::Str(v as usize as *mut ::core::ffi::c_char)
                 }
-            }
-            etESCAPE_q | etESCAPE_Q | etESCAPE_w => {
-                if bArgList {
-                    PrintfArg::Str(getTextArg(pArgList))
-                } else {
-                    PrintfArg::Str(ap.arg::<*mut ::core::ffi::c_char>())
+                etTOKEN => {
+                    if flag_alternateform {
+                        PrintfArg::Expr(v as usize as *mut crate::src::headers::sqliteInt_h::Expr)
+                    } else {
+                        PrintfArg::Token(v as usize as *mut crate::src::headers::sqliteInt_h::Token)
+                    }
                 }
-            }
-            etTOKEN => {
-                // %#T = Expr (flag_alternateform), %T = Token
-                if flag_alternateform {
-                    PrintfArg::Expr(ap.arg::<*mut crate::src::headers::sqliteInt_h::Expr>())
-                } else {
-                    PrintfArg::Token(ap.arg::<*mut crate::src::headers::sqliteInt_h::Token>())
+                etSRCITEM => {
+                    PrintfArg::SrcItem(v as usize as *mut crate::src::headers::sqliteInt_h::SrcItem)
                 }
-            }
-            etSRCITEM => {
-                PrintfArg::SrcItem(ap.arg::<*mut crate::src::headers::sqliteInt_h::SrcItem>())
-            }
-            etSIZE => {
-                // %n — write-back current count
-                if !bArgList {
-                    PrintfArg::NOut(ap.arg::<*mut ::core::ffi::c_int>())
-                } else {
+                etSIZE => {
+                    PrintfArg::NOut(v as usize as *mut ::core::ffi::c_int)
+                }
+                etPOINTER => {
+                    PrintfArg::UInt(v)
+                }
+                etORDINAL | etRADIX | etDECIMAL => {
+                    let signed = fmtinfo[infop_idx as usize].flags as ::core::ffi::c_int & FLAG_SIGNED != 0;
+                    if signed {
+                        PrintfArg::Int(v as crate::src::ext::rtree::rtree::i64_0)
+                    } else {
+                        PrintfArg::UInt(v)
+                    }
+                }
+                etPERCENT => {
+                    pi -= 1; // %% consumes no arg
+                    PrintfArg::None
+                }
+                _ => {
+                    pi -= 1;
                     PrintfArg::None
                 }
             }
-            etPERCENT => {
-                PrintfArg::None
-            }
-            etPOINTER => {
-                // Pointer: treat as unsigned integer with appropriate flag_long
-                let fl = if ::core::mem::size_of::<*mut ::core::ffi::c_char>()
-                    == ::core::mem::size_of::<crate::src::ext::rtree::rtree::i64_0>()
-                { 2u8 } else if ::core::mem::size_of::<*mut ::core::ffi::c_char>()
-                    == ::core::mem::size_of::<::core::ffi::c_long>()
-                { 1u8 } else { 0u8 };
-                let v = if bArgList {
-                    getIntArg(pArgList) as u64
-                } else if fl == 2 {
-                    ap.arg::<crate::src::ext::rtree::rtree::u64_0>() as u64
-                } else if fl == 1 {
-                    ap.arg::<::core::ffi::c_ulong>() as u64
-                } else {
-                    ap.arg::<::core::ffi::c_uint>() as u64
-                };
-                PrintfArg::UInt(v)
-            }
-            etORDINAL | etRADIX | etDECIMAL => {
-                let signed = fmtinfo[infop_idx as usize].flags as ::core::ffi::c_int & FLAG_SIGNED != 0;
-                if signed {
-                    let v = if bArgList {
-                        getIntArg(pArgList) as crate::src::ext::rtree::rtree::i64_0
-                    } else if flag_long == 2 {
-                        ap.arg::<crate::src::ext::rtree::rtree::i64_0>()
-                    } else if flag_long == 1 {
-                        ap.arg::<::core::ffi::c_long>() as crate::src::ext::rtree::rtree::i64_0
-                    } else {
-                        ap.arg::<::core::ffi::c_int>() as crate::src::ext::rtree::rtree::i64_0
-                    };
-                    PrintfArg::Int(v)
-                } else {
-                    let v = if bArgList {
-                        getIntArg(pArgList) as u64
-                    } else if flag_long == 2 {
-                        ap.arg::<crate::src::ext::rtree::rtree::u64_0>() as u64
-                    } else if flag_long == 1 {
-                        ap.arg::<::core::ffi::c_ulong>() as u64
-                    } else {
-                        ap.arg::<::core::ffi::c_uint>() as u64
-                    };
-                    PrintfArg::UInt(v)
-                }
-            }
-            _ => {
-                // etINVALID — skip
-                PrintfArg::None
-            }
-        };
-
-        let literal_start = if specs.is_empty() {
-            0
         } else {
-            // The literal starts right after the previous specifier's format char
-            // We'll compute this from the previous spec's end. For now use literal_end.
-            literal_end
+            PrintfArg::None
         };
 
-        specs.push(PrintfSpec {
-            xtype,
-            infop_idx,
-            flag_leftjustify,
-            flag_prefix,
-            flag_alternateform,
-            flag_altform2,
-            flag_zeropad,
-            flag_long,
-            cThousand,
-            width,
-            precision,
-            literal_start,
-            literal_end,
-        });
         if !matches!(arg, PrintfArg::None) {
             args.push(arg);
         }
 
-        // Advance past the specifier character
         if *fmt != 0 {
             fmt = fmt.offset(1);
         }
     }
 
-    // Record trailing literal if any
-    // (handled by the formatter which reads from literal_end of last spec to end of string)
-
-    (specs, args)
+    args
 }
 
 // Signed/unsigned integer extraction is inlined in extract_printf_args
@@ -1472,29 +1347,6 @@ pub unsafe fn sqlite3_vmprintf_args(
     sqlite3StrAccumFinish(&raw mut acc)
 }
 
-
-pub unsafe extern "C" fn renderLogMsg(
-    mut iErrCode: ::core::ffi::c_int,
-    mut zFormat: *const ::core::ffi::c_char,
-    mut ap: ::core::ffi::VaList,
-) {
-    let mut acc: crate::src::headers::sqliteInt_h::StrAccum = unsafe { ::core::mem::zeroed() };
-    let mut zMsg: [::core::ffi::c_char; 700] = [0; 700];
-    sqlite3StrAccumInit(
-        &raw mut acc,
-        ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::sqlite3>(),
-        &raw mut zMsg as *mut ::core::ffi::c_char,
-        ::core::mem::size_of::<[::core::ffi::c_char; 700]>() as ::core::ffi::c_int,
-        0 as ::core::ffi::c_int,
-    );
-    let (_s, a) = extract_printf_args(zFormat, ap, false, ::core::ptr::null_mut());
-    sqlite3_str_vappendf_args(&raw mut acc, zFormat, &a);
-    crate::src::src::global::sqlite3Config.xLog.expect("non-null function pointer")(
-        crate::src::src::global::sqlite3Config.pLogArg,
-        iErrCode,
-        sqlite3StrAccumFinish(&raw mut acc),
-    );
-}
 
 pub unsafe fn renderLogMsg_args(
     iErrCode: ::core::ffi::c_int,

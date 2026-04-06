@@ -5,9 +5,6 @@
 #![allow(unused_mut)]
 #![allow(static_mut_refs)]
 #![allow(unsafe_op_in_unsafe_fn)]
-#![feature(
-    c_variadic
-)]
 
 
 // Re-export sqlite_printf!, sqlite_snprintf! and json_printf! macros from proc-macro crate

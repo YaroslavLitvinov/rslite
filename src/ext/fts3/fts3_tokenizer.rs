@@ -447,7 +447,7 @@ pub unsafe extern "C" fn sqlite3Fts3InitTokenizer(
         crate::src::ext::fts3::fts3::sqlite3Fts3ErrMsg(
             pzErr,
             b"unknown tokenizer: %s\0" as *const u8 as *const ::core::ffi::c_char,
-            z,
+            &[crate::src::src::printf::PrintfArg::Str(z as *mut ::core::ffi::c_char)],
         );
         rc = crate::src::headers::sqlite3_h::SQLITE_ERROR;
     } else {
@@ -485,6 +485,7 @@ pub unsafe extern "C" fn sqlite3Fts3InitTokenizer(
             crate::src::ext::fts3::fts3::sqlite3Fts3ErrMsg(
                 pzErr,
                 b"unknown tokenizer\0" as *const u8 as *const ::core::ffi::c_char,
+                &[],
             );
         } else {
             (**ppTok).pModule = m;

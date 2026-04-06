@@ -1327,4 +1327,4 @@ pub unsafe extern "C" fn sqlite3_vtab_on_conflict(mut db: *mut crate::src::heade
 }
 
 // sqlite3_vtab_config — C wrapper is in c_code/vtab_config.c
-pub use crate::src::printf_c_variadic::sqlite3_vtab_config_args;
+pub use crate::src::printf_c_variadic::rs_vtab_config_dispatch as sqlite3_vtab_config_args;

@@ -1024,7 +1024,7 @@ unsafe extern "C" fn fts3MatchinfoCheck(
     crate::src::ext::fts3::fts3::sqlite3Fts3ErrMsg(
         pzErr,
         b"unrecognized matchinfo request: %c\0" as *const u8 as *const ::core::ffi::c_char,
-        cArg as ::core::ffi::c_int,
+        &[crate::src::src::printf::PrintfArg::Char(cArg as u32)],
     );
     crate::src::headers::sqlite3_h::SQLITE_ERROR
 }

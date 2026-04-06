@@ -139,6 +139,7 @@ unsafe extern "C" fn fts3auxConnectMethod(
     crate::src::ext::fts3::fts3::sqlite3Fts3ErrMsg(
         pzErr,
         b"invalid arguments to fts4aux constructor\0" as *const u8 as *const ::core::ffi::c_char,
+        &[],
     );
     crate::src::headers::sqlite3_h::SQLITE_ERROR
 }

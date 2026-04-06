@@ -3999,6 +3999,6 @@ pub unsafe extern "C" fn sqlite3_compileoption_get(
 }
 
 // Re-export variadic functions from printf_c_variadic module
-pub use crate::src::printf_c_variadic::sqlite3_config_args;
-pub use crate::src::printf_c_variadic::sqlite3_db_config_args;
-pub use crate::src::printf_c_variadic::sqlite3_test_control_args;
+pub use crate::src::printf_c_variadic::rs_config_dispatch as sqlite3_config_args;
+pub use crate::src::printf_c_variadic::rs_db_config_dispatch as sqlite3_db_config_args;
+pub use crate::src::printf_c_variadic::rs_test_control_dispatch as sqlite3_test_control_args;

@@ -130,14 +130,13 @@ unsafe fn fts3_appendf_raw(
     *pz = z;
 }
 
-#[unsafe(no_mangle)]
-pub unsafe extern "C" fn sqlite3Fts3ErrMsg(
+pub unsafe fn sqlite3Fts3ErrMsg(
     mut pzErr: *mut *mut ::core::ffi::c_char,
     mut zFormat: *const ::core::ffi::c_char,
-    mut args: ...
+    args: &[crate::src::src::printf::PrintfArg],
 ) {
     crate::src::src::malloc::sqlite3_free(*pzErr as *mut ::core::ffi::c_void);
-    *pzErr = crate::sqlite_vmprintf!(zFormat, args);
+    *pzErr = crate::src::src::printf::sqlite3_vmprintf_args(zFormat, args);
 }
 
 #[unsafe(no_mangle)]

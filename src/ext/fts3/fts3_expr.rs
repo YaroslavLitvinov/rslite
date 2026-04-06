@@ -1017,14 +1017,14 @@ pub unsafe extern "C" fn sqlite3Fts3ExprParse(
                 pzErr,
                 b"FTS expression tree is too large (maximum depth %d)\0" as *const u8
                     as *const ::core::ffi::c_char,
-                crate::fts3Int_h::SQLITE_FTS3_MAX_EXPR_DEPTH,
+                &[crate::src::src::printf::PrintfArg::Int(crate::fts3Int_h::SQLITE_FTS3_MAX_EXPR_DEPTH as i64)],
             );
             rc = crate::src::headers::sqlite3_h::SQLITE_ERROR;
         } else if rc == crate::src::headers::sqlite3_h::SQLITE_ERROR {
             crate::src::ext::fts3::fts3::sqlite3Fts3ErrMsg(
                 pzErr,
                 b"malformed MATCH expression: [%s]\0" as *const u8 as *const ::core::ffi::c_char,
-                z,
+                &[crate::src::src::printf::PrintfArg::Str(z as *mut ::core::ffi::c_char)],
             );
         }
     }

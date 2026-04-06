@@ -674,7 +674,7 @@ pub struct sqlite3_api_routines {
     pub vmprintf: Option<
         unsafe extern "C" fn(
             *const ::core::ffi::c_char,
-            ::core::ffi::VaList,
+            *mut ::core::ffi::c_void, /* va_list — opaque, handled in C */
         ) -> *mut ::core::ffi::c_char,
     >,
     pub overload_function: Option<
@@ -1058,7 +1058,7 @@ pub struct sqlite3_api_routines {
             ::core::ffi::c_int,
             *mut ::core::ffi::c_char,
             *const ::core::ffi::c_char,
-            ::core::ffi::VaList,
+            *mut ::core::ffi::c_void, /* va_list — opaque, handled in C */
         ) -> *mut ::core::ffi::c_char,
     >,
     pub wal_checkpoint_v2: Option<
@@ -1285,7 +1285,7 @@ pub struct sqlite3_api_routines {
         unsafe extern "C" fn(
             *mut crate::src::headers::sqliteInt_h::sqlite3_str,
             *const ::core::ffi::c_char,
-            ::core::ffi::VaList,
+            *mut ::core::ffi::c_void, /* va_list — opaque, handled in C */
         ) -> (),
     >,
     pub str_append: Option<

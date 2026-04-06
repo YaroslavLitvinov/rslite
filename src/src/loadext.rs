@@ -31,9 +31,9 @@ pub use crate::src::headers::stdlib::FILENAME_MAX;
 // These functions are implemented in c_code/ and linked as C symbols.
 unsafe extern "C" {
     #[link_name = "sqlite3_vmprintf"]
-    fn sqlite3_vmprintf_c(zFormat: *const ::core::ffi::c_char, ap: ::core::ffi::VaList) -> *mut ::core::ffi::c_char;
+    fn sqlite3_vmprintf_c(zFormat: *const ::core::ffi::c_char, ap: *mut ::core::ffi::c_void) -> *mut ::core::ffi::c_char;
     #[link_name = "sqlite3_vsnprintf"]
-    fn sqlite3_vsnprintf_c(n: ::core::ffi::c_int, zBuf: *mut ::core::ffi::c_char, zFormat: *const ::core::ffi::c_char, ap: ::core::ffi::VaList) -> *mut ::core::ffi::c_char;
+    fn sqlite3_vsnprintf_c(n: ::core::ffi::c_int, zBuf: *mut ::core::ffi::c_char, zFormat: *const ::core::ffi::c_char, ap: *mut ::core::ffi::c_void) -> *mut ::core::ffi::c_char;
     #[link_name = "sqlite3_str_appendf"]
     fn sqlite3_str_appendf_c(p: *mut crate::src::headers::sqliteInt_h::sqlite3_str, zFormat: *const ::core::ffi::c_char, ...);
     #[link_name = "sqlite3_test_control"]
@@ -797,7 +797,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
             sqlite3_vmprintf_c
                 as unsafe extern "C" fn(
                     *const ::core::ffi::c_char,
-                    ::core::ffi::VaList,
+                    *mut ::core::ffi::c_void,
                 ) -> *mut ::core::ffi::c_char,
         ),
     overload_function:  Some(
@@ -1228,7 +1228,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
                     ::core::ffi::c_int,
                     *mut ::core::ffi::c_char,
                     *const ::core::ffi::c_char,
-                    ::core::ffi::VaList,
+                    *mut ::core::ffi::c_void,
                 ) -> *mut ::core::ffi::c_char,
         ),
     wal_checkpoint_v2:  Some(

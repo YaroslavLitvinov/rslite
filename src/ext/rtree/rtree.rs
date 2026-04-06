@@ -7314,14 +7314,14 @@ unsafe extern "C" fn rtreedepth(
 
 pub const RTREE_CHECK_MAX_ERROR: ::core::ffi::c_int = 100 as ::core::ffi::c_int;
 
-pub unsafe extern "C" fn rtreeCheckPrepare(
+pub unsafe fn rtreeCheckPrepare(
     mut pCheck: *mut RtreeCheck,
     mut zFmt: *const ::core::ffi::c_char,
-    mut args: ...
+    args: &[crate::src::src::printf::PrintfArg],
 ) -> *mut crate::src::headers::sqlite3_h::sqlite3_stmt {
     let mut z: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
     let mut pRet: *mut crate::src::headers::sqlite3_h::sqlite3_stmt = ::core::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_stmt>();
-    z = crate::sqlite_vmprintf!(zFmt, args);
+    z = crate::src::src::printf::sqlite3_vmprintf_args(zFmt, args);
     if (*pCheck).rc == crate::src::headers::sqlite3_h::SQLITE_OK {
         if z.is_null() {
             (*pCheck).rc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
@@ -7339,13 +7339,13 @@ pub unsafe extern "C" fn rtreeCheckPrepare(
     pRet
 }
 
-pub unsafe extern "C" fn rtreeCheckAppendMsg(
+pub unsafe fn rtreeCheckAppendMsg(
     mut pCheck: *mut RtreeCheck,
     mut zFmt: *const ::core::ffi::c_char,
-    mut args: ...
+    args: &[crate::src::src::printf::PrintfArg],
 ) {
     if (*pCheck).rc == crate::src::headers::sqlite3_h::SQLITE_OK && (*pCheck).nErr < RTREE_CHECK_MAX_ERROR {
-        let mut z: *mut ::core::ffi::c_char = crate::sqlite_vmprintf!(zFmt, args);
+        let mut z: *mut ::core::ffi::c_char = crate::src::src::printf::sqlite3_vmprintf_args(zFmt, args);
         if z.is_null() {
             (*pCheck).rc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
         } else {
@@ -7390,8 +7390,10 @@ unsafe extern "C" fn rtreeCheckGetNode(
             pCheck,
             b"SELECT data FROM %Q.'%q_node' WHERE nodeno=?\0" as *const u8
                 as *const ::core::ffi::c_char,
-            __pCheck_ref.zDb,
-            __pCheck_ref.zTab,
+            &[
+                crate::src::src::printf::PrintfArg::Str(__pCheck_ref.zDb as *mut ::core::ffi::c_char),
+                crate::src::src::printf::PrintfArg::Str(__pCheck_ref.zTab as *mut ::core::ffi::c_char),
+            ],
         );
     }
     if __pCheck_ref.rc == crate::src::headers::sqlite3_h::SQLITE_OK {
@@ -7422,7 +7424,9 @@ unsafe extern "C" fn rtreeCheckGetNode(
             rtreeCheckAppendMsg(
                 pCheck,
                 b"Node %lld missing from database\0" as *const u8 as *const ::core::ffi::c_char,
-                iNode,
+                &[
+                    crate::src::src::printf::PrintfArg::Int(iNode as i64),
+                ],
             );
         }
     }
@@ -7446,7 +7450,10 @@ unsafe extern "C" fn rtreeCheckMapping(
     let __pCheck_ref = { &mut *pCheck };
     if __pCheck_ref.aCheckMapping[bLeaf as usize].is_null() {
         __pCheck_ref.aCheckMapping[bLeaf as usize] =
-            rtreeCheckPrepare(pCheck, azSql[bLeaf as usize], __pCheck_ref.zDb, __pCheck_ref.zTab);
+            rtreeCheckPrepare(pCheck, azSql[bLeaf as usize], &[
+                crate::src::src::printf::PrintfArg::Str(__pCheck_ref.zDb as *mut ::core::ffi::c_char),
+                crate::src::src::printf::PrintfArg::Str(__pCheck_ref.zTab as *mut ::core::ffi::c_char),
+            ]);
     }
     if __pCheck_ref.rc != crate::src::headers::sqlite3_h::SQLITE_OK {
         return;
@@ -7459,13 +7466,15 @@ unsafe extern "C" fn rtreeCheckMapping(
             pCheck,
             b"Mapping (%lld -> %lld) missing from %s table\0" as *const u8
                 as *const ::core::ffi::c_char,
-            iKey,
-            iVal,
-            if bLeaf != 0 {
-                b"%_rowid\0" as *const u8 as *const ::core::ffi::c_char
-            } else {
-                b"%_parent\0" as *const u8 as *const ::core::ffi::c_char
-            },
+            &[
+                crate::src::src::printf::PrintfArg::Int(iKey as i64),
+                crate::src::src::printf::PrintfArg::Int(iVal as i64),
+                crate::src::src::printf::PrintfArg::Str((if bLeaf != 0 {
+                    b"%_rowid\0" as *const u8 as *const ::core::ffi::c_char
+                } else {
+                    b"%_parent\0" as *const u8 as *const ::core::ffi::c_char
+                }) as *mut ::core::ffi::c_char),
+            ],
         );
     } else if rc == crate::src::headers::sqlite3_h::SQLITE_ROW {
         let mut ii: i64_0 = crate::src::src::vdbeapi::sqlite3_column_int64(pStmt, 0 as ::core::ffi::c_int) as i64_0;
@@ -7474,15 +7483,17 @@ unsafe extern "C" fn rtreeCheckMapping(
                 pCheck,
                 b"Found (%lld -> %lld) in %s table, expected (%lld -> %lld)\0" as *const u8
                     as *const ::core::ffi::c_char,
-                iKey,
-                ii,
-                if bLeaf != 0 {
-                    b"%_rowid\0" as *const u8 as *const ::core::ffi::c_char
-                } else {
-                    b"%_parent\0" as *const u8 as *const ::core::ffi::c_char
-                },
-                iKey,
-                iVal,
+                &[
+                    crate::src::src::printf::PrintfArg::Int(iKey as i64),
+                    crate::src::src::printf::PrintfArg::Int(ii as i64),
+                    crate::src::src::printf::PrintfArg::Str((if bLeaf != 0 {
+                        b"%_rowid\0" as *const u8 as *const ::core::ffi::c_char
+                    } else {
+                        b"%_parent\0" as *const u8 as *const ::core::ffi::c_char
+                    }) as *mut ::core::ffi::c_char),
+                    crate::src::src::printf::PrintfArg::Int(iKey as i64),
+                    crate::src::src::printf::PrintfArg::Int(iVal as i64),
+                ],
             );
         }
     }
@@ -7525,9 +7536,11 @@ unsafe extern "C" fn rtreeCheckCellCoord(
                 pCheck,
                 b"Dimension %d of cell %d on node %lld is corrupt\0" as *const u8
                     as *const ::core::ffi::c_char,
-                i,
-                iCell,
-                iNode,
+                &[
+                    crate::src::src::printf::PrintfArg::Int(i as i64),
+                    crate::src::src::printf::PrintfArg::Int(iCell as i64),
+                    crate::src::src::printf::PrintfArg::Int(iNode as i64),
+                ],
             );
         }
         if !pParent.is_null() {
@@ -7559,9 +7572,11 @@ unsafe extern "C" fn rtreeCheckCellCoord(
                     pCheck,
                     b"Dimension %d of cell %d on node %lld is corrupt relative to parent\0"
                         as *const u8 as *const ::core::ffi::c_char,
-                    i,
-                    iCell,
-                    iNode,
+                    &[
+                        crate::src::src::printf::PrintfArg::Int(i as i64),
+                        crate::src::src::printf::PrintfArg::Int(iCell as i64),
+                        crate::src::src::printf::PrintfArg::Int(iNode as i64),
+                    ],
                 );
             }
         }
@@ -7583,8 +7598,10 @@ unsafe extern "C" fn rtreeCheckNode(
             rtreeCheckAppendMsg(
                 pCheck,
                 b"Node %lld is too small (%d bytes)\0" as *const u8 as *const ::core::ffi::c_char,
-                iNode,
-                nNode,
+                &[
+                    crate::src::src::printf::PrintfArg::Int(iNode as i64),
+                    crate::src::src::printf::PrintfArg::Int(nNode as i64),
+                ],
             );
         } else {
             let mut nCell: ::core::ffi::c_int = 0;
@@ -7596,7 +7613,9 @@ unsafe extern "C" fn rtreeCheckNode(
                         pCheck,
                         b"Rtree depth out of range (%d)\0" as *const u8
                             as *const ::core::ffi::c_char,
-                        iDepth,
+                        &[
+                            crate::src::src::printf::PrintfArg::Int(iDepth as i64),
+                        ],
                     );
                     crate::src::src::malloc::sqlite3_free(aNode as *mut ::core::ffi::c_void);
                     return;
@@ -7613,9 +7632,11 @@ unsafe extern "C" fn rtreeCheckNode(
                     pCheck,
                     b"Node %lld is too small for cell count of %d (%d bytes)\0" as *const u8
                         as *const ::core::ffi::c_char,
-                    iNode,
-                    nCell,
-                    nNode,
+                    &[
+                        crate::src::src::printf::PrintfArg::Int(iNode as i64),
+                        crate::src::src::printf::PrintfArg::Int(nCell as i64),
+                        crate::src::src::printf::PrintfArg::Int(nNode as i64),
+                    ],
                 );
             } else {
                 i = 0 as ::core::ffi::c_int;
@@ -7666,9 +7687,11 @@ unsafe extern "C" fn rtreeCheckCount(
         pCount = rtreeCheckPrepare(
             pCheck,
             b"SELECT count(*) FROM %Q.'%q%s'\0" as *const u8 as *const ::core::ffi::c_char,
-            (*pCheck).zDb,
-            (*pCheck).zTab,
-            zTbl,
+            &[
+                crate::src::src::printf::PrintfArg::Str((*pCheck).zDb as *mut ::core::ffi::c_char),
+                crate::src::src::printf::PrintfArg::Str((*pCheck).zTab as *mut ::core::ffi::c_char),
+                crate::src::src::printf::PrintfArg::Str(zTbl as *mut ::core::ffi::c_char),
+            ],
         );
         if !pCount.is_null() {
             if crate::src::src::vdbeapi::sqlite3_step(pCount) == crate::src::headers::sqlite3_h::SQLITE_ROW {
@@ -7679,9 +7702,11 @@ unsafe extern "C" fn rtreeCheckCount(
                         pCheck,
                         b"Wrong number of entries in %%%s table - expected %lld, actual %lld\0"
                             as *const u8 as *const ::core::ffi::c_char,
-                        zTbl,
-                        nExpect,
-                        nActual,
+                        &[
+                            crate::src::src::printf::PrintfArg::Str(zTbl as *mut ::core::ffi::c_char),
+                            crate::src::src::printf::PrintfArg::Int(nExpect as i64),
+                            crate::src::src::printf::PrintfArg::Int(nActual as i64),
+                        ],
                     );
                 }
             }
@@ -7705,8 +7730,10 @@ unsafe extern "C" fn rtreeCheckTable(
     pStmt = rtreeCheckPrepare(
         &raw mut check,
         b"SELECT * FROM %Q.'%q_rowid'\0" as *const u8 as *const ::core::ffi::c_char,
-        zDb,
-        zTab,
+        &[
+            crate::src::src::printf::PrintfArg::Str(zDb as *mut ::core::ffi::c_char),
+            crate::src::src::printf::PrintfArg::Str(zTab as *mut ::core::ffi::c_char),
+        ],
     );
     if !pStmt.is_null() {
         nAux = crate::src::src::vdbeapi::sqlite3_column_count(pStmt) - 2 as ::core::ffi::c_int;
@@ -7717,8 +7744,10 @@ unsafe extern "C" fn rtreeCheckTable(
     pStmt = rtreeCheckPrepare(
         &raw mut check,
         b"SELECT * FROM %Q.%Q\0" as *const u8 as *const ::core::ffi::c_char,
-        zDb,
-        zTab,
+        &[
+            crate::src::src::printf::PrintfArg::Str(zDb as *mut ::core::ffi::c_char),
+            crate::src::src::printf::PrintfArg::Str(zTab as *mut ::core::ffi::c_char),
+        ],
     );
     if !pStmt.is_null() {
         let mut rc: ::core::ffi::c_int = 0;
@@ -7728,6 +7757,7 @@ unsafe extern "C" fn rtreeCheckTable(
             rtreeCheckAppendMsg(
                 &raw mut check,
                 b"Schema corrupt or not an rtree\0" as *const u8 as *const ::core::ffi::c_char,
+                &[],
             );
         } else if crate::src::headers::sqlite3_h::SQLITE_ROW == crate::src::src::vdbeapi::sqlite3_step(pStmt) {
             check.bInt = (crate::src::src::vdbeapi::sqlite3_column_type(pStmt, 1 as ::core::ffi::c_int) == crate::src::headers::sqlite3_h::SQLITE_INTEGER)

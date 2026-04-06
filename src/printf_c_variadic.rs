@@ -40,8 +40,8 @@ impl VtabConfigOp {
     }
 }
 
-#[unsafe(no_mangle)]
-pub unsafe extern "C" fn sqlite3_vtab_config_args(
+#[unsafe(export_name = "sqlite3_vtab_config_args")]
+pub unsafe extern "C" fn rs_vtab_config_dispatch(
     mut db: *mut crate::src::headers::sqliteInt_h::sqlite3,
     op: ::core::ffi::c_int,
     args: *const u64,
@@ -193,8 +193,8 @@ pub unsafe fn sqlite3_log_args(
 
 // sqlite3_log — C wrapper is in c_code/log.c
 // C wrapper formats the message with sqlite3_vsnprintf, then calls sqlite3_log_formatted.
-#[unsafe(no_mangle)]
-pub unsafe extern "C" fn sqlite3_log_formatted(
+#[unsafe(export_name = "sqlite3_log_formatted")]
+pub unsafe extern "C" fn rs_log_dispatch(
     iErrCode: ::core::ffi::c_int,
     zMsg: *const ::core::ffi::c_char,
 ) {
@@ -281,8 +281,8 @@ impl ConfigOp {
     }
 }
 
-#[unsafe(no_mangle)]
-pub unsafe extern "C" fn sqlite3_config_args(
+#[unsafe(export_name = "sqlite3_config_args")]
+pub unsafe extern "C" fn rs_config_dispatch(
     op: ::core::ffi::c_int,
     args: *const u64,
 ) -> ::core::ffi::c_int {
@@ -405,8 +405,8 @@ pub unsafe extern "C" fn sqlite3_config_args(
 
 use crate::src::headers::sqlite3_h::SqliteDbConfig;
 
-#[unsafe(no_mangle)]
-pub unsafe extern "C" fn sqlite3_db_config_args(
+#[unsafe(export_name = "sqlite3_db_config_args")]
+pub unsafe extern "C" fn rs_db_config_dispatch(
     mut db: *mut crate::src::headers::sqliteInt_h::sqlite3,
     op: ::core::ffi::c_int,
     args: *const u64,
@@ -596,8 +596,8 @@ impl TestControlOp {
     }
 }
 
-#[unsafe(no_mangle)]
-pub unsafe extern "C" fn sqlite3_test_control_args(
+#[unsafe(export_name = "sqlite3_test_control_args")]
+pub unsafe extern "C" fn rs_test_control_dispatch(
     op: ::core::ffi::c_int,
     args: *const u64,
 ) -> ::core::ffi::c_int {

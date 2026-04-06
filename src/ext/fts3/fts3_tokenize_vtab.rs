@@ -52,7 +52,7 @@ unsafe extern "C" fn fts3tokQueryTokenizer(
         crate::src::ext::fts3::fts3::sqlite3Fts3ErrMsg(
             pzErr,
             b"unknown tokenizer: %s\0" as *const u8 as *const ::core::ffi::c_char,
-            zName,
+            &[crate::src::src::printf::PrintfArg::Str(zName as *mut ::core::ffi::c_char)],
         );
         return crate::src::headers::sqlite3_h::SQLITE_ERROR;
     }

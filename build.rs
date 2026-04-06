@@ -1,12 +1,4 @@
 fn main() {
-    // Enable c_variadic via RUSTFLAGS with -Z unstable-options
-    // This allows variadic functions to compile without feature declarations in .rs files
-    if let Ok(existing) = std::env::var("RUSTFLAGS") {
-        println!("cargo:rustc-env=RUSTFLAGS={} -Z unstable-options -Zcrate-attr=feature(c_variadic)", existing);
-    } else {
-        println!("cargo:rustc-env=RUSTFLAGS=-Z unstable-options -Zcrate-attr=feature(c_variadic)");
-    }
-
     // Compile C code: variadic entry points (one file per function)
     cc::Build::new()
         .file("c_code/printf_c.c")
@@ -19,6 +11,7 @@ fn main() {
         .file("c_code/config.c")
         .file("c_code/vtab_config.c")
         .file("c_code/log.c")
+        .file("c_code/fts3_errmsg.c")
         .compile("printf_c");
 
     // Force the linker to pull in C symbols that are only called by external
