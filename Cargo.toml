@@ -31,6 +31,7 @@ default = []
 test = ["crust-core/test"]
 fts3 = ["crust-core/fts3"]
 fts4 = ["crust-core/fts4"]
+update_delete_limit = ["crust-core/update_delete_limit"]
 
 [dependencies]
 crust-core = { workspace = true }
