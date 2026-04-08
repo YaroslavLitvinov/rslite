@@ -3,7 +3,9 @@
 # Usage: make [DEBUG=1] [target]
 
 .PHONY: help all clean clean-c-tests \
-  c-tcl-tests crust-tcl-tests \
+  ensure-c-shell \
+  c-quick-tests c-tcl-tests c-dev-tests c-tests c-fuzz-tests c-prerelease-tests c-soak-tests \
+  crust-tcl-tests \
   verify-c-link verify-rust-link \
   test
 
@@ -12,7 +14,7 @@ SQLITE_SRC ?= /sqlite
 PROJ := $(shell cd $(dir $(MAKEFILE_LIST)) && pwd)
 NPROC := $(shell nproc)
 DEBUG ?= 0
-WITH_WARNINGS ?= 0
+VERBOSE ?= 0
 
 # Debug/Release selection
 ifeq ($(DEBUG),1)
@@ -42,11 +44,11 @@ RUST_TEST_SOURCES := $(shell find $(PROJ)/c2rust/crust-tclsqlite/src -name "*.rs
 
 $(PROJ)/target/debug/libsqlite_noamalgam.so:
 	@echo "→ Building Rust library (debug)..."
-	@cargo +nightly build -p crust-core --manifest-path $(PROJ)/Cargo.toml $(if $(filter 1,$(WITH_WARNINGS)),, --quiet)
+	@cargo +nightly build -p crust-core --manifest-path $(PROJ)/Cargo.toml $(if $(filter 1,$(VERBOSE)),, --quiet)
 
 $(PROJ)/target/release/libsqlite_noamalgam.so:
 	@echo "→ Building Rust library (release)..."
-	@cargo +nightly build --release -p crust-core --manifest-path $(PROJ)/Cargo.toml $(if $(filter 1,$(WITH_WARNINGS)),, --quiet)
+	@cargo +nightly build --release -p crust-core --manifest-path $(PROJ)/Cargo.toml $(if $(filter 1,$(VERBOSE)),, --quiet)
 
 # ============ C Build Targets ============
 
@@ -55,46 +57,52 @@ $(SQLITE_SRC)/sqlite3-c-debug: $(PROJ)/target/debug/libsqlite_noamalgam.so
 	@cd $(SQLITE_SRC) && ./configure CFLAGS="-g -O0" \
 		--fts3 --fts4 --fts5 --rtree --session --geopoly \
 		--memsys3 --memsys5 --update-limit --dbpage --dbstat \
-		--column-metadata $(if $(filter 1,$(WITH_WARNINGS)),, > /dev/null 2>&1)
-	@cd $(SQLITE_SRC) && $(MAKE) shell.c sqlite3.h sqlite3ext.h $(if $(filter 1,$(WITH_WARNINGS)),, > /dev/null 2>&1)
+		--column-metadata $(if $(filter 1,$(VERBOSE)),, > /dev/null 2>&1)
+	@cd $(SQLITE_SRC) && $(MAKE) shell.c sqlite3.h sqlite3ext.h $(if $(filter 1,$(VERBOSE)),, > /dev/null 2>&1)
 	@cd $(SQLITE_SRC) && cc -g -O0 -o sqlite3 shell.c \
 		-I. -I./src -I./ext/rtree -I./ext/icu -I./ext/fts3 -I./ext/session -I./ext/misc \
 		-I/usr/include -DHAVE_READLINE=1 -DSQLITE_HAVE_ZLIB=1 \
 		-L$(PROJ)/target/debug -Wl,-rpath,$(PROJ)/target/debug \
-		-lsqlite_noamalgam -lreadline -lncurses -lm -lz $(if $(filter 1,$(WITH_WARNINGS)),, 2>&1)
+		-lsqlite_noamalgam -lreadline -lncurses -lm -lz $(if $(filter 1,$(VERBOSE)),, 2>&1)
 
 $(SQLITE_SRC)/sqlite3-c-release: $(PROJ)/target/release/libsqlite_noamalgam.so
 	@echo "→ Building C shell (release) linked against Rust library..."
 	@cd $(SQLITE_SRC) && ./configure CFLAGS="-O2" \
 		--fts3 --fts4 --fts5 --rtree --session --geopoly \
 		--memsys3 --memsys5 --update-limit --dbpage --dbstat \
-		--column-metadata $(if $(filter 1,$(WITH_WARNINGS)),, > /dev/null 2>&1)
-	@cd $(SQLITE_SRC) && $(MAKE) shell.c sqlite3.h sqlite3ext.h $(if $(filter 1,$(WITH_WARNINGS)),, > /dev/null 2>&1)
+		--column-metadata $(if $(filter 1,$(VERBOSE)),, > /dev/null 2>&1)
+	@cd $(SQLITE_SRC) && $(MAKE) shell.c sqlite3.h sqlite3ext.h $(if $(filter 1,$(VERBOSE)),, > /dev/null 2>&1)
 	@cd $(SQLITE_SRC) && cc -O2 -o sqlite3 shell.c \
 		-I. -I./src -I./ext/rtree -I./ext/icu -I./ext/fts3 -I./ext/session -I./ext/misc \
 		-I/usr/include -DHAVE_READLINE=1 -DSQLITE_HAVE_ZLIB=1 \
 		-L$(PROJ)/target/release -Wl,-rpath,$(PROJ)/target/release \
-		-lsqlite_noamalgam -lreadline -lncurses -lm -lz $(if $(filter 1,$(WITH_WARNINGS)),, 2>&1)
+		-lsqlite_noamalgam -lreadline -lncurses -lm -lz $(if $(filter 1,$(VERBOSE)),, 2>&1)
 
 # ============ Rust Shell & Test Builds ============
 
 $(PROJ)/c2rust/target/debug/sqlite3 $(PROJ)/c2rust/target/debug/rustfixture: $(RUST_SHELL_SOURCES) $(RUST_TEST_SOURCES)
 	@echo "→ Building Rust binaries (debug)..."
-	@cargo +nightly build -p crust-sqlite-shell -p crust-tclsqlite --features crust-tclsqlite/test --manifest-path $(PROJ)/c2rust/Cargo.toml $(if $(filter 1,$(WITH_WARNINGS)),, --quiet)
+	@cargo +nightly build -p crust-sqlite-shell -p crust-tclsqlite --features crust-tclsqlite/test --manifest-path $(PROJ)/c2rust/Cargo.toml $(if $(filter 1,$(VERBOSE)),, --quiet)
 
 $(PROJ)/c2rust/target/release/sqlite3 $(PROJ)/c2rust/target/release/rustfixture: $(RUST_SHELL_SOURCES) $(RUST_TEST_SOURCES)
 	@echo "→ Building Rust binaries (release)..."
-	@cargo +nightly build --release -p crust-sqlite-shell -p crust-tclsqlite --features crust-tclsqlite/test --manifest-path $(PROJ)/c2rust/Cargo.toml $(if $(filter 1,$(WITH_WARNINGS)),, --quiet)
+	@cargo +nightly build --release -p crust-sqlite-shell -p crust-tclsqlite --features crust-tclsqlite/test --manifest-path $(PROJ)/c2rust/Cargo.toml $(if $(filter 1,$(VERBOSE)),, --quiet)
 
 # ============ Verification ============
 
 verify-c-link:
-	@if ! ldd $(SQLITE_SRC)/sqlite3 | grep -q libsqlite_noamalgam; then \
-		echo "✗ ERROR: C shell is NOT linked to libsqlite_noamalgam"; \
-		ldd $(SQLITE_SRC)/sqlite3; \
-		exit 1; \
-	fi
-	@echo "✓ C shell linked to libsqlite_noamalgam"
+	@echo "→ Verifying C binaries linked to Rust library..."
+	@for binary in $(SQLITE_SRC)/sqlite3 $(SQLITE_SRC)/testfixture; do \
+		if [ -f $$binary ]; then \
+			if ! ldd $$binary 2>/dev/null | grep -q libsqlite_noamalgam; then \
+				echo "✗ ERROR: $$binary is NOT linked to libsqlite_noamalgam"; \
+				echo "  Dependencies:"; \
+				ldd $$binary 2>/dev/null | grep -v "^[[:space:]]*$"; \
+				exit 1; \
+			fi; \
+			echo "  ✓ $$(basename $$binary) linked to libsqlite_noamalgam"; \
+		fi; \
+	done
 
 verify-rust-link:
 	@if ! ldd $(RUST_TEST) | grep -q libsqlite_noamalgam; then \
@@ -106,13 +114,14 @@ verify-rust-link:
 
 # ============ Main Test Targets ============
 
-c-tcl-tests:
+# Helper to ensure C shell is built and linked
+ensure-c-shell:
 	@if [ ! -f $(SQLITE_SRC)/sqlite3 ] || [ $(RUST_LIB) -nt $(SQLITE_SRC)/sqlite3 ] || ! ldd $(SQLITE_SRC)/sqlite3 2>/dev/null | grep -q libsqlite_noamalgam; then \
 		$(MAKE) $(if $(filter 1,$(DEBUG)),$(SQLITE_SRC)/sqlite3-c-debug,$(SQLITE_SRC)/sqlite3-c-release); \
 	else \
 		echo "→ C shell already built ($(MODE))"; \
 	fi
-	@echo "→ Running C TCL tests ($(MODE))"
+	@echo "→ Verifying C shell ($(MODE))"
 	@echo "  Shell: $(SQLITE_SRC)/sqlite3"
 	@echo "  Linked libraries:"
 	@ldd $(SQLITE_SRC)/sqlite3 | grep -E "libsqlite|libc.so"
@@ -120,8 +129,41 @@ c-tcl-tests:
 		echo "✗ ERROR: C shell is NOT linked to libsqlite_noamalgam"; \
 		exit 1; \
 	fi
+
+c-quick-tests: ensure-c-shell
+	@echo "→ Running C quick tests ($(MODE))..."
+	$(MAKE) -C $(SQLITE_SRC) quicktest
+	@echo "✓ C quick tests ($(MODE)) passed"
+
+c-tcl-tests: ensure-c-shell
+	@echo "→ Running C TCL tests ($(MODE))..."
 	$(MAKE) -C $(SQLITE_SRC) testrunner
 	@echo "✓ C TCL tests ($(MODE)) passed"
+
+c-dev-tests: ensure-c-shell
+	@echo "→ Running C dev tests ($(MODE))..."
+	$(MAKE) -C $(SQLITE_SRC) devtest
+	@echo "✓ C dev tests ($(MODE)) passed"
+
+c-tests: ensure-c-shell
+	@echo "→ Running C all tests ($(MODE))..."
+	$(MAKE) -C $(SQLITE_SRC) alltest
+	@echo "✓ C all tests ($(MODE)) passed"
+
+c-fuzz-tests: ensure-c-shell
+	@echo "→ Running C fuzz tests ($(MODE))..."
+	$(MAKE) -C $(SQLITE_SRC) fuzztest
+	@echo "✓ C fuzz tests ($(MODE)) passed"
+
+c-prerelease-tests: ensure-c-shell
+	@echo "→ Running C prerelease tests ($(MODE))..."
+	$(MAKE) -C $(SQLITE_SRC) releasetest
+	@echo "✓ C prerelease tests ($(MODE)) passed"
+
+c-soak-tests: ensure-c-shell
+	@echo "→ Running C soak tests ($(MODE))..."
+	$(MAKE) -C $(SQLITE_SRC) soaktest
+	@echo "✓ C soak tests ($(MODE)) passed"
 
 crust-tcl-tests: $(RUST_SHELL) $(RUST_TEST)
 	@echo "→ Running Rust TCL tests ($(MODE))"
@@ -135,6 +177,7 @@ crust-tcl-tests: $(RUST_SHELL) $(RUST_TEST)
 
 test: clean-c-tests
 	@echo "→ Building & testing all..."
+	@$(MAKE) DEBUG=0 c-quick-tests > /dev/null
 	@$(MAKE) DEBUG=0 c-tcl-tests > /dev/null
 	@$(MAKE) DEBUG=0 crust-tcl-tests > /dev/null
 	@echo "✓ All tests passed"
@@ -164,24 +207,33 @@ help:
 	@echo "╚════════════════════════════════════════╝"
 	@echo ""
 	@echo "USAGE:"
-	@echo "  make [DEBUG=1] [WITH_WARNINGS=1] [target]"
+	@echo "  make [DEBUG=1] [VERBOSE=1] [target]"
 	@echo ""
-	@echo "MAIN TARGETS:"
-	@echo "  c-tcl-tests             Build & run C TCL tests (release by default)"
-	@echo "  crust-tcl-tests         Build & run Rust TCL tests (release by default)"
+	@echo "C TEST TARGETS:"
+	@echo "  c-quick-tests           Quick sanity checks (seconds)"
+	@echo "  c-tcl-tests             Full TCL test suite (parallel, ~40s)"
+	@echo "  c-dev-tests             Developer tests"
+	@echo "  c-tests                 Most/all TCL tests"
+	@echo "  c-prerelease-tests      Pre-release tests"
+	@echo "  c-soak-tests            Really long tests"
+	@echo "  c-fuzz-tests            Fuzz testing (random inputs)"
+	@echo ""
+	@echo "RUST TEST TARGETS:"
+	@echo "  crust-tcl-tests         Build & run Rust TCL tests"
+	@echo ""
+	@echo "MASTER TARGETS:"
 	@echo "  test                    Build & run all tests (release)"
 	@echo ""
 	@echo "OPTIONS:"
 	@echo "  DEBUG=1                 Use debug mode instead of release"
-	@echo "  WITH_WARNINGS=1         Show build warnings (suppressed by default)"
+	@echo "  VERBOSE=1               Show full build output & warnings (quiet by default)"
 	@echo ""
 	@echo "EXAMPLES:"
-	@echo "  make c-tcl-tests        Build & test C (release, quiet)"
-	@echo "  make DEBUG=1 c-tcl-tests    Build & test C (debug, quiet)"
-	@echo "  make WITH_WARNINGS=1 c-tcl-tests  Build & test C (release, show warnings)"
-	@echo "  make crust-tcl-tests    Build & test Rust (release)"
-	@echo "  make DEBUG=1 crust-tcl-tests Build & test Rust (debug)"
-	@echo "  make test               Build & test all (release)"
+	@echo "  make c-quick-tests      Quick test C (quiet)"
+	@echo "  make VERBOSE=1 c-tcl-tests  Full C tests with build output"
+	@echo "  make DEBUG=1 c-fuzz-tests Fuzz test C (debug)"
+	@echo "  make crust-tcl-tests    Test Rust (quiet)"
+	@echo "  make test               Build & test all"
 	@echo ""
 	@echo "CLEANUP:"
 	@echo "  make clean              Clean all artifacts"
