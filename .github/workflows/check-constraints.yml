@@ -7,11 +7,11 @@ on:
 jobs:
   check-constraints:
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/clockwork-pilot/rslite-ws:latest
-      options: --user root
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
@@ -19,18 +19,34 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_TOKEN }}
 
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Cache Docker image
+        id: cache-image
+        uses: actions/cache@v4
+        with:
+          path: /tmp/rslite-ws.tar
+          key: docker-rslite-ws-${{ hashFiles('.github/workflows/check-constraints.yml') }}
+
+      - name: Load cached image
+        if: steps.cache-image.outputs.cache-hit == 'true'
+        run: docker load < /tmp/rslite-ws.tar
+
+      - name: Pull image and save to cache
+        if: steps.cache-image.outputs.cache-hit != 'true'
+        run: |
+          docker pull ghcr.io/clockwork-pilot/rslite-ws:latest
+          docker save ghcr.io/clockwork-pilot/rslite-ws:latest > /tmp/rslite-ws.tar
 
       - name: Run constraint checks
         id: constraints
-        env:
-          PROJECT_ROOT: ${{ github.workspace }}
-          WORKSPACE_ROOT: ${{ github.workspace }}
-          CLAUDE_PROJECT_ROOT: ${{ github.workspace }}
         run: |
-          ~/create-venv-docker.sh && \
-          python /plugin/constraints_tool/constraints_tool/check_spec_constraints.py
+          docker run --rm \
+            -v ${{ github.workspace }}:/workspace \
+            -e PROJECT_ROOT=/workspace \
+            -e WORKSPACE_ROOT=/workspace \
+            -e CLAUDE_PROJECT_ROOT=/workspace \
+            --user root \
+            ghcr.io/clockwork-pilot/rslite-ws:latest \
+            bash -c '~/create-venv-docker.sh && python /plugin/constraints_tool/constraints_tool/check_spec_constraints.py'
 
       - name: Show full results on failure
         if: failure() && steps.constraints.outcome == 'failure'
