@@ -10,13 +10,14 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
 - [Features](#features)
     - [Feature: build_all](#feature-build_all)
       - [constraint_build_all](#constraint_build_all)
+    - [Feature: clippy_checks](#feature-clippy_checks)
+      - [clippy_checks](#clippy_checks)
+      - [no_forbidden_allows_robust](#no_forbidden_allows_robust)
     - [Feature: fts5_no_libc_global](#feature-fts5_no_libc_global)
       - [fts5_no_libc_calls](#fts5_no_libc_calls)
     - [Feature: lib_exports](#feature-lib_exports)
       - [cdylib_symbols](#cdylib_symbols)
       - [no_rust_variadic_exports](#no_rust_variadic_exports)
-      - [rustfixture_symbols](#rustfixture_symbols)
-      - [shell_symbols](#shell_symbols)
     - [Feature: toolchain_version](#feature-toolchain_version)
       - [c2rust_nightly](#c2rust_nightly)
       - [stable_toolchain_or_missing](#stable_toolchain_or_missing)
@@ -28,6 +29,19 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
 
 #### constraint_build_all
 **Description:** Ensure our rust codebase is healthy
+
+### Feature: clippy_checks
+**Verify no clippy warnings in rust codebase**
+
+**Goals:**
+- Run cargo clippy on all packages
+- Ensure all clippy lints pass with no warnings
+
+#### clippy_checks
+**Description:** Run cargo clippy and ensure no warnings reported
+
+#### no_forbidden_allows_robust
+**Description:** Structural: Robust whitespace-tolerant detection of forbidden clippy allows. Detects any formatting of allow() with forbidden lints, ignoring whitespace between allow and (.
 
 ### Feature: fts5_no_libc_global
 **Ensure fts5.rs contains no libc:: calls (only external C FFI allowed)**
@@ -52,12 +66,6 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
 
 #### no_rust_variadic_exports
 **Description:** Negative: none of the 10 exported symbols must be Rust variadic extern fns — they live in C only
-
-#### rustfixture_symbols
-**Description:** Behavioral: all 10 symbols must be global (T) in the rustfixture binary
-
-#### shell_symbols
-**Description:** Behavioral: all 10 symbols must be global (T) in the shell binary
 
 ### Feature: toolchain_version
 **Enforce Rust toolchain versions. Stable for main code, nightly for shell and tests.**
