@@ -1,0 +1,59 @@
+name: Issue Trigger
+
+on:
+  issues:
+    types: [opened]
+  issue_comment:
+    types: [created]
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      issues: write
+
+    steps:
+      - name: Get actor
+        id: actor
+        run: |
+          if [ "${{ github.event_name }}" = "issue_comment" ]; then
+            echo "username=${{ github.event.comment.user.login }}" >> $GITHUB_OUTPUT
+          else
+            echo "username=${{ github.event.issue.user.login }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Check runner exists for actor
+        id: runner_check
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          USERNAME="${{ steps.actor.outputs.username }}"
+          RUNNERS=$(gh api repos/${{ github.repository }}/actions/runners)
+          MATCH=$(echo "$RUNNERS" | jq --arg label "$USERNAME" '
+            .runners[] | select(.labels[].name == $label) | select(.status == "online")
+          ')
+          if [ -n "$MATCH" ]; then
+            echo "found=true" >> $GITHUB_OUTPUT
+          else
+            echo "found=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Trigger coding agent workflow
+        if: steps.runner_check.outputs.found == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh workflow run coding-agent.yml \
+            --repo ${{ github.repository }} \
+            --field runner_label="${{ steps.actor.outputs.username }}" \
+            --field issue_number="${{ github.event.issue.number }}"
+
+      - name: Comment if no runner found
+        if: steps.runner_check.outputs.found == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue comment ${{ github.event.issue.number }} \
+            --repo ${{ github.repository }} \
+            --body "No online runner found for user **${{ steps.actor.outputs.username }}**."
