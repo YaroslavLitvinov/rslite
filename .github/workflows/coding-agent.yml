@@ -1,0 +1,130 @@
+name: Coding Agent
+
+on:
+  workflow_dispatch:
+    inputs:
+      runner_label:
+        description: GitHub username (matches self-hosted runner label)
+        required: true
+        type: string
+      issue_number:
+        description: Issue number to work on
+        required: true
+        type: string
+
+jobs:
+  run-agent:
+    runs-on: [self-hosted, "${{ inputs.runner_label }}"]
+    permissions:
+      contents: write
+
+    steps:
+      - name: Get issue details
+        id: issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ISSUE=$(gh api repos/${{ github.repository }}/issues/${{ inputs.issue_number }})
+          TITLE=$(echo "$ISSUE" | jq -r '.title')
+          BODY=$(echo "$ISSUE" | jq -r '.body // ""')
+          SLUG=$(echo "$TITLE" | tr '[:upper:]' '[:lower:]' | tr -cs 'a-z0-9' '-' | sed 's/-\+/-/g;s/^-//;s/-$//' | cut -c1-100)
+          echo "branch=issue/${{ inputs.issue_number }}/${SLUG}" >> $GITHUB_OUTPUT
+
+          # Parse timeout from first line: "timeout: N" or "timeout=N" (minutes), default 10
+          FIRST_LINE=$(echo "$BODY" | head -1)
+          TIMEOUT_MINS=$(echo "$FIRST_LINE" | grep -ioP '(?<=timeout[:=])\s*\d+' | tr -d ' ')
+          TIMEOUT_SECS=$(( ${TIMEOUT_MINS:-10} * 60 ))
+          echo "timeout_secs=${TIMEOUT_SECS}" >> $GITHUB_OUTPUT
+
+          # Strip timeout line from body if present
+          if [ -n "$TIMEOUT_MINS" ]; then
+            BODY=$(echo "$BODY" | tail -n +2 | sed '/./,$!d')
+          fi
+
+          {
+            echo "ONESHOT_PROMPT_MESSAGE<<EOF"
+            echo "$TITLE"
+            echo "$BODY"
+            echo "EOF"
+          } >> $GITHUB_ENV
+
+      - name: Create branch in project root
+        run: |
+          cd "$CLAUDE_PROJECT_ROOT"
+          git fetch origin
+          DEFAULT_BRANCH=$(git remote show origin | grep 'HEAD branch' | awk '{print $NF}')
+          git checkout -B "${{ steps.issue.outputs.branch }}" "origin/${DEFAULT_BRANCH}"
+
+      - name: Prepare docker-files directories
+        run: |
+          mkdir -p "$DOCKER_FILES/.credentials" "$DOCKER_FILES/.cargo" "$DOCKER_FILES/venv" "$DOCKER_FILES/.local"
+          [ -s "$DOCKER_FILES/.claude.local.json" ] || printf '{}\n' > "$DOCKER_FILES/.claude.local.json"
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run Claude agent in Docker
+        id: agent
+        env:
+          CODING_AGENT_MODEL: ${{ vars.CODING_AGENT_MODEL }}
+        run: |
+          MODEL="${CODING_AGENT_MODEL:-claude-haiku-4-5}"
+          TIMEOUT_SECS="${{ steps.issue.outputs.timeout_secs }}"
+
+          set +e
+          timeout "$TIMEOUT_SECS" docker run --rm \
+            -e CLAUDE_PROJECT_ROOT=/workspace \
+            -e WORKSPACE_ROOT=/workspace \
+            -e CLAUDE_FILE_RULES=/docker-scripts/work-on-sqlite/y2-plugin-deny-file-rules.json \
+            -e PROXY_WRAPPER_CONFIG=/docker-scripts/work-on-sqlite/proxy_wrapper_config.json \
+            -e DISABLE_STOP_HOOK= \
+            -e ONESHOT_PROMPT_MESSAGE \
+            -v "$DOCKER_FILES/.cargo:/home/node/.cargo:Z" \
+            -v "$DOCKER_FILES/venv:/home/node/venv:Z" \
+            -v "$DOCKER_FILES/.credentials:/home/node/.claude:Z" \
+            -v "$DOCKER_FILES/.claude.local.json:/home/node/.claude.json:Z" \
+            -v "$DOCKER_FILES/.local:/home/node/.local:Z" \
+            -v "$CLAUDE_PROJECT_ROOT:/workspace:Z" \
+            $CLAUDE_EXTRA_DOCKER_ARGS \
+            ghcr.io/clockwork-pilot/rslite-ws:latest \
+            bash -c "source /docker-scripts/work-on-sqlite/user-entrypoint.sh; \
+              claude --dangerously-skip-permissions \
+                --model $MODEL \
+                --plugin-dir /plugin \
+                -p \"\$ONESHOT_PROMPT_MESSAGE\""
+          echo "exit_code=$?" >> $GITHUB_OUTPUT
+          set -e
+
+      - name: Commit result
+        run: |
+          EXIT_CODE="${{ steps.agent.outputs.exit_code }}"
+          TIMEOUT_SECS="${{ steps.issue.outputs.timeout_secs }}"
+          TIMEOUT_MINS=$(( TIMEOUT_SECS / 60 ))
+
+          if [ "$EXIT_CODE" -eq 124 ]; then
+            MSG="agent: timed out after ${TIMEOUT_MINS}m"
+          elif [ "$EXIT_CODE" -ne 0 ]; then
+            FAILED=$(jq -r '
+              .features_results | to_entries[] |
+              .key as $feature |
+              .value.constraints_results | to_entries[] |
+              select(.value.verdict == false) |
+              "\($feature):\(.key)"
+            ' "$CLAUDE_PROJECT_ROOT/spec-checks.k.json" 2>/dev/null | paste -sd ', ')
+            if [ -n "$FAILED" ]; then
+              MSG="agent: failed constraints: ${FAILED}"
+            else
+              MSG="agent: error (exit code ${EXIT_CODE})"
+            fi
+          else
+            MSG="agent: completed successfully"
+          fi
+
+          cd "$CLAUDE_PROJECT_ROOT"
+          git add -A
+          git diff --cached --quiet || git commit -m "$MSG"
+          git push origin "${{ steps.issue.outputs.branch }}"
