@@ -12,6 +12,7 @@ jobs:
     permissions:
       actions: write
       issues: write
+      administration: read
 
     steps:
       - name: Get actor
