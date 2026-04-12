@@ -2,12 +2,27 @@ name: Issue Trigger
 
 on:
   issues:
-    types: [opened, edited]
-  issue_comment:
-    types: [created]
+    types: [opened, labeled]
 
 jobs:
+  ensure-label:
+    if: github.event.action == 'opened'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Ensure agent-run label exists
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api "repos/${{ github.repository }}/labels/agent-run" >/dev/null 2>&1 || \
+            gh api -X POST "repos/${{ github.repository }}/labels" \
+              -f name=agent-run \
+              -f color=0E8A16 \
+              -f description="Apply to trigger the coding agent on this issue"
+
   trigger:
+    if: github.event.action == 'labeled' && github.event.label.name == 'agent-run'
     runs-on: ubuntu-latest
     permissions:
       actions: write
@@ -17,11 +32,15 @@ jobs:
       - name: Get actor
         id: actor
         run: |
-          if [ "${{ github.event_name }}" = "issue_comment" ]; then
-            echo "username=${{ github.event.comment.user.login }}" >> $GITHUB_OUTPUT
-          else
-            echo "username=${{ github.event.issue.user.login }}" >> $GITHUB_OUTPUT
-          fi
+          echo "username=${{ github.event.sender.login }}" >> $GITHUB_OUTPUT
+
+      - name: Remove trigger label
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api -X DELETE \
+            "repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/labels/agent-run" \
+            || true
 
       - name: Check runner exists for actor
         id: runner_check
