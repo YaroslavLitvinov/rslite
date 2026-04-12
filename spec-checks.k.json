@@ -1,0 +1,103 @@
+{
+  "type": "ChecksResults",
+  "model_version": 1,
+  "features_results": {
+    "toolchain_version": {
+      "feature_id": "toolchain_version",
+      "constraints_results": {
+        "c2rust_nightly": {
+          "constraint_id": "c2rust_nightly",
+          "verdict": true,
+          "shrunken_output": "",
+          "timestamp": "2026-04-12T15:07:35.135796",
+          "duration": 0.001640496018808335,
+          "fails_count": 1,
+          "postponed": false
+        },
+        "stable_toolchain_or_missing": {
+          "constraint_id": "stable_toolchain_or_missing",
+          "verdict": true,
+          "shrunken_output": "",
+          "timestamp": "2026-04-12T15:07:35.136642",
+          "duration": 0.00068856799043715,
+          "fails_count": 1,
+          "postponed": false
+        }
+      }
+    },
+    "fts5_no_libc_global": {
+      "feature_id": "fts5_no_libc_global",
+      "constraints_results": {
+        "fts5_no_libc_calls": {
+          "constraint_id": "fts5_no_libc_calls",
+          "verdict": true,
+          "shrunken_output": "[stderr] grep: /workspace/src/fts5.rs: No such file or directory\n",
+          "timestamp": "2026-04-12T15:07:35.138108",
+          "duration": 0.0013345550105441362,
+          "fails_count": 1,
+          "postponed": false
+        }
+      }
+    },
+    "build_all": {
+      "feature_id": "build_all",
+      "constraints_results": {
+        "constraint_build_all": {
+          "constraint_id": "constraint_build_all",
+          "verdict": true,
+          "shrunken_output": "[stdout] sqlite/testrunner.log\n0 errors out of 396913 tests in 00:38 on d8392dd691dd Linux 64-bit\nSQLite 2026-01-09 17:27:48 b270f8339eb13b504d0b2ba154ebca966b7dde08e40c3ed7d559\n\u2713 C TCL tests (release) passed\n",
+          "timestamp": "2026-04-12T15:09:28.597819",
+          "duration": 113.45957995697972,
+          "fails_count": 1,
+          "postponed": false
+        }
+      }
+    },
+    "clippy_checks": {
+      "feature_id": "clippy_checks",
+      "constraints_results": {
+        "clippy_checks": {
+          "constraint_id": "clippy_checks",
+          "verdict": true,
+          "shrunken_output": "[stderr] ust-bitfields-derive v0.22.1\n   Compiling strum_macros v0.27.2\n    Checking c2rust-bitfields v0.22.1\n    Checking snafu v0.7.5\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 14.51s\n",
+          "timestamp": "2026-04-12T15:09:43.176184",
+          "duration": 14.578154407994589,
+          "fails_count": 1,
+          "postponed": false
+        },
+        "no_forbidden_allows_robust": {
+          "constraint_id": "no_forbidden_allows_robust",
+          "verdict": true,
+          "shrunken_output": "",
+          "timestamp": "2026-04-12T15:09:43.185613",
+          "duration": 0.009251570008927956,
+          "fails_count": 1,
+          "postponed": false
+        }
+      }
+    },
+    "lib_exports": {
+      "feature_id": "lib_exports",
+      "constraints_results": {
+        "cdylib_symbols": {
+          "constraint_id": "cdylib_symbols",
+          "verdict": true,
+          "shrunken_output": "",
+          "timestamp": "2026-04-12T15:09:43.214635",
+          "duration": 0.028811137977754697,
+          "fails_count": 1,
+          "postponed": false
+        },
+        "no_rust_variadic_exports": {
+          "constraint_id": "no_rust_variadic_exports",
+          "verdict": true,
+          "shrunken_output": "",
+          "timestamp": "2026-04-12T15:09:43.216388",
+          "duration": 0.0015806109877303243,
+          "fails_count": 1,
+          "postponed": false
+        }
+      }
+    }
+  }
+}
