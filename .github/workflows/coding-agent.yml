@@ -28,18 +28,31 @@ jobs:
           TITLE=$(echo "$ISSUE" | jq -r '.title')
           BODY=$(echo "$ISSUE" | jq -r '.body // ""')
           SLUG=$(echo "$TITLE" | tr '[:upper:]' '[:lower:]' | tr -cs 'a-z0-9' '-' | sed 's/-\+/-/g;s/^-//;s/-$//' | cut -c1-100)
-          echo "branch=issue/${{ inputs.issue_number }}/${SLUG}" >> $GITHUB_OUTPUT
+          ISSUE_NUM="${{ inputs.issue_number }}"
+          EXISTING=$(gh api "repos/${{ github.repository }}/branches" --paginate -q ".[].name" \
+            | grep -E "^agent/${ISSUE_NUM}(-|$)" | head -1 || true)
+          if [ -n "$EXISTING" ]; then
+            echo "Reusing existing branch: $EXISTING"
+            echo "branch=$EXISTING" >> $GITHUB_OUTPUT
+          else
+            echo "branch=agent/${ISSUE_NUM}-${SLUG}" >> $GITHUB_OUTPUT
+          fi
 
-          # Parse timeout from first line: "timeout: N" or "timeout=N" (minutes), default 10
-          FIRST_LINE=$(echo "$BODY" | head -1)
-          TIMEOUT_MINS=$(echo "$FIRST_LINE" | grep -ioP '(?<=timeout[:=])\s*\d+' | tr -d ' ')
+          # Parse optional YAML frontmatter block at top of body:
+          #   ---
+          #   timeout: 30              # minutes (default 10)
+          #   model: claude-opus-4-6   # default: claude-haiku-4-5
+          #   ---
+          # Unknown fields are ignored but the block is stripped from the prompt.
+          YAML_PART=$(printf '%s\n' "$BODY" | grep -Pzo '(?s)^---\n\K.*?(?=\n---\n)' | tr -d '\0' || true)
+          if [ -n "$YAML_PART" ]; then
+            BODY=$(printf '%s\n' "$BODY" | sed '1,/^---$/d; 1,/^---$/d')
+          fi
+          TIMEOUT_MINS=$(yq '.timeout // ""' <<< "$YAML_PART")
+          MODEL=$(yq '.model // ""' <<< "$YAML_PART")
           TIMEOUT_SECS=$(( ${TIMEOUT_MINS:-10} * 60 ))
           echo "timeout_secs=${TIMEOUT_SECS}" >> $GITHUB_OUTPUT
-
-          # Strip timeout line from body if present
-          if [ -n "$TIMEOUT_MINS" ]; then
-            BODY=$(echo "$BODY" | tail -n +2 | sed '/./,$!d')
-          fi
+          echo "model=${MODEL}" >> $GITHUB_OUTPUT
 
           {
             echo "ONESHOT_PROMPT_MESSAGE<<EOF"
@@ -48,12 +61,18 @@ jobs:
             echo "EOF"
           } >> $GITHUB_ENV
 
-      - name: Create branch in project root
+      - name: Create or checkout branch in project root
         run: |
           cd "$CLAUDE_PROJECT_ROOT"
           git fetch origin
-          DEFAULT_BRANCH=$(git remote show origin | grep 'HEAD branch' | awk '{print $NF}')
-          git checkout -B "${{ steps.issue.outputs.branch }}" "origin/${DEFAULT_BRANCH}"
+          BRANCH="${{ steps.issue.outputs.branch }}"
+          if git ls-remote --exit-code --heads origin "$BRANCH" >/dev/null 2>&1; then
+            echo "Checking out existing branch: $BRANCH"
+            git checkout -B "$BRANCH" "origin/${BRANCH}"
+          else
+            DEFAULT_BRANCH=$(git remote show origin | grep 'HEAD branch' | awk '{print $NF}')
+            git checkout -B "$BRANCH" "origin/${DEFAULT_BRANCH}"
+          fi
 
       - name: Prepare docker-files directories
         run: |
@@ -69,10 +88,9 @@ jobs:
 
       - name: Run Claude agent in Docker
         id: agent
-        env:
-          CODING_AGENT_MODEL: ${{ vars.CODING_AGENT_MODEL }}
         run: |
-          MODEL="${CODING_AGENT_MODEL:-claude-haiku-4-5}"
+          MODEL="${{ steps.issue.outputs.model }}"
+          MODEL="${MODEL:-claude-haiku-4-5}"
           TIMEOUT_SECS="${{ steps.issue.outputs.timeout_secs }}"
 
           set +e
