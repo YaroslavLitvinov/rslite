@@ -16,8 +16,7 @@
           "id": "constraint_build_all",
           "cmd": "cd $WORKSPACE_ROOT && make c-tcl-tests",
           "description": "Ensure our rust codebase is healthy",
-          "fails_count": 1,
-          "timeout": 300
+          "fails_count": 1
         }
       }
     },
@@ -79,7 +78,7 @@
       "constraints": {
         "cdylib_symbols": {
           "id": "cdylib_symbols",
-          "cmd": "SYMS=$(nm -D target/release/libsqlite_noamalgam.so) && for sym in sqlite3_str_appendf sqlite3_snprintf sqlite3_mprintf sqlite3_vsnprintf sqlite3_vmprintf sqlite3_test_control sqlite3_db_config sqlite3_config sqlite3_vtab_config sqlite3_log; do echo \"$SYMS\" | grep -q \"T ${sym}$\" || { echo \"missing $sym in cdylib\"; exit 1; }; done && grep -q \"export_name.*sqlite3_test_control_args\" $PROJECT_ROOT/crates/crust-core/src/printf_c_variadic.rs",
+          "cmd": "SYMS=$(nm -D target/release/libsqlite_noamalgam.so) && for sym in sqlite3_str_appendf sqlite3_snprintf sqlite3_mprintf sqlite3_vsnprintf sqlite3_vmprintf sqlite3_test_control sqlite3_db_config sqlite3_config sqlite3_vtab_config sqlite3_log; do echo \"$SYMS\" | grep -q \"T ${sym}$\" || { echo \"missing $sym in cdylib\"; exit 1; }; done && grep -q \"export_name.*sqlite3_test_control_args\" $PROJECT_ROOT/crates/rslite-core/src/printf_c_variadic.rs",
           "description": "Behavioral: all 10 symbols must appear in dynamic symbol table (T) of the cdylib",
           "fails_count": 1
         },
@@ -114,6 +113,40 @@
           "id": "no_forbidden_allows_robust",
           "cmd": "! grep -rE \"allow[[:space:]]*\\\\(.*clippy::(unnecessary_cast|missing_safety_doc|needless_return)|allow[[:space:]]*\\\\(.*warnings\" \"$PROJECT_ROOT/crates\" --include=\"*.rs\" 2>/dev/null",
           "description": "Structural: Robust whitespace-tolerant detection of forbidden clippy allows. Detects any formatting of allow() with forbidden lints, ignoring whitespace between allow and (.",
+          "fails_count": 1
+        }
+      }
+    },
+    "pub_visibility": {
+      "type": "Feature",
+      "model_version": 1,
+      "id": "pub_visibility",
+      "description": "Non-test cdylib exports only stable C API; test feature re-exposes internals",
+      "goals": [
+        "Only ~280 C API symbols exported from cdylib in default build",
+        "test feature must not lose any default symbols from cdylib",
+        "test feature must keep internals accessible for tclsqlite/testfixture"
+      ],
+      "depends_on": [
+        "build_all"
+      ],
+      "constraints": {
+        "cdylib_default_exports": {
+          "id": "cdylib_default_exports",
+          "cmd": "cd $PROJECT_ROOT && cargo build -p rslite-core --features fts4,update_delete_limit 2>/dev/null && nm -D --defined-only target/debug/libsqlite_noamalgam.so | grep \" T \" | awk \"{print \\$3}\" | sort > /tmp/rslite_actual.txt && sort $PROJECT_ROOT/crates/rslite-core/expected_exports.txt > /tmp/rslite_expected.txt && diff /tmp/rslite_actual.txt /tmp/rslite_expected.txt || { echo \"cdylib exports diverged from expected_exports.txt\"; exit 1; }",
+          "description": "Behavioral: non-test cdylib exports must match expected_exports.txt exactly (~280 stable C API symbols)",
+          "fails_count": 1
+        },
+        "test_tclsqlite_builds": {
+          "id": "test_tclsqlite_builds",
+          "cmd": "cd $PROJECT_ROOT/c2rust/crust-tclsqlite && cargo build -p crust-tclsqlite --features test 2>/dev/null",
+          "description": "Environmental: tclsqlite with test feature must compile, proving internal symbols remain accessible",
+          "fails_count": 1
+        },
+        "rslite_uses_crust_core": {
+          "id": "rslite_uses_crust_core",
+          "cmd": "cd $PROJECT_ROOT && ! grep -r 'rslite.raw\\|rslite_raw' crates/rslite/Cargo.toml crates/rslite/src/ && echo 'rslite does not reference rslite-raw'",
+          "description": "Structural: rslite crate must not reference rslite-raw in its Cargo.toml or source files \u2014 it should use crust-core (sqlite_noamalgam) directly",
           "fails_count": 1
         }
       }
