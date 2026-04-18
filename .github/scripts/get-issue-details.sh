@@ -19,23 +19,6 @@ echo "Title: $TITLE"
 echo "Body length: ${#BODY} characters"
 echo "::endgroup::"
 
-echo "title=${TITLE}" >> $GITHUB_OUTPUT
-echo "body=${BODY}" >> $GITHUB_OUTPUT
-
-# Generate branch name from title
-SLUG=$(echo "$TITLE" | tr '[:upper:]' '[:lower:]' | tr -cs 'a-z0-9' '-' | sed 's/-\+/-/g;s/^-//;s/-$//' | cut -c1-100)
-
-# Check for existing branch
-EXISTING=$(gh api "repos/$REPO/branches" --paginate -q ".[].name" \
-  | grep -E "^agent/${ISSUE_NUMBER}(-|$)" | head -1 || true)
-
-if [ -n "$EXISTING" ]; then
-  echo "Reusing existing branch: $EXISTING"
-  echo "branch=$EXISTING" >> $GITHUB_OUTPUT
-else
-  echo "branch=agent/${ISSUE_NUMBER}-${SLUG}" >> $GITHUB_OUTPUT
-fi
-
 # Parse optional YAML frontmatter block at top of body:
 #   ---
 #   timeout: 30              # minutes (default 10)
@@ -52,6 +35,22 @@ if [ -n "$YAML_PART" ]; then
   # yq may emit the literal string "null" when a key resolves to null
   [ "$TIMEOUT_MINS" = "null" ] && TIMEOUT_MINS=""
   [ "$MODEL" = "null" ] && MODEL=""
+fi
+
+echo "title=${TITLE}" >> $GITHUB_OUTPUT
+
+# Generate branch name from title
+SLUG=$(echo "$TITLE" | tr '[:upper:]' '[:lower:]' | tr -cs 'a-z0-9' '-' | sed 's/-\+/-/g;s/^-//;s/-$//' | cut -c1-100)
+
+# Check for existing branch
+EXISTING=$(gh api "repos/$REPO/branches" --paginate -q ".[].name" \
+  | grep -E "^agent/${ISSUE_NUMBER}(-|$)" | head -1 || true)
+
+if [ -n "$EXISTING" ]; then
+  echo "Reusing existing branch: $EXISTING"
+  echo "branch=$EXISTING" >> $GITHUB_OUTPUT
+else
+  echo "branch=agent/${ISSUE_NUMBER}-${SLUG}" >> $GITHUB_OUTPUT
 fi
 
 TIMEOUT_SECS=$(( ${TIMEOUT_MINS:-10} * 60 ))
