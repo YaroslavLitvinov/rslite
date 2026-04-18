@@ -5,13 +5,16 @@ set -e
 
 echo "::group::Image Digest Extraction"
 
-manifest=$(docker manifest inspect ghcr.io/clockwork-pilot/rslite-ws:latest)
+manifest=$(docker manifest inspect ghcr.io/clockwork-pilot/rslite-ws:latest 2>&1)
 echo "Manifest received (length: ${#manifest})"
 
-digest=$(echo "$manifest" | python3 << 'PYTHON'
+digest=$(python3 << 'PYTHON' "$manifest"
 import sys, json
+
+manifest_str = sys.argv[1]
+
 try:
-  m = json.load(sys.stdin)
+  m = json.loads(manifest_str)
   if 'manifests' in m:
     digest = m['manifests'][0]['digest']
   elif 'config' in m:
@@ -23,7 +26,7 @@ try:
   print(digest)
 except Exception as e:
   print(f'ERROR: Failed to extract digest: {e}', file=sys.stderr)
-  print(f'Manifest keys: {list(m.keys())}', file=sys.stderr)
+  print(f'Raw manifest: {manifest_str[:500]}', file=sys.stderr)
   sys.exit(1)
 PYTHON
 )
