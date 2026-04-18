@@ -27,14 +27,17 @@ echo "::endgroup::"
 YAML_PART=$(printf '%s\n' "$BODY" | grep -Pzo '(?s)^---\r?\n\K.*?(?=\r?\n---(\r?\n|$))' | tr -d '\0' || true)
 TIMEOUT_MINS=""
 MODEL=""
+BASE_BRANCH=""
 
 if [ -n "$YAML_PART" ]; then
   BODY=$(printf '%s\n' "$BODY" | sed '1,/^---\s*$/d; 1,/^---\s*$/d')
   TIMEOUT_MINS=$(yq -r '.timeout // ""' <<< "$YAML_PART" 2>/dev/null || true)
   MODEL=$(yq -r '.model // ""' <<< "$YAML_PART" 2>/dev/null || true)
+  BASE_BRANCH=$(yq -r '.base_branch // ""' <<< "$YAML_PART" 2>/dev/null || true)
   # yq may emit the literal string "null" when a key resolves to null
   [ "$TIMEOUT_MINS" = "null" ] && TIMEOUT_MINS=""
   [ "$MODEL" = "null" ] && MODEL=""
+  [ "$BASE_BRANCH" = "null" ] && BASE_BRANCH=""
 fi
 
 echo "title=${TITLE}" >> $GITHUB_OUTPUT
@@ -58,6 +61,7 @@ FINAL_MODEL="${MODEL:-claude-haiku-4-5}"
 
 echo "timeout_secs=${TIMEOUT_SECS}" >> $GITHUB_OUTPUT
 echo "model=${FINAL_MODEL}" >> $GITHUB_OUTPUT
+echo "base_branch=${BASE_BRANCH}" >> $GITHUB_OUTPUT
 
 # Export prompt message to environment
 {
@@ -72,6 +76,9 @@ echo ""
 echo "::group::Issue Details Summary"
 echo "Issue #${ISSUE_NUMBER}: $TITLE"
 echo "Branch: agent/${ISSUE_NUMBER}-${SLUG}"
+if [ -n "$BASE_BRANCH" ]; then
+  echo "Base branch: $BASE_BRANCH"
+fi
 echo "Timeout: ${TIMEOUT_MINS:-10} minutes ($TIMEOUT_SECS seconds)"
 echo "Model: $FINAL_MODEL"
 echo "::endgroup::"
