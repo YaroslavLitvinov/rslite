@@ -11,8 +11,8 @@ on:
         description: Issue number to work on
         required: true
         type: string
-      target_branch:
-        description: Branch to work on (defaults to repo default branch)
+      base_branch:
+        description: Branch to base agent work on (defaults to repo default branch)
         required: false
         type: string
 
@@ -68,7 +68,7 @@ jobs:
         run: |
           git fetch origin
           BRANCH="${{ steps.issue.outputs.branch }}"
-          BASE_BRANCH="${{ inputs.target_branch }}"
+          BASE_BRANCH="${{ inputs.base_branch }}"
 
           # Priority: workflow input > issue YAML > repo default
           if [ -z "$BASE_BRANCH" ]; then
