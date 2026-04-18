@@ -30,10 +30,19 @@ MODEL=""
 BASE_BRANCH=""
 
 if [ -n "$YAML_PART" ]; then
-  BODY=$(printf '%s\n' "$BODY" | sed '1,/^---\s*$/d; 1,/^---\s*$/d')
-  TIMEOUT_MINS=$(yq -r '.timeout // ""' <<< "$YAML_PART" 2>/dev/null || true)
-  MODEL=$(yq -r '.model // ""' <<< "$YAML_PART" 2>/dev/null || true)
-  BASE_BRANCH=$(yq -r '.base_branch // ""' <<< "$YAML_PART" 2>/dev/null || true)
+  echo "DEBUG: Found YAML frontmatter, parsing..." >&2
+  # Remove YAML block: delete from start to first ---, then start to second ---
+  BODY=$(printf '%s\n' "$BODY" | sed '0,/^---\s*$/d' | sed '0,/^---\s*$/d')
+
+  if [ -z "$(which yq)" ]; then
+    echo "::warning::yq not installed, skipping YAML parsing" >&2
+  else
+    TIMEOUT_MINS=$(yq -r '.timeout // ""' <<< "$YAML_PART" 2>/dev/null || true)
+    MODEL=$(yq -r '.model // ""' <<< "$YAML_PART" 2>/dev/null || true)
+    BASE_BRANCH=$(yq -r '.base_branch // ""' <<< "$YAML_PART" 2>/dev/null || true)
+    echo "DEBUG: timeout=$TIMEOUT_MINS model=$MODEL base_branch=$BASE_BRANCH" >&2
+  fi
+
   # yq may emit the literal string "null" when a key resolves to null
   [ "$TIMEOUT_MINS" = "null" ] && TIMEOUT_MINS=""
   [ "$MODEL" = "null" ] && MODEL=""
