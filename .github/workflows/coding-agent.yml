@@ -71,31 +71,32 @@ jobs:
           PR_BRANCH="${{ steps.issue.outputs.pr_branch }}"
           BASE_BRANCH="${{ inputs.base_branch }}"
 
-          # Priority for base_branch: workflow input > issue YAML > repo default
-          if [ -z "$BASE_BRANCH" ]; then
-            BASE_BRANCH="${{ steps.issue.outputs.base_branch }}"
+          # Determine work branch: explicit pr_branch or auto-generated agent branch
+          if [ -n "$PR_BRANCH" ]; then
+            WORK_BRANCH="$PR_BRANCH"
+            echo "::notice::Using pr_branch: $WORK_BRANCH"
+          else
+            WORK_BRANCH="$AGENT_BRANCH"
+            echo "::notice::Using auto-generated branch: $WORK_BRANCH"
           fi
 
-          # Priority for work branch: pr_branch > existing agent branch > create new
-          if [ -n "$PR_BRANCH" ]; then
-            echo "::notice::Using pr_branch from issue: $PR_BRANCH"
-            WORK_BRANCH="$PR_BRANCH"
-            git checkout -B "$WORK_BRANCH" "origin/$PR_BRANCH"
-          elif git ls-remote --exit-code --heads origin "$AGENT_BRANCH" >/dev/null 2>&1; then
-            echo "::notice::Continuing work on existing branch: $AGENT_BRANCH"
-            WORK_BRANCH="$AGENT_BRANCH"
-            git checkout -B "$WORK_BRANCH" "origin/$AGENT_BRANCH"
+          # Check/create work branch
+          if git ls-remote --exit-code --heads origin "$WORK_BRANCH" >/dev/null 2>&1; then
+            echo "::notice::Branch exists, checking out: $WORK_BRANCH"
+            git checkout -B "$WORK_BRANCH" "origin/$WORK_BRANCH"
           else
-            echo "::notice::Creating new branch $AGENT_BRANCH"
-            WORK_BRANCH="$AGENT_BRANCH"
+            # Determine base: workflow input > issue YAML > repo default
+            if [ -z "$BASE_BRANCH" ]; then
+              BASE_BRANCH="${{ steps.issue.outputs.base_branch }}"
+            fi
             if [ -z "$BASE_BRANCH" ]; then
               BASE_BRANCH=$(git remote show origin | grep 'HEAD branch' | awk '{print $NF}')
             fi
-            echo "::notice::Basing work on: $BASE_BRANCH"
+            echo "::notice::Creating branch $WORK_BRANCH from base: $BASE_BRANCH"
             git checkout -B "$WORK_BRANCH" "origin/$BASE_BRANCH"
           fi
 
-          echo "WORK_BRANCH=$WORK_BRANCH" >> $GITHUB_OUTPUT
+          echo "branch=$WORK_BRANCH" >> $GITHUB_OUTPUT
 
       - name: Prepare docker-files directories
         run: |
