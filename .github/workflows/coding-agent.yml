@@ -11,9 +11,40 @@ on:
         description: Issue number to work on
         required: true
         type: string
+      base_branch:
+        description: Branch to base agent work on (defaults to repo default branch)
+        required: false
+        type: string
 
 jobs:
+  validate-runner:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate runner availability
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUNNER_LABEL: ${{ inputs.runner_label }}
+        run: |
+          echo "::group::Validating Runner"
+          echo "Checking for self-hosted runner with label: $RUNNER_LABEL"
+
+          runners=$(gh api repos/${{ github.repository }}/actions/runners \
+            --jq '.runners[] | select(.labels[].name == "'$RUNNER_LABEL'") | .id' 2>/dev/null || echo "")
+
+          if [ -z "$runners" ]; then
+            echo "::error::No self-hosted runner found with label '$RUNNER_LABEL'"
+            echo ""
+            echo "Available runners:"
+            gh api repos/${{ github.repository }}/actions/runners \
+              --jq '.runners[] | "\(.id): \(.name) (labels: \(.labels[].name | join(", ")))"' || true
+            exit 1
+          fi
+
+          echo "✓ Found runner(s) with label: $RUNNER_LABEL"
+          echo "::endgroup::"
+
   run-agent:
+    needs: validate-runner
     runs-on: [self-hosted, "${{ inputs.runner_label }}"]
     permissions:
       contents: write
@@ -36,14 +67,38 @@ jobs:
       - name: Create or checkout branch
         run: |
           git fetch origin
-          BRANCH="${{ steps.issue.outputs.branch }}"
-          if git ls-remote --exit-code --heads origin "$BRANCH" >/dev/null 2>&1; then
-            echo "Checking out existing branch: $BRANCH"
-            git checkout -B "$BRANCH" "origin/${BRANCH}"
+          AGENT_BRANCH="${{ steps.issue.outputs.branch }}"
+          PR_BRANCH="${{ steps.issue.outputs.pr_branch }}"
+          BASE_BRANCH="${{ inputs.base_branch }}"
+
+          # Determine work branch: explicit pr_branch or auto-generated agent branch
+          if [ -n "$PR_BRANCH" ]; then
+            WORK_BRANCH="$PR_BRANCH"
+            echo "::notice::Using pr_branch: $WORK_BRANCH"
           else
-            DEFAULT_BRANCH=$(git remote show origin | grep 'HEAD branch' | awk '{print $NF}')
-            git checkout -B "$BRANCH" "origin/${DEFAULT_BRANCH}"
+            WORK_BRANCH="$AGENT_BRANCH"
+            echo "::notice::Using auto-generated branch: $WORK_BRANCH"
           fi
+
+          # Determine base: workflow input > issue YAML > repo default
+          if [ -z "$BASE_BRANCH" ]; then
+            BASE_BRANCH="${{ steps.issue.outputs.base_branch }}"
+          fi
+          if [ -z "$BASE_BRANCH" ]; then
+            BASE_BRANCH=$(git remote show origin | grep 'HEAD branch' | awk '{print $NF}')
+          fi
+
+          # Check/create work branch
+          if git ls-remote --exit-code --heads origin "$WORK_BRANCH" >/dev/null 2>&1; then
+            echo "::notice::Branch exists, checking out from base: $BASE_BRANCH"
+            # Always use specified base_branch (may rebase if branch existed)
+            git checkout -B "$WORK_BRANCH" "origin/$BASE_BRANCH"
+          else
+            echo "::notice::Creating branch $WORK_BRANCH from base: $BASE_BRANCH"
+            git checkout -B "$WORK_BRANCH" "origin/$BASE_BRANCH"
+          fi
+
+          echo "branch=$WORK_BRANCH" >> $GITHUB_OUTPUT
 
       - name: Prepare docker-files directories
         run: |
