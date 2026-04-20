@@ -12,6 +12,7 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
       - [constraint_build_all](#constraint_build_all)
     - [Feature: clippy_checks](#feature-clippy_checks)
       - [clippy_checks](#clippy_checks)
+      - [forbid_non_camel_case_types_allow](#forbid_non_camel_case_types_allow)
       - [no_forbidden_allows_robust](#no_forbidden_allows_robust)
     - [Feature: fts5_no_libc_global](#feature-fts5_no_libc_global)
       - [fts5_no_libc_calls](#fts5_no_libc_calls)
@@ -43,6 +44,9 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
 
 #### clippy_checks
 **Description:** Run cargo clippy and ensure no warnings reported
+
+#### forbid_non_camel_case_types_allow
+**Description:** Structural: Forbid allow() attributes for clippy::non_camel_case_types rule. Types must follow camelCase naming convention.
 
 #### no_forbidden_allows_robust
 **Description:** Structural: Robust whitespace-tolerant detection of forbidden clippy allows. Detects any formatting of allow() with forbidden lints, ignoring whitespace between allow and (.

@@ -113,6 +113,12 @@
           "cmd": "! grep -rE \"allow[[:space:]]*\\\\(.*clippy::(unnecessary_cast|missing_safety_doc|needless_return)|allow[[:space:]]*\\\\(.*warnings\" \"$PROJECT_ROOT/crates\" --include=\"*.rs\" 2>/dev/null",
           "description": "Structural: Robust whitespace-tolerant detection of forbidden clippy allows. Detects any formatting of allow() with forbidden lints, ignoring whitespace between allow and (.",
           "fails_count": 1
+        },
+        "forbid_non_camel_case_types_allow": {
+          "id": "forbid_non_camel_case_types_allow",
+          "cmd": "! grep -rE \"allow[[:space:]]*\\\\(.*clippy::non_camel_case_types\" \"$PROJECT_ROOT/crates\" --include=\"*.rs\" 2>/dev/null",
+          "description": "Structural: Forbid allow() attributes for clippy::non_camel_case_types rule. Types must follow camelCase naming convention.",
+          "fails_count": 1
         }
       }
     },
