@@ -1,8 +1,8 @@
-pub use crate::__stddef_size_t_h::size_t;
-pub use crate::internal::__builtin_va_list;
-pub use crate::internal::__va_list_tag;
+pub use crate::__stddef_size_t_h::SizeT;
+pub use crate::internal::BuiltinVaList;
+pub use crate::internal::VaListTag;
 use crate::sqlite_printf;
-pub use crate::src::headers::stdlib::va_list;
+pub use crate::src::headers::stdlib::VaList;
 use sqlite_printf_macros::sqlite_snprintf;
 
 pub use crate::src::headers::sqlite3_h::SQLITE_ABORT;
@@ -39,18 +39,18 @@ pub use crate::src::headers::sqlite3_h::SQLITE_TEXT;
 pub use crate::src::headers::sqlite3_h::SQLITE_UTF8;
 pub use crate::src::headers::sqlite3_h::SQLITE_VTAB_CONSTRAINT_SUPPORT;
 pub use crate::src::headers::sqlite3_h::SQLITE_VTAB_INNOCUOUS;
-pub use crate::src::headers::sqlite3_h::sqlite_int64;
-pub use crate::src::headers::sqlite3_h::sqlite_uint64;
-pub use crate::src::headers::sqlite3_h::sqlite3_blob;
-pub use crate::src::headers::sqlite3_h::sqlite3_destructor_type;
+pub use crate::src::headers::sqlite3_h::SqliteInt64;
+pub use crate::src::headers::sqlite3_h::SqliteUint64;
+pub use crate::src::headers::sqlite3_h::Sqlite3Blob;
+pub use crate::src::headers::sqlite3_h::Sqlite3DestructorType;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_constraint;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_constraint_usage;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_info;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_orderby;
-pub use crate::src::headers::sqlite3_h::sqlite3_int64;
+pub use crate::src::headers::sqlite3_h::Sqlite3Int64;
 pub use crate::src::headers::sqlite3_h::sqlite3_module;
-pub use crate::src::headers::sqlite3_h::sqlite3_stmt;
-pub use crate::src::headers::sqlite3_h::sqlite3_uint64;
+pub use crate::src::headers::sqlite3_h::Sqlite3Stmt;
+pub use crate::src::headers::sqlite3_h::Sqlite3Uint64;
 pub use crate::src::headers::sqlite3_h::sqlite3_vtab;
 pub use crate::src::headers::sqlite3_h::sqlite3_vtab_cursor;
 pub use crate::src::headers::sqliteInt_h::sqlite3;
@@ -201,14 +201,14 @@ pub struct Fts5ExtensionApi {
     pub xRowCount: Option<
         unsafe extern "C" fn(
             *mut Fts5Context,
-            *mut crate::src::headers::sqlite3_h::sqlite3_int64,
+            *mut crate::src::headers::sqlite3_h::Sqlite3Int64,
         ) -> ::core::ffi::c_int,
     >,
     pub xColumnTotalSize: Option<
         unsafe extern "C" fn(
             *mut Fts5Context,
             ::core::ffi::c_int,
-            *mut crate::src::headers::sqlite3_h::sqlite3_int64,
+            *mut crate::src::headers::sqlite3_h::Sqlite3Int64,
         ) -> ::core::ffi::c_int,
     >,
     pub xTokenize: Option<
@@ -245,7 +245,7 @@ pub struct Fts5ExtensionApi {
         ) -> ::core::ffi::c_int,
     >,
     pub xRowid: Option<
-        unsafe extern "C" fn(*mut Fts5Context) -> crate::src::headers::sqlite3_h::sqlite3_int64,
+        unsafe extern "C" fn(*mut Fts5Context) -> crate::src::headers::sqlite3_h::Sqlite3Int64,
     >,
     pub xColumnText: Option<
         unsafe extern "C" fn(
@@ -368,7 +368,7 @@ pub struct Fts5PhraseIter {
     pub b: *const ::core::ffi::c_uchar,
 }
 
-pub type fts5_extension_function = Option<
+pub type Fts5ExtensionFunction = Option<
     unsafe extern "C" fn(
         *const Fts5ExtensionApi,
         *mut Fts5Context,
@@ -470,7 +470,7 @@ pub struct fts5_api {
             *mut fts5_api,
             *const ::core::ffi::c_char,
             *mut ::core::ffi::c_void,
-            fts5_extension_function,
+            Fts5ExtensionFunction,
             Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()>,
         ) -> ::core::ffi::c_int,
     >,
@@ -493,28 +493,28 @@ pub struct fts5_api {
     >,
 }
 
-pub type u8_0 = ::core::ffi::c_uchar;
+pub type U8_0 = ::core::ffi::c_uchar;
 
-pub type u32_0 = ::core::ffi::c_uint;
+pub type U32_0 = ::core::ffi::c_uint;
 
-pub type u16_0 = ::core::ffi::c_ushort;
+pub type U16_0 = ::core::ffi::c_ushort;
 
-pub type i16_0 = ::core::ffi::c_short;
+pub type I16_0 = ::core::ffi::c_short;
 
-pub type i64_0 = crate::src::headers::sqlite3_h::sqlite3_int64;
+pub type I64_0 = crate::src::headers::sqlite3_h::Sqlite3Int64;
 
-pub type u64_0 = crate::src::headers::sqlite3_h::sqlite3_uint64;
+pub type U64_0 = crate::src::headers::sqlite3_h::Sqlite3Uint64;
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct Fts5Global {
     pub api: fts5_api,
     pub db: *mut crate::src::headers::sqliteInt_h::sqlite3,
-    pub iNextId: i64_0,
+    pub iNextId: I64_0,
     pub pAux: *mut Fts5Auxiliary,
     pub pTok: *mut Fts5TokenizerModule,
     pub pDfltTok: *mut Fts5TokenizerModule,
     pub pCsr: *mut Fts5Cursor,
-    pub aLocaleHdr: [u32_0; 4],
+    pub aLocaleHdr: [U32_0; 4],
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -522,22 +522,22 @@ pub struct Fts5Cursor {
     pub base: crate::src::headers::sqlite3_h::sqlite3_vtab_cursor,
     pub pNext: *mut Fts5Cursor,
     pub aColumnSize: *mut ::core::ffi::c_int,
-    pub iCsrId: i64_0,
+    pub iCsrId: I64_0,
     pub ePlan: ::core::ffi::c_int,
     pub bDesc: ::core::ffi::c_int,
-    pub iFirstRowid: i64_0,
-    pub iLastRowid: i64_0,
-    pub pStmt: *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+    pub iFirstRowid: I64_0,
+    pub iLastRowid: I64_0,
+    pub pStmt: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
     pub pExpr: *mut Fts5Expr,
     pub pSorter: *mut Fts5Sorter,
     pub csrflags: ::core::ffi::c_int,
-    pub iSpecial: i64_0,
+    pub iSpecial: I64_0,
     pub zRank: *mut ::core::ffi::c_char,
     pub zRankArgs: *mut ::core::ffi::c_char,
     pub pRank: *mut Fts5Auxiliary,
     pub nRankArg: ::core::ffi::c_int,
     pub apRankArg: *mut *mut crate::src::headers::vdbeInt_h::sqlite3_value,
-    pub pRankArgStmt: *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+    pub pRankArgStmt: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
     pub pAux: *mut Fts5Auxiliary,
     pub pAuxdata: *mut Fts5Auxdata,
     pub aInstIter: *mut Fts5PoslistReader,
@@ -548,12 +548,12 @@ pub struct Fts5Cursor {
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct Fts5PoslistReader {
-    pub a: *const u8_0,
+    pub a: *const U8_0,
     pub n: ::core::ffi::c_int,
     pub i: ::core::ffi::c_int,
-    pub bFlag: u8_0,
-    pub bEof: u8_0,
-    pub iPos: i64_0,
+    pub bFlag: U8_0,
+    pub bEof: U8_0,
+    pub iPos: I64_0,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -569,16 +569,16 @@ pub struct Fts5Auxiliary {
     pub pGlobal: *mut Fts5Global,
     pub zFunc: *mut ::core::ffi::c_char,
     pub pUserData: *mut ::core::ffi::c_void,
-    pub xFunc: fts5_extension_function,
+    pub xFunc: Fts5ExtensionFunction,
     pub xDestroy: Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()>,
     pub pNext: *mut Fts5Auxiliary,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct Fts5Sorter {
-    pub pStmt: *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
-    pub iRowid: i64_0,
-    pub aPoslist: *const u8_0,
+    pub pStmt: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
+    pub iRowid: I64_0,
+    pub aPoslist: *const U8_0,
     pub nIdx: ::core::ffi::c_int,
     pub aIdx: [::core::ffi::c_int; 0],
 }
@@ -603,8 +603,8 @@ pub struct Fts5ExprPhrase {
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct Fts5ExprTerm {
-    pub bPrefix: u8_0,
-    pub bFirst: u8_0,
+    pub bPrefix: U8_0,
+    pub bFirst: U8_0,
     pub pTerm: *mut ::core::ffi::c_char,
     pub nQueryTerm: ::core::ffi::c_int,
     pub nFullTerm: ::core::ffi::c_int,
@@ -614,15 +614,15 @@ pub struct Fts5ExprTerm {
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct Fts5IndexIter {
-    pub iRowid: i64_0,
-    pub pData: *const u8_0,
+    pub iRowid: I64_0,
+    pub pData: *const U8_0,
     pub nData: ::core::ffi::c_int,
-    pub bEof: u8_0,
+    pub bEof: U8_0,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct Fts5Buffer {
-    pub p: *mut u8_0,
+    pub p: *mut U8_0,
     pub n: ::core::ffi::c_int,
     pub nSpace: ::core::ffi::c_int,
 }
@@ -638,10 +638,10 @@ pub struct Fts5ExprNode {
             *mut Fts5Expr,
             *mut Fts5ExprNode,
             ::core::ffi::c_int,
-            i64_0,
+            I64_0,
         ) -> ::core::ffi::c_int,
     >,
-    pub iRowid: i64_0,
+    pub iRowid: I64_0,
     pub pNear: *mut Fts5ExprNearset,
     pub nChild: ::core::ffi::c_int,
     pub apChild: [*mut Fts5ExprNode; 0],
@@ -669,7 +669,7 @@ pub struct Fts5Config {
     pub zName: *mut ::core::ffi::c_char,
     pub nCol: ::core::ffi::c_int,
     pub azCol: *mut *mut ::core::ffi::c_char,
-    pub abUnindexed: *mut u8_0,
+    pub abUnindexed: *mut U8_0,
     pub nPrefix: ::core::ffi::c_int,
     pub aPrefix: *mut ::core::ffi::c_int,
     pub eContent: ::core::ffi::c_int,
@@ -718,31 +718,31 @@ pub struct Fts5Index {
     pub nWorkUnit: ::core::ffi::c_int,
     pub pHash: *mut Fts5Hash,
     pub nPendingData: ::core::ffi::c_int,
-    pub iWriteRowid: i64_0,
+    pub iWriteRowid: I64_0,
     pub bDelete: ::core::ffi::c_int,
     pub nContentlessDelete: ::core::ffi::c_int,
     pub nPendingRow: ::core::ffi::c_int,
     pub rc: ::core::ffi::c_int,
     pub flushRc: ::core::ffi::c_int,
-    pub pReader: *mut crate::src::headers::sqlite3_h::sqlite3_blob,
-    pub pWriter: *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
-    pub pDeleter: *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
-    pub pIdxWriter: *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
-    pub pIdxDeleter: *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
-    pub pIdxSelect: *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
-    pub pIdxNextSelect: *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+    pub pReader: *mut crate::src::headers::sqlite3_h::Sqlite3Blob,
+    pub pWriter: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
+    pub pDeleter: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
+    pub pIdxWriter: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
+    pub pIdxDeleter: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
+    pub pIdxSelect: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
+    pub pIdxNextSelect: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
     pub nRead: ::core::ffi::c_int,
-    pub pDeleteFromIdx: *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
-    pub pDataVersion: *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
-    pub iStructVersion: i64_0,
+    pub pDeleteFromIdx: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
+    pub pDataVersion: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
+    pub iStructVersion: I64_0,
     pub pStruct: *mut Fts5Structure,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct Fts5Structure {
     pub nRef: ::core::ffi::c_int,
-    pub nWriteCounter: u64_0,
-    pub nOriginCntr: u64_0,
+    pub nWriteCounter: U64_0,
+    pub nOriginCntr: U64_0,
     pub nSegment: ::core::ffi::c_int,
     pub nLevel: ::core::ffi::c_int,
     pub aLevel: [Fts5StructureLevel; 0],
@@ -760,11 +760,11 @@ pub struct Fts5StructureSegment {
     pub iSegid: ::core::ffi::c_int,
     pub pgnoFirst: ::core::ffi::c_int,
     pub pgnoLast: ::core::ffi::c_int,
-    pub iOrigin1: u64_0,
-    pub iOrigin2: u64_0,
+    pub iOrigin1: U64_0,
+    pub iOrigin2: U64_0,
     pub nPgTombstone: ::core::ffi::c_int,
-    pub nEntryTombstone: u64_0,
-    pub nEntry: u64_0,
+    pub nEntryTombstone: U64_0,
+    pub nEntry: U64_0,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -785,11 +785,11 @@ pub struct Fts5HashEntry {
     pub iSzPoslist: ::core::ffi::c_int,
     pub nData: ::core::ffi::c_int,
     pub nKey: ::core::ffi::c_int,
-    pub bDel: u8_0,
-    pub bContent: u8_0,
-    pub iCol: i16_0,
+    pub bDel: U8_0,
+    pub bContent: U8_0,
+    pub iCol: I16_0,
     pub iPos: ::core::ffi::c_int,
-    pub iRowid: i64_0,
+    pub iRowid: I64_0,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -817,7 +817,7 @@ pub struct TrigramTokenizer {
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct Fts5PoslistWriter {
-    pub iPrev: i64_0,
+    pub iPrev: I64_0,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -836,7 +836,7 @@ pub struct Fts5TermsetEntry {
 #[repr(C)]
 pub union C2RustUnnamed {
     pub sFts: Fts5Structure,
-    pub tmpSpace: [u8_0; 48],
+    pub tmpSpace: [U8_0; 48],
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -849,8 +849,8 @@ pub struct Fts5Iter {
     pub xSetOutputs: Option<unsafe extern "C" fn(*mut Fts5Iter, *mut Fts5SegIter) -> ()>,
     pub nSeg: ::core::ffi::c_int,
     pub bRev: ::core::ffi::c_int,
-    pub bSkipEmpty: u8_0,
-    pub iSwitchRowid: i64_0,
+    pub bSkipEmpty: U8_0,
+    pub iSwitchRowid: I64_0,
     pub aFirst: *mut Fts5CResult,
     pub aSeg: [Fts5SegIter; 0],
 }
@@ -862,7 +862,7 @@ pub struct Fts5SegIter {
     pub iLeafPgno: ::core::ffi::c_int,
     pub pLeaf: *mut Fts5Data,
     pub pNextLeaf: *mut Fts5Data,
-    pub iLeafOffset: i64_0,
+    pub iLeafOffset: I64_0,
     pub pTombArray: *mut Fts5TombstoneArray,
     pub xNext: Option<
         unsafe extern "C" fn(*mut Fts5Index, *mut Fts5SegIter, *mut ::core::ffi::c_int) -> (),
@@ -876,9 +876,9 @@ pub struct Fts5SegIter {
     pub aRowidOffset: *mut ::core::ffi::c_int,
     pub pDlidx: *mut Fts5DlidxIter,
     pub term: Fts5Buffer,
-    pub iRowid: i64_0,
+    pub iRowid: I64_0,
     pub nPos: ::core::ffi::c_int,
-    pub bDel: u8_0,
+    pub bDel: U8_0,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -895,12 +895,12 @@ pub struct Fts5DlidxLvl {
     pub bEof: ::core::ffi::c_int,
     pub iFirstOff: ::core::ffi::c_int,
     pub iLeafPgno: ::core::ffi::c_int,
-    pub iRowid: i64_0,
+    pub iRowid: I64_0,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct Fts5Data {
-    pub p: *mut u8_0,
+    pub p: *mut U8_0,
     pub nn: ::core::ffi::c_int,
     pub szLeaf: ::core::ffi::c_int,
 }
@@ -914,8 +914,8 @@ pub struct Fts5TombstoneArray {
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct Fts5CResult {
-    pub iFirst: u16_0,
-    pub bTermEq: u8_0,
+    pub iFirst: U16_0,
+    pub bTermEq: U8_0,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -933,8 +933,8 @@ pub struct Fts5TokenDataIter {
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct Fts5TokenDataMap {
-    pub iRowid: i64_0,
-    pub iPos: i64_0,
+    pub iRowid: I64_0,
+    pub iPos: I64_0,
     pub iIter: ::core::ffi::c_int,
     pub nByte: ::core::ffi::c_int,
 }
@@ -965,8 +965,8 @@ pub struct PrefixSetupCtx {
         ) -> (),
     >,
     pub xAppend:
-        Option<unsafe extern "C" fn(*mut Fts5Index, u64_0, *mut Fts5Iter, *mut Fts5Buffer) -> ()>,
-    pub iLastRowid: i64_0,
+        Option<unsafe extern "C" fn(*mut Fts5Index, U64_0, *mut Fts5Iter, *mut Fts5Buffer) -> ()>,
+    pub iLastRowid: I64_0,
     pub nMerge: ::core::ffi::c_int,
     pub aBuf: *mut Fts5Buffer,
     pub nBuf: ::core::ffi::c_int,
@@ -984,17 +984,17 @@ pub struct TokendataSetupCtx {
 #[repr(C)]
 pub struct PrefixMerger {
     pub iter: Fts5DoclistIter,
-    pub iPos: i64_0,
+    pub iPos: I64_0,
     pub iOff: ::core::ffi::c_int,
-    pub aPos: *mut u8_0,
+    pub aPos: *mut U8_0,
     pub pNext: *mut PrefixMerger,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct Fts5DoclistIter {
-    pub aEof: *mut u8_0,
-    pub iRowid: i64_0,
-    pub aPoslist: *mut u8_0,
+    pub aEof: *mut U8_0,
+    pub iRowid: I64_0,
+    pub aPoslist: *mut U8_0,
     pub nPoslist: ::core::ffi::c_int,
     pub nSize: ::core::ffi::c_int,
 }
@@ -1003,10 +1003,10 @@ pub struct Fts5DoclistIter {
 pub struct Fts5SegWriter {
     pub iSegid: ::core::ffi::c_int,
     pub writer: Fts5PageWriter,
-    pub iPrevRowid: i64_0,
-    pub bFirstRowidInDoclist: u8_0,
-    pub bFirstRowidInPage: u8_0,
-    pub bFirstTermInPage: u8_0,
+    pub iPrevRowid: I64_0,
+    pub bFirstRowidInDoclist: U8_0,
+    pub bFirstRowidInPage: U8_0,
+    pub bFirstTermInPage: U8_0,
     pub nLeafWritten: ::core::ffi::c_int,
     pub nEmpty: ::core::ffi::c_int,
     pub nDlidx: ::core::ffi::c_int,
@@ -1019,7 +1019,7 @@ pub struct Fts5SegWriter {
 pub struct Fts5DlidxWriter {
     pub pgno: ::core::ffi::c_int,
     pub bPrevValid: ::core::ffi::c_int,
-    pub iPrev: i64_0,
+    pub iPrev: I64_0,
     pub buf: Fts5Buffer,
 }
 #[derive(Copy, Clone)]
@@ -1058,10 +1058,10 @@ pub struct Fts5Storage {
     pub pConfig: *mut Fts5Config,
     pub pIndex: *mut Fts5Index,
     pub bTotalsValid: ::core::ffi::c_int,
-    pub nTotalRow: i64_0,
-    pub aTotalSize: *mut i64_0,
-    pub pSavedRow: *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
-    pub aStmt: [*mut crate::src::headers::sqlite3_h::sqlite3_stmt; 12],
+    pub nTotalRow: I64_0,
+    pub aTotalSize: *mut I64_0,
+    pub pSavedRow: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
+    pub aStmt: [*mut crate::src::headers::sqlite3_h::Sqlite3Stmt; 12],
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -1082,10 +1082,10 @@ pub struct Fts5InsertCtx {
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct Fts5IntegrityCtx {
-    pub iRowid: i64_0,
+    pub iRowid: I64_0,
     pub iCol: ::core::ffi::c_int,
     pub szCol: ::core::ffi::c_int,
-    pub cksum: u64_0,
+    pub cksum: U64_0,
     pub pTermset: *mut Fts5Termset,
     pub pConfig: *mut Fts5Config,
 }
@@ -1150,11 +1150,11 @@ pub struct Fts5NearTrimmer {
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct Fts5LookaheadReader {
-    pub a: *const u8_0,
+    pub a: *const U8_0,
     pub n: ::core::ffi::c_int,
     pub i: ::core::ffi::c_int,
-    pub iPos: i64_0,
-    pub iLookahead: i64_0,
+    pub iPos: I64_0,
+    pub iLookahead: I64_0,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -1187,14 +1187,14 @@ pub struct Fts5PoslistPopulator {
 pub struct Fts5ExprCtx {
     pub pExpr: *mut Fts5Expr,
     pub aPopulator: *mut Fts5PoslistPopulator,
-    pub iOff: i64_0,
+    pub iOff: I64_0,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct Builtin {
     pub zFunc: *const ::core::ffi::c_char,
     pub pUserData: *mut ::core::ffi::c_void,
-    pub xFunc: fts5_extension_function,
+    pub xFunc: Fts5ExtensionFunction,
     pub xDestroy: Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()>,
 }
 #[derive(Copy, Clone)]
@@ -1254,15 +1254,15 @@ impl<'a> Fts5Bm25DataRef<'a> {
         &mut self,
         pApi: *const Fts5ExtensionApi,
         pFts: *mut Fts5Context,
-        nRow: crate::src::headers::sqlite3_h::sqlite3_int64,
-        nToken: crate::src::headers::sqlite3_h::sqlite3_int64,
+        nRow: crate::src::headers::sqlite3_h::Sqlite3Int64,
+        nToken: crate::src::headers::sqlite3_h::Sqlite3Int64,
     ) -> ::core::ffi::c_int {
         let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
 
         self.avgdl = nToken as f64 / nRow as f64;
 
         for i in 0..self.nPhrase {
-            let mut nHit: crate::src::headers::sqlite3_h::sqlite3_int64 = 0;
+            let mut nHit: crate::src::headers::sqlite3_h::Sqlite3Int64 = 0;
             rc = (*pApi).xQueryPhrase.expect("non-null function pointer")(
                 pFts,
                 i as ::core::ffi::c_int,
@@ -1376,7 +1376,7 @@ pub struct Unicode61Tokenizer {
 #[repr(C)]
 pub struct Fts5VocabCursor {
     pub base: crate::src::headers::sqlite3_h::sqlite3_vtab_cursor,
-    pub pStmt: *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+    pub pStmt: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
     pub pFts5: *mut Fts5Table,
     pub bEof: ::core::ffi::c_int,
     pub pIter: *mut Fts5IndexIter,
@@ -1385,11 +1385,11 @@ pub struct Fts5VocabCursor {
     pub zLeTerm: *mut ::core::ffi::c_char,
     pub colUsed: ::core::ffi::c_int,
     pub iCol: ::core::ffi::c_int,
-    pub aCnt: *mut i64_0,
-    pub aDoc: *mut i64_0,
-    pub rowid: i64_0,
+    pub aCnt: *mut I64_0,
+    pub aDoc: *mut I64_0,
+    pub rowid: I64_0,
     pub term: Fts5Buffer,
-    pub iInstPos: i64_0,
+    pub iInstPos: I64_0,
     pub iInstOff: ::core::ffi::c_int,
 }
 #[derive(Copy, Clone)]
@@ -1445,22 +1445,22 @@ pub const FTS5_STAR: ::core::ffi::c_int = 15 as ::core::ffi::c_int;
 unsafe extern "C" fn sqlite3Fts5BufferSize(
     mut pRc: *mut ::core::ffi::c_int,
     mut pBuf: *mut Fts5Buffer,
-    mut nByte: u32_0,
+    mut nByte: U32_0,
 ) -> ::core::ffi::c_int {
-    if ((*pBuf).nSpace as u32_0) < nByte {
-        let mut nNew: u64_0 = (if (*pBuf).nSpace != 0 {
+    if ((*pBuf).nSpace as U32_0) < nByte {
+        let mut nNew: U64_0 = (if (*pBuf).nSpace != 0 {
             (*pBuf).nSpace
         } else {
             64 as ::core::ffi::c_int
-        }) as u64_0;
-        let mut pNew: *mut u8_0 = std::ptr::null_mut::<u8_0>();
-        while nNew < nByte as u64_0 {
-            nNew = nNew.wrapping_mul(2 as u64_0);
+        }) as U64_0;
+        let mut pNew: *mut U8_0 = std::ptr::null_mut::<U8_0>();
+        while nNew < nByte as U64_0 {
+            nNew = nNew.wrapping_mul(2 as U64_0);
         }
         pNew = crate::src::src::malloc::sqlite3_realloc64(
             (*pBuf).p as *mut ::core::ffi::c_void,
-            nNew as crate::src::headers::sqlite3_h::sqlite3_uint64,
-        ) as *mut u8_0;
+            nNew as crate::src::headers::sqlite3_h::Sqlite3Uint64,
+        ) as *mut U8_0;
         if pNew.is_null() {
             *pRc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
             return 1 as ::core::ffi::c_int;
@@ -1487,39 +1487,39 @@ pub const FTS5_DEFAULT_HASHSIZE: ::core::ffi::c_int =
 
 unsafe extern "C" fn sqlite3Fts5GetVarint32(
     mut p: *const ::core::ffi::c_uchar,
-    mut v: *mut u32_0,
+    mut v: *mut U32_0,
 ) -> ::core::ffi::c_int {
-    let mut a: u32_0 = 0;
-    let mut b: u32_0 = 0;
-    a = *p as u32_0;
-    if a & 0x80 as u32_0 == 0 {
+    let mut a: U32_0 = 0;
+    let mut b: U32_0 = 0;
+    a = *p as U32_0;
+    if a & 0x80 as U32_0 == 0 {
         *v = a;
         return 1 as ::core::ffi::c_int;
     }
     p = p.offset(1);
-    b = *p as u32_0;
-    if b & 0x80 as u32_0 == 0 {
-        a &= 0x7f as u32_0;
+    b = *p as U32_0;
+    if b & 0x80 as U32_0 == 0 {
+        a &= 0x7f as U32_0;
         a <<= 7 as ::core::ffi::c_int;
         *v = a | b;
         return 2 as ::core::ffi::c_int;
     }
     p = p.offset(1);
     a <<= 14 as ::core::ffi::c_int;
-    a |= *p as u32_0;
-    if a & 0x80 as u32_0 == 0 {
+    a |= *p as U32_0;
+    if a & 0x80 as U32_0 == 0 {
         a &= ((0x7f as ::core::ffi::c_int) << 14 as ::core::ffi::c_int | 0x7f as ::core::ffi::c_int)
-            as u32_0;
-        b &= 0x7f as u32_0;
+            as U32_0;
+        b &= 0x7f as U32_0;
         b <<= 7 as ::core::ffi::c_int;
         *v = a | b;
         return 3 as ::core::ffi::c_int;
     }
-    let mut v64: u64_0 = 0;
-    let mut n: u8_0 = 0;
+    let mut v64: U64_0 = 0;
+    let mut n: U8_0 = 0;
     p = p.offset(-(2 as ::core::ffi::c_int as isize));
     n = sqlite3Fts5GetVarint(p, &raw mut v64);
-    *v = v64 as u32_0 & 0x7fffffff as ::core::ffi::c_int as u32_0;
+    *v = v64 as U32_0 & 0x7fffffff as ::core::ffi::c_int as U32_0;
     n as ::core::ffi::c_int
 }
 
@@ -1661,8 +1661,8 @@ pub const FTS5_EOF: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
 pub const FTS5_MAX_PAGE_SIZE: ::core::ffi::c_int =
     64 as ::core::ffi::c_int * 1024 as ::core::ffi::c_int;
 
-pub const FTS5_LARGEST_INT64: i64_0 =
-    0xffffffff as i64_0 | (0x7fffffff as ::core::ffi::c_int as i64_0) << 32 as ::core::ffi::c_int;
+pub const FTS5_LARGEST_INT64: I64_0 =
+    0xffffffff as I64_0 | (0x7fffffff as ::core::ffi::c_int as I64_0) << 32 as ::core::ffi::c_int;
 
 unsafe extern "C" fn fts5_iswhitespace(mut x: ::core::ffi::c_char) -> ::core::ffi::c_int {
     (x as ::core::ffi::c_int == ' ' as i32) as ::core::ffi::c_int
@@ -1986,22 +1986,22 @@ unsafe extern "C" fn fts5AsciiAddExceptions(
 unsafe extern "C" fn sqlite3Fts5BufferAppendVarint(
     mut pRc: *mut ::core::ffi::c_int,
     mut pBuf: *mut Fts5Buffer,
-    mut iVal: i64_0,
+    mut iVal: I64_0,
 ) {
     let __pBuf_ref = { &mut *pBuf };
-    if if (__pBuf_ref.n as u32_0).wrapping_add(9 as ::core::ffi::c_int as u32_0)
-        <= __pBuf_ref.nSpace as u32_0
+    if if (__pBuf_ref.n as U32_0).wrapping_add(9 as ::core::ffi::c_int as U32_0)
+        <= __pBuf_ref.nSpace as U32_0
     {
         0 as ::core::ffi::c_int
     } else {
-        sqlite3Fts5BufferSize(pRc, pBuf, (9 as ::core::ffi::c_int + __pBuf_ref.n) as u32_0)
+        sqlite3Fts5BufferSize(pRc, pBuf, (9 as ::core::ffi::c_int + __pBuf_ref.n) as U32_0)
     } != 0
     {
         return;
     }
     __pBuf_ref.n += sqlite3Fts5PutVarint(
         __pBuf_ref.p.offset(__pBuf_ref.n as isize) as *mut ::core::ffi::c_uchar,
-        iVal as u64_0,
+        iVal as U64_0,
     );
 }
 
@@ -2019,15 +2019,15 @@ unsafe extern "C" fn fts5ConfigSkipWhitespace(
 
 pub const FTS5_OPT_WORK_UNIT: ::core::ffi::c_int = 1000 as ::core::ffi::c_int;
 
-unsafe extern "C" fn sqlite3Fts5Put32(mut aBuf: *mut u8_0, mut iVal: ::core::ffi::c_int) {
+unsafe extern "C" fn sqlite3Fts5Put32(mut aBuf: *mut U8_0, mut iVal: ::core::ffi::c_int) {
     *aBuf.offset(0 as isize) =
-        (iVal >> 24 as ::core::ffi::c_int & 0xff as ::core::ffi::c_int) as u8_0;
+        (iVal >> 24 as ::core::ffi::c_int & 0xff as ::core::ffi::c_int) as U8_0;
     *aBuf.offset(1 as isize) =
-        (iVal >> 16 as ::core::ffi::c_int & 0xff as ::core::ffi::c_int) as u8_0;
+        (iVal >> 16 as ::core::ffi::c_int & 0xff as ::core::ffi::c_int) as U8_0;
     *aBuf.offset(2 as isize) =
-        (iVal >> 8 as ::core::ffi::c_int & 0xff as ::core::ffi::c_int) as u8_0;
+        (iVal >> 8 as ::core::ffi::c_int & 0xff as ::core::ffi::c_int) as U8_0;
     *aBuf.offset(3 as isize) =
-        (iVal >> 0 as ::core::ffi::c_int & 0xff as ::core::ffi::c_int) as u8_0;
+        (iVal >> 0 as ::core::ffi::c_int & 0xff as ::core::ffi::c_int) as U8_0;
 }
 
 pub const FTS5_WORK_UNIT: ::core::ffi::c_int = 64 as ::core::ffi::c_int;
@@ -2081,15 +2081,15 @@ unsafe extern "C" fn fts5CInstIterNext(mut pIter: *mut CInstIter) -> ::core::ffi
     rc
 }
 
-unsafe extern "C" fn sqlite3Fts5Get32(mut aBuf: *const u8_0) -> ::core::ffi::c_int {
-    ((*aBuf.offset(0 as isize) as u32_0) << 24 as ::core::ffi::c_int)
+unsafe extern "C" fn sqlite3Fts5Get32(mut aBuf: *const U8_0) -> ::core::ffi::c_int {
+    ((*aBuf.offset(0 as isize) as U32_0) << 24 as ::core::ffi::c_int)
         .wrapping_add(
-            ((*aBuf.offset(1 as isize) as ::core::ffi::c_int) << 16 as ::core::ffi::c_int) as u32_0,
+            ((*aBuf.offset(1 as isize) as ::core::ffi::c_int) << 16 as ::core::ffi::c_int) as U32_0,
         )
         .wrapping_add(
-            ((*aBuf.offset(2 as isize) as ::core::ffi::c_int) << 8 as ::core::ffi::c_int) as u32_0,
+            ((*aBuf.offset(2 as isize) as ::core::ffi::c_int) << 8 as ::core::ffi::c_int) as U32_0,
         )
-        .wrapping_add(*aBuf.offset(3 as isize) as u32_0) as ::core::ffi::c_int
+        .wrapping_add(*aBuf.offset(3 as isize) as U32_0) as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn fts5ConfigSkipBareword(
@@ -2109,34 +2109,34 @@ unsafe extern "C" fn fts5AsciiDelete(mut p: *mut Fts5Tokenizer) {
     crate::src::src::malloc::sqlite3_free(p as *mut ::core::ffi::c_void);
 }
 
-pub const LARGEST_INT64: i64_0 =
-    0xffffffff as i64_0 | (0x7fffffff as ::core::ffi::c_int as i64_0) << 32 as ::core::ffi::c_int;
+pub const LARGEST_INT64: I64_0 =
+    0xffffffff as I64_0 | (0x7fffffff as ::core::ffi::c_int as I64_0) << 32 as ::core::ffi::c_int;
 
-pub const SMALLEST_INT64: i64_0 = -(1 as ::core::ffi::c_int) as i64_0 - LARGEST_INT64;
+pub const SMALLEST_INT64: I64_0 = -(1 as ::core::ffi::c_int) as I64_0 - LARGEST_INT64;
 
 unsafe extern "C" fn sqlite3Fts5BufferAppendBlob(
     mut pRc: *mut ::core::ffi::c_int,
     mut pBuf: *mut Fts5Buffer,
-    mut nData: u32_0,
-    mut pData: *const u8_0,
+    mut nData: U32_0,
+    mut pData: *const U8_0,
 ) {
     if nData != 0 {
         let __pBuf_ref = { &mut *pBuf };
-        if if (__pBuf_ref.n as u32_0).wrapping_add(nData) <= __pBuf_ref.nSpace as u32_0 {
+        if if (__pBuf_ref.n as U32_0).wrapping_add(nData) <= __pBuf_ref.nSpace as U32_0 {
             0 as ::core::ffi::c_int
         } else {
-            sqlite3Fts5BufferSize(pRc, pBuf, nData.wrapping_add(__pBuf_ref.n as u32_0))
+            sqlite3Fts5BufferSize(pRc, pBuf, nData.wrapping_add(__pBuf_ref.n as U32_0))
         } != 0
         {
             return;
         }
         std::ptr::copy_nonoverlapping(
             pData as *const u8,
-            __pBuf_ref.p.offset(__pBuf_ref.n as isize) as *mut u8_0 as *mut u8,
+            __pBuf_ref.p.offset(__pBuf_ref.n as isize) as *mut U8_0 as *mut u8,
             nData as usize,
         );
         __pBuf_ref.n =
-            (__pBuf_ref.n as u32_0).wrapping_add(nData) as ::core::ffi::c_int as ::core::ffi::c_int;
+            (__pBuf_ref.n as U32_0).wrapping_add(nData) as ::core::ffi::c_int as ::core::ffi::c_int;
     }
 }
 
@@ -2209,18 +2209,18 @@ unsafe extern "C" fn fts5AsciiCreate(
 #[repr(i32)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, strum_macros::FromRepr)]
 pub enum Fts5SqlStmt {
-    STMT_SCAN_ASC = 0,
-    STMT_SCAN_DESC = 1,
-    STMT_LOOKUP = 2,
-    STMT_LOOKUP2 = 3,
-    STMT_INSERT_CONTENT = 4,
-    STMT_REPLACE_CONTENT = 5,
-    STMT_DELETE_CONTENT = 6,
-    STMT_REPLACE_DOCSIZE = 7,
-    STMT_DELETE_DOCSIZE = 8,
-    STMT_LOOKUP_DOCSIZE = 9,
-    STMT_REPLACE_CONFIG = 10,
-    STMT_SCAN = 11,
+    StmtScanAsc = 0,
+    StmtScanDesc = 1,
+    StmtLookup = 2,
+    StmtLookup2 = 3,
+    StmtInsertContent = 4,
+    StmtReplaceContent = 5,
+    StmtDeleteContent = 6,
+    StmtReplaceDocsize = 7,
+    StmtDeleteDocsize = 8,
+    StmtLookupDocsize = 9,
+    StmtReplaceConfig = 10,
+    StmtScan = 11,
 }
 unsafe extern "C" fn fts5ConfigSkipLiteral(
     mut pIn: *const ::core::ffi::c_char,
@@ -2312,8 +2312,8 @@ pub unsafe extern "C" fn sqlite3Fts5BufferAppendString(
     sqlite3Fts5BufferAppendBlob(
         pRc,
         pBuf,
-        (nStr + 1 as ::core::ffi::c_int) as u32_0,
-        zStr as *const u8_0,
+        (nStr + 1 as ::core::ffi::c_int) as U32_0,
+        zStr as *const U8_0,
     );
     (*pBuf).n -= 1;
 }
@@ -2321,7 +2321,7 @@ pub unsafe extern "C" fn sqlite3Fts5BufferAppendString(
 unsafe extern "C" fn fts5StorageGetStmt(
     mut p: *mut Fts5Storage,
     mut eStmt: ::core::ffi::c_int,
-    mut ppStmt: *mut *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+    mut ppStmt: *mut *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
     mut pzErrMsg: *mut *mut ::core::ffi::c_char,
 ) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
@@ -2330,7 +2330,7 @@ unsafe extern "C" fn fts5StorageGetStmt(
         let mut zSql: *mut ::core::ffi::c_char = match Fts5SqlStmt::from_repr(eStmt) {
             None => std::ptr::null_mut(),
             Some(stmt) => match stmt {
-                Fts5SqlStmt::STMT_SCAN_ASC => {
+                Fts5SqlStmt::StmtScanAsc => {
                     let __pC_ref = &*pC;
                     sqlite_printf!(
                         "SELECT %s FROM %s T WHERE T.%Q >= ? AND T.%Q <= ? ORDER BY T.%Q ASC",
@@ -2341,7 +2341,7 @@ unsafe extern "C" fn fts5StorageGetStmt(
                         __pC_ref.zContentRowid,
                     )
                 }
-                Fts5SqlStmt::STMT_SCAN_DESC => {
+                Fts5SqlStmt::StmtScanDesc => {
                     let __pC_ref = &*pC;
                     sqlite_printf!(
                         "SELECT %s FROM %s T WHERE T.%Q <= ? AND T.%Q >= ? ORDER BY T.%Q DESC",
@@ -2352,7 +2352,7 @@ unsafe extern "C" fn fts5StorageGetStmt(
                         __pC_ref.zContentRowid,
                     )
                 }
-                Fts5SqlStmt::STMT_LOOKUP | Fts5SqlStmt::STMT_LOOKUP2 => {
+                Fts5SqlStmt::StmtLookup | Fts5SqlStmt::StmtLookup2 => {
                     let __pC_ref = &*pC;
                     sqlite_printf!(
                         "SELECT %s FROM %s T WHERE T.%Q=?",
@@ -2361,7 +2361,7 @@ unsafe extern "C" fn fts5StorageGetStmt(
                         __pC_ref.zContentRowid,
                     )
                 }
-                Fts5SqlStmt::STMT_INSERT_CONTENT | Fts5SqlStmt::STMT_REPLACE_CONTENT => {
+                Fts5SqlStmt::StmtInsertContent | Fts5SqlStmt::StmtReplaceContent => {
                     let mut zBind: *mut ::core::ffi::c_char =
                         std::ptr::null_mut::<::core::ffi::c_char>();
                     let mut i: ::core::ffi::c_int = 0;
@@ -2408,7 +2408,7 @@ unsafe extern "C" fn fts5StorageGetStmt(
                             i += 1;
                         }
                     }
-                    let zS = if stmt == Fts5SqlStmt::STMT_INSERT_CONTENT {
+                    let zS = if stmt == Fts5SqlStmt::StmtInsertContent {
                         sqlite3Fts5Mprintf(
                             &raw mut rc,
                             sqlite_printf!(
@@ -2432,14 +2432,14 @@ unsafe extern "C" fn fts5StorageGetStmt(
                     crate::src::src::malloc::sqlite3_free(zBind as *mut ::core::ffi::c_void);
                     zS
                 }
-                Fts5SqlStmt::STMT_DELETE_CONTENT => {
+                Fts5SqlStmt::StmtDeleteContent => {
                     sqlite_printf!(
                         "DELETE FROM %Q.'%q_content' WHERE id=?",
                         (*pC).zDb,
                         (*pC).zName
                     )
                 }
-                Fts5SqlStmt::STMT_REPLACE_DOCSIZE => {
+                Fts5SqlStmt::StmtReplaceDocsize => {
                     let __pC_ref = &*pC;
                     sqlite_printf!(
                         "REPLACE INTO %Q.'%q_docsize' VALUES(?,?%s)",
@@ -2452,14 +2452,14 @@ unsafe extern "C" fn fts5StorageGetStmt(
                         },
                     )
                 }
-                Fts5SqlStmt::STMT_DELETE_DOCSIZE => {
+                Fts5SqlStmt::StmtDeleteDocsize => {
                     sqlite_printf!(
                         "DELETE FROM %Q.'%q_docsize' WHERE id=?",
                         (*pC).zDb,
                         (*pC).zName
                     )
                 }
-                Fts5SqlStmt::STMT_LOOKUP_DOCSIZE => {
+                Fts5SqlStmt::StmtLookupDocsize => {
                     let __pC_ref = &*pC;
                     sqlite_printf!(
                         "SELECT sz%s FROM %Q.'%q_docsize' WHERE id=?",
@@ -2472,14 +2472,14 @@ unsafe extern "C" fn fts5StorageGetStmt(
                         __pC_ref.zName,
                     )
                 }
-                Fts5SqlStmt::STMT_REPLACE_CONFIG => {
+                Fts5SqlStmt::StmtReplaceConfig => {
                     sqlite_printf!(
                         "REPLACE INTO %Q.'%q_config' VALUES(?,?)",
                         (*pC).zDb,
                         (*pC).zName
                     )
                 }
-                Fts5SqlStmt::STMT_SCAN => {
+                Fts5SqlStmt::StmtScan => {
                     sqlite_printf!(
                         "SELECT %s FROM %s AS T",
                         (*pC).zContentExprlist,
@@ -2493,7 +2493,7 @@ unsafe extern "C" fn fts5StorageGetStmt(
         } else {
             let mut f: ::core::ffi::c_int =
                 crate::src::headers::sqlite3_h::SQLITE_PREPARE_PERSISTENT;
-            if eStmt > Fts5SqlStmt::STMT_LOOKUP2 as ::core::ffi::c_int {
+            if eStmt > Fts5SqlStmt::StmtLookup2 as ::core::ffi::c_int {
                 f |= crate::src::headers::sqlite3_h::SQLITE_PREPARE_NO_VTAB;
             }
             let __p_ref = { &mut *p };
@@ -2503,9 +2503,9 @@ unsafe extern "C" fn fts5StorageGetStmt(
                 zSql,
                 -(1 as ::core::ffi::c_int),
                 f as ::core::ffi::c_uint,
-                (&raw mut __p_ref.aStmt as *mut *mut crate::src::headers::sqlite3_h::sqlite3_stmt)
+                (&raw mut __p_ref.aStmt as *mut *mut crate::src::headers::sqlite3_h::Sqlite3Stmt)
                     .offset(eStmt as isize)
-                    as *mut *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    as *mut *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                 std::ptr::null_mut::<*const ::core::ffi::c_char>(),
             );
             (*__p_ref.pConfig).bLock -= 1;
@@ -2515,8 +2515,8 @@ unsafe extern "C" fn fts5StorageGetStmt(
                     crate::sqlite_printf!("%s", crate::src::src::main::sqlite3_errmsg((*pC).db),);
             }
             if rc == crate::src::headers::sqlite3_h::SQLITE_ERROR
-                && eStmt > Fts5SqlStmt::STMT_LOOKUP2 as ::core::ffi::c_int
-                && eStmt < Fts5SqlStmt::STMT_SCAN as ::core::ffi::c_int
+                && eStmt > Fts5SqlStmt::StmtLookup2 as ::core::ffi::c_int
+                && eStmt < Fts5SqlStmt::StmtScan as ::core::ffi::c_int
             {
                 rc = crate::src::headers::sqlite3_h::SQLITE_CORRUPT;
             }
@@ -2572,7 +2572,7 @@ unsafe extern "C" fn sqlite3Fts5HashNew(
     if pNew.is_null() {
         rc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
     } else {
-        let mut nByte: crate::src::headers::sqlite3_h::sqlite3_int64 = 0;
+        let mut nByte: crate::src::headers::sqlite3_h::Sqlite3Int64 = 0;
         std::ptr::write_bytes(
             pNew as *mut ::core::ffi::c_void as *mut u8,
             0,
@@ -2584,9 +2584,9 @@ unsafe extern "C" fn sqlite3Fts5HashNew(
         __pNew_ref.nSlot = 1024 as ::core::ffi::c_int;
         nByte = (std::mem::size_of::<*mut Fts5HashEntry>() as usize)
             .wrapping_mul(__pNew_ref.nSlot as usize)
-            as crate::src::headers::sqlite3_h::sqlite3_int64;
+            as crate::src::headers::sqlite3_h::Sqlite3Int64;
         __pNew_ref.aSlot = crate::src::src::malloc::sqlite3_malloc64(
-            nByte as crate::src::headers::sqlite3_h::sqlite3_uint64,
+            nByte as crate::src::headers::sqlite3_h::Sqlite3Uint64,
         ) as *mut *mut Fts5HashEntry;
         if __pNew_ref.aSlot.is_null() {
             crate::src::src::malloc::sqlite3_free(pNew as *mut ::core::ffi::c_void);
@@ -2606,7 +2606,7 @@ unsafe extern "C" fn sqlite3Fts5HashNew(
 pub const SMALLEST_INT32: ::core::ffi::c_int = -(1 as ::core::ffi::c_int) - LARGEST_INT32;
 
 pub const FTS5_LOCALE_HDR_SIZE: ::core::ffi::c_int =
-    std::mem::size_of::<[u32_0; 4]>() as ::core::ffi::c_int;
+    std::mem::size_of::<[U32_0; 4]>() as ::core::ffi::c_int;
 
 pub const FTS5_VOCAB_TERM_EQ: ::core::ffi::c_int = 0x100 as ::core::ffi::c_int;
 
@@ -2643,109 +2643,109 @@ pub const FTS5_VOCAB_COLUSED_MASK: ::core::ffi::c_int = 0xff as ::core::ffi::c_i
 
 unsafe extern "C" fn sqlite3Fts5GetVarint(
     mut p: *const ::core::ffi::c_uchar,
-    mut v: *mut u64_0,
-) -> u8_0 {
-    let mut a: u32_0 = 0;
-    let mut b: u32_0 = 0;
-    let mut s: u32_0 = 0;
-    a = *p as u32_0;
-    if a & 0x80 as u32_0 == 0 {
-        *v = a as u64_0;
-        return 1 as u8_0;
+    mut v: *mut U64_0,
+) -> U8_0 {
+    let mut a: U32_0 = 0;
+    let mut b: U32_0 = 0;
+    let mut s: U32_0 = 0;
+    a = *p as U32_0;
+    if a & 0x80 as U32_0 == 0 {
+        *v = a as U64_0;
+        return 1 as U8_0;
     }
     p = p.offset(1);
-    b = *p as u32_0;
-    if b & 0x80 as u32_0 == 0 {
-        a &= 0x7f as u32_0;
+    b = *p as U32_0;
+    if b & 0x80 as U32_0 == 0 {
+        a &= 0x7f as U32_0;
         a <<= 7 as ::core::ffi::c_int;
         a |= b;
-        *v = a as u64_0;
-        return 2 as u8_0;
+        *v = a as U64_0;
+        return 2 as U8_0;
     }
     p = p.offset(1);
     a <<= 14 as ::core::ffi::c_int;
-    a |= *p as u32_0;
-    if a & 0x80 as u32_0 == 0 {
-        a &= SLOT_2_0 as u32_0;
-        b &= 0x7f as u32_0;
+    a |= *p as U32_0;
+    if a & 0x80 as U32_0 == 0 {
+        a &= SLOT_2_0 as U32_0;
+        b &= 0x7f as U32_0;
         b <<= 7 as ::core::ffi::c_int;
         a |= b;
-        *v = a as u64_0;
-        return 3 as u8_0;
+        *v = a as U64_0;
+        return 3 as U8_0;
     }
-    a &= SLOT_2_0 as u32_0;
+    a &= SLOT_2_0 as U32_0;
     p = p.offset(1);
     b <<= 14 as ::core::ffi::c_int;
-    b |= *p as u32_0;
-    if b & 0x80 as u32_0 == 0 {
-        b &= SLOT_2_0 as u32_0;
+    b |= *p as U32_0;
+    if b & 0x80 as U32_0 == 0 {
+        b &= SLOT_2_0 as U32_0;
         a <<= 7 as ::core::ffi::c_int;
         a |= b;
-        *v = a as u64_0;
-        return 4 as u8_0;
+        *v = a as U64_0;
+        return 4 as U8_0;
     }
-    b &= SLOT_2_0 as u32_0;
+    b &= SLOT_2_0 as U32_0;
     s = a;
     p = p.offset(1);
     a <<= 14 as ::core::ffi::c_int;
-    a |= *p as u32_0;
-    if a & 0x80 as u32_0 == 0 {
+    a |= *p as U32_0;
+    if a & 0x80 as U32_0 == 0 {
         b <<= 7 as ::core::ffi::c_int;
         a |= b;
         s >>= 18 as ::core::ffi::c_int;
-        *v = (s as u64_0) << 32 as ::core::ffi::c_int | a as u64_0;
-        return 5 as u8_0;
+        *v = (s as U64_0) << 32 as ::core::ffi::c_int | a as U64_0;
+        return 5 as U8_0;
     }
     s <<= 7 as ::core::ffi::c_int;
     s |= b;
     p = p.offset(1);
     b <<= 14 as ::core::ffi::c_int;
-    b |= *p as u32_0;
-    if b & 0x80 as u32_0 == 0 {
-        a &= SLOT_2_0 as u32_0;
+    b |= *p as U32_0;
+    if b & 0x80 as U32_0 == 0 {
+        a &= SLOT_2_0 as U32_0;
         a <<= 7 as ::core::ffi::c_int;
         a |= b;
         s >>= 18 as ::core::ffi::c_int;
-        *v = (s as u64_0) << 32 as ::core::ffi::c_int | a as u64_0;
-        return 6 as u8_0;
+        *v = (s as U64_0) << 32 as ::core::ffi::c_int | a as U64_0;
+        return 6 as U8_0;
     }
     p = p.offset(1);
     a <<= 14 as ::core::ffi::c_int;
-    a |= *p as u32_0;
-    if a & 0x80 as u32_0 == 0 {
+    a |= *p as U32_0;
+    if a & 0x80 as U32_0 == 0 {
         a &= SLOT_4_2_0;
-        b &= SLOT_2_0 as u32_0;
+        b &= SLOT_2_0 as U32_0;
         b <<= 7 as ::core::ffi::c_int;
         a |= b;
         s >>= 11 as ::core::ffi::c_int;
-        *v = (s as u64_0) << 32 as ::core::ffi::c_int | a as u64_0;
-        return 7 as u8_0;
+        *v = (s as U64_0) << 32 as ::core::ffi::c_int | a as U64_0;
+        return 7 as U8_0;
     }
-    a &= SLOT_2_0 as u32_0;
+    a &= SLOT_2_0 as U32_0;
     p = p.offset(1);
     b <<= 14 as ::core::ffi::c_int;
-    b |= *p as u32_0;
-    if b & 0x80 as u32_0 == 0 {
+    b |= *p as U32_0;
+    if b & 0x80 as U32_0 == 0 {
         b &= SLOT_4_2_0;
         a <<= 7 as ::core::ffi::c_int;
         a |= b;
         s >>= 4 as ::core::ffi::c_int;
-        *v = (s as u64_0) << 32 as ::core::ffi::c_int | a as u64_0;
-        return 8 as u8_0;
+        *v = (s as U64_0) << 32 as ::core::ffi::c_int | a as U64_0;
+        return 8 as U8_0;
     }
     p = p.offset(1);
     a <<= 15 as ::core::ffi::c_int;
-    a |= *p as u32_0;
-    b &= SLOT_2_0 as u32_0;
+    a |= *p as U32_0;
+    b &= SLOT_2_0 as U32_0;
     b <<= 8 as ::core::ffi::c_int;
     a |= b;
     s <<= 4 as ::core::ffi::c_int;
-    b = *p.offset(-(4 as ::core::ffi::c_int) as isize) as u32_0;
-    b &= 0x7f as u32_0;
+    b = *p.offset(-(4 as ::core::ffi::c_int) as isize) as U32_0;
+    b &= 0x7f as U32_0;
     b >>= 3 as ::core::ffi::c_int;
     s |= b;
-    *v = (s as u64_0) << 32 as ::core::ffi::c_int | a as u64_0;
-    9 as u8_0
+    *v = (s as U64_0) << 32 as ::core::ffi::c_int | a as U64_0;
+    9 as U8_0
 }
 
 pub const FTS5_MAX_PREFIX_INDEXES: ::core::ffi::c_int = 31 as ::core::ffi::c_int;
@@ -2872,9 +2872,9 @@ unsafe extern "C" fn fts5AsciiTokenize(
                 crate::src::src::malloc::sqlite3_free(pFold as *mut ::core::ffi::c_void);
             }
             pFold = crate::src::src::malloc::sqlite3_malloc64(
-                (nByte as crate::src::headers::sqlite3_h::sqlite3_int64
-                    * 2 as crate::src::headers::sqlite3_h::sqlite3_int64)
-                    as crate::src::headers::sqlite3_h::sqlite3_uint64,
+                (nByte as crate::src::headers::sqlite3_h::Sqlite3Int64
+                    * 2 as crate::src::headers::sqlite3_h::Sqlite3Int64)
+                    as crate::src::headers::sqlite3_h::Sqlite3Uint64,
             ) as *mut ::core::ffi::c_char;
             if pFold.is_null() {
                 rc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
@@ -3883,9 +3883,9 @@ unsafe extern "C" fn sqlite3Fts5HashClear(mut pHash: *mut Fts5Hash) {
     std::ptr::write_bytes(
         __pHash_ref.aSlot as *mut ::core::ffi::c_void as *mut u8,
         0,
-        (__pHash_ref.nSlot as crate::__stddef_size_t_h::size_t)
+        (__pHash_ref.nSlot as crate::__stddef_size_t_h::SizeT)
             .wrapping_mul(
-                std::mem::size_of::<*mut Fts5HashEntry>() as crate::__stddef_size_t_h::size_t
+                std::mem::size_of::<*mut Fts5HashEntry>() as crate::__stddef_size_t_h::SizeT
             ),
     );
     __pHash_ref.nEntry = 0 as ::core::ffi::c_int;
@@ -3928,7 +3928,7 @@ unsafe extern "C" fn sqlite3Fts5BufferFree(mut pBuf: *mut Fts5Buffer) {
 
 unsafe extern "C" fn fts5HashKey(
     mut nSlot: ::core::ffi::c_int,
-    mut p: *const u8_0,
+    mut p: *const U8_0,
     mut n: ::core::ffi::c_int,
 ) -> ::core::ffi::c_uint {
     let mut i: ::core::ffi::c_int = 0;
@@ -4073,8 +4073,8 @@ unsafe extern "C" fn fts5HighlightCb(
 
 unsafe extern "C" fn fts5HashKey2(
     mut nSlot: ::core::ffi::c_int,
-    mut b: u8_0,
-    mut p: *const u8_0,
+    mut b: U8_0,
+    mut p: *const U8_0,
     mut n: ::core::ffi::c_int,
 ) -> ::core::ffi::c_uint {
     let mut i: ::core::ffi::c_int = 0;
@@ -4094,10 +4094,10 @@ unsafe extern "C" fn sqlite3Fts5BufferSet(
     mut pRc: *mut ::core::ffi::c_int,
     mut pBuf: *mut Fts5Buffer,
     mut nData: ::core::ffi::c_int,
-    mut pData: *const u8_0,
+    mut pData: *const U8_0,
 ) {
     (*pBuf).n = 0 as ::core::ffi::c_int;
-    sqlite3Fts5BufferAppendBlob(pRc, pBuf, nData as u32_0, pData);
+    sqlite3Fts5BufferAppendBlob(pRc, pBuf, nData as U32_0, pData);
 }
 
 unsafe extern "C" fn fts5HashResize(mut pHash: *mut Fts5Hash) -> ::core::ffi::c_int {
@@ -4108,7 +4108,7 @@ unsafe extern "C" fn fts5HashResize(mut pHash: *mut Fts5Hash) -> ::core::ffi::c_
     let mut apOld: *mut *mut Fts5HashEntry = __pHash_ref.aSlot;
     apNew = crate::src::src::malloc::sqlite3_malloc64(
         (nNew as usize).wrapping_mul(std::mem::size_of::<*mut Fts5HashEntry>() as usize)
-            as crate::src::headers::sqlite3_h::sqlite3_uint64,
+            as crate::src::headers::sqlite3_h::Sqlite3Uint64,
     ) as *mut *mut Fts5HashEntry;
     if apNew.is_null() {
         return crate::src::headers::sqlite3_h::SQLITE_NOMEM;
@@ -4116,9 +4116,9 @@ unsafe extern "C" fn fts5HashResize(mut pHash: *mut Fts5Hash) -> ::core::ffi::c_
     std::ptr::write_bytes(
         apNew as *mut ::core::ffi::c_void as *mut u8,
         0,
-        (nNew as crate::__stddef_size_t_h::size_t)
+        (nNew as crate::__stddef_size_t_h::SizeT)
             .wrapping_mul(
-                std::mem::size_of::<*mut Fts5HashEntry>() as crate::__stddef_size_t_h::size_t
+                std::mem::size_of::<*mut Fts5HashEntry>() as crate::__stddef_size_t_h::SizeT
             ) as usize,
     );
     i = 0 as ::core::ffi::c_int;
@@ -4131,7 +4131,7 @@ unsafe extern "C" fn fts5HashResize(mut pHash: *mut Fts5Hash) -> ::core::ffi::c_
             *fresh48 = __p_ref.pHashNext;
             iHash = fts5HashKey(
                 nNew,
-                p.offset(1 as isize) as *mut Fts5HashEntry as *mut ::core::ffi::c_char as *mut u8_0,
+                p.offset(1 as isize) as *mut Fts5HashEntry as *mut ::core::ffi::c_char as *mut U8_0,
                 __p_ref.nKey,
             );
             __p_ref.pHashNext = *apNew.offset(iHash as isize);
@@ -4147,65 +4147,65 @@ unsafe extern "C" fn fts5HashResize(mut pHash: *mut Fts5Hash) -> ::core::ffi::c_
 }
 
 unsafe extern "C" fn sqlite3Fts5PoslistNext64(
-    mut a: *const u8_0,
+    mut a: *const U8_0,
     mut n: ::core::ffi::c_int,
     mut pi: *mut ::core::ffi::c_int,
-    mut piOff: *mut i64_0,
+    mut piOff: *mut I64_0,
 ) -> ::core::ffi::c_int {
     let mut i: ::core::ffi::c_int = *pi;
     if i >= n {
-        *piOff = -(1 as ::core::ffi::c_int) as i64_0;
+        *piOff = -(1 as ::core::ffi::c_int) as I64_0;
         return 1 as ::core::ffi::c_int;
     } else {
-        let mut iOff: i64_0 = *piOff;
-        let mut iVal: u32_0 = 0;
+        let mut iOff: I64_0 = *piOff;
+        let mut iVal: U32_0 = 0;
         let fresh7 = i;
         i += 1;
-        iVal = *a.offset(fresh7 as isize) as u32_0;
-        if iVal & 0x80 as u32_0 != 0 {
+        iVal = *a.offset(fresh7 as isize) as U32_0;
+        if iVal & 0x80 as U32_0 != 0 {
             i -= 1;
             i += sqlite3Fts5GetVarint32(
                 a.offset(i as isize) as *const ::core::ffi::c_uchar,
                 &raw mut iVal,
             );
         }
-        if iVal <= 1 as u32_0 {
-            if iVal == 0 as u32_0 {
+        if iVal <= 1 as U32_0 {
+            if iVal == 0 as U32_0 {
                 *pi = i;
                 return 0 as ::core::ffi::c_int;
             }
             let fresh8 = i;
             i += 1;
-            iVal = *a.offset(fresh8 as isize) as u32_0;
-            if iVal & 0x80 as u32_0 != 0 {
+            iVal = *a.offset(fresh8 as isize) as U32_0;
+            if iVal & 0x80 as U32_0 != 0 {
                 i -= 1;
                 i += sqlite3Fts5GetVarint32(
                     a.offset(i as isize) as *const ::core::ffi::c_uchar,
                     &raw mut iVal,
                 );
             }
-            iOff = (iVal as i64_0) << 32 as ::core::ffi::c_int;
+            iOff = (iVal as I64_0) << 32 as ::core::ffi::c_int;
             let fresh9 = i;
             i += 1;
-            iVal = *a.offset(fresh9 as isize) as u32_0;
-            if iVal & 0x80 as u32_0 != 0 {
+            iVal = *a.offset(fresh9 as isize) as U32_0;
+            if iVal & 0x80 as U32_0 != 0 {
                 i -= 1;
                 i += sqlite3Fts5GetVarint32(
                     a.offset(i as isize) as *const ::core::ffi::c_uchar,
                     &raw mut iVal,
                 );
             }
-            if iVal < 2 as u32_0 {
-                *piOff = -(1 as ::core::ffi::c_int) as i64_0;
+            if iVal < 2 as U32_0 {
+                *piOff = -(1 as ::core::ffi::c_int) as I64_0;
                 return 1 as ::core::ffi::c_int;
             }
             *piOff = iOff
-                + (iVal.wrapping_sub(2 as u32_0) & 0x7fffffff as ::core::ffi::c_int as u32_0)
-                    as i64_0;
+                + (iVal.wrapping_sub(2 as U32_0) & 0x7fffffff as ::core::ffi::c_int as U32_0)
+                    as I64_0;
         } else {
             *piOff = (iOff
-                & (0x7fffffff as ::core::ffi::c_int as i64_0) << 32 as ::core::ffi::c_int)
-                + (iOff + iVal.wrapping_sub(2 as u32_0) as i64_0 & 0x7fffffff as i64_0);
+                & (0x7fffffff as ::core::ffi::c_int as I64_0) << 32 as ::core::ffi::c_int)
+                + (iOff + iVal.wrapping_sub(2 as U32_0) as I64_0 & 0x7fffffff as I64_0);
         }
         *pi = i;
         return 0 as ::core::ffi::c_int;
@@ -4239,7 +4239,7 @@ unsafe extern "C" fn fts5VocabInitVtab(
         *pzErr = crate::sqlite_printf!("wrong number of vtable arguments",);
         rc = crate::src::headers::sqlite3_h::SQLITE_ERROR;
     } else {
-        let mut nByte: i64_0 = 0;
+        let mut nByte: I64_0 = 0;
         let mut zDb: *const ::core::ffi::c_char = if bDb != 0 {
             *argv.offset(3 as isize)
         } else {
@@ -4255,8 +4255,8 @@ unsafe extern "C" fn fts5VocabInitVtab(
         } else {
             *argv.offset(4 as isize)
         };
-        let mut nDb: i64_0 = (fts5_cstr_len(zDb) as i64_0).wrapping_add(1 as i64_0);
-        let mut nTab: i64_0 = (fts5_cstr_len(zTab) as i64_0).wrapping_add(1 as i64_0);
+        let mut nDb: I64_0 = (fts5_cstr_len(zDb) as I64_0).wrapping_add(1 as I64_0);
+        let mut nTab: I64_0 = (fts5_cstr_len(zTab) as I64_0).wrapping_add(1 as I64_0);
         let mut eType: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
         rc = fts5VocabTableType(zType, pzErr, &raw mut eType);
         if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
@@ -4264,10 +4264,10 @@ unsafe extern "C" fn fts5VocabInitVtab(
         }
         nByte = (std::mem::size_of::<Fts5VocabTable>() as ::core::ffi::c_ulonglong)
             .wrapping_add(nDb as ::core::ffi::c_ulonglong)
-            .wrapping_add(nTab as ::core::ffi::c_ulonglong) as i64_0;
+            .wrapping_add(nTab as ::core::ffi::c_ulonglong) as I64_0;
         pRet = sqlite3Fts5MallocZero(
             &raw mut rc,
-            nByte as crate::src::headers::sqlite3_h::sqlite3_int64,
+            nByte as crate::src::headers::sqlite3_h::Sqlite3Int64,
         ) as *mut Fts5VocabTable;
         if !pRet.is_null() {
             let __pRet_ref = { &mut *pRet };
@@ -4394,21 +4394,21 @@ unsafe extern "C" fn fts5HashAddPoslistSize(
 ) -> ::core::ffi::c_int {
     let mut nRet: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     if (*p).iSzPoslist != 0 {
-        let mut pPtr: *mut u8_0 = if !p2.is_null() {
-            p2 as *mut u8_0
+        let mut pPtr: *mut U8_0 = if !p2.is_null() {
+            p2 as *mut U8_0
         } else {
-            p as *mut u8_0
+            p as *mut U8_0
         };
         let mut nData: ::core::ffi::c_int = (*p).nData;
         if (*pHash).eDetail == FTS5_DETAIL_NONE {
             if (*p).bDel != 0 {
                 let fresh21 = nData;
                 nData += 1;
-                *pPtr.offset(fresh21 as isize) = 0 as u8_0;
+                *pPtr.offset(fresh21 as isize) = 0 as U8_0;
                 if (*p).bContent != 0 {
                     let fresh22 = nData;
                     nData += 1;
-                    *pPtr.offset(fresh22 as isize) = 0 as u8_0;
+                    *pPtr.offset(fresh22 as isize) = 0 as U8_0;
                 }
             }
         } else {
@@ -4416,19 +4416,19 @@ unsafe extern "C" fn fts5HashAddPoslistSize(
             let mut nPos: ::core::ffi::c_int =
                 nSz * 2 as ::core::ffi::c_int + (*p).bDel as ::core::ffi::c_int;
             if nPos <= 127 as ::core::ffi::c_int {
-                *pPtr.offset((*p).iSzPoslist as isize) = nPos as u8_0;
+                *pPtr.offset((*p).iSzPoslist as isize) = nPos as U8_0;
             } else {
-                let mut nByte: ::core::ffi::c_int = sqlite3Fts5GetVarintLen(nPos as u32_0);
+                let mut nByte: ::core::ffi::c_int = sqlite3Fts5GetVarintLen(nPos as U32_0);
                 let __p_ref = { &*p };
                 std::ptr::copy(
                     pPtr.offset((__p_ref.iSzPoslist + 1 as ::core::ffi::c_int) as isize)
-                        as *mut u8_0 as *const u8,
-                    pPtr.offset((__p_ref.iSzPoslist + nByte) as isize) as *mut u8_0 as *mut u8,
+                        as *mut U8_0 as *const u8,
+                    pPtr.offset((__p_ref.iSzPoslist + nByte) as isize) as *mut U8_0 as *mut u8,
                     nSz as usize,
                 );
                 sqlite3Fts5PutVarint(
                     pPtr.offset(__p_ref.iSzPoslist as isize) as *mut ::core::ffi::c_uchar,
-                    nPos as u64_0,
+                    nPos as U64_0,
                 );
                 nData += nByte - 1 as ::core::ffi::c_int;
             }
@@ -4437,8 +4437,8 @@ unsafe extern "C" fn fts5HashAddPoslistSize(
         if p2.is_null() {
             let __p_ref = { &mut *p };
             __p_ref.iSzPoslist = 0 as ::core::ffi::c_int;
-            __p_ref.bDel = 0 as u8_0;
-            __p_ref.bContent = 0 as u8_0;
+            __p_ref.bDel = 0 as U8_0;
+            __p_ref.bContent = 0 as U8_0;
             __p_ref.nData = nData;
         }
     }
@@ -4611,13 +4611,13 @@ unsafe extern "C" fn sqlite3Fts5PoslistReaderNext(
         &raw mut __pIter_ref.iPos,
     ) != 0
     {
-        __pIter_ref.bEof = 1 as u8_0;
+        __pIter_ref.bEof = 1 as U8_0;
     }
     __pIter_ref.bEof as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn sqlite3Fts5PoslistReaderInit(
-    mut a: *const u8_0,
+    mut a: *const U8_0,
     mut n: ::core::ffi::c_int,
     mut pIter: *mut Fts5PoslistReader,
 ) -> ::core::ffi::c_int {
@@ -4770,7 +4770,7 @@ unsafe extern "C" fn fts5ConfigParseSpecial(
         if (*pConfig).aPrefix.is_null() {
             (*pConfig).aPrefix = sqlite3Fts5MallocZero(
                 &raw mut rc,
-                nByte as crate::src::headers::sqlite3_h::sqlite3_int64,
+                nByte as crate::src::headers::sqlite3_h::Sqlite3Int64,
             ) as *mut ::core::ffi::c_int;
             if rc != 0 {
                 return rc;
@@ -4835,15 +4835,15 @@ unsafe extern "C" fn fts5ConfigParseSpecial(
     ) == 0 as ::core::ffi::c_int
     {
         let mut p_0: *const ::core::ffi::c_char = zArg;
-        let mut nArg: crate::src::headers::sqlite3_h::sqlite3_int64 = (fts5_cstr_len(zArg)
-            as crate::src::headers::sqlite3_h::sqlite3_int64)
-            .wrapping_add(1 as crate::src::headers::sqlite3_h::sqlite3_int64);
+        let mut nArg: crate::src::headers::sqlite3_h::Sqlite3Int64 = (fts5_cstr_len(zArg)
+            as crate::src::headers::sqlite3_h::Sqlite3Int64)
+            .wrapping_add(1 as crate::src::headers::sqlite3_h::Sqlite3Int64);
         let mut azArg: *mut *mut ::core::ffi::c_char = sqlite3Fts5MallocZero(
             &raw mut rc,
             ((std::mem::size_of::<*mut ::core::ffi::c_char>() as usize).wrapping_add(2 as usize)
                 as ::core::ffi::c_ulonglong)
                 .wrapping_mul(nArg as ::core::ffi::c_ulonglong)
-                as crate::src::headers::sqlite3_h::sqlite3_int64,
+                as crate::src::headers::sqlite3_h::Sqlite3Int64,
         ) as *mut *mut ::core::ffi::c_char;
         if !azArg.is_null() {
             let mut pSpace: *mut ::core::ffi::c_char = azArg.offset(nArg as isize)
@@ -4853,7 +4853,7 @@ unsafe extern "C" fn fts5ConfigParseSpecial(
                 *pzErr = crate::sqlite_printf!("multiple tokenize=... directives",);
                 rc = crate::src::headers::sqlite3_h::SQLITE_ERROR;
             } else {
-                nArg = 0 as crate::src::headers::sqlite3_h::sqlite3_int64;
+                nArg = 0 as crate::src::headers::sqlite3_h::Sqlite3Int64;
                 while !p_0.is_null() && *p_0 as ::core::ffi::c_int != 0 {
                     let mut p2: *const ::core::ffi::c_char = fts5ConfigSkipWhitespace(p_0);
                     if *p2 as ::core::ffi::c_int == '\'' as i32 {
@@ -5060,26 +5060,26 @@ unsafe extern "C" fn fts5ConfigParseSpecial(
 
 unsafe extern "C" fn sqlite3Fts5PoslistSafeAppend(
     mut pBuf: *mut Fts5Buffer,
-    mut piPrev: *mut i64_0,
-    mut iPos: i64_0,
+    mut piPrev: *mut I64_0,
+    mut iPos: I64_0,
 ) {
     if iPos >= *piPrev {
-        static mut colmask: i64_0 =
-            (0x7fffffff as ::core::ffi::c_int as i64_0) << 32 as ::core::ffi::c_int;
+        static mut colmask: I64_0 =
+            (0x7fffffff as ::core::ffi::c_int as I64_0) << 32 as ::core::ffi::c_int;
         let __pBuf_ref = { &mut *pBuf };
         if iPos & colmask != *piPrev & colmask {
             let fresh10 = __pBuf_ref.n;
             __pBuf_ref.n += 1;
-            *__pBuf_ref.p.offset(fresh10 as isize) = 1 as u8_0;
+            *__pBuf_ref.p.offset(fresh10 as isize) = 1 as U8_0;
             __pBuf_ref.n += sqlite3Fts5PutVarint(
                 __pBuf_ref.p.offset(__pBuf_ref.n as isize) as *mut ::core::ffi::c_uchar,
-                (iPos >> 32 as ::core::ffi::c_int) as u64_0,
+                (iPos >> 32 as ::core::ffi::c_int) as U64_0,
             );
             *piPrev = iPos & colmask;
         }
         __pBuf_ref.n += sqlite3Fts5PutVarint(
             __pBuf_ref.p.offset(__pBuf_ref.n as isize) as *mut ::core::ffi::c_uchar,
-            (iPos - *piPrev + 2 as i64_0) as u64_0,
+            (iPos - *piPrev + 2 as I64_0) as U64_0,
         );
         *piPrev = iPos;
     }
@@ -5100,7 +5100,7 @@ pub const FTS5_BI_ORDER_RANK: ::core::ffi::c_int = 0x20 as ::core::ffi::c_int;
 
 unsafe extern "C" fn sqlite3Fts5HashWrite(
     mut pHash: *mut Fts5Hash,
-    mut iRowid: i64_0,
+    mut iRowid: I64_0,
     mut iCol: ::core::ffi::c_int,
     mut iPos: ::core::ffi::c_int,
     mut bByte: ::core::ffi::c_char,
@@ -5109,15 +5109,15 @@ unsafe extern "C" fn sqlite3Fts5HashWrite(
 ) -> ::core::ffi::c_int {
     let mut iHash: ::core::ffi::c_uint = 0;
     let mut p: *mut Fts5HashEntry = std::ptr::null_mut::<Fts5HashEntry>();
-    let mut pPtr: *mut u8_0 = std::ptr::null_mut::<u8_0>();
+    let mut pPtr: *mut U8_0 = std::ptr::null_mut::<U8_0>();
     let mut nIncr: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut bNew: ::core::ffi::c_int = 0;
     let __pHash_ref = { &mut *pHash };
     bNew = (__pHash_ref.eDetail == FTS5_DETAIL_FULL) as ::core::ffi::c_int;
     iHash = fts5HashKey2(
         __pHash_ref.nSlot,
-        bByte as u8_0,
-        pToken as *const u8_0,
+        bByte as U8_0,
+        pToken as *const U8_0,
         nToken,
     );
     p = *__pHash_ref.aSlot.offset(iHash as isize);
@@ -5138,14 +5138,14 @@ unsafe extern "C" fn sqlite3Fts5HashWrite(
     }
     if p.is_null() {
         let mut zKey_0: *mut ::core::ffi::c_char = std::ptr::null_mut::<::core::ffi::c_char>();
-        let mut nByte: crate::src::headers::sqlite3_h::sqlite3_int64 =
+        let mut nByte: crate::src::headers::sqlite3_h::Sqlite3Int64 =
             (std::mem::size_of::<Fts5HashEntry>() as usize)
                 .wrapping_add((nToken + 1 as ::core::ffi::c_int) as usize)
                 .wrapping_add(1 as usize)
                 .wrapping_add(64 as usize)
-                as crate::src::headers::sqlite3_h::sqlite3_int64;
-        if nByte < 128 as crate::src::headers::sqlite3_h::sqlite3_int64 {
-            nByte = 128 as crate::src::headers::sqlite3_h::sqlite3_int64;
+                as crate::src::headers::sqlite3_h::Sqlite3Int64;
+        if nByte < 128 as crate::src::headers::sqlite3_h::Sqlite3Int64 {
+            nByte = 128 as crate::src::headers::sqlite3_h::Sqlite3Int64;
         }
         if __pHash_ref.nEntry * 2 as ::core::ffi::c_int >= __pHash_ref.nSlot {
             let mut rc: ::core::ffi::c_int = fts5HashResize(pHash);
@@ -5154,13 +5154,13 @@ unsafe extern "C" fn sqlite3Fts5HashWrite(
             }
             iHash = fts5HashKey2(
                 __pHash_ref.nSlot,
-                bByte as u8_0,
-                pToken as *const u8_0,
+                bByte as U8_0,
+                pToken as *const U8_0,
                 nToken,
             );
         }
         p = crate::src::src::malloc::sqlite3_malloc64(
-            nByte as crate::src::headers::sqlite3_h::sqlite3_uint64,
+            nByte as crate::src::headers::sqlite3_h::Sqlite3Uint64,
         ) as *mut Fts5HashEntry;
         if p.is_null() {
             return crate::src::headers::sqlite3_h::SQLITE_NOMEM;
@@ -5189,8 +5189,8 @@ unsafe extern "C" fn sqlite3Fts5HashWrite(
         *fresh46 = p;
         __pHash_ref.nEntry += 1;
         (*p).nData += sqlite3Fts5PutVarint(
-            (p as *mut u8_0).offset((*p).nData as isize) as *mut ::core::ffi::c_uchar,
-            iRowid as u64_0,
+            (p as *mut U8_0).offset((*p).nData as isize) as *mut ::core::ffi::c_uchar,
+            iRowid as U64_0,
         );
         (*p).iRowid = iRowid;
         (*p).iSzPoslist = (*p).nData;
@@ -5200,7 +5200,7 @@ unsafe extern "C" fn sqlite3Fts5HashWrite(
                 0 as ::core::ffi::c_int
             } else {
                 -(1 as ::core::ffi::c_int)
-            }) as i16_0;
+            }) as I16_0;
         }
     } else {
         if (*p).nAlloc - (*p).nData
@@ -5210,14 +5210,14 @@ unsafe extern "C" fn sqlite3Fts5HashWrite(
                 + 3 as ::core::ffi::c_int
                 + 5 as ::core::ffi::c_int
         {
-            let mut nNew: crate::src::headers::sqlite3_h::sqlite3_int64 = ((*p).nAlloc
+            let mut nNew: crate::src::headers::sqlite3_h::Sqlite3Int64 = ((*p).nAlloc
                 * 2 as ::core::ffi::c_int)
-                as crate::src::headers::sqlite3_h::sqlite3_int64;
+                as crate::src::headers::sqlite3_h::Sqlite3Int64;
             let mut pNew: *mut Fts5HashEntry = std::ptr::null_mut::<Fts5HashEntry>();
             let mut pp: *mut *mut Fts5HashEntry = std::ptr::null_mut::<*mut Fts5HashEntry>();
             pNew = crate::src::src::malloc::sqlite3_realloc64(
                 p as *mut ::core::ffi::c_void,
-                nNew as crate::src::headers::sqlite3_h::sqlite3_uint64,
+                nNew as crate::src::headers::sqlite3_h::Sqlite3Uint64,
             ) as *mut Fts5HashEntry;
             if pNew.is_null() {
                 return crate::src::headers::sqlite3_h::SQLITE_NOMEM;
@@ -5232,10 +5232,10 @@ unsafe extern "C" fn sqlite3Fts5HashWrite(
         }
         nIncr -= (*p).nData;
     }
-    pPtr = p as *mut u8_0;
+    pPtr = p as *mut U8_0;
     if iRowid != (*p).iRowid {
         let __p_ref = { &mut *p };
-        let mut iDiff: u64_0 = (iRowid as u64_0).wrapping_sub(__p_ref.iRowid as u64_0);
+        let mut iDiff: U64_0 = (iRowid as U64_0).wrapping_sub(__p_ref.iRowid as U64_0);
         fts5HashAddPoslistSize(pHash, p, std::ptr::null_mut::<Fts5HashEntry>());
         __p_ref.nData += sqlite3Fts5PutVarint(
             pPtr.offset(__p_ref.nData as isize) as *mut ::core::ffi::c_uchar,
@@ -5250,43 +5250,43 @@ unsafe extern "C" fn sqlite3Fts5HashWrite(
                 0 as ::core::ffi::c_int
             } else {
                 -(1 as ::core::ffi::c_int)
-            }) as i16_0;
+            }) as I16_0;
             __p_ref.iPos = 0 as ::core::ffi::c_int;
         }
     }
     if iCol >= 0 as ::core::ffi::c_int {
         if __pHash_ref.eDetail == FTS5_DETAIL_NONE {
-            (*p).bContent = 1 as u8_0;
+            (*p).bContent = 1 as U8_0;
         } else {
             if iCol != (*p).iCol as ::core::ffi::c_int {
                 if __pHash_ref.eDetail == FTS5_DETAIL_FULL {
                     let __p_ref = { &mut *p };
                     let fresh47 = __p_ref.nData;
                     __p_ref.nData += 1;
-                    *pPtr.offset(fresh47 as isize) = 0x1 as u8_0;
+                    *pPtr.offset(fresh47 as isize) = 0x1 as U8_0;
                     __p_ref.nData += sqlite3Fts5PutVarint(
                         pPtr.offset(__p_ref.nData as isize) as *mut ::core::ffi::c_uchar,
-                        iCol as u64_0,
+                        iCol as U64_0,
                     );
-                    __p_ref.iCol = iCol as i16_0;
+                    __p_ref.iCol = iCol as I16_0;
                     __p_ref.iPos = 0 as ::core::ffi::c_int;
                 } else {
                     bNew = 1 as ::core::ffi::c_int;
                     iPos = iCol;
-                    (*p).iCol = iPos as i16_0;
+                    (*p).iCol = iPos as I16_0;
                 }
             }
             if bNew != 0 {
                 let __p_ref = { &mut *p };
                 __p_ref.nData += sqlite3Fts5PutVarint(
                     pPtr.offset(__p_ref.nData as isize) as *mut ::core::ffi::c_uchar,
-                    (iPos - __p_ref.iPos + 2 as ::core::ffi::c_int) as u64_0,
+                    (iPos - __p_ref.iPos + 2 as ::core::ffi::c_int) as U64_0,
                 );
                 __p_ref.iPos = iPos;
             }
         }
     } else {
-        (*p).bDel = 1 as u8_0;
+        (*p).bDel = 1 as U8_0;
     }
     nIncr += (*p).nData;
     *__pHash_ref.pnByte += nIncr;
@@ -5406,166 +5406,166 @@ pub const FTS5_REMOVE_DIACRITICS_SIMPLE: ::core::ffi::c_int = 1 as ::core::ffi::
 
 unsafe extern "C" fn sqlite3Fts5UnicodeCatParse(
     mut zCat: *const ::core::ffi::c_char,
-    mut aArray: *mut u8_0,
+    mut aArray: *mut U8_0,
 ) -> ::core::ffi::c_int {
-    *aArray.offset(0 as isize) = 1 as u8_0;
+    *aArray.offset(0 as isize) = 1 as U8_0;
     match *zCat.offset(0 as isize) as ::core::ffi::c_int {
         67 => match *zCat.offset(1 as isize) as ::core::ffi::c_int {
             99 => {
-                *aArray.offset(1 as isize) = 1 as u8_0;
+                *aArray.offset(1 as isize) = 1 as U8_0;
             }
             102 => {
-                *aArray.offset(2 as isize) = 1 as u8_0;
+                *aArray.offset(2 as isize) = 1 as U8_0;
             }
             110 => {
-                *aArray.offset(3 as isize) = 1 as u8_0;
+                *aArray.offset(3 as isize) = 1 as U8_0;
             }
             115 => {
-                *aArray.offset(4 as isize) = 1 as u8_0;
+                *aArray.offset(4 as isize) = 1 as U8_0;
             }
             111 => {
-                *aArray.offset(31 as isize) = 1 as u8_0;
+                *aArray.offset(31 as isize) = 1 as U8_0;
             }
             42 => {
-                *aArray.offset(1 as isize) = 1 as u8_0;
-                *aArray.offset(2 as isize) = 1 as u8_0;
-                *aArray.offset(3 as isize) = 1 as u8_0;
-                *aArray.offset(4 as isize) = 1 as u8_0;
-                *aArray.offset(31 as isize) = 1 as u8_0;
+                *aArray.offset(1 as isize) = 1 as U8_0;
+                *aArray.offset(2 as isize) = 1 as U8_0;
+                *aArray.offset(3 as isize) = 1 as U8_0;
+                *aArray.offset(4 as isize) = 1 as U8_0;
+                *aArray.offset(31 as isize) = 1 as U8_0;
             }
             _ => return 1 as ::core::ffi::c_int,
         },
         76 => match *zCat.offset(1 as isize) as ::core::ffi::c_int {
             108 => {
-                *aArray.offset(5 as isize) = 1 as u8_0;
+                *aArray.offset(5 as isize) = 1 as U8_0;
             }
             109 => {
-                *aArray.offset(6 as isize) = 1 as u8_0;
+                *aArray.offset(6 as isize) = 1 as U8_0;
             }
             111 => {
-                *aArray.offset(7 as isize) = 1 as u8_0;
+                *aArray.offset(7 as isize) = 1 as U8_0;
             }
             116 => {
-                *aArray.offset(8 as isize) = 1 as u8_0;
+                *aArray.offset(8 as isize) = 1 as U8_0;
             }
             117 => {
-                *aArray.offset(9 as isize) = 1 as u8_0;
+                *aArray.offset(9 as isize) = 1 as U8_0;
             }
             67 => {
-                *aArray.offset(30 as isize) = 1 as u8_0;
+                *aArray.offset(30 as isize) = 1 as U8_0;
             }
             42 => {
-                *aArray.offset(5 as isize) = 1 as u8_0;
-                *aArray.offset(6 as isize) = 1 as u8_0;
-                *aArray.offset(7 as isize) = 1 as u8_0;
-                *aArray.offset(8 as isize) = 1 as u8_0;
-                *aArray.offset(9 as isize) = 1 as u8_0;
-                *aArray.offset(30 as isize) = 1 as u8_0;
+                *aArray.offset(5 as isize) = 1 as U8_0;
+                *aArray.offset(6 as isize) = 1 as U8_0;
+                *aArray.offset(7 as isize) = 1 as U8_0;
+                *aArray.offset(8 as isize) = 1 as U8_0;
+                *aArray.offset(9 as isize) = 1 as U8_0;
+                *aArray.offset(30 as isize) = 1 as U8_0;
             }
             _ => return 1 as ::core::ffi::c_int,
         },
         77 => match *zCat.offset(1 as isize) as ::core::ffi::c_int {
             99 => {
-                *aArray.offset(10 as isize) = 1 as u8_0;
+                *aArray.offset(10 as isize) = 1 as U8_0;
             }
             101 => {
-                *aArray.offset(11 as isize) = 1 as u8_0;
+                *aArray.offset(11 as isize) = 1 as U8_0;
             }
             110 => {
-                *aArray.offset(12 as isize) = 1 as u8_0;
+                *aArray.offset(12 as isize) = 1 as U8_0;
             }
             42 => {
-                *aArray.offset(10 as isize) = 1 as u8_0;
-                *aArray.offset(11 as isize) = 1 as u8_0;
-                *aArray.offset(12 as isize) = 1 as u8_0;
+                *aArray.offset(10 as isize) = 1 as U8_0;
+                *aArray.offset(11 as isize) = 1 as U8_0;
+                *aArray.offset(12 as isize) = 1 as U8_0;
             }
             _ => return 1 as ::core::ffi::c_int,
         },
         78 => match *zCat.offset(1 as isize) as ::core::ffi::c_int {
             100 => {
-                *aArray.offset(13 as isize) = 1 as u8_0;
+                *aArray.offset(13 as isize) = 1 as U8_0;
             }
             108 => {
-                *aArray.offset(14 as isize) = 1 as u8_0;
+                *aArray.offset(14 as isize) = 1 as U8_0;
             }
             111 => {
-                *aArray.offset(15 as isize) = 1 as u8_0;
+                *aArray.offset(15 as isize) = 1 as U8_0;
             }
             42 => {
-                *aArray.offset(13 as isize) = 1 as u8_0;
-                *aArray.offset(14 as isize) = 1 as u8_0;
-                *aArray.offset(15 as isize) = 1 as u8_0;
+                *aArray.offset(13 as isize) = 1 as U8_0;
+                *aArray.offset(14 as isize) = 1 as U8_0;
+                *aArray.offset(15 as isize) = 1 as U8_0;
             }
             _ => return 1 as ::core::ffi::c_int,
         },
         80 => match *zCat.offset(1 as isize) as ::core::ffi::c_int {
             99 => {
-                *aArray.offset(16 as isize) = 1 as u8_0;
+                *aArray.offset(16 as isize) = 1 as U8_0;
             }
             100 => {
-                *aArray.offset(17 as isize) = 1 as u8_0;
+                *aArray.offset(17 as isize) = 1 as U8_0;
             }
             101 => {
-                *aArray.offset(18 as isize) = 1 as u8_0;
+                *aArray.offset(18 as isize) = 1 as U8_0;
             }
             102 => {
-                *aArray.offset(19 as isize) = 1 as u8_0;
+                *aArray.offset(19 as isize) = 1 as U8_0;
             }
             105 => {
-                *aArray.offset(20 as isize) = 1 as u8_0;
+                *aArray.offset(20 as isize) = 1 as U8_0;
             }
             111 => {
-                *aArray.offset(21 as isize) = 1 as u8_0;
+                *aArray.offset(21 as isize) = 1 as U8_0;
             }
             115 => {
-                *aArray.offset(22 as isize) = 1 as u8_0;
+                *aArray.offset(22 as isize) = 1 as U8_0;
             }
             42 => {
-                *aArray.offset(16 as isize) = 1 as u8_0;
-                *aArray.offset(17 as isize) = 1 as u8_0;
-                *aArray.offset(18 as isize) = 1 as u8_0;
-                *aArray.offset(19 as isize) = 1 as u8_0;
-                *aArray.offset(20 as isize) = 1 as u8_0;
-                *aArray.offset(21 as isize) = 1 as u8_0;
-                *aArray.offset(22 as isize) = 1 as u8_0;
+                *aArray.offset(16 as isize) = 1 as U8_0;
+                *aArray.offset(17 as isize) = 1 as U8_0;
+                *aArray.offset(18 as isize) = 1 as U8_0;
+                *aArray.offset(19 as isize) = 1 as U8_0;
+                *aArray.offset(20 as isize) = 1 as U8_0;
+                *aArray.offset(21 as isize) = 1 as U8_0;
+                *aArray.offset(22 as isize) = 1 as U8_0;
             }
             _ => return 1 as ::core::ffi::c_int,
         },
         83 => match *zCat.offset(1 as isize) as ::core::ffi::c_int {
             99 => {
-                *aArray.offset(23 as isize) = 1 as u8_0;
+                *aArray.offset(23 as isize) = 1 as U8_0;
             }
             107 => {
-                *aArray.offset(24 as isize) = 1 as u8_0;
+                *aArray.offset(24 as isize) = 1 as U8_0;
             }
             109 => {
-                *aArray.offset(25 as isize) = 1 as u8_0;
+                *aArray.offset(25 as isize) = 1 as U8_0;
             }
             111 => {
-                *aArray.offset(26 as isize) = 1 as u8_0;
+                *aArray.offset(26 as isize) = 1 as U8_0;
             }
             42 => {
-                *aArray.offset(23 as isize) = 1 as u8_0;
-                *aArray.offset(24 as isize) = 1 as u8_0;
-                *aArray.offset(25 as isize) = 1 as u8_0;
-                *aArray.offset(26 as isize) = 1 as u8_0;
+                *aArray.offset(23 as isize) = 1 as U8_0;
+                *aArray.offset(24 as isize) = 1 as U8_0;
+                *aArray.offset(25 as isize) = 1 as U8_0;
+                *aArray.offset(26 as isize) = 1 as U8_0;
             }
             _ => return 1 as ::core::ffi::c_int,
         },
         90 => match *zCat.offset(1 as isize) as ::core::ffi::c_int {
             108 => {
-                *aArray.offset(27 as isize) = 1 as u8_0;
+                *aArray.offset(27 as isize) = 1 as U8_0;
             }
             112 => {
-                *aArray.offset(28 as isize) = 1 as u8_0;
+                *aArray.offset(28 as isize) = 1 as U8_0;
             }
             115 => {
-                *aArray.offset(29 as isize) = 1 as u8_0;
+                *aArray.offset(29 as isize) = 1 as U8_0;
             }
             42 => {
-                *aArray.offset(27 as isize) = 1 as u8_0;
-                *aArray.offset(28 as isize) = 1 as u8_0;
-                *aArray.offset(29 as isize) = 1 as u8_0;
+                *aArray.offset(27 as isize) = 1 as U8_0;
+                *aArray.offset(28 as isize) = 1 as U8_0;
+                *aArray.offset(29 as isize) = 1 as U8_0;
             }
             _ => return 1 as ::core::ffi::c_int,
         },
@@ -5577,12 +5577,12 @@ unsafe extern "C" fn sqlite3Fts5UnicodeCatParse(
 unsafe extern "C" fn sqlite3Fts5PoslistWriterAppend(
     mut pBuf: *mut Fts5Buffer,
     mut pWriter: *mut Fts5PoslistWriter,
-    mut iPos: i64_0,
+    mut iPos: I64_0,
 ) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-    if if ((*pBuf).n as u32_0).wrapping_add(
-        (5 as ::core::ffi::c_int + 5 as ::core::ffi::c_int + 5 as ::core::ffi::c_int) as u32_0,
-    ) <= (*pBuf).nSpace as u32_0
+    if if ((*pBuf).n as U32_0).wrapping_add(
+        (5 as ::core::ffi::c_int + 5 as ::core::ffi::c_int + 5 as ::core::ffi::c_int) as U32_0,
+    ) <= (*pBuf).nSpace as U32_0
     {
         0 as ::core::ffi::c_int
     } else {
@@ -5592,7 +5592,7 @@ unsafe extern "C" fn sqlite3Fts5PoslistWriterAppend(
             (5 as ::core::ffi::c_int
                 + 5 as ::core::ffi::c_int
                 + 5 as ::core::ffi::c_int
-                + (*pBuf).n) as u32_0,
+                + (*pBuf).n) as U32_0,
         )
     } != 0
     {
@@ -5615,7 +5615,7 @@ unsafe extern "C" fn fts5UnicodeAddExceptions(
             (*p).aiException as *mut ::core::ffi::c_void,
             ((n + (*p).nException) as usize)
                 .wrapping_mul(std::mem::size_of::<::core::ffi::c_int>() as usize)
-                as crate::src::headers::sqlite3_h::sqlite3_uint64,
+                as crate::src::headers::sqlite3_h::Sqlite3Uint64,
         ) as *mut ::core::ffi::c_int;
         if !aNew.is_null() {
             let __p_ref = { &mut *p };
@@ -5624,13 +5624,13 @@ unsafe extern "C" fn fts5UnicodeAddExceptions(
             let mut zTerm: *const ::core::ffi::c_uchar =
                 z.offset(n as isize) as *const ::core::ffi::c_char as *const ::core::ffi::c_uchar;
             while zCsr < zTerm {
-                let mut iCode: u32_0 = 0;
+                let mut iCode: U32_0 = 0;
                 let mut bToken: ::core::ffi::c_int = 0;
                 let fresh163 = zCsr;
                 zCsr = zCsr.offset(1);
-                iCode = *fresh163 as u32_0;
-                if iCode >= 0xc0 as u32_0 {
-                    iCode = sqlite3Utf8Trans1[iCode.wrapping_sub(0xc0 as u32_0) as usize] as u32_0;
+                iCode = *fresh163 as U32_0;
+                if iCode >= 0xc0 as U32_0 {
+                    iCode = sqlite3Utf8Trans1[iCode.wrapping_sub(0xc0 as U32_0) as usize] as U32_0;
                     while zCsr < zTerm
                         && *zCsr as ::core::ffi::c_int & 0xc0 as ::core::ffi::c_int
                             == 0x80 as ::core::ffi::c_int
@@ -5638,19 +5638,19 @@ unsafe extern "C" fn fts5UnicodeAddExceptions(
                         let fresh164 = zCsr;
                         zCsr = zCsr.offset(1);
                         iCode = (iCode << 6 as ::core::ffi::c_int).wrapping_add(
-                            (0x3f as ::core::ffi::c_int & *fresh164 as ::core::ffi::c_int) as u32_0,
+                            (0x3f as ::core::ffi::c_int & *fresh164 as ::core::ffi::c_int) as U32_0,
                         );
                     }
-                    if iCode < 0x80 as u32_0
+                    if iCode < 0x80 as U32_0
                         || iCode as ::core::ffi::c_uint & 0xfffff800 as ::core::ffi::c_uint
                             == 0xd800 as ::core::ffi::c_uint
                         || iCode as ::core::ffi::c_uint & 0xfffffffe as ::core::ffi::c_uint
                             == 0xfffe as ::core::ffi::c_uint
                     {
-                        iCode = 0xfffd as u32_0;
+                        iCode = 0xfffd as U32_0;
                     }
                 }
-                if iCode < 128 as u32_0 {
+                if iCode < 128 as U32_0 {
                     __p_ref.aTokenChar[iCode as usize] = bTokenChars as ::core::ffi::c_uchar;
                 } else {
                     bToken = __p_ref.aCategory[sqlite3Fts5UnicodeCategory(iCode) as usize]
@@ -5662,7 +5662,7 @@ unsafe extern "C" fn fts5UnicodeAddExceptions(
                         let mut i: ::core::ffi::c_int = 0;
                         i = 0 as ::core::ffi::c_int;
                         while i < nNew {
-                            if *aNew.offset(i as isize) as u32_0 > iCode {
+                            if *aNew.offset(i as isize) as U32_0 > iCode {
                                 break;
                             }
                             i += 1;
@@ -5671,9 +5671,9 @@ unsafe extern "C" fn fts5UnicodeAddExceptions(
                             aNew.offset(i as isize) as *mut ::core::ffi::c_int as *const u8,
                             aNew.offset((i + 1 as ::core::ffi::c_int) as isize)
                                 as *mut ::core::ffi::c_int as *mut u8,
-                            (((nNew - i) as crate::__stddef_size_t_h::size_t)
+                            (((nNew - i) as crate::__stddef_size_t_h::SizeT)
                                 .wrapping_mul(std::mem::size_of::<::core::ffi::c_int>()
-                                    as crate::__stddef_size_t_h::size_t))
+                                    as crate::__stddef_size_t_h::SizeT))
                                 as usize,
                         );
                         *aNew.offset(i as isize) = iCode as ::core::ffi::c_int;
@@ -5692,22 +5692,22 @@ unsafe extern "C" fn fts5UnicodeAddExceptions(
 
 unsafe extern "C" fn sqlite3Fts5MallocZero(
     mut pRc: *mut ::core::ffi::c_int,
-    mut nByte: crate::src::headers::sqlite3_h::sqlite3_int64,
+    mut nByte: crate::src::headers::sqlite3_h::Sqlite3Int64,
 ) -> *mut ::core::ffi::c_void {
     let mut pRet: *mut ::core::ffi::c_void = std::ptr::null_mut::<::core::ffi::c_void>();
     if *pRc == crate::src::headers::sqlite3_h::SQLITE_OK {
         pRet = crate::src::src::malloc::sqlite3_malloc64(
-            nByte as crate::src::headers::sqlite3_h::sqlite3_uint64,
+            nByte as crate::src::headers::sqlite3_h::Sqlite3Uint64,
         );
         if pRet.is_null() {
-            if nByte > 0 as crate::src::headers::sqlite3_h::sqlite3_int64 {
+            if nByte > 0 as crate::src::headers::sqlite3_h::Sqlite3Int64 {
                 *pRc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
             }
         } else {
             std::ptr::write_bytes(
                 pRet as *mut u8,
                 0,
-                nByte as crate::__stddef_size_t_h::size_t,
+                nByte as crate::__stddef_size_t_h::SizeT,
             );
         }
     }
@@ -5901,10 +5901,10 @@ unsafe extern "C" fn fts5VocabBestIndexMethod(
     crate::src::headers::sqlite3_h::SQLITE_OK
 }
 
-unsafe extern "C" fn fts5ParseAlloc(mut t: u64_0) -> *mut ::core::ffi::c_void {
+unsafe extern "C" fn fts5ParseAlloc(mut t: U64_0) -> *mut ::core::ffi::c_void {
     crate::src::src::malloc::sqlite3_malloc64(
-        t as crate::src::headers::sqlite3_h::sqlite3_int64
-            as crate::src::headers::sqlite3_h::sqlite3_uint64,
+        t as crate::src::headers::sqlite3_h::Sqlite3Int64
+            as crate::src::headers::sqlite3_h::Sqlite3Uint64,
     )
 }
 
@@ -5930,7 +5930,7 @@ unsafe extern "C" fn sqlite3Fts5ExprNew(
     *pzErr = std::ptr::null_mut::<::core::ffi::c_char>();
     sParse.bPhraseToAnd = bPhraseToAnd;
     pEngine = sqlite3Fts5ParserAlloc(Some(
-        fts5ParseAlloc as unsafe extern "C" fn(u64_0) -> *mut ::core::ffi::c_void,
+        fts5ParseAlloc as unsafe extern "C" fn(U64_0) -> *mut ::core::ffi::c_void,
     ));
     if pEngine.is_null() {
         return crate::src::headers::sqlite3_h::SQLITE_NOMEM;
@@ -5948,13 +5948,13 @@ unsafe extern "C" fn sqlite3Fts5ExprNew(
         Some(fts5ParseFree as unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()),
     );
     if sParse.rc == crate::src::headers::sqlite3_h::SQLITE_OK && iCol < (*pConfig).nCol {
-        let mut n: ::core::ffi::c_int = (std::mem::size_of::<i64_0>() as usize).wrapping_mul(
+        let mut n: ::core::ffi::c_int = (std::mem::size_of::<I64_0>() as usize).wrapping_mul(
             ((1 as ::core::ffi::c_int + 2 as ::core::ffi::c_int) / 2 as ::core::ffi::c_int)
                 as usize,
         ) as ::core::ffi::c_int;
         let mut pColset: *mut Fts5Colset = sqlite3Fts5MallocZero(
             &raw mut sParse.rc,
-            n as crate::src::headers::sqlite3_h::sqlite3_int64,
+            n as crate::src::headers::sqlite3_h::Sqlite3Int64,
         ) as *mut Fts5Colset;
         if !pColset.is_null() {
             (*pColset).nCol = 1 as ::core::ffi::c_int;
@@ -6242,19 +6242,19 @@ pub const FTS5_PATTERN_GLOB: ::core::ffi::c_int = 66 as ::core::ffi::c_int;
 
 unsafe extern "C" fn fts5PutVarint64(
     mut p: *mut ::core::ffi::c_uchar,
-    mut v: u64_0,
+    mut v: U64_0,
 ) -> ::core::ffi::c_int {
     let mut i: ::core::ffi::c_int = 0;
     let mut j: ::core::ffi::c_int = 0;
     let mut n: ::core::ffi::c_int = 0;
-    let mut buf: [u8_0; 10] = [0; 10];
-    if v & (0xff000000 as ::core::ffi::c_uint as u64_0) << 32 as ::core::ffi::c_int != 0 {
-        *p.offset(8 as isize) = v as u8_0 as ::core::ffi::c_uchar;
+    let mut buf: [U8_0; 10] = [0; 10];
+    if v & (0xff000000 as ::core::ffi::c_uint as U64_0) << 32 as ::core::ffi::c_int != 0 {
+        *p.offset(8 as isize) = v as U8_0 as ::core::ffi::c_uchar;
         v >>= 8 as ::core::ffi::c_int;
         i = 7 as ::core::ffi::c_int;
         while i >= 0 as ::core::ffi::c_int {
             *p.offset(i as isize) =
-                (v & 0x7f as u64_0 | 0x80 as u64_0) as u8_0 as ::core::ffi::c_uchar;
+                (v & 0x7f as U64_0 | 0x80 as U64_0) as U8_0 as ::core::ffi::c_uchar;
             v >>= 7 as ::core::ffi::c_int;
             i -= 1;
         }
@@ -6264,15 +6264,15 @@ unsafe extern "C" fn fts5PutVarint64(
     loop {
         let fresh6 = n;
         n += 1;
-        buf[fresh6 as usize] = (v & 0x7f as u64_0 | 0x80 as u64_0) as u8_0;
+        buf[fresh6 as usize] = (v & 0x7f as U64_0 | 0x80 as U64_0) as U8_0;
         v >>= 7 as ::core::ffi::c_int;
-        if !(v != 0 as u64_0) {
+        if !(v != 0 as U64_0) {
             break;
         }
     }
     buf[0 as ::core::ffi::c_int as usize] = (buf[0 as ::core::ffi::c_int as usize]
         as ::core::ffi::c_int
-        & 0x7f as ::core::ffi::c_int) as u8_0;
+        & 0x7f as ::core::ffi::c_int) as U8_0;
     i = 0 as ::core::ffi::c_int;
     j = n - 1 as ::core::ffi::c_int;
     while j >= 0 as ::core::ffi::c_int {
@@ -6417,7 +6417,7 @@ unsafe extern "C" fn fts5SentenceFinderAdd(
         aNew = crate::src::src::malloc::sqlite3_realloc64(
             __p_ref.aFirst as *mut ::core::ffi::c_void,
             (nNew as usize).wrapping_mul(std::mem::size_of::<::core::ffi::c_int>() as usize)
-                as crate::src::headers::sqlite3_h::sqlite3_uint64,
+                as crate::src::headers::sqlite3_h::Sqlite3Uint64,
         ) as *mut ::core::ffi::c_int;
         if aNew.is_null() {
             return crate::src::headers::sqlite3_h::SQLITE_NOMEM;
@@ -6474,135 +6474,135 @@ pub const FTS5_DATA_ZERO_PADDING: ::core::ffi::c_int = 8 as ::core::ffi::c_int;
 pub const FTS5_DATA_PADDING: ::core::ffi::c_int = 20 as ::core::ffi::c_int;
 
 unsafe extern "C" fn sqlite3Fts5IsBareword(mut t: ::core::ffi::c_char) -> ::core::ffi::c_int {
-    let mut aBareword: [u8_0; 128] = [
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        1 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
+    let mut aBareword: [U8_0; 128] = [
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        1 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
     ];
     (t as ::core::ffi::c_int & 0x80 as ::core::ffi::c_int != 0
         || aBareword[t as ::core::ffi::c_int as usize] as ::core::ffi::c_int != 0)
@@ -6611,16 +6611,16 @@ unsafe extern "C" fn sqlite3Fts5IsBareword(mut t: ::core::ffi::c_char) -> ::core
 
 unsafe extern "C" fn sqlite3Fts5PutVarint(
     mut p: *mut ::core::ffi::c_uchar,
-    mut v: u64_0,
+    mut v: U64_0,
 ) -> ::core::ffi::c_int {
-    if v <= 0x7f as u64_0 {
-        *p.offset(0 as isize) = (v & 0x7f as u64_0) as ::core::ffi::c_uchar;
+    if v <= 0x7f as U64_0 {
+        *p.offset(0 as isize) = (v & 0x7f as U64_0) as ::core::ffi::c_uchar;
         return 1 as ::core::ffi::c_int;
     }
-    if v <= 0x3fff as u64_0 {
+    if v <= 0x3fff as U64_0 {
         *p.offset(0 as isize) =
-            (v >> 7 as ::core::ffi::c_int & 0x7f as u64_0 | 0x80 as u64_0) as ::core::ffi::c_uchar;
-        *p.offset(1 as isize) = (v & 0x7f as u64_0) as ::core::ffi::c_uchar;
+            (v >> 7 as ::core::ffi::c_int & 0x7f as U64_0 | 0x80 as U64_0) as ::core::ffi::c_uchar;
+        *p.offset(1 as isize) = (v & 0x7f as U64_0) as ::core::ffi::c_uchar;
         return 2 as ::core::ffi::c_int;
     }
     fts5PutVarint64(p, v)
@@ -6682,8 +6682,8 @@ unsafe extern "C" fn fts5VocabOpenMethod(
     let mut pFts5: *mut Fts5Table = std::ptr::null_mut::<Fts5Table>();
     let mut pCsr: *mut Fts5VocabCursor = std::ptr::null_mut::<Fts5VocabCursor>();
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
-    let mut pStmt: *mut crate::src::headers::sqlite3_h::sqlite3_stmt =
-        std::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_stmt>();
+    let mut pStmt: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt =
+        std::ptr::null_mut::<crate::src::headers::sqlite3_h::Sqlite3Stmt>();
     let mut zSql: *mut ::core::ffi::c_char = std::ptr::null_mut::<::core::ffi::c_char>();
     let __pTab_ref = { &mut *pTab };
     if __pTab_ref.bBusy != 0 {
@@ -6722,15 +6722,15 @@ unsafe extern "C" fn fts5VocabOpenMethod(
         && crate::src::src::vdbeapi::sqlite3_step(pStmt)
             == crate::src::headers::sqlite3_h::SQLITE_ROW
     {
-        let mut iId: i64_0 =
-            crate::src::src::vdbeapi::sqlite3_column_int64(pStmt, 0 as ::core::ffi::c_int) as i64_0;
+        let mut iId: I64_0 =
+            crate::src::src::vdbeapi::sqlite3_column_int64(pStmt, 0 as ::core::ffi::c_int) as I64_0;
         pFts5 = sqlite3Fts5TableFromCsrid(__pTab_ref.pGlobal, iId);
     }
     __pTab_ref.bBusy = 0 as ::core::ffi::c_uint;
     if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
         if pFts5.is_null() {
             rc = crate::src::src::vdbeapi::sqlite3_finalize(pStmt);
-            pStmt = std::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_stmt>();
+            pStmt = std::ptr::null_mut::<crate::src::headers::sqlite3_h::Sqlite3Stmt>();
             if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
                 (*pVTab).zErrMsg = crate::sqlite_printf!(
                     "no such fts5 table: %s.%s",
@@ -6744,22 +6744,22 @@ unsafe extern "C" fn fts5VocabOpenMethod(
         }
     }
     if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
-        let mut nByte: i64_0 = ((*(*pFts5).pConfig).nCol as usize)
-            .wrapping_mul(std::mem::size_of::<i64_0>() as usize)
+        let mut nByte: I64_0 = ((*(*pFts5).pConfig).nCol as usize)
+            .wrapping_mul(std::mem::size_of::<I64_0>() as usize)
             .wrapping_mul(2 as usize)
             .wrapping_add(std::mem::size_of::<Fts5VocabCursor>() as usize)
-            as i64_0;
+            as I64_0;
         pCsr = sqlite3Fts5MallocZero(
             &raw mut rc,
-            nByte as crate::src::headers::sqlite3_h::sqlite3_int64,
+            nByte as crate::src::headers::sqlite3_h::Sqlite3Int64,
         ) as *mut Fts5VocabCursor;
     }
     if !pCsr.is_null() {
         let __pCsr_ref = { &mut *pCsr };
         __pCsr_ref.pFts5 = pFts5;
         __pCsr_ref.pStmt = pStmt;
-        __pCsr_ref.aCnt = pCsr.offset(1 as isize) as *mut Fts5VocabCursor as *mut i64_0;
-        __pCsr_ref.aDoc = __pCsr_ref.aCnt.offset((*(*pFts5).pConfig).nCol as isize) as *mut i64_0;
+        __pCsr_ref.aCnt = pCsr.offset(1 as isize) as *mut Fts5VocabCursor as *mut I64_0;
+        __pCsr_ref.aDoc = __pCsr_ref.aCnt.offset((*(*pFts5).pConfig).nCol as isize) as *mut I64_0;
     } else {
         crate::src::src::vdbeapi::sqlite3_finalize(pStmt);
     }
@@ -6767,14 +6767,14 @@ unsafe extern "C" fn fts5VocabOpenMethod(
     rc
 }
 
-unsafe extern "C" fn sqlite3Fts5GetVarintLen(mut iVal: u32_0) -> ::core::ffi::c_int {
-    if iVal < ((1 as ::core::ffi::c_int) << 14 as ::core::ffi::c_int) as u32_0 {
+unsafe extern "C" fn sqlite3Fts5GetVarintLen(mut iVal: U32_0) -> ::core::ffi::c_int {
+    if iVal < ((1 as ::core::ffi::c_int) << 14 as ::core::ffi::c_int) as U32_0 {
         return 2 as ::core::ffi::c_int;
     }
-    if iVal < ((1 as ::core::ffi::c_int) << 21 as ::core::ffi::c_int) as u32_0 {
+    if iVal < ((1 as ::core::ffi::c_int) << 21 as ::core::ffi::c_int) as U32_0 {
         return 3 as ::core::ffi::c_int;
     }
-    if iVal < ((1 as ::core::ffi::c_int) << 28 as ::core::ffi::c_int) as u32_0 {
+    if iVal < ((1 as ::core::ffi::c_int) << 28 as ::core::ffi::c_int) as U32_0 {
         return 4 as ::core::ffi::c_int;
     }
     5 as ::core::ffi::c_int
@@ -6790,7 +6790,7 @@ unsafe extern "C" fn unicodeSetCategories(
             z = z.offset(1);
         }
         if *z as ::core::ffi::c_int != 0
-            && sqlite3Fts5UnicodeCatParse(z, &raw mut (*p).aCategory as *mut u8_0) != 0
+            && sqlite3Fts5UnicodeCatParse(z, &raw mut (*p).aCategory as *mut U8_0) != 0
         {
             return crate::src::headers::sqlite3_h::SQLITE_ERROR;
         }
@@ -6802,8 +6802,8 @@ unsafe extern "C" fn unicodeSetCategories(
         }
     }
     sqlite3Fts5UnicodeAscii(
-        &raw mut (*p).aCategory as *mut u8_0,
-        &raw mut (*p).aTokenChar as *mut u8_0,
+        &raw mut (*p).aCategory as *mut U8_0,
+        &raw mut (*p).aTokenChar as *mut U8_0,
     );
     crate::src::headers::sqlite3_h::SQLITE_OK
 }
@@ -6821,7 +6821,7 @@ unsafe extern "C" fn sqlite3Fts5TermsetNew(mut pp: *mut *mut Fts5Termset) -> ::c
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
     *pp = sqlite3Fts5MallocZero(
         &raw mut rc,
-        std::mem::size_of::<Fts5Termset>() as crate::src::headers::sqlite3_h::sqlite3_int64,
+        std::mem::size_of::<Fts5Termset>() as crate::src::headers::sqlite3_h::Sqlite3Int64,
     ) as *mut Fts5Termset;
     rc
 }
@@ -6835,19 +6835,19 @@ unsafe extern "C" fn sqlite3Fts5StorageOpen(
 ) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
     let mut p: *mut Fts5Storage = std::ptr::null_mut::<Fts5Storage>();
-    let mut nByte: crate::src::headers::sqlite3_h::sqlite3_int64 = 0;
+    let mut nByte: crate::src::headers::sqlite3_h::Sqlite3Int64 = 0;
     nByte = (std::mem::size_of::<Fts5Storage>() as usize).wrapping_add(
-        ((*pConfig).nCol as usize).wrapping_mul(std::mem::size_of::<i64_0>() as usize),
-    ) as crate::src::headers::sqlite3_h::sqlite3_int64;
+        ((*pConfig).nCol as usize).wrapping_mul(std::mem::size_of::<I64_0>() as usize),
+    ) as crate::src::headers::sqlite3_h::Sqlite3Int64;
     p = crate::src::src::malloc::sqlite3_malloc64(
-        nByte as crate::src::headers::sqlite3_h::sqlite3_uint64,
+        nByte as crate::src::headers::sqlite3_h::Sqlite3Uint64,
     ) as *mut Fts5Storage;
     *pp = p;
     if p.is_null() {
         return crate::src::headers::sqlite3_h::SQLITE_NOMEM;
     }
     std::ptr::write_bytes(p as *mut ::core::ffi::c_void as *mut u8, 0, nByte as usize);
-    (*p).aTotalSize = p.offset(1 as isize) as *mut Fts5Storage as *mut i64_0;
+    (*p).aTotalSize = p.offset(1 as isize) as *mut Fts5Storage as *mut I64_0;
     (*p).pConfig = pConfig;
     (*p).pIndex = pIndex;
     if bCreate != 0 {
@@ -6858,10 +6858,10 @@ unsafe extern "C" fn sqlite3Fts5StorageOpen(
             let mut nDefn: ::core::ffi::c_int =
                 32 as ::core::ffi::c_int + __pConfig_ref.nCol * 10 as ::core::ffi::c_int;
             let mut zDefn: *mut ::core::ffi::c_char = crate::src::src::malloc::sqlite3_malloc64(
-                (32 as crate::src::headers::sqlite3_h::sqlite3_int64
-                    + __pConfig_ref.nCol as crate::src::headers::sqlite3_h::sqlite3_int64
-                        * 20 as crate::src::headers::sqlite3_h::sqlite3_int64)
-                    as crate::src::headers::sqlite3_h::sqlite3_uint64,
+                (32 as crate::src::headers::sqlite3_h::Sqlite3Int64
+                    + __pConfig_ref.nCol as crate::src::headers::sqlite3_h::Sqlite3Int64
+                        * 20 as crate::src::headers::sqlite3_h::Sqlite3Int64)
+                    as crate::src::headers::sqlite3_h::Sqlite3Uint64,
             ) as *mut ::core::ffi::c_char;
             if zDefn.is_null() {
                 rc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
@@ -6975,18 +6975,18 @@ unsafe extern "C" fn sqlite3Fts5TermsetAdd(
     *pbPresent = 0 as ::core::ffi::c_int;
     if !p.is_null() {
         let mut i: ::core::ffi::c_int = 0;
-        let mut hash: u32_0 = 13 as u32_0;
+        let mut hash: U32_0 = 13 as U32_0;
         let mut pEntry: *mut Fts5TermsetEntry = std::ptr::null_mut::<Fts5TermsetEntry>();
         i = nTerm - 1 as ::core::ffi::c_int;
         while i >= 0 as ::core::ffi::c_int {
-            hash = hash << 3 as ::core::ffi::c_int ^ hash ^ *pTerm.offset(i as isize) as u32_0;
+            hash = hash << 3 as ::core::ffi::c_int ^ hash ^ *pTerm.offset(i as isize) as U32_0;
             i -= 1;
         }
-        hash = hash << 3 as ::core::ffi::c_int ^ hash ^ iIdx as u32_0;
+        hash = hash << 3 as ::core::ffi::c_int ^ hash ^ iIdx as U32_0;
         hash = hash.wrapping_rem(
             (std::mem::size_of::<[*mut Fts5TermsetEntry; 512]>() as usize)
                 .wrapping_div(std::mem::size_of::<*mut Fts5TermsetEntry>() as usize)
-                as ::core::ffi::c_int as u32_0,
+                as ::core::ffi::c_int as U32_0,
         );
         pEntry = (*p).apHash[hash as usize];
         while !pEntry.is_null() {
@@ -7008,7 +7008,7 @@ unsafe extern "C" fn sqlite3Fts5TermsetAdd(
             pEntry = sqlite3Fts5MallocZero(
                 &raw mut rc,
                 (std::mem::size_of::<Fts5TermsetEntry>() as usize).wrapping_add(nTerm as usize)
-                    as crate::src::headers::sqlite3_h::sqlite3_int64,
+                    as crate::src::headers::sqlite3_h::Sqlite3Int64,
             ) as *mut Fts5TermsetEntry;
             if !pEntry.is_null() {
                 let __pEntry_ref = { &mut *pEntry };
@@ -7068,7 +7068,7 @@ unsafe extern "C" fn fts5UnicodeCreate(
             __p_ref.aFold = crate::src::src::malloc::sqlite3_malloc64(
                 (__p_ref.nFold as usize)
                     .wrapping_mul(std::mem::size_of::<::core::ffi::c_char>() as usize)
-                    as crate::src::headers::sqlite3_h::sqlite3_uint64,
+                    as crate::src::headers::sqlite3_h::Sqlite3Uint64,
             ) as *mut ::core::ffi::c_char;
             if __p_ref.aFold.is_null() {
                 rc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
@@ -7164,9 +7164,9 @@ unsafe extern "C" fn fts5SnippetScore(
     let mut nInst: ::core::ffi::c_int = 0;
     let mut nScore: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut iLast: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-    let mut iEnd: crate::src::headers::sqlite3_h::sqlite3_int64 = iPos
-        as crate::src::headers::sqlite3_h::sqlite3_int64
-        + nToken as crate::src::headers::sqlite3_h::sqlite3_int64;
+    let mut iEnd: crate::src::headers::sqlite3_h::Sqlite3Int64 = iPos
+        as crate::src::headers::sqlite3_h::Sqlite3Int64
+        + nToken as crate::src::headers::sqlite3_h::Sqlite3Int64;
     rc = (*pApi).xInstCount.expect("non-null function pointer")(pFts, &raw mut nInst);
     i = 0 as ::core::ffi::c_int;
     while i < nInst && rc == crate::src::headers::sqlite3_h::SQLITE_OK {
@@ -7180,7 +7180,7 @@ unsafe extern "C" fn fts5SnippetScore(
         if rc == crate::src::headers::sqlite3_h::SQLITE_OK
             && ic == iCol
             && iOff >= iPos
-            && (iOff as crate::src::headers::sqlite3_h::sqlite3_int64) < iEnd
+            && (iOff as crate::src::headers::sqlite3_h::Sqlite3Int64) < iEnd
         {
             nScore += if *aSeen.offset(ip as isize) as ::core::ffi::c_int != 0 {
                 1 as ::core::ffi::c_int
@@ -7197,16 +7197,16 @@ unsafe extern "C" fn fts5SnippetScore(
     }
     *pnScore = nScore;
     if !piPos.is_null() {
-        let mut iAdj: crate::src::headers::sqlite3_h::sqlite3_int64 = (iFirst
+        let mut iAdj: crate::src::headers::sqlite3_h::Sqlite3Int64 = (iFirst
             - (nToken - (iLast - iFirst)) / 2 as ::core::ffi::c_int)
-            as crate::src::headers::sqlite3_h::sqlite3_int64;
-        if iAdj + nToken as crate::src::headers::sqlite3_h::sqlite3_int64
-            > nDocsize as crate::src::headers::sqlite3_h::sqlite3_int64
+            as crate::src::headers::sqlite3_h::Sqlite3Int64;
+        if iAdj + nToken as crate::src::headers::sqlite3_h::Sqlite3Int64
+            > nDocsize as crate::src::headers::sqlite3_h::Sqlite3Int64
         {
-            iAdj = (nDocsize - nToken) as crate::src::headers::sqlite3_h::sqlite3_int64;
+            iAdj = (nDocsize - nToken) as crate::src::headers::sqlite3_h::Sqlite3Int64;
         }
-        if iAdj < 0 as crate::src::headers::sqlite3_h::sqlite3_int64 {
-            iAdj = 0 as crate::src::headers::sqlite3_h::sqlite3_int64;
+        if iAdj < 0 as crate::src::headers::sqlite3_h::Sqlite3Int64 {
+            iAdj = 0 as crate::src::headers::sqlite3_h::Sqlite3Int64;
         }
         *piPos = iAdj as ::core::ffi::c_int;
     }
@@ -7220,9 +7220,9 @@ unsafe extern "C" fn sqlite3Fts5ExprPattern(
     mut zText: *const ::core::ffi::c_char,
     mut pp: *mut *mut Fts5Expr,
 ) -> ::core::ffi::c_int {
-    let mut nText: i64_0 = fts5_cstr_len(zText) as i64_0;
+    let mut nText: I64_0 = fts5_cstr_len(zText) as I64_0;
     let mut zExpr: *mut ::core::ffi::c_char = crate::src::src::malloc::sqlite3_malloc64(
-        (nText * 4 as i64_0 + 1 as i64_0) as crate::src::headers::sqlite3_h::sqlite3_uint64,
+        (nText * 4 as I64_0 + 1 as I64_0) as crate::src::headers::sqlite3_h::Sqlite3Uint64,
     ) as *mut ::core::ffi::c_char;
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
     if zExpr.is_null() {
@@ -7241,8 +7241,8 @@ unsafe extern "C" fn sqlite3Fts5ExprPattern(
             aSpec[1 as ::core::ffi::c_int as usize] = '?' as i32 as ::core::ffi::c_char;
             aSpec[2 as ::core::ffi::c_int as usize] = '[' as i32 as ::core::ffi::c_char;
         }
-        while i as i64_0 <= nText {
-            if i as i64_0 == nText
+        while i as I64_0 <= nText {
+            if i as I64_0 == nText
                 || *zText.offset(i as isize) as ::core::ffi::c_int
                     == aSpec[0 as ::core::ffi::c_int as usize] as ::core::ffi::c_int
                 || *zText.offset(i as isize) as ::core::ffi::c_int
@@ -7287,7 +7287,7 @@ unsafe extern "C" fn sqlite3Fts5ExprPattern(
                     {
                         i += 1;
                     }
-                    while (i as i64_0) < nText
+                    while (i as I64_0) < nText
                         && *zText.offset(i as isize) as ::core::ffi::c_int != ']' as i32
                     {
                         i += 1;
@@ -7333,1792 +7333,1792 @@ unsafe extern "C" fn fts5DestroyMethod(
     rc
 }
 
-static mut aFts5UnicodeBlock: [u16_0; 17] = [
-    0 as ::core::ffi::c_int as u16_0,
-    1471 as ::core::ffi::c_int as u16_0,
-    1753 as ::core::ffi::c_int as u16_0,
-    1760 as ::core::ffi::c_int as u16_0,
-    1760 as ::core::ffi::c_int as u16_0,
-    1760 as ::core::ffi::c_int as u16_0,
-    1760 as ::core::ffi::c_int as u16_0,
-    1760 as ::core::ffi::c_int as u16_0,
-    1760 as ::core::ffi::c_int as u16_0,
-    1760 as ::core::ffi::c_int as u16_0,
-    1760 as ::core::ffi::c_int as u16_0,
-    1760 as ::core::ffi::c_int as u16_0,
-    1760 as ::core::ffi::c_int as u16_0,
-    1760 as ::core::ffi::c_int as u16_0,
-    1760 as ::core::ffi::c_int as u16_0,
-    1763 as ::core::ffi::c_int as u16_0,
-    1765 as ::core::ffi::c_int as u16_0,
+static mut aFts5UnicodeBlock: [U16_0; 17] = [
+    0 as ::core::ffi::c_int as U16_0,
+    1471 as ::core::ffi::c_int as U16_0,
+    1753 as ::core::ffi::c_int as U16_0,
+    1760 as ::core::ffi::c_int as U16_0,
+    1760 as ::core::ffi::c_int as U16_0,
+    1760 as ::core::ffi::c_int as U16_0,
+    1760 as ::core::ffi::c_int as U16_0,
+    1760 as ::core::ffi::c_int as U16_0,
+    1760 as ::core::ffi::c_int as U16_0,
+    1760 as ::core::ffi::c_int as U16_0,
+    1760 as ::core::ffi::c_int as U16_0,
+    1760 as ::core::ffi::c_int as U16_0,
+    1760 as ::core::ffi::c_int as U16_0,
+    1760 as ::core::ffi::c_int as U16_0,
+    1760 as ::core::ffi::c_int as U16_0,
+    1763 as ::core::ffi::c_int as U16_0,
+    1765 as ::core::ffi::c_int as U16_0,
 ];
 
-static mut aFts5UnicodeMap: [u16_0; 1765] = [
-    0 as ::core::ffi::c_int as u16_0,
-    32 as ::core::ffi::c_int as u16_0,
-    33 as ::core::ffi::c_int as u16_0,
-    36 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    40 as ::core::ffi::c_int as u16_0,
-    41 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    43 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    45 as ::core::ffi::c_int as u16_0,
-    46 as ::core::ffi::c_int as u16_0,
-    48 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    60 as ::core::ffi::c_int as u16_0,
-    63 as ::core::ffi::c_int as u16_0,
-    65 as ::core::ffi::c_int as u16_0,
-    91 as ::core::ffi::c_int as u16_0,
-    92 as ::core::ffi::c_int as u16_0,
-    93 as ::core::ffi::c_int as u16_0,
-    94 as ::core::ffi::c_int as u16_0,
-    95 as ::core::ffi::c_int as u16_0,
-    96 as ::core::ffi::c_int as u16_0,
-    97 as ::core::ffi::c_int as u16_0,
-    123 as ::core::ffi::c_int as u16_0,
-    124 as ::core::ffi::c_int as u16_0,
-    125 as ::core::ffi::c_int as u16_0,
-    126 as ::core::ffi::c_int as u16_0,
-    127 as ::core::ffi::c_int as u16_0,
-    160 as ::core::ffi::c_int as u16_0,
-    161 as ::core::ffi::c_int as u16_0,
-    162 as ::core::ffi::c_int as u16_0,
-    166 as ::core::ffi::c_int as u16_0,
-    167 as ::core::ffi::c_int as u16_0,
-    168 as ::core::ffi::c_int as u16_0,
-    169 as ::core::ffi::c_int as u16_0,
-    170 as ::core::ffi::c_int as u16_0,
-    171 as ::core::ffi::c_int as u16_0,
-    172 as ::core::ffi::c_int as u16_0,
-    173 as ::core::ffi::c_int as u16_0,
-    174 as ::core::ffi::c_int as u16_0,
-    175 as ::core::ffi::c_int as u16_0,
-    176 as ::core::ffi::c_int as u16_0,
-    177 as ::core::ffi::c_int as u16_0,
-    178 as ::core::ffi::c_int as u16_0,
-    180 as ::core::ffi::c_int as u16_0,
-    181 as ::core::ffi::c_int as u16_0,
-    182 as ::core::ffi::c_int as u16_0,
-    184 as ::core::ffi::c_int as u16_0,
-    185 as ::core::ffi::c_int as u16_0,
-    186 as ::core::ffi::c_int as u16_0,
-    187 as ::core::ffi::c_int as u16_0,
-    188 as ::core::ffi::c_int as u16_0,
-    191 as ::core::ffi::c_int as u16_0,
-    192 as ::core::ffi::c_int as u16_0,
-    215 as ::core::ffi::c_int as u16_0,
-    216 as ::core::ffi::c_int as u16_0,
-    223 as ::core::ffi::c_int as u16_0,
-    247 as ::core::ffi::c_int as u16_0,
-    248 as ::core::ffi::c_int as u16_0,
-    256 as ::core::ffi::c_int as u16_0,
-    312 as ::core::ffi::c_int as u16_0,
-    313 as ::core::ffi::c_int as u16_0,
-    329 as ::core::ffi::c_int as u16_0,
-    330 as ::core::ffi::c_int as u16_0,
-    377 as ::core::ffi::c_int as u16_0,
-    383 as ::core::ffi::c_int as u16_0,
-    385 as ::core::ffi::c_int as u16_0,
-    387 as ::core::ffi::c_int as u16_0,
-    388 as ::core::ffi::c_int as u16_0,
-    391 as ::core::ffi::c_int as u16_0,
-    394 as ::core::ffi::c_int as u16_0,
-    396 as ::core::ffi::c_int as u16_0,
-    398 as ::core::ffi::c_int as u16_0,
-    402 as ::core::ffi::c_int as u16_0,
-    403 as ::core::ffi::c_int as u16_0,
-    405 as ::core::ffi::c_int as u16_0,
-    406 as ::core::ffi::c_int as u16_0,
-    409 as ::core::ffi::c_int as u16_0,
-    412 as ::core::ffi::c_int as u16_0,
-    414 as ::core::ffi::c_int as u16_0,
-    415 as ::core::ffi::c_int as u16_0,
-    417 as ::core::ffi::c_int as u16_0,
-    418 as ::core::ffi::c_int as u16_0,
-    423 as ::core::ffi::c_int as u16_0,
-    427 as ::core::ffi::c_int as u16_0,
-    428 as ::core::ffi::c_int as u16_0,
-    431 as ::core::ffi::c_int as u16_0,
-    434 as ::core::ffi::c_int as u16_0,
-    436 as ::core::ffi::c_int as u16_0,
-    437 as ::core::ffi::c_int as u16_0,
-    440 as ::core::ffi::c_int as u16_0,
-    442 as ::core::ffi::c_int as u16_0,
-    443 as ::core::ffi::c_int as u16_0,
-    444 as ::core::ffi::c_int as u16_0,
-    446 as ::core::ffi::c_int as u16_0,
-    448 as ::core::ffi::c_int as u16_0,
-    452 as ::core::ffi::c_int as u16_0,
-    453 as ::core::ffi::c_int as u16_0,
-    454 as ::core::ffi::c_int as u16_0,
-    455 as ::core::ffi::c_int as u16_0,
-    456 as ::core::ffi::c_int as u16_0,
-    457 as ::core::ffi::c_int as u16_0,
-    458 as ::core::ffi::c_int as u16_0,
-    459 as ::core::ffi::c_int as u16_0,
-    460 as ::core::ffi::c_int as u16_0,
-    461 as ::core::ffi::c_int as u16_0,
-    477 as ::core::ffi::c_int as u16_0,
-    478 as ::core::ffi::c_int as u16_0,
-    496 as ::core::ffi::c_int as u16_0,
-    497 as ::core::ffi::c_int as u16_0,
-    498 as ::core::ffi::c_int as u16_0,
-    499 as ::core::ffi::c_int as u16_0,
-    500 as ::core::ffi::c_int as u16_0,
-    503 as ::core::ffi::c_int as u16_0,
-    505 as ::core::ffi::c_int as u16_0,
-    506 as ::core::ffi::c_int as u16_0,
-    564 as ::core::ffi::c_int as u16_0,
-    570 as ::core::ffi::c_int as u16_0,
-    572 as ::core::ffi::c_int as u16_0,
-    573 as ::core::ffi::c_int as u16_0,
-    575 as ::core::ffi::c_int as u16_0,
-    577 as ::core::ffi::c_int as u16_0,
-    580 as ::core::ffi::c_int as u16_0,
-    583 as ::core::ffi::c_int as u16_0,
-    584 as ::core::ffi::c_int as u16_0,
-    592 as ::core::ffi::c_int as u16_0,
-    660 as ::core::ffi::c_int as u16_0,
-    661 as ::core::ffi::c_int as u16_0,
-    688 as ::core::ffi::c_int as u16_0,
-    706 as ::core::ffi::c_int as u16_0,
-    710 as ::core::ffi::c_int as u16_0,
-    722 as ::core::ffi::c_int as u16_0,
-    736 as ::core::ffi::c_int as u16_0,
-    741 as ::core::ffi::c_int as u16_0,
-    748 as ::core::ffi::c_int as u16_0,
-    749 as ::core::ffi::c_int as u16_0,
-    750 as ::core::ffi::c_int as u16_0,
-    751 as ::core::ffi::c_int as u16_0,
-    768 as ::core::ffi::c_int as u16_0,
-    880 as ::core::ffi::c_int as u16_0,
-    884 as ::core::ffi::c_int as u16_0,
-    885 as ::core::ffi::c_int as u16_0,
-    886 as ::core::ffi::c_int as u16_0,
-    890 as ::core::ffi::c_int as u16_0,
-    891 as ::core::ffi::c_int as u16_0,
-    894 as ::core::ffi::c_int as u16_0,
-    900 as ::core::ffi::c_int as u16_0,
-    902 as ::core::ffi::c_int as u16_0,
-    903 as ::core::ffi::c_int as u16_0,
-    904 as ::core::ffi::c_int as u16_0,
-    908 as ::core::ffi::c_int as u16_0,
-    910 as ::core::ffi::c_int as u16_0,
-    912 as ::core::ffi::c_int as u16_0,
-    913 as ::core::ffi::c_int as u16_0,
-    931 as ::core::ffi::c_int as u16_0,
-    940 as ::core::ffi::c_int as u16_0,
-    975 as ::core::ffi::c_int as u16_0,
-    977 as ::core::ffi::c_int as u16_0,
-    978 as ::core::ffi::c_int as u16_0,
-    981 as ::core::ffi::c_int as u16_0,
-    984 as ::core::ffi::c_int as u16_0,
-    1008 as ::core::ffi::c_int as u16_0,
-    1012 as ::core::ffi::c_int as u16_0,
-    1014 as ::core::ffi::c_int as u16_0,
-    1015 as ::core::ffi::c_int as u16_0,
-    1018 as ::core::ffi::c_int as u16_0,
-    1020 as ::core::ffi::c_int as u16_0,
-    1021 as ::core::ffi::c_int as u16_0,
-    1072 as ::core::ffi::c_int as u16_0,
-    1120 as ::core::ffi::c_int as u16_0,
-    1154 as ::core::ffi::c_int as u16_0,
-    1155 as ::core::ffi::c_int as u16_0,
-    1160 as ::core::ffi::c_int as u16_0,
-    1162 as ::core::ffi::c_int as u16_0,
-    1217 as ::core::ffi::c_int as u16_0,
-    1231 as ::core::ffi::c_int as u16_0,
-    1232 as ::core::ffi::c_int as u16_0,
-    1329 as ::core::ffi::c_int as u16_0,
-    1369 as ::core::ffi::c_int as u16_0,
-    1370 as ::core::ffi::c_int as u16_0,
-    1377 as ::core::ffi::c_int as u16_0,
-    1417 as ::core::ffi::c_int as u16_0,
-    1418 as ::core::ffi::c_int as u16_0,
-    1423 as ::core::ffi::c_int as u16_0,
-    1425 as ::core::ffi::c_int as u16_0,
-    1470 as ::core::ffi::c_int as u16_0,
-    1471 as ::core::ffi::c_int as u16_0,
-    1472 as ::core::ffi::c_int as u16_0,
-    1473 as ::core::ffi::c_int as u16_0,
-    1475 as ::core::ffi::c_int as u16_0,
-    1476 as ::core::ffi::c_int as u16_0,
-    1478 as ::core::ffi::c_int as u16_0,
-    1479 as ::core::ffi::c_int as u16_0,
-    1488 as ::core::ffi::c_int as u16_0,
-    1520 as ::core::ffi::c_int as u16_0,
-    1523 as ::core::ffi::c_int as u16_0,
-    1536 as ::core::ffi::c_int as u16_0,
-    1542 as ::core::ffi::c_int as u16_0,
-    1545 as ::core::ffi::c_int as u16_0,
-    1547 as ::core::ffi::c_int as u16_0,
-    1548 as ::core::ffi::c_int as u16_0,
-    1550 as ::core::ffi::c_int as u16_0,
-    1552 as ::core::ffi::c_int as u16_0,
-    1563 as ::core::ffi::c_int as u16_0,
-    1566 as ::core::ffi::c_int as u16_0,
-    1568 as ::core::ffi::c_int as u16_0,
-    1600 as ::core::ffi::c_int as u16_0,
-    1601 as ::core::ffi::c_int as u16_0,
-    1611 as ::core::ffi::c_int as u16_0,
-    1632 as ::core::ffi::c_int as u16_0,
-    1642 as ::core::ffi::c_int as u16_0,
-    1646 as ::core::ffi::c_int as u16_0,
-    1648 as ::core::ffi::c_int as u16_0,
-    1649 as ::core::ffi::c_int as u16_0,
-    1748 as ::core::ffi::c_int as u16_0,
-    1749 as ::core::ffi::c_int as u16_0,
-    1750 as ::core::ffi::c_int as u16_0,
-    1757 as ::core::ffi::c_int as u16_0,
-    1758 as ::core::ffi::c_int as u16_0,
-    1759 as ::core::ffi::c_int as u16_0,
-    1765 as ::core::ffi::c_int as u16_0,
-    1767 as ::core::ffi::c_int as u16_0,
-    1769 as ::core::ffi::c_int as u16_0,
-    1770 as ::core::ffi::c_int as u16_0,
-    1774 as ::core::ffi::c_int as u16_0,
-    1776 as ::core::ffi::c_int as u16_0,
-    1786 as ::core::ffi::c_int as u16_0,
-    1789 as ::core::ffi::c_int as u16_0,
-    1791 as ::core::ffi::c_int as u16_0,
-    1792 as ::core::ffi::c_int as u16_0,
-    1807 as ::core::ffi::c_int as u16_0,
-    1808 as ::core::ffi::c_int as u16_0,
-    1809 as ::core::ffi::c_int as u16_0,
-    1810 as ::core::ffi::c_int as u16_0,
-    1840 as ::core::ffi::c_int as u16_0,
-    1869 as ::core::ffi::c_int as u16_0,
-    1958 as ::core::ffi::c_int as u16_0,
-    1969 as ::core::ffi::c_int as u16_0,
-    1984 as ::core::ffi::c_int as u16_0,
-    1994 as ::core::ffi::c_int as u16_0,
-    2027 as ::core::ffi::c_int as u16_0,
-    2036 as ::core::ffi::c_int as u16_0,
-    2038 as ::core::ffi::c_int as u16_0,
-    2039 as ::core::ffi::c_int as u16_0,
-    2042 as ::core::ffi::c_int as u16_0,
-    2048 as ::core::ffi::c_int as u16_0,
-    2070 as ::core::ffi::c_int as u16_0,
-    2074 as ::core::ffi::c_int as u16_0,
-    2075 as ::core::ffi::c_int as u16_0,
-    2084 as ::core::ffi::c_int as u16_0,
-    2085 as ::core::ffi::c_int as u16_0,
-    2088 as ::core::ffi::c_int as u16_0,
-    2089 as ::core::ffi::c_int as u16_0,
-    2096 as ::core::ffi::c_int as u16_0,
-    2112 as ::core::ffi::c_int as u16_0,
-    2137 as ::core::ffi::c_int as u16_0,
-    2142 as ::core::ffi::c_int as u16_0,
-    2208 as ::core::ffi::c_int as u16_0,
-    2210 as ::core::ffi::c_int as u16_0,
-    2276 as ::core::ffi::c_int as u16_0,
-    2304 as ::core::ffi::c_int as u16_0,
-    2307 as ::core::ffi::c_int as u16_0,
-    2308 as ::core::ffi::c_int as u16_0,
-    2362 as ::core::ffi::c_int as u16_0,
-    2363 as ::core::ffi::c_int as u16_0,
-    2364 as ::core::ffi::c_int as u16_0,
-    2365 as ::core::ffi::c_int as u16_0,
-    2366 as ::core::ffi::c_int as u16_0,
-    2369 as ::core::ffi::c_int as u16_0,
-    2377 as ::core::ffi::c_int as u16_0,
-    2381 as ::core::ffi::c_int as u16_0,
-    2382 as ::core::ffi::c_int as u16_0,
-    2384 as ::core::ffi::c_int as u16_0,
-    2385 as ::core::ffi::c_int as u16_0,
-    2392 as ::core::ffi::c_int as u16_0,
-    2402 as ::core::ffi::c_int as u16_0,
-    2404 as ::core::ffi::c_int as u16_0,
-    2406 as ::core::ffi::c_int as u16_0,
-    2416 as ::core::ffi::c_int as u16_0,
-    2417 as ::core::ffi::c_int as u16_0,
-    2418 as ::core::ffi::c_int as u16_0,
-    2425 as ::core::ffi::c_int as u16_0,
-    2433 as ::core::ffi::c_int as u16_0,
-    2434 as ::core::ffi::c_int as u16_0,
-    2437 as ::core::ffi::c_int as u16_0,
-    2447 as ::core::ffi::c_int as u16_0,
-    2451 as ::core::ffi::c_int as u16_0,
-    2474 as ::core::ffi::c_int as u16_0,
-    2482 as ::core::ffi::c_int as u16_0,
-    2486 as ::core::ffi::c_int as u16_0,
-    2492 as ::core::ffi::c_int as u16_0,
-    2493 as ::core::ffi::c_int as u16_0,
-    2494 as ::core::ffi::c_int as u16_0,
-    2497 as ::core::ffi::c_int as u16_0,
-    2503 as ::core::ffi::c_int as u16_0,
-    2507 as ::core::ffi::c_int as u16_0,
-    2509 as ::core::ffi::c_int as u16_0,
-    2510 as ::core::ffi::c_int as u16_0,
-    2519 as ::core::ffi::c_int as u16_0,
-    2524 as ::core::ffi::c_int as u16_0,
-    2527 as ::core::ffi::c_int as u16_0,
-    2530 as ::core::ffi::c_int as u16_0,
-    2534 as ::core::ffi::c_int as u16_0,
-    2544 as ::core::ffi::c_int as u16_0,
-    2546 as ::core::ffi::c_int as u16_0,
-    2548 as ::core::ffi::c_int as u16_0,
-    2554 as ::core::ffi::c_int as u16_0,
-    2555 as ::core::ffi::c_int as u16_0,
-    2561 as ::core::ffi::c_int as u16_0,
-    2563 as ::core::ffi::c_int as u16_0,
-    2565 as ::core::ffi::c_int as u16_0,
-    2575 as ::core::ffi::c_int as u16_0,
-    2579 as ::core::ffi::c_int as u16_0,
-    2602 as ::core::ffi::c_int as u16_0,
-    2610 as ::core::ffi::c_int as u16_0,
-    2613 as ::core::ffi::c_int as u16_0,
-    2616 as ::core::ffi::c_int as u16_0,
-    2620 as ::core::ffi::c_int as u16_0,
-    2622 as ::core::ffi::c_int as u16_0,
-    2625 as ::core::ffi::c_int as u16_0,
-    2631 as ::core::ffi::c_int as u16_0,
-    2635 as ::core::ffi::c_int as u16_0,
-    2641 as ::core::ffi::c_int as u16_0,
-    2649 as ::core::ffi::c_int as u16_0,
-    2654 as ::core::ffi::c_int as u16_0,
-    2662 as ::core::ffi::c_int as u16_0,
-    2672 as ::core::ffi::c_int as u16_0,
-    2674 as ::core::ffi::c_int as u16_0,
-    2677 as ::core::ffi::c_int as u16_0,
-    2689 as ::core::ffi::c_int as u16_0,
-    2691 as ::core::ffi::c_int as u16_0,
-    2693 as ::core::ffi::c_int as u16_0,
-    2703 as ::core::ffi::c_int as u16_0,
-    2707 as ::core::ffi::c_int as u16_0,
-    2730 as ::core::ffi::c_int as u16_0,
-    2738 as ::core::ffi::c_int as u16_0,
-    2741 as ::core::ffi::c_int as u16_0,
-    2748 as ::core::ffi::c_int as u16_0,
-    2749 as ::core::ffi::c_int as u16_0,
-    2750 as ::core::ffi::c_int as u16_0,
-    2753 as ::core::ffi::c_int as u16_0,
-    2759 as ::core::ffi::c_int as u16_0,
-    2761 as ::core::ffi::c_int as u16_0,
-    2763 as ::core::ffi::c_int as u16_0,
-    2765 as ::core::ffi::c_int as u16_0,
-    2768 as ::core::ffi::c_int as u16_0,
-    2784 as ::core::ffi::c_int as u16_0,
-    2786 as ::core::ffi::c_int as u16_0,
-    2790 as ::core::ffi::c_int as u16_0,
-    2800 as ::core::ffi::c_int as u16_0,
-    2801 as ::core::ffi::c_int as u16_0,
-    2817 as ::core::ffi::c_int as u16_0,
-    2818 as ::core::ffi::c_int as u16_0,
-    2821 as ::core::ffi::c_int as u16_0,
-    2831 as ::core::ffi::c_int as u16_0,
-    2835 as ::core::ffi::c_int as u16_0,
-    2858 as ::core::ffi::c_int as u16_0,
-    2866 as ::core::ffi::c_int as u16_0,
-    2869 as ::core::ffi::c_int as u16_0,
-    2876 as ::core::ffi::c_int as u16_0,
-    2877 as ::core::ffi::c_int as u16_0,
-    2878 as ::core::ffi::c_int as u16_0,
-    2879 as ::core::ffi::c_int as u16_0,
-    2880 as ::core::ffi::c_int as u16_0,
-    2881 as ::core::ffi::c_int as u16_0,
-    2887 as ::core::ffi::c_int as u16_0,
-    2891 as ::core::ffi::c_int as u16_0,
-    2893 as ::core::ffi::c_int as u16_0,
-    2902 as ::core::ffi::c_int as u16_0,
-    2903 as ::core::ffi::c_int as u16_0,
-    2908 as ::core::ffi::c_int as u16_0,
-    2911 as ::core::ffi::c_int as u16_0,
-    2914 as ::core::ffi::c_int as u16_0,
-    2918 as ::core::ffi::c_int as u16_0,
-    2928 as ::core::ffi::c_int as u16_0,
-    2929 as ::core::ffi::c_int as u16_0,
-    2930 as ::core::ffi::c_int as u16_0,
-    2946 as ::core::ffi::c_int as u16_0,
-    2947 as ::core::ffi::c_int as u16_0,
-    2949 as ::core::ffi::c_int as u16_0,
-    2958 as ::core::ffi::c_int as u16_0,
-    2962 as ::core::ffi::c_int as u16_0,
-    2969 as ::core::ffi::c_int as u16_0,
-    2972 as ::core::ffi::c_int as u16_0,
-    2974 as ::core::ffi::c_int as u16_0,
-    2979 as ::core::ffi::c_int as u16_0,
-    2984 as ::core::ffi::c_int as u16_0,
-    2990 as ::core::ffi::c_int as u16_0,
-    3006 as ::core::ffi::c_int as u16_0,
-    3008 as ::core::ffi::c_int as u16_0,
-    3009 as ::core::ffi::c_int as u16_0,
-    3014 as ::core::ffi::c_int as u16_0,
-    3018 as ::core::ffi::c_int as u16_0,
-    3021 as ::core::ffi::c_int as u16_0,
-    3024 as ::core::ffi::c_int as u16_0,
-    3031 as ::core::ffi::c_int as u16_0,
-    3046 as ::core::ffi::c_int as u16_0,
-    3056 as ::core::ffi::c_int as u16_0,
-    3059 as ::core::ffi::c_int as u16_0,
-    3065 as ::core::ffi::c_int as u16_0,
-    3066 as ::core::ffi::c_int as u16_0,
-    3073 as ::core::ffi::c_int as u16_0,
-    3077 as ::core::ffi::c_int as u16_0,
-    3086 as ::core::ffi::c_int as u16_0,
-    3090 as ::core::ffi::c_int as u16_0,
-    3114 as ::core::ffi::c_int as u16_0,
-    3125 as ::core::ffi::c_int as u16_0,
-    3133 as ::core::ffi::c_int as u16_0,
-    3134 as ::core::ffi::c_int as u16_0,
-    3137 as ::core::ffi::c_int as u16_0,
-    3142 as ::core::ffi::c_int as u16_0,
-    3146 as ::core::ffi::c_int as u16_0,
-    3157 as ::core::ffi::c_int as u16_0,
-    3160 as ::core::ffi::c_int as u16_0,
-    3168 as ::core::ffi::c_int as u16_0,
-    3170 as ::core::ffi::c_int as u16_0,
-    3174 as ::core::ffi::c_int as u16_0,
-    3192 as ::core::ffi::c_int as u16_0,
-    3199 as ::core::ffi::c_int as u16_0,
-    3202 as ::core::ffi::c_int as u16_0,
-    3205 as ::core::ffi::c_int as u16_0,
-    3214 as ::core::ffi::c_int as u16_0,
-    3218 as ::core::ffi::c_int as u16_0,
-    3242 as ::core::ffi::c_int as u16_0,
-    3253 as ::core::ffi::c_int as u16_0,
-    3260 as ::core::ffi::c_int as u16_0,
-    3261 as ::core::ffi::c_int as u16_0,
-    3262 as ::core::ffi::c_int as u16_0,
-    3263 as ::core::ffi::c_int as u16_0,
-    3264 as ::core::ffi::c_int as u16_0,
-    3270 as ::core::ffi::c_int as u16_0,
-    3271 as ::core::ffi::c_int as u16_0,
-    3274 as ::core::ffi::c_int as u16_0,
-    3276 as ::core::ffi::c_int as u16_0,
-    3285 as ::core::ffi::c_int as u16_0,
-    3294 as ::core::ffi::c_int as u16_0,
-    3296 as ::core::ffi::c_int as u16_0,
-    3298 as ::core::ffi::c_int as u16_0,
-    3302 as ::core::ffi::c_int as u16_0,
-    3313 as ::core::ffi::c_int as u16_0,
-    3330 as ::core::ffi::c_int as u16_0,
-    3333 as ::core::ffi::c_int as u16_0,
-    3342 as ::core::ffi::c_int as u16_0,
-    3346 as ::core::ffi::c_int as u16_0,
-    3389 as ::core::ffi::c_int as u16_0,
-    3390 as ::core::ffi::c_int as u16_0,
-    3393 as ::core::ffi::c_int as u16_0,
-    3398 as ::core::ffi::c_int as u16_0,
-    3402 as ::core::ffi::c_int as u16_0,
-    3405 as ::core::ffi::c_int as u16_0,
-    3406 as ::core::ffi::c_int as u16_0,
-    3415 as ::core::ffi::c_int as u16_0,
-    3424 as ::core::ffi::c_int as u16_0,
-    3426 as ::core::ffi::c_int as u16_0,
-    3430 as ::core::ffi::c_int as u16_0,
-    3440 as ::core::ffi::c_int as u16_0,
-    3449 as ::core::ffi::c_int as u16_0,
-    3450 as ::core::ffi::c_int as u16_0,
-    3458 as ::core::ffi::c_int as u16_0,
-    3461 as ::core::ffi::c_int as u16_0,
-    3482 as ::core::ffi::c_int as u16_0,
-    3507 as ::core::ffi::c_int as u16_0,
-    3517 as ::core::ffi::c_int as u16_0,
-    3520 as ::core::ffi::c_int as u16_0,
-    3530 as ::core::ffi::c_int as u16_0,
-    3535 as ::core::ffi::c_int as u16_0,
-    3538 as ::core::ffi::c_int as u16_0,
-    3542 as ::core::ffi::c_int as u16_0,
-    3544 as ::core::ffi::c_int as u16_0,
-    3570 as ::core::ffi::c_int as u16_0,
-    3572 as ::core::ffi::c_int as u16_0,
-    3585 as ::core::ffi::c_int as u16_0,
-    3633 as ::core::ffi::c_int as u16_0,
-    3634 as ::core::ffi::c_int as u16_0,
-    3636 as ::core::ffi::c_int as u16_0,
-    3647 as ::core::ffi::c_int as u16_0,
-    3648 as ::core::ffi::c_int as u16_0,
-    3654 as ::core::ffi::c_int as u16_0,
-    3655 as ::core::ffi::c_int as u16_0,
-    3663 as ::core::ffi::c_int as u16_0,
-    3664 as ::core::ffi::c_int as u16_0,
-    3674 as ::core::ffi::c_int as u16_0,
-    3713 as ::core::ffi::c_int as u16_0,
-    3716 as ::core::ffi::c_int as u16_0,
-    3719 as ::core::ffi::c_int as u16_0,
-    3722 as ::core::ffi::c_int as u16_0,
-    3725 as ::core::ffi::c_int as u16_0,
-    3732 as ::core::ffi::c_int as u16_0,
-    3737 as ::core::ffi::c_int as u16_0,
-    3745 as ::core::ffi::c_int as u16_0,
-    3749 as ::core::ffi::c_int as u16_0,
-    3751 as ::core::ffi::c_int as u16_0,
-    3754 as ::core::ffi::c_int as u16_0,
-    3757 as ::core::ffi::c_int as u16_0,
-    3761 as ::core::ffi::c_int as u16_0,
-    3762 as ::core::ffi::c_int as u16_0,
-    3764 as ::core::ffi::c_int as u16_0,
-    3771 as ::core::ffi::c_int as u16_0,
-    3773 as ::core::ffi::c_int as u16_0,
-    3776 as ::core::ffi::c_int as u16_0,
-    3782 as ::core::ffi::c_int as u16_0,
-    3784 as ::core::ffi::c_int as u16_0,
-    3792 as ::core::ffi::c_int as u16_0,
-    3804 as ::core::ffi::c_int as u16_0,
-    3840 as ::core::ffi::c_int as u16_0,
-    3841 as ::core::ffi::c_int as u16_0,
-    3844 as ::core::ffi::c_int as u16_0,
-    3859 as ::core::ffi::c_int as u16_0,
-    3860 as ::core::ffi::c_int as u16_0,
-    3861 as ::core::ffi::c_int as u16_0,
-    3864 as ::core::ffi::c_int as u16_0,
-    3866 as ::core::ffi::c_int as u16_0,
-    3872 as ::core::ffi::c_int as u16_0,
-    3882 as ::core::ffi::c_int as u16_0,
-    3892 as ::core::ffi::c_int as u16_0,
-    3893 as ::core::ffi::c_int as u16_0,
-    3894 as ::core::ffi::c_int as u16_0,
-    3895 as ::core::ffi::c_int as u16_0,
-    3896 as ::core::ffi::c_int as u16_0,
-    3897 as ::core::ffi::c_int as u16_0,
-    3898 as ::core::ffi::c_int as u16_0,
-    3899 as ::core::ffi::c_int as u16_0,
-    3900 as ::core::ffi::c_int as u16_0,
-    3901 as ::core::ffi::c_int as u16_0,
-    3902 as ::core::ffi::c_int as u16_0,
-    3904 as ::core::ffi::c_int as u16_0,
-    3913 as ::core::ffi::c_int as u16_0,
-    3953 as ::core::ffi::c_int as u16_0,
-    3967 as ::core::ffi::c_int as u16_0,
-    3968 as ::core::ffi::c_int as u16_0,
-    3973 as ::core::ffi::c_int as u16_0,
-    3974 as ::core::ffi::c_int as u16_0,
-    3976 as ::core::ffi::c_int as u16_0,
-    3981 as ::core::ffi::c_int as u16_0,
-    3993 as ::core::ffi::c_int as u16_0,
-    4030 as ::core::ffi::c_int as u16_0,
-    4038 as ::core::ffi::c_int as u16_0,
-    4039 as ::core::ffi::c_int as u16_0,
-    4046 as ::core::ffi::c_int as u16_0,
-    4048 as ::core::ffi::c_int as u16_0,
-    4053 as ::core::ffi::c_int as u16_0,
-    4057 as ::core::ffi::c_int as u16_0,
-    4096 as ::core::ffi::c_int as u16_0,
-    4139 as ::core::ffi::c_int as u16_0,
-    4141 as ::core::ffi::c_int as u16_0,
-    4145 as ::core::ffi::c_int as u16_0,
-    4146 as ::core::ffi::c_int as u16_0,
-    4152 as ::core::ffi::c_int as u16_0,
-    4153 as ::core::ffi::c_int as u16_0,
-    4155 as ::core::ffi::c_int as u16_0,
-    4157 as ::core::ffi::c_int as u16_0,
-    4159 as ::core::ffi::c_int as u16_0,
-    4160 as ::core::ffi::c_int as u16_0,
-    4170 as ::core::ffi::c_int as u16_0,
-    4176 as ::core::ffi::c_int as u16_0,
-    4182 as ::core::ffi::c_int as u16_0,
-    4184 as ::core::ffi::c_int as u16_0,
-    4186 as ::core::ffi::c_int as u16_0,
-    4190 as ::core::ffi::c_int as u16_0,
-    4193 as ::core::ffi::c_int as u16_0,
-    4194 as ::core::ffi::c_int as u16_0,
-    4197 as ::core::ffi::c_int as u16_0,
-    4199 as ::core::ffi::c_int as u16_0,
-    4206 as ::core::ffi::c_int as u16_0,
-    4209 as ::core::ffi::c_int as u16_0,
-    4213 as ::core::ffi::c_int as u16_0,
-    4226 as ::core::ffi::c_int as u16_0,
-    4227 as ::core::ffi::c_int as u16_0,
-    4229 as ::core::ffi::c_int as u16_0,
-    4231 as ::core::ffi::c_int as u16_0,
-    4237 as ::core::ffi::c_int as u16_0,
-    4238 as ::core::ffi::c_int as u16_0,
-    4239 as ::core::ffi::c_int as u16_0,
-    4240 as ::core::ffi::c_int as u16_0,
-    4250 as ::core::ffi::c_int as u16_0,
-    4253 as ::core::ffi::c_int as u16_0,
-    4254 as ::core::ffi::c_int as u16_0,
-    4256 as ::core::ffi::c_int as u16_0,
-    4295 as ::core::ffi::c_int as u16_0,
-    4301 as ::core::ffi::c_int as u16_0,
-    4304 as ::core::ffi::c_int as u16_0,
-    4347 as ::core::ffi::c_int as u16_0,
-    4348 as ::core::ffi::c_int as u16_0,
-    4349 as ::core::ffi::c_int as u16_0,
-    4682 as ::core::ffi::c_int as u16_0,
-    4688 as ::core::ffi::c_int as u16_0,
-    4696 as ::core::ffi::c_int as u16_0,
-    4698 as ::core::ffi::c_int as u16_0,
-    4704 as ::core::ffi::c_int as u16_0,
-    4746 as ::core::ffi::c_int as u16_0,
-    4752 as ::core::ffi::c_int as u16_0,
-    4786 as ::core::ffi::c_int as u16_0,
-    4792 as ::core::ffi::c_int as u16_0,
-    4800 as ::core::ffi::c_int as u16_0,
-    4802 as ::core::ffi::c_int as u16_0,
-    4808 as ::core::ffi::c_int as u16_0,
-    4824 as ::core::ffi::c_int as u16_0,
-    4882 as ::core::ffi::c_int as u16_0,
-    4888 as ::core::ffi::c_int as u16_0,
-    4957 as ::core::ffi::c_int as u16_0,
-    4960 as ::core::ffi::c_int as u16_0,
-    4969 as ::core::ffi::c_int as u16_0,
-    4992 as ::core::ffi::c_int as u16_0,
-    5008 as ::core::ffi::c_int as u16_0,
-    5024 as ::core::ffi::c_int as u16_0,
-    5120 as ::core::ffi::c_int as u16_0,
-    5121 as ::core::ffi::c_int as u16_0,
-    5741 as ::core::ffi::c_int as u16_0,
-    5743 as ::core::ffi::c_int as u16_0,
-    5760 as ::core::ffi::c_int as u16_0,
-    5761 as ::core::ffi::c_int as u16_0,
-    5787 as ::core::ffi::c_int as u16_0,
-    5788 as ::core::ffi::c_int as u16_0,
-    5792 as ::core::ffi::c_int as u16_0,
-    5867 as ::core::ffi::c_int as u16_0,
-    5870 as ::core::ffi::c_int as u16_0,
-    5888 as ::core::ffi::c_int as u16_0,
-    5902 as ::core::ffi::c_int as u16_0,
-    5906 as ::core::ffi::c_int as u16_0,
-    5920 as ::core::ffi::c_int as u16_0,
-    5938 as ::core::ffi::c_int as u16_0,
-    5941 as ::core::ffi::c_int as u16_0,
-    5952 as ::core::ffi::c_int as u16_0,
-    5970 as ::core::ffi::c_int as u16_0,
-    5984 as ::core::ffi::c_int as u16_0,
-    5998 as ::core::ffi::c_int as u16_0,
-    6002 as ::core::ffi::c_int as u16_0,
-    6016 as ::core::ffi::c_int as u16_0,
-    6068 as ::core::ffi::c_int as u16_0,
-    6070 as ::core::ffi::c_int as u16_0,
-    6071 as ::core::ffi::c_int as u16_0,
-    6078 as ::core::ffi::c_int as u16_0,
-    6086 as ::core::ffi::c_int as u16_0,
-    6087 as ::core::ffi::c_int as u16_0,
-    6089 as ::core::ffi::c_int as u16_0,
-    6100 as ::core::ffi::c_int as u16_0,
-    6103 as ::core::ffi::c_int as u16_0,
-    6104 as ::core::ffi::c_int as u16_0,
-    6107 as ::core::ffi::c_int as u16_0,
-    6108 as ::core::ffi::c_int as u16_0,
-    6109 as ::core::ffi::c_int as u16_0,
-    6112 as ::core::ffi::c_int as u16_0,
-    6128 as ::core::ffi::c_int as u16_0,
-    6144 as ::core::ffi::c_int as u16_0,
-    6150 as ::core::ffi::c_int as u16_0,
-    6151 as ::core::ffi::c_int as u16_0,
-    6155 as ::core::ffi::c_int as u16_0,
-    6158 as ::core::ffi::c_int as u16_0,
-    6160 as ::core::ffi::c_int as u16_0,
-    6176 as ::core::ffi::c_int as u16_0,
-    6211 as ::core::ffi::c_int as u16_0,
-    6212 as ::core::ffi::c_int as u16_0,
-    6272 as ::core::ffi::c_int as u16_0,
-    6313 as ::core::ffi::c_int as u16_0,
-    6314 as ::core::ffi::c_int as u16_0,
-    6320 as ::core::ffi::c_int as u16_0,
-    6400 as ::core::ffi::c_int as u16_0,
-    6432 as ::core::ffi::c_int as u16_0,
-    6435 as ::core::ffi::c_int as u16_0,
-    6439 as ::core::ffi::c_int as u16_0,
-    6441 as ::core::ffi::c_int as u16_0,
-    6448 as ::core::ffi::c_int as u16_0,
-    6450 as ::core::ffi::c_int as u16_0,
-    6451 as ::core::ffi::c_int as u16_0,
-    6457 as ::core::ffi::c_int as u16_0,
-    6464 as ::core::ffi::c_int as u16_0,
-    6468 as ::core::ffi::c_int as u16_0,
-    6470 as ::core::ffi::c_int as u16_0,
-    6480 as ::core::ffi::c_int as u16_0,
-    6512 as ::core::ffi::c_int as u16_0,
-    6528 as ::core::ffi::c_int as u16_0,
-    6576 as ::core::ffi::c_int as u16_0,
-    6593 as ::core::ffi::c_int as u16_0,
-    6600 as ::core::ffi::c_int as u16_0,
-    6608 as ::core::ffi::c_int as u16_0,
-    6618 as ::core::ffi::c_int as u16_0,
-    6622 as ::core::ffi::c_int as u16_0,
-    6656 as ::core::ffi::c_int as u16_0,
-    6679 as ::core::ffi::c_int as u16_0,
-    6681 as ::core::ffi::c_int as u16_0,
-    6686 as ::core::ffi::c_int as u16_0,
-    6688 as ::core::ffi::c_int as u16_0,
-    6741 as ::core::ffi::c_int as u16_0,
-    6742 as ::core::ffi::c_int as u16_0,
-    6743 as ::core::ffi::c_int as u16_0,
-    6744 as ::core::ffi::c_int as u16_0,
-    6752 as ::core::ffi::c_int as u16_0,
-    6753 as ::core::ffi::c_int as u16_0,
-    6754 as ::core::ffi::c_int as u16_0,
-    6755 as ::core::ffi::c_int as u16_0,
-    6757 as ::core::ffi::c_int as u16_0,
-    6765 as ::core::ffi::c_int as u16_0,
-    6771 as ::core::ffi::c_int as u16_0,
-    6783 as ::core::ffi::c_int as u16_0,
-    6784 as ::core::ffi::c_int as u16_0,
-    6800 as ::core::ffi::c_int as u16_0,
-    6816 as ::core::ffi::c_int as u16_0,
-    6823 as ::core::ffi::c_int as u16_0,
-    6824 as ::core::ffi::c_int as u16_0,
-    6912 as ::core::ffi::c_int as u16_0,
-    6916 as ::core::ffi::c_int as u16_0,
-    6917 as ::core::ffi::c_int as u16_0,
-    6964 as ::core::ffi::c_int as u16_0,
-    6965 as ::core::ffi::c_int as u16_0,
-    6966 as ::core::ffi::c_int as u16_0,
-    6971 as ::core::ffi::c_int as u16_0,
-    6972 as ::core::ffi::c_int as u16_0,
-    6973 as ::core::ffi::c_int as u16_0,
-    6978 as ::core::ffi::c_int as u16_0,
-    6979 as ::core::ffi::c_int as u16_0,
-    6981 as ::core::ffi::c_int as u16_0,
-    6992 as ::core::ffi::c_int as u16_0,
-    7002 as ::core::ffi::c_int as u16_0,
-    7009 as ::core::ffi::c_int as u16_0,
-    7019 as ::core::ffi::c_int as u16_0,
-    7028 as ::core::ffi::c_int as u16_0,
-    7040 as ::core::ffi::c_int as u16_0,
-    7042 as ::core::ffi::c_int as u16_0,
-    7043 as ::core::ffi::c_int as u16_0,
-    7073 as ::core::ffi::c_int as u16_0,
-    7074 as ::core::ffi::c_int as u16_0,
-    7078 as ::core::ffi::c_int as u16_0,
-    7080 as ::core::ffi::c_int as u16_0,
-    7082 as ::core::ffi::c_int as u16_0,
-    7083 as ::core::ffi::c_int as u16_0,
-    7084 as ::core::ffi::c_int as u16_0,
-    7086 as ::core::ffi::c_int as u16_0,
-    7088 as ::core::ffi::c_int as u16_0,
-    7098 as ::core::ffi::c_int as u16_0,
-    7142 as ::core::ffi::c_int as u16_0,
-    7143 as ::core::ffi::c_int as u16_0,
-    7144 as ::core::ffi::c_int as u16_0,
-    7146 as ::core::ffi::c_int as u16_0,
-    7149 as ::core::ffi::c_int as u16_0,
-    7150 as ::core::ffi::c_int as u16_0,
-    7151 as ::core::ffi::c_int as u16_0,
-    7154 as ::core::ffi::c_int as u16_0,
-    7164 as ::core::ffi::c_int as u16_0,
-    7168 as ::core::ffi::c_int as u16_0,
-    7204 as ::core::ffi::c_int as u16_0,
-    7212 as ::core::ffi::c_int as u16_0,
-    7220 as ::core::ffi::c_int as u16_0,
-    7222 as ::core::ffi::c_int as u16_0,
-    7227 as ::core::ffi::c_int as u16_0,
-    7232 as ::core::ffi::c_int as u16_0,
-    7245 as ::core::ffi::c_int as u16_0,
-    7248 as ::core::ffi::c_int as u16_0,
-    7258 as ::core::ffi::c_int as u16_0,
-    7288 as ::core::ffi::c_int as u16_0,
-    7294 as ::core::ffi::c_int as u16_0,
-    7360 as ::core::ffi::c_int as u16_0,
-    7376 as ::core::ffi::c_int as u16_0,
-    7379 as ::core::ffi::c_int as u16_0,
-    7380 as ::core::ffi::c_int as u16_0,
-    7393 as ::core::ffi::c_int as u16_0,
-    7394 as ::core::ffi::c_int as u16_0,
-    7401 as ::core::ffi::c_int as u16_0,
-    7405 as ::core::ffi::c_int as u16_0,
-    7406 as ::core::ffi::c_int as u16_0,
-    7410 as ::core::ffi::c_int as u16_0,
-    7412 as ::core::ffi::c_int as u16_0,
-    7413 as ::core::ffi::c_int as u16_0,
-    7424 as ::core::ffi::c_int as u16_0,
-    7468 as ::core::ffi::c_int as u16_0,
-    7531 as ::core::ffi::c_int as u16_0,
-    7544 as ::core::ffi::c_int as u16_0,
-    7545 as ::core::ffi::c_int as u16_0,
-    7579 as ::core::ffi::c_int as u16_0,
-    7616 as ::core::ffi::c_int as u16_0,
-    7676 as ::core::ffi::c_int as u16_0,
-    7680 as ::core::ffi::c_int as u16_0,
-    7830 as ::core::ffi::c_int as u16_0,
-    7838 as ::core::ffi::c_int as u16_0,
-    7936 as ::core::ffi::c_int as u16_0,
-    7944 as ::core::ffi::c_int as u16_0,
-    7952 as ::core::ffi::c_int as u16_0,
-    7960 as ::core::ffi::c_int as u16_0,
-    7968 as ::core::ffi::c_int as u16_0,
-    7976 as ::core::ffi::c_int as u16_0,
-    7984 as ::core::ffi::c_int as u16_0,
-    7992 as ::core::ffi::c_int as u16_0,
-    8000 as ::core::ffi::c_int as u16_0,
-    8008 as ::core::ffi::c_int as u16_0,
-    8016 as ::core::ffi::c_int as u16_0,
-    8025 as ::core::ffi::c_int as u16_0,
-    8027 as ::core::ffi::c_int as u16_0,
-    8029 as ::core::ffi::c_int as u16_0,
-    8031 as ::core::ffi::c_int as u16_0,
-    8033 as ::core::ffi::c_int as u16_0,
-    8040 as ::core::ffi::c_int as u16_0,
-    8048 as ::core::ffi::c_int as u16_0,
-    8064 as ::core::ffi::c_int as u16_0,
-    8072 as ::core::ffi::c_int as u16_0,
-    8080 as ::core::ffi::c_int as u16_0,
-    8088 as ::core::ffi::c_int as u16_0,
-    8096 as ::core::ffi::c_int as u16_0,
-    8104 as ::core::ffi::c_int as u16_0,
-    8112 as ::core::ffi::c_int as u16_0,
-    8118 as ::core::ffi::c_int as u16_0,
-    8120 as ::core::ffi::c_int as u16_0,
-    8124 as ::core::ffi::c_int as u16_0,
-    8125 as ::core::ffi::c_int as u16_0,
-    8126 as ::core::ffi::c_int as u16_0,
-    8127 as ::core::ffi::c_int as u16_0,
-    8130 as ::core::ffi::c_int as u16_0,
-    8134 as ::core::ffi::c_int as u16_0,
-    8136 as ::core::ffi::c_int as u16_0,
-    8140 as ::core::ffi::c_int as u16_0,
-    8141 as ::core::ffi::c_int as u16_0,
-    8144 as ::core::ffi::c_int as u16_0,
-    8150 as ::core::ffi::c_int as u16_0,
-    8152 as ::core::ffi::c_int as u16_0,
-    8157 as ::core::ffi::c_int as u16_0,
-    8160 as ::core::ffi::c_int as u16_0,
-    8168 as ::core::ffi::c_int as u16_0,
-    8173 as ::core::ffi::c_int as u16_0,
-    8178 as ::core::ffi::c_int as u16_0,
-    8182 as ::core::ffi::c_int as u16_0,
-    8184 as ::core::ffi::c_int as u16_0,
-    8188 as ::core::ffi::c_int as u16_0,
-    8189 as ::core::ffi::c_int as u16_0,
-    8192 as ::core::ffi::c_int as u16_0,
-    8203 as ::core::ffi::c_int as u16_0,
-    8208 as ::core::ffi::c_int as u16_0,
-    8214 as ::core::ffi::c_int as u16_0,
-    8216 as ::core::ffi::c_int as u16_0,
-    8217 as ::core::ffi::c_int as u16_0,
-    8218 as ::core::ffi::c_int as u16_0,
-    8219 as ::core::ffi::c_int as u16_0,
-    8221 as ::core::ffi::c_int as u16_0,
-    8222 as ::core::ffi::c_int as u16_0,
-    8223 as ::core::ffi::c_int as u16_0,
-    8224 as ::core::ffi::c_int as u16_0,
-    8232 as ::core::ffi::c_int as u16_0,
-    8233 as ::core::ffi::c_int as u16_0,
-    8234 as ::core::ffi::c_int as u16_0,
-    8239 as ::core::ffi::c_int as u16_0,
-    8240 as ::core::ffi::c_int as u16_0,
-    8249 as ::core::ffi::c_int as u16_0,
-    8250 as ::core::ffi::c_int as u16_0,
-    8251 as ::core::ffi::c_int as u16_0,
-    8255 as ::core::ffi::c_int as u16_0,
-    8257 as ::core::ffi::c_int as u16_0,
-    8260 as ::core::ffi::c_int as u16_0,
-    8261 as ::core::ffi::c_int as u16_0,
-    8262 as ::core::ffi::c_int as u16_0,
-    8263 as ::core::ffi::c_int as u16_0,
-    8274 as ::core::ffi::c_int as u16_0,
-    8275 as ::core::ffi::c_int as u16_0,
-    8276 as ::core::ffi::c_int as u16_0,
-    8277 as ::core::ffi::c_int as u16_0,
-    8287 as ::core::ffi::c_int as u16_0,
-    8288 as ::core::ffi::c_int as u16_0,
-    8298 as ::core::ffi::c_int as u16_0,
-    8304 as ::core::ffi::c_int as u16_0,
-    8305 as ::core::ffi::c_int as u16_0,
-    8308 as ::core::ffi::c_int as u16_0,
-    8314 as ::core::ffi::c_int as u16_0,
-    8317 as ::core::ffi::c_int as u16_0,
-    8318 as ::core::ffi::c_int as u16_0,
-    8319 as ::core::ffi::c_int as u16_0,
-    8320 as ::core::ffi::c_int as u16_0,
-    8330 as ::core::ffi::c_int as u16_0,
-    8333 as ::core::ffi::c_int as u16_0,
-    8334 as ::core::ffi::c_int as u16_0,
-    8336 as ::core::ffi::c_int as u16_0,
-    8352 as ::core::ffi::c_int as u16_0,
-    8400 as ::core::ffi::c_int as u16_0,
-    8413 as ::core::ffi::c_int as u16_0,
-    8417 as ::core::ffi::c_int as u16_0,
-    8418 as ::core::ffi::c_int as u16_0,
-    8421 as ::core::ffi::c_int as u16_0,
-    8448 as ::core::ffi::c_int as u16_0,
-    8450 as ::core::ffi::c_int as u16_0,
-    8451 as ::core::ffi::c_int as u16_0,
-    8455 as ::core::ffi::c_int as u16_0,
-    8456 as ::core::ffi::c_int as u16_0,
-    8458 as ::core::ffi::c_int as u16_0,
-    8459 as ::core::ffi::c_int as u16_0,
-    8462 as ::core::ffi::c_int as u16_0,
-    8464 as ::core::ffi::c_int as u16_0,
-    8467 as ::core::ffi::c_int as u16_0,
-    8468 as ::core::ffi::c_int as u16_0,
-    8469 as ::core::ffi::c_int as u16_0,
-    8470 as ::core::ffi::c_int as u16_0,
-    8472 as ::core::ffi::c_int as u16_0,
-    8473 as ::core::ffi::c_int as u16_0,
-    8478 as ::core::ffi::c_int as u16_0,
-    8484 as ::core::ffi::c_int as u16_0,
-    8485 as ::core::ffi::c_int as u16_0,
-    8486 as ::core::ffi::c_int as u16_0,
-    8487 as ::core::ffi::c_int as u16_0,
-    8488 as ::core::ffi::c_int as u16_0,
-    8489 as ::core::ffi::c_int as u16_0,
-    8490 as ::core::ffi::c_int as u16_0,
-    8494 as ::core::ffi::c_int as u16_0,
-    8495 as ::core::ffi::c_int as u16_0,
-    8496 as ::core::ffi::c_int as u16_0,
-    8500 as ::core::ffi::c_int as u16_0,
-    8501 as ::core::ffi::c_int as u16_0,
-    8505 as ::core::ffi::c_int as u16_0,
-    8506 as ::core::ffi::c_int as u16_0,
-    8508 as ::core::ffi::c_int as u16_0,
-    8510 as ::core::ffi::c_int as u16_0,
-    8512 as ::core::ffi::c_int as u16_0,
-    8517 as ::core::ffi::c_int as u16_0,
-    8519 as ::core::ffi::c_int as u16_0,
-    8522 as ::core::ffi::c_int as u16_0,
-    8523 as ::core::ffi::c_int as u16_0,
-    8524 as ::core::ffi::c_int as u16_0,
-    8526 as ::core::ffi::c_int as u16_0,
-    8527 as ::core::ffi::c_int as u16_0,
-    8528 as ::core::ffi::c_int as u16_0,
-    8544 as ::core::ffi::c_int as u16_0,
-    8579 as ::core::ffi::c_int as u16_0,
-    8581 as ::core::ffi::c_int as u16_0,
-    8585 as ::core::ffi::c_int as u16_0,
-    8592 as ::core::ffi::c_int as u16_0,
-    8597 as ::core::ffi::c_int as u16_0,
-    8602 as ::core::ffi::c_int as u16_0,
-    8604 as ::core::ffi::c_int as u16_0,
-    8608 as ::core::ffi::c_int as u16_0,
-    8609 as ::core::ffi::c_int as u16_0,
-    8611 as ::core::ffi::c_int as u16_0,
-    8612 as ::core::ffi::c_int as u16_0,
-    8614 as ::core::ffi::c_int as u16_0,
-    8615 as ::core::ffi::c_int as u16_0,
-    8622 as ::core::ffi::c_int as u16_0,
-    8623 as ::core::ffi::c_int as u16_0,
-    8654 as ::core::ffi::c_int as u16_0,
-    8656 as ::core::ffi::c_int as u16_0,
-    8658 as ::core::ffi::c_int as u16_0,
-    8659 as ::core::ffi::c_int as u16_0,
-    8660 as ::core::ffi::c_int as u16_0,
-    8661 as ::core::ffi::c_int as u16_0,
-    8692 as ::core::ffi::c_int as u16_0,
-    8960 as ::core::ffi::c_int as u16_0,
-    8968 as ::core::ffi::c_int as u16_0,
-    8972 as ::core::ffi::c_int as u16_0,
-    8992 as ::core::ffi::c_int as u16_0,
-    8994 as ::core::ffi::c_int as u16_0,
-    9001 as ::core::ffi::c_int as u16_0,
-    9002 as ::core::ffi::c_int as u16_0,
-    9003 as ::core::ffi::c_int as u16_0,
-    9084 as ::core::ffi::c_int as u16_0,
-    9085 as ::core::ffi::c_int as u16_0,
-    9115 as ::core::ffi::c_int as u16_0,
-    9140 as ::core::ffi::c_int as u16_0,
-    9180 as ::core::ffi::c_int as u16_0,
-    9186 as ::core::ffi::c_int as u16_0,
-    9216 as ::core::ffi::c_int as u16_0,
-    9280 as ::core::ffi::c_int as u16_0,
-    9312 as ::core::ffi::c_int as u16_0,
-    9372 as ::core::ffi::c_int as u16_0,
-    9450 as ::core::ffi::c_int as u16_0,
-    9472 as ::core::ffi::c_int as u16_0,
-    9655 as ::core::ffi::c_int as u16_0,
-    9656 as ::core::ffi::c_int as u16_0,
-    9665 as ::core::ffi::c_int as u16_0,
-    9666 as ::core::ffi::c_int as u16_0,
-    9720 as ::core::ffi::c_int as u16_0,
-    9728 as ::core::ffi::c_int as u16_0,
-    9839 as ::core::ffi::c_int as u16_0,
-    9840 as ::core::ffi::c_int as u16_0,
-    9985 as ::core::ffi::c_int as u16_0,
-    10088 as ::core::ffi::c_int as u16_0,
-    10089 as ::core::ffi::c_int as u16_0,
-    10090 as ::core::ffi::c_int as u16_0,
-    10091 as ::core::ffi::c_int as u16_0,
-    10092 as ::core::ffi::c_int as u16_0,
-    10093 as ::core::ffi::c_int as u16_0,
-    10094 as ::core::ffi::c_int as u16_0,
-    10095 as ::core::ffi::c_int as u16_0,
-    10096 as ::core::ffi::c_int as u16_0,
-    10097 as ::core::ffi::c_int as u16_0,
-    10098 as ::core::ffi::c_int as u16_0,
-    10099 as ::core::ffi::c_int as u16_0,
-    10100 as ::core::ffi::c_int as u16_0,
-    10101 as ::core::ffi::c_int as u16_0,
-    10102 as ::core::ffi::c_int as u16_0,
-    10132 as ::core::ffi::c_int as u16_0,
-    10176 as ::core::ffi::c_int as u16_0,
-    10181 as ::core::ffi::c_int as u16_0,
-    10182 as ::core::ffi::c_int as u16_0,
-    10183 as ::core::ffi::c_int as u16_0,
-    10214 as ::core::ffi::c_int as u16_0,
-    10215 as ::core::ffi::c_int as u16_0,
-    10216 as ::core::ffi::c_int as u16_0,
-    10217 as ::core::ffi::c_int as u16_0,
-    10218 as ::core::ffi::c_int as u16_0,
-    10219 as ::core::ffi::c_int as u16_0,
-    10220 as ::core::ffi::c_int as u16_0,
-    10221 as ::core::ffi::c_int as u16_0,
-    10222 as ::core::ffi::c_int as u16_0,
-    10223 as ::core::ffi::c_int as u16_0,
-    10224 as ::core::ffi::c_int as u16_0,
-    10240 as ::core::ffi::c_int as u16_0,
-    10496 as ::core::ffi::c_int as u16_0,
-    10627 as ::core::ffi::c_int as u16_0,
-    10628 as ::core::ffi::c_int as u16_0,
-    10629 as ::core::ffi::c_int as u16_0,
-    10630 as ::core::ffi::c_int as u16_0,
-    10631 as ::core::ffi::c_int as u16_0,
-    10632 as ::core::ffi::c_int as u16_0,
-    10633 as ::core::ffi::c_int as u16_0,
-    10634 as ::core::ffi::c_int as u16_0,
-    10635 as ::core::ffi::c_int as u16_0,
-    10636 as ::core::ffi::c_int as u16_0,
-    10637 as ::core::ffi::c_int as u16_0,
-    10638 as ::core::ffi::c_int as u16_0,
-    10639 as ::core::ffi::c_int as u16_0,
-    10640 as ::core::ffi::c_int as u16_0,
-    10641 as ::core::ffi::c_int as u16_0,
-    10642 as ::core::ffi::c_int as u16_0,
-    10643 as ::core::ffi::c_int as u16_0,
-    10644 as ::core::ffi::c_int as u16_0,
-    10645 as ::core::ffi::c_int as u16_0,
-    10646 as ::core::ffi::c_int as u16_0,
-    10647 as ::core::ffi::c_int as u16_0,
-    10648 as ::core::ffi::c_int as u16_0,
-    10649 as ::core::ffi::c_int as u16_0,
-    10712 as ::core::ffi::c_int as u16_0,
-    10713 as ::core::ffi::c_int as u16_0,
-    10714 as ::core::ffi::c_int as u16_0,
-    10715 as ::core::ffi::c_int as u16_0,
-    10716 as ::core::ffi::c_int as u16_0,
-    10748 as ::core::ffi::c_int as u16_0,
-    10749 as ::core::ffi::c_int as u16_0,
-    10750 as ::core::ffi::c_int as u16_0,
-    11008 as ::core::ffi::c_int as u16_0,
-    11056 as ::core::ffi::c_int as u16_0,
-    11077 as ::core::ffi::c_int as u16_0,
-    11079 as ::core::ffi::c_int as u16_0,
-    11088 as ::core::ffi::c_int as u16_0,
-    11264 as ::core::ffi::c_int as u16_0,
-    11312 as ::core::ffi::c_int as u16_0,
-    11360 as ::core::ffi::c_int as u16_0,
-    11363 as ::core::ffi::c_int as u16_0,
-    11365 as ::core::ffi::c_int as u16_0,
-    11367 as ::core::ffi::c_int as u16_0,
-    11374 as ::core::ffi::c_int as u16_0,
-    11377 as ::core::ffi::c_int as u16_0,
-    11378 as ::core::ffi::c_int as u16_0,
-    11380 as ::core::ffi::c_int as u16_0,
-    11381 as ::core::ffi::c_int as u16_0,
-    11383 as ::core::ffi::c_int as u16_0,
-    11388 as ::core::ffi::c_int as u16_0,
-    11390 as ::core::ffi::c_int as u16_0,
-    11393 as ::core::ffi::c_int as u16_0,
-    11394 as ::core::ffi::c_int as u16_0,
-    11492 as ::core::ffi::c_int as u16_0,
-    11493 as ::core::ffi::c_int as u16_0,
-    11499 as ::core::ffi::c_int as u16_0,
-    11503 as ::core::ffi::c_int as u16_0,
-    11506 as ::core::ffi::c_int as u16_0,
-    11513 as ::core::ffi::c_int as u16_0,
-    11517 as ::core::ffi::c_int as u16_0,
-    11518 as ::core::ffi::c_int as u16_0,
-    11520 as ::core::ffi::c_int as u16_0,
-    11559 as ::core::ffi::c_int as u16_0,
-    11565 as ::core::ffi::c_int as u16_0,
-    11568 as ::core::ffi::c_int as u16_0,
-    11631 as ::core::ffi::c_int as u16_0,
-    11632 as ::core::ffi::c_int as u16_0,
-    11647 as ::core::ffi::c_int as u16_0,
-    11648 as ::core::ffi::c_int as u16_0,
-    11680 as ::core::ffi::c_int as u16_0,
-    11688 as ::core::ffi::c_int as u16_0,
-    11696 as ::core::ffi::c_int as u16_0,
-    11704 as ::core::ffi::c_int as u16_0,
-    11712 as ::core::ffi::c_int as u16_0,
-    11720 as ::core::ffi::c_int as u16_0,
-    11728 as ::core::ffi::c_int as u16_0,
-    11736 as ::core::ffi::c_int as u16_0,
-    11744 as ::core::ffi::c_int as u16_0,
-    11776 as ::core::ffi::c_int as u16_0,
-    11778 as ::core::ffi::c_int as u16_0,
-    11779 as ::core::ffi::c_int as u16_0,
-    11780 as ::core::ffi::c_int as u16_0,
-    11781 as ::core::ffi::c_int as u16_0,
-    11782 as ::core::ffi::c_int as u16_0,
-    11785 as ::core::ffi::c_int as u16_0,
-    11786 as ::core::ffi::c_int as u16_0,
-    11787 as ::core::ffi::c_int as u16_0,
-    11788 as ::core::ffi::c_int as u16_0,
-    11789 as ::core::ffi::c_int as u16_0,
-    11790 as ::core::ffi::c_int as u16_0,
-    11799 as ::core::ffi::c_int as u16_0,
-    11800 as ::core::ffi::c_int as u16_0,
-    11802 as ::core::ffi::c_int as u16_0,
-    11803 as ::core::ffi::c_int as u16_0,
-    11804 as ::core::ffi::c_int as u16_0,
-    11805 as ::core::ffi::c_int as u16_0,
-    11806 as ::core::ffi::c_int as u16_0,
-    11808 as ::core::ffi::c_int as u16_0,
-    11809 as ::core::ffi::c_int as u16_0,
-    11810 as ::core::ffi::c_int as u16_0,
-    11811 as ::core::ffi::c_int as u16_0,
-    11812 as ::core::ffi::c_int as u16_0,
-    11813 as ::core::ffi::c_int as u16_0,
-    11814 as ::core::ffi::c_int as u16_0,
-    11815 as ::core::ffi::c_int as u16_0,
-    11816 as ::core::ffi::c_int as u16_0,
-    11817 as ::core::ffi::c_int as u16_0,
-    11818 as ::core::ffi::c_int as u16_0,
-    11823 as ::core::ffi::c_int as u16_0,
-    11824 as ::core::ffi::c_int as u16_0,
-    11834 as ::core::ffi::c_int as u16_0,
-    11904 as ::core::ffi::c_int as u16_0,
-    11931 as ::core::ffi::c_int as u16_0,
-    12032 as ::core::ffi::c_int as u16_0,
-    12272 as ::core::ffi::c_int as u16_0,
-    12288 as ::core::ffi::c_int as u16_0,
-    12289 as ::core::ffi::c_int as u16_0,
-    12292 as ::core::ffi::c_int as u16_0,
-    12293 as ::core::ffi::c_int as u16_0,
-    12294 as ::core::ffi::c_int as u16_0,
-    12295 as ::core::ffi::c_int as u16_0,
-    12296 as ::core::ffi::c_int as u16_0,
-    12297 as ::core::ffi::c_int as u16_0,
-    12298 as ::core::ffi::c_int as u16_0,
-    12299 as ::core::ffi::c_int as u16_0,
-    12300 as ::core::ffi::c_int as u16_0,
-    12301 as ::core::ffi::c_int as u16_0,
-    12302 as ::core::ffi::c_int as u16_0,
-    12303 as ::core::ffi::c_int as u16_0,
-    12304 as ::core::ffi::c_int as u16_0,
-    12305 as ::core::ffi::c_int as u16_0,
-    12306 as ::core::ffi::c_int as u16_0,
-    12308 as ::core::ffi::c_int as u16_0,
-    12309 as ::core::ffi::c_int as u16_0,
-    12310 as ::core::ffi::c_int as u16_0,
-    12311 as ::core::ffi::c_int as u16_0,
-    12312 as ::core::ffi::c_int as u16_0,
-    12313 as ::core::ffi::c_int as u16_0,
-    12314 as ::core::ffi::c_int as u16_0,
-    12315 as ::core::ffi::c_int as u16_0,
-    12316 as ::core::ffi::c_int as u16_0,
-    12317 as ::core::ffi::c_int as u16_0,
-    12318 as ::core::ffi::c_int as u16_0,
-    12320 as ::core::ffi::c_int as u16_0,
-    12321 as ::core::ffi::c_int as u16_0,
-    12330 as ::core::ffi::c_int as u16_0,
-    12334 as ::core::ffi::c_int as u16_0,
-    12336 as ::core::ffi::c_int as u16_0,
-    12337 as ::core::ffi::c_int as u16_0,
-    12342 as ::core::ffi::c_int as u16_0,
-    12344 as ::core::ffi::c_int as u16_0,
-    12347 as ::core::ffi::c_int as u16_0,
-    12348 as ::core::ffi::c_int as u16_0,
-    12349 as ::core::ffi::c_int as u16_0,
-    12350 as ::core::ffi::c_int as u16_0,
-    12353 as ::core::ffi::c_int as u16_0,
-    12441 as ::core::ffi::c_int as u16_0,
-    12443 as ::core::ffi::c_int as u16_0,
-    12445 as ::core::ffi::c_int as u16_0,
-    12447 as ::core::ffi::c_int as u16_0,
-    12448 as ::core::ffi::c_int as u16_0,
-    12449 as ::core::ffi::c_int as u16_0,
-    12539 as ::core::ffi::c_int as u16_0,
-    12540 as ::core::ffi::c_int as u16_0,
-    12543 as ::core::ffi::c_int as u16_0,
-    12549 as ::core::ffi::c_int as u16_0,
-    12593 as ::core::ffi::c_int as u16_0,
-    12688 as ::core::ffi::c_int as u16_0,
-    12690 as ::core::ffi::c_int as u16_0,
-    12694 as ::core::ffi::c_int as u16_0,
-    12704 as ::core::ffi::c_int as u16_0,
-    12736 as ::core::ffi::c_int as u16_0,
-    12784 as ::core::ffi::c_int as u16_0,
-    12800 as ::core::ffi::c_int as u16_0,
-    12832 as ::core::ffi::c_int as u16_0,
-    12842 as ::core::ffi::c_int as u16_0,
-    12872 as ::core::ffi::c_int as u16_0,
-    12880 as ::core::ffi::c_int as u16_0,
-    12881 as ::core::ffi::c_int as u16_0,
-    12896 as ::core::ffi::c_int as u16_0,
-    12928 as ::core::ffi::c_int as u16_0,
-    12938 as ::core::ffi::c_int as u16_0,
-    12977 as ::core::ffi::c_int as u16_0,
-    12992 as ::core::ffi::c_int as u16_0,
-    13056 as ::core::ffi::c_int as u16_0,
-    13312 as ::core::ffi::c_int as u16_0,
-    19893 as ::core::ffi::c_int as u16_0,
-    19904 as ::core::ffi::c_int as u16_0,
-    19968 as ::core::ffi::c_int as u16_0,
-    40908 as ::core::ffi::c_int as u16_0,
-    40960 as ::core::ffi::c_int as u16_0,
-    40981 as ::core::ffi::c_int as u16_0,
-    40982 as ::core::ffi::c_int as u16_0,
-    42128 as ::core::ffi::c_int as u16_0,
-    42192 as ::core::ffi::c_int as u16_0,
-    42232 as ::core::ffi::c_int as u16_0,
-    42238 as ::core::ffi::c_int as u16_0,
-    42240 as ::core::ffi::c_int as u16_0,
-    42508 as ::core::ffi::c_int as u16_0,
-    42509 as ::core::ffi::c_int as u16_0,
-    42512 as ::core::ffi::c_int as u16_0,
-    42528 as ::core::ffi::c_int as u16_0,
-    42538 as ::core::ffi::c_int as u16_0,
-    42560 as ::core::ffi::c_int as u16_0,
-    42606 as ::core::ffi::c_int as u16_0,
-    42607 as ::core::ffi::c_int as u16_0,
-    42608 as ::core::ffi::c_int as u16_0,
-    42611 as ::core::ffi::c_int as u16_0,
-    42612 as ::core::ffi::c_int as u16_0,
-    42622 as ::core::ffi::c_int as u16_0,
-    42623 as ::core::ffi::c_int as u16_0,
-    42624 as ::core::ffi::c_int as u16_0,
-    42655 as ::core::ffi::c_int as u16_0,
-    42656 as ::core::ffi::c_int as u16_0,
-    42726 as ::core::ffi::c_int as u16_0,
-    42736 as ::core::ffi::c_int as u16_0,
-    42738 as ::core::ffi::c_int as u16_0,
-    42752 as ::core::ffi::c_int as u16_0,
-    42775 as ::core::ffi::c_int as u16_0,
-    42784 as ::core::ffi::c_int as u16_0,
-    42786 as ::core::ffi::c_int as u16_0,
-    42800 as ::core::ffi::c_int as u16_0,
-    42802 as ::core::ffi::c_int as u16_0,
-    42864 as ::core::ffi::c_int as u16_0,
-    42865 as ::core::ffi::c_int as u16_0,
-    42873 as ::core::ffi::c_int as u16_0,
-    42878 as ::core::ffi::c_int as u16_0,
-    42888 as ::core::ffi::c_int as u16_0,
-    42889 as ::core::ffi::c_int as u16_0,
-    42891 as ::core::ffi::c_int as u16_0,
-    42896 as ::core::ffi::c_int as u16_0,
-    42912 as ::core::ffi::c_int as u16_0,
-    43000 as ::core::ffi::c_int as u16_0,
-    43002 as ::core::ffi::c_int as u16_0,
-    43003 as ::core::ffi::c_int as u16_0,
-    43010 as ::core::ffi::c_int as u16_0,
-    43011 as ::core::ffi::c_int as u16_0,
-    43014 as ::core::ffi::c_int as u16_0,
-    43015 as ::core::ffi::c_int as u16_0,
-    43019 as ::core::ffi::c_int as u16_0,
-    43020 as ::core::ffi::c_int as u16_0,
-    43043 as ::core::ffi::c_int as u16_0,
-    43045 as ::core::ffi::c_int as u16_0,
-    43047 as ::core::ffi::c_int as u16_0,
-    43048 as ::core::ffi::c_int as u16_0,
-    43056 as ::core::ffi::c_int as u16_0,
-    43062 as ::core::ffi::c_int as u16_0,
-    43064 as ::core::ffi::c_int as u16_0,
-    43065 as ::core::ffi::c_int as u16_0,
-    43072 as ::core::ffi::c_int as u16_0,
-    43124 as ::core::ffi::c_int as u16_0,
-    43136 as ::core::ffi::c_int as u16_0,
-    43138 as ::core::ffi::c_int as u16_0,
-    43188 as ::core::ffi::c_int as u16_0,
-    43204 as ::core::ffi::c_int as u16_0,
-    43214 as ::core::ffi::c_int as u16_0,
-    43216 as ::core::ffi::c_int as u16_0,
-    43232 as ::core::ffi::c_int as u16_0,
-    43250 as ::core::ffi::c_int as u16_0,
-    43256 as ::core::ffi::c_int as u16_0,
-    43259 as ::core::ffi::c_int as u16_0,
-    43264 as ::core::ffi::c_int as u16_0,
-    43274 as ::core::ffi::c_int as u16_0,
-    43302 as ::core::ffi::c_int as u16_0,
-    43310 as ::core::ffi::c_int as u16_0,
-    43312 as ::core::ffi::c_int as u16_0,
-    43335 as ::core::ffi::c_int as u16_0,
-    43346 as ::core::ffi::c_int as u16_0,
-    43359 as ::core::ffi::c_int as u16_0,
-    43360 as ::core::ffi::c_int as u16_0,
-    43392 as ::core::ffi::c_int as u16_0,
-    43395 as ::core::ffi::c_int as u16_0,
-    43396 as ::core::ffi::c_int as u16_0,
-    43443 as ::core::ffi::c_int as u16_0,
-    43444 as ::core::ffi::c_int as u16_0,
-    43446 as ::core::ffi::c_int as u16_0,
-    43450 as ::core::ffi::c_int as u16_0,
-    43452 as ::core::ffi::c_int as u16_0,
-    43453 as ::core::ffi::c_int as u16_0,
-    43457 as ::core::ffi::c_int as u16_0,
-    43471 as ::core::ffi::c_int as u16_0,
-    43472 as ::core::ffi::c_int as u16_0,
-    43486 as ::core::ffi::c_int as u16_0,
-    43520 as ::core::ffi::c_int as u16_0,
-    43561 as ::core::ffi::c_int as u16_0,
-    43567 as ::core::ffi::c_int as u16_0,
-    43569 as ::core::ffi::c_int as u16_0,
-    43571 as ::core::ffi::c_int as u16_0,
-    43573 as ::core::ffi::c_int as u16_0,
-    43584 as ::core::ffi::c_int as u16_0,
-    43587 as ::core::ffi::c_int as u16_0,
-    43588 as ::core::ffi::c_int as u16_0,
-    43596 as ::core::ffi::c_int as u16_0,
-    43597 as ::core::ffi::c_int as u16_0,
-    43600 as ::core::ffi::c_int as u16_0,
-    43612 as ::core::ffi::c_int as u16_0,
-    43616 as ::core::ffi::c_int as u16_0,
-    43632 as ::core::ffi::c_int as u16_0,
-    43633 as ::core::ffi::c_int as u16_0,
-    43639 as ::core::ffi::c_int as u16_0,
-    43642 as ::core::ffi::c_int as u16_0,
-    43643 as ::core::ffi::c_int as u16_0,
-    43648 as ::core::ffi::c_int as u16_0,
-    43696 as ::core::ffi::c_int as u16_0,
-    43697 as ::core::ffi::c_int as u16_0,
-    43698 as ::core::ffi::c_int as u16_0,
-    43701 as ::core::ffi::c_int as u16_0,
-    43703 as ::core::ffi::c_int as u16_0,
-    43705 as ::core::ffi::c_int as u16_0,
-    43710 as ::core::ffi::c_int as u16_0,
-    43712 as ::core::ffi::c_int as u16_0,
-    43713 as ::core::ffi::c_int as u16_0,
-    43714 as ::core::ffi::c_int as u16_0,
-    43739 as ::core::ffi::c_int as u16_0,
-    43741 as ::core::ffi::c_int as u16_0,
-    43742 as ::core::ffi::c_int as u16_0,
-    43744 as ::core::ffi::c_int as u16_0,
-    43755 as ::core::ffi::c_int as u16_0,
-    43756 as ::core::ffi::c_int as u16_0,
-    43758 as ::core::ffi::c_int as u16_0,
-    43760 as ::core::ffi::c_int as u16_0,
-    43762 as ::core::ffi::c_int as u16_0,
-    43763 as ::core::ffi::c_int as u16_0,
-    43765 as ::core::ffi::c_int as u16_0,
-    43766 as ::core::ffi::c_int as u16_0,
-    43777 as ::core::ffi::c_int as u16_0,
-    43785 as ::core::ffi::c_int as u16_0,
-    43793 as ::core::ffi::c_int as u16_0,
-    43808 as ::core::ffi::c_int as u16_0,
-    43816 as ::core::ffi::c_int as u16_0,
-    43968 as ::core::ffi::c_int as u16_0,
-    44003 as ::core::ffi::c_int as u16_0,
-    44005 as ::core::ffi::c_int as u16_0,
-    44006 as ::core::ffi::c_int as u16_0,
-    44008 as ::core::ffi::c_int as u16_0,
-    44009 as ::core::ffi::c_int as u16_0,
-    44011 as ::core::ffi::c_int as u16_0,
-    44012 as ::core::ffi::c_int as u16_0,
-    44013 as ::core::ffi::c_int as u16_0,
-    44016 as ::core::ffi::c_int as u16_0,
-    44032 as ::core::ffi::c_int as u16_0,
-    55203 as ::core::ffi::c_int as u16_0,
-    55216 as ::core::ffi::c_int as u16_0,
-    55243 as ::core::ffi::c_int as u16_0,
-    55296 as ::core::ffi::c_int as u16_0,
-    56191 as ::core::ffi::c_int as u16_0,
-    56319 as ::core::ffi::c_int as u16_0,
-    57343 as ::core::ffi::c_int as u16_0,
-    57344 as ::core::ffi::c_int as u16_0,
-    63743 as ::core::ffi::c_int as u16_0,
-    63744 as ::core::ffi::c_int as u16_0,
-    64112 as ::core::ffi::c_int as u16_0,
-    64256 as ::core::ffi::c_int as u16_0,
-    64275 as ::core::ffi::c_int as u16_0,
-    64285 as ::core::ffi::c_int as u16_0,
-    64286 as ::core::ffi::c_int as u16_0,
-    64287 as ::core::ffi::c_int as u16_0,
-    64297 as ::core::ffi::c_int as u16_0,
-    64298 as ::core::ffi::c_int as u16_0,
-    64312 as ::core::ffi::c_int as u16_0,
-    64318 as ::core::ffi::c_int as u16_0,
-    64320 as ::core::ffi::c_int as u16_0,
-    64323 as ::core::ffi::c_int as u16_0,
-    64326 as ::core::ffi::c_int as u16_0,
-    64434 as ::core::ffi::c_int as u16_0,
-    64467 as ::core::ffi::c_int as u16_0,
-    64830 as ::core::ffi::c_int as u16_0,
-    64831 as ::core::ffi::c_int as u16_0,
-    64848 as ::core::ffi::c_int as u16_0,
-    64914 as ::core::ffi::c_int as u16_0,
-    65008 as ::core::ffi::c_int as u16_0,
-    65020 as ::core::ffi::c_int as u16_0,
-    65021 as ::core::ffi::c_int as u16_0,
-    65024 as ::core::ffi::c_int as u16_0,
-    65040 as ::core::ffi::c_int as u16_0,
-    65047 as ::core::ffi::c_int as u16_0,
-    65048 as ::core::ffi::c_int as u16_0,
-    65049 as ::core::ffi::c_int as u16_0,
-    65056 as ::core::ffi::c_int as u16_0,
-    65072 as ::core::ffi::c_int as u16_0,
-    65073 as ::core::ffi::c_int as u16_0,
-    65075 as ::core::ffi::c_int as u16_0,
-    65077 as ::core::ffi::c_int as u16_0,
-    65078 as ::core::ffi::c_int as u16_0,
-    65079 as ::core::ffi::c_int as u16_0,
-    65080 as ::core::ffi::c_int as u16_0,
-    65081 as ::core::ffi::c_int as u16_0,
-    65082 as ::core::ffi::c_int as u16_0,
-    65083 as ::core::ffi::c_int as u16_0,
-    65084 as ::core::ffi::c_int as u16_0,
-    65085 as ::core::ffi::c_int as u16_0,
-    65086 as ::core::ffi::c_int as u16_0,
-    65087 as ::core::ffi::c_int as u16_0,
-    65088 as ::core::ffi::c_int as u16_0,
-    65089 as ::core::ffi::c_int as u16_0,
-    65090 as ::core::ffi::c_int as u16_0,
-    65091 as ::core::ffi::c_int as u16_0,
-    65092 as ::core::ffi::c_int as u16_0,
-    65093 as ::core::ffi::c_int as u16_0,
-    65095 as ::core::ffi::c_int as u16_0,
-    65096 as ::core::ffi::c_int as u16_0,
-    65097 as ::core::ffi::c_int as u16_0,
-    65101 as ::core::ffi::c_int as u16_0,
-    65104 as ::core::ffi::c_int as u16_0,
-    65108 as ::core::ffi::c_int as u16_0,
-    65112 as ::core::ffi::c_int as u16_0,
-    65113 as ::core::ffi::c_int as u16_0,
-    65114 as ::core::ffi::c_int as u16_0,
-    65115 as ::core::ffi::c_int as u16_0,
-    65116 as ::core::ffi::c_int as u16_0,
-    65117 as ::core::ffi::c_int as u16_0,
-    65118 as ::core::ffi::c_int as u16_0,
-    65119 as ::core::ffi::c_int as u16_0,
-    65122 as ::core::ffi::c_int as u16_0,
-    65123 as ::core::ffi::c_int as u16_0,
-    65124 as ::core::ffi::c_int as u16_0,
-    65128 as ::core::ffi::c_int as u16_0,
-    65129 as ::core::ffi::c_int as u16_0,
-    65130 as ::core::ffi::c_int as u16_0,
-    65136 as ::core::ffi::c_int as u16_0,
-    65142 as ::core::ffi::c_int as u16_0,
-    65279 as ::core::ffi::c_int as u16_0,
-    65281 as ::core::ffi::c_int as u16_0,
-    65284 as ::core::ffi::c_int as u16_0,
-    65285 as ::core::ffi::c_int as u16_0,
-    65288 as ::core::ffi::c_int as u16_0,
-    65289 as ::core::ffi::c_int as u16_0,
-    65290 as ::core::ffi::c_int as u16_0,
-    65291 as ::core::ffi::c_int as u16_0,
-    65292 as ::core::ffi::c_int as u16_0,
-    65293 as ::core::ffi::c_int as u16_0,
-    65294 as ::core::ffi::c_int as u16_0,
-    65296 as ::core::ffi::c_int as u16_0,
-    65306 as ::core::ffi::c_int as u16_0,
-    65308 as ::core::ffi::c_int as u16_0,
-    65311 as ::core::ffi::c_int as u16_0,
-    65313 as ::core::ffi::c_int as u16_0,
-    65339 as ::core::ffi::c_int as u16_0,
-    65340 as ::core::ffi::c_int as u16_0,
-    65341 as ::core::ffi::c_int as u16_0,
-    65342 as ::core::ffi::c_int as u16_0,
-    65343 as ::core::ffi::c_int as u16_0,
-    65344 as ::core::ffi::c_int as u16_0,
-    65345 as ::core::ffi::c_int as u16_0,
-    65371 as ::core::ffi::c_int as u16_0,
-    65372 as ::core::ffi::c_int as u16_0,
-    65373 as ::core::ffi::c_int as u16_0,
-    65374 as ::core::ffi::c_int as u16_0,
-    65375 as ::core::ffi::c_int as u16_0,
-    65376 as ::core::ffi::c_int as u16_0,
-    65377 as ::core::ffi::c_int as u16_0,
-    65378 as ::core::ffi::c_int as u16_0,
-    65379 as ::core::ffi::c_int as u16_0,
-    65380 as ::core::ffi::c_int as u16_0,
-    65382 as ::core::ffi::c_int as u16_0,
-    65392 as ::core::ffi::c_int as u16_0,
-    65393 as ::core::ffi::c_int as u16_0,
-    65438 as ::core::ffi::c_int as u16_0,
-    65440 as ::core::ffi::c_int as u16_0,
-    65474 as ::core::ffi::c_int as u16_0,
-    65482 as ::core::ffi::c_int as u16_0,
-    65490 as ::core::ffi::c_int as u16_0,
-    65498 as ::core::ffi::c_int as u16_0,
-    65504 as ::core::ffi::c_int as u16_0,
-    65506 as ::core::ffi::c_int as u16_0,
-    65507 as ::core::ffi::c_int as u16_0,
-    65508 as ::core::ffi::c_int as u16_0,
-    65509 as ::core::ffi::c_int as u16_0,
-    65512 as ::core::ffi::c_int as u16_0,
-    65513 as ::core::ffi::c_int as u16_0,
-    65517 as ::core::ffi::c_int as u16_0,
-    65529 as ::core::ffi::c_int as u16_0,
-    65532 as ::core::ffi::c_int as u16_0,
-    0 as ::core::ffi::c_int as u16_0,
-    13 as ::core::ffi::c_int as u16_0,
-    40 as ::core::ffi::c_int as u16_0,
-    60 as ::core::ffi::c_int as u16_0,
-    63 as ::core::ffi::c_int as u16_0,
-    80 as ::core::ffi::c_int as u16_0,
-    128 as ::core::ffi::c_int as u16_0,
-    256 as ::core::ffi::c_int as u16_0,
-    263 as ::core::ffi::c_int as u16_0,
-    311 as ::core::ffi::c_int as u16_0,
-    320 as ::core::ffi::c_int as u16_0,
-    373 as ::core::ffi::c_int as u16_0,
-    377 as ::core::ffi::c_int as u16_0,
-    394 as ::core::ffi::c_int as u16_0,
-    400 as ::core::ffi::c_int as u16_0,
-    464 as ::core::ffi::c_int as u16_0,
-    509 as ::core::ffi::c_int as u16_0,
-    640 as ::core::ffi::c_int as u16_0,
-    672 as ::core::ffi::c_int as u16_0,
-    768 as ::core::ffi::c_int as u16_0,
-    800 as ::core::ffi::c_int as u16_0,
-    816 as ::core::ffi::c_int as u16_0,
-    833 as ::core::ffi::c_int as u16_0,
-    834 as ::core::ffi::c_int as u16_0,
-    842 as ::core::ffi::c_int as u16_0,
-    896 as ::core::ffi::c_int as u16_0,
-    927 as ::core::ffi::c_int as u16_0,
-    928 as ::core::ffi::c_int as u16_0,
-    968 as ::core::ffi::c_int as u16_0,
-    976 as ::core::ffi::c_int as u16_0,
-    977 as ::core::ffi::c_int as u16_0,
-    1024 as ::core::ffi::c_int as u16_0,
-    1064 as ::core::ffi::c_int as u16_0,
-    1104 as ::core::ffi::c_int as u16_0,
-    1184 as ::core::ffi::c_int as u16_0,
-    2048 as ::core::ffi::c_int as u16_0,
-    2056 as ::core::ffi::c_int as u16_0,
-    2058 as ::core::ffi::c_int as u16_0,
-    2103 as ::core::ffi::c_int as u16_0,
-    2108 as ::core::ffi::c_int as u16_0,
-    2111 as ::core::ffi::c_int as u16_0,
-    2135 as ::core::ffi::c_int as u16_0,
-    2136 as ::core::ffi::c_int as u16_0,
-    2304 as ::core::ffi::c_int as u16_0,
-    2326 as ::core::ffi::c_int as u16_0,
-    2335 as ::core::ffi::c_int as u16_0,
-    2336 as ::core::ffi::c_int as u16_0,
-    2367 as ::core::ffi::c_int as u16_0,
-    2432 as ::core::ffi::c_int as u16_0,
-    2494 as ::core::ffi::c_int as u16_0,
-    2560 as ::core::ffi::c_int as u16_0,
-    2561 as ::core::ffi::c_int as u16_0,
-    2565 as ::core::ffi::c_int as u16_0,
-    2572 as ::core::ffi::c_int as u16_0,
-    2576 as ::core::ffi::c_int as u16_0,
-    2581 as ::core::ffi::c_int as u16_0,
-    2585 as ::core::ffi::c_int as u16_0,
-    2616 as ::core::ffi::c_int as u16_0,
-    2623 as ::core::ffi::c_int as u16_0,
-    2624 as ::core::ffi::c_int as u16_0,
-    2640 as ::core::ffi::c_int as u16_0,
-    2656 as ::core::ffi::c_int as u16_0,
-    2685 as ::core::ffi::c_int as u16_0,
-    2687 as ::core::ffi::c_int as u16_0,
-    2816 as ::core::ffi::c_int as u16_0,
-    2873 as ::core::ffi::c_int as u16_0,
-    2880 as ::core::ffi::c_int as u16_0,
-    2904 as ::core::ffi::c_int as u16_0,
-    2912 as ::core::ffi::c_int as u16_0,
-    2936 as ::core::ffi::c_int as u16_0,
-    3072 as ::core::ffi::c_int as u16_0,
-    3680 as ::core::ffi::c_int as u16_0,
-    4096 as ::core::ffi::c_int as u16_0,
-    4097 as ::core::ffi::c_int as u16_0,
-    4098 as ::core::ffi::c_int as u16_0,
-    4099 as ::core::ffi::c_int as u16_0,
-    4152 as ::core::ffi::c_int as u16_0,
-    4167 as ::core::ffi::c_int as u16_0,
-    4178 as ::core::ffi::c_int as u16_0,
-    4198 as ::core::ffi::c_int as u16_0,
-    4224 as ::core::ffi::c_int as u16_0,
-    4226 as ::core::ffi::c_int as u16_0,
-    4227 as ::core::ffi::c_int as u16_0,
-    4272 as ::core::ffi::c_int as u16_0,
-    4275 as ::core::ffi::c_int as u16_0,
-    4279 as ::core::ffi::c_int as u16_0,
-    4281 as ::core::ffi::c_int as u16_0,
-    4283 as ::core::ffi::c_int as u16_0,
-    4285 as ::core::ffi::c_int as u16_0,
-    4286 as ::core::ffi::c_int as u16_0,
-    4304 as ::core::ffi::c_int as u16_0,
-    4336 as ::core::ffi::c_int as u16_0,
-    4352 as ::core::ffi::c_int as u16_0,
-    4355 as ::core::ffi::c_int as u16_0,
-    4391 as ::core::ffi::c_int as u16_0,
-    4396 as ::core::ffi::c_int as u16_0,
-    4397 as ::core::ffi::c_int as u16_0,
-    4406 as ::core::ffi::c_int as u16_0,
-    4416 as ::core::ffi::c_int as u16_0,
-    4480 as ::core::ffi::c_int as u16_0,
-    4482 as ::core::ffi::c_int as u16_0,
-    4483 as ::core::ffi::c_int as u16_0,
-    4531 as ::core::ffi::c_int as u16_0,
-    4534 as ::core::ffi::c_int as u16_0,
-    4543 as ::core::ffi::c_int as u16_0,
-    4545 as ::core::ffi::c_int as u16_0,
-    4549 as ::core::ffi::c_int as u16_0,
-    4560 as ::core::ffi::c_int as u16_0,
-    5760 as ::core::ffi::c_int as u16_0,
-    5803 as ::core::ffi::c_int as u16_0,
-    5804 as ::core::ffi::c_int as u16_0,
-    5805 as ::core::ffi::c_int as u16_0,
-    5806 as ::core::ffi::c_int as u16_0,
-    5808 as ::core::ffi::c_int as u16_0,
-    5814 as ::core::ffi::c_int as u16_0,
-    5815 as ::core::ffi::c_int as u16_0,
-    5824 as ::core::ffi::c_int as u16_0,
-    8192 as ::core::ffi::c_int as u16_0,
-    9216 as ::core::ffi::c_int as u16_0,
-    9328 as ::core::ffi::c_int as u16_0,
-    12288 as ::core::ffi::c_int as u16_0,
-    26624 as ::core::ffi::c_int as u16_0,
-    28416 as ::core::ffi::c_int as u16_0,
-    28496 as ::core::ffi::c_int as u16_0,
-    28497 as ::core::ffi::c_int as u16_0,
-    28559 as ::core::ffi::c_int as u16_0,
-    28563 as ::core::ffi::c_int as u16_0,
-    45056 as ::core::ffi::c_int as u16_0,
-    53248 as ::core::ffi::c_int as u16_0,
-    53504 as ::core::ffi::c_int as u16_0,
-    53545 as ::core::ffi::c_int as u16_0,
-    53605 as ::core::ffi::c_int as u16_0,
-    53607 as ::core::ffi::c_int as u16_0,
-    53610 as ::core::ffi::c_int as u16_0,
-    53613 as ::core::ffi::c_int as u16_0,
-    53619 as ::core::ffi::c_int as u16_0,
-    53627 as ::core::ffi::c_int as u16_0,
-    53635 as ::core::ffi::c_int as u16_0,
-    53637 as ::core::ffi::c_int as u16_0,
-    53644 as ::core::ffi::c_int as u16_0,
-    53674 as ::core::ffi::c_int as u16_0,
-    53678 as ::core::ffi::c_int as u16_0,
-    53760 as ::core::ffi::c_int as u16_0,
-    53826 as ::core::ffi::c_int as u16_0,
-    53829 as ::core::ffi::c_int as u16_0,
-    54016 as ::core::ffi::c_int as u16_0,
-    54112 as ::core::ffi::c_int as u16_0,
-    54272 as ::core::ffi::c_int as u16_0,
-    54298 as ::core::ffi::c_int as u16_0,
-    54324 as ::core::ffi::c_int as u16_0,
-    54350 as ::core::ffi::c_int as u16_0,
-    54358 as ::core::ffi::c_int as u16_0,
-    54376 as ::core::ffi::c_int as u16_0,
-    54402 as ::core::ffi::c_int as u16_0,
-    54428 as ::core::ffi::c_int as u16_0,
-    54430 as ::core::ffi::c_int as u16_0,
-    54434 as ::core::ffi::c_int as u16_0,
-    54437 as ::core::ffi::c_int as u16_0,
-    54441 as ::core::ffi::c_int as u16_0,
-    54446 as ::core::ffi::c_int as u16_0,
-    54454 as ::core::ffi::c_int as u16_0,
-    54459 as ::core::ffi::c_int as u16_0,
-    54461 as ::core::ffi::c_int as u16_0,
-    54469 as ::core::ffi::c_int as u16_0,
-    54480 as ::core::ffi::c_int as u16_0,
-    54506 as ::core::ffi::c_int as u16_0,
-    54532 as ::core::ffi::c_int as u16_0,
-    54535 as ::core::ffi::c_int as u16_0,
-    54541 as ::core::ffi::c_int as u16_0,
-    54550 as ::core::ffi::c_int as u16_0,
-    54558 as ::core::ffi::c_int as u16_0,
-    54584 as ::core::ffi::c_int as u16_0,
-    54587 as ::core::ffi::c_int as u16_0,
-    54592 as ::core::ffi::c_int as u16_0,
-    54598 as ::core::ffi::c_int as u16_0,
-    54602 as ::core::ffi::c_int as u16_0,
-    54610 as ::core::ffi::c_int as u16_0,
-    54636 as ::core::ffi::c_int as u16_0,
-    54662 as ::core::ffi::c_int as u16_0,
-    54688 as ::core::ffi::c_int as u16_0,
-    54714 as ::core::ffi::c_int as u16_0,
-    54740 as ::core::ffi::c_int as u16_0,
-    54766 as ::core::ffi::c_int as u16_0,
-    54792 as ::core::ffi::c_int as u16_0,
-    54818 as ::core::ffi::c_int as u16_0,
-    54844 as ::core::ffi::c_int as u16_0,
-    54870 as ::core::ffi::c_int as u16_0,
-    54896 as ::core::ffi::c_int as u16_0,
-    54922 as ::core::ffi::c_int as u16_0,
-    54952 as ::core::ffi::c_int as u16_0,
-    54977 as ::core::ffi::c_int as u16_0,
-    54978 as ::core::ffi::c_int as u16_0,
-    55003 as ::core::ffi::c_int as u16_0,
-    55004 as ::core::ffi::c_int as u16_0,
-    55010 as ::core::ffi::c_int as u16_0,
-    55035 as ::core::ffi::c_int as u16_0,
-    55036 as ::core::ffi::c_int as u16_0,
-    55061 as ::core::ffi::c_int as u16_0,
-    55062 as ::core::ffi::c_int as u16_0,
-    55068 as ::core::ffi::c_int as u16_0,
-    55093 as ::core::ffi::c_int as u16_0,
-    55094 as ::core::ffi::c_int as u16_0,
-    55119 as ::core::ffi::c_int as u16_0,
-    55120 as ::core::ffi::c_int as u16_0,
-    55126 as ::core::ffi::c_int as u16_0,
-    55151 as ::core::ffi::c_int as u16_0,
-    55152 as ::core::ffi::c_int as u16_0,
-    55177 as ::core::ffi::c_int as u16_0,
-    55178 as ::core::ffi::c_int as u16_0,
-    55184 as ::core::ffi::c_int as u16_0,
-    55209 as ::core::ffi::c_int as u16_0,
-    55210 as ::core::ffi::c_int as u16_0,
-    55235 as ::core::ffi::c_int as u16_0,
-    55236 as ::core::ffi::c_int as u16_0,
-    55242 as ::core::ffi::c_int as u16_0,
-    55246 as ::core::ffi::c_int as u16_0,
-    60928 as ::core::ffi::c_int as u16_0,
-    60933 as ::core::ffi::c_int as u16_0,
-    60961 as ::core::ffi::c_int as u16_0,
-    60964 as ::core::ffi::c_int as u16_0,
-    60967 as ::core::ffi::c_int as u16_0,
-    60969 as ::core::ffi::c_int as u16_0,
-    60980 as ::core::ffi::c_int as u16_0,
-    60985 as ::core::ffi::c_int as u16_0,
-    60987 as ::core::ffi::c_int as u16_0,
-    60994 as ::core::ffi::c_int as u16_0,
-    60999 as ::core::ffi::c_int as u16_0,
-    61001 as ::core::ffi::c_int as u16_0,
-    61003 as ::core::ffi::c_int as u16_0,
-    61005 as ::core::ffi::c_int as u16_0,
-    61009 as ::core::ffi::c_int as u16_0,
-    61012 as ::core::ffi::c_int as u16_0,
-    61015 as ::core::ffi::c_int as u16_0,
-    61017 as ::core::ffi::c_int as u16_0,
-    61019 as ::core::ffi::c_int as u16_0,
-    61021 as ::core::ffi::c_int as u16_0,
-    61023 as ::core::ffi::c_int as u16_0,
-    61025 as ::core::ffi::c_int as u16_0,
-    61028 as ::core::ffi::c_int as u16_0,
-    61031 as ::core::ffi::c_int as u16_0,
-    61036 as ::core::ffi::c_int as u16_0,
-    61044 as ::core::ffi::c_int as u16_0,
-    61049 as ::core::ffi::c_int as u16_0,
-    61054 as ::core::ffi::c_int as u16_0,
-    61056 as ::core::ffi::c_int as u16_0,
-    61067 as ::core::ffi::c_int as u16_0,
-    61089 as ::core::ffi::c_int as u16_0,
-    61093 as ::core::ffi::c_int as u16_0,
-    61099 as ::core::ffi::c_int as u16_0,
-    61168 as ::core::ffi::c_int as u16_0,
-    61440 as ::core::ffi::c_int as u16_0,
-    61488 as ::core::ffi::c_int as u16_0,
-    61600 as ::core::ffi::c_int as u16_0,
-    61617 as ::core::ffi::c_int as u16_0,
-    61633 as ::core::ffi::c_int as u16_0,
-    61649 as ::core::ffi::c_int as u16_0,
-    61696 as ::core::ffi::c_int as u16_0,
-    61712 as ::core::ffi::c_int as u16_0,
-    61744 as ::core::ffi::c_int as u16_0,
-    61808 as ::core::ffi::c_int as u16_0,
-    61926 as ::core::ffi::c_int as u16_0,
-    61968 as ::core::ffi::c_int as u16_0,
-    62016 as ::core::ffi::c_int as u16_0,
-    62032 as ::core::ffi::c_int as u16_0,
-    62208 as ::core::ffi::c_int as u16_0,
-    62256 as ::core::ffi::c_int as u16_0,
-    62263 as ::core::ffi::c_int as u16_0,
-    62336 as ::core::ffi::c_int as u16_0,
-    62368 as ::core::ffi::c_int as u16_0,
-    62406 as ::core::ffi::c_int as u16_0,
-    62432 as ::core::ffi::c_int as u16_0,
-    62464 as ::core::ffi::c_int as u16_0,
-    62528 as ::core::ffi::c_int as u16_0,
-    62530 as ::core::ffi::c_int as u16_0,
-    62713 as ::core::ffi::c_int as u16_0,
-    62720 as ::core::ffi::c_int as u16_0,
-    62784 as ::core::ffi::c_int as u16_0,
-    62800 as ::core::ffi::c_int as u16_0,
-    62971 as ::core::ffi::c_int as u16_0,
-    63045 as ::core::ffi::c_int as u16_0,
-    63104 as ::core::ffi::c_int as u16_0,
-    63232 as ::core::ffi::c_int as u16_0,
-    0 as ::core::ffi::c_int as u16_0,
-    42710 as ::core::ffi::c_int as u16_0,
-    42752 as ::core::ffi::c_int as u16_0,
-    46900 as ::core::ffi::c_int as u16_0,
-    46912 as ::core::ffi::c_int as u16_0,
-    47133 as ::core::ffi::c_int as u16_0,
-    63488 as ::core::ffi::c_int as u16_0,
-    1 as ::core::ffi::c_int as u16_0,
-    32 as ::core::ffi::c_int as u16_0,
-    256 as ::core::ffi::c_int as u16_0,
-    0 as ::core::ffi::c_int as u16_0,
-    65533 as ::core::ffi::c_int as u16_0,
+static mut aFts5UnicodeMap: [U16_0; 1765] = [
+    0 as ::core::ffi::c_int as U16_0,
+    32 as ::core::ffi::c_int as U16_0,
+    33 as ::core::ffi::c_int as U16_0,
+    36 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    40 as ::core::ffi::c_int as U16_0,
+    41 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    43 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    45 as ::core::ffi::c_int as U16_0,
+    46 as ::core::ffi::c_int as U16_0,
+    48 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    60 as ::core::ffi::c_int as U16_0,
+    63 as ::core::ffi::c_int as U16_0,
+    65 as ::core::ffi::c_int as U16_0,
+    91 as ::core::ffi::c_int as U16_0,
+    92 as ::core::ffi::c_int as U16_0,
+    93 as ::core::ffi::c_int as U16_0,
+    94 as ::core::ffi::c_int as U16_0,
+    95 as ::core::ffi::c_int as U16_0,
+    96 as ::core::ffi::c_int as U16_0,
+    97 as ::core::ffi::c_int as U16_0,
+    123 as ::core::ffi::c_int as U16_0,
+    124 as ::core::ffi::c_int as U16_0,
+    125 as ::core::ffi::c_int as U16_0,
+    126 as ::core::ffi::c_int as U16_0,
+    127 as ::core::ffi::c_int as U16_0,
+    160 as ::core::ffi::c_int as U16_0,
+    161 as ::core::ffi::c_int as U16_0,
+    162 as ::core::ffi::c_int as U16_0,
+    166 as ::core::ffi::c_int as U16_0,
+    167 as ::core::ffi::c_int as U16_0,
+    168 as ::core::ffi::c_int as U16_0,
+    169 as ::core::ffi::c_int as U16_0,
+    170 as ::core::ffi::c_int as U16_0,
+    171 as ::core::ffi::c_int as U16_0,
+    172 as ::core::ffi::c_int as U16_0,
+    173 as ::core::ffi::c_int as U16_0,
+    174 as ::core::ffi::c_int as U16_0,
+    175 as ::core::ffi::c_int as U16_0,
+    176 as ::core::ffi::c_int as U16_0,
+    177 as ::core::ffi::c_int as U16_0,
+    178 as ::core::ffi::c_int as U16_0,
+    180 as ::core::ffi::c_int as U16_0,
+    181 as ::core::ffi::c_int as U16_0,
+    182 as ::core::ffi::c_int as U16_0,
+    184 as ::core::ffi::c_int as U16_0,
+    185 as ::core::ffi::c_int as U16_0,
+    186 as ::core::ffi::c_int as U16_0,
+    187 as ::core::ffi::c_int as U16_0,
+    188 as ::core::ffi::c_int as U16_0,
+    191 as ::core::ffi::c_int as U16_0,
+    192 as ::core::ffi::c_int as U16_0,
+    215 as ::core::ffi::c_int as U16_0,
+    216 as ::core::ffi::c_int as U16_0,
+    223 as ::core::ffi::c_int as U16_0,
+    247 as ::core::ffi::c_int as U16_0,
+    248 as ::core::ffi::c_int as U16_0,
+    256 as ::core::ffi::c_int as U16_0,
+    312 as ::core::ffi::c_int as U16_0,
+    313 as ::core::ffi::c_int as U16_0,
+    329 as ::core::ffi::c_int as U16_0,
+    330 as ::core::ffi::c_int as U16_0,
+    377 as ::core::ffi::c_int as U16_0,
+    383 as ::core::ffi::c_int as U16_0,
+    385 as ::core::ffi::c_int as U16_0,
+    387 as ::core::ffi::c_int as U16_0,
+    388 as ::core::ffi::c_int as U16_0,
+    391 as ::core::ffi::c_int as U16_0,
+    394 as ::core::ffi::c_int as U16_0,
+    396 as ::core::ffi::c_int as U16_0,
+    398 as ::core::ffi::c_int as U16_0,
+    402 as ::core::ffi::c_int as U16_0,
+    403 as ::core::ffi::c_int as U16_0,
+    405 as ::core::ffi::c_int as U16_0,
+    406 as ::core::ffi::c_int as U16_0,
+    409 as ::core::ffi::c_int as U16_0,
+    412 as ::core::ffi::c_int as U16_0,
+    414 as ::core::ffi::c_int as U16_0,
+    415 as ::core::ffi::c_int as U16_0,
+    417 as ::core::ffi::c_int as U16_0,
+    418 as ::core::ffi::c_int as U16_0,
+    423 as ::core::ffi::c_int as U16_0,
+    427 as ::core::ffi::c_int as U16_0,
+    428 as ::core::ffi::c_int as U16_0,
+    431 as ::core::ffi::c_int as U16_0,
+    434 as ::core::ffi::c_int as U16_0,
+    436 as ::core::ffi::c_int as U16_0,
+    437 as ::core::ffi::c_int as U16_0,
+    440 as ::core::ffi::c_int as U16_0,
+    442 as ::core::ffi::c_int as U16_0,
+    443 as ::core::ffi::c_int as U16_0,
+    444 as ::core::ffi::c_int as U16_0,
+    446 as ::core::ffi::c_int as U16_0,
+    448 as ::core::ffi::c_int as U16_0,
+    452 as ::core::ffi::c_int as U16_0,
+    453 as ::core::ffi::c_int as U16_0,
+    454 as ::core::ffi::c_int as U16_0,
+    455 as ::core::ffi::c_int as U16_0,
+    456 as ::core::ffi::c_int as U16_0,
+    457 as ::core::ffi::c_int as U16_0,
+    458 as ::core::ffi::c_int as U16_0,
+    459 as ::core::ffi::c_int as U16_0,
+    460 as ::core::ffi::c_int as U16_0,
+    461 as ::core::ffi::c_int as U16_0,
+    477 as ::core::ffi::c_int as U16_0,
+    478 as ::core::ffi::c_int as U16_0,
+    496 as ::core::ffi::c_int as U16_0,
+    497 as ::core::ffi::c_int as U16_0,
+    498 as ::core::ffi::c_int as U16_0,
+    499 as ::core::ffi::c_int as U16_0,
+    500 as ::core::ffi::c_int as U16_0,
+    503 as ::core::ffi::c_int as U16_0,
+    505 as ::core::ffi::c_int as U16_0,
+    506 as ::core::ffi::c_int as U16_0,
+    564 as ::core::ffi::c_int as U16_0,
+    570 as ::core::ffi::c_int as U16_0,
+    572 as ::core::ffi::c_int as U16_0,
+    573 as ::core::ffi::c_int as U16_0,
+    575 as ::core::ffi::c_int as U16_0,
+    577 as ::core::ffi::c_int as U16_0,
+    580 as ::core::ffi::c_int as U16_0,
+    583 as ::core::ffi::c_int as U16_0,
+    584 as ::core::ffi::c_int as U16_0,
+    592 as ::core::ffi::c_int as U16_0,
+    660 as ::core::ffi::c_int as U16_0,
+    661 as ::core::ffi::c_int as U16_0,
+    688 as ::core::ffi::c_int as U16_0,
+    706 as ::core::ffi::c_int as U16_0,
+    710 as ::core::ffi::c_int as U16_0,
+    722 as ::core::ffi::c_int as U16_0,
+    736 as ::core::ffi::c_int as U16_0,
+    741 as ::core::ffi::c_int as U16_0,
+    748 as ::core::ffi::c_int as U16_0,
+    749 as ::core::ffi::c_int as U16_0,
+    750 as ::core::ffi::c_int as U16_0,
+    751 as ::core::ffi::c_int as U16_0,
+    768 as ::core::ffi::c_int as U16_0,
+    880 as ::core::ffi::c_int as U16_0,
+    884 as ::core::ffi::c_int as U16_0,
+    885 as ::core::ffi::c_int as U16_0,
+    886 as ::core::ffi::c_int as U16_0,
+    890 as ::core::ffi::c_int as U16_0,
+    891 as ::core::ffi::c_int as U16_0,
+    894 as ::core::ffi::c_int as U16_0,
+    900 as ::core::ffi::c_int as U16_0,
+    902 as ::core::ffi::c_int as U16_0,
+    903 as ::core::ffi::c_int as U16_0,
+    904 as ::core::ffi::c_int as U16_0,
+    908 as ::core::ffi::c_int as U16_0,
+    910 as ::core::ffi::c_int as U16_0,
+    912 as ::core::ffi::c_int as U16_0,
+    913 as ::core::ffi::c_int as U16_0,
+    931 as ::core::ffi::c_int as U16_0,
+    940 as ::core::ffi::c_int as U16_0,
+    975 as ::core::ffi::c_int as U16_0,
+    977 as ::core::ffi::c_int as U16_0,
+    978 as ::core::ffi::c_int as U16_0,
+    981 as ::core::ffi::c_int as U16_0,
+    984 as ::core::ffi::c_int as U16_0,
+    1008 as ::core::ffi::c_int as U16_0,
+    1012 as ::core::ffi::c_int as U16_0,
+    1014 as ::core::ffi::c_int as U16_0,
+    1015 as ::core::ffi::c_int as U16_0,
+    1018 as ::core::ffi::c_int as U16_0,
+    1020 as ::core::ffi::c_int as U16_0,
+    1021 as ::core::ffi::c_int as U16_0,
+    1072 as ::core::ffi::c_int as U16_0,
+    1120 as ::core::ffi::c_int as U16_0,
+    1154 as ::core::ffi::c_int as U16_0,
+    1155 as ::core::ffi::c_int as U16_0,
+    1160 as ::core::ffi::c_int as U16_0,
+    1162 as ::core::ffi::c_int as U16_0,
+    1217 as ::core::ffi::c_int as U16_0,
+    1231 as ::core::ffi::c_int as U16_0,
+    1232 as ::core::ffi::c_int as U16_0,
+    1329 as ::core::ffi::c_int as U16_0,
+    1369 as ::core::ffi::c_int as U16_0,
+    1370 as ::core::ffi::c_int as U16_0,
+    1377 as ::core::ffi::c_int as U16_0,
+    1417 as ::core::ffi::c_int as U16_0,
+    1418 as ::core::ffi::c_int as U16_0,
+    1423 as ::core::ffi::c_int as U16_0,
+    1425 as ::core::ffi::c_int as U16_0,
+    1470 as ::core::ffi::c_int as U16_0,
+    1471 as ::core::ffi::c_int as U16_0,
+    1472 as ::core::ffi::c_int as U16_0,
+    1473 as ::core::ffi::c_int as U16_0,
+    1475 as ::core::ffi::c_int as U16_0,
+    1476 as ::core::ffi::c_int as U16_0,
+    1478 as ::core::ffi::c_int as U16_0,
+    1479 as ::core::ffi::c_int as U16_0,
+    1488 as ::core::ffi::c_int as U16_0,
+    1520 as ::core::ffi::c_int as U16_0,
+    1523 as ::core::ffi::c_int as U16_0,
+    1536 as ::core::ffi::c_int as U16_0,
+    1542 as ::core::ffi::c_int as U16_0,
+    1545 as ::core::ffi::c_int as U16_0,
+    1547 as ::core::ffi::c_int as U16_0,
+    1548 as ::core::ffi::c_int as U16_0,
+    1550 as ::core::ffi::c_int as U16_0,
+    1552 as ::core::ffi::c_int as U16_0,
+    1563 as ::core::ffi::c_int as U16_0,
+    1566 as ::core::ffi::c_int as U16_0,
+    1568 as ::core::ffi::c_int as U16_0,
+    1600 as ::core::ffi::c_int as U16_0,
+    1601 as ::core::ffi::c_int as U16_0,
+    1611 as ::core::ffi::c_int as U16_0,
+    1632 as ::core::ffi::c_int as U16_0,
+    1642 as ::core::ffi::c_int as U16_0,
+    1646 as ::core::ffi::c_int as U16_0,
+    1648 as ::core::ffi::c_int as U16_0,
+    1649 as ::core::ffi::c_int as U16_0,
+    1748 as ::core::ffi::c_int as U16_0,
+    1749 as ::core::ffi::c_int as U16_0,
+    1750 as ::core::ffi::c_int as U16_0,
+    1757 as ::core::ffi::c_int as U16_0,
+    1758 as ::core::ffi::c_int as U16_0,
+    1759 as ::core::ffi::c_int as U16_0,
+    1765 as ::core::ffi::c_int as U16_0,
+    1767 as ::core::ffi::c_int as U16_0,
+    1769 as ::core::ffi::c_int as U16_0,
+    1770 as ::core::ffi::c_int as U16_0,
+    1774 as ::core::ffi::c_int as U16_0,
+    1776 as ::core::ffi::c_int as U16_0,
+    1786 as ::core::ffi::c_int as U16_0,
+    1789 as ::core::ffi::c_int as U16_0,
+    1791 as ::core::ffi::c_int as U16_0,
+    1792 as ::core::ffi::c_int as U16_0,
+    1807 as ::core::ffi::c_int as U16_0,
+    1808 as ::core::ffi::c_int as U16_0,
+    1809 as ::core::ffi::c_int as U16_0,
+    1810 as ::core::ffi::c_int as U16_0,
+    1840 as ::core::ffi::c_int as U16_0,
+    1869 as ::core::ffi::c_int as U16_0,
+    1958 as ::core::ffi::c_int as U16_0,
+    1969 as ::core::ffi::c_int as U16_0,
+    1984 as ::core::ffi::c_int as U16_0,
+    1994 as ::core::ffi::c_int as U16_0,
+    2027 as ::core::ffi::c_int as U16_0,
+    2036 as ::core::ffi::c_int as U16_0,
+    2038 as ::core::ffi::c_int as U16_0,
+    2039 as ::core::ffi::c_int as U16_0,
+    2042 as ::core::ffi::c_int as U16_0,
+    2048 as ::core::ffi::c_int as U16_0,
+    2070 as ::core::ffi::c_int as U16_0,
+    2074 as ::core::ffi::c_int as U16_0,
+    2075 as ::core::ffi::c_int as U16_0,
+    2084 as ::core::ffi::c_int as U16_0,
+    2085 as ::core::ffi::c_int as U16_0,
+    2088 as ::core::ffi::c_int as U16_0,
+    2089 as ::core::ffi::c_int as U16_0,
+    2096 as ::core::ffi::c_int as U16_0,
+    2112 as ::core::ffi::c_int as U16_0,
+    2137 as ::core::ffi::c_int as U16_0,
+    2142 as ::core::ffi::c_int as U16_0,
+    2208 as ::core::ffi::c_int as U16_0,
+    2210 as ::core::ffi::c_int as U16_0,
+    2276 as ::core::ffi::c_int as U16_0,
+    2304 as ::core::ffi::c_int as U16_0,
+    2307 as ::core::ffi::c_int as U16_0,
+    2308 as ::core::ffi::c_int as U16_0,
+    2362 as ::core::ffi::c_int as U16_0,
+    2363 as ::core::ffi::c_int as U16_0,
+    2364 as ::core::ffi::c_int as U16_0,
+    2365 as ::core::ffi::c_int as U16_0,
+    2366 as ::core::ffi::c_int as U16_0,
+    2369 as ::core::ffi::c_int as U16_0,
+    2377 as ::core::ffi::c_int as U16_0,
+    2381 as ::core::ffi::c_int as U16_0,
+    2382 as ::core::ffi::c_int as U16_0,
+    2384 as ::core::ffi::c_int as U16_0,
+    2385 as ::core::ffi::c_int as U16_0,
+    2392 as ::core::ffi::c_int as U16_0,
+    2402 as ::core::ffi::c_int as U16_0,
+    2404 as ::core::ffi::c_int as U16_0,
+    2406 as ::core::ffi::c_int as U16_0,
+    2416 as ::core::ffi::c_int as U16_0,
+    2417 as ::core::ffi::c_int as U16_0,
+    2418 as ::core::ffi::c_int as U16_0,
+    2425 as ::core::ffi::c_int as U16_0,
+    2433 as ::core::ffi::c_int as U16_0,
+    2434 as ::core::ffi::c_int as U16_0,
+    2437 as ::core::ffi::c_int as U16_0,
+    2447 as ::core::ffi::c_int as U16_0,
+    2451 as ::core::ffi::c_int as U16_0,
+    2474 as ::core::ffi::c_int as U16_0,
+    2482 as ::core::ffi::c_int as U16_0,
+    2486 as ::core::ffi::c_int as U16_0,
+    2492 as ::core::ffi::c_int as U16_0,
+    2493 as ::core::ffi::c_int as U16_0,
+    2494 as ::core::ffi::c_int as U16_0,
+    2497 as ::core::ffi::c_int as U16_0,
+    2503 as ::core::ffi::c_int as U16_0,
+    2507 as ::core::ffi::c_int as U16_0,
+    2509 as ::core::ffi::c_int as U16_0,
+    2510 as ::core::ffi::c_int as U16_0,
+    2519 as ::core::ffi::c_int as U16_0,
+    2524 as ::core::ffi::c_int as U16_0,
+    2527 as ::core::ffi::c_int as U16_0,
+    2530 as ::core::ffi::c_int as U16_0,
+    2534 as ::core::ffi::c_int as U16_0,
+    2544 as ::core::ffi::c_int as U16_0,
+    2546 as ::core::ffi::c_int as U16_0,
+    2548 as ::core::ffi::c_int as U16_0,
+    2554 as ::core::ffi::c_int as U16_0,
+    2555 as ::core::ffi::c_int as U16_0,
+    2561 as ::core::ffi::c_int as U16_0,
+    2563 as ::core::ffi::c_int as U16_0,
+    2565 as ::core::ffi::c_int as U16_0,
+    2575 as ::core::ffi::c_int as U16_0,
+    2579 as ::core::ffi::c_int as U16_0,
+    2602 as ::core::ffi::c_int as U16_0,
+    2610 as ::core::ffi::c_int as U16_0,
+    2613 as ::core::ffi::c_int as U16_0,
+    2616 as ::core::ffi::c_int as U16_0,
+    2620 as ::core::ffi::c_int as U16_0,
+    2622 as ::core::ffi::c_int as U16_0,
+    2625 as ::core::ffi::c_int as U16_0,
+    2631 as ::core::ffi::c_int as U16_0,
+    2635 as ::core::ffi::c_int as U16_0,
+    2641 as ::core::ffi::c_int as U16_0,
+    2649 as ::core::ffi::c_int as U16_0,
+    2654 as ::core::ffi::c_int as U16_0,
+    2662 as ::core::ffi::c_int as U16_0,
+    2672 as ::core::ffi::c_int as U16_0,
+    2674 as ::core::ffi::c_int as U16_0,
+    2677 as ::core::ffi::c_int as U16_0,
+    2689 as ::core::ffi::c_int as U16_0,
+    2691 as ::core::ffi::c_int as U16_0,
+    2693 as ::core::ffi::c_int as U16_0,
+    2703 as ::core::ffi::c_int as U16_0,
+    2707 as ::core::ffi::c_int as U16_0,
+    2730 as ::core::ffi::c_int as U16_0,
+    2738 as ::core::ffi::c_int as U16_0,
+    2741 as ::core::ffi::c_int as U16_0,
+    2748 as ::core::ffi::c_int as U16_0,
+    2749 as ::core::ffi::c_int as U16_0,
+    2750 as ::core::ffi::c_int as U16_0,
+    2753 as ::core::ffi::c_int as U16_0,
+    2759 as ::core::ffi::c_int as U16_0,
+    2761 as ::core::ffi::c_int as U16_0,
+    2763 as ::core::ffi::c_int as U16_0,
+    2765 as ::core::ffi::c_int as U16_0,
+    2768 as ::core::ffi::c_int as U16_0,
+    2784 as ::core::ffi::c_int as U16_0,
+    2786 as ::core::ffi::c_int as U16_0,
+    2790 as ::core::ffi::c_int as U16_0,
+    2800 as ::core::ffi::c_int as U16_0,
+    2801 as ::core::ffi::c_int as U16_0,
+    2817 as ::core::ffi::c_int as U16_0,
+    2818 as ::core::ffi::c_int as U16_0,
+    2821 as ::core::ffi::c_int as U16_0,
+    2831 as ::core::ffi::c_int as U16_0,
+    2835 as ::core::ffi::c_int as U16_0,
+    2858 as ::core::ffi::c_int as U16_0,
+    2866 as ::core::ffi::c_int as U16_0,
+    2869 as ::core::ffi::c_int as U16_0,
+    2876 as ::core::ffi::c_int as U16_0,
+    2877 as ::core::ffi::c_int as U16_0,
+    2878 as ::core::ffi::c_int as U16_0,
+    2879 as ::core::ffi::c_int as U16_0,
+    2880 as ::core::ffi::c_int as U16_0,
+    2881 as ::core::ffi::c_int as U16_0,
+    2887 as ::core::ffi::c_int as U16_0,
+    2891 as ::core::ffi::c_int as U16_0,
+    2893 as ::core::ffi::c_int as U16_0,
+    2902 as ::core::ffi::c_int as U16_0,
+    2903 as ::core::ffi::c_int as U16_0,
+    2908 as ::core::ffi::c_int as U16_0,
+    2911 as ::core::ffi::c_int as U16_0,
+    2914 as ::core::ffi::c_int as U16_0,
+    2918 as ::core::ffi::c_int as U16_0,
+    2928 as ::core::ffi::c_int as U16_0,
+    2929 as ::core::ffi::c_int as U16_0,
+    2930 as ::core::ffi::c_int as U16_0,
+    2946 as ::core::ffi::c_int as U16_0,
+    2947 as ::core::ffi::c_int as U16_0,
+    2949 as ::core::ffi::c_int as U16_0,
+    2958 as ::core::ffi::c_int as U16_0,
+    2962 as ::core::ffi::c_int as U16_0,
+    2969 as ::core::ffi::c_int as U16_0,
+    2972 as ::core::ffi::c_int as U16_0,
+    2974 as ::core::ffi::c_int as U16_0,
+    2979 as ::core::ffi::c_int as U16_0,
+    2984 as ::core::ffi::c_int as U16_0,
+    2990 as ::core::ffi::c_int as U16_0,
+    3006 as ::core::ffi::c_int as U16_0,
+    3008 as ::core::ffi::c_int as U16_0,
+    3009 as ::core::ffi::c_int as U16_0,
+    3014 as ::core::ffi::c_int as U16_0,
+    3018 as ::core::ffi::c_int as U16_0,
+    3021 as ::core::ffi::c_int as U16_0,
+    3024 as ::core::ffi::c_int as U16_0,
+    3031 as ::core::ffi::c_int as U16_0,
+    3046 as ::core::ffi::c_int as U16_0,
+    3056 as ::core::ffi::c_int as U16_0,
+    3059 as ::core::ffi::c_int as U16_0,
+    3065 as ::core::ffi::c_int as U16_0,
+    3066 as ::core::ffi::c_int as U16_0,
+    3073 as ::core::ffi::c_int as U16_0,
+    3077 as ::core::ffi::c_int as U16_0,
+    3086 as ::core::ffi::c_int as U16_0,
+    3090 as ::core::ffi::c_int as U16_0,
+    3114 as ::core::ffi::c_int as U16_0,
+    3125 as ::core::ffi::c_int as U16_0,
+    3133 as ::core::ffi::c_int as U16_0,
+    3134 as ::core::ffi::c_int as U16_0,
+    3137 as ::core::ffi::c_int as U16_0,
+    3142 as ::core::ffi::c_int as U16_0,
+    3146 as ::core::ffi::c_int as U16_0,
+    3157 as ::core::ffi::c_int as U16_0,
+    3160 as ::core::ffi::c_int as U16_0,
+    3168 as ::core::ffi::c_int as U16_0,
+    3170 as ::core::ffi::c_int as U16_0,
+    3174 as ::core::ffi::c_int as U16_0,
+    3192 as ::core::ffi::c_int as U16_0,
+    3199 as ::core::ffi::c_int as U16_0,
+    3202 as ::core::ffi::c_int as U16_0,
+    3205 as ::core::ffi::c_int as U16_0,
+    3214 as ::core::ffi::c_int as U16_0,
+    3218 as ::core::ffi::c_int as U16_0,
+    3242 as ::core::ffi::c_int as U16_0,
+    3253 as ::core::ffi::c_int as U16_0,
+    3260 as ::core::ffi::c_int as U16_0,
+    3261 as ::core::ffi::c_int as U16_0,
+    3262 as ::core::ffi::c_int as U16_0,
+    3263 as ::core::ffi::c_int as U16_0,
+    3264 as ::core::ffi::c_int as U16_0,
+    3270 as ::core::ffi::c_int as U16_0,
+    3271 as ::core::ffi::c_int as U16_0,
+    3274 as ::core::ffi::c_int as U16_0,
+    3276 as ::core::ffi::c_int as U16_0,
+    3285 as ::core::ffi::c_int as U16_0,
+    3294 as ::core::ffi::c_int as U16_0,
+    3296 as ::core::ffi::c_int as U16_0,
+    3298 as ::core::ffi::c_int as U16_0,
+    3302 as ::core::ffi::c_int as U16_0,
+    3313 as ::core::ffi::c_int as U16_0,
+    3330 as ::core::ffi::c_int as U16_0,
+    3333 as ::core::ffi::c_int as U16_0,
+    3342 as ::core::ffi::c_int as U16_0,
+    3346 as ::core::ffi::c_int as U16_0,
+    3389 as ::core::ffi::c_int as U16_0,
+    3390 as ::core::ffi::c_int as U16_0,
+    3393 as ::core::ffi::c_int as U16_0,
+    3398 as ::core::ffi::c_int as U16_0,
+    3402 as ::core::ffi::c_int as U16_0,
+    3405 as ::core::ffi::c_int as U16_0,
+    3406 as ::core::ffi::c_int as U16_0,
+    3415 as ::core::ffi::c_int as U16_0,
+    3424 as ::core::ffi::c_int as U16_0,
+    3426 as ::core::ffi::c_int as U16_0,
+    3430 as ::core::ffi::c_int as U16_0,
+    3440 as ::core::ffi::c_int as U16_0,
+    3449 as ::core::ffi::c_int as U16_0,
+    3450 as ::core::ffi::c_int as U16_0,
+    3458 as ::core::ffi::c_int as U16_0,
+    3461 as ::core::ffi::c_int as U16_0,
+    3482 as ::core::ffi::c_int as U16_0,
+    3507 as ::core::ffi::c_int as U16_0,
+    3517 as ::core::ffi::c_int as U16_0,
+    3520 as ::core::ffi::c_int as U16_0,
+    3530 as ::core::ffi::c_int as U16_0,
+    3535 as ::core::ffi::c_int as U16_0,
+    3538 as ::core::ffi::c_int as U16_0,
+    3542 as ::core::ffi::c_int as U16_0,
+    3544 as ::core::ffi::c_int as U16_0,
+    3570 as ::core::ffi::c_int as U16_0,
+    3572 as ::core::ffi::c_int as U16_0,
+    3585 as ::core::ffi::c_int as U16_0,
+    3633 as ::core::ffi::c_int as U16_0,
+    3634 as ::core::ffi::c_int as U16_0,
+    3636 as ::core::ffi::c_int as U16_0,
+    3647 as ::core::ffi::c_int as U16_0,
+    3648 as ::core::ffi::c_int as U16_0,
+    3654 as ::core::ffi::c_int as U16_0,
+    3655 as ::core::ffi::c_int as U16_0,
+    3663 as ::core::ffi::c_int as U16_0,
+    3664 as ::core::ffi::c_int as U16_0,
+    3674 as ::core::ffi::c_int as U16_0,
+    3713 as ::core::ffi::c_int as U16_0,
+    3716 as ::core::ffi::c_int as U16_0,
+    3719 as ::core::ffi::c_int as U16_0,
+    3722 as ::core::ffi::c_int as U16_0,
+    3725 as ::core::ffi::c_int as U16_0,
+    3732 as ::core::ffi::c_int as U16_0,
+    3737 as ::core::ffi::c_int as U16_0,
+    3745 as ::core::ffi::c_int as U16_0,
+    3749 as ::core::ffi::c_int as U16_0,
+    3751 as ::core::ffi::c_int as U16_0,
+    3754 as ::core::ffi::c_int as U16_0,
+    3757 as ::core::ffi::c_int as U16_0,
+    3761 as ::core::ffi::c_int as U16_0,
+    3762 as ::core::ffi::c_int as U16_0,
+    3764 as ::core::ffi::c_int as U16_0,
+    3771 as ::core::ffi::c_int as U16_0,
+    3773 as ::core::ffi::c_int as U16_0,
+    3776 as ::core::ffi::c_int as U16_0,
+    3782 as ::core::ffi::c_int as U16_0,
+    3784 as ::core::ffi::c_int as U16_0,
+    3792 as ::core::ffi::c_int as U16_0,
+    3804 as ::core::ffi::c_int as U16_0,
+    3840 as ::core::ffi::c_int as U16_0,
+    3841 as ::core::ffi::c_int as U16_0,
+    3844 as ::core::ffi::c_int as U16_0,
+    3859 as ::core::ffi::c_int as U16_0,
+    3860 as ::core::ffi::c_int as U16_0,
+    3861 as ::core::ffi::c_int as U16_0,
+    3864 as ::core::ffi::c_int as U16_0,
+    3866 as ::core::ffi::c_int as U16_0,
+    3872 as ::core::ffi::c_int as U16_0,
+    3882 as ::core::ffi::c_int as U16_0,
+    3892 as ::core::ffi::c_int as U16_0,
+    3893 as ::core::ffi::c_int as U16_0,
+    3894 as ::core::ffi::c_int as U16_0,
+    3895 as ::core::ffi::c_int as U16_0,
+    3896 as ::core::ffi::c_int as U16_0,
+    3897 as ::core::ffi::c_int as U16_0,
+    3898 as ::core::ffi::c_int as U16_0,
+    3899 as ::core::ffi::c_int as U16_0,
+    3900 as ::core::ffi::c_int as U16_0,
+    3901 as ::core::ffi::c_int as U16_0,
+    3902 as ::core::ffi::c_int as U16_0,
+    3904 as ::core::ffi::c_int as U16_0,
+    3913 as ::core::ffi::c_int as U16_0,
+    3953 as ::core::ffi::c_int as U16_0,
+    3967 as ::core::ffi::c_int as U16_0,
+    3968 as ::core::ffi::c_int as U16_0,
+    3973 as ::core::ffi::c_int as U16_0,
+    3974 as ::core::ffi::c_int as U16_0,
+    3976 as ::core::ffi::c_int as U16_0,
+    3981 as ::core::ffi::c_int as U16_0,
+    3993 as ::core::ffi::c_int as U16_0,
+    4030 as ::core::ffi::c_int as U16_0,
+    4038 as ::core::ffi::c_int as U16_0,
+    4039 as ::core::ffi::c_int as U16_0,
+    4046 as ::core::ffi::c_int as U16_0,
+    4048 as ::core::ffi::c_int as U16_0,
+    4053 as ::core::ffi::c_int as U16_0,
+    4057 as ::core::ffi::c_int as U16_0,
+    4096 as ::core::ffi::c_int as U16_0,
+    4139 as ::core::ffi::c_int as U16_0,
+    4141 as ::core::ffi::c_int as U16_0,
+    4145 as ::core::ffi::c_int as U16_0,
+    4146 as ::core::ffi::c_int as U16_0,
+    4152 as ::core::ffi::c_int as U16_0,
+    4153 as ::core::ffi::c_int as U16_0,
+    4155 as ::core::ffi::c_int as U16_0,
+    4157 as ::core::ffi::c_int as U16_0,
+    4159 as ::core::ffi::c_int as U16_0,
+    4160 as ::core::ffi::c_int as U16_0,
+    4170 as ::core::ffi::c_int as U16_0,
+    4176 as ::core::ffi::c_int as U16_0,
+    4182 as ::core::ffi::c_int as U16_0,
+    4184 as ::core::ffi::c_int as U16_0,
+    4186 as ::core::ffi::c_int as U16_0,
+    4190 as ::core::ffi::c_int as U16_0,
+    4193 as ::core::ffi::c_int as U16_0,
+    4194 as ::core::ffi::c_int as U16_0,
+    4197 as ::core::ffi::c_int as U16_0,
+    4199 as ::core::ffi::c_int as U16_0,
+    4206 as ::core::ffi::c_int as U16_0,
+    4209 as ::core::ffi::c_int as U16_0,
+    4213 as ::core::ffi::c_int as U16_0,
+    4226 as ::core::ffi::c_int as U16_0,
+    4227 as ::core::ffi::c_int as U16_0,
+    4229 as ::core::ffi::c_int as U16_0,
+    4231 as ::core::ffi::c_int as U16_0,
+    4237 as ::core::ffi::c_int as U16_0,
+    4238 as ::core::ffi::c_int as U16_0,
+    4239 as ::core::ffi::c_int as U16_0,
+    4240 as ::core::ffi::c_int as U16_0,
+    4250 as ::core::ffi::c_int as U16_0,
+    4253 as ::core::ffi::c_int as U16_0,
+    4254 as ::core::ffi::c_int as U16_0,
+    4256 as ::core::ffi::c_int as U16_0,
+    4295 as ::core::ffi::c_int as U16_0,
+    4301 as ::core::ffi::c_int as U16_0,
+    4304 as ::core::ffi::c_int as U16_0,
+    4347 as ::core::ffi::c_int as U16_0,
+    4348 as ::core::ffi::c_int as U16_0,
+    4349 as ::core::ffi::c_int as U16_0,
+    4682 as ::core::ffi::c_int as U16_0,
+    4688 as ::core::ffi::c_int as U16_0,
+    4696 as ::core::ffi::c_int as U16_0,
+    4698 as ::core::ffi::c_int as U16_0,
+    4704 as ::core::ffi::c_int as U16_0,
+    4746 as ::core::ffi::c_int as U16_0,
+    4752 as ::core::ffi::c_int as U16_0,
+    4786 as ::core::ffi::c_int as U16_0,
+    4792 as ::core::ffi::c_int as U16_0,
+    4800 as ::core::ffi::c_int as U16_0,
+    4802 as ::core::ffi::c_int as U16_0,
+    4808 as ::core::ffi::c_int as U16_0,
+    4824 as ::core::ffi::c_int as U16_0,
+    4882 as ::core::ffi::c_int as U16_0,
+    4888 as ::core::ffi::c_int as U16_0,
+    4957 as ::core::ffi::c_int as U16_0,
+    4960 as ::core::ffi::c_int as U16_0,
+    4969 as ::core::ffi::c_int as U16_0,
+    4992 as ::core::ffi::c_int as U16_0,
+    5008 as ::core::ffi::c_int as U16_0,
+    5024 as ::core::ffi::c_int as U16_0,
+    5120 as ::core::ffi::c_int as U16_0,
+    5121 as ::core::ffi::c_int as U16_0,
+    5741 as ::core::ffi::c_int as U16_0,
+    5743 as ::core::ffi::c_int as U16_0,
+    5760 as ::core::ffi::c_int as U16_0,
+    5761 as ::core::ffi::c_int as U16_0,
+    5787 as ::core::ffi::c_int as U16_0,
+    5788 as ::core::ffi::c_int as U16_0,
+    5792 as ::core::ffi::c_int as U16_0,
+    5867 as ::core::ffi::c_int as U16_0,
+    5870 as ::core::ffi::c_int as U16_0,
+    5888 as ::core::ffi::c_int as U16_0,
+    5902 as ::core::ffi::c_int as U16_0,
+    5906 as ::core::ffi::c_int as U16_0,
+    5920 as ::core::ffi::c_int as U16_0,
+    5938 as ::core::ffi::c_int as U16_0,
+    5941 as ::core::ffi::c_int as U16_0,
+    5952 as ::core::ffi::c_int as U16_0,
+    5970 as ::core::ffi::c_int as U16_0,
+    5984 as ::core::ffi::c_int as U16_0,
+    5998 as ::core::ffi::c_int as U16_0,
+    6002 as ::core::ffi::c_int as U16_0,
+    6016 as ::core::ffi::c_int as U16_0,
+    6068 as ::core::ffi::c_int as U16_0,
+    6070 as ::core::ffi::c_int as U16_0,
+    6071 as ::core::ffi::c_int as U16_0,
+    6078 as ::core::ffi::c_int as U16_0,
+    6086 as ::core::ffi::c_int as U16_0,
+    6087 as ::core::ffi::c_int as U16_0,
+    6089 as ::core::ffi::c_int as U16_0,
+    6100 as ::core::ffi::c_int as U16_0,
+    6103 as ::core::ffi::c_int as U16_0,
+    6104 as ::core::ffi::c_int as U16_0,
+    6107 as ::core::ffi::c_int as U16_0,
+    6108 as ::core::ffi::c_int as U16_0,
+    6109 as ::core::ffi::c_int as U16_0,
+    6112 as ::core::ffi::c_int as U16_0,
+    6128 as ::core::ffi::c_int as U16_0,
+    6144 as ::core::ffi::c_int as U16_0,
+    6150 as ::core::ffi::c_int as U16_0,
+    6151 as ::core::ffi::c_int as U16_0,
+    6155 as ::core::ffi::c_int as U16_0,
+    6158 as ::core::ffi::c_int as U16_0,
+    6160 as ::core::ffi::c_int as U16_0,
+    6176 as ::core::ffi::c_int as U16_0,
+    6211 as ::core::ffi::c_int as U16_0,
+    6212 as ::core::ffi::c_int as U16_0,
+    6272 as ::core::ffi::c_int as U16_0,
+    6313 as ::core::ffi::c_int as U16_0,
+    6314 as ::core::ffi::c_int as U16_0,
+    6320 as ::core::ffi::c_int as U16_0,
+    6400 as ::core::ffi::c_int as U16_0,
+    6432 as ::core::ffi::c_int as U16_0,
+    6435 as ::core::ffi::c_int as U16_0,
+    6439 as ::core::ffi::c_int as U16_0,
+    6441 as ::core::ffi::c_int as U16_0,
+    6448 as ::core::ffi::c_int as U16_0,
+    6450 as ::core::ffi::c_int as U16_0,
+    6451 as ::core::ffi::c_int as U16_0,
+    6457 as ::core::ffi::c_int as U16_0,
+    6464 as ::core::ffi::c_int as U16_0,
+    6468 as ::core::ffi::c_int as U16_0,
+    6470 as ::core::ffi::c_int as U16_0,
+    6480 as ::core::ffi::c_int as U16_0,
+    6512 as ::core::ffi::c_int as U16_0,
+    6528 as ::core::ffi::c_int as U16_0,
+    6576 as ::core::ffi::c_int as U16_0,
+    6593 as ::core::ffi::c_int as U16_0,
+    6600 as ::core::ffi::c_int as U16_0,
+    6608 as ::core::ffi::c_int as U16_0,
+    6618 as ::core::ffi::c_int as U16_0,
+    6622 as ::core::ffi::c_int as U16_0,
+    6656 as ::core::ffi::c_int as U16_0,
+    6679 as ::core::ffi::c_int as U16_0,
+    6681 as ::core::ffi::c_int as U16_0,
+    6686 as ::core::ffi::c_int as U16_0,
+    6688 as ::core::ffi::c_int as U16_0,
+    6741 as ::core::ffi::c_int as U16_0,
+    6742 as ::core::ffi::c_int as U16_0,
+    6743 as ::core::ffi::c_int as U16_0,
+    6744 as ::core::ffi::c_int as U16_0,
+    6752 as ::core::ffi::c_int as U16_0,
+    6753 as ::core::ffi::c_int as U16_0,
+    6754 as ::core::ffi::c_int as U16_0,
+    6755 as ::core::ffi::c_int as U16_0,
+    6757 as ::core::ffi::c_int as U16_0,
+    6765 as ::core::ffi::c_int as U16_0,
+    6771 as ::core::ffi::c_int as U16_0,
+    6783 as ::core::ffi::c_int as U16_0,
+    6784 as ::core::ffi::c_int as U16_0,
+    6800 as ::core::ffi::c_int as U16_0,
+    6816 as ::core::ffi::c_int as U16_0,
+    6823 as ::core::ffi::c_int as U16_0,
+    6824 as ::core::ffi::c_int as U16_0,
+    6912 as ::core::ffi::c_int as U16_0,
+    6916 as ::core::ffi::c_int as U16_0,
+    6917 as ::core::ffi::c_int as U16_0,
+    6964 as ::core::ffi::c_int as U16_0,
+    6965 as ::core::ffi::c_int as U16_0,
+    6966 as ::core::ffi::c_int as U16_0,
+    6971 as ::core::ffi::c_int as U16_0,
+    6972 as ::core::ffi::c_int as U16_0,
+    6973 as ::core::ffi::c_int as U16_0,
+    6978 as ::core::ffi::c_int as U16_0,
+    6979 as ::core::ffi::c_int as U16_0,
+    6981 as ::core::ffi::c_int as U16_0,
+    6992 as ::core::ffi::c_int as U16_0,
+    7002 as ::core::ffi::c_int as U16_0,
+    7009 as ::core::ffi::c_int as U16_0,
+    7019 as ::core::ffi::c_int as U16_0,
+    7028 as ::core::ffi::c_int as U16_0,
+    7040 as ::core::ffi::c_int as U16_0,
+    7042 as ::core::ffi::c_int as U16_0,
+    7043 as ::core::ffi::c_int as U16_0,
+    7073 as ::core::ffi::c_int as U16_0,
+    7074 as ::core::ffi::c_int as U16_0,
+    7078 as ::core::ffi::c_int as U16_0,
+    7080 as ::core::ffi::c_int as U16_0,
+    7082 as ::core::ffi::c_int as U16_0,
+    7083 as ::core::ffi::c_int as U16_0,
+    7084 as ::core::ffi::c_int as U16_0,
+    7086 as ::core::ffi::c_int as U16_0,
+    7088 as ::core::ffi::c_int as U16_0,
+    7098 as ::core::ffi::c_int as U16_0,
+    7142 as ::core::ffi::c_int as U16_0,
+    7143 as ::core::ffi::c_int as U16_0,
+    7144 as ::core::ffi::c_int as U16_0,
+    7146 as ::core::ffi::c_int as U16_0,
+    7149 as ::core::ffi::c_int as U16_0,
+    7150 as ::core::ffi::c_int as U16_0,
+    7151 as ::core::ffi::c_int as U16_0,
+    7154 as ::core::ffi::c_int as U16_0,
+    7164 as ::core::ffi::c_int as U16_0,
+    7168 as ::core::ffi::c_int as U16_0,
+    7204 as ::core::ffi::c_int as U16_0,
+    7212 as ::core::ffi::c_int as U16_0,
+    7220 as ::core::ffi::c_int as U16_0,
+    7222 as ::core::ffi::c_int as U16_0,
+    7227 as ::core::ffi::c_int as U16_0,
+    7232 as ::core::ffi::c_int as U16_0,
+    7245 as ::core::ffi::c_int as U16_0,
+    7248 as ::core::ffi::c_int as U16_0,
+    7258 as ::core::ffi::c_int as U16_0,
+    7288 as ::core::ffi::c_int as U16_0,
+    7294 as ::core::ffi::c_int as U16_0,
+    7360 as ::core::ffi::c_int as U16_0,
+    7376 as ::core::ffi::c_int as U16_0,
+    7379 as ::core::ffi::c_int as U16_0,
+    7380 as ::core::ffi::c_int as U16_0,
+    7393 as ::core::ffi::c_int as U16_0,
+    7394 as ::core::ffi::c_int as U16_0,
+    7401 as ::core::ffi::c_int as U16_0,
+    7405 as ::core::ffi::c_int as U16_0,
+    7406 as ::core::ffi::c_int as U16_0,
+    7410 as ::core::ffi::c_int as U16_0,
+    7412 as ::core::ffi::c_int as U16_0,
+    7413 as ::core::ffi::c_int as U16_0,
+    7424 as ::core::ffi::c_int as U16_0,
+    7468 as ::core::ffi::c_int as U16_0,
+    7531 as ::core::ffi::c_int as U16_0,
+    7544 as ::core::ffi::c_int as U16_0,
+    7545 as ::core::ffi::c_int as U16_0,
+    7579 as ::core::ffi::c_int as U16_0,
+    7616 as ::core::ffi::c_int as U16_0,
+    7676 as ::core::ffi::c_int as U16_0,
+    7680 as ::core::ffi::c_int as U16_0,
+    7830 as ::core::ffi::c_int as U16_0,
+    7838 as ::core::ffi::c_int as U16_0,
+    7936 as ::core::ffi::c_int as U16_0,
+    7944 as ::core::ffi::c_int as U16_0,
+    7952 as ::core::ffi::c_int as U16_0,
+    7960 as ::core::ffi::c_int as U16_0,
+    7968 as ::core::ffi::c_int as U16_0,
+    7976 as ::core::ffi::c_int as U16_0,
+    7984 as ::core::ffi::c_int as U16_0,
+    7992 as ::core::ffi::c_int as U16_0,
+    8000 as ::core::ffi::c_int as U16_0,
+    8008 as ::core::ffi::c_int as U16_0,
+    8016 as ::core::ffi::c_int as U16_0,
+    8025 as ::core::ffi::c_int as U16_0,
+    8027 as ::core::ffi::c_int as U16_0,
+    8029 as ::core::ffi::c_int as U16_0,
+    8031 as ::core::ffi::c_int as U16_0,
+    8033 as ::core::ffi::c_int as U16_0,
+    8040 as ::core::ffi::c_int as U16_0,
+    8048 as ::core::ffi::c_int as U16_0,
+    8064 as ::core::ffi::c_int as U16_0,
+    8072 as ::core::ffi::c_int as U16_0,
+    8080 as ::core::ffi::c_int as U16_0,
+    8088 as ::core::ffi::c_int as U16_0,
+    8096 as ::core::ffi::c_int as U16_0,
+    8104 as ::core::ffi::c_int as U16_0,
+    8112 as ::core::ffi::c_int as U16_0,
+    8118 as ::core::ffi::c_int as U16_0,
+    8120 as ::core::ffi::c_int as U16_0,
+    8124 as ::core::ffi::c_int as U16_0,
+    8125 as ::core::ffi::c_int as U16_0,
+    8126 as ::core::ffi::c_int as U16_0,
+    8127 as ::core::ffi::c_int as U16_0,
+    8130 as ::core::ffi::c_int as U16_0,
+    8134 as ::core::ffi::c_int as U16_0,
+    8136 as ::core::ffi::c_int as U16_0,
+    8140 as ::core::ffi::c_int as U16_0,
+    8141 as ::core::ffi::c_int as U16_0,
+    8144 as ::core::ffi::c_int as U16_0,
+    8150 as ::core::ffi::c_int as U16_0,
+    8152 as ::core::ffi::c_int as U16_0,
+    8157 as ::core::ffi::c_int as U16_0,
+    8160 as ::core::ffi::c_int as U16_0,
+    8168 as ::core::ffi::c_int as U16_0,
+    8173 as ::core::ffi::c_int as U16_0,
+    8178 as ::core::ffi::c_int as U16_0,
+    8182 as ::core::ffi::c_int as U16_0,
+    8184 as ::core::ffi::c_int as U16_0,
+    8188 as ::core::ffi::c_int as U16_0,
+    8189 as ::core::ffi::c_int as U16_0,
+    8192 as ::core::ffi::c_int as U16_0,
+    8203 as ::core::ffi::c_int as U16_0,
+    8208 as ::core::ffi::c_int as U16_0,
+    8214 as ::core::ffi::c_int as U16_0,
+    8216 as ::core::ffi::c_int as U16_0,
+    8217 as ::core::ffi::c_int as U16_0,
+    8218 as ::core::ffi::c_int as U16_0,
+    8219 as ::core::ffi::c_int as U16_0,
+    8221 as ::core::ffi::c_int as U16_0,
+    8222 as ::core::ffi::c_int as U16_0,
+    8223 as ::core::ffi::c_int as U16_0,
+    8224 as ::core::ffi::c_int as U16_0,
+    8232 as ::core::ffi::c_int as U16_0,
+    8233 as ::core::ffi::c_int as U16_0,
+    8234 as ::core::ffi::c_int as U16_0,
+    8239 as ::core::ffi::c_int as U16_0,
+    8240 as ::core::ffi::c_int as U16_0,
+    8249 as ::core::ffi::c_int as U16_0,
+    8250 as ::core::ffi::c_int as U16_0,
+    8251 as ::core::ffi::c_int as U16_0,
+    8255 as ::core::ffi::c_int as U16_0,
+    8257 as ::core::ffi::c_int as U16_0,
+    8260 as ::core::ffi::c_int as U16_0,
+    8261 as ::core::ffi::c_int as U16_0,
+    8262 as ::core::ffi::c_int as U16_0,
+    8263 as ::core::ffi::c_int as U16_0,
+    8274 as ::core::ffi::c_int as U16_0,
+    8275 as ::core::ffi::c_int as U16_0,
+    8276 as ::core::ffi::c_int as U16_0,
+    8277 as ::core::ffi::c_int as U16_0,
+    8287 as ::core::ffi::c_int as U16_0,
+    8288 as ::core::ffi::c_int as U16_0,
+    8298 as ::core::ffi::c_int as U16_0,
+    8304 as ::core::ffi::c_int as U16_0,
+    8305 as ::core::ffi::c_int as U16_0,
+    8308 as ::core::ffi::c_int as U16_0,
+    8314 as ::core::ffi::c_int as U16_0,
+    8317 as ::core::ffi::c_int as U16_0,
+    8318 as ::core::ffi::c_int as U16_0,
+    8319 as ::core::ffi::c_int as U16_0,
+    8320 as ::core::ffi::c_int as U16_0,
+    8330 as ::core::ffi::c_int as U16_0,
+    8333 as ::core::ffi::c_int as U16_0,
+    8334 as ::core::ffi::c_int as U16_0,
+    8336 as ::core::ffi::c_int as U16_0,
+    8352 as ::core::ffi::c_int as U16_0,
+    8400 as ::core::ffi::c_int as U16_0,
+    8413 as ::core::ffi::c_int as U16_0,
+    8417 as ::core::ffi::c_int as U16_0,
+    8418 as ::core::ffi::c_int as U16_0,
+    8421 as ::core::ffi::c_int as U16_0,
+    8448 as ::core::ffi::c_int as U16_0,
+    8450 as ::core::ffi::c_int as U16_0,
+    8451 as ::core::ffi::c_int as U16_0,
+    8455 as ::core::ffi::c_int as U16_0,
+    8456 as ::core::ffi::c_int as U16_0,
+    8458 as ::core::ffi::c_int as U16_0,
+    8459 as ::core::ffi::c_int as U16_0,
+    8462 as ::core::ffi::c_int as U16_0,
+    8464 as ::core::ffi::c_int as U16_0,
+    8467 as ::core::ffi::c_int as U16_0,
+    8468 as ::core::ffi::c_int as U16_0,
+    8469 as ::core::ffi::c_int as U16_0,
+    8470 as ::core::ffi::c_int as U16_0,
+    8472 as ::core::ffi::c_int as U16_0,
+    8473 as ::core::ffi::c_int as U16_0,
+    8478 as ::core::ffi::c_int as U16_0,
+    8484 as ::core::ffi::c_int as U16_0,
+    8485 as ::core::ffi::c_int as U16_0,
+    8486 as ::core::ffi::c_int as U16_0,
+    8487 as ::core::ffi::c_int as U16_0,
+    8488 as ::core::ffi::c_int as U16_0,
+    8489 as ::core::ffi::c_int as U16_0,
+    8490 as ::core::ffi::c_int as U16_0,
+    8494 as ::core::ffi::c_int as U16_0,
+    8495 as ::core::ffi::c_int as U16_0,
+    8496 as ::core::ffi::c_int as U16_0,
+    8500 as ::core::ffi::c_int as U16_0,
+    8501 as ::core::ffi::c_int as U16_0,
+    8505 as ::core::ffi::c_int as U16_0,
+    8506 as ::core::ffi::c_int as U16_0,
+    8508 as ::core::ffi::c_int as U16_0,
+    8510 as ::core::ffi::c_int as U16_0,
+    8512 as ::core::ffi::c_int as U16_0,
+    8517 as ::core::ffi::c_int as U16_0,
+    8519 as ::core::ffi::c_int as U16_0,
+    8522 as ::core::ffi::c_int as U16_0,
+    8523 as ::core::ffi::c_int as U16_0,
+    8524 as ::core::ffi::c_int as U16_0,
+    8526 as ::core::ffi::c_int as U16_0,
+    8527 as ::core::ffi::c_int as U16_0,
+    8528 as ::core::ffi::c_int as U16_0,
+    8544 as ::core::ffi::c_int as U16_0,
+    8579 as ::core::ffi::c_int as U16_0,
+    8581 as ::core::ffi::c_int as U16_0,
+    8585 as ::core::ffi::c_int as U16_0,
+    8592 as ::core::ffi::c_int as U16_0,
+    8597 as ::core::ffi::c_int as U16_0,
+    8602 as ::core::ffi::c_int as U16_0,
+    8604 as ::core::ffi::c_int as U16_0,
+    8608 as ::core::ffi::c_int as U16_0,
+    8609 as ::core::ffi::c_int as U16_0,
+    8611 as ::core::ffi::c_int as U16_0,
+    8612 as ::core::ffi::c_int as U16_0,
+    8614 as ::core::ffi::c_int as U16_0,
+    8615 as ::core::ffi::c_int as U16_0,
+    8622 as ::core::ffi::c_int as U16_0,
+    8623 as ::core::ffi::c_int as U16_0,
+    8654 as ::core::ffi::c_int as U16_0,
+    8656 as ::core::ffi::c_int as U16_0,
+    8658 as ::core::ffi::c_int as U16_0,
+    8659 as ::core::ffi::c_int as U16_0,
+    8660 as ::core::ffi::c_int as U16_0,
+    8661 as ::core::ffi::c_int as U16_0,
+    8692 as ::core::ffi::c_int as U16_0,
+    8960 as ::core::ffi::c_int as U16_0,
+    8968 as ::core::ffi::c_int as U16_0,
+    8972 as ::core::ffi::c_int as U16_0,
+    8992 as ::core::ffi::c_int as U16_0,
+    8994 as ::core::ffi::c_int as U16_0,
+    9001 as ::core::ffi::c_int as U16_0,
+    9002 as ::core::ffi::c_int as U16_0,
+    9003 as ::core::ffi::c_int as U16_0,
+    9084 as ::core::ffi::c_int as U16_0,
+    9085 as ::core::ffi::c_int as U16_0,
+    9115 as ::core::ffi::c_int as U16_0,
+    9140 as ::core::ffi::c_int as U16_0,
+    9180 as ::core::ffi::c_int as U16_0,
+    9186 as ::core::ffi::c_int as U16_0,
+    9216 as ::core::ffi::c_int as U16_0,
+    9280 as ::core::ffi::c_int as U16_0,
+    9312 as ::core::ffi::c_int as U16_0,
+    9372 as ::core::ffi::c_int as U16_0,
+    9450 as ::core::ffi::c_int as U16_0,
+    9472 as ::core::ffi::c_int as U16_0,
+    9655 as ::core::ffi::c_int as U16_0,
+    9656 as ::core::ffi::c_int as U16_0,
+    9665 as ::core::ffi::c_int as U16_0,
+    9666 as ::core::ffi::c_int as U16_0,
+    9720 as ::core::ffi::c_int as U16_0,
+    9728 as ::core::ffi::c_int as U16_0,
+    9839 as ::core::ffi::c_int as U16_0,
+    9840 as ::core::ffi::c_int as U16_0,
+    9985 as ::core::ffi::c_int as U16_0,
+    10088 as ::core::ffi::c_int as U16_0,
+    10089 as ::core::ffi::c_int as U16_0,
+    10090 as ::core::ffi::c_int as U16_0,
+    10091 as ::core::ffi::c_int as U16_0,
+    10092 as ::core::ffi::c_int as U16_0,
+    10093 as ::core::ffi::c_int as U16_0,
+    10094 as ::core::ffi::c_int as U16_0,
+    10095 as ::core::ffi::c_int as U16_0,
+    10096 as ::core::ffi::c_int as U16_0,
+    10097 as ::core::ffi::c_int as U16_0,
+    10098 as ::core::ffi::c_int as U16_0,
+    10099 as ::core::ffi::c_int as U16_0,
+    10100 as ::core::ffi::c_int as U16_0,
+    10101 as ::core::ffi::c_int as U16_0,
+    10102 as ::core::ffi::c_int as U16_0,
+    10132 as ::core::ffi::c_int as U16_0,
+    10176 as ::core::ffi::c_int as U16_0,
+    10181 as ::core::ffi::c_int as U16_0,
+    10182 as ::core::ffi::c_int as U16_0,
+    10183 as ::core::ffi::c_int as U16_0,
+    10214 as ::core::ffi::c_int as U16_0,
+    10215 as ::core::ffi::c_int as U16_0,
+    10216 as ::core::ffi::c_int as U16_0,
+    10217 as ::core::ffi::c_int as U16_0,
+    10218 as ::core::ffi::c_int as U16_0,
+    10219 as ::core::ffi::c_int as U16_0,
+    10220 as ::core::ffi::c_int as U16_0,
+    10221 as ::core::ffi::c_int as U16_0,
+    10222 as ::core::ffi::c_int as U16_0,
+    10223 as ::core::ffi::c_int as U16_0,
+    10224 as ::core::ffi::c_int as U16_0,
+    10240 as ::core::ffi::c_int as U16_0,
+    10496 as ::core::ffi::c_int as U16_0,
+    10627 as ::core::ffi::c_int as U16_0,
+    10628 as ::core::ffi::c_int as U16_0,
+    10629 as ::core::ffi::c_int as U16_0,
+    10630 as ::core::ffi::c_int as U16_0,
+    10631 as ::core::ffi::c_int as U16_0,
+    10632 as ::core::ffi::c_int as U16_0,
+    10633 as ::core::ffi::c_int as U16_0,
+    10634 as ::core::ffi::c_int as U16_0,
+    10635 as ::core::ffi::c_int as U16_0,
+    10636 as ::core::ffi::c_int as U16_0,
+    10637 as ::core::ffi::c_int as U16_0,
+    10638 as ::core::ffi::c_int as U16_0,
+    10639 as ::core::ffi::c_int as U16_0,
+    10640 as ::core::ffi::c_int as U16_0,
+    10641 as ::core::ffi::c_int as U16_0,
+    10642 as ::core::ffi::c_int as U16_0,
+    10643 as ::core::ffi::c_int as U16_0,
+    10644 as ::core::ffi::c_int as U16_0,
+    10645 as ::core::ffi::c_int as U16_0,
+    10646 as ::core::ffi::c_int as U16_0,
+    10647 as ::core::ffi::c_int as U16_0,
+    10648 as ::core::ffi::c_int as U16_0,
+    10649 as ::core::ffi::c_int as U16_0,
+    10712 as ::core::ffi::c_int as U16_0,
+    10713 as ::core::ffi::c_int as U16_0,
+    10714 as ::core::ffi::c_int as U16_0,
+    10715 as ::core::ffi::c_int as U16_0,
+    10716 as ::core::ffi::c_int as U16_0,
+    10748 as ::core::ffi::c_int as U16_0,
+    10749 as ::core::ffi::c_int as U16_0,
+    10750 as ::core::ffi::c_int as U16_0,
+    11008 as ::core::ffi::c_int as U16_0,
+    11056 as ::core::ffi::c_int as U16_0,
+    11077 as ::core::ffi::c_int as U16_0,
+    11079 as ::core::ffi::c_int as U16_0,
+    11088 as ::core::ffi::c_int as U16_0,
+    11264 as ::core::ffi::c_int as U16_0,
+    11312 as ::core::ffi::c_int as U16_0,
+    11360 as ::core::ffi::c_int as U16_0,
+    11363 as ::core::ffi::c_int as U16_0,
+    11365 as ::core::ffi::c_int as U16_0,
+    11367 as ::core::ffi::c_int as U16_0,
+    11374 as ::core::ffi::c_int as U16_0,
+    11377 as ::core::ffi::c_int as U16_0,
+    11378 as ::core::ffi::c_int as U16_0,
+    11380 as ::core::ffi::c_int as U16_0,
+    11381 as ::core::ffi::c_int as U16_0,
+    11383 as ::core::ffi::c_int as U16_0,
+    11388 as ::core::ffi::c_int as U16_0,
+    11390 as ::core::ffi::c_int as U16_0,
+    11393 as ::core::ffi::c_int as U16_0,
+    11394 as ::core::ffi::c_int as U16_0,
+    11492 as ::core::ffi::c_int as U16_0,
+    11493 as ::core::ffi::c_int as U16_0,
+    11499 as ::core::ffi::c_int as U16_0,
+    11503 as ::core::ffi::c_int as U16_0,
+    11506 as ::core::ffi::c_int as U16_0,
+    11513 as ::core::ffi::c_int as U16_0,
+    11517 as ::core::ffi::c_int as U16_0,
+    11518 as ::core::ffi::c_int as U16_0,
+    11520 as ::core::ffi::c_int as U16_0,
+    11559 as ::core::ffi::c_int as U16_0,
+    11565 as ::core::ffi::c_int as U16_0,
+    11568 as ::core::ffi::c_int as U16_0,
+    11631 as ::core::ffi::c_int as U16_0,
+    11632 as ::core::ffi::c_int as U16_0,
+    11647 as ::core::ffi::c_int as U16_0,
+    11648 as ::core::ffi::c_int as U16_0,
+    11680 as ::core::ffi::c_int as U16_0,
+    11688 as ::core::ffi::c_int as U16_0,
+    11696 as ::core::ffi::c_int as U16_0,
+    11704 as ::core::ffi::c_int as U16_0,
+    11712 as ::core::ffi::c_int as U16_0,
+    11720 as ::core::ffi::c_int as U16_0,
+    11728 as ::core::ffi::c_int as U16_0,
+    11736 as ::core::ffi::c_int as U16_0,
+    11744 as ::core::ffi::c_int as U16_0,
+    11776 as ::core::ffi::c_int as U16_0,
+    11778 as ::core::ffi::c_int as U16_0,
+    11779 as ::core::ffi::c_int as U16_0,
+    11780 as ::core::ffi::c_int as U16_0,
+    11781 as ::core::ffi::c_int as U16_0,
+    11782 as ::core::ffi::c_int as U16_0,
+    11785 as ::core::ffi::c_int as U16_0,
+    11786 as ::core::ffi::c_int as U16_0,
+    11787 as ::core::ffi::c_int as U16_0,
+    11788 as ::core::ffi::c_int as U16_0,
+    11789 as ::core::ffi::c_int as U16_0,
+    11790 as ::core::ffi::c_int as U16_0,
+    11799 as ::core::ffi::c_int as U16_0,
+    11800 as ::core::ffi::c_int as U16_0,
+    11802 as ::core::ffi::c_int as U16_0,
+    11803 as ::core::ffi::c_int as U16_0,
+    11804 as ::core::ffi::c_int as U16_0,
+    11805 as ::core::ffi::c_int as U16_0,
+    11806 as ::core::ffi::c_int as U16_0,
+    11808 as ::core::ffi::c_int as U16_0,
+    11809 as ::core::ffi::c_int as U16_0,
+    11810 as ::core::ffi::c_int as U16_0,
+    11811 as ::core::ffi::c_int as U16_0,
+    11812 as ::core::ffi::c_int as U16_0,
+    11813 as ::core::ffi::c_int as U16_0,
+    11814 as ::core::ffi::c_int as U16_0,
+    11815 as ::core::ffi::c_int as U16_0,
+    11816 as ::core::ffi::c_int as U16_0,
+    11817 as ::core::ffi::c_int as U16_0,
+    11818 as ::core::ffi::c_int as U16_0,
+    11823 as ::core::ffi::c_int as U16_0,
+    11824 as ::core::ffi::c_int as U16_0,
+    11834 as ::core::ffi::c_int as U16_0,
+    11904 as ::core::ffi::c_int as U16_0,
+    11931 as ::core::ffi::c_int as U16_0,
+    12032 as ::core::ffi::c_int as U16_0,
+    12272 as ::core::ffi::c_int as U16_0,
+    12288 as ::core::ffi::c_int as U16_0,
+    12289 as ::core::ffi::c_int as U16_0,
+    12292 as ::core::ffi::c_int as U16_0,
+    12293 as ::core::ffi::c_int as U16_0,
+    12294 as ::core::ffi::c_int as U16_0,
+    12295 as ::core::ffi::c_int as U16_0,
+    12296 as ::core::ffi::c_int as U16_0,
+    12297 as ::core::ffi::c_int as U16_0,
+    12298 as ::core::ffi::c_int as U16_0,
+    12299 as ::core::ffi::c_int as U16_0,
+    12300 as ::core::ffi::c_int as U16_0,
+    12301 as ::core::ffi::c_int as U16_0,
+    12302 as ::core::ffi::c_int as U16_0,
+    12303 as ::core::ffi::c_int as U16_0,
+    12304 as ::core::ffi::c_int as U16_0,
+    12305 as ::core::ffi::c_int as U16_0,
+    12306 as ::core::ffi::c_int as U16_0,
+    12308 as ::core::ffi::c_int as U16_0,
+    12309 as ::core::ffi::c_int as U16_0,
+    12310 as ::core::ffi::c_int as U16_0,
+    12311 as ::core::ffi::c_int as U16_0,
+    12312 as ::core::ffi::c_int as U16_0,
+    12313 as ::core::ffi::c_int as U16_0,
+    12314 as ::core::ffi::c_int as U16_0,
+    12315 as ::core::ffi::c_int as U16_0,
+    12316 as ::core::ffi::c_int as U16_0,
+    12317 as ::core::ffi::c_int as U16_0,
+    12318 as ::core::ffi::c_int as U16_0,
+    12320 as ::core::ffi::c_int as U16_0,
+    12321 as ::core::ffi::c_int as U16_0,
+    12330 as ::core::ffi::c_int as U16_0,
+    12334 as ::core::ffi::c_int as U16_0,
+    12336 as ::core::ffi::c_int as U16_0,
+    12337 as ::core::ffi::c_int as U16_0,
+    12342 as ::core::ffi::c_int as U16_0,
+    12344 as ::core::ffi::c_int as U16_0,
+    12347 as ::core::ffi::c_int as U16_0,
+    12348 as ::core::ffi::c_int as U16_0,
+    12349 as ::core::ffi::c_int as U16_0,
+    12350 as ::core::ffi::c_int as U16_0,
+    12353 as ::core::ffi::c_int as U16_0,
+    12441 as ::core::ffi::c_int as U16_0,
+    12443 as ::core::ffi::c_int as U16_0,
+    12445 as ::core::ffi::c_int as U16_0,
+    12447 as ::core::ffi::c_int as U16_0,
+    12448 as ::core::ffi::c_int as U16_0,
+    12449 as ::core::ffi::c_int as U16_0,
+    12539 as ::core::ffi::c_int as U16_0,
+    12540 as ::core::ffi::c_int as U16_0,
+    12543 as ::core::ffi::c_int as U16_0,
+    12549 as ::core::ffi::c_int as U16_0,
+    12593 as ::core::ffi::c_int as U16_0,
+    12688 as ::core::ffi::c_int as U16_0,
+    12690 as ::core::ffi::c_int as U16_0,
+    12694 as ::core::ffi::c_int as U16_0,
+    12704 as ::core::ffi::c_int as U16_0,
+    12736 as ::core::ffi::c_int as U16_0,
+    12784 as ::core::ffi::c_int as U16_0,
+    12800 as ::core::ffi::c_int as U16_0,
+    12832 as ::core::ffi::c_int as U16_0,
+    12842 as ::core::ffi::c_int as U16_0,
+    12872 as ::core::ffi::c_int as U16_0,
+    12880 as ::core::ffi::c_int as U16_0,
+    12881 as ::core::ffi::c_int as U16_0,
+    12896 as ::core::ffi::c_int as U16_0,
+    12928 as ::core::ffi::c_int as U16_0,
+    12938 as ::core::ffi::c_int as U16_0,
+    12977 as ::core::ffi::c_int as U16_0,
+    12992 as ::core::ffi::c_int as U16_0,
+    13056 as ::core::ffi::c_int as U16_0,
+    13312 as ::core::ffi::c_int as U16_0,
+    19893 as ::core::ffi::c_int as U16_0,
+    19904 as ::core::ffi::c_int as U16_0,
+    19968 as ::core::ffi::c_int as U16_0,
+    40908 as ::core::ffi::c_int as U16_0,
+    40960 as ::core::ffi::c_int as U16_0,
+    40981 as ::core::ffi::c_int as U16_0,
+    40982 as ::core::ffi::c_int as U16_0,
+    42128 as ::core::ffi::c_int as U16_0,
+    42192 as ::core::ffi::c_int as U16_0,
+    42232 as ::core::ffi::c_int as U16_0,
+    42238 as ::core::ffi::c_int as U16_0,
+    42240 as ::core::ffi::c_int as U16_0,
+    42508 as ::core::ffi::c_int as U16_0,
+    42509 as ::core::ffi::c_int as U16_0,
+    42512 as ::core::ffi::c_int as U16_0,
+    42528 as ::core::ffi::c_int as U16_0,
+    42538 as ::core::ffi::c_int as U16_0,
+    42560 as ::core::ffi::c_int as U16_0,
+    42606 as ::core::ffi::c_int as U16_0,
+    42607 as ::core::ffi::c_int as U16_0,
+    42608 as ::core::ffi::c_int as U16_0,
+    42611 as ::core::ffi::c_int as U16_0,
+    42612 as ::core::ffi::c_int as U16_0,
+    42622 as ::core::ffi::c_int as U16_0,
+    42623 as ::core::ffi::c_int as U16_0,
+    42624 as ::core::ffi::c_int as U16_0,
+    42655 as ::core::ffi::c_int as U16_0,
+    42656 as ::core::ffi::c_int as U16_0,
+    42726 as ::core::ffi::c_int as U16_0,
+    42736 as ::core::ffi::c_int as U16_0,
+    42738 as ::core::ffi::c_int as U16_0,
+    42752 as ::core::ffi::c_int as U16_0,
+    42775 as ::core::ffi::c_int as U16_0,
+    42784 as ::core::ffi::c_int as U16_0,
+    42786 as ::core::ffi::c_int as U16_0,
+    42800 as ::core::ffi::c_int as U16_0,
+    42802 as ::core::ffi::c_int as U16_0,
+    42864 as ::core::ffi::c_int as U16_0,
+    42865 as ::core::ffi::c_int as U16_0,
+    42873 as ::core::ffi::c_int as U16_0,
+    42878 as ::core::ffi::c_int as U16_0,
+    42888 as ::core::ffi::c_int as U16_0,
+    42889 as ::core::ffi::c_int as U16_0,
+    42891 as ::core::ffi::c_int as U16_0,
+    42896 as ::core::ffi::c_int as U16_0,
+    42912 as ::core::ffi::c_int as U16_0,
+    43000 as ::core::ffi::c_int as U16_0,
+    43002 as ::core::ffi::c_int as U16_0,
+    43003 as ::core::ffi::c_int as U16_0,
+    43010 as ::core::ffi::c_int as U16_0,
+    43011 as ::core::ffi::c_int as U16_0,
+    43014 as ::core::ffi::c_int as U16_0,
+    43015 as ::core::ffi::c_int as U16_0,
+    43019 as ::core::ffi::c_int as U16_0,
+    43020 as ::core::ffi::c_int as U16_0,
+    43043 as ::core::ffi::c_int as U16_0,
+    43045 as ::core::ffi::c_int as U16_0,
+    43047 as ::core::ffi::c_int as U16_0,
+    43048 as ::core::ffi::c_int as U16_0,
+    43056 as ::core::ffi::c_int as U16_0,
+    43062 as ::core::ffi::c_int as U16_0,
+    43064 as ::core::ffi::c_int as U16_0,
+    43065 as ::core::ffi::c_int as U16_0,
+    43072 as ::core::ffi::c_int as U16_0,
+    43124 as ::core::ffi::c_int as U16_0,
+    43136 as ::core::ffi::c_int as U16_0,
+    43138 as ::core::ffi::c_int as U16_0,
+    43188 as ::core::ffi::c_int as U16_0,
+    43204 as ::core::ffi::c_int as U16_0,
+    43214 as ::core::ffi::c_int as U16_0,
+    43216 as ::core::ffi::c_int as U16_0,
+    43232 as ::core::ffi::c_int as U16_0,
+    43250 as ::core::ffi::c_int as U16_0,
+    43256 as ::core::ffi::c_int as U16_0,
+    43259 as ::core::ffi::c_int as U16_0,
+    43264 as ::core::ffi::c_int as U16_0,
+    43274 as ::core::ffi::c_int as U16_0,
+    43302 as ::core::ffi::c_int as U16_0,
+    43310 as ::core::ffi::c_int as U16_0,
+    43312 as ::core::ffi::c_int as U16_0,
+    43335 as ::core::ffi::c_int as U16_0,
+    43346 as ::core::ffi::c_int as U16_0,
+    43359 as ::core::ffi::c_int as U16_0,
+    43360 as ::core::ffi::c_int as U16_0,
+    43392 as ::core::ffi::c_int as U16_0,
+    43395 as ::core::ffi::c_int as U16_0,
+    43396 as ::core::ffi::c_int as U16_0,
+    43443 as ::core::ffi::c_int as U16_0,
+    43444 as ::core::ffi::c_int as U16_0,
+    43446 as ::core::ffi::c_int as U16_0,
+    43450 as ::core::ffi::c_int as U16_0,
+    43452 as ::core::ffi::c_int as U16_0,
+    43453 as ::core::ffi::c_int as U16_0,
+    43457 as ::core::ffi::c_int as U16_0,
+    43471 as ::core::ffi::c_int as U16_0,
+    43472 as ::core::ffi::c_int as U16_0,
+    43486 as ::core::ffi::c_int as U16_0,
+    43520 as ::core::ffi::c_int as U16_0,
+    43561 as ::core::ffi::c_int as U16_0,
+    43567 as ::core::ffi::c_int as U16_0,
+    43569 as ::core::ffi::c_int as U16_0,
+    43571 as ::core::ffi::c_int as U16_0,
+    43573 as ::core::ffi::c_int as U16_0,
+    43584 as ::core::ffi::c_int as U16_0,
+    43587 as ::core::ffi::c_int as U16_0,
+    43588 as ::core::ffi::c_int as U16_0,
+    43596 as ::core::ffi::c_int as U16_0,
+    43597 as ::core::ffi::c_int as U16_0,
+    43600 as ::core::ffi::c_int as U16_0,
+    43612 as ::core::ffi::c_int as U16_0,
+    43616 as ::core::ffi::c_int as U16_0,
+    43632 as ::core::ffi::c_int as U16_0,
+    43633 as ::core::ffi::c_int as U16_0,
+    43639 as ::core::ffi::c_int as U16_0,
+    43642 as ::core::ffi::c_int as U16_0,
+    43643 as ::core::ffi::c_int as U16_0,
+    43648 as ::core::ffi::c_int as U16_0,
+    43696 as ::core::ffi::c_int as U16_0,
+    43697 as ::core::ffi::c_int as U16_0,
+    43698 as ::core::ffi::c_int as U16_0,
+    43701 as ::core::ffi::c_int as U16_0,
+    43703 as ::core::ffi::c_int as U16_0,
+    43705 as ::core::ffi::c_int as U16_0,
+    43710 as ::core::ffi::c_int as U16_0,
+    43712 as ::core::ffi::c_int as U16_0,
+    43713 as ::core::ffi::c_int as U16_0,
+    43714 as ::core::ffi::c_int as U16_0,
+    43739 as ::core::ffi::c_int as U16_0,
+    43741 as ::core::ffi::c_int as U16_0,
+    43742 as ::core::ffi::c_int as U16_0,
+    43744 as ::core::ffi::c_int as U16_0,
+    43755 as ::core::ffi::c_int as U16_0,
+    43756 as ::core::ffi::c_int as U16_0,
+    43758 as ::core::ffi::c_int as U16_0,
+    43760 as ::core::ffi::c_int as U16_0,
+    43762 as ::core::ffi::c_int as U16_0,
+    43763 as ::core::ffi::c_int as U16_0,
+    43765 as ::core::ffi::c_int as U16_0,
+    43766 as ::core::ffi::c_int as U16_0,
+    43777 as ::core::ffi::c_int as U16_0,
+    43785 as ::core::ffi::c_int as U16_0,
+    43793 as ::core::ffi::c_int as U16_0,
+    43808 as ::core::ffi::c_int as U16_0,
+    43816 as ::core::ffi::c_int as U16_0,
+    43968 as ::core::ffi::c_int as U16_0,
+    44003 as ::core::ffi::c_int as U16_0,
+    44005 as ::core::ffi::c_int as U16_0,
+    44006 as ::core::ffi::c_int as U16_0,
+    44008 as ::core::ffi::c_int as U16_0,
+    44009 as ::core::ffi::c_int as U16_0,
+    44011 as ::core::ffi::c_int as U16_0,
+    44012 as ::core::ffi::c_int as U16_0,
+    44013 as ::core::ffi::c_int as U16_0,
+    44016 as ::core::ffi::c_int as U16_0,
+    44032 as ::core::ffi::c_int as U16_0,
+    55203 as ::core::ffi::c_int as U16_0,
+    55216 as ::core::ffi::c_int as U16_0,
+    55243 as ::core::ffi::c_int as U16_0,
+    55296 as ::core::ffi::c_int as U16_0,
+    56191 as ::core::ffi::c_int as U16_0,
+    56319 as ::core::ffi::c_int as U16_0,
+    57343 as ::core::ffi::c_int as U16_0,
+    57344 as ::core::ffi::c_int as U16_0,
+    63743 as ::core::ffi::c_int as U16_0,
+    63744 as ::core::ffi::c_int as U16_0,
+    64112 as ::core::ffi::c_int as U16_0,
+    64256 as ::core::ffi::c_int as U16_0,
+    64275 as ::core::ffi::c_int as U16_0,
+    64285 as ::core::ffi::c_int as U16_0,
+    64286 as ::core::ffi::c_int as U16_0,
+    64287 as ::core::ffi::c_int as U16_0,
+    64297 as ::core::ffi::c_int as U16_0,
+    64298 as ::core::ffi::c_int as U16_0,
+    64312 as ::core::ffi::c_int as U16_0,
+    64318 as ::core::ffi::c_int as U16_0,
+    64320 as ::core::ffi::c_int as U16_0,
+    64323 as ::core::ffi::c_int as U16_0,
+    64326 as ::core::ffi::c_int as U16_0,
+    64434 as ::core::ffi::c_int as U16_0,
+    64467 as ::core::ffi::c_int as U16_0,
+    64830 as ::core::ffi::c_int as U16_0,
+    64831 as ::core::ffi::c_int as U16_0,
+    64848 as ::core::ffi::c_int as U16_0,
+    64914 as ::core::ffi::c_int as U16_0,
+    65008 as ::core::ffi::c_int as U16_0,
+    65020 as ::core::ffi::c_int as U16_0,
+    65021 as ::core::ffi::c_int as U16_0,
+    65024 as ::core::ffi::c_int as U16_0,
+    65040 as ::core::ffi::c_int as U16_0,
+    65047 as ::core::ffi::c_int as U16_0,
+    65048 as ::core::ffi::c_int as U16_0,
+    65049 as ::core::ffi::c_int as U16_0,
+    65056 as ::core::ffi::c_int as U16_0,
+    65072 as ::core::ffi::c_int as U16_0,
+    65073 as ::core::ffi::c_int as U16_0,
+    65075 as ::core::ffi::c_int as U16_0,
+    65077 as ::core::ffi::c_int as U16_0,
+    65078 as ::core::ffi::c_int as U16_0,
+    65079 as ::core::ffi::c_int as U16_0,
+    65080 as ::core::ffi::c_int as U16_0,
+    65081 as ::core::ffi::c_int as U16_0,
+    65082 as ::core::ffi::c_int as U16_0,
+    65083 as ::core::ffi::c_int as U16_0,
+    65084 as ::core::ffi::c_int as U16_0,
+    65085 as ::core::ffi::c_int as U16_0,
+    65086 as ::core::ffi::c_int as U16_0,
+    65087 as ::core::ffi::c_int as U16_0,
+    65088 as ::core::ffi::c_int as U16_0,
+    65089 as ::core::ffi::c_int as U16_0,
+    65090 as ::core::ffi::c_int as U16_0,
+    65091 as ::core::ffi::c_int as U16_0,
+    65092 as ::core::ffi::c_int as U16_0,
+    65093 as ::core::ffi::c_int as U16_0,
+    65095 as ::core::ffi::c_int as U16_0,
+    65096 as ::core::ffi::c_int as U16_0,
+    65097 as ::core::ffi::c_int as U16_0,
+    65101 as ::core::ffi::c_int as U16_0,
+    65104 as ::core::ffi::c_int as U16_0,
+    65108 as ::core::ffi::c_int as U16_0,
+    65112 as ::core::ffi::c_int as U16_0,
+    65113 as ::core::ffi::c_int as U16_0,
+    65114 as ::core::ffi::c_int as U16_0,
+    65115 as ::core::ffi::c_int as U16_0,
+    65116 as ::core::ffi::c_int as U16_0,
+    65117 as ::core::ffi::c_int as U16_0,
+    65118 as ::core::ffi::c_int as U16_0,
+    65119 as ::core::ffi::c_int as U16_0,
+    65122 as ::core::ffi::c_int as U16_0,
+    65123 as ::core::ffi::c_int as U16_0,
+    65124 as ::core::ffi::c_int as U16_0,
+    65128 as ::core::ffi::c_int as U16_0,
+    65129 as ::core::ffi::c_int as U16_0,
+    65130 as ::core::ffi::c_int as U16_0,
+    65136 as ::core::ffi::c_int as U16_0,
+    65142 as ::core::ffi::c_int as U16_0,
+    65279 as ::core::ffi::c_int as U16_0,
+    65281 as ::core::ffi::c_int as U16_0,
+    65284 as ::core::ffi::c_int as U16_0,
+    65285 as ::core::ffi::c_int as U16_0,
+    65288 as ::core::ffi::c_int as U16_0,
+    65289 as ::core::ffi::c_int as U16_0,
+    65290 as ::core::ffi::c_int as U16_0,
+    65291 as ::core::ffi::c_int as U16_0,
+    65292 as ::core::ffi::c_int as U16_0,
+    65293 as ::core::ffi::c_int as U16_0,
+    65294 as ::core::ffi::c_int as U16_0,
+    65296 as ::core::ffi::c_int as U16_0,
+    65306 as ::core::ffi::c_int as U16_0,
+    65308 as ::core::ffi::c_int as U16_0,
+    65311 as ::core::ffi::c_int as U16_0,
+    65313 as ::core::ffi::c_int as U16_0,
+    65339 as ::core::ffi::c_int as U16_0,
+    65340 as ::core::ffi::c_int as U16_0,
+    65341 as ::core::ffi::c_int as U16_0,
+    65342 as ::core::ffi::c_int as U16_0,
+    65343 as ::core::ffi::c_int as U16_0,
+    65344 as ::core::ffi::c_int as U16_0,
+    65345 as ::core::ffi::c_int as U16_0,
+    65371 as ::core::ffi::c_int as U16_0,
+    65372 as ::core::ffi::c_int as U16_0,
+    65373 as ::core::ffi::c_int as U16_0,
+    65374 as ::core::ffi::c_int as U16_0,
+    65375 as ::core::ffi::c_int as U16_0,
+    65376 as ::core::ffi::c_int as U16_0,
+    65377 as ::core::ffi::c_int as U16_0,
+    65378 as ::core::ffi::c_int as U16_0,
+    65379 as ::core::ffi::c_int as U16_0,
+    65380 as ::core::ffi::c_int as U16_0,
+    65382 as ::core::ffi::c_int as U16_0,
+    65392 as ::core::ffi::c_int as U16_0,
+    65393 as ::core::ffi::c_int as U16_0,
+    65438 as ::core::ffi::c_int as U16_0,
+    65440 as ::core::ffi::c_int as U16_0,
+    65474 as ::core::ffi::c_int as U16_0,
+    65482 as ::core::ffi::c_int as U16_0,
+    65490 as ::core::ffi::c_int as U16_0,
+    65498 as ::core::ffi::c_int as U16_0,
+    65504 as ::core::ffi::c_int as U16_0,
+    65506 as ::core::ffi::c_int as U16_0,
+    65507 as ::core::ffi::c_int as U16_0,
+    65508 as ::core::ffi::c_int as U16_0,
+    65509 as ::core::ffi::c_int as U16_0,
+    65512 as ::core::ffi::c_int as U16_0,
+    65513 as ::core::ffi::c_int as U16_0,
+    65517 as ::core::ffi::c_int as U16_0,
+    65529 as ::core::ffi::c_int as U16_0,
+    65532 as ::core::ffi::c_int as U16_0,
+    0 as ::core::ffi::c_int as U16_0,
+    13 as ::core::ffi::c_int as U16_0,
+    40 as ::core::ffi::c_int as U16_0,
+    60 as ::core::ffi::c_int as U16_0,
+    63 as ::core::ffi::c_int as U16_0,
+    80 as ::core::ffi::c_int as U16_0,
+    128 as ::core::ffi::c_int as U16_0,
+    256 as ::core::ffi::c_int as U16_0,
+    263 as ::core::ffi::c_int as U16_0,
+    311 as ::core::ffi::c_int as U16_0,
+    320 as ::core::ffi::c_int as U16_0,
+    373 as ::core::ffi::c_int as U16_0,
+    377 as ::core::ffi::c_int as U16_0,
+    394 as ::core::ffi::c_int as U16_0,
+    400 as ::core::ffi::c_int as U16_0,
+    464 as ::core::ffi::c_int as U16_0,
+    509 as ::core::ffi::c_int as U16_0,
+    640 as ::core::ffi::c_int as U16_0,
+    672 as ::core::ffi::c_int as U16_0,
+    768 as ::core::ffi::c_int as U16_0,
+    800 as ::core::ffi::c_int as U16_0,
+    816 as ::core::ffi::c_int as U16_0,
+    833 as ::core::ffi::c_int as U16_0,
+    834 as ::core::ffi::c_int as U16_0,
+    842 as ::core::ffi::c_int as U16_0,
+    896 as ::core::ffi::c_int as U16_0,
+    927 as ::core::ffi::c_int as U16_0,
+    928 as ::core::ffi::c_int as U16_0,
+    968 as ::core::ffi::c_int as U16_0,
+    976 as ::core::ffi::c_int as U16_0,
+    977 as ::core::ffi::c_int as U16_0,
+    1024 as ::core::ffi::c_int as U16_0,
+    1064 as ::core::ffi::c_int as U16_0,
+    1104 as ::core::ffi::c_int as U16_0,
+    1184 as ::core::ffi::c_int as U16_0,
+    2048 as ::core::ffi::c_int as U16_0,
+    2056 as ::core::ffi::c_int as U16_0,
+    2058 as ::core::ffi::c_int as U16_0,
+    2103 as ::core::ffi::c_int as U16_0,
+    2108 as ::core::ffi::c_int as U16_0,
+    2111 as ::core::ffi::c_int as U16_0,
+    2135 as ::core::ffi::c_int as U16_0,
+    2136 as ::core::ffi::c_int as U16_0,
+    2304 as ::core::ffi::c_int as U16_0,
+    2326 as ::core::ffi::c_int as U16_0,
+    2335 as ::core::ffi::c_int as U16_0,
+    2336 as ::core::ffi::c_int as U16_0,
+    2367 as ::core::ffi::c_int as U16_0,
+    2432 as ::core::ffi::c_int as U16_0,
+    2494 as ::core::ffi::c_int as U16_0,
+    2560 as ::core::ffi::c_int as U16_0,
+    2561 as ::core::ffi::c_int as U16_0,
+    2565 as ::core::ffi::c_int as U16_0,
+    2572 as ::core::ffi::c_int as U16_0,
+    2576 as ::core::ffi::c_int as U16_0,
+    2581 as ::core::ffi::c_int as U16_0,
+    2585 as ::core::ffi::c_int as U16_0,
+    2616 as ::core::ffi::c_int as U16_0,
+    2623 as ::core::ffi::c_int as U16_0,
+    2624 as ::core::ffi::c_int as U16_0,
+    2640 as ::core::ffi::c_int as U16_0,
+    2656 as ::core::ffi::c_int as U16_0,
+    2685 as ::core::ffi::c_int as U16_0,
+    2687 as ::core::ffi::c_int as U16_0,
+    2816 as ::core::ffi::c_int as U16_0,
+    2873 as ::core::ffi::c_int as U16_0,
+    2880 as ::core::ffi::c_int as U16_0,
+    2904 as ::core::ffi::c_int as U16_0,
+    2912 as ::core::ffi::c_int as U16_0,
+    2936 as ::core::ffi::c_int as U16_0,
+    3072 as ::core::ffi::c_int as U16_0,
+    3680 as ::core::ffi::c_int as U16_0,
+    4096 as ::core::ffi::c_int as U16_0,
+    4097 as ::core::ffi::c_int as U16_0,
+    4098 as ::core::ffi::c_int as U16_0,
+    4099 as ::core::ffi::c_int as U16_0,
+    4152 as ::core::ffi::c_int as U16_0,
+    4167 as ::core::ffi::c_int as U16_0,
+    4178 as ::core::ffi::c_int as U16_0,
+    4198 as ::core::ffi::c_int as U16_0,
+    4224 as ::core::ffi::c_int as U16_0,
+    4226 as ::core::ffi::c_int as U16_0,
+    4227 as ::core::ffi::c_int as U16_0,
+    4272 as ::core::ffi::c_int as U16_0,
+    4275 as ::core::ffi::c_int as U16_0,
+    4279 as ::core::ffi::c_int as U16_0,
+    4281 as ::core::ffi::c_int as U16_0,
+    4283 as ::core::ffi::c_int as U16_0,
+    4285 as ::core::ffi::c_int as U16_0,
+    4286 as ::core::ffi::c_int as U16_0,
+    4304 as ::core::ffi::c_int as U16_0,
+    4336 as ::core::ffi::c_int as U16_0,
+    4352 as ::core::ffi::c_int as U16_0,
+    4355 as ::core::ffi::c_int as U16_0,
+    4391 as ::core::ffi::c_int as U16_0,
+    4396 as ::core::ffi::c_int as U16_0,
+    4397 as ::core::ffi::c_int as U16_0,
+    4406 as ::core::ffi::c_int as U16_0,
+    4416 as ::core::ffi::c_int as U16_0,
+    4480 as ::core::ffi::c_int as U16_0,
+    4482 as ::core::ffi::c_int as U16_0,
+    4483 as ::core::ffi::c_int as U16_0,
+    4531 as ::core::ffi::c_int as U16_0,
+    4534 as ::core::ffi::c_int as U16_0,
+    4543 as ::core::ffi::c_int as U16_0,
+    4545 as ::core::ffi::c_int as U16_0,
+    4549 as ::core::ffi::c_int as U16_0,
+    4560 as ::core::ffi::c_int as U16_0,
+    5760 as ::core::ffi::c_int as U16_0,
+    5803 as ::core::ffi::c_int as U16_0,
+    5804 as ::core::ffi::c_int as U16_0,
+    5805 as ::core::ffi::c_int as U16_0,
+    5806 as ::core::ffi::c_int as U16_0,
+    5808 as ::core::ffi::c_int as U16_0,
+    5814 as ::core::ffi::c_int as U16_0,
+    5815 as ::core::ffi::c_int as U16_0,
+    5824 as ::core::ffi::c_int as U16_0,
+    8192 as ::core::ffi::c_int as U16_0,
+    9216 as ::core::ffi::c_int as U16_0,
+    9328 as ::core::ffi::c_int as U16_0,
+    12288 as ::core::ffi::c_int as U16_0,
+    26624 as ::core::ffi::c_int as U16_0,
+    28416 as ::core::ffi::c_int as U16_0,
+    28496 as ::core::ffi::c_int as U16_0,
+    28497 as ::core::ffi::c_int as U16_0,
+    28559 as ::core::ffi::c_int as U16_0,
+    28563 as ::core::ffi::c_int as U16_0,
+    45056 as ::core::ffi::c_int as U16_0,
+    53248 as ::core::ffi::c_int as U16_0,
+    53504 as ::core::ffi::c_int as U16_0,
+    53545 as ::core::ffi::c_int as U16_0,
+    53605 as ::core::ffi::c_int as U16_0,
+    53607 as ::core::ffi::c_int as U16_0,
+    53610 as ::core::ffi::c_int as U16_0,
+    53613 as ::core::ffi::c_int as U16_0,
+    53619 as ::core::ffi::c_int as U16_0,
+    53627 as ::core::ffi::c_int as U16_0,
+    53635 as ::core::ffi::c_int as U16_0,
+    53637 as ::core::ffi::c_int as U16_0,
+    53644 as ::core::ffi::c_int as U16_0,
+    53674 as ::core::ffi::c_int as U16_0,
+    53678 as ::core::ffi::c_int as U16_0,
+    53760 as ::core::ffi::c_int as U16_0,
+    53826 as ::core::ffi::c_int as U16_0,
+    53829 as ::core::ffi::c_int as U16_0,
+    54016 as ::core::ffi::c_int as U16_0,
+    54112 as ::core::ffi::c_int as U16_0,
+    54272 as ::core::ffi::c_int as U16_0,
+    54298 as ::core::ffi::c_int as U16_0,
+    54324 as ::core::ffi::c_int as U16_0,
+    54350 as ::core::ffi::c_int as U16_0,
+    54358 as ::core::ffi::c_int as U16_0,
+    54376 as ::core::ffi::c_int as U16_0,
+    54402 as ::core::ffi::c_int as U16_0,
+    54428 as ::core::ffi::c_int as U16_0,
+    54430 as ::core::ffi::c_int as U16_0,
+    54434 as ::core::ffi::c_int as U16_0,
+    54437 as ::core::ffi::c_int as U16_0,
+    54441 as ::core::ffi::c_int as U16_0,
+    54446 as ::core::ffi::c_int as U16_0,
+    54454 as ::core::ffi::c_int as U16_0,
+    54459 as ::core::ffi::c_int as U16_0,
+    54461 as ::core::ffi::c_int as U16_0,
+    54469 as ::core::ffi::c_int as U16_0,
+    54480 as ::core::ffi::c_int as U16_0,
+    54506 as ::core::ffi::c_int as U16_0,
+    54532 as ::core::ffi::c_int as U16_0,
+    54535 as ::core::ffi::c_int as U16_0,
+    54541 as ::core::ffi::c_int as U16_0,
+    54550 as ::core::ffi::c_int as U16_0,
+    54558 as ::core::ffi::c_int as U16_0,
+    54584 as ::core::ffi::c_int as U16_0,
+    54587 as ::core::ffi::c_int as U16_0,
+    54592 as ::core::ffi::c_int as U16_0,
+    54598 as ::core::ffi::c_int as U16_0,
+    54602 as ::core::ffi::c_int as U16_0,
+    54610 as ::core::ffi::c_int as U16_0,
+    54636 as ::core::ffi::c_int as U16_0,
+    54662 as ::core::ffi::c_int as U16_0,
+    54688 as ::core::ffi::c_int as U16_0,
+    54714 as ::core::ffi::c_int as U16_0,
+    54740 as ::core::ffi::c_int as U16_0,
+    54766 as ::core::ffi::c_int as U16_0,
+    54792 as ::core::ffi::c_int as U16_0,
+    54818 as ::core::ffi::c_int as U16_0,
+    54844 as ::core::ffi::c_int as U16_0,
+    54870 as ::core::ffi::c_int as U16_0,
+    54896 as ::core::ffi::c_int as U16_0,
+    54922 as ::core::ffi::c_int as U16_0,
+    54952 as ::core::ffi::c_int as U16_0,
+    54977 as ::core::ffi::c_int as U16_0,
+    54978 as ::core::ffi::c_int as U16_0,
+    55003 as ::core::ffi::c_int as U16_0,
+    55004 as ::core::ffi::c_int as U16_0,
+    55010 as ::core::ffi::c_int as U16_0,
+    55035 as ::core::ffi::c_int as U16_0,
+    55036 as ::core::ffi::c_int as U16_0,
+    55061 as ::core::ffi::c_int as U16_0,
+    55062 as ::core::ffi::c_int as U16_0,
+    55068 as ::core::ffi::c_int as U16_0,
+    55093 as ::core::ffi::c_int as U16_0,
+    55094 as ::core::ffi::c_int as U16_0,
+    55119 as ::core::ffi::c_int as U16_0,
+    55120 as ::core::ffi::c_int as U16_0,
+    55126 as ::core::ffi::c_int as U16_0,
+    55151 as ::core::ffi::c_int as U16_0,
+    55152 as ::core::ffi::c_int as U16_0,
+    55177 as ::core::ffi::c_int as U16_0,
+    55178 as ::core::ffi::c_int as U16_0,
+    55184 as ::core::ffi::c_int as U16_0,
+    55209 as ::core::ffi::c_int as U16_0,
+    55210 as ::core::ffi::c_int as U16_0,
+    55235 as ::core::ffi::c_int as U16_0,
+    55236 as ::core::ffi::c_int as U16_0,
+    55242 as ::core::ffi::c_int as U16_0,
+    55246 as ::core::ffi::c_int as U16_0,
+    60928 as ::core::ffi::c_int as U16_0,
+    60933 as ::core::ffi::c_int as U16_0,
+    60961 as ::core::ffi::c_int as U16_0,
+    60964 as ::core::ffi::c_int as U16_0,
+    60967 as ::core::ffi::c_int as U16_0,
+    60969 as ::core::ffi::c_int as U16_0,
+    60980 as ::core::ffi::c_int as U16_0,
+    60985 as ::core::ffi::c_int as U16_0,
+    60987 as ::core::ffi::c_int as U16_0,
+    60994 as ::core::ffi::c_int as U16_0,
+    60999 as ::core::ffi::c_int as U16_0,
+    61001 as ::core::ffi::c_int as U16_0,
+    61003 as ::core::ffi::c_int as U16_0,
+    61005 as ::core::ffi::c_int as U16_0,
+    61009 as ::core::ffi::c_int as U16_0,
+    61012 as ::core::ffi::c_int as U16_0,
+    61015 as ::core::ffi::c_int as U16_0,
+    61017 as ::core::ffi::c_int as U16_0,
+    61019 as ::core::ffi::c_int as U16_0,
+    61021 as ::core::ffi::c_int as U16_0,
+    61023 as ::core::ffi::c_int as U16_0,
+    61025 as ::core::ffi::c_int as U16_0,
+    61028 as ::core::ffi::c_int as U16_0,
+    61031 as ::core::ffi::c_int as U16_0,
+    61036 as ::core::ffi::c_int as U16_0,
+    61044 as ::core::ffi::c_int as U16_0,
+    61049 as ::core::ffi::c_int as U16_0,
+    61054 as ::core::ffi::c_int as U16_0,
+    61056 as ::core::ffi::c_int as U16_0,
+    61067 as ::core::ffi::c_int as U16_0,
+    61089 as ::core::ffi::c_int as U16_0,
+    61093 as ::core::ffi::c_int as U16_0,
+    61099 as ::core::ffi::c_int as U16_0,
+    61168 as ::core::ffi::c_int as U16_0,
+    61440 as ::core::ffi::c_int as U16_0,
+    61488 as ::core::ffi::c_int as U16_0,
+    61600 as ::core::ffi::c_int as U16_0,
+    61617 as ::core::ffi::c_int as U16_0,
+    61633 as ::core::ffi::c_int as U16_0,
+    61649 as ::core::ffi::c_int as U16_0,
+    61696 as ::core::ffi::c_int as U16_0,
+    61712 as ::core::ffi::c_int as U16_0,
+    61744 as ::core::ffi::c_int as U16_0,
+    61808 as ::core::ffi::c_int as U16_0,
+    61926 as ::core::ffi::c_int as U16_0,
+    61968 as ::core::ffi::c_int as U16_0,
+    62016 as ::core::ffi::c_int as U16_0,
+    62032 as ::core::ffi::c_int as U16_0,
+    62208 as ::core::ffi::c_int as U16_0,
+    62256 as ::core::ffi::c_int as U16_0,
+    62263 as ::core::ffi::c_int as U16_0,
+    62336 as ::core::ffi::c_int as U16_0,
+    62368 as ::core::ffi::c_int as U16_0,
+    62406 as ::core::ffi::c_int as U16_0,
+    62432 as ::core::ffi::c_int as U16_0,
+    62464 as ::core::ffi::c_int as U16_0,
+    62528 as ::core::ffi::c_int as U16_0,
+    62530 as ::core::ffi::c_int as U16_0,
+    62713 as ::core::ffi::c_int as U16_0,
+    62720 as ::core::ffi::c_int as U16_0,
+    62784 as ::core::ffi::c_int as U16_0,
+    62800 as ::core::ffi::c_int as U16_0,
+    62971 as ::core::ffi::c_int as U16_0,
+    63045 as ::core::ffi::c_int as U16_0,
+    63104 as ::core::ffi::c_int as U16_0,
+    63232 as ::core::ffi::c_int as U16_0,
+    0 as ::core::ffi::c_int as U16_0,
+    42710 as ::core::ffi::c_int as U16_0,
+    42752 as ::core::ffi::c_int as U16_0,
+    46900 as ::core::ffi::c_int as U16_0,
+    46912 as ::core::ffi::c_int as U16_0,
+    47133 as ::core::ffi::c_int as U16_0,
+    63488 as ::core::ffi::c_int as U16_0,
+    1 as ::core::ffi::c_int as U16_0,
+    32 as ::core::ffi::c_int as U16_0,
+    256 as ::core::ffi::c_int as U16_0,
+    0 as ::core::ffi::c_int as U16_0,
+    65533 as ::core::ffi::c_int as U16_0,
 ];
 
 unsafe extern "C" fn fts5InitVtab(
@@ -9137,7 +9137,7 @@ unsafe extern "C" fn fts5InitVtab(
     let mut pTab: *mut Fts5FullTable = std::ptr::null_mut::<Fts5FullTable>();
     pTab = sqlite3Fts5MallocZero(
         &raw mut rc,
-        std::mem::size_of::<Fts5FullTable>() as crate::src::headers::sqlite3_h::sqlite3_int64,
+        std::mem::size_of::<Fts5FullTable>() as crate::src::headers::sqlite3_h::Sqlite3Int64,
     ) as *mut Fts5FullTable;
     if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
         rc = sqlite3Fts5ConfigParse(pGlobal, db, argc, azConfig, &raw mut pConfig, pzErr);
@@ -9255,12 +9255,12 @@ unsafe extern "C" fn fts5HashEntryMerge(
 
 unsafe extern "C" fn sqlite3Fts5TermsetFree(mut p: *mut Fts5Termset) {
     if !p.is_null() {
-        let mut i: u32_0 = 0;
-        i = 0 as u32_0;
+        let mut i: U32_0 = 0;
+        i = 0 as U32_0;
         while i
             < (std::mem::size_of::<[*mut Fts5TermsetEntry; 512]>() as usize)
                 .wrapping_div(std::mem::size_of::<*mut Fts5TermsetEntry>() as usize)
-                as ::core::ffi::c_int as u32_0
+                as ::core::ffi::c_int as U32_0
         {
             let mut pEntry: *mut Fts5TermsetEntry = (*p).apHash[i as usize];
             while !pEntry.is_null() {
@@ -9277,7 +9277,7 @@ unsafe extern "C" fn sqlite3Fts5TermsetFree(mut p: *mut Fts5Termset) {
 unsafe extern "C" fn fts5VocabResetCursor(mut pCsr: *mut Fts5VocabCursor) {
     let __pCsr_ref = { &mut *pCsr };
     let mut nCol: ::core::ffi::c_int = (*(*__pCsr_ref.pFts5).pConfig).nCol;
-    __pCsr_ref.rowid = 0 as i64_0;
+    __pCsr_ref.rowid = 0 as I64_0;
     sqlite3Fts5IterClose(__pCsr_ref.pIter);
     sqlite3Fts5StructureRelease(__pCsr_ref.pStruct);
     __pCsr_ref.pStruct = std::ptr::null_mut::<::core::ffi::c_void>();
@@ -9287,20 +9287,20 @@ unsafe extern "C" fn fts5VocabResetCursor(mut pCsr: *mut Fts5VocabCursor) {
     __pCsr_ref.zLeTerm = std::ptr::null_mut::<::core::ffi::c_char>();
     __pCsr_ref.bEof = 0 as ::core::ffi::c_int;
     __pCsr_ref.iCol = 0 as ::core::ffi::c_int;
-    __pCsr_ref.iInstPos = 0 as i64_0;
+    __pCsr_ref.iInstPos = 0 as I64_0;
     __pCsr_ref.iInstOff = 0 as ::core::ffi::c_int;
     __pCsr_ref.colUsed = 0 as ::core::ffi::c_int;
     std::ptr::write_bytes(
         __pCsr_ref.aCnt as *mut ::core::ffi::c_void as *mut u8,
         0,
-        (std::mem::size_of::<i64_0>() as crate::__stddef_size_t_h::size_t)
-            .wrapping_mul(nCol as crate::__stddef_size_t_h::size_t) as usize,
+        (std::mem::size_of::<I64_0>() as crate::__stddef_size_t_h::SizeT)
+            .wrapping_mul(nCol as crate::__stddef_size_t_h::SizeT) as usize,
     );
     std::ptr::write_bytes(
         __pCsr_ref.aDoc as *mut ::core::ffi::c_void as *mut u8,
         0,
-        (std::mem::size_of::<i64_0>() as crate::__stddef_size_t_h::size_t)
-            .wrapping_mul(nCol as crate::__stddef_size_t_h::size_t) as usize,
+        (std::mem::size_of::<I64_0>() as crate::__stddef_size_t_h::SizeT)
+            .wrapping_mul(nCol as crate::__stddef_size_t_h::SizeT) as usize,
     );
 }
 
@@ -9632,10 +9632,10 @@ unsafe extern "C" fn sqlite3Fts5StorageClose(mut p: *mut Fts5Storage) -> ::core:
         let mut i: ::core::ffi::c_int = 0;
         i = 0 as ::core::ffi::c_int;
         while i
-            < (std::mem::size_of::<[*mut crate::src::headers::sqlite3_h::sqlite3_stmt; 12]>()
+            < (std::mem::size_of::<[*mut crate::src::headers::sqlite3_h::Sqlite3Stmt; 12]>()
                 as usize)
                 .wrapping_div(
-                    std::mem::size_of::<*mut crate::src::headers::sqlite3_h::sqlite3_stmt>()
+                    std::mem::size_of::<*mut crate::src::headers::sqlite3_h::Sqlite3Stmt>()
                         as usize,
                 ) as ::core::ffi::c_int
         {
@@ -9662,7 +9662,7 @@ unsafe extern "C" fn fts5UnicodeIsAlnum(
     mut p: *mut Unicode61Tokenizer,
     mut iCode: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    (*p).aCategory[sqlite3Fts5UnicodeCategory(iCode as u32_0) as usize] as ::core::ffi::c_int
+    (*p).aCategory[sqlite3Fts5UnicodeCategory(iCode as U32_0) as usize] as ::core::ffi::c_int
         ^ fts5UnicodeIsException(p, iCode)
 }
 
@@ -9698,7 +9698,7 @@ unsafe extern "C" fn fts5VocabInstanceNewTerm(
             &raw mut rc,
             &raw mut __pCsr_ref.term,
             nTerm,
-            zTerm as *const u8_0,
+            zTerm as *const U8_0,
         );
     }
     rc
@@ -9755,7 +9755,7 @@ unsafe extern "C" fn fts5UnicodeTokenize(
     let mut pEnd: *const ::core::ffi::c_char =
         aFold.offset((nFold - 6 as ::core::ffi::c_int) as isize) as *mut ::core::ffi::c_char;
     's_20: while rc == crate::src::headers::sqlite3_h::SQLITE_OK {
-        let mut iCode: u32_0 = 0;
+        let mut iCode: U32_0 = 0;
         let mut zOut: *mut ::core::ffi::c_char = aFold;
         let mut is: ::core::ffi::c_int = 0;
         let mut ie: ::core::ffi::c_int = 0;
@@ -9768,9 +9768,9 @@ unsafe extern "C" fn fts5UnicodeTokenize(
                     as ::core::ffi::c_int;
                 let fresh147 = zCsr;
                 zCsr = zCsr.offset(1);
-                iCode = *fresh147 as u32_0;
-                if iCode >= 0xc0 as u32_0 {
-                    iCode = sqlite3Utf8Trans1[iCode.wrapping_sub(0xc0 as u32_0) as usize] as u32_0;
+                iCode = *fresh147 as U32_0;
+                if iCode >= 0xc0 as U32_0 {
+                    iCode = sqlite3Utf8Trans1[iCode.wrapping_sub(0xc0 as U32_0) as usize] as U32_0;
                     while zCsr < zTerm
                         && *zCsr as ::core::ffi::c_int & 0xc0 as ::core::ffi::c_int
                             == 0x80 as ::core::ffi::c_int
@@ -9778,16 +9778,16 @@ unsafe extern "C" fn fts5UnicodeTokenize(
                         let fresh148 = zCsr;
                         zCsr = zCsr.offset(1);
                         iCode = (iCode << 6 as ::core::ffi::c_int).wrapping_add(
-                            (0x3f as ::core::ffi::c_int & *fresh148 as ::core::ffi::c_int) as u32_0,
+                            (0x3f as ::core::ffi::c_int & *fresh148 as ::core::ffi::c_int) as U32_0,
                         );
                     }
-                    if iCode < 0x80 as u32_0
+                    if iCode < 0x80 as U32_0
                         || iCode as ::core::ffi::c_uint & 0xfffff800 as ::core::ffi::c_uint
                             == 0xd800 as ::core::ffi::c_uint
                         || iCode as ::core::ffi::c_uint & 0xfffffffe as ::core::ffi::c_uint
                             == 0xfffe as ::core::ffi::c_uint
                     {
-                        iCode = 0xfffd as u32_0;
+                        iCode = 0xfffd as U32_0;
                     }
                 }
                 if fts5UnicodeIsAlnum(p, iCode as ::core::ffi::c_int) != 0 {
@@ -9824,74 +9824,74 @@ unsafe extern "C" fn fts5UnicodeTokenize(
                     iCode = sqlite3Fts5UnicodeFold(
                         iCode as ::core::ffi::c_int,
                         __p_ref.eRemoveDiacritic,
-                    ) as u32_0;
+                    ) as U32_0;
                     if iCode != 0 {
-                        if iCode < 0x80 as u32_0 {
+                        if iCode < 0x80 as U32_0 {
                             let fresh151 = zOut;
                             zOut = zOut.offset(1);
-                            *fresh151 = (iCode & 0xff as u32_0) as ::core::ffi::c_uchar
+                            *fresh151 = (iCode & 0xff as U32_0) as ::core::ffi::c_uchar
                                 as ::core::ffi::c_char;
-                        } else if iCode < 0x800 as u32_0 {
+                        } else if iCode < 0x800 as U32_0 {
                             let fresh152 = zOut;
                             zOut = zOut.offset(1);
                             *fresh152 = (0xc0 as ::core::ffi::c_int
-                                + (iCode >> 6 as ::core::ffi::c_int & 0x1f as u32_0)
+                                + (iCode >> 6 as ::core::ffi::c_int & 0x1f as U32_0)
                                     as ::core::ffi::c_uchar
                                     as ::core::ffi::c_int)
                                 as ::core::ffi::c_char;
                             let fresh153 = zOut;
                             zOut = zOut.offset(1);
                             *fresh153 = (0x80 as ::core::ffi::c_int
-                                + (iCode & 0x3f as u32_0) as ::core::ffi::c_uchar
+                                + (iCode & 0x3f as U32_0) as ::core::ffi::c_uchar
                                     as ::core::ffi::c_int)
                                 as ::core::ffi::c_char;
-                        } else if iCode < 0x10000 as ::core::ffi::c_int as u32_0 {
+                        } else if iCode < 0x10000 as ::core::ffi::c_int as U32_0 {
                             let fresh154 = zOut;
                             zOut = zOut.offset(1);
                             *fresh154 = (0xe0 as ::core::ffi::c_int
-                                + (iCode >> 12 as ::core::ffi::c_int & 0xf as u32_0)
+                                + (iCode >> 12 as ::core::ffi::c_int & 0xf as U32_0)
                                     as ::core::ffi::c_uchar
                                     as ::core::ffi::c_int)
                                 as ::core::ffi::c_char;
                             let fresh155 = zOut;
                             zOut = zOut.offset(1);
                             *fresh155 = (0x80 as ::core::ffi::c_int
-                                + (iCode >> 6 as ::core::ffi::c_int & 0x3f as u32_0)
+                                + (iCode >> 6 as ::core::ffi::c_int & 0x3f as U32_0)
                                     as ::core::ffi::c_uchar
                                     as ::core::ffi::c_int)
                                 as ::core::ffi::c_char;
                             let fresh156 = zOut;
                             zOut = zOut.offset(1);
                             *fresh156 = (0x80 as ::core::ffi::c_int
-                                + (iCode & 0x3f as u32_0) as ::core::ffi::c_uchar
+                                + (iCode & 0x3f as U32_0) as ::core::ffi::c_uchar
                                     as ::core::ffi::c_int)
                                 as ::core::ffi::c_char;
                         } else {
                             let fresh157 = zOut;
                             zOut = zOut.offset(1);
                             *fresh157 = (0xf0 as ::core::ffi::c_int
-                                + (iCode >> 18 as ::core::ffi::c_int & 0x7 as u32_0)
+                                + (iCode >> 18 as ::core::ffi::c_int & 0x7 as U32_0)
                                     as ::core::ffi::c_uchar
                                     as ::core::ffi::c_int)
                                 as ::core::ffi::c_char;
                             let fresh158 = zOut;
                             zOut = zOut.offset(1);
                             *fresh158 = (0x80 as ::core::ffi::c_int
-                                + (iCode >> 12 as ::core::ffi::c_int & 0x3f as u32_0)
+                                + (iCode >> 12 as ::core::ffi::c_int & 0x3f as U32_0)
                                     as ::core::ffi::c_uchar
                                     as ::core::ffi::c_int)
                                 as ::core::ffi::c_char;
                             let fresh159 = zOut;
                             zOut = zOut.offset(1);
                             *fresh159 = (0x80 as ::core::ffi::c_int
-                                + (iCode >> 6 as ::core::ffi::c_int & 0x3f as u32_0)
+                                + (iCode >> 6 as ::core::ffi::c_int & 0x3f as U32_0)
                                     as ::core::ffi::c_uchar
                                     as ::core::ffi::c_int)
                                 as ::core::ffi::c_char;
                             let fresh160 = zOut;
                             zOut = zOut.offset(1);
                             *fresh160 = (0x80 as ::core::ffi::c_int
-                                + (iCode & 0x3f as u32_0) as ::core::ffi::c_uchar
+                                + (iCode & 0x3f as U32_0) as ::core::ffi::c_uchar
                                     as ::core::ffi::c_int)
                                 as ::core::ffi::c_char;
                         }
@@ -9905,9 +9905,9 @@ unsafe extern "C" fn fts5UnicodeTokenize(
             }
             if zOut > pEnd as *mut ::core::ffi::c_char {
                 aFold = crate::src::src::malloc::sqlite3_malloc64(
-                    (nFold as crate::src::headers::sqlite3_h::sqlite3_int64
-                        * 2 as crate::src::headers::sqlite3_h::sqlite3_int64)
-                        as crate::src::headers::sqlite3_h::sqlite3_uint64,
+                    (nFold as crate::src::headers::sqlite3_h::Sqlite3Int64
+                        * 2 as crate::src::headers::sqlite3_h::Sqlite3Int64)
+                        as crate::src::headers::sqlite3_h::Sqlite3Uint64,
                 ) as *mut ::core::ffi::c_char;
                 if aFold.is_null() {
                     rc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
@@ -9934,9 +9934,9 @@ unsafe extern "C" fn fts5UnicodeTokenize(
             if *zCsr as ::core::ffi::c_int & 0x80 as ::core::ffi::c_int != 0 {
                 let fresh149 = zCsr;
                 zCsr = zCsr.offset(1);
-                iCode = *fresh149 as u32_0;
-                if iCode >= 0xc0 as u32_0 {
-                    iCode = sqlite3Utf8Trans1[iCode.wrapping_sub(0xc0 as u32_0) as usize] as u32_0;
+                iCode = *fresh149 as U32_0;
+                if iCode >= 0xc0 as U32_0 {
+                    iCode = sqlite3Utf8Trans1[iCode.wrapping_sub(0xc0 as U32_0) as usize] as U32_0;
                     while zCsr < zTerm
                         && *zCsr as ::core::ffi::c_int & 0xc0 as ::core::ffi::c_int
                             == 0x80 as ::core::ffi::c_int
@@ -9944,16 +9944,16 @@ unsafe extern "C" fn fts5UnicodeTokenize(
                         let fresh150 = zCsr;
                         zCsr = zCsr.offset(1);
                         iCode = (iCode << 6 as ::core::ffi::c_int).wrapping_add(
-                            (0x3f as ::core::ffi::c_int & *fresh150 as ::core::ffi::c_int) as u32_0,
+                            (0x3f as ::core::ffi::c_int & *fresh150 as ::core::ffi::c_int) as U32_0,
                         );
                     }
-                    if iCode < 0x80 as u32_0
+                    if iCode < 0x80 as U32_0
                         || iCode as ::core::ffi::c_uint & 0xfffff800 as ::core::ffi::c_uint
                             == 0xd800 as ::core::ffi::c_uint
                         || iCode as ::core::ffi::c_uint & 0xfffffffe as ::core::ffi::c_uint
                             == 0xfffe as ::core::ffi::c_uint
                     {
-                        iCode = 0xfffd as u32_0;
+                        iCode = 0xfffd as U32_0;
                     }
                 }
                 if fts5UnicodeIsAlnum(p, iCode as ::core::ffi::c_int) != 0
@@ -10002,7 +10002,7 @@ unsafe extern "C" fn fts5HashEntrySort(
     *ppSorted = std::ptr::null_mut::<Fts5HashEntry>();
     ap = crate::src::src::malloc::sqlite3_malloc64(
         (std::mem::size_of::<*mut Fts5HashEntry>() as usize).wrapping_mul(nMergeSlot as usize)
-            as crate::src::headers::sqlite3_h::sqlite3_uint64,
+            as crate::src::headers::sqlite3_h::Sqlite3Uint64,
     ) as *mut *mut Fts5HashEntry;
     if ap.is_null() {
         return crate::src::headers::sqlite3_h::SQLITE_NOMEM;
@@ -10010,8 +10010,8 @@ unsafe extern "C" fn fts5HashEntrySort(
     std::ptr::write_bytes(
         ap as *mut ::core::ffi::c_void as *mut u8,
         0,
-        (std::mem::size_of::<*mut Fts5HashEntry>() as crate::__stddef_size_t_h::size_t)
-            .wrapping_mul(nMergeSlot as crate::__stddef_size_t_h::size_t) as usize,
+        (std::mem::size_of::<*mut Fts5HashEntry>() as crate::__stddef_size_t_h::SizeT)
+            .wrapping_mul(nMergeSlot as crate::__stddef_size_t_h::SizeT) as usize,
     );
     iSlot = 0 as ::core::ffi::c_int;
     while iSlot < (*pHash).nSlot {
@@ -10063,11 +10063,11 @@ unsafe extern "C" fn fts5ConfigGobbleWord(
     mut pbQuoted: *mut ::core::ffi::c_int,
 ) -> *const ::core::ffi::c_char {
     let mut zRet: *const ::core::ffi::c_char = std::ptr::null::<::core::ffi::c_char>();
-    let mut nIn: crate::src::headers::sqlite3_h::sqlite3_int64 =
-        fts5_cstr_len(zIn) as crate::src::headers::sqlite3_h::sqlite3_int64;
+    let mut nIn: crate::src::headers::sqlite3_h::Sqlite3Int64 =
+        fts5_cstr_len(zIn) as crate::src::headers::sqlite3_h::Sqlite3Int64;
     let mut zOut: *mut ::core::ffi::c_char = crate::src::src::malloc::sqlite3_malloc64(
-        (nIn + 1 as crate::src::headers::sqlite3_h::sqlite3_int64)
-            as crate::src::headers::sqlite3_h::sqlite3_uint64,
+        (nIn + 1 as crate::src::headers::sqlite3_h::Sqlite3Int64)
+            as crate::src::headers::sqlite3_h::Sqlite3Uint64,
     ) as *mut ::core::ffi::c_char;
     *pbQuoted = 0 as ::core::ffi::c_int;
     *pzOut = std::ptr::null_mut::<::core::ffi::c_char>();
@@ -10077,7 +10077,7 @@ unsafe extern "C" fn fts5ConfigGobbleWord(
         std::ptr::copy_nonoverlapping(
             zIn as *const u8,
             zOut as *mut u8,
-            (nIn + 1 as crate::src::headers::sqlite3_h::sqlite3_int64) as usize,
+            (nIn + 1 as crate::src::headers::sqlite3_h::Sqlite3Int64) as usize,
         );
         if fts5_isopenquote(*zOut.offset(0 as isize)) != 0 {
             let mut ii: ::core::ffi::c_int = fts5Dequote(zOut);
@@ -10146,12 +10146,12 @@ unsafe extern "C" fn fts5VocabInstanceNext(mut pCsr: *mut Fts5VocabCursor) -> ::
     let mut eDetail: ::core::ffi::c_int = (*(*__pCsr_ref.pFts5).pConfig).eDetail;
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
     let mut pIter: *mut Fts5IndexIter = __pCsr_ref.pIter;
-    let mut pp: *mut i64_0 = &raw mut __pCsr_ref.iInstPos;
+    let mut pp: *mut I64_0 = &raw mut __pCsr_ref.iInstPos;
     let mut po: *mut ::core::ffi::c_int = &raw mut __pCsr_ref.iInstOff;
     while eDetail == FTS5_DETAIL_NONE
         || sqlite3Fts5PoslistNext64((*pIter).pData, (*pIter).nData, po, pp) != 0
     {
-        __pCsr_ref.iInstPos = 0 as i64_0;
+        __pCsr_ref.iInstPos = 0 as I64_0;
         __pCsr_ref.iInstOff = 0 as ::core::ffi::c_int;
         rc = sqlite3Fts5IterNextScan(__pCsr_ref.pIter);
         if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
@@ -10200,9 +10200,9 @@ unsafe extern "C" fn sqlite3Fts5ExprAnd(
                 std::ptr::copy(
                     ap as *const u8,
                     ap.offset(__p2_ref.nPhrase as isize) as *mut *mut Fts5ExprPhrase as *mut u8,
-                    ((__p1_ref.nPhrase as crate::__stddef_size_t_h::size_t)
+                    ((__p1_ref.nPhrase as crate::__stddef_size_t_h::SizeT)
                         .wrapping_mul(std::mem::size_of::<*mut Fts5ExprPhrase>()
-                            as crate::__stddef_size_t_h::size_t)) as usize,
+                            as crate::__stddef_size_t_h::SizeT)) as usize,
                 );
                 i = 0 as ::core::ffi::c_int;
                 while i < __p2_ref.nPhrase {
@@ -10246,14 +10246,14 @@ unsafe extern "C" fn fts5CreateMethod(
 
 unsafe extern "C" fn sqlite3Fts5StorageFindDeleteRow(
     mut p: *mut Fts5Storage,
-    mut iDel: i64_0,
+    mut iDel: I64_0,
 ) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
-    let mut pSeek: *mut crate::src::headers::sqlite3_h::sqlite3_stmt =
-        std::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_stmt>();
+    let mut pSeek: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt =
+        std::ptr::null_mut::<crate::src::headers::sqlite3_h::Sqlite3Stmt>();
     rc = fts5StorageGetStmt(
         p,
-        Fts5SqlStmt::STMT_LOOKUP as ::core::ffi::c_int + 1 as ::core::ffi::c_int,
+        Fts5SqlStmt::StmtLookup as ::core::ffi::c_int + 1 as ::core::ffi::c_int,
         &raw mut pSeek,
         std::ptr::null_mut::<*mut ::core::ffi::c_char>(),
     );
@@ -10261,7 +10261,7 @@ unsafe extern "C" fn sqlite3Fts5StorageFindDeleteRow(
         crate::src::src::vdbeapi::sqlite3_bind_int64(
             pSeek,
             1 as ::core::ffi::c_int,
-            iDel as crate::src::headers::sqlite3_h::sqlite3_int64,
+            iDel as crate::src::headers::sqlite3_h::Sqlite3Int64,
         );
         if crate::src::src::vdbeapi::sqlite3_step(pSeek)
             != crate::src::headers::sqlite3_h::SQLITE_ROW
@@ -10297,7 +10297,7 @@ unsafe extern "C" fn fts5ConfigParseColumn(
                 b"unindexed\0" as *const u8 as *const ::core::ffi::c_char,
             )
         {
-            *__p_ref.abUnindexed.offset(__p_ref.nCol as isize) = 1 as u8_0;
+            *__p_ref.abUnindexed.offset(__p_ref.nCol as isize) = 1 as U8_0;
             *pbUnindexed = 1 as ::core::ffi::c_int;
         } else {
             *pzErr = crate::sqlite_printf!("unrecognized column option: %s", zArg,);
@@ -10366,28 +10366,28 @@ unsafe extern "C" fn fts5VocabNextMethod(
                 &raw mut rc,
                 &raw mut __pCsr_ref.term,
                 nTerm,
-                zTerm as *const u8_0,
+                zTerm as *const U8_0,
             );
             std::ptr::write_bytes(
                 __pCsr_ref.aCnt as *mut ::core::ffi::c_void as *mut u8,
                 0,
-                (nCol as crate::__stddef_size_t_h::size_t)
-                    .wrapping_mul(std::mem::size_of::<i64_0>() as crate::__stddef_size_t_h::size_t)
+                (nCol as crate::__stddef_size_t_h::SizeT)
+                    .wrapping_mul(std::mem::size_of::<I64_0>() as crate::__stddef_size_t_h::SizeT)
                     as usize,
             );
             std::ptr::write_bytes(
                 __pCsr_ref.aDoc as *mut ::core::ffi::c_void as *mut u8,
                 0,
-                (nCol as crate::__stddef_size_t_h::size_t)
-                    .wrapping_mul(std::mem::size_of::<i64_0>() as crate::__stddef_size_t_h::size_t)
+                (nCol as crate::__stddef_size_t_h::SizeT)
+                    .wrapping_mul(std::mem::size_of::<I64_0>() as crate::__stddef_size_t_h::SizeT)
                     as usize,
             );
             __pCsr_ref.iCol = 0 as ::core::ffi::c_int;
             while rc == crate::src::headers::sqlite3_h::SQLITE_OK {
                 let mut eDetail: ::core::ffi::c_int = (*(*__pCsr_ref.pFts5).pConfig).eDetail;
-                let mut pPos: *const u8_0 = std::ptr::null::<u8_0>();
+                let mut pPos: *const U8_0 = std::ptr::null::<U8_0>();
                 let mut nPos: ::core::ffi::c_int = 0;
-                let mut iPos: i64_0 = 0 as i64_0;
+                let mut iPos: I64_0 = 0 as I64_0;
                 let mut iOff: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
                 pPos = (*__pCsr_ref.pIter).pData;
                 nPos = (*__pCsr_ref.pIter).nData;
@@ -10396,29 +10396,29 @@ unsafe extern "C" fn fts5VocabNextMethod(
                         if eDetail == FTS5_DETAIL_FULL
                             && __pCsr_ref.colUsed & 0x4 as ::core::ffi::c_int != 0
                         {
-                            while iPos < nPos as i64_0 {
-                                let mut ii: u32_0 = 0;
+                            while iPos < nPos as I64_0 {
+                                let mut ii: U32_0 = 0;
                                 let fresh165 = iPos;
                                 iPos += 1;
-                                ii = *pPos.offset(fresh165 as isize) as u32_0;
-                                if ii & 0x80 as u32_0 != 0 {
+                                ii = *pPos.offset(fresh165 as isize) as U32_0;
+                                if ii & 0x80 as U32_0 != 0 {
                                     iPos -= 1;
                                     iPos += sqlite3Fts5GetVarint32(
                                         pPos.offset(iPos as isize) as *const ::core::ffi::c_uchar,
                                         &raw mut ii,
-                                    ) as i64_0;
+                                    ) as I64_0;
                                 }
-                                if ii == 1 as u32_0 {
+                                if ii == 1 as U32_0 {
                                     let fresh166 = iPos;
                                     iPos += 1;
-                                    ii = *pPos.offset(fresh166 as isize) as u32_0;
-                                    if ii & 0x80 as u32_0 != 0 {
+                                    ii = *pPos.offset(fresh166 as isize) as U32_0;
+                                    if ii & 0x80 as U32_0 != 0 {
                                         iPos -= 1;
                                         iPos += sqlite3Fts5GetVarint32(
                                             pPos.offset(iPos as isize)
                                                 as *const ::core::ffi::c_uchar,
                                             &raw mut ii,
-                                        ) as i64_0;
+                                        ) as I64_0;
                                     }
                                 } else {
                                     let ref mut fresh167 = *__pCsr_ref.aCnt.offset(0 as isize);
@@ -10441,7 +10441,7 @@ unsafe extern "C" fn fts5VocabNextMethod(
                                 )
                             {
                                 let mut ii_0: ::core::ffi::c_int =
-                                    (iPos >> 32 as ::core::ffi::c_int & 0x7fffffff as i64_0)
+                                    (iPos >> 32 as ::core::ffi::c_int & 0x7fffffff as I64_0)
                                         as ::core::ffi::c_int;
                                 if iCol != ii_0 {
                                     if ii_0 >= nCol {
@@ -10466,7 +10466,7 @@ unsafe extern "C" fn fts5VocabNextMethod(
                                     &raw mut iPos,
                                 )
                             {
-                                if iPos >= nCol as i64_0 {
+                                if iPos >= nCol as I64_0 {
                                     rc = FTS5_CORRUPT;
                                     break;
                                 } else {
@@ -10512,7 +10512,7 @@ unsafe extern "C" fn fts5VocabNextMethod(
         && __pTab_ref.eType == FTS5_VOCAB_COL
     {
         while __pCsr_ref.iCol < nCol
-            && *__pCsr_ref.aDoc.offset(__pCsr_ref.iCol as isize) == 0 as i64_0
+            && *__pCsr_ref.aDoc.offset(__pCsr_ref.iCol as isize) == 0 as I64_0
         {
             __pCsr_ref.iCol += 1;
         }
@@ -10535,7 +10535,7 @@ unsafe extern "C" fn sqlite3Fts5HashQuery(
     mut ppOut: *mut *mut ::core::ffi::c_void,
     mut pnDoclist: *mut ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    let mut iHash: ::core::ffi::c_uint = fts5HashKey((*pHash).nSlot, pTerm as *const u8_0, nTerm);
+    let mut iHash: ::core::ffi::c_uint = fts5HashKey((*pHash).nSlot, pTerm as *const U8_0, nTerm);
     let mut zKey: *mut ::core::ffi::c_char = std::ptr::null_mut::<::core::ffi::c_char>();
     let mut p: *mut Fts5HashEntry = std::ptr::null_mut::<Fts5HashEntry>();
     p = *(*pHash).aSlot.offset(iHash as isize);
@@ -10559,15 +10559,15 @@ unsafe extern "C" fn sqlite3Fts5HashQuery(
         let mut nList: ::core::ffi::c_int = (*p).nData - nHashPre;
         *ppOut = crate::src::src::malloc::sqlite3_malloc64(
             (nPre + nList + 10 as ::core::ffi::c_int)
-                as crate::src::headers::sqlite3_h::sqlite3_uint64,
+                as crate::src::headers::sqlite3_h::Sqlite3Uint64,
         );
-        let mut pRet: *mut u8_0 = *ppOut as *mut u8_0;
+        let mut pRet: *mut U8_0 = *ppOut as *mut U8_0;
         if !pRet.is_null() {
             let mut pFaux: *mut Fts5HashEntry =
-                pRet.offset((nPre - nHashPre) as isize) as *mut u8_0 as *mut Fts5HashEntry;
+                pRet.offset((nPre - nHashPre) as isize) as *mut U8_0 as *mut Fts5HashEntry;
             std::ptr::copy_nonoverlapping(
-                (p as *mut u8_0).offset(nHashPre as isize) as *mut u8_0 as *const u8,
-                pRet.offset(nPre as isize) as *mut u8_0 as *mut u8,
+                (p as *mut U8_0).offset(nHashPre as isize) as *mut U8_0 as *const u8,
+                pRet.offset(nPre as isize) as *mut U8_0 as *mut u8,
                 nList as usize,
             );
             nList += fts5HashAddPoslistSize(pHash, p, pFaux);
@@ -10595,14 +10595,14 @@ unsafe extern "C" fn fts5ExprSynonymRowid(
     mut pTerm: *mut Fts5ExprTerm,
     mut bDesc: ::core::ffi::c_int,
     mut pbEof: *mut ::core::ffi::c_int,
-) -> i64_0 {
-    let mut iRet: i64_0 = 0 as i64_0;
+) -> I64_0 {
+    let mut iRet: I64_0 = 0 as I64_0;
     let mut bRetValid: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut p: *mut Fts5ExprTerm = std::ptr::null_mut::<Fts5ExprTerm>();
     p = pTerm;
     while !p.is_null() {
         if 0 as ::core::ffi::c_int == (*(*p).pIter).bEof as ::core::ffi::c_int {
-            let mut iRowid: i64_0 = (*(*p).pIter).iRowid;
+            let mut iRowid: I64_0 = (*(*p).pIter).iRowid;
             if bRetValid == 0 as ::core::ffi::c_int
                 || bDesc != (iRowid < iRet) as ::core::ffi::c_int
             {
@@ -10626,13 +10626,13 @@ unsafe extern "C" fn fts5SetUniqueFlag(
 
 unsafe extern "C" fn fts5StorageDeleteFromIndex(
     mut p: *mut Fts5Storage,
-    mut iDel: i64_0,
+    mut iDel: I64_0,
     mut apVal: *mut *mut crate::src::headers::vdbeInt_h::sqlite3_value,
     mut bSaveRow: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
     let mut pConfig: *mut Fts5Config = (*p).pConfig;
-    let mut pSeek: *mut crate::src::headers::sqlite3_h::sqlite3_stmt =
-        std::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_stmt>();
+    let mut pSeek: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt =
+        std::ptr::null_mut::<crate::src::headers::sqlite3_h::Sqlite3Stmt>();
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
     let mut rc2: ::core::ffi::c_int = 0;
     let mut iCol: ::core::ffi::c_int = 0;
@@ -10640,11 +10640,11 @@ unsafe extern "C" fn fts5StorageDeleteFromIndex(
     if apVal.is_null() {
         if !(*p).pSavedRow.is_null() && bSaveRow != 0 {
             pSeek = (*p).pSavedRow;
-            (*p).pSavedRow = std::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_stmt>();
+            (*p).pSavedRow = std::ptr::null_mut::<crate::src::headers::sqlite3_h::Sqlite3Stmt>();
         } else {
             rc = fts5StorageGetStmt(
                 p,
-                Fts5SqlStmt::STMT_LOOKUP as ::core::ffi::c_int + bSaveRow,
+                Fts5SqlStmt::StmtLookup as ::core::ffi::c_int + bSaveRow,
                 &raw mut pSeek,
                 std::ptr::null_mut::<*mut ::core::ffi::c_char>(),
             );
@@ -10654,7 +10654,7 @@ unsafe extern "C" fn fts5StorageDeleteFromIndex(
             crate::src::src::vdbeapi::sqlite3_bind_int64(
                 pSeek,
                 1 as ::core::ffi::c_int,
-                iDel as crate::src::headers::sqlite3_h::sqlite3_int64,
+                iDel as crate::src::headers::sqlite3_h::Sqlite3Int64,
             );
             if crate::src::src::vdbeapi::sqlite3_step(pSeek)
                 != crate::src::headers::sqlite3_h::SQLITE_ROW
@@ -10743,12 +10743,12 @@ unsafe extern "C" fn fts5StorageDeleteFromIndex(
                 );
                 *(*p)
                     .aTotalSize
-                    .offset((iCol - 1 as ::core::ffi::c_int) as isize) -= ctx.szCol as i64_0;
+                    .offset((iCol - 1 as ::core::ffi::c_int) as isize) -= ctx.szCol as I64_0;
                 if rc == crate::src::headers::sqlite3_h::SQLITE_OK
                     && *(*p)
                         .aTotalSize
                         .offset((iCol - 1 as ::core::ffi::c_int) as isize)
-                        < 0 as i64_0
+                        < 0 as I64_0
                 {
                     rc = FTS5_CORRUPT;
                 }
@@ -10758,7 +10758,7 @@ unsafe extern "C" fn fts5StorageDeleteFromIndex(
         }
         iCol += 1;
     }
-    if rc == crate::src::headers::sqlite3_h::SQLITE_OK && (*p).nTotalRow < 1 as i64_0 {
+    if rc == crate::src::headers::sqlite3_h::SQLITE_OK && (*p).nTotalRow < 1 as I64_0 {
         rc = FTS5_CORRUPT;
     } else {
         (*p).nTotalRow -= 1;
@@ -10776,9 +10776,9 @@ unsafe extern "C" fn fts5StorageDeleteFromIndex(
 
 unsafe extern "C" fn fts5SetEstimatedRows(
     mut pIdxInfo: *mut crate::src::headers::sqlite3_h::sqlite3_index_info,
-    mut nRow: i64_0,
+    mut nRow: I64_0,
 ) {
-    (*pIdxInfo).estimatedRows = nRow as crate::src::headers::sqlite3_h::sqlite3_int64;
+    (*pIdxInfo).estimatedRows = nRow as crate::src::headers::sqlite3_h::Sqlite3Int64;
 }
 
 unsafe extern "C" fn fts5ConfigMakeExprlist(mut p: *mut Fts5Config) -> ::core::ffi::c_int {
@@ -10837,14 +10837,14 @@ unsafe extern "C" fn fts5ConfigMakeExprlist(mut p: *mut Fts5Config) -> ::core::f
 
 unsafe extern "C" fn fts5ExprSynonymList(
     mut pTerm: *mut Fts5ExprTerm,
-    mut iRowid: i64_0,
+    mut iRowid: I64_0,
     mut pBuf: *mut Fts5Buffer,
-    mut pa: *mut *mut u8_0,
+    mut pa: *mut *mut U8_0,
     mut pn: *mut ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
     let mut current_block: u64;
     let mut aStatic: [Fts5PoslistReader; 4] = [Fts5PoslistReader {
-        a: std::ptr::null::<u8_0>(),
+        a: std::ptr::null::<U8_0>(),
         n: 0,
         i: 0,
         bFlag: 0,
@@ -10868,13 +10868,13 @@ unsafe extern "C" fn fts5ExprSynonymList(
         {
             if !((*pIter).nData == 0 as ::core::ffi::c_int) {
                 if nIter == nAlloc {
-                    let mut nByte: crate::src::headers::sqlite3_h::sqlite3_int64 =
+                    let mut nByte: crate::src::headers::sqlite3_h::Sqlite3Int64 =
                         (std::mem::size_of::<Fts5PoslistReader>() as usize)
                             .wrapping_mul(nAlloc as usize)
                             .wrapping_mul(2 as usize)
-                            as crate::src::headers::sqlite3_h::sqlite3_int64;
+                            as crate::src::headers::sqlite3_h::Sqlite3Int64;
                     let mut aNew: *mut Fts5PoslistReader = crate::src::src::malloc::sqlite3_malloc64(
-                        nByte as crate::src::headers::sqlite3_h::sqlite3_uint64,
+                        nByte as crate::src::headers::sqlite3_h::Sqlite3Uint64,
                     )
                         as *mut Fts5PoslistReader;
                     if aNew.is_null() {
@@ -10886,8 +10886,8 @@ unsafe extern "C" fn fts5ExprSynonymList(
                             aIter as *const u8,
                             aNew as *mut u8,
                             ((std::mem::size_of::<Fts5PoslistReader>()
-                                as crate::__stddef_size_t_h::size_t)
-                                .wrapping_mul(nIter as crate::__stddef_size_t_h::size_t))
+                                as crate::__stddef_size_t_h::SizeT)
+                                .wrapping_mul(nIter as crate::__stddef_size_t_h::SizeT))
                                 as usize,
                         );
                         nAlloc *= 2 as ::core::ffi::c_int;
@@ -10912,15 +10912,15 @@ unsafe extern "C" fn fts5ExprSynonymList(
     match current_block {
         17833034027772472439 => {
             if nIter == 1 as ::core::ffi::c_int {
-                *pa = (*aIter.offset(0 as isize)).a as *mut u8_0;
+                *pa = (*aIter.offset(0 as isize)).a as *mut U8_0;
                 *pn = (*aIter.offset(0 as isize)).n;
             } else {
                 let mut writer: Fts5PoslistWriter = { std::mem::zeroed() };
-                let mut iPrev: i64_0 = -(1 as ::core::ffi::c_int) as i64_0;
+                let mut iPrev: I64_0 = -(1 as ::core::ffi::c_int) as I64_0;
                 sqlite3Fts5BufferZero(pBuf);
                 loop {
                     let mut i: ::core::ffi::c_int = 0;
-                    let mut iMin: i64_0 = FTS5_LARGEST_INT64;
+                    let mut iMin: I64_0 = FTS5_LARGEST_INT64;
                     let mut current_block_18: u64;
                     i = 0 as ::core::ffi::c_int;
                     while i < nIter {
@@ -11018,1777 +11018,1777 @@ unsafe extern "C" fn sqlite3Fts5HashIsEmpty(mut pHash: *mut Fts5Hash) -> ::core:
     ((*pHash).nEntry == 0 as ::core::ffi::c_int) as ::core::ffi::c_int
 }
 
-static mut aFts5UnicodeData: [u16_0; 1765] = [
-    1025 as ::core::ffi::c_int as u16_0,
-    61 as ::core::ffi::c_int as u16_0,
-    117 as ::core::ffi::c_int as u16_0,
-    55 as ::core::ffi::c_int as u16_0,
-    117 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    49 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    121 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    841 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    56 as ::core::ffi::c_int as u16_0,
-    48 as ::core::ffi::c_int as u16_0,
-    56 as ::core::ffi::c_int as u16_0,
-    837 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    1057 as ::core::ffi::c_int as u16_0,
-    61 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    151 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    56 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    52 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    34 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    56 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    79 as ::core::ffi::c_int as u16_0,
-    56 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    56 as ::core::ffi::c_int as u16_0,
-    47 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    51 as ::core::ffi::c_int as u16_0,
-    111 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    745 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    233 as ::core::ffi::c_int as u16_0,
-    773 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    261 as ::core::ffi::c_int as u16_0,
-    1822 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    542 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    1534 as ::core::ffi::c_int as u16_0,
-    222 as ::core::ffi::c_int as u16_0,
-    69 as ::core::ffi::c_int as u16_0,
-    73 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    126 as ::core::ffi::c_int as u16_0,
-    126 as ::core::ffi::c_int as u16_0,
-    73 as ::core::ffi::c_int as u16_0,
-    69 as ::core::ffi::c_int as u16_0,
-    137 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    73 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    105 as ::core::ffi::c_int as u16_0,
-    101 as ::core::ffi::c_int as u16_0,
-    73 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    73 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    190 as ::core::ffi::c_int as u16_0,
-    158 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    126 as ::core::ffi::c_int as u16_0,
-    126 as ::core::ffi::c_int as u16_0,
-    73 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    126 as ::core::ffi::c_int as u16_0,
-    94 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    94 as ::core::ffi::c_int as u16_0,
-    69 as ::core::ffi::c_int as u16_0,
-    135 as ::core::ffi::c_int as u16_0,
-    41 as ::core::ffi::c_int as u16_0,
-    40 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    41 as ::core::ffi::c_int as u16_0,
-    40 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    41 as ::core::ffi::c_int as u16_0,
-    40 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    542 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    606 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    41 as ::core::ffi::c_int as u16_0,
-    40 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    126 as ::core::ffi::c_int as u16_0,
-    73 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    1886 as ::core::ffi::c_int as u16_0,
-    197 as ::core::ffi::c_int as u16_0,
-    73 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    73 as ::core::ffi::c_int as u16_0,
-    69 as ::core::ffi::c_int as u16_0,
-    126 as ::core::ffi::c_int as u16_0,
-    105 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    286 as ::core::ffi::c_int as u16_0,
-    2181 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    869 as ::core::ffi::c_int as u16_0,
-    582 as ::core::ffi::c_int as u16_0,
-    152 as ::core::ffi::c_int as u16_0,
-    390 as ::core::ffi::c_int as u16_0,
-    472 as ::core::ffi::c_int as u16_0,
-    166 as ::core::ffi::c_int as u16_0,
-    248 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    56 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    568 as ::core::ffi::c_int as u16_0,
-    3596 as ::core::ffi::c_int as u16_0,
-    158 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    56 as ::core::ffi::c_int as u16_0,
-    94 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    101 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    88 as ::core::ffi::c_int as u16_0,
-    41 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    105 as ::core::ffi::c_int as u16_0,
-    41 as ::core::ffi::c_int as u16_0,
-    73 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    553 as ::core::ffi::c_int as u16_0,
-    297 as ::core::ffi::c_int as u16_0,
-    1125 as ::core::ffi::c_int as u16_0,
-    94 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    105 as ::core::ffi::c_int as u16_0,
-    101 as ::core::ffi::c_int as u16_0,
-    798 as ::core::ffi::c_int as u16_0,
-    133 as ::core::ffi::c_int as u16_0,
-    94 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    126 as ::core::ffi::c_int as u16_0,
-    94 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    1641 as ::core::ffi::c_int as u16_0,
-    1541 as ::core::ffi::c_int as u16_0,
-    1118 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    172 as ::core::ffi::c_int as u16_0,
-    75 as ::core::ffi::c_int as u16_0,
-    1790 as ::core::ffi::c_int as u16_0,
-    478 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    2846 as ::core::ffi::c_int as u16_0,
-    1225 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    213 as ::core::ffi::c_int as u16_0,
-    1253 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    49 as ::core::ffi::c_int as u16_0,
-    55 as ::core::ffi::c_int as u16_0,
-    1452 as ::core::ffi::c_int as u16_0,
-    49 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    871 as ::core::ffi::c_int as u16_0,
-    103 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    162 as ::core::ffi::c_int as u16_0,
-    121 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    55 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    90 as ::core::ffi::c_int as u16_0,
-    364 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    1031 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    327 as ::core::ffi::c_int as u16_0,
-    684 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    149 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    3175 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    236 as ::core::ffi::c_int as u16_0,
-    34 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    204 as ::core::ffi::c_int as u16_0,
-    70 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    140 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    103 as ::core::ffi::c_int as u16_0,
-    90 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    469 as ::core::ffi::c_int as u16_0,
-    34 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    967 as ::core::ffi::c_int as u16_0,
-    876 as ::core::ffi::c_int as u16_0,
-    2855 as ::core::ffi::c_int as u16_0,
-    364 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    1063 as ::core::ffi::c_int as u16_0,
-    300 as ::core::ffi::c_int as u16_0,
-    70 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    117 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    711 as ::core::ffi::c_int as u16_0,
-    140 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    300 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    108 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    172 as ::core::ffi::c_int as u16_0,
-    501 as ::core::ffi::c_int as u16_0,
-    807 as ::core::ffi::c_int as u16_0,
-    108 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    359 as ::core::ffi::c_int as u16_0,
-    876 as ::core::ffi::c_int as u16_0,
-    108 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    1735 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    106 as ::core::ffi::c_int as u16_0,
-    268 as ::core::ffi::c_int as u16_0,
-    138 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    236 as ::core::ffi::c_int as u16_0,
-    327 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    199 as ::core::ffi::c_int as u16_0,
-    231 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    263 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    711 as ::core::ffi::c_int as u16_0,
-    231 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    135 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    106 as ::core::ffi::c_int as u16_0,
-    140 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    103 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    87 as ::core::ffi::c_int as u16_0,
-    207 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    55 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    199 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    711 as ::core::ffi::c_int as u16_0,
-    231 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    106 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    108 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    135 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    103 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    295 as ::core::ffi::c_int as u16_0,
-    103 as ::core::ffi::c_int as u16_0,
-    711 as ::core::ffi::c_int as u16_0,
-    231 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    167 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    106 as ::core::ffi::c_int as u16_0,
-    172 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    55 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    263 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    711 as ::core::ffi::c_int as u16_0,
-    231 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    167 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    140 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    103 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    207 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    199 as ::core::ffi::c_int as u16_0,
-    103 as ::core::ffi::c_int as u16_0,
-    135 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    103 as ::core::ffi::c_int as u16_0,
-    391 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    106 as ::core::ffi::c_int as u16_0,
-    106 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    111 as ::core::ffi::c_int as u16_0,
-    218 as ::core::ffi::c_int as u16_0,
-    55 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    106 as ::core::ffi::c_int as u16_0,
-    263 as ::core::ffi::c_int as u16_0,
-    103 as ::core::ffi::c_int as u16_0,
-    743 as ::core::ffi::c_int as u16_0,
-    327 as ::core::ffi::c_int as u16_0,
-    167 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    108 as ::core::ffi::c_int as u16_0,
-    138 as ::core::ffi::c_int as u16_0,
-    108 as ::core::ffi::c_int as u16_0,
-    140 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    239 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    263 as ::core::ffi::c_int as u16_0,
-    103 as ::core::ffi::c_int as u16_0,
-    743 as ::core::ffi::c_int as u16_0,
-    327 as ::core::ffi::c_int as u16_0,
-    167 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    170 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    263 as ::core::ffi::c_int as u16_0,
-    103 as ::core::ffi::c_int as u16_0,
-    1319 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    106 as ::core::ffi::c_int as u16_0,
-    140 as ::core::ffi::c_int as u16_0,
-    106 as ::core::ffi::c_int as u16_0,
-    106 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    207 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    199 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    583 as ::core::ffi::c_int as u16_0,
-    775 as ::core::ffi::c_int as u16_0,
-    295 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    231 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    106 as ::core::ffi::c_int as u16_0,
-    108 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    266 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    1543 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    236 as ::core::ffi::c_int as u16_0,
-    55 as ::core::ffi::c_int as u16_0,
-    199 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    268 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    135 as ::core::ffi::c_int as u16_0,
-    231 as ::core::ffi::c_int as u16_0,
-    103 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    135 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    204 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    167 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    204 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    135 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    122 as ::core::ffi::c_int as u16_0,
-    501 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    122 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    218 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    335 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    263 as ::core::ffi::c_int as u16_0,
-    1159 as ::core::ffi::c_int as u16_0,
-    460 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    172 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    167 as ::core::ffi::c_int as u16_0,
-    364 as ::core::ffi::c_int as u16_0,
-    1164 as ::core::ffi::c_int as u16_0,
-    282 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    218 as ::core::ffi::c_int as u16_0,
-    90 as ::core::ffi::c_int as u16_0,
-    181 as ::core::ffi::c_int as u16_0,
-    154 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    1383 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    140 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    204 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    213 as ::core::ffi::c_int as u16_0,
-    199 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    135 as ::core::ffi::c_int as u16_0,
-    108 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    106 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    234 as ::core::ffi::c_int as u16_0,
-    103 as ::core::ffi::c_int as u16_0,
-    140 as ::core::ffi::c_int as u16_0,
-    423 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    202 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    106 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    90 as ::core::ffi::c_int as u16_0,
-    1225 as ::core::ffi::c_int as u16_0,
-    41 as ::core::ffi::c_int as u16_0,
-    41 as ::core::ffi::c_int as u16_0,
-    1383 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    10631 as ::core::ffi::c_int as u16_0,
-    135 as ::core::ffi::c_int as u16_0,
-    231 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    135 as ::core::ffi::c_int as u16_0,
-    1319 as ::core::ffi::c_int as u16_0,
-    135 as ::core::ffi::c_int as u16_0,
-    1063 as ::core::ffi::c_int as u16_0,
-    135 as ::core::ffi::c_int as u16_0,
-    231 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    135 as ::core::ffi::c_int as u16_0,
-    487 as ::core::ffi::c_int as u16_0,
-    1831 as ::core::ffi::c_int as u16_0,
-    135 as ::core::ffi::c_int as u16_0,
-    2151 as ::core::ffi::c_int as u16_0,
-    108 as ::core::ffi::c_int as u16_0,
-    309 as ::core::ffi::c_int as u16_0,
-    655 as ::core::ffi::c_int as u16_0,
-    519 as ::core::ffi::c_int as u16_0,
-    346 as ::core::ffi::c_int as u16_0,
-    2727 as ::core::ffi::c_int as u16_0,
-    49 as ::core::ffi::c_int as u16_0,
-    19847 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    551 as ::core::ffi::c_int as u16_0,
-    61 as ::core::ffi::c_int as u16_0,
-    839 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    2407 as ::core::ffi::c_int as u16_0,
-    117 as ::core::ffi::c_int as u16_0,
-    110 as ::core::ffi::c_int as u16_0,
-    423 as ::core::ffi::c_int as u16_0,
-    135 as ::core::ffi::c_int as u16_0,
-    108 as ::core::ffi::c_int as u16_0,
-    583 as ::core::ffi::c_int as u16_0,
-    108 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    583 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    423 as ::core::ffi::c_int as u16_0,
-    103 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    1671 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    236 as ::core::ffi::c_int as u16_0,
-    266 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    364 as ::core::ffi::c_int as u16_0,
-    117 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    117 as ::core::ffi::c_int as u16_0,
-    55 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    335 as ::core::ffi::c_int as u16_0,
-    213 as ::core::ffi::c_int as u16_0,
-    49 as ::core::ffi::c_int as u16_0,
-    149 as ::core::ffi::c_int as u16_0,
-    108 as ::core::ffi::c_int as u16_0,
-    61 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    1127 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    1671 as ::core::ffi::c_int as u16_0,
-    1319 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    2247 as ::core::ffi::c_int as u16_0,
-    935 as ::core::ffi::c_int as u16_0,
-    108 as ::core::ffi::c_int as u16_0,
-    138 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    106 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    202 as ::core::ffi::c_int as u16_0,
-    108 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    967 as ::core::ffi::c_int as u16_0,
-    167 as ::core::ffi::c_int as u16_0,
-    1415 as ::core::ffi::c_int as u16_0,
-    554 as ::core::ffi::c_int as u16_0,
-    231 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    47 as ::core::ffi::c_int as u16_0,
-    1114 as ::core::ffi::c_int as u16_0,
-    743 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    106 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    1703 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    236 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    268 as ::core::ffi::c_int as u16_0,
-    202 as ::core::ffi::c_int as u16_0,
-    332 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    245 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    213 as ::core::ffi::c_int as u16_0,
-    140 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    1511 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    172 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    170 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    231 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    245 as ::core::ffi::c_int as u16_0,
-    346 as ::core::ffi::c_int as u16_0,
-    300 as ::core::ffi::c_int as u16_0,
-    314 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    967 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    140 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    1415 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    106 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    108 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    149 as ::core::ffi::c_int as u16_0,
-    1159 as ::core::ffi::c_int as u16_0,
-    266 as ::core::ffi::c_int as u16_0,
-    268 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    181 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    103 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    967 as ::core::ffi::c_int as u16_0,
-    198 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    277 as ::core::ffi::c_int as u16_0,
-    108 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    428 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    236 as ::core::ffi::c_int as u16_0,
-    135 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    135 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    1413 as ::core::ffi::c_int as u16_0,
-    2022 as ::core::ffi::c_int as u16_0,
-    421 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    1093 as ::core::ffi::c_int as u16_0,
-    1190 as ::core::ffi::c_int as u16_0,
-    1260 as ::core::ffi::c_int as u16_0,
-    140 as ::core::ffi::c_int as u16_0,
-    4830 as ::core::ffi::c_int as u16_0,
-    261 as ::core::ffi::c_int as u16_0,
-    3166 as ::core::ffi::c_int as u16_0,
-    261 as ::core::ffi::c_int as u16_0,
-    265 as ::core::ffi::c_int as u16_0,
-    197 as ::core::ffi::c_int as u16_0,
-    201 as ::core::ffi::c_int as u16_0,
-    261 as ::core::ffi::c_int as u16_0,
-    265 as ::core::ffi::c_int as u16_0,
-    261 as ::core::ffi::c_int as u16_0,
-    265 as ::core::ffi::c_int as u16_0,
-    197 as ::core::ffi::c_int as u16_0,
-    201 as ::core::ffi::c_int as u16_0,
-    261 as ::core::ffi::c_int as u16_0,
-    41 as ::core::ffi::c_int as u16_0,
-    41 as ::core::ffi::c_int as u16_0,
-    41 as ::core::ffi::c_int as u16_0,
-    94 as ::core::ffi::c_int as u16_0,
-    229 as ::core::ffi::c_int as u16_0,
-    265 as ::core::ffi::c_int as u16_0,
-    453 as ::core::ffi::c_int as u16_0,
-    261 as ::core::ffi::c_int as u16_0,
-    264 as ::core::ffi::c_int as u16_0,
-    261 as ::core::ffi::c_int as u16_0,
-    264 as ::core::ffi::c_int as u16_0,
-    261 as ::core::ffi::c_int as u16_0,
-    264 as ::core::ffi::c_int as u16_0,
-    165 as ::core::ffi::c_int as u16_0,
-    69 as ::core::ffi::c_int as u16_0,
-    137 as ::core::ffi::c_int as u16_0,
-    40 as ::core::ffi::c_int as u16_0,
-    56 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    120 as ::core::ffi::c_int as u16_0,
-    101 as ::core::ffi::c_int as u16_0,
-    69 as ::core::ffi::c_int as u16_0,
-    137 as ::core::ffi::c_int as u16_0,
-    40 as ::core::ffi::c_int as u16_0,
-    120 as ::core::ffi::c_int as u16_0,
-    133 as ::core::ffi::c_int as u16_0,
-    69 as ::core::ffi::c_int as u16_0,
-    137 as ::core::ffi::c_int as u16_0,
-    120 as ::core::ffi::c_int as u16_0,
-    261 as ::core::ffi::c_int as u16_0,
-    169 as ::core::ffi::c_int as u16_0,
-    120 as ::core::ffi::c_int as u16_0,
-    101 as ::core::ffi::c_int as u16_0,
-    69 as ::core::ffi::c_int as u16_0,
-    137 as ::core::ffi::c_int as u16_0,
-    40 as ::core::ffi::c_int as u16_0,
-    88 as ::core::ffi::c_int as u16_0,
-    381 as ::core::ffi::c_int as u16_0,
-    162 as ::core::ffi::c_int as u16_0,
-    209 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    52 as ::core::ffi::c_int as u16_0,
-    51 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    84 as ::core::ffi::c_int as u16_0,
-    51 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    52 as ::core::ffi::c_int as u16_0,
-    277 as ::core::ffi::c_int as u16_0,
-    59 as ::core::ffi::c_int as u16_0,
-    60 as ::core::ffi::c_int as u16_0,
-    162 as ::core::ffi::c_int as u16_0,
-    61 as ::core::ffi::c_int as u16_0,
-    309 as ::core::ffi::c_int as u16_0,
-    52 as ::core::ffi::c_int as u16_0,
-    51 as ::core::ffi::c_int as u16_0,
-    149 as ::core::ffi::c_int as u16_0,
-    80 as ::core::ffi::c_int as u16_0,
-    117 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    373 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    48 as ::core::ffi::c_int as u16_0,
-    341 as ::core::ffi::c_int as u16_0,
-    61 as ::core::ffi::c_int as u16_0,
-    162 as ::core::ffi::c_int as u16_0,
-    194 as ::core::ffi::c_int as u16_0,
-    47 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    207 as ::core::ffi::c_int as u16_0,
-    121 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    335 as ::core::ffi::c_int as u16_0,
-    121 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    422 as ::core::ffi::c_int as u16_0,
-    855 as ::core::ffi::c_int as u16_0,
-    428 as ::core::ffi::c_int as u16_0,
-    139 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    107 as ::core::ffi::c_int as u16_0,
-    396 as ::core::ffi::c_int as u16_0,
-    90 as ::core::ffi::c_int as u16_0,
-    41 as ::core::ffi::c_int as u16_0,
-    154 as ::core::ffi::c_int as u16_0,
-    41 as ::core::ffi::c_int as u16_0,
-    90 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    105 as ::core::ffi::c_int as u16_0,
-    69 as ::core::ffi::c_int as u16_0,
-    105 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    41 as ::core::ffi::c_int as u16_0,
-    90 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    169 as ::core::ffi::c_int as u16_0,
-    218 as ::core::ffi::c_int as u16_0,
-    41 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    41 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    41 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    137 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    137 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    135 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    90 as ::core::ffi::c_int as u16_0,
-    69 as ::core::ffi::c_int as u16_0,
-    73 as ::core::ffi::c_int as u16_0,
-    185 as ::core::ffi::c_int as u16_0,
-    94 as ::core::ffi::c_int as u16_0,
-    101 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    90 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    527 as ::core::ffi::c_int as u16_0,
-    1134 as ::core::ffi::c_int as u16_0,
-    94 as ::core::ffi::c_int as u16_0,
-    142 as ::core::ffi::c_int as u16_0,
-    47 as ::core::ffi::c_int as u16_0,
-    185 as ::core::ffi::c_int as u16_0,
-    186 as ::core::ffi::c_int as u16_0,
-    89 as ::core::ffi::c_int as u16_0,
-    154 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    90 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    90 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    250 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    1018 as ::core::ffi::c_int as u16_0,
-    89 as ::core::ffi::c_int as u16_0,
-    90 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    1018 as ::core::ffi::c_int as u16_0,
-    8601 as ::core::ffi::c_int as u16_0,
-    282 as ::core::ffi::c_int as u16_0,
-    153 as ::core::ffi::c_int as u16_0,
-    666 as ::core::ffi::c_int as u16_0,
-    89 as ::core::ffi::c_int as u16_0,
-    250 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    2618 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    986 as ::core::ffi::c_int as u16_0,
-    825 as ::core::ffi::c_int as u16_0,
-    1306 as ::core::ffi::c_int as u16_0,
-    217 as ::core::ffi::c_int as u16_0,
-    602 as ::core::ffi::c_int as u16_0,
-    1274 as ::core::ffi::c_int as u16_0,
-    378 as ::core::ffi::c_int as u16_0,
-    1935 as ::core::ffi::c_int as u16_0,
-    2522 as ::core::ffi::c_int as u16_0,
-    719 as ::core::ffi::c_int as u16_0,
-    5882 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    314 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    1754 as ::core::ffi::c_int as u16_0,
-    281 as ::core::ffi::c_int as u16_0,
-    3578 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    4634 as ::core::ffi::c_int as u16_0,
-    3322 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    975 as ::core::ffi::c_int as u16_0,
-    1434 as ::core::ffi::c_int as u16_0,
-    185 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    1017 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    537 as ::core::ffi::c_int as u16_0,
-    8218 as ::core::ffi::c_int as u16_0,
-    4217 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    2041 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    1049 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    8281 as ::core::ffi::c_int as u16_0,
-    1562 as ::core::ffi::c_int as u16_0,
-    697 as ::core::ffi::c_int as u16_0,
-    90 as ::core::ffi::c_int as u16_0,
-    217 as ::core::ffi::c_int as u16_0,
-    346 as ::core::ffi::c_int as u16_0,
-    1513 as ::core::ffi::c_int as u16_0,
-    1509 as ::core::ffi::c_int as u16_0,
-    126 as ::core::ffi::c_int as u16_0,
-    73 as ::core::ffi::c_int as u16_0,
-    69 as ::core::ffi::c_int as u16_0,
-    254 as ::core::ffi::c_int as u16_0,
-    105 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    94 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    94 as ::core::ffi::c_int as u16_0,
-    165 as ::core::ffi::c_int as u16_0,
-    70 as ::core::ffi::c_int as u16_0,
-    105 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    3166 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    218 as ::core::ffi::c_int as u16_0,
-    158 as ::core::ffi::c_int as u16_0,
-    108 as ::core::ffi::c_int as u16_0,
-    94 as ::core::ffi::c_int as u16_0,
-    149 as ::core::ffi::c_int as u16_0,
-    47 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    1221 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    1799 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    743 as ::core::ffi::c_int as u16_0,
-    231 as ::core::ffi::c_int as u16_0,
-    231 as ::core::ffi::c_int as u16_0,
-    231 as ::core::ffi::c_int as u16_0,
-    231 as ::core::ffi::c_int as u16_0,
-    231 as ::core::ffi::c_int as u16_0,
-    231 as ::core::ffi::c_int as u16_0,
-    231 as ::core::ffi::c_int as u16_0,
-    231 as ::core::ffi::c_int as u16_0,
-    1036 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    52 as ::core::ffi::c_int as u16_0,
-    51 as ::core::ffi::c_int as u16_0,
-    52 as ::core::ffi::c_int as u16_0,
-    51 as ::core::ffi::c_int as u16_0,
-    117 as ::core::ffi::c_int as u16_0,
-    52 as ::core::ffi::c_int as u16_0,
-    51 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    52 as ::core::ffi::c_int as u16_0,
-    51 as ::core::ffi::c_int as u16_0,
-    309 as ::core::ffi::c_int as u16_0,
-    49 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    49 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    52 as ::core::ffi::c_int as u16_0,
-    51 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    52 as ::core::ffi::c_int as u16_0,
-    51 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    181 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    341 as ::core::ffi::c_int as u16_0,
-    81 as ::core::ffi::c_int as u16_0,
-    858 as ::core::ffi::c_int as u16_0,
-    2874 as ::core::ffi::c_int as u16_0,
-    6874 as ::core::ffi::c_int as u16_0,
-    410 as ::core::ffi::c_int as u16_0,
-    61 as ::core::ffi::c_int as u16_0,
-    117 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    46 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    90 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    49 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    82 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    302 as ::core::ffi::c_int as u16_0,
-    140 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    49 as ::core::ffi::c_int as u16_0,
-    166 as ::core::ffi::c_int as u16_0,
-    90 as ::core::ffi::c_int as u16_0,
-    110 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    90 as ::core::ffi::c_int as u16_0,
-    2759 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    88 as ::core::ffi::c_int as u16_0,
-    70 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    49 as ::core::ffi::c_int as u16_0,
-    2887 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    102 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    1319 as ::core::ffi::c_int as u16_0,
-    3015 as ::core::ffi::c_int as u16_0,
-    90 as ::core::ffi::c_int as u16_0,
-    143 as ::core::ffi::c_int as u16_0,
-    346 as ::core::ffi::c_int as u16_0,
-    871 as ::core::ffi::c_int as u16_0,
-    1178 as ::core::ffi::c_int as u16_0,
-    519 as ::core::ffi::c_int as u16_0,
-    1018 as ::core::ffi::c_int as u16_0,
-    335 as ::core::ffi::c_int as u16_0,
-    986 as ::core::ffi::c_int as u16_0,
-    271 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    495 as ::core::ffi::c_int as u16_0,
-    1050 as ::core::ffi::c_int as u16_0,
-    335 as ::core::ffi::c_int as u16_0,
-    1274 as ::core::ffi::c_int as u16_0,
-    495 as ::core::ffi::c_int as u16_0,
-    2042 as ::core::ffi::c_int as u16_0,
-    8218 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    2074 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    679 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    36583 as ::core::ffi::c_int as u16_0,
-    1786 as ::core::ffi::c_int as u16_0,
-    1287 as ::core::ffi::c_int as u16_0,
-    198 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    8583 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    117 as ::core::ffi::c_int as u16_0,
-    519 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    1502 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    107 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    332 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    798 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    2247 as ::core::ffi::c_int as u16_0,
-    334 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    213 as ::core::ffi::c_int as u16_0,
-    760 as ::core::ffi::c_int as u16_0,
-    294 as ::core::ffi::c_int as u16_0,
-    88 as ::core::ffi::c_int as u16_0,
-    478 as ::core::ffi::c_int as u16_0,
-    69 as ::core::ffi::c_int as u16_0,
-    2014 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    261 as ::core::ffi::c_int as u16_0,
-    190 as ::core::ffi::c_int as u16_0,
-    350 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    88 as ::core::ffi::c_int as u16_0,
-    158 as ::core::ffi::c_int as u16_0,
-    158 as ::core::ffi::c_int as u16_0,
-    382 as ::core::ffi::c_int as u16_0,
-    70 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    231 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    103 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    135 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    743 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    154 as ::core::ffi::c_int as u16_0,
-    207 as ::core::ffi::c_int as u16_0,
-    90 as ::core::ffi::c_int as u16_0,
-    55 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    1671 as ::core::ffi::c_int as u16_0,
-    149 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    1607 as ::core::ffi::c_int as u16_0,
-    522 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    588 as ::core::ffi::c_int as u16_0,
-    199 as ::core::ffi::c_int as u16_0,
-    117 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    903 as ::core::ffi::c_int as u16_0,
-    268 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    743 as ::core::ffi::c_int as u16_0,
-    364 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    935 as ::core::ffi::c_int as u16_0,
-    108 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    1511 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    140 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    138 as ::core::ffi::c_int as u16_0,
-    437 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    1319 as ::core::ffi::c_int as u16_0,
-    204 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    103 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    263 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    149 as ::core::ffi::c_int as u16_0,
-    519 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    199 as ::core::ffi::c_int as u16_0,
-    122 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    1543 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    108 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    167 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    359 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    70 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    199 as ::core::ffi::c_int as u16_0,
-    199 as ::core::ffi::c_int as u16_0,
-    199 as ::core::ffi::c_int as u16_0,
-    231 as ::core::ffi::c_int as u16_0,
-    231 as ::core::ffi::c_int as u16_0,
-    1127 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    743 as ::core::ffi::c_int as u16_0,
-    1575 as ::core::ffi::c_int as u16_0,
-    36 as ::core::ffi::c_int as u16_0,
-    68 as ::core::ffi::c_int as u16_0,
-    68 as ::core::ffi::c_int as u16_0,
-    36 as ::core::ffi::c_int as u16_0,
-    63 as ::core::ffi::c_int as u16_0,
-    63 as ::core::ffi::c_int as u16_0,
-    11719 as ::core::ffi::c_int as u16_0,
-    3399 as ::core::ffi::c_int as u16_0,
-    229 as ::core::ffi::c_int as u16_0,
-    165 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    327 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    423 as ::core::ffi::c_int as u16_0,
-    167 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    3463 as ::core::ffi::c_int as u16_0,
-    536 as ::core::ffi::c_int as u16_0,
-    11623 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    2055 as ::core::ffi::c_int as u16_0,
-    1735 as ::core::ffi::c_int as u16_0,
-    391 as ::core::ffi::c_int as u16_0,
-    55 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    524 as ::core::ffi::c_int as u16_0,
-    245 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    236 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    81 as ::core::ffi::c_int as u16_0,
-    80 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    149 as ::core::ffi::c_int as u16_0,
-    112 as ::core::ffi::c_int as u16_0,
-    117 as ::core::ffi::c_int as u16_0,
-    149 as ::core::ffi::c_int as u16_0,
-    49 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    117 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    49 as ::core::ffi::c_int as u16_0,
-    121 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    55 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    167 as ::core::ffi::c_int as u16_0,
-    4327 as ::core::ffi::c_int as u16_0,
-    34 as ::core::ffi::c_int as u16_0,
-    117 as ::core::ffi::c_int as u16_0,
-    55 as ::core::ffi::c_int as u16_0,
-    117 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    49 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    121 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    841 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    56 as ::core::ffi::c_int as u16_0,
-    48 as ::core::ffi::c_int as u16_0,
-    56 as ::core::ffi::c_int as u16_0,
-    837 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    54 as ::core::ffi::c_int as u16_0,
-    50 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    327 as ::core::ffi::c_int as u16_0,
-    38 as ::core::ffi::c_int as u16_0,
-    1447 as ::core::ffi::c_int as u16_0,
-    70 as ::core::ffi::c_int as u16_0,
-    999 as ::core::ffi::c_int as u16_0,
-    199 as ::core::ffi::c_int as u16_0,
-    199 as ::core::ffi::c_int as u16_0,
-    199 as ::core::ffi::c_int as u16_0,
-    103 as ::core::ffi::c_int as u16_0,
-    87 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    56 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    87 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    153 as ::core::ffi::c_int as u16_0,
-    90 as ::core::ffi::c_int as u16_0,
-    98 as ::core::ffi::c_int as u16_0,
-    90 as ::core::ffi::c_int as u16_0,
-    391 as ::core::ffi::c_int as u16_0,
-    839 as ::core::ffi::c_int as u16_0,
-    615 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    487 as ::core::ffi::c_int as u16_0,
-    455 as ::core::ffi::c_int as u16_0,
-    3943 as ::core::ffi::c_int as u16_0,
-    117 as ::core::ffi::c_int as u16_0,
-    1455 as ::core::ffi::c_int as u16_0,
-    314 as ::core::ffi::c_int as u16_0,
-    1710 as ::core::ffi::c_int as u16_0,
-    143 as ::core::ffi::c_int as u16_0,
-    570 as ::core::ffi::c_int as u16_0,
-    47 as ::core::ffi::c_int as u16_0,
-    410 as ::core::ffi::c_int as u16_0,
-    1466 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    935 as ::core::ffi::c_int as u16_0,
-    1575 as ::core::ffi::c_int as u16_0,
-    999 as ::core::ffi::c_int as u16_0,
-    143 as ::core::ffi::c_int as u16_0,
-    551 as ::core::ffi::c_int as u16_0,
-    46 as ::core::ffi::c_int as u16_0,
-    263 as ::core::ffi::c_int as u16_0,
-    46 as ::core::ffi::c_int as u16_0,
-    967 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    1159 as ::core::ffi::c_int as u16_0,
-    263 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    174 as ::core::ffi::c_int as u16_0,
-    1289 as ::core::ffi::c_int as u16_0,
-    1285 as ::core::ffi::c_int as u16_0,
-    2503 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    199 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    1415 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    743 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    271 as ::core::ffi::c_int as u16_0,
-    711 as ::core::ffi::c_int as u16_0,
-    207 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    839 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    1799 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    108 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    140 as ::core::ffi::c_int as u16_0,
-    135 as ::core::ffi::c_int as u16_0,
-    103 as ::core::ffi::c_int as u16_0,
-    871 as ::core::ffi::c_int as u16_0,
-    108 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    271 as ::core::ffi::c_int as u16_0,
-    309 as ::core::ffi::c_int as u16_0,
-    935 as ::core::ffi::c_int as u16_0,
-    79 as ::core::ffi::c_int as u16_0,
-    53 as ::core::ffi::c_int as u16_0,
-    1735 as ::core::ffi::c_int as u16_0,
-    245 as ::core::ffi::c_int as u16_0,
-    711 as ::core::ffi::c_int as u16_0,
-    271 as ::core::ffi::c_int as u16_0,
-    615 as ::core::ffi::c_int as u16_0,
-    271 as ::core::ffi::c_int as u16_0,
-    2343 as ::core::ffi::c_int as u16_0,
-    1007 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    1703 as ::core::ffi::c_int as u16_0,
-    492 as ::core::ffi::c_int as u16_0,
-    245 as ::core::ffi::c_int as u16_0,
-    655 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    1447 as ::core::ffi::c_int as u16_0,
-    106 as ::core::ffi::c_int as u16_0,
-    140 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    85 as ::core::ffi::c_int as u16_0,
-    34 as ::core::ffi::c_int as u16_0,
-    149 as ::core::ffi::c_int as u16_0,
-    807 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    108 as ::core::ffi::c_int as u16_0,
-    1159 as ::core::ffi::c_int as u16_0,
-    172 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    268 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    149 as ::core::ffi::c_int as u16_0,
-    76 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    1543 as ::core::ffi::c_int as u16_0,
-    106 as ::core::ffi::c_int as u16_0,
-    300 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    135 as ::core::ffi::c_int as u16_0,
-    149 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    1383 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    204 as ::core::ffi::c_int as u16_0,
-    42 as ::core::ffi::c_int as u16_0,
-    44 as ::core::ffi::c_int as u16_0,
-    333 as ::core::ffi::c_int as u16_0,
-    28135 as ::core::ffi::c_int as u16_0,
-    3182 as ::core::ffi::c_int as u16_0,
-    149 as ::core::ffi::c_int as u16_0,
-    34279 as ::core::ffi::c_int as u16_0,
-    18215 as ::core::ffi::c_int as u16_0,
-    2215 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    1482 as ::core::ffi::c_int as u16_0,
-    140 as ::core::ffi::c_int as u16_0,
-    422 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    7898 as ::core::ffi::c_int as u16_0,
-    1274 as ::core::ffi::c_int as u16_0,
-    1946 as ::core::ffi::c_int as u16_0,
-    74 as ::core::ffi::c_int as u16_0,
-    108 as ::core::ffi::c_int as u16_0,
-    122 as ::core::ffi::c_int as u16_0,
-    202 as ::core::ffi::c_int as u16_0,
-    258 as ::core::ffi::c_int as u16_0,
-    268 as ::core::ffi::c_int as u16_0,
-    90 as ::core::ffi::c_int as u16_0,
-    236 as ::core::ffi::c_int as u16_0,
-    986 as ::core::ffi::c_int as u16_0,
-    140 as ::core::ffi::c_int as u16_0,
-    1562 as ::core::ffi::c_int as u16_0,
-    2138 as ::core::ffi::c_int as u16_0,
-    108 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    2810 as ::core::ffi::c_int as u16_0,
-    591 as ::core::ffi::c_int as u16_0,
-    841 as ::core::ffi::c_int as u16_0,
-    837 as ::core::ffi::c_int as u16_0,
-    841 as ::core::ffi::c_int as u16_0,
-    229 as ::core::ffi::c_int as u16_0,
-    581 as ::core::ffi::c_int as u16_0,
-    841 as ::core::ffi::c_int as u16_0,
-    837 as ::core::ffi::c_int as u16_0,
-    41 as ::core::ffi::c_int as u16_0,
-    73 as ::core::ffi::c_int as u16_0,
-    41 as ::core::ffi::c_int as u16_0,
-    73 as ::core::ffi::c_int as u16_0,
-    137 as ::core::ffi::c_int as u16_0,
-    265 as ::core::ffi::c_int as u16_0,
-    133 as ::core::ffi::c_int as u16_0,
-    37 as ::core::ffi::c_int as u16_0,
-    229 as ::core::ffi::c_int as u16_0,
-    357 as ::core::ffi::c_int as u16_0,
-    841 as ::core::ffi::c_int as u16_0,
-    837 as ::core::ffi::c_int as u16_0,
-    73 as ::core::ffi::c_int as u16_0,
-    137 as ::core::ffi::c_int as u16_0,
-    265 as ::core::ffi::c_int as u16_0,
-    233 as ::core::ffi::c_int as u16_0,
-    837 as ::core::ffi::c_int as u16_0,
-    73 as ::core::ffi::c_int as u16_0,
-    137 as ::core::ffi::c_int as u16_0,
-    169 as ::core::ffi::c_int as u16_0,
-    41 as ::core::ffi::c_int as u16_0,
-    233 as ::core::ffi::c_int as u16_0,
-    837 as ::core::ffi::c_int as u16_0,
-    841 as ::core::ffi::c_int as u16_0,
-    837 as ::core::ffi::c_int as u16_0,
-    841 as ::core::ffi::c_int as u16_0,
-    837 as ::core::ffi::c_int as u16_0,
-    841 as ::core::ffi::c_int as u16_0,
-    837 as ::core::ffi::c_int as u16_0,
-    841 as ::core::ffi::c_int as u16_0,
-    837 as ::core::ffi::c_int as u16_0,
-    841 as ::core::ffi::c_int as u16_0,
-    837 as ::core::ffi::c_int as u16_0,
-    841 as ::core::ffi::c_int as u16_0,
-    901 as ::core::ffi::c_int as u16_0,
-    809 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    805 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    197 as ::core::ffi::c_int as u16_0,
-    809 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    805 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    197 as ::core::ffi::c_int as u16_0,
-    809 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    805 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    197 as ::core::ffi::c_int as u16_0,
-    809 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    805 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    197 as ::core::ffi::c_int as u16_0,
-    809 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    805 as ::core::ffi::c_int as u16_0,
-    57 as ::core::ffi::c_int as u16_0,
-    197 as ::core::ffi::c_int as u16_0,
-    94 as ::core::ffi::c_int as u16_0,
-    1613 as ::core::ffi::c_int as u16_0,
-    135 as ::core::ffi::c_int as u16_0,
-    871 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    327 as ::core::ffi::c_int as u16_0,
-    135 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    103 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    71 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    135 as ::core::ffi::c_int as u16_0,
-    231 as ::core::ffi::c_int as u16_0,
-    135 as ::core::ffi::c_int as u16_0,
-    135 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    327 as ::core::ffi::c_int as u16_0,
-    551 as ::core::ffi::c_int as u16_0,
-    103 as ::core::ffi::c_int as u16_0,
-    167 as ::core::ffi::c_int as u16_0,
-    551 as ::core::ffi::c_int as u16_0,
-    89 as ::core::ffi::c_int as u16_0,
-    1434 as ::core::ffi::c_int as u16_0,
-    3226 as ::core::ffi::c_int as u16_0,
-    506 as ::core::ffi::c_int as u16_0,
-    474 as ::core::ffi::c_int as u16_0,
-    506 as ::core::ffi::c_int as u16_0,
-    506 as ::core::ffi::c_int as u16_0,
-    367 as ::core::ffi::c_int as u16_0,
-    1018 as ::core::ffi::c_int as u16_0,
-    1946 as ::core::ffi::c_int as u16_0,
-    1402 as ::core::ffi::c_int as u16_0,
-    954 as ::core::ffi::c_int as u16_0,
-    1402 as ::core::ffi::c_int as u16_0,
-    314 as ::core::ffi::c_int as u16_0,
-    90 as ::core::ffi::c_int as u16_0,
-    1082 as ::core::ffi::c_int as u16_0,
-    218 as ::core::ffi::c_int as u16_0,
-    2266 as ::core::ffi::c_int as u16_0,
-    666 as ::core::ffi::c_int as u16_0,
-    1210 as ::core::ffi::c_int as u16_0,
-    186 as ::core::ffi::c_int as u16_0,
-    570 as ::core::ffi::c_int as u16_0,
-    2042 as ::core::ffi::c_int as u16_0,
-    58 as ::core::ffi::c_int as u16_0,
-    5850 as ::core::ffi::c_int as u16_0,
-    154 as ::core::ffi::c_int as u16_0,
-    2010 as ::core::ffi::c_int as u16_0,
-    154 as ::core::ffi::c_int as u16_0,
-    794 as ::core::ffi::c_int as u16_0,
-    2266 as ::core::ffi::c_int as u16_0,
-    378 as ::core::ffi::c_int as u16_0,
-    2266 as ::core::ffi::c_int as u16_0,
-    3738 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    39 as ::core::ffi::c_int as u16_0,
-    17351 as ::core::ffi::c_int as u16_0,
-    34 as ::core::ffi::c_int as u16_0,
-    3074 as ::core::ffi::c_int as u16_0,
-    7692 as ::core::ffi::c_int as u16_0,
-    63 as ::core::ffi::c_int as u16_0,
-    63 as ::core::ffi::c_int as u16_0,
+static mut aFts5UnicodeData: [U16_0; 1765] = [
+    1025 as ::core::ffi::c_int as U16_0,
+    61 as ::core::ffi::c_int as U16_0,
+    117 as ::core::ffi::c_int as U16_0,
+    55 as ::core::ffi::c_int as U16_0,
+    117 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    49 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    121 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    841 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    56 as ::core::ffi::c_int as U16_0,
+    48 as ::core::ffi::c_int as U16_0,
+    56 as ::core::ffi::c_int as U16_0,
+    837 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    1057 as ::core::ffi::c_int as U16_0,
+    61 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    151 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    56 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    52 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    34 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    56 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    79 as ::core::ffi::c_int as U16_0,
+    56 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    56 as ::core::ffi::c_int as U16_0,
+    47 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    51 as ::core::ffi::c_int as U16_0,
+    111 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    745 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    233 as ::core::ffi::c_int as U16_0,
+    773 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    261 as ::core::ffi::c_int as U16_0,
+    1822 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    542 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    1534 as ::core::ffi::c_int as U16_0,
+    222 as ::core::ffi::c_int as U16_0,
+    69 as ::core::ffi::c_int as U16_0,
+    73 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    126 as ::core::ffi::c_int as U16_0,
+    126 as ::core::ffi::c_int as U16_0,
+    73 as ::core::ffi::c_int as U16_0,
+    69 as ::core::ffi::c_int as U16_0,
+    137 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    73 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    105 as ::core::ffi::c_int as U16_0,
+    101 as ::core::ffi::c_int as U16_0,
+    73 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    73 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    190 as ::core::ffi::c_int as U16_0,
+    158 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    126 as ::core::ffi::c_int as U16_0,
+    126 as ::core::ffi::c_int as U16_0,
+    73 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    126 as ::core::ffi::c_int as U16_0,
+    94 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    94 as ::core::ffi::c_int as U16_0,
+    69 as ::core::ffi::c_int as U16_0,
+    135 as ::core::ffi::c_int as U16_0,
+    41 as ::core::ffi::c_int as U16_0,
+    40 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    41 as ::core::ffi::c_int as U16_0,
+    40 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    41 as ::core::ffi::c_int as U16_0,
+    40 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    542 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    606 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    41 as ::core::ffi::c_int as U16_0,
+    40 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    126 as ::core::ffi::c_int as U16_0,
+    73 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    1886 as ::core::ffi::c_int as U16_0,
+    197 as ::core::ffi::c_int as U16_0,
+    73 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    73 as ::core::ffi::c_int as U16_0,
+    69 as ::core::ffi::c_int as U16_0,
+    126 as ::core::ffi::c_int as U16_0,
+    105 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    286 as ::core::ffi::c_int as U16_0,
+    2181 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    869 as ::core::ffi::c_int as U16_0,
+    582 as ::core::ffi::c_int as U16_0,
+    152 as ::core::ffi::c_int as U16_0,
+    390 as ::core::ffi::c_int as U16_0,
+    472 as ::core::ffi::c_int as U16_0,
+    166 as ::core::ffi::c_int as U16_0,
+    248 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    56 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    568 as ::core::ffi::c_int as U16_0,
+    3596 as ::core::ffi::c_int as U16_0,
+    158 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    56 as ::core::ffi::c_int as U16_0,
+    94 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    101 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    88 as ::core::ffi::c_int as U16_0,
+    41 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    105 as ::core::ffi::c_int as U16_0,
+    41 as ::core::ffi::c_int as U16_0,
+    73 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    553 as ::core::ffi::c_int as U16_0,
+    297 as ::core::ffi::c_int as U16_0,
+    1125 as ::core::ffi::c_int as U16_0,
+    94 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    105 as ::core::ffi::c_int as U16_0,
+    101 as ::core::ffi::c_int as U16_0,
+    798 as ::core::ffi::c_int as U16_0,
+    133 as ::core::ffi::c_int as U16_0,
+    94 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    126 as ::core::ffi::c_int as U16_0,
+    94 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    1641 as ::core::ffi::c_int as U16_0,
+    1541 as ::core::ffi::c_int as U16_0,
+    1118 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    172 as ::core::ffi::c_int as U16_0,
+    75 as ::core::ffi::c_int as U16_0,
+    1790 as ::core::ffi::c_int as U16_0,
+    478 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    2846 as ::core::ffi::c_int as U16_0,
+    1225 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    213 as ::core::ffi::c_int as U16_0,
+    1253 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    49 as ::core::ffi::c_int as U16_0,
+    55 as ::core::ffi::c_int as U16_0,
+    1452 as ::core::ffi::c_int as U16_0,
+    49 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    871 as ::core::ffi::c_int as U16_0,
+    103 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    162 as ::core::ffi::c_int as U16_0,
+    121 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    55 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    90 as ::core::ffi::c_int as U16_0,
+    364 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    1031 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    327 as ::core::ffi::c_int as U16_0,
+    684 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    149 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    3175 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    236 as ::core::ffi::c_int as U16_0,
+    34 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    204 as ::core::ffi::c_int as U16_0,
+    70 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    140 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    103 as ::core::ffi::c_int as U16_0,
+    90 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    469 as ::core::ffi::c_int as U16_0,
+    34 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    967 as ::core::ffi::c_int as U16_0,
+    876 as ::core::ffi::c_int as U16_0,
+    2855 as ::core::ffi::c_int as U16_0,
+    364 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    1063 as ::core::ffi::c_int as U16_0,
+    300 as ::core::ffi::c_int as U16_0,
+    70 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    117 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    711 as ::core::ffi::c_int as U16_0,
+    140 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    300 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    108 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    172 as ::core::ffi::c_int as U16_0,
+    501 as ::core::ffi::c_int as U16_0,
+    807 as ::core::ffi::c_int as U16_0,
+    108 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    359 as ::core::ffi::c_int as U16_0,
+    876 as ::core::ffi::c_int as U16_0,
+    108 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    1735 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    106 as ::core::ffi::c_int as U16_0,
+    268 as ::core::ffi::c_int as U16_0,
+    138 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    236 as ::core::ffi::c_int as U16_0,
+    327 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    199 as ::core::ffi::c_int as U16_0,
+    231 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    263 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    711 as ::core::ffi::c_int as U16_0,
+    231 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    135 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    106 as ::core::ffi::c_int as U16_0,
+    140 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    103 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    87 as ::core::ffi::c_int as U16_0,
+    207 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    55 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    199 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    711 as ::core::ffi::c_int as U16_0,
+    231 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    106 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    108 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    135 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    103 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    295 as ::core::ffi::c_int as U16_0,
+    103 as ::core::ffi::c_int as U16_0,
+    711 as ::core::ffi::c_int as U16_0,
+    231 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    167 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    106 as ::core::ffi::c_int as U16_0,
+    172 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    55 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    263 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    711 as ::core::ffi::c_int as U16_0,
+    231 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    167 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    140 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    103 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    207 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    199 as ::core::ffi::c_int as U16_0,
+    103 as ::core::ffi::c_int as U16_0,
+    135 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    103 as ::core::ffi::c_int as U16_0,
+    391 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    106 as ::core::ffi::c_int as U16_0,
+    106 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    111 as ::core::ffi::c_int as U16_0,
+    218 as ::core::ffi::c_int as U16_0,
+    55 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    106 as ::core::ffi::c_int as U16_0,
+    263 as ::core::ffi::c_int as U16_0,
+    103 as ::core::ffi::c_int as U16_0,
+    743 as ::core::ffi::c_int as U16_0,
+    327 as ::core::ffi::c_int as U16_0,
+    167 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    108 as ::core::ffi::c_int as U16_0,
+    138 as ::core::ffi::c_int as U16_0,
+    108 as ::core::ffi::c_int as U16_0,
+    140 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    239 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    263 as ::core::ffi::c_int as U16_0,
+    103 as ::core::ffi::c_int as U16_0,
+    743 as ::core::ffi::c_int as U16_0,
+    327 as ::core::ffi::c_int as U16_0,
+    167 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    170 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    263 as ::core::ffi::c_int as U16_0,
+    103 as ::core::ffi::c_int as U16_0,
+    1319 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    106 as ::core::ffi::c_int as U16_0,
+    140 as ::core::ffi::c_int as U16_0,
+    106 as ::core::ffi::c_int as U16_0,
+    106 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    207 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    199 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    583 as ::core::ffi::c_int as U16_0,
+    775 as ::core::ffi::c_int as U16_0,
+    295 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    231 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    106 as ::core::ffi::c_int as U16_0,
+    108 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    266 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    1543 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    236 as ::core::ffi::c_int as U16_0,
+    55 as ::core::ffi::c_int as U16_0,
+    199 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    268 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    135 as ::core::ffi::c_int as U16_0,
+    231 as ::core::ffi::c_int as U16_0,
+    103 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    135 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    204 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    167 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    204 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    135 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    122 as ::core::ffi::c_int as U16_0,
+    501 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    122 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    218 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    335 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    263 as ::core::ffi::c_int as U16_0,
+    1159 as ::core::ffi::c_int as U16_0,
+    460 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    172 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    167 as ::core::ffi::c_int as U16_0,
+    364 as ::core::ffi::c_int as U16_0,
+    1164 as ::core::ffi::c_int as U16_0,
+    282 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    218 as ::core::ffi::c_int as U16_0,
+    90 as ::core::ffi::c_int as U16_0,
+    181 as ::core::ffi::c_int as U16_0,
+    154 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    1383 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    140 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    204 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    213 as ::core::ffi::c_int as U16_0,
+    199 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    135 as ::core::ffi::c_int as U16_0,
+    108 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    106 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    234 as ::core::ffi::c_int as U16_0,
+    103 as ::core::ffi::c_int as U16_0,
+    140 as ::core::ffi::c_int as U16_0,
+    423 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    202 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    106 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    90 as ::core::ffi::c_int as U16_0,
+    1225 as ::core::ffi::c_int as U16_0,
+    41 as ::core::ffi::c_int as U16_0,
+    41 as ::core::ffi::c_int as U16_0,
+    1383 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    10631 as ::core::ffi::c_int as U16_0,
+    135 as ::core::ffi::c_int as U16_0,
+    231 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    135 as ::core::ffi::c_int as U16_0,
+    1319 as ::core::ffi::c_int as U16_0,
+    135 as ::core::ffi::c_int as U16_0,
+    1063 as ::core::ffi::c_int as U16_0,
+    135 as ::core::ffi::c_int as U16_0,
+    231 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    135 as ::core::ffi::c_int as U16_0,
+    487 as ::core::ffi::c_int as U16_0,
+    1831 as ::core::ffi::c_int as U16_0,
+    135 as ::core::ffi::c_int as U16_0,
+    2151 as ::core::ffi::c_int as U16_0,
+    108 as ::core::ffi::c_int as U16_0,
+    309 as ::core::ffi::c_int as U16_0,
+    655 as ::core::ffi::c_int as U16_0,
+    519 as ::core::ffi::c_int as U16_0,
+    346 as ::core::ffi::c_int as U16_0,
+    2727 as ::core::ffi::c_int as U16_0,
+    49 as ::core::ffi::c_int as U16_0,
+    19847 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    551 as ::core::ffi::c_int as U16_0,
+    61 as ::core::ffi::c_int as U16_0,
+    839 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    2407 as ::core::ffi::c_int as U16_0,
+    117 as ::core::ffi::c_int as U16_0,
+    110 as ::core::ffi::c_int as U16_0,
+    423 as ::core::ffi::c_int as U16_0,
+    135 as ::core::ffi::c_int as U16_0,
+    108 as ::core::ffi::c_int as U16_0,
+    583 as ::core::ffi::c_int as U16_0,
+    108 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    583 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    423 as ::core::ffi::c_int as U16_0,
+    103 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    1671 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    236 as ::core::ffi::c_int as U16_0,
+    266 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    364 as ::core::ffi::c_int as U16_0,
+    117 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    117 as ::core::ffi::c_int as U16_0,
+    55 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    335 as ::core::ffi::c_int as U16_0,
+    213 as ::core::ffi::c_int as U16_0,
+    49 as ::core::ffi::c_int as U16_0,
+    149 as ::core::ffi::c_int as U16_0,
+    108 as ::core::ffi::c_int as U16_0,
+    61 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    1127 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    1671 as ::core::ffi::c_int as U16_0,
+    1319 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    2247 as ::core::ffi::c_int as U16_0,
+    935 as ::core::ffi::c_int as U16_0,
+    108 as ::core::ffi::c_int as U16_0,
+    138 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    106 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    202 as ::core::ffi::c_int as U16_0,
+    108 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    967 as ::core::ffi::c_int as U16_0,
+    167 as ::core::ffi::c_int as U16_0,
+    1415 as ::core::ffi::c_int as U16_0,
+    554 as ::core::ffi::c_int as U16_0,
+    231 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    47 as ::core::ffi::c_int as U16_0,
+    1114 as ::core::ffi::c_int as U16_0,
+    743 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    106 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    1703 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    236 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    268 as ::core::ffi::c_int as U16_0,
+    202 as ::core::ffi::c_int as U16_0,
+    332 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    245 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    213 as ::core::ffi::c_int as U16_0,
+    140 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    1511 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    172 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    170 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    231 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    245 as ::core::ffi::c_int as U16_0,
+    346 as ::core::ffi::c_int as U16_0,
+    300 as ::core::ffi::c_int as U16_0,
+    314 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    967 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    140 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    1415 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    106 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    108 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    149 as ::core::ffi::c_int as U16_0,
+    1159 as ::core::ffi::c_int as U16_0,
+    266 as ::core::ffi::c_int as U16_0,
+    268 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    181 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    103 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    967 as ::core::ffi::c_int as U16_0,
+    198 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    277 as ::core::ffi::c_int as U16_0,
+    108 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    428 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    236 as ::core::ffi::c_int as U16_0,
+    135 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    135 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    1413 as ::core::ffi::c_int as U16_0,
+    2022 as ::core::ffi::c_int as U16_0,
+    421 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    1093 as ::core::ffi::c_int as U16_0,
+    1190 as ::core::ffi::c_int as U16_0,
+    1260 as ::core::ffi::c_int as U16_0,
+    140 as ::core::ffi::c_int as U16_0,
+    4830 as ::core::ffi::c_int as U16_0,
+    261 as ::core::ffi::c_int as U16_0,
+    3166 as ::core::ffi::c_int as U16_0,
+    261 as ::core::ffi::c_int as U16_0,
+    265 as ::core::ffi::c_int as U16_0,
+    197 as ::core::ffi::c_int as U16_0,
+    201 as ::core::ffi::c_int as U16_0,
+    261 as ::core::ffi::c_int as U16_0,
+    265 as ::core::ffi::c_int as U16_0,
+    261 as ::core::ffi::c_int as U16_0,
+    265 as ::core::ffi::c_int as U16_0,
+    197 as ::core::ffi::c_int as U16_0,
+    201 as ::core::ffi::c_int as U16_0,
+    261 as ::core::ffi::c_int as U16_0,
+    41 as ::core::ffi::c_int as U16_0,
+    41 as ::core::ffi::c_int as U16_0,
+    41 as ::core::ffi::c_int as U16_0,
+    94 as ::core::ffi::c_int as U16_0,
+    229 as ::core::ffi::c_int as U16_0,
+    265 as ::core::ffi::c_int as U16_0,
+    453 as ::core::ffi::c_int as U16_0,
+    261 as ::core::ffi::c_int as U16_0,
+    264 as ::core::ffi::c_int as U16_0,
+    261 as ::core::ffi::c_int as U16_0,
+    264 as ::core::ffi::c_int as U16_0,
+    261 as ::core::ffi::c_int as U16_0,
+    264 as ::core::ffi::c_int as U16_0,
+    165 as ::core::ffi::c_int as U16_0,
+    69 as ::core::ffi::c_int as U16_0,
+    137 as ::core::ffi::c_int as U16_0,
+    40 as ::core::ffi::c_int as U16_0,
+    56 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    120 as ::core::ffi::c_int as U16_0,
+    101 as ::core::ffi::c_int as U16_0,
+    69 as ::core::ffi::c_int as U16_0,
+    137 as ::core::ffi::c_int as U16_0,
+    40 as ::core::ffi::c_int as U16_0,
+    120 as ::core::ffi::c_int as U16_0,
+    133 as ::core::ffi::c_int as U16_0,
+    69 as ::core::ffi::c_int as U16_0,
+    137 as ::core::ffi::c_int as U16_0,
+    120 as ::core::ffi::c_int as U16_0,
+    261 as ::core::ffi::c_int as U16_0,
+    169 as ::core::ffi::c_int as U16_0,
+    120 as ::core::ffi::c_int as U16_0,
+    101 as ::core::ffi::c_int as U16_0,
+    69 as ::core::ffi::c_int as U16_0,
+    137 as ::core::ffi::c_int as U16_0,
+    40 as ::core::ffi::c_int as U16_0,
+    88 as ::core::ffi::c_int as U16_0,
+    381 as ::core::ffi::c_int as U16_0,
+    162 as ::core::ffi::c_int as U16_0,
+    209 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    52 as ::core::ffi::c_int as U16_0,
+    51 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    84 as ::core::ffi::c_int as U16_0,
+    51 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    52 as ::core::ffi::c_int as U16_0,
+    277 as ::core::ffi::c_int as U16_0,
+    59 as ::core::ffi::c_int as U16_0,
+    60 as ::core::ffi::c_int as U16_0,
+    162 as ::core::ffi::c_int as U16_0,
+    61 as ::core::ffi::c_int as U16_0,
+    309 as ::core::ffi::c_int as U16_0,
+    52 as ::core::ffi::c_int as U16_0,
+    51 as ::core::ffi::c_int as U16_0,
+    149 as ::core::ffi::c_int as U16_0,
+    80 as ::core::ffi::c_int as U16_0,
+    117 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    373 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    48 as ::core::ffi::c_int as U16_0,
+    341 as ::core::ffi::c_int as U16_0,
+    61 as ::core::ffi::c_int as U16_0,
+    162 as ::core::ffi::c_int as U16_0,
+    194 as ::core::ffi::c_int as U16_0,
+    47 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    207 as ::core::ffi::c_int as U16_0,
+    121 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    335 as ::core::ffi::c_int as U16_0,
+    121 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    422 as ::core::ffi::c_int as U16_0,
+    855 as ::core::ffi::c_int as U16_0,
+    428 as ::core::ffi::c_int as U16_0,
+    139 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    107 as ::core::ffi::c_int as U16_0,
+    396 as ::core::ffi::c_int as U16_0,
+    90 as ::core::ffi::c_int as U16_0,
+    41 as ::core::ffi::c_int as U16_0,
+    154 as ::core::ffi::c_int as U16_0,
+    41 as ::core::ffi::c_int as U16_0,
+    90 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    105 as ::core::ffi::c_int as U16_0,
+    69 as ::core::ffi::c_int as U16_0,
+    105 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    41 as ::core::ffi::c_int as U16_0,
+    90 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    169 as ::core::ffi::c_int as U16_0,
+    218 as ::core::ffi::c_int as U16_0,
+    41 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    41 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    41 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    137 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    137 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    135 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    90 as ::core::ffi::c_int as U16_0,
+    69 as ::core::ffi::c_int as U16_0,
+    73 as ::core::ffi::c_int as U16_0,
+    185 as ::core::ffi::c_int as U16_0,
+    94 as ::core::ffi::c_int as U16_0,
+    101 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    90 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    527 as ::core::ffi::c_int as U16_0,
+    1134 as ::core::ffi::c_int as U16_0,
+    94 as ::core::ffi::c_int as U16_0,
+    142 as ::core::ffi::c_int as U16_0,
+    47 as ::core::ffi::c_int as U16_0,
+    185 as ::core::ffi::c_int as U16_0,
+    186 as ::core::ffi::c_int as U16_0,
+    89 as ::core::ffi::c_int as U16_0,
+    154 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    90 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    90 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    250 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    1018 as ::core::ffi::c_int as U16_0,
+    89 as ::core::ffi::c_int as U16_0,
+    90 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    1018 as ::core::ffi::c_int as U16_0,
+    8601 as ::core::ffi::c_int as U16_0,
+    282 as ::core::ffi::c_int as U16_0,
+    153 as ::core::ffi::c_int as U16_0,
+    666 as ::core::ffi::c_int as U16_0,
+    89 as ::core::ffi::c_int as U16_0,
+    250 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    2618 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    986 as ::core::ffi::c_int as U16_0,
+    825 as ::core::ffi::c_int as U16_0,
+    1306 as ::core::ffi::c_int as U16_0,
+    217 as ::core::ffi::c_int as U16_0,
+    602 as ::core::ffi::c_int as U16_0,
+    1274 as ::core::ffi::c_int as U16_0,
+    378 as ::core::ffi::c_int as U16_0,
+    1935 as ::core::ffi::c_int as U16_0,
+    2522 as ::core::ffi::c_int as U16_0,
+    719 as ::core::ffi::c_int as U16_0,
+    5882 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    314 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    1754 as ::core::ffi::c_int as U16_0,
+    281 as ::core::ffi::c_int as U16_0,
+    3578 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    4634 as ::core::ffi::c_int as U16_0,
+    3322 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    975 as ::core::ffi::c_int as U16_0,
+    1434 as ::core::ffi::c_int as U16_0,
+    185 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    1017 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    537 as ::core::ffi::c_int as U16_0,
+    8218 as ::core::ffi::c_int as U16_0,
+    4217 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    2041 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    1049 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    8281 as ::core::ffi::c_int as U16_0,
+    1562 as ::core::ffi::c_int as U16_0,
+    697 as ::core::ffi::c_int as U16_0,
+    90 as ::core::ffi::c_int as U16_0,
+    217 as ::core::ffi::c_int as U16_0,
+    346 as ::core::ffi::c_int as U16_0,
+    1513 as ::core::ffi::c_int as U16_0,
+    1509 as ::core::ffi::c_int as U16_0,
+    126 as ::core::ffi::c_int as U16_0,
+    73 as ::core::ffi::c_int as U16_0,
+    69 as ::core::ffi::c_int as U16_0,
+    254 as ::core::ffi::c_int as U16_0,
+    105 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    94 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    94 as ::core::ffi::c_int as U16_0,
+    165 as ::core::ffi::c_int as U16_0,
+    70 as ::core::ffi::c_int as U16_0,
+    105 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    3166 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    218 as ::core::ffi::c_int as U16_0,
+    158 as ::core::ffi::c_int as U16_0,
+    108 as ::core::ffi::c_int as U16_0,
+    94 as ::core::ffi::c_int as U16_0,
+    149 as ::core::ffi::c_int as U16_0,
+    47 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    1221 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    1799 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    743 as ::core::ffi::c_int as U16_0,
+    231 as ::core::ffi::c_int as U16_0,
+    231 as ::core::ffi::c_int as U16_0,
+    231 as ::core::ffi::c_int as U16_0,
+    231 as ::core::ffi::c_int as U16_0,
+    231 as ::core::ffi::c_int as U16_0,
+    231 as ::core::ffi::c_int as U16_0,
+    231 as ::core::ffi::c_int as U16_0,
+    231 as ::core::ffi::c_int as U16_0,
+    1036 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    52 as ::core::ffi::c_int as U16_0,
+    51 as ::core::ffi::c_int as U16_0,
+    52 as ::core::ffi::c_int as U16_0,
+    51 as ::core::ffi::c_int as U16_0,
+    117 as ::core::ffi::c_int as U16_0,
+    52 as ::core::ffi::c_int as U16_0,
+    51 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    52 as ::core::ffi::c_int as U16_0,
+    51 as ::core::ffi::c_int as U16_0,
+    309 as ::core::ffi::c_int as U16_0,
+    49 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    49 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    52 as ::core::ffi::c_int as U16_0,
+    51 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    52 as ::core::ffi::c_int as U16_0,
+    51 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    181 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    341 as ::core::ffi::c_int as U16_0,
+    81 as ::core::ffi::c_int as U16_0,
+    858 as ::core::ffi::c_int as U16_0,
+    2874 as ::core::ffi::c_int as U16_0,
+    6874 as ::core::ffi::c_int as U16_0,
+    410 as ::core::ffi::c_int as U16_0,
+    61 as ::core::ffi::c_int as U16_0,
+    117 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    46 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    90 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    49 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    82 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    302 as ::core::ffi::c_int as U16_0,
+    140 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    49 as ::core::ffi::c_int as U16_0,
+    166 as ::core::ffi::c_int as U16_0,
+    90 as ::core::ffi::c_int as U16_0,
+    110 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    90 as ::core::ffi::c_int as U16_0,
+    2759 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    88 as ::core::ffi::c_int as U16_0,
+    70 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    49 as ::core::ffi::c_int as U16_0,
+    2887 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    102 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    1319 as ::core::ffi::c_int as U16_0,
+    3015 as ::core::ffi::c_int as U16_0,
+    90 as ::core::ffi::c_int as U16_0,
+    143 as ::core::ffi::c_int as U16_0,
+    346 as ::core::ffi::c_int as U16_0,
+    871 as ::core::ffi::c_int as U16_0,
+    1178 as ::core::ffi::c_int as U16_0,
+    519 as ::core::ffi::c_int as U16_0,
+    1018 as ::core::ffi::c_int as U16_0,
+    335 as ::core::ffi::c_int as U16_0,
+    986 as ::core::ffi::c_int as U16_0,
+    271 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    495 as ::core::ffi::c_int as U16_0,
+    1050 as ::core::ffi::c_int as U16_0,
+    335 as ::core::ffi::c_int as U16_0,
+    1274 as ::core::ffi::c_int as U16_0,
+    495 as ::core::ffi::c_int as U16_0,
+    2042 as ::core::ffi::c_int as U16_0,
+    8218 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    2074 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    679 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    36583 as ::core::ffi::c_int as U16_0,
+    1786 as ::core::ffi::c_int as U16_0,
+    1287 as ::core::ffi::c_int as U16_0,
+    198 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    8583 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    117 as ::core::ffi::c_int as U16_0,
+    519 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    1502 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    107 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    332 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    798 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    2247 as ::core::ffi::c_int as U16_0,
+    334 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    213 as ::core::ffi::c_int as U16_0,
+    760 as ::core::ffi::c_int as U16_0,
+    294 as ::core::ffi::c_int as U16_0,
+    88 as ::core::ffi::c_int as U16_0,
+    478 as ::core::ffi::c_int as U16_0,
+    69 as ::core::ffi::c_int as U16_0,
+    2014 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    261 as ::core::ffi::c_int as U16_0,
+    190 as ::core::ffi::c_int as U16_0,
+    350 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    88 as ::core::ffi::c_int as U16_0,
+    158 as ::core::ffi::c_int as U16_0,
+    158 as ::core::ffi::c_int as U16_0,
+    382 as ::core::ffi::c_int as U16_0,
+    70 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    231 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    103 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    135 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    743 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    154 as ::core::ffi::c_int as U16_0,
+    207 as ::core::ffi::c_int as U16_0,
+    90 as ::core::ffi::c_int as U16_0,
+    55 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    1671 as ::core::ffi::c_int as U16_0,
+    149 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    1607 as ::core::ffi::c_int as U16_0,
+    522 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    588 as ::core::ffi::c_int as U16_0,
+    199 as ::core::ffi::c_int as U16_0,
+    117 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    903 as ::core::ffi::c_int as U16_0,
+    268 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    743 as ::core::ffi::c_int as U16_0,
+    364 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    935 as ::core::ffi::c_int as U16_0,
+    108 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    1511 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    140 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    138 as ::core::ffi::c_int as U16_0,
+    437 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    1319 as ::core::ffi::c_int as U16_0,
+    204 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    103 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    263 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    149 as ::core::ffi::c_int as U16_0,
+    519 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    199 as ::core::ffi::c_int as U16_0,
+    122 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    1543 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    108 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    167 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    359 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    70 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    199 as ::core::ffi::c_int as U16_0,
+    199 as ::core::ffi::c_int as U16_0,
+    199 as ::core::ffi::c_int as U16_0,
+    231 as ::core::ffi::c_int as U16_0,
+    231 as ::core::ffi::c_int as U16_0,
+    1127 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    743 as ::core::ffi::c_int as U16_0,
+    1575 as ::core::ffi::c_int as U16_0,
+    36 as ::core::ffi::c_int as U16_0,
+    68 as ::core::ffi::c_int as U16_0,
+    68 as ::core::ffi::c_int as U16_0,
+    36 as ::core::ffi::c_int as U16_0,
+    63 as ::core::ffi::c_int as U16_0,
+    63 as ::core::ffi::c_int as U16_0,
+    11719 as ::core::ffi::c_int as U16_0,
+    3399 as ::core::ffi::c_int as U16_0,
+    229 as ::core::ffi::c_int as U16_0,
+    165 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    327 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    423 as ::core::ffi::c_int as U16_0,
+    167 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    3463 as ::core::ffi::c_int as U16_0,
+    536 as ::core::ffi::c_int as U16_0,
+    11623 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    2055 as ::core::ffi::c_int as U16_0,
+    1735 as ::core::ffi::c_int as U16_0,
+    391 as ::core::ffi::c_int as U16_0,
+    55 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    524 as ::core::ffi::c_int as U16_0,
+    245 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    236 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    81 as ::core::ffi::c_int as U16_0,
+    80 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    149 as ::core::ffi::c_int as U16_0,
+    112 as ::core::ffi::c_int as U16_0,
+    117 as ::core::ffi::c_int as U16_0,
+    149 as ::core::ffi::c_int as U16_0,
+    49 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    117 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    49 as ::core::ffi::c_int as U16_0,
+    121 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    55 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    167 as ::core::ffi::c_int as U16_0,
+    4327 as ::core::ffi::c_int as U16_0,
+    34 as ::core::ffi::c_int as U16_0,
+    117 as ::core::ffi::c_int as U16_0,
+    55 as ::core::ffi::c_int as U16_0,
+    117 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    49 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    121 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    841 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    56 as ::core::ffi::c_int as U16_0,
+    48 as ::core::ffi::c_int as U16_0,
+    56 as ::core::ffi::c_int as U16_0,
+    837 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    54 as ::core::ffi::c_int as U16_0,
+    50 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    327 as ::core::ffi::c_int as U16_0,
+    38 as ::core::ffi::c_int as U16_0,
+    1447 as ::core::ffi::c_int as U16_0,
+    70 as ::core::ffi::c_int as U16_0,
+    999 as ::core::ffi::c_int as U16_0,
+    199 as ::core::ffi::c_int as U16_0,
+    199 as ::core::ffi::c_int as U16_0,
+    199 as ::core::ffi::c_int as U16_0,
+    103 as ::core::ffi::c_int as U16_0,
+    87 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    56 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    87 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    153 as ::core::ffi::c_int as U16_0,
+    90 as ::core::ffi::c_int as U16_0,
+    98 as ::core::ffi::c_int as U16_0,
+    90 as ::core::ffi::c_int as U16_0,
+    391 as ::core::ffi::c_int as U16_0,
+    839 as ::core::ffi::c_int as U16_0,
+    615 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    487 as ::core::ffi::c_int as U16_0,
+    455 as ::core::ffi::c_int as U16_0,
+    3943 as ::core::ffi::c_int as U16_0,
+    117 as ::core::ffi::c_int as U16_0,
+    1455 as ::core::ffi::c_int as U16_0,
+    314 as ::core::ffi::c_int as U16_0,
+    1710 as ::core::ffi::c_int as U16_0,
+    143 as ::core::ffi::c_int as U16_0,
+    570 as ::core::ffi::c_int as U16_0,
+    47 as ::core::ffi::c_int as U16_0,
+    410 as ::core::ffi::c_int as U16_0,
+    1466 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    935 as ::core::ffi::c_int as U16_0,
+    1575 as ::core::ffi::c_int as U16_0,
+    999 as ::core::ffi::c_int as U16_0,
+    143 as ::core::ffi::c_int as U16_0,
+    551 as ::core::ffi::c_int as U16_0,
+    46 as ::core::ffi::c_int as U16_0,
+    263 as ::core::ffi::c_int as U16_0,
+    46 as ::core::ffi::c_int as U16_0,
+    967 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    1159 as ::core::ffi::c_int as U16_0,
+    263 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    174 as ::core::ffi::c_int as U16_0,
+    1289 as ::core::ffi::c_int as U16_0,
+    1285 as ::core::ffi::c_int as U16_0,
+    2503 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    199 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    1415 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    743 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    271 as ::core::ffi::c_int as U16_0,
+    711 as ::core::ffi::c_int as U16_0,
+    207 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    839 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    1799 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    108 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    140 as ::core::ffi::c_int as U16_0,
+    135 as ::core::ffi::c_int as U16_0,
+    103 as ::core::ffi::c_int as U16_0,
+    871 as ::core::ffi::c_int as U16_0,
+    108 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    271 as ::core::ffi::c_int as U16_0,
+    309 as ::core::ffi::c_int as U16_0,
+    935 as ::core::ffi::c_int as U16_0,
+    79 as ::core::ffi::c_int as U16_0,
+    53 as ::core::ffi::c_int as U16_0,
+    1735 as ::core::ffi::c_int as U16_0,
+    245 as ::core::ffi::c_int as U16_0,
+    711 as ::core::ffi::c_int as U16_0,
+    271 as ::core::ffi::c_int as U16_0,
+    615 as ::core::ffi::c_int as U16_0,
+    271 as ::core::ffi::c_int as U16_0,
+    2343 as ::core::ffi::c_int as U16_0,
+    1007 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    1703 as ::core::ffi::c_int as U16_0,
+    492 as ::core::ffi::c_int as U16_0,
+    245 as ::core::ffi::c_int as U16_0,
+    655 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    1447 as ::core::ffi::c_int as U16_0,
+    106 as ::core::ffi::c_int as U16_0,
+    140 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    85 as ::core::ffi::c_int as U16_0,
+    34 as ::core::ffi::c_int as U16_0,
+    149 as ::core::ffi::c_int as U16_0,
+    807 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    108 as ::core::ffi::c_int as U16_0,
+    1159 as ::core::ffi::c_int as U16_0,
+    172 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    268 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    149 as ::core::ffi::c_int as U16_0,
+    76 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    1543 as ::core::ffi::c_int as U16_0,
+    106 as ::core::ffi::c_int as U16_0,
+    300 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    135 as ::core::ffi::c_int as U16_0,
+    149 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    1383 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    204 as ::core::ffi::c_int as U16_0,
+    42 as ::core::ffi::c_int as U16_0,
+    44 as ::core::ffi::c_int as U16_0,
+    333 as ::core::ffi::c_int as U16_0,
+    28135 as ::core::ffi::c_int as U16_0,
+    3182 as ::core::ffi::c_int as U16_0,
+    149 as ::core::ffi::c_int as U16_0,
+    34279 as ::core::ffi::c_int as U16_0,
+    18215 as ::core::ffi::c_int as U16_0,
+    2215 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    1482 as ::core::ffi::c_int as U16_0,
+    140 as ::core::ffi::c_int as U16_0,
+    422 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    7898 as ::core::ffi::c_int as U16_0,
+    1274 as ::core::ffi::c_int as U16_0,
+    1946 as ::core::ffi::c_int as U16_0,
+    74 as ::core::ffi::c_int as U16_0,
+    108 as ::core::ffi::c_int as U16_0,
+    122 as ::core::ffi::c_int as U16_0,
+    202 as ::core::ffi::c_int as U16_0,
+    258 as ::core::ffi::c_int as U16_0,
+    268 as ::core::ffi::c_int as U16_0,
+    90 as ::core::ffi::c_int as U16_0,
+    236 as ::core::ffi::c_int as U16_0,
+    986 as ::core::ffi::c_int as U16_0,
+    140 as ::core::ffi::c_int as U16_0,
+    1562 as ::core::ffi::c_int as U16_0,
+    2138 as ::core::ffi::c_int as U16_0,
+    108 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    2810 as ::core::ffi::c_int as U16_0,
+    591 as ::core::ffi::c_int as U16_0,
+    841 as ::core::ffi::c_int as U16_0,
+    837 as ::core::ffi::c_int as U16_0,
+    841 as ::core::ffi::c_int as U16_0,
+    229 as ::core::ffi::c_int as U16_0,
+    581 as ::core::ffi::c_int as U16_0,
+    841 as ::core::ffi::c_int as U16_0,
+    837 as ::core::ffi::c_int as U16_0,
+    41 as ::core::ffi::c_int as U16_0,
+    73 as ::core::ffi::c_int as U16_0,
+    41 as ::core::ffi::c_int as U16_0,
+    73 as ::core::ffi::c_int as U16_0,
+    137 as ::core::ffi::c_int as U16_0,
+    265 as ::core::ffi::c_int as U16_0,
+    133 as ::core::ffi::c_int as U16_0,
+    37 as ::core::ffi::c_int as U16_0,
+    229 as ::core::ffi::c_int as U16_0,
+    357 as ::core::ffi::c_int as U16_0,
+    841 as ::core::ffi::c_int as U16_0,
+    837 as ::core::ffi::c_int as U16_0,
+    73 as ::core::ffi::c_int as U16_0,
+    137 as ::core::ffi::c_int as U16_0,
+    265 as ::core::ffi::c_int as U16_0,
+    233 as ::core::ffi::c_int as U16_0,
+    837 as ::core::ffi::c_int as U16_0,
+    73 as ::core::ffi::c_int as U16_0,
+    137 as ::core::ffi::c_int as U16_0,
+    169 as ::core::ffi::c_int as U16_0,
+    41 as ::core::ffi::c_int as U16_0,
+    233 as ::core::ffi::c_int as U16_0,
+    837 as ::core::ffi::c_int as U16_0,
+    841 as ::core::ffi::c_int as U16_0,
+    837 as ::core::ffi::c_int as U16_0,
+    841 as ::core::ffi::c_int as U16_0,
+    837 as ::core::ffi::c_int as U16_0,
+    841 as ::core::ffi::c_int as U16_0,
+    837 as ::core::ffi::c_int as U16_0,
+    841 as ::core::ffi::c_int as U16_0,
+    837 as ::core::ffi::c_int as U16_0,
+    841 as ::core::ffi::c_int as U16_0,
+    837 as ::core::ffi::c_int as U16_0,
+    841 as ::core::ffi::c_int as U16_0,
+    901 as ::core::ffi::c_int as U16_0,
+    809 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    805 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    197 as ::core::ffi::c_int as U16_0,
+    809 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    805 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    197 as ::core::ffi::c_int as U16_0,
+    809 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    805 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    197 as ::core::ffi::c_int as U16_0,
+    809 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    805 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    197 as ::core::ffi::c_int as U16_0,
+    809 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    805 as ::core::ffi::c_int as U16_0,
+    57 as ::core::ffi::c_int as U16_0,
+    197 as ::core::ffi::c_int as U16_0,
+    94 as ::core::ffi::c_int as U16_0,
+    1613 as ::core::ffi::c_int as U16_0,
+    135 as ::core::ffi::c_int as U16_0,
+    871 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    327 as ::core::ffi::c_int as U16_0,
+    135 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    103 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    71 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    135 as ::core::ffi::c_int as U16_0,
+    231 as ::core::ffi::c_int as U16_0,
+    135 as ::core::ffi::c_int as U16_0,
+    135 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    327 as ::core::ffi::c_int as U16_0,
+    551 as ::core::ffi::c_int as U16_0,
+    103 as ::core::ffi::c_int as U16_0,
+    167 as ::core::ffi::c_int as U16_0,
+    551 as ::core::ffi::c_int as U16_0,
+    89 as ::core::ffi::c_int as U16_0,
+    1434 as ::core::ffi::c_int as U16_0,
+    3226 as ::core::ffi::c_int as U16_0,
+    506 as ::core::ffi::c_int as U16_0,
+    474 as ::core::ffi::c_int as U16_0,
+    506 as ::core::ffi::c_int as U16_0,
+    506 as ::core::ffi::c_int as U16_0,
+    367 as ::core::ffi::c_int as U16_0,
+    1018 as ::core::ffi::c_int as U16_0,
+    1946 as ::core::ffi::c_int as U16_0,
+    1402 as ::core::ffi::c_int as U16_0,
+    954 as ::core::ffi::c_int as U16_0,
+    1402 as ::core::ffi::c_int as U16_0,
+    314 as ::core::ffi::c_int as U16_0,
+    90 as ::core::ffi::c_int as U16_0,
+    1082 as ::core::ffi::c_int as U16_0,
+    218 as ::core::ffi::c_int as U16_0,
+    2266 as ::core::ffi::c_int as U16_0,
+    666 as ::core::ffi::c_int as U16_0,
+    1210 as ::core::ffi::c_int as U16_0,
+    186 as ::core::ffi::c_int as U16_0,
+    570 as ::core::ffi::c_int as U16_0,
+    2042 as ::core::ffi::c_int as U16_0,
+    58 as ::core::ffi::c_int as U16_0,
+    5850 as ::core::ffi::c_int as U16_0,
+    154 as ::core::ffi::c_int as U16_0,
+    2010 as ::core::ffi::c_int as U16_0,
+    154 as ::core::ffi::c_int as U16_0,
+    794 as ::core::ffi::c_int as U16_0,
+    2266 as ::core::ffi::c_int as U16_0,
+    378 as ::core::ffi::c_int as U16_0,
+    2266 as ::core::ffi::c_int as U16_0,
+    3738 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    39 as ::core::ffi::c_int as U16_0,
+    17351 as ::core::ffi::c_int as U16_0,
+    34 as ::core::ffi::c_int as U16_0,
+    3074 as ::core::ffi::c_int as U16_0,
+    7692 as ::core::ffi::c_int as U16_0,
+    63 as ::core::ffi::c_int as U16_0,
+    63 as ::core::ffi::c_int as U16_0,
 ];
 
 unsafe extern "C" fn fts5IndexCorruptRowid(
     mut pIdx: *mut Fts5Index,
-    mut iRowid: i64_0,
+    mut iRowid: I64_0,
 ) -> ::core::ffi::c_int {
     let __pIdx_ref = { &mut *pIdx };
     __pIdx_ref.rc = FTS5_CORRUPT;
@@ -12824,12 +12824,12 @@ unsafe extern "C" fn sqlite3Fts5HashScanEof(mut p: *mut Fts5Hash) -> ::core::ffi
 }
 
 unsafe extern "C" fn sqlite3Fts5ParserAlloc(
-    mut mallocProc: Option<unsafe extern "C" fn(u64_0) -> *mut ::core::ffi::c_void>,
+    mut mallocProc: Option<unsafe extern "C" fn(U64_0) -> *mut ::core::ffi::c_void>,
 ) -> *mut ::core::ffi::c_void {
     let mut fts5yypParser: *mut fts5yyParser = std::ptr::null_mut::<fts5yyParser>();
     fts5yypParser = Some(mallocProc.expect("non-null function pointer"))
         .expect("non-null function pointer")(
-        std::mem::size_of::<fts5yyParser>() as u64_0
+        std::mem::size_of::<fts5yyParser>() as U64_0
     ) as *mut fts5yyParser;
     if !fts5yypParser.is_null() {
         sqlite3Fts5ParserInit(fts5yypParser as *mut ::core::ffi::c_void);
@@ -12848,7 +12848,7 @@ unsafe extern "C" fn sqlite3Fts5ConfigParse(
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
     let mut pRet: *mut Fts5Config = std::ptr::null_mut::<Fts5Config>();
     let mut i: ::core::ffi::c_int = 0;
-    let mut nByte: crate::src::headers::sqlite3_h::sqlite3_int64 = 0;
+    let mut nByte: crate::src::headers::sqlite3_h::Sqlite3Int64 = 0;
     let mut bUnindexed: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     pRet = crate::src::src::malloc::sqlite3_malloc(
         std::mem::size_of::<Fts5Config>() as ::core::ffi::c_int
@@ -12867,13 +12867,13 @@ unsafe extern "C" fn sqlite3Fts5ConfigParse(
     (*pRet).iCookie = -(1 as ::core::ffi::c_int);
     nByte = (nArg as usize).wrapping_mul(
         (std::mem::size_of::<*mut ::core::ffi::c_char>() as usize)
-            .wrapping_add(std::mem::size_of::<u8_0>() as usize),
-    ) as crate::src::headers::sqlite3_h::sqlite3_int64;
+            .wrapping_add(std::mem::size_of::<U8_0>() as usize),
+    ) as crate::src::headers::sqlite3_h::Sqlite3Int64;
     (*pRet).azCol = sqlite3Fts5MallocZero(&raw mut rc, nByte) as *mut *mut ::core::ffi::c_char;
     (*pRet).abUnindexed = if !(*pRet).azCol.is_null() {
-        (*pRet).azCol.offset(nArg as isize) as *mut *mut ::core::ffi::c_char as *mut u8_0
+        (*pRet).azCol.offset(nArg as isize) as *mut *mut ::core::ffi::c_char as *mut U8_0
     } else {
-        std::ptr::null_mut::<u8_0>()
+        std::ptr::null_mut::<U8_0>()
     };
     (*pRet).zDb = sqlite3Fts5Strndup(
         &raw mut rc,
@@ -13025,7 +13025,7 @@ unsafe extern "C" fn sqlite3Fts5HashScanEntry(
     mut pHash: *mut Fts5Hash,
     mut pzTerm: *mut *const ::core::ffi::c_char,
     mut pnTerm: *mut ::core::ffi::c_int,
-    mut ppDoclist: *mut *const u8_0,
+    mut ppDoclist: *mut *const U8_0,
     mut pnDoclist: *mut ::core::ffi::c_int,
 ) {
     let mut p: *mut Fts5HashEntry = std::ptr::null_mut::<Fts5HashEntry>();
@@ -13037,14 +13037,14 @@ unsafe extern "C" fn sqlite3Fts5HashScanEntry(
         fts5HashAddPoslistSize(pHash, p, std::ptr::null_mut::<Fts5HashEntry>());
         *pzTerm = zKey;
         *pnTerm = nTerm;
-        *ppDoclist = zKey.offset(nTerm as isize) as *mut ::core::ffi::c_char as *const u8_0;
+        *ppDoclist = zKey.offset(nTerm as isize) as *mut ::core::ffi::c_char as *const U8_0;
         *pnDoclist = ((*p).nData as usize).wrapping_sub(
             (std::mem::size_of::<Fts5HashEntry>() as usize).wrapping_add(nTerm as usize),
         ) as ::core::ffi::c_int;
     } else {
         *pzTerm = std::ptr::null::<::core::ffi::c_char>();
         *pnTerm = 0 as ::core::ffi::c_int;
-        *ppDoclist = std::ptr::null::<u8_0>();
+        *ppDoclist = std::ptr::null::<U8_0>();
         *pnDoclist = 0 as ::core::ffi::c_int;
     };
 }
@@ -13341,7 +13341,7 @@ unsafe extern "C" fn fts5BestIndexMethod(
     if bSeenEq != 0 {
         __pInfo_ref.estimatedCost = if nSeenMatch != 0 { 1000.0f64 } else { 25.0f64 };
         fts5SetUniqueFlag(pInfo);
-        fts5SetEstimatedRows(pInfo, 1 as i64_0);
+        fts5SetEstimatedRows(pInfo, 1 as I64_0);
     } else {
         if bSeenLt != 0 && bSeenGt != 0 {
             __pInfo_ref.estimatedCost = if nSeenMatch != 0 {
@@ -13367,7 +13367,7 @@ unsafe extern "C" fn fts5BestIndexMethod(
             __pInfo_ref.estimatedCost *= 0.4f64;
             i += 1;
         }
-        fts5SetEstimatedRows(pInfo, (__pInfo_ref.estimatedCost / 4.0f64) as i64_0);
+        fts5SetEstimatedRows(pInfo, (__pInfo_ref.estimatedCost / 4.0f64) as I64_0);
     }
     __pInfo_ref.idxNum = idxFlags;
     crate::src::headers::sqlite3_h::SQLITE_OK
@@ -13378,8 +13378,8 @@ unsafe extern "C" fn fts5CountCb(
     mut _pFts: *mut Fts5Context,
     mut pUserData: *mut ::core::ffi::c_void,
 ) -> ::core::ffi::c_int {
-    let mut pn: *mut crate::src::headers::sqlite3_h::sqlite3_int64 =
-        pUserData as *mut crate::src::headers::sqlite3_h::sqlite3_int64;
+    let mut pn: *mut crate::src::headers::sqlite3_h::Sqlite3Int64 =
+        pUserData as *mut crate::src::headers::sqlite3_h::Sqlite3Int64;
     *pn += 1;
     crate::src::headers::sqlite3_h::SQLITE_OK
 }
@@ -13392,7 +13392,7 @@ unsafe extern "C" fn fts5ExprPhraseIsMatch(
     let mut current_block: u64;
     let mut writer: Fts5PoslistWriter = { std::mem::zeroed() };
     let mut aStatic: [Fts5PoslistReader; 4] = [Fts5PoslistReader {
-        a: std::ptr::null::<u8_0>(),
+        a: std::ptr::null::<U8_0>(),
         n: 0,
         i: 0,
         bFlag: 0,
@@ -13412,12 +13412,12 @@ unsafe extern "C" fn fts5ExprPhraseIsMatch(
             .wrapping_div(std::mem::size_of::<Fts5PoslistReader>() as usize)
             as ::core::ffi::c_int
     {
-        let mut nByte: crate::src::headers::sqlite3_h::sqlite3_int64 =
+        let mut nByte: crate::src::headers::sqlite3_h::Sqlite3Int64 =
             (std::mem::size_of::<Fts5PoslistReader>() as usize)
                 .wrapping_mul(__pPhrase_ref.nTerm as usize)
-                as crate::src::headers::sqlite3_h::sqlite3_int64;
+                as crate::src::headers::sqlite3_h::Sqlite3Int64;
         aIter = crate::src::src::malloc::sqlite3_malloc64(
-            nByte as crate::src::headers::sqlite3_h::sqlite3_uint64,
+            nByte as crate::src::headers::sqlite3_h::Sqlite3Uint64,
         ) as *mut Fts5PoslistReader;
         if aIter.is_null() {
             return crate::src::headers::sqlite3_h::SQLITE_NOMEM;
@@ -13426,8 +13426,8 @@ unsafe extern "C" fn fts5ExprPhraseIsMatch(
     std::ptr::write_bytes(
         aIter as *mut ::core::ffi::c_void as *mut u8,
         0,
-        (std::mem::size_of::<Fts5PoslistReader>() as crate::__stddef_size_t_h::size_t)
-            .wrapping_mul(__pPhrase_ref.nTerm as crate::__stddef_size_t_h::size_t),
+        (std::mem::size_of::<Fts5PoslistReader>() as crate::__stddef_size_t_h::SizeT)
+            .wrapping_mul(__pPhrase_ref.nTerm as crate::__stddef_size_t_h::SizeT),
     );
     i = 0 as ::core::ffi::c_int;
     loop {
@@ -13439,7 +13439,7 @@ unsafe extern "C" fn fts5ExprPhraseIsMatch(
             .offset(i as isize) as *mut Fts5ExprTerm;
         let mut n: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
         let mut bFlag: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-        let mut a: *mut u8_0 = std::ptr::null_mut::<u8_0>();
+        let mut a: *mut U8_0 = std::ptr::null_mut::<U8_0>();
         if !(*pTerm).pSynonym.is_null() {
             let mut buf: Fts5Buffer = { std::mem::zeroed() };
             rc = fts5ExprSynonymList(pTerm, (*pNode).iRowid, &raw mut buf, &raw mut a, &raw mut n);
@@ -13452,11 +13452,11 @@ unsafe extern "C" fn fts5ExprPhraseIsMatch(
             }
         } else {
             let __pIter_ref = &*(*pTerm).pIter;
-            a = __pIter_ref.pData as *mut u8_0;
+            a = __pIter_ref.pData as *mut U8_0;
             n = __pIter_ref.nData;
         }
         sqlite3Fts5PoslistReaderInit(a, n, aIter.offset(i as isize) as *mut Fts5PoslistReader);
-        (*aIter.offset(i as isize)).bFlag = bFlag as u8_0;
+        (*aIter.offset(i as isize)).bFlag = bFlag as U8_0;
         if (*aIter.offset(i as isize)).bEof != 0 {
             current_block = 5168995775973936431;
             break;
@@ -13472,14 +13472,14 @@ unsafe extern "C" fn fts5ExprPhraseIsMatch(
             }
             _ => {
                 let mut bMatch: ::core::ffi::c_int = 0;
-                let mut iPos: i64_0 = (*aIter.offset(0 as isize)).iPos;
+                let mut iPos: I64_0 = (*aIter.offset(0 as isize)).iPos;
                 loop {
                     bMatch = 1 as ::core::ffi::c_int;
                     i = 0 as ::core::ffi::c_int;
                     while i < __pPhrase_ref.nTerm {
                         let mut pPos: *mut Fts5PoslistReader =
                             aIter.offset(i as isize) as *mut Fts5PoslistReader;
-                        let mut iAdj: i64_0 = iPos + i as i64_0;
+                        let mut iAdj: I64_0 = iPos + i as I64_0;
                         if (*pPos).iPos != iAdj {
                             bMatch = 0 as ::core::ffi::c_int;
                             while (*pPos).iPos < iAdj {
@@ -13489,7 +13489,7 @@ unsafe extern "C" fn fts5ExprPhraseIsMatch(
                                 }
                             }
                             if (*pPos).iPos > iAdj {
-                                iPos = (*pPos).iPos - i as i64_0;
+                                iPos = (*pPos).iPos - i as I64_0;
                             }
                         }
                         i += 1;
@@ -13499,7 +13499,7 @@ unsafe extern "C" fn fts5ExprPhraseIsMatch(
                     }
                 }
                 if bFirst == 0 as ::core::ffi::c_int
-                    || (iPos & 0x7fffffff as i64_0) as ::core::ffi::c_int == 0 as ::core::ffi::c_int
+                    || (iPos & 0x7fffffff as I64_0) as ::core::ffi::c_int == 0 as ::core::ffi::c_int
                 {
                     rc = sqlite3Fts5PoslistWriterAppend(
                         &raw mut __pPhrase_ref.poslist,
@@ -13533,7 +13533,7 @@ unsafe extern "C" fn fts5ExprPhraseIsMatch(
     while i < __pPhrase_ref.nTerm {
         if (*aIter.offset(i as isize)).bFlag != 0 {
             crate::src::src::malloc::sqlite3_free(
-                (*aIter.offset(i as isize)).a as *mut u8_0 as *mut ::core::ffi::c_void,
+                (*aIter.offset(i as isize)).a as *mut U8_0 as *mut ::core::ffi::c_void,
             );
         }
         i += 1;
@@ -13550,7 +13550,7 @@ pub const FTS5_SEGITER_REVERSE: ::core::ffi::c_int = 0x2 as ::core::ffi::c_int;
 
 unsafe extern "C" fn sqlite3Fts5StorageReleaseDeleteRow(mut pStorage: *mut Fts5Storage) {
     crate::src::src::vdbeapi::sqlite3_reset((*pStorage).pSavedRow);
-    (*pStorage).pSavedRow = std::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_stmt>();
+    (*pStorage).pSavedRow = std::ptr::null_mut::<crate::src::headers::sqlite3_h::Sqlite3Stmt>();
 }
 
 unsafe fn fts5Bm25GetData(
@@ -13570,17 +13570,17 @@ unsafe fn fts5Bm25GetData(
     let nByte = (std::mem::size_of::<Fts5Bm25Data>() as usize).wrapping_add(
         ((nPhrase * 2 as ::core::ffi::c_int) as usize)
             .wrapping_mul(std::mem::size_of::<::core::ffi::c_double>() as usize),
-    ) as crate::src::headers::sqlite3_h::sqlite3_int64;
+    ) as crate::src::headers::sqlite3_h::Sqlite3Int64;
 
     let p = crate::src::src::malloc::sqlite3_malloc64(
-        nByte as crate::src::headers::sqlite3_h::sqlite3_uint64,
+        nByte as crate::src::headers::sqlite3_h::Sqlite3Uint64,
     ) as *mut Fts5Bm25Data;
     if p.is_null() {
         return Err(crate::src::headers::sqlite3_h::SQLITE_NOMEM);
     }
 
-    let mut nRow: crate::src::headers::sqlite3_h::sqlite3_int64 = 0;
-    let mut nToken: crate::src::headers::sqlite3_h::sqlite3_int64 = 0;
+    let mut nRow: crate::src::headers::sqlite3_h::Sqlite3Int64 = 0;
+    let mut nToken: crate::src::headers::sqlite3_h::Sqlite3Int64 = 0;
 
     std::ptr::write_bytes(p as *mut ::core::ffi::c_void as *mut u8, 0, nByte as usize);
     (*p).nPhrase = nPhrase;
@@ -13729,15 +13729,15 @@ unsafe extern "C" fn fts5VocabFilterMethod(
 
 unsafe extern "C" fn fts5StorageContentlessDelete(
     mut p: *mut Fts5Storage,
-    mut iDel: i64_0,
+    mut iDel: I64_0,
 ) -> ::core::ffi::c_int {
-    let mut iOrigin: i64_0 = 0 as i64_0;
-    let mut pLookup: *mut crate::src::headers::sqlite3_h::sqlite3_stmt =
-        std::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_stmt>();
+    let mut iOrigin: I64_0 = 0 as I64_0;
+    let mut pLookup: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt =
+        std::ptr::null_mut::<crate::src::headers::sqlite3_h::Sqlite3Stmt>();
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
     rc = fts5StorageGetStmt(
         p,
-        Fts5SqlStmt::STMT_LOOKUP_DOCSIZE as ::core::ffi::c_int,
+        Fts5SqlStmt::StmtLookupDocsize as ::core::ffi::c_int,
         &raw mut pLookup,
         std::ptr::null_mut::<*mut ::core::ffi::c_char>(),
     );
@@ -13745,18 +13745,18 @@ unsafe extern "C" fn fts5StorageContentlessDelete(
         crate::src::src::vdbeapi::sqlite3_bind_int64(
             pLookup,
             1 as ::core::ffi::c_int,
-            iDel as crate::src::headers::sqlite3_h::sqlite3_int64,
+            iDel as crate::src::headers::sqlite3_h::Sqlite3Int64,
         );
         if crate::src::headers::sqlite3_h::SQLITE_ROW
             == crate::src::src::vdbeapi::sqlite3_step(pLookup)
         {
             iOrigin =
                 crate::src::src::vdbeapi::sqlite3_column_int64(pLookup, 1 as ::core::ffi::c_int)
-                    as i64_0;
+                    as I64_0;
         }
         rc = crate::src::src::vdbeapi::sqlite3_reset(pLookup);
     }
-    if rc == crate::src::headers::sqlite3_h::SQLITE_OK && iOrigin != 0 as i64_0 {
+    if rc == crate::src::headers::sqlite3_h::SQLITE_OK && iOrigin != 0 as I64_0 {
         rc = sqlite3Fts5IndexContentlessDelete((*p).pIndex, iOrigin, iDel);
     }
     rc
@@ -13811,16 +13811,16 @@ unsafe extern "C" fn fts5PorterGobbleVC(
 
 unsafe extern "C" fn fts5StorageInsertDocsize(
     mut p: *mut Fts5Storage,
-    mut iRowid: i64_0,
+    mut iRowid: I64_0,
     mut pBuf: *mut Fts5Buffer,
 ) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
     if (*(*p).pConfig).bColumnsize != 0 {
-        let mut pReplace: *mut crate::src::headers::sqlite3_h::sqlite3_stmt =
-            std::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_stmt>();
+        let mut pReplace: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt =
+            std::ptr::null_mut::<crate::src::headers::sqlite3_h::Sqlite3Stmt>();
         rc = fts5StorageGetStmt(
             p,
-            Fts5SqlStmt::STMT_REPLACE_DOCSIZE as ::core::ffi::c_int,
+            Fts5SqlStmt::StmtReplaceDocsize as ::core::ffi::c_int,
             &raw mut pReplace,
             std::ptr::null_mut::<*mut ::core::ffi::c_char>(),
         );
@@ -13828,15 +13828,15 @@ unsafe extern "C" fn fts5StorageInsertDocsize(
             crate::src::src::vdbeapi::sqlite3_bind_int64(
                 pReplace,
                 1 as ::core::ffi::c_int,
-                iRowid as crate::src::headers::sqlite3_h::sqlite3_int64,
+                iRowid as crate::src::headers::sqlite3_h::Sqlite3Int64,
             );
             if (*(*p).pConfig).bContentlessDelete != 0 {
-                let mut iOrigin: i64_0 = 0 as i64_0;
+                let mut iOrigin: I64_0 = 0 as I64_0;
                 rc = sqlite3Fts5IndexGetOrigin((*p).pIndex, &raw mut iOrigin);
                 crate::src::src::vdbeapi::sqlite3_bind_int64(
                     pReplace,
                     3 as ::core::ffi::c_int,
-                    iOrigin as crate::src::headers::sqlite3_h::sqlite3_int64,
+                    iOrigin as crate::src::headers::sqlite3_h::Sqlite3Int64,
                 );
             }
         }
@@ -14007,8 +14007,8 @@ unsafe extern "C" fn fts5Porter_MEq1(
     0 as ::core::ffi::c_int
 }
 
-pub const FTS5_LOOKAHEAD_EOF: i64_0 =
-    (1 as ::core::ffi::c_int as i64_0) << 62 as ::core::ffi::c_int;
+pub const FTS5_LOOKAHEAD_EOF: I64_0 =
+    (1 as ::core::ffi::c_int as I64_0) << 62 as ::core::ffi::c_int;
 
 unsafe extern "C" fn fts5LookaheadReaderNext(
     mut p: *mut Fts5LookaheadReader,
@@ -14097,7 +14097,7 @@ unsafe extern "C" fn fts5VocabColumnMethod(
     let mut pCsr: *mut Fts5VocabCursor = pCursor as *mut Fts5VocabCursor;
     let mut eDetail: ::core::ffi::c_int = (*(*(*pCsr).pFts5).pConfig).eDetail;
     let mut eType: ::core::ffi::c_int = (*((*pCursor).pVtab as *mut Fts5VocabTable)).eType;
-    let mut iVal: i64_0 = 0 as i64_0;
+    let mut iVal: I64_0 = 0 as I64_0;
     if iCol == 0 as ::core::ffi::c_int {
         crate::src::src::vdbeapi::sqlite3_result_text(
             pCtx,
@@ -14137,13 +14137,13 @@ unsafe extern "C" fn fts5VocabColumnMethod(
             1 => {
                 crate::src::src::vdbeapi::sqlite3_result_int64(
                     pCtx,
-                    (*(*pCsr).pIter).iRowid as crate::src::headers::sqlite3_h::sqlite3_int64,
+                    (*(*pCsr).pIter).iRowid as crate::src::headers::sqlite3_h::Sqlite3Int64,
                 );
             }
             2 => {
                 let mut ii: ::core::ffi::c_int = -(1 as ::core::ffi::c_int);
                 if eDetail == FTS5_DETAIL_FULL {
-                    ii = ((*pCsr).iInstPos >> 32 as ::core::ffi::c_int & 0x7fffffff as i64_0)
+                    ii = ((*pCsr).iInstPos >> 32 as ::core::ffi::c_int & 0x7fffffff as I64_0)
                         as ::core::ffi::c_int;
                 } else if eDetail == FTS5_DETAIL_COLUMNS {
                     ii = (*pCsr).iInstPos as ::core::ffi::c_int;
@@ -14162,28 +14162,28 @@ unsafe extern "C" fn fts5VocabColumnMethod(
             _ => {
                 if eDetail == FTS5_DETAIL_FULL {
                     let mut ii_0: ::core::ffi::c_int =
-                        ((*pCsr).iInstPos & 0x7fffffff as i64_0) as ::core::ffi::c_int;
+                        ((*pCsr).iInstPos & 0x7fffffff as I64_0) as ::core::ffi::c_int;
                     crate::src::src::vdbeapi::sqlite3_result_int(pCtx, ii_0);
                 }
             }
         }
     }
-    if iVal > 0 as i64_0 {
+    if iVal > 0 as I64_0 {
         crate::src::src::vdbeapi::sqlite3_result_int64(
             pCtx,
-            iVal as crate::src::headers::sqlite3_h::sqlite3_int64,
+            iVal as crate::src::headers::sqlite3_h::Sqlite3Int64,
         );
     }
     crate::src::headers::sqlite3_h::SQLITE_OK
 }
 
-unsafe extern "C" fn fts5PutU16(mut aOut: *mut u8_0, mut iVal: u16_0) {
-    *aOut.offset(0 as isize) = (iVal as ::core::ffi::c_int >> 8 as ::core::ffi::c_int) as u8_0;
-    *aOut.offset(1 as isize) = (iVal as ::core::ffi::c_int & 0xff as ::core::ffi::c_int) as u8_0;
+unsafe extern "C" fn fts5PutU16(mut aOut: *mut U8_0, mut iVal: U16_0) {
+    *aOut.offset(0 as isize) = (iVal as ::core::ffi::c_int >> 8 as ::core::ffi::c_int) as U8_0;
+    *aOut.offset(1 as isize) = (iVal as ::core::ffi::c_int & 0xff as ::core::ffi::c_int) as U8_0;
 }
 
 unsafe extern "C" fn fts5LookaheadReaderInit(
-    mut a: *const u8_0,
+    mut a: *const U8_0,
     mut n: ::core::ffi::c_int,
     mut p: *mut Fts5LookaheadReader,
 ) -> ::core::ffi::c_int {
@@ -14198,9 +14198,9 @@ unsafe extern "C" fn fts5LookaheadReaderInit(
     fts5LookaheadReaderNext(p)
 }
 
-unsafe extern "C" fn fts5GetU16(mut aIn: *const u8_0) -> u16_0 {
-    (((*aIn.offset(0 as isize) as u16_0 as ::core::ffi::c_int) << 8 as ::core::ffi::c_int)
-        + *aIn.offset(1 as isize) as ::core::ffi::c_int) as u16_0
+unsafe extern "C" fn fts5GetU16(mut aIn: *const U8_0) -> U16_0 {
+    (((*aIn.offset(0 as isize) as U16_0 as ::core::ffi::c_int) << 8 as ::core::ffi::c_int)
+        + *aIn.offset(1 as isize) as ::core::ffi::c_int) as U16_0
 }
 
 unsafe extern "C" fn fts5StorageSaveTotals(mut p: *mut Fts5Storage) -> ::core::ffi::c_int {
@@ -14225,15 +14225,15 @@ unsafe extern "C" fn fts5StorageSaveTotals(mut p: *mut Fts5Storage) -> ::core::f
     rc
 }
 
-unsafe extern "C" fn fts5GetU64(mut a: *mut u8_0) -> u64_0 {
-    ((*a.offset(0 as isize) as u64_0) << 56 as ::core::ffi::c_int)
-        .wrapping_add((*a.offset(1 as isize) as u64_0) << 48 as ::core::ffi::c_int)
-        .wrapping_add((*a.offset(2 as isize) as u64_0) << 40 as ::core::ffi::c_int)
-        .wrapping_add((*a.offset(3 as isize) as u64_0) << 32 as ::core::ffi::c_int)
-        .wrapping_add((*a.offset(4 as isize) as u64_0) << 24 as ::core::ffi::c_int)
-        .wrapping_add((*a.offset(5 as isize) as u64_0) << 16 as ::core::ffi::c_int)
-        .wrapping_add((*a.offset(6 as isize) as u64_0) << 8 as ::core::ffi::c_int)
-        .wrapping_add((*a.offset(7 as isize) as u64_0) << 0 as ::core::ffi::c_int)
+unsafe extern "C" fn fts5GetU64(mut a: *mut U8_0) -> U64_0 {
+    ((*a.offset(0 as isize) as U64_0) << 56 as ::core::ffi::c_int)
+        .wrapping_add((*a.offset(1 as isize) as U64_0) << 48 as ::core::ffi::c_int)
+        .wrapping_add((*a.offset(2 as isize) as U64_0) << 40 as ::core::ffi::c_int)
+        .wrapping_add((*a.offset(3 as isize) as U64_0) << 32 as ::core::ffi::c_int)
+        .wrapping_add((*a.offset(4 as isize) as U64_0) << 24 as ::core::ffi::c_int)
+        .wrapping_add((*a.offset(5 as isize) as U64_0) << 16 as ::core::ffi::c_int)
+        .wrapping_add((*a.offset(6 as isize) as U64_0) << 8 as ::core::ffi::c_int)
+        .wrapping_add((*a.offset(7 as isize) as U64_0) << 0 as ::core::ffi::c_int)
 }
 
 unsafe extern "C" fn fts5Porter_MGt1_and_S_or_T(
@@ -14308,26 +14308,26 @@ unsafe extern "C" fn fts5Porter_Vowel(
     0 as ::core::ffi::c_int
 }
 
-unsafe extern "C" fn fts5GetU32(mut a: *const u8_0) -> u32_0 {
-    ((*a.offset(0 as isize) as u32_0) << 24 as ::core::ffi::c_int)
-        .wrapping_add((*a.offset(1 as isize) as u32_0) << 16 as ::core::ffi::c_int)
-        .wrapping_add((*a.offset(2 as isize) as u32_0) << 8 as ::core::ffi::c_int)
-        .wrapping_add((*a.offset(3 as isize) as u32_0) << 0 as ::core::ffi::c_int)
+unsafe extern "C" fn fts5GetU32(mut a: *const U8_0) -> U32_0 {
+    ((*a.offset(0 as isize) as U32_0) << 24 as ::core::ffi::c_int)
+        .wrapping_add((*a.offset(1 as isize) as U32_0) << 16 as ::core::ffi::c_int)
+        .wrapping_add((*a.offset(2 as isize) as U32_0) << 8 as ::core::ffi::c_int)
+        .wrapping_add((*a.offset(3 as isize) as U32_0) << 0 as ::core::ffi::c_int)
 }
 
-unsafe extern "C" fn sqlite3Fts5UnicodeCategory(mut iCode: u32_0) -> ::core::ffi::c_int {
+unsafe extern "C" fn sqlite3Fts5UnicodeCategory(mut iCode: U32_0) -> ::core::ffi::c_int {
     let mut iRes: ::core::ffi::c_int = -(1 as ::core::ffi::c_int);
     let mut iHi: ::core::ffi::c_int = 0;
     let mut iLo: ::core::ffi::c_int = 0;
     let mut ret: ::core::ffi::c_int = 0;
-    let mut iKey: u16_0 = 0;
-    if iCode >= ((1 as ::core::ffi::c_int) << 20 as ::core::ffi::c_int) as u32_0 {
+    let mut iKey: U16_0 = 0;
+    if iCode >= ((1 as ::core::ffi::c_int) << 20 as ::core::ffi::c_int) as U32_0 {
         return 0 as ::core::ffi::c_int;
     }
     iLo = aFts5UnicodeBlock[(iCode >> 16 as ::core::ffi::c_int) as usize] as ::core::ffi::c_int;
-    iHi = aFts5UnicodeBlock[(1 as u32_0).wrapping_add(iCode >> 16 as ::core::ffi::c_int) as usize]
+    iHi = aFts5UnicodeBlock[(1 as U32_0).wrapping_add(iCode >> 16 as ::core::ffi::c_int) as usize]
         as ::core::ffi::c_int;
-    iKey = (iCode & 0xffff as u32_0) as u16_0;
+    iKey = (iCode & 0xffff as U32_0) as U16_0;
     while iHi > iLo {
         let mut iTest: ::core::ffi::c_int = (iHi + iLo) / 2 as ::core::ffi::c_int;
         if iKey as ::core::ffi::c_int >= aFts5UnicodeMap[iTest as usize] as ::core::ffi::c_int {
@@ -14362,14 +14362,14 @@ unsafe extern "C" fn sqlite3Fts5UnicodeCategory(mut iCode: u32_0) -> ::core::ffi
 
 unsafe extern "C" fn sqlite3Fts5StorageDelete(
     mut p: *mut Fts5Storage,
-    mut iDel: i64_0,
+    mut iDel: I64_0,
     mut apVal: *mut *mut crate::src::headers::vdbeInt_h::sqlite3_value,
     mut bSaveRow: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
     let mut pConfig: *mut Fts5Config = (*p).pConfig;
     let mut rc: ::core::ffi::c_int = 0;
-    let mut pDel: *mut crate::src::headers::sqlite3_h::sqlite3_stmt =
-        std::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_stmt>();
+    let mut pDel: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt =
+        std::ptr::null_mut::<crate::src::headers::sqlite3_h::Sqlite3Stmt>();
     rc = fts5StorageLoadTotals(p, 1 as ::core::ffi::c_int);
     if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
         rc = sqlite3Fts5IndexBeginWrite((*p).pIndex, 1 as ::core::ffi::c_int, iDel);
@@ -14391,7 +14391,7 @@ unsafe extern "C" fn sqlite3Fts5StorageDelete(
     if rc == crate::src::headers::sqlite3_h::SQLITE_OK && __pConfig_ref.bColumnsize != 0 {
         rc = fts5StorageGetStmt(
             p,
-            Fts5SqlStmt::STMT_DELETE_DOCSIZE as ::core::ffi::c_int,
+            Fts5SqlStmt::StmtDeleteDocsize as ::core::ffi::c_int,
             &raw mut pDel,
             std::ptr::null_mut::<*mut ::core::ffi::c_char>(),
         );
@@ -14399,7 +14399,7 @@ unsafe extern "C" fn sqlite3Fts5StorageDelete(
             crate::src::src::vdbeapi::sqlite3_bind_int64(
                 pDel,
                 1 as ::core::ffi::c_int,
-                iDel as crate::src::headers::sqlite3_h::sqlite3_int64,
+                iDel as crate::src::headers::sqlite3_h::Sqlite3Int64,
             );
             crate::src::src::vdbeapi::sqlite3_step(pDel);
             rc = crate::src::src::vdbeapi::sqlite3_reset(pDel);
@@ -14411,7 +14411,7 @@ unsafe extern "C" fn sqlite3Fts5StorageDelete(
         if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
             rc = fts5StorageGetStmt(
                 p,
-                Fts5SqlStmt::STMT_DELETE_CONTENT as ::core::ffi::c_int,
+                Fts5SqlStmt::StmtDeleteContent as ::core::ffi::c_int,
                 &raw mut pDel,
                 std::ptr::null_mut::<*mut ::core::ffi::c_char>(),
             );
@@ -14420,7 +14420,7 @@ unsafe extern "C" fn sqlite3Fts5StorageDelete(
             crate::src::src::vdbeapi::sqlite3_bind_int64(
                 pDel,
                 1 as ::core::ffi::c_int,
-                iDel as crate::src::headers::sqlite3_h::sqlite3_int64,
+                iDel as crate::src::headers::sqlite3_h::Sqlite3Int64,
             );
             crate::src::src::vdbeapi::sqlite3_step(pDel);
             rc = crate::src::src::vdbeapi::sqlite3_reset(pDel);
@@ -14446,10 +14446,10 @@ unsafe extern "C" fn fts5ExprNearIsMatch(
             .wrapping_div(std::mem::size_of::<Fts5NearTrimmer>() as usize)
             as ::core::ffi::c_int
     {
-        let mut nByte: crate::src::headers::sqlite3_h::sqlite3_int64 =
+        let mut nByte: crate::src::headers::sqlite3_h::Sqlite3Int64 =
             (std::mem::size_of::<Fts5NearTrimmer>() as usize)
                 .wrapping_mul(__pNear_ref.nPhrase as usize)
-                as crate::src::headers::sqlite3_h::sqlite3_int64;
+                as crate::src::headers::sqlite3_h::Sqlite3Int64;
         a = sqlite3Fts5MallocZero(&raw mut rc, nByte) as *mut Fts5NearTrimmer;
     } else {
     }
@@ -14473,8 +14473,8 @@ unsafe extern "C" fn fts5ExprNearIsMatch(
     }
     's_80: loop {
         let mut iAdv: ::core::ffi::c_int = 0;
-        let mut iMin: i64_0 = 0;
-        let mut iMax: i64_0 = 0;
+        let mut iMin: I64_0 = 0;
+        let mut iMax: I64_0 = 0;
         iMax = (*a.offset(0 as isize)).reader.iPos;
         loop {
             bMatch = 1 as ::core::ffi::c_int;
@@ -14484,8 +14484,8 @@ unsafe extern "C" fn fts5ExprNearIsMatch(
                 iMin = iMax
                     - (**(&raw mut __pNear_ref.apPhrase as *mut *mut Fts5ExprPhrase)
                         .offset(i as isize))
-                    .nTerm as i64_0
-                    - __pNear_ref.nNear as i64_0;
+                    .nTerm as I64_0
+                    - __pNear_ref.nNear as I64_0;
                 if (*pPos).iPos < iMin || (*pPos).iPos > iMax {
                     bMatch = 0 as ::core::ffi::c_int;
                     while (*pPos).iPos < iMin {
@@ -14505,7 +14505,7 @@ unsafe extern "C" fn fts5ExprNearIsMatch(
         }
         i = 0 as ::core::ffi::c_int;
         while i < __pNear_ref.nPhrase {
-            let mut iPos: i64_0 = (*a.offset(i as isize)).reader.iPos;
+            let mut iPos: I64_0 = (*a.offset(i as isize)).reader.iPos;
             let mut pWriter: *mut Fts5PoslistWriter = &raw mut (*a.offset(i as isize)).writer;
             if (*(*a.offset(i as isize)).pOut).n == 0 as ::core::ffi::c_int
                 || iPos != (*pWriter).iPrev
@@ -14851,15 +14851,15 @@ unsafe extern "C" fn fts5PorterStep4(
     ret
 }
 
-unsafe extern "C" fn fts5PutU64(mut a: *mut u8_0, mut iVal: u64_0) {
-    *a.offset(0 as isize) = (iVal >> 56 as ::core::ffi::c_int & 0xff as u64_0) as u8_0;
-    *a.offset(1 as isize) = (iVal >> 48 as ::core::ffi::c_int & 0xff as u64_0) as u8_0;
-    *a.offset(2 as isize) = (iVal >> 40 as ::core::ffi::c_int & 0xff as u64_0) as u8_0;
-    *a.offset(3 as isize) = (iVal >> 32 as ::core::ffi::c_int & 0xff as u64_0) as u8_0;
-    *a.offset(4 as isize) = (iVal >> 24 as ::core::ffi::c_int & 0xff as u64_0) as u8_0;
-    *a.offset(5 as isize) = (iVal >> 16 as ::core::ffi::c_int & 0xff as u64_0) as u8_0;
-    *a.offset(6 as isize) = (iVal >> 8 as ::core::ffi::c_int & 0xff as u64_0) as u8_0;
-    *a.offset(7 as isize) = (iVal >> 0 as ::core::ffi::c_int & 0xff as u64_0) as u8_0;
+unsafe extern "C" fn fts5PutU64(mut a: *mut U8_0, mut iVal: U64_0) {
+    *a.offset(0 as isize) = (iVal >> 56 as ::core::ffi::c_int & 0xff as U64_0) as U8_0;
+    *a.offset(1 as isize) = (iVal >> 48 as ::core::ffi::c_int & 0xff as U64_0) as U8_0;
+    *a.offset(2 as isize) = (iVal >> 40 as ::core::ffi::c_int & 0xff as U64_0) as U8_0;
+    *a.offset(3 as isize) = (iVal >> 32 as ::core::ffi::c_int & 0xff as U64_0) as U8_0;
+    *a.offset(4 as isize) = (iVal >> 24 as ::core::ffi::c_int & 0xff as U64_0) as U8_0;
+    *a.offset(5 as isize) = (iVal >> 16 as ::core::ffi::c_int & 0xff as U64_0) as U8_0;
+    *a.offset(6 as isize) = (iVal >> 8 as ::core::ffi::c_int & 0xff as U64_0) as U8_0;
+    *a.offset(7 as isize) = (iVal >> 0 as ::core::ffi::c_int & 0xff as U64_0) as U8_0;
 }
 
 unsafe extern "C" fn fts5NewTransaction(mut pTab: *mut Fts5FullTable) -> ::core::ffi::c_int {
@@ -14974,16 +14974,16 @@ unsafe extern "C" fn fts5OpenMethod(
     let mut pTab: *mut Fts5FullTable = pVTab as *mut Fts5FullTable;
     let mut pConfig: *mut Fts5Config = (*pTab).p.pConfig;
     let mut pCsr: *mut Fts5Cursor = std::ptr::null_mut::<Fts5Cursor>();
-    let mut nByte: crate::src::headers::sqlite3_h::sqlite3_int64 = 0;
+    let mut nByte: crate::src::headers::sqlite3_h::Sqlite3Int64 = 0;
     let mut rc: ::core::ffi::c_int = 0;
     rc = fts5NewTransaction(pTab);
     if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
         nByte = (std::mem::size_of::<Fts5Cursor>() as usize).wrapping_add(
             ((*pConfig).nCol as usize)
                 .wrapping_mul(std::mem::size_of::<::core::ffi::c_int>() as usize),
-        ) as crate::src::headers::sqlite3_h::sqlite3_int64;
+        ) as crate::src::headers::sqlite3_h::Sqlite3Int64;
         pCsr = crate::src::src::malloc::sqlite3_malloc64(
-            nByte as crate::src::headers::sqlite3_h::sqlite3_uint64,
+            nByte as crate::src::headers::sqlite3_h::Sqlite3Uint64,
         ) as *mut Fts5Cursor;
         if !pCsr.is_null() {
             let mut pGlobal: *mut Fts5Global = (*pTab).pGlobal;
@@ -15008,11 +15008,11 @@ unsafe extern "C" fn fts5OpenMethod(
     rc
 }
 
-unsafe extern "C" fn fts5PutU32(mut a: *mut u8_0, mut iVal: u32_0) {
-    *a.offset(0 as isize) = (iVal >> 24 as ::core::ffi::c_int & 0xff as u32_0) as u8_0;
-    *a.offset(1 as isize) = (iVal >> 16 as ::core::ffi::c_int & 0xff as u32_0) as u8_0;
-    *a.offset(2 as isize) = (iVal >> 8 as ::core::ffi::c_int & 0xff as u32_0) as u8_0;
-    *a.offset(3 as isize) = (iVal >> 0 as ::core::ffi::c_int & 0xff as u32_0) as u8_0;
+unsafe extern "C" fn fts5PutU32(mut a: *mut U8_0, mut iVal: U32_0) {
+    *a.offset(0 as isize) = (iVal >> 24 as ::core::ffi::c_int & 0xff as U32_0) as U8_0;
+    *a.offset(1 as isize) = (iVal >> 16 as ::core::ffi::c_int & 0xff as U32_0) as U8_0;
+    *a.offset(2 as isize) = (iVal >> 8 as ::core::ffi::c_int & 0xff as U32_0) as U8_0;
+    *a.offset(3 as isize) = (iVal >> 0 as ::core::ffi::c_int & 0xff as U32_0) as U8_0;
 }
 
 unsafe extern "C" fn fts5yy_find_shift_action(
@@ -15032,7 +15032,7 @@ unsafe extern "C" fn fts5yy_find_shift_action(
     };
 }
 
-unsafe extern "C" fn sqlite3Fts5UnicodeAscii(mut aArray: *mut u8_0, mut aAscii: *mut u8_0) {
+unsafe extern "C" fn sqlite3Fts5UnicodeAscii(mut aArray: *mut U8_0, mut aAscii: *mut U8_0) {
     let mut i: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut iTbl: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     while i < 128 as ::core::ffi::c_int {
@@ -15043,39 +15043,39 @@ unsafe extern "C" fn sqlite3Fts5UnicodeAscii(mut aArray: *mut u8_0, mut aAscii: 
         let mut n: ::core::ffi::c_int =
             (aFts5UnicodeData[iTbl as usize] as ::core::ffi::c_int >> 5 as ::core::ffi::c_int) + i;
         while i < 128 as ::core::ffi::c_int && i < n {
-            *aAscii.offset(i as isize) = bToken as u8_0;
+            *aAscii.offset(i as isize) = bToken as U8_0;
             i += 1;
         }
         iTbl += 1;
     }
-    *aAscii.offset(0 as isize) = 0 as u8_0;
+    *aAscii.offset(0 as isize) = 0 as U8_0;
 }
 
 unsafe extern "C" fn fts5IdxMalloc(
     mut p: *mut Fts5Index,
-    mut nByte: crate::src::headers::sqlite3_h::sqlite3_int64,
+    mut nByte: crate::src::headers::sqlite3_h::Sqlite3Int64,
 ) -> *mut ::core::ffi::c_void {
     sqlite3Fts5MallocZero(&raw mut (*p).rc, nByte)
 }
 
 unsafe extern "C" fn fts5VocabRowidMethod(
     mut pCursor: *mut crate::src::headers::sqlite3_h::sqlite3_vtab_cursor,
-    mut pRowid: *mut crate::src::headers::sqlite3_h::sqlite_int64,
+    mut pRowid: *mut crate::src::headers::sqlite3_h::SqliteInt64,
 ) -> ::core::ffi::c_int {
     let pCsr = &*(pCursor as *mut Fts5VocabCursor);
-    *pRowid = pCsr.rowid as crate::src::headers::sqlite3_h::sqlite_int64;
+    *pRowid = pCsr.rowid as crate::src::headers::sqlite3_h::SqliteInt64;
     crate::src::headers::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn fts5StmtType(mut pCsr: *mut Fts5Cursor) -> ::core::ffi::c_int {
     if (*pCsr).ePlan == FTS5_PLAN_SCAN {
         return if (*pCsr).bDesc != 0 {
-            Fts5SqlStmt::STMT_SCAN_DESC as ::core::ffi::c_int
+            Fts5SqlStmt::StmtScanDesc as ::core::ffi::c_int
         } else {
-            Fts5SqlStmt::STMT_SCAN_ASC as ::core::ffi::c_int
+            Fts5SqlStmt::StmtScanAsc as ::core::ffi::c_int
         };
     }
-    Fts5SqlStmt::STMT_LOOKUP as ::core::ffi::c_int
+    Fts5SqlStmt::StmtLookup as ::core::ffi::c_int
 }
 
 unsafe extern "C" fn sqlite3Fts5VocabInit(
@@ -15173,7 +15173,7 @@ unsafe extern "C" fn sqlite3Fts5VocabInit(
                 fts5VocabRowidMethod
                     as unsafe extern "C" fn(
                         *mut crate::src::headers::sqlite3_h::sqlite3_vtab_cursor,
-                        *mut crate::src::headers::sqlite3_h::sqlite_int64,
+                        *mut crate::src::headers::sqlite3_h::SqliteInt64,
                     ) -> ::core::ffi::c_int,
             ),
             xUpdate: None,
@@ -15437,7 +15437,7 @@ unsafe extern "C" fn fts5FreeCursorComponents(mut pCsr: *mut Fts5Cursor) {
         &raw mut __pCsr_ref.ePlan as *mut ::core::ffi::c_void as *mut u8,
         0,
         (std::mem::size_of::<Fts5Cursor>() as usize).wrapping_sub(
-            ((&raw mut __pCsr_ref.ePlan as *mut u8_0).offset_from(pCsr as *mut u8_0)
+            ((&raw mut __pCsr_ref.ePlan as *mut U8_0).offset_from(pCsr as *mut U8_0)
                 as ::core::ffi::c_long) as usize,
         ),
     );
@@ -15473,8 +15473,8 @@ unsafe extern "C" fn fts5BufferCompare(
 unsafe extern "C" fn fts5LeafFirstTermOff(mut pLeaf: *mut Fts5Data) -> ::core::ffi::c_int {
     let mut ret: ::core::ffi::c_int = 0;
     sqlite3Fts5GetVarint32(
-        (*pLeaf).p.offset((*pLeaf).szLeaf as isize) as *mut u8_0,
-        &raw mut ret as *mut u32_0,
+        (*pLeaf).p.offset((*pLeaf).szLeaf as isize) as *mut U8_0,
+        &raw mut ret as *mut U32_0,
     );
     ret
 }
@@ -15483,8 +15483,8 @@ unsafe extern "C" fn fts5IndexCloseReader(mut p: *mut Fts5Index) {
     if !(*p).pReader.is_null() {
         let mut rc: ::core::ffi::c_int = 0;
         let __p_ref = { &mut *p };
-        let mut pReader: *mut crate::src::headers::sqlite3_h::sqlite3_blob = __p_ref.pReader;
-        __p_ref.pReader = std::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_blob>();
+        let mut pReader: *mut crate::src::headers::sqlite3_h::Sqlite3Blob = __p_ref.pReader;
+        __p_ref.pReader = std::ptr::null_mut::<crate::src::headers::sqlite3_h::Sqlite3Blob>();
         rc = crate::src::src::vdbeblob::sqlite3_blob_close(pReader);
         if __p_ref.rc == crate::src::headers::sqlite3_h::SQLITE_OK {
             __p_ref.rc = rc;
@@ -15526,8 +15526,8 @@ unsafe extern "C" fn fts5ConfigSkipArgs(
 unsafe extern "C" fn sqlite3Fts5StorageRebuild(mut p: *mut Fts5Storage) -> ::core::ffi::c_int {
     let mut buf: Fts5Buffer = { std::mem::zeroed() };
     let mut pConfig: *mut Fts5Config = (*p).pConfig;
-    let mut pScan: *mut crate::src::headers::sqlite3_h::sqlite3_stmt =
-        std::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_stmt>();
+    let mut pScan: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt =
+        std::ptr::null_mut::<crate::src::headers::sqlite3_h::Sqlite3Stmt>();
     let mut ctx: Fts5InsertCtx = { std::mem::zeroed() };
     let mut rc: ::core::ffi::c_int = 0;
     let mut rc2: ::core::ffi::c_int = 0;
@@ -15539,7 +15539,7 @@ unsafe extern "C" fn sqlite3Fts5StorageRebuild(mut p: *mut Fts5Storage) -> ::cor
     if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
         rc = fts5StorageGetStmt(
             p,
-            Fts5SqlStmt::STMT_SCAN as ::core::ffi::c_int,
+            Fts5SqlStmt::StmtScan as ::core::ffi::c_int,
             &raw mut pScan,
             (*pConfig).pzErrmsg,
         );
@@ -15548,8 +15548,8 @@ unsafe extern "C" fn sqlite3Fts5StorageRebuild(mut p: *mut Fts5Storage) -> ::cor
         && crate::src::headers::sqlite3_h::SQLITE_ROW
             == crate::src::src::vdbeapi::sqlite3_step(pScan)
     {
-        let mut iRowid: i64_0 =
-            crate::src::src::vdbeapi::sqlite3_column_int64(pScan, 0 as ::core::ffi::c_int) as i64_0;
+        let mut iRowid: I64_0 =
+            crate::src::src::vdbeapi::sqlite3_column_int64(pScan, 0 as ::core::ffi::c_int) as I64_0;
         sqlite3Fts5BufferZero(&raw mut buf);
         rc = sqlite3Fts5IndexBeginWrite((*p).pIndex, 0 as ::core::ffi::c_int, iRowid);
         ctx.iCol = 0 as ::core::ffi::c_int;
@@ -15613,8 +15613,8 @@ unsafe extern "C" fn sqlite3Fts5StorageRebuild(mut p: *mut Fts5Storage) -> ::cor
                     sqlite3Fts5ClearLocale(pConfig);
                 }
             }
-            sqlite3Fts5BufferAppendVarint(&raw mut rc, &raw mut buf, ctx.szCol as i64_0);
-            *(*p).aTotalSize.offset(ctx.iCol as isize) += ctx.szCol as i64_0;
+            sqlite3Fts5BufferAppendVarint(&raw mut rc, &raw mut buf, ctx.szCol as I64_0);
+            *(*p).aTotalSize.offset(ctx.iCol as isize) += ctx.szCol as I64_0;
             ctx.iCol += 1;
         }
         (*p).nTotalRow += 1;
@@ -15633,17 +15633,17 @@ unsafe extern "C" fn sqlite3Fts5StorageRebuild(mut p: *mut Fts5Storage) -> ::cor
     rc
 }
 
-unsafe extern "C" fn fts5DataRead(mut p: *mut Fts5Index, mut iRowid: i64_0) -> *mut Fts5Data {
+unsafe extern "C" fn fts5DataRead(mut p: *mut Fts5Index, mut iRowid: I64_0) -> *mut Fts5Data {
     let mut pRet: *mut Fts5Data = std::ptr::null_mut::<Fts5Data>();
     if (*p).rc == crate::src::headers::sqlite3_h::SQLITE_OK {
         let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
         let __p_ref = { &mut *p };
         if !__p_ref.pReader.is_null() {
-            let mut pBlob: *mut crate::src::headers::sqlite3_h::sqlite3_blob = __p_ref.pReader;
-            __p_ref.pReader = std::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_blob>();
+            let mut pBlob: *mut crate::src::headers::sqlite3_h::Sqlite3Blob = __p_ref.pReader;
+            __p_ref.pReader = std::ptr::null_mut::<crate::src::headers::sqlite3_h::Sqlite3Blob>();
             rc = crate::src::src::vdbeblob::sqlite3_blob_reopen(
                 pBlob,
-                iRowid as crate::src::headers::sqlite3_h::sqlite3_int64,
+                iRowid as crate::src::headers::sqlite3_h::Sqlite3Int64,
             );
             __p_ref.pReader = pBlob;
             if rc != crate::src::headers::sqlite3_h::SQLITE_OK {
@@ -15660,7 +15660,7 @@ unsafe extern "C" fn fts5DataRead(mut p: *mut Fts5Index, mut iRowid: i64_0) -> *
                 (*pConfig).zDb,
                 __p_ref.zDataTbl,
                 b"block\0" as *const u8 as *const ::core::ffi::c_char,
-                iRowid as crate::src::headers::sqlite3_h::sqlite3_int64,
+                iRowid as crate::src::headers::sqlite3_h::Sqlite3Int64,
                 0 as ::core::ffi::c_int,
                 &raw mut __p_ref.pReader,
             );
@@ -15669,20 +15669,20 @@ unsafe extern "C" fn fts5DataRead(mut p: *mut Fts5Index, mut iRowid: i64_0) -> *
             rc = fts5IndexCorruptRowid(p, iRowid);
         }
         if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
-            let mut aOut: *mut u8_0 = std::ptr::null_mut::<u8_0>();
-            let mut nByte: i64_0 =
-                crate::src::src::vdbeblob::sqlite3_blob_bytes(__p_ref.pReader) as i64_0;
-            let mut szData: i64_0 = ((std::mem::size_of::<Fts5Data>() as usize)
+            let mut aOut: *mut U8_0 = std::ptr::null_mut::<U8_0>();
+            let mut nByte: I64_0 =
+                crate::src::src::vdbeblob::sqlite3_blob_bytes(__p_ref.pReader) as I64_0;
+            let mut szData: I64_0 = ((std::mem::size_of::<Fts5Data>() as usize)
                 .wrapping_add(7 as usize)
-                & !(7 as ::core::ffi::c_int) as usize) as i64_0;
-            let mut nAlloc: i64_0 = szData + nByte + FTS5_DATA_PADDING as i64_0;
+                & !(7 as ::core::ffi::c_int) as usize) as I64_0;
+            let mut nAlloc: I64_0 = szData + nByte + FTS5_DATA_PADDING as I64_0;
             pRet = crate::src::src::malloc::sqlite3_malloc64(
-                nAlloc as crate::src::headers::sqlite3_h::sqlite3_uint64,
+                nAlloc as crate::src::headers::sqlite3_h::Sqlite3Uint64,
             ) as *mut Fts5Data;
             if !pRet.is_null() {
                 let __pRet_ref = { &mut *pRet };
                 __pRet_ref.nn = nByte as ::core::ffi::c_int;
-                __pRet_ref.p = (pRet as *mut u8_0).offset(szData as isize);
+                __pRet_ref.p = (pRet as *mut U8_0).offset(szData as isize);
                 aOut = __pRet_ref.p;
             } else {
                 rc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
@@ -15700,10 +15700,10 @@ unsafe extern "C" fn fts5DataRead(mut p: *mut Fts5Index, mut iRowid: i64_0) -> *
                 pRet = std::ptr::null_mut::<Fts5Data>();
             } else {
                 let __pRet_ref = { &mut *pRet };
-                *__pRet_ref.p.offset(nByte as isize) = 0 as u8_0;
-                *__pRet_ref.p.offset((nByte + 1 as i64_0) as isize) = 0 as u8_0;
+                *__pRet_ref.p.offset(nByte as isize) = 0 as U8_0;
+                *__pRet_ref.p.offset((nByte + 1 as I64_0) as isize) = 0 as U8_0;
                 __pRet_ref.szLeaf =
-                    fts5GetU16(__pRet_ref.p.offset(2 as isize) as *mut u8_0) as ::core::ffi::c_int;
+                    fts5GetU16(__pRet_ref.p.offset(2 as isize) as *mut U8_0) as ::core::ffi::c_int;
             }
         }
         __p_ref.rc = rc;
@@ -15715,12 +15715,12 @@ unsafe extern "C" fn fts5DataRead(mut p: *mut Fts5Index, mut iRowid: i64_0) -> *
 unsafe extern "C" fn fts5ExprAdvanceto(
     mut pIter: *mut Fts5IndexIter,
     mut bDesc: ::core::ffi::c_int,
-    mut piLast: *mut i64_0,
+    mut piLast: *mut I64_0,
     mut pRc: *mut ::core::ffi::c_int,
     mut pbEof: *mut ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    let mut iLast: i64_0 = *piLast;
-    let mut iRowid: i64_0 = 0;
+    let mut iLast: I64_0 = *piLast;
+    let mut iRowid: I64_0 = 0;
     iRowid = (*pIter).iRowid;
     if bDesc == 0 as ::core::ffi::c_int && iLast > iRowid || bDesc != 0 && iLast < iRowid {
         let mut rc: ::core::ffi::c_int = sqlite3Fts5IterNextFrom(pIter, iLast);
@@ -15785,7 +15785,7 @@ unsafe extern "C" fn sqlite3Fts5ConfigParseRank(
             zRank = sqlite3Fts5MallocZero(
                 &raw mut rc,
                 p.offset(1 as isize).offset_from(pRank) as ::core::ffi::c_long
-                    as crate::src::headers::sqlite3_h::sqlite3_int64,
+                    as crate::src::headers::sqlite3_h::Sqlite3Int64,
             ) as *mut ::core::ffi::c_char;
             if !zRank.is_null() {
                 std::ptr::copy_nonoverlapping(
@@ -15816,7 +15816,7 @@ unsafe extern "C" fn sqlite3Fts5ConfigParseRank(
                     zRankArgs = sqlite3Fts5MallocZero(
                         &raw mut rc,
                         p.offset(1 as isize).offset_from(pArgs) as ::core::ffi::c_long
-                            as crate::src::headers::sqlite3_h::sqlite3_int64,
+                            as crate::src::headers::sqlite3_h::Sqlite3Int64,
                     ) as *mut ::core::ffi::c_char;
                     if !zRankArgs.is_null() {
                         std::ptr::copy_nonoverlapping(
@@ -15846,8 +15846,8 @@ unsafe extern "C" fn fts5SorterNext(mut pCsr: *mut Fts5Cursor) -> ::core::ffi::c
         rc = crate::src::headers::sqlite3_h::SQLITE_OK;
         (*pCsr).csrflags |= 0x1 as ::core::ffi::c_int | 0x2 as ::core::ffi::c_int;
     } else if rc == crate::src::headers::sqlite3_h::SQLITE_ROW {
-        let mut a: *const u8_0 = std::ptr::null::<u8_0>();
-        let mut aBlob: *const u8_0 = std::ptr::null::<u8_0>();
+        let mut a: *const U8_0 = std::ptr::null::<U8_0>();
+        let mut aBlob: *const U8_0 = std::ptr::null::<U8_0>();
         let mut nBlob: ::core::ffi::c_int = 0;
         let mut i: ::core::ffi::c_int = 0;
         let mut iOff: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
@@ -15856,7 +15856,7 @@ unsafe extern "C" fn fts5SorterNext(mut pCsr: *mut Fts5Cursor) -> ::core::ffi::c
         __pSorter_ref.iRowid = crate::src::src::vdbeapi::sqlite3_column_int64(
             __pSorter_ref.pStmt,
             0 as ::core::ffi::c_int,
-        ) as i64_0;
+        ) as I64_0;
         nBlob = crate::src::src::vdbeapi::sqlite3_column_bytes(
             __pSorter_ref.pStmt,
             1 as ::core::ffi::c_int,
@@ -15864,7 +15864,7 @@ unsafe extern "C" fn fts5SorterNext(mut pCsr: *mut Fts5Cursor) -> ::core::ffi::c
         a = crate::src::src::vdbeapi::sqlite3_column_blob(
             __pSorter_ref.pStmt,
             1 as ::core::ffi::c_int,
-        ) as *const u8_0;
+        ) as *const U8_0;
         aBlob = a;
         if nBlob > 0 as ::core::ffi::c_int {
             i = 0 as ::core::ffi::c_int;
@@ -15872,14 +15872,14 @@ unsafe extern "C" fn fts5SorterNext(mut pCsr: *mut Fts5Cursor) -> ::core::ffi::c
                 let mut iVal: ::core::ffi::c_int = 0;
                 a = a.offset(sqlite3Fts5GetVarint32(
                     a as *const ::core::ffi::c_uchar,
-                    &raw mut iVal as *mut u32_0,
+                    &raw mut iVal as *mut U32_0,
                 ) as isize);
                 iOff += iVal;
                 *(&raw mut __pSorter_ref.aIdx as *mut ::core::ffi::c_int).offset(i as isize) = iOff;
                 i += 1;
             }
             *(&raw mut __pSorter_ref.aIdx as *mut ::core::ffi::c_int).offset(i as isize) =
-                (aBlob.offset(nBlob as isize) as *const u8_0).offset_from(a) as ::core::ffi::c_long
+                (aBlob.offset(nBlob as isize) as *const U8_0).offset_from(a) as ::core::ffi::c_long
                     as ::core::ffi::c_int;
             __pSorter_ref.aPoslist = a;
         }
@@ -15891,17 +15891,17 @@ unsafe extern "C" fn fts5SorterNext(mut pCsr: *mut Fts5Cursor) -> ::core::ffi::c
 unsafe extern "C" fn fts5ExprSynonymAdvanceto(
     mut pTerm: *mut Fts5ExprTerm,
     mut bDesc: ::core::ffi::c_int,
-    mut piLast: *mut i64_0,
+    mut piLast: *mut I64_0,
     mut pRc: *mut ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
-    let mut iLast: i64_0 = *piLast;
+    let mut iLast: I64_0 = *piLast;
     let mut p: *mut Fts5ExprTerm = std::ptr::null_mut::<Fts5ExprTerm>();
     let mut bEof: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     p = pTerm;
     while rc == crate::src::headers::sqlite3_h::SQLITE_OK && !p.is_null() {
         if (*(*p).pIter).bEof as ::core::ffi::c_int == 0 as ::core::ffi::c_int {
-            let mut iRowid: i64_0 = (*(*p).pIter).iRowid;
+            let mut iRowid: I64_0 = (*(*p).pIter).iRowid;
             if bDesc == 0 as ::core::ffi::c_int && iLast > iRowid || bDesc != 0 && iLast < iRowid {
                 rc = sqlite3Fts5IterNextFrom((*p).pIter, iLast);
             }
@@ -16766,7 +16766,7 @@ unsafe extern "C" fn sqlite3Fts5ConfigSetValue(
     rc
 }
 
-unsafe extern "C" fn fts5LeafRead(mut p: *mut Fts5Index, mut iRowid: i64_0) -> *mut Fts5Data {
+unsafe extern "C" fn fts5LeafRead(mut p: *mut Fts5Index, mut iRowid: I64_0) -> *mut Fts5Data {
     let mut pRet: *mut Fts5Data = fts5DataRead(p, iRowid);
     if !pRet.is_null() {
         if (*pRet).nn < 4 as ::core::ffi::c_int || (*pRet).szLeaf > (*pRet).nn {
@@ -16791,7 +16791,7 @@ unsafe extern "C" fn fts5CursorReseek(
         let __pCsr_ref = { &mut *pCsr };
         let mut pTab: *mut Fts5FullTable = __pCsr_ref.base.pVtab as *mut Fts5FullTable;
         let mut bDesc: ::core::ffi::c_int = __pCsr_ref.bDesc;
-        let mut iRowid: i64_0 = sqlite3Fts5ExprRowid(__pCsr_ref.pExpr);
+        let mut iRowid: I64_0 = sqlite3Fts5ExprRowid(__pCsr_ref.pExpr);
         rc = sqlite3Fts5ExprFirst(
             __pCsr_ref.pExpr,
             (*pTab).p.pIndex,
@@ -16816,7 +16816,7 @@ unsafe extern "C" fn fts5CursorReseek(
 
 unsafe extern "C" fn fts5IndexPrepareStmt(
     mut p: *mut Fts5Index,
-    mut ppStmt: *mut *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+    mut ppStmt: *mut *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
     mut zSql: *mut ::core::ffi::c_char,
 ) -> ::core::ffi::c_int {
     if (*p).rc == crate::src::headers::sqlite3_h::SQLITE_OK {
@@ -16846,15 +16846,15 @@ unsafe extern "C" fn fts5IndexPrepareStmt(
 
 unsafe extern "C" fn fts5StorageNewRowid(
     mut p: *mut Fts5Storage,
-    mut piRowid: *mut i64_0,
+    mut piRowid: *mut I64_0,
 ) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_MISMATCH;
     if (*(*p).pConfig).bColumnsize != 0 {
-        let mut pReplace: *mut crate::src::headers::sqlite3_h::sqlite3_stmt =
-            std::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_stmt>();
+        let mut pReplace: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt =
+            std::ptr::null_mut::<crate::src::headers::sqlite3_h::Sqlite3Stmt>();
         rc = fts5StorageGetStmt(
             p,
-            Fts5SqlStmt::STMT_REPLACE_DOCSIZE as ::core::ffi::c_int,
+            Fts5SqlStmt::StmtReplaceDocsize as ::core::ffi::c_int,
             &raw mut pReplace,
             std::ptr::null_mut::<*mut ::core::ffi::c_char>(),
         );
@@ -16866,7 +16866,7 @@ unsafe extern "C" fn fts5StorageNewRowid(
         }
         if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
             *piRowid =
-                crate::src::src::main::sqlite3_last_insert_rowid((*(*p).pConfig).db) as i64_0;
+                crate::src::src::main::sqlite3_last_insert_rowid((*(*p).pConfig).db) as I64_0;
         }
     }
     rc
@@ -16907,7 +16907,7 @@ unsafe extern "C" fn sqlite3Fts5StorageContentInsert(
     mut p: *mut Fts5Storage,
     mut bReplace: ::core::ffi::c_int,
     mut apVal: *mut *mut crate::src::headers::vdbeInt_h::sqlite3_value,
-    mut piRowid: *mut i64_0,
+    mut piRowid: *mut I64_0,
 ) -> ::core::ffi::c_int {
     let mut pConfig: *mut Fts5Config = (*p).pConfig;
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
@@ -16916,17 +16916,17 @@ unsafe extern "C" fn sqlite3Fts5StorageContentInsert(
             == crate::src::headers::sqlite3_h::SQLITE_INTEGER
         {
             *piRowid =
-                crate::src::src::vdbeapi::sqlite3_value_int64(*apVal.offset(1 as isize)) as i64_0;
+                crate::src::src::vdbeapi::sqlite3_value_int64(*apVal.offset(1 as isize)) as I64_0;
         } else {
             rc = fts5StorageNewRowid(p, piRowid);
         }
     } else {
-        let mut pInsert: *mut crate::src::headers::sqlite3_h::sqlite3_stmt =
-            std::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_stmt>();
+        let mut pInsert: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt =
+            std::ptr::null_mut::<crate::src::headers::sqlite3_h::Sqlite3Stmt>();
         let mut i: ::core::ffi::c_int = 0;
         rc = fts5StorageGetStmt(
             p,
-            Fts5SqlStmt::STMT_INSERT_CONTENT as ::core::ffi::c_int + bReplace,
+            Fts5SqlStmt::StmtInsertContent as ::core::ffi::c_int + bReplace,
             &raw mut pInsert,
             std::ptr::null_mut::<*mut ::core::ffi::c_char>(),
         );
@@ -17026,7 +17026,7 @@ unsafe extern "C" fn sqlite3Fts5StorageContentInsert(
             crate::src::src::vdbeapi::sqlite3_step(pInsert);
             rc = crate::src::src::vdbeapi::sqlite3_reset(pInsert);
         }
-        *piRowid = crate::src::src::main::sqlite3_last_insert_rowid((*pConfig).db) as i64_0;
+        *piRowid = crate::src::src::main::sqlite3_last_insert_rowid((*pConfig).db) as I64_0;
     }
     rc
 }
@@ -17099,8 +17099,8 @@ unsafe extern "C" fn fts5ExprNearInitAll(
 
 unsafe extern "C" fn fts5DataWrite(
     mut p: *mut Fts5Index,
-    mut iRowid: i64_0,
-    mut pData: *const u8_0,
+    mut iRowid: I64_0,
+    mut pData: *const U8_0,
     mut nData: ::core::ffi::c_int,
 ) {
     let __p_ref = { &mut *p };
@@ -17125,7 +17125,7 @@ unsafe extern "C" fn fts5DataWrite(
     crate::src::src::vdbeapi::sqlite3_bind_int64(
         __p_ref.pWriter,
         1 as ::core::ffi::c_int,
-        iRowid as crate::src::headers::sqlite3_h::sqlite3_int64,
+        iRowid as crate::src::headers::sqlite3_h::Sqlite3Int64,
     );
     crate::src::src::vdbeapi::sqlite3_bind_blob(
         __p_ref.pWriter,
@@ -17223,7 +17223,7 @@ static mut fts5yyRuleInfoNRhs: [::core::ffi::c_schar; 28] = [
     0 as ::core::ffi::c_int as ::core::ffi::c_schar,
 ];
 
-unsafe extern "C" fn fts5DataDelete(mut p: *mut Fts5Index, mut iFirst: i64_0, mut iLast: i64_0) {
+unsafe extern "C" fn fts5DataDelete(mut p: *mut Fts5Index, mut iFirst: I64_0, mut iLast: I64_0) {
     let __p_ref = { &mut *p };
     if __p_ref.rc != crate::src::headers::sqlite3_h::SQLITE_OK {
         return;
@@ -17242,12 +17242,12 @@ unsafe extern "C" fn fts5DataDelete(mut p: *mut Fts5Index, mut iFirst: i64_0, mu
     crate::src::src::vdbeapi::sqlite3_bind_int64(
         __p_ref.pDeleter,
         1 as ::core::ffi::c_int,
-        iFirst as crate::src::headers::sqlite3_h::sqlite3_int64,
+        iFirst as crate::src::headers::sqlite3_h::Sqlite3Int64,
     );
     crate::src::src::vdbeapi::sqlite3_bind_int64(
         __p_ref.pDeleter,
         2 as ::core::ffi::c_int,
-        iLast as crate::src::headers::sqlite3_h::sqlite3_int64,
+        iLast as crate::src::headers::sqlite3_h::Sqlite3Int64,
     );
     crate::src::src::vdbeapi::sqlite3_step(__p_ref.pDeleter);
     __p_ref.rc = crate::src::src::vdbeapi::sqlite3_reset(__p_ref.pDeleter);
@@ -17258,31 +17258,31 @@ unsafe extern "C" fn fts5DataRemoveSegment(
     mut pSeg: *mut Fts5StructureSegment,
 ) {
     let mut iSegid: ::core::ffi::c_int = (*pSeg).iSegid;
-    let mut iFirst: i64_0 = ((iSegid as i64_0)
+    let mut iFirst: I64_0 = ((iSegid as I64_0)
         << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-        + ((0 as ::core::ffi::c_int as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-        + ((0 as ::core::ffi::c_int as i64_0) << 31 as ::core::ffi::c_int)
-        + 0 as ::core::ffi::c_int as i64_0;
-    let mut iLast: i64_0 = (((iSegid + 1 as ::core::ffi::c_int) as i64_0)
+        + ((0 as ::core::ffi::c_int as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
+        + ((0 as ::core::ffi::c_int as I64_0) << 31 as ::core::ffi::c_int)
+        + 0 as ::core::ffi::c_int as I64_0;
+    let mut iLast: I64_0 = (((iSegid + 1 as ::core::ffi::c_int) as I64_0)
         << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-        + ((0 as ::core::ffi::c_int as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-        + ((0 as ::core::ffi::c_int as i64_0) << 31 as ::core::ffi::c_int)
-        + 0 as ::core::ffi::c_int as i64_0
-        - 1 as i64_0;
+        + ((0 as ::core::ffi::c_int as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
+        + ((0 as ::core::ffi::c_int as I64_0) << 31 as ::core::ffi::c_int)
+        + 0 as ::core::ffi::c_int as I64_0
+        - 1 as I64_0;
     fts5DataDelete(p, iFirst, iLast);
     if (*pSeg).nPgTombstone != 0 {
-        let mut iTomb1: i64_0 = (((iSegid + ((1 as ::core::ffi::c_int) << 16 as ::core::ffi::c_int))
-            as i64_0)
+        let mut iTomb1: I64_0 = (((iSegid + ((1 as ::core::ffi::c_int) << 16 as ::core::ffi::c_int))
+            as I64_0)
             << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-            + ((0 as ::core::ffi::c_int as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-            + ((0 as ::core::ffi::c_int as i64_0) << 31 as ::core::ffi::c_int)
-            + 0 as ::core::ffi::c_int as i64_0;
-        let mut iTomb2: i64_0 = (((iSegid + ((1 as ::core::ffi::c_int) << 16 as ::core::ffi::c_int))
-            as i64_0)
+            + ((0 as ::core::ffi::c_int as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
+            + ((0 as ::core::ffi::c_int as I64_0) << 31 as ::core::ffi::c_int)
+            + 0 as ::core::ffi::c_int as I64_0;
+        let mut iTomb2: I64_0 = (((iSegid + ((1 as ::core::ffi::c_int) << 16 as ::core::ffi::c_int))
+            as I64_0)
             << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-            + ((0 as ::core::ffi::c_int as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-            + ((0 as ::core::ffi::c_int as i64_0) << 31 as ::core::ffi::c_int)
-            + ((*pSeg).nPgTombstone - 1 as ::core::ffi::c_int) as i64_0;
+            + ((0 as ::core::ffi::c_int as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
+            + ((0 as ::core::ffi::c_int as I64_0) << 31 as ::core::ffi::c_int)
+            + ((*pSeg).nPgTombstone - 1 as ::core::ffi::c_int) as I64_0;
         fts5DataDelete(p, iTomb1, iTomb2);
     }
     if (*p).pIdxDeleter.is_null() {
@@ -17645,8 +17645,8 @@ unsafe extern "C" fn fts5yy_reduce(
 
 unsafe extern "C" fn fts5RowidCmp(
     mut pExpr: *mut Fts5Expr,
-    mut iLhs: i64_0,
-    mut iRhs: i64_0,
+    mut iLhs: I64_0,
+    mut iRhs: I64_0,
 ) -> ::core::ffi::c_int {
     if (*pExpr).bDesc == 0 as ::core::ffi::c_int {
         if iLhs < iRhs {
@@ -17696,7 +17696,7 @@ unsafe extern "C" fn fts5ExprSetEof(mut pNode: *mut Fts5ExprNode) {
 unsafe extern "C" fn sqlite3Fts5StorageIndexInsert(
     mut p: *mut Fts5Storage,
     mut apVal: *mut *mut crate::src::headers::vdbeInt_h::sqlite3_value,
-    mut iRowid: i64_0,
+    mut iRowid: I64_0,
 ) -> ::core::ffi::c_int {
     let mut pConfig: *mut Fts5Config = (*p).pConfig;
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
@@ -17773,8 +17773,8 @@ unsafe extern "C" fn sqlite3Fts5StorageIndexInsert(
                 sqlite3Fts5ClearLocale(pConfig);
             }
         }
-        sqlite3Fts5BufferAppendVarint(&raw mut rc, &raw mut buf, ctx.szCol as i64_0);
-        *(*p).aTotalSize.offset(ctx.iCol as isize) += ctx.szCol as i64_0;
+        sqlite3Fts5BufferAppendVarint(&raw mut rc, &raw mut buf, ctx.szCol as I64_0);
+        *(*p).aTotalSize.offset(ctx.iCol as isize) += ctx.szCol as I64_0;
         ctx.iCol += 1;
     }
     (*p).nTotalRow += 1;
@@ -17824,8 +17824,8 @@ unsafe extern "C" fn sqlite3Fts5ConfigLoad(
     let mut zSelect: *const ::core::ffi::c_char =
         b"SELECT k, v FROM %Q.'%q_config'\0" as *const u8 as *const ::core::ffi::c_char;
     let mut zSql: *mut ::core::ffi::c_char = std::ptr::null_mut::<::core::ffi::c_char>();
-    let mut p: *mut crate::src::headers::sqlite3_h::sqlite3_stmt =
-        std::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_stmt>();
+    let mut p: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt =
+        std::ptr::null_mut::<crate::src::headers::sqlite3_h::Sqlite3Stmt>();
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
     let mut iVersion: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let __pConfig_ref = { &mut *pConfig };
@@ -17923,7 +17923,7 @@ unsafe extern "C" fn fts5CursorFirstSorted(
     let mut pConfig: *mut Fts5Config = (*pTab).p.pConfig;
     let mut pSorter: *mut Fts5Sorter = std::ptr::null_mut::<Fts5Sorter>();
     let mut nPhrase: ::core::ffi::c_int = 0;
-    let mut nByte: crate::src::headers::sqlite3_h::sqlite3_int64 = 0;
+    let mut nByte: crate::src::headers::sqlite3_h::Sqlite3Int64 = 0;
     let mut rc: ::core::ffi::c_int = 0;
     let __pCsr_ref = { &mut *pCsr };
     let mut zRank: *const ::core::ffi::c_char = __pCsr_ref.zRank;
@@ -17931,10 +17931,10 @@ unsafe extern "C" fn fts5CursorFirstSorted(
     nPhrase = sqlite3Fts5ExprPhraseCount(__pCsr_ref.pExpr);
     nByte = (24 as usize).wrapping_add(
         (((nPhrase + 2 as ::core::ffi::c_int) / 2 as ::core::ffi::c_int) as usize)
-            .wrapping_mul(std::mem::size_of::<i64_0>() as usize),
-    ) as crate::src::headers::sqlite3_h::sqlite3_int64;
+            .wrapping_mul(std::mem::size_of::<I64_0>() as usize),
+    ) as crate::src::headers::sqlite3_h::Sqlite3Int64;
     pSorter = crate::src::src::malloc::sqlite3_malloc64(
-        nByte as crate::src::headers::sqlite3_h::sqlite3_uint64,
+        nByte as crate::src::headers::sqlite3_h::Sqlite3Uint64,
     ) as *mut Fts5Sorter;
     if pSorter.is_null() {
         return crate::src::headers::sqlite3_h::SQLITE_NOMEM;
@@ -18144,11 +18144,11 @@ unsafe extern "C" fn fts5StructureMakeWritable(
 ) {
     let mut p: *mut Fts5Structure = *pp;
     if *pRc == crate::src::headers::sqlite3_h::SQLITE_OK && (*p).nRef > 1 as ::core::ffi::c_int {
-        let mut nByte: i64_0 = (32 as usize).wrapping_add(
+        let mut nByte: I64_0 = (32 as usize).wrapping_add(
             ((*p).nLevel as usize).wrapping_mul(std::mem::size_of::<Fts5StructureLevel>() as usize),
-        ) as i64_0;
+        ) as I64_0;
         let mut pNew: *mut Fts5Structure = std::ptr::null_mut::<Fts5Structure>();
-        pNew = sqlite3Fts5MallocZero(pRc, nByte as crate::src::headers::sqlite3_h::sqlite3_int64)
+        pNew = sqlite3Fts5MallocZero(pRc, nByte as crate::src::headers::sqlite3_h::Sqlite3Int64)
             as *mut Fts5Structure;
         if !pNew.is_null() {
             let mut i: ::core::ffi::c_int = 0;
@@ -18169,11 +18169,11 @@ unsafe extern "C" fn fts5StructureMakeWritable(
                 nByte = (std::mem::size_of::<Fts5StructureSegment>() as usize).wrapping_mul(
                     (*(&raw mut (*pNew).aLevel as *mut Fts5StructureLevel).offset(i as isize)).nSeg
                         as usize,
-                ) as i64_0;
+                ) as I64_0;
                 let __pLvl_ref = { &mut *pLvl };
                 __pLvl_ref.aSeg = sqlite3Fts5MallocZero(
                     pRc,
-                    nByte as crate::src::headers::sqlite3_h::sqlite3_int64,
+                    nByte as crate::src::headers::sqlite3_h::Sqlite3Int64,
                 ) as *mut Fts5StructureSegment;
                 if __pLvl_ref.aSeg.is_null() {
                     i = 0 as ::core::ffi::c_int;
@@ -18226,7 +18226,7 @@ unsafe extern "C" fn fts5ExprNodeTest_STRING(
     let mut pLeft: *mut Fts5ExprPhrase =
         *(&raw mut (*pNear).apPhrase as *mut *mut Fts5ExprPhrase).offset(0 as isize);
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
-    let mut iLast: i64_0 = 0;
+    let mut iLast: I64_0 = 0;
     let mut i: ::core::ffi::c_int = 0;
     let mut j: ::core::ffi::c_int = 0;
     let mut bMatch: ::core::ffi::c_int = 0;
@@ -18256,7 +18256,7 @@ unsafe extern "C" fn fts5ExprNodeTest_STRING(
                     .offset(j as isize)
                     as *mut Fts5ExprTerm;
                 if !(*pTerm).pSynonym.is_null() {
-                    let mut iRowid: i64_0 = fts5ExprSynonymRowid(
+                    let mut iRowid: I64_0 = fts5ExprSynonymRowid(
                         pTerm,
                         bDesc,
                         std::ptr::null_mut::<::core::ffi::c_int>(),
@@ -18306,7 +18306,7 @@ unsafe extern "C" fn fts5ExprNodeTest_STRING(
 unsafe extern "C" fn fts5StorageCount(
     mut p: *mut Fts5Storage,
     mut zSuffix: *const ::core::ffi::c_char,
-    mut pnRow: *mut i64_0,
+    mut pnRow: *mut I64_0,
 ) -> ::core::ffi::c_int {
     let mut pConfig: *mut Fts5Config = (*p).pConfig;
     let mut zSql: *mut ::core::ffi::c_char = std::ptr::null_mut::<::core::ffi::c_char>();
@@ -18320,8 +18320,8 @@ unsafe extern "C" fn fts5StorageCount(
     if zSql.is_null() {
         rc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
     } else {
-        let mut pCnt: *mut crate::src::headers::sqlite3_h::sqlite3_stmt =
-            std::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_stmt>();
+        let mut pCnt: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt =
+            std::ptr::null_mut::<crate::src::headers::sqlite3_h::Sqlite3Stmt>();
         rc = crate::src::src::prepare::sqlite3_prepare_v2(
             (*pConfig).db,
             zSql,
@@ -18335,7 +18335,7 @@ unsafe extern "C" fn fts5StorageCount(
             {
                 *pnRow =
                     crate::src::src::vdbeapi::sqlite3_column_int64(pCnt, 0 as ::core::ffi::c_int)
-                        as i64_0;
+                        as I64_0;
             }
             rc = crate::src::src::vdbeapi::sqlite3_finalize(pCnt);
         }
@@ -18367,7 +18367,7 @@ unsafe extern "C" fn fts5CursorFirst(
 }
 
 unsafe extern "C" fn fts5StructureDecode(
-    mut pData: *const u8_0,
+    mut pData: *const U8_0,
     mut nData: ::core::ffi::c_int,
     mut piCookie: *mut ::core::ffi::c_int,
     mut ppOut: *mut *mut Fts5Structure,
@@ -18377,17 +18377,17 @@ unsafe extern "C" fn fts5StructureDecode(
     let mut iLvl: ::core::ffi::c_int = 0;
     let mut nLevel: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut nSegment: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-    let mut nByte: crate::src::headers::sqlite3_h::sqlite3_int64 = 0;
+    let mut nByte: crate::src::headers::sqlite3_h::Sqlite3Int64 = 0;
     let mut pRet: *mut Fts5Structure = std::ptr::null_mut::<Fts5Structure>();
     let mut bStructureV2: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-    let mut nOriginCntr: u64_0 = 0 as u64_0;
+    let mut nOriginCntr: U64_0 = 0 as U64_0;
     if !piCookie.is_null() {
         *piCookie = sqlite3Fts5Get32(pData);
     }
     i = 4 as ::core::ffi::c_int;
     if 0 as ::core::ffi::c_int
         == fts5_memcmp(
-            pData.offset(i as isize) as *const u8_0 as *const ::core::ffi::c_void,
+            pData.offset(i as isize) as *const U8_0 as *const ::core::ffi::c_void,
             FTS5_STRUCTURE_V2.as_ptr() as *const ::core::ffi::c_void,
             4 as u64,
         )
@@ -18397,11 +18397,11 @@ unsafe extern "C" fn fts5StructureDecode(
     }
     i += sqlite3Fts5GetVarint32(
         pData.offset(i as isize) as *const ::core::ffi::c_uchar,
-        &raw mut nLevel as *mut u32_0,
+        &raw mut nLevel as *mut U32_0,
     );
     i += sqlite3Fts5GetVarint32(
         pData.offset(i as isize) as *const ::core::ffi::c_uchar,
-        &raw mut nSegment as *mut u32_0,
+        &raw mut nSegment as *mut U32_0,
     );
     if nLevel > FTS5_MAX_SEGMENT
         || nLevel < 0 as ::core::ffi::c_int
@@ -18412,7 +18412,7 @@ unsafe extern "C" fn fts5StructureDecode(
     }
     nByte = (32 as usize).wrapping_add(
         (nLevel as usize).wrapping_mul(std::mem::size_of::<Fts5StructureLevel>() as usize),
-    ) as crate::src::headers::sqlite3_h::sqlite3_int64;
+    ) as crate::src::headers::sqlite3_h::Sqlite3Int64;
     pRet = sqlite3Fts5MallocZero(&raw mut rc, nByte) as *mut Fts5Structure;
     if !pRet.is_null() {
         (*pRet).nRef = 1 as ::core::ffi::c_int;
@@ -18435,11 +18435,11 @@ unsafe extern "C" fn fts5StructureDecode(
                 let __pLvl_ref = { &mut *pLvl };
                 i += sqlite3Fts5GetVarint32(
                     pData.offset(i as isize) as *const ::core::ffi::c_uchar,
-                    &raw mut __pLvl_ref.nMerge as *mut u32_0,
+                    &raw mut __pLvl_ref.nMerge as *mut U32_0,
                 );
                 i += sqlite3Fts5GetVarint32(
                     pData.offset(i as isize) as *const ::core::ffi::c_uchar,
-                    &raw mut nTotal as *mut u32_0,
+                    &raw mut nTotal as *mut U32_0,
                 );
                 if nTotal < __pLvl_ref.nMerge {
                     rc = FTS5_CORRUPT;
@@ -18448,7 +18448,7 @@ unsafe extern "C" fn fts5StructureDecode(
                     &raw mut rc,
                     (nTotal as usize)
                         .wrapping_mul(std::mem::size_of::<Fts5StructureSegment>() as usize)
-                        as crate::src::headers::sqlite3_h::sqlite3_int64,
+                        as crate::src::headers::sqlite3_h::Sqlite3Int64,
                 ) as *mut Fts5StructureSegment;
                 nSegment -= nTotal;
             }
@@ -18465,15 +18465,15 @@ unsafe extern "C" fn fts5StructureDecode(
                         let __pSeg_ref = { &mut *pSeg };
                         i += sqlite3Fts5GetVarint32(
                             pData.offset(i as isize) as *const ::core::ffi::c_uchar,
-                            &raw mut __pSeg_ref.iSegid as *mut u32_0,
+                            &raw mut __pSeg_ref.iSegid as *mut U32_0,
                         );
                         i += sqlite3Fts5GetVarint32(
                             pData.offset(i as isize) as *const ::core::ffi::c_uchar,
-                            &raw mut __pSeg_ref.pgnoFirst as *mut u32_0,
+                            &raw mut __pSeg_ref.pgnoFirst as *mut U32_0,
                         );
                         i += sqlite3Fts5GetVarint32(
                             pData.offset(i as isize) as *const ::core::ffi::c_uchar,
-                            &raw mut __pSeg_ref.pgnoLast as *mut u32_0,
+                            &raw mut __pSeg_ref.pgnoLast as *mut U32_0,
                         );
                         if bStructureV2 != 0 {
                             i += sqlite3Fts5GetVarint(
@@ -18486,7 +18486,7 @@ unsafe extern "C" fn fts5StructureDecode(
                             ) as ::core::ffi::c_int;
                             i += sqlite3Fts5GetVarint32(
                                 pData.offset(i as isize) as *const ::core::ffi::c_uchar,
-                                &raw mut __pSeg_ref.nPgTombstone as *mut u32_0,
+                                &raw mut __pSeg_ref.nPgTombstone as *mut U32_0,
                             );
                             i += sqlite3Fts5GetVarint(
                                 pData.offset(i as isize) as *const ::core::ffi::c_uchar,
@@ -18526,7 +18526,7 @@ unsafe extern "C" fn fts5StructureDecode(
             rc = FTS5_CORRUPT;
         }
         if bStructureV2 != 0 {
-            (*pRet).nOriginCntr = nOriginCntr.wrapping_add(1 as u64_0);
+            (*pRet).nOriginCntr = nOriginCntr.wrapping_add(1 as U64_0);
         }
         if rc != crate::src::headers::sqlite3_h::SQLITE_OK {
             fts5StructureRelease(pRet);
@@ -18631,7 +18631,7 @@ unsafe extern "C" fn fts5SpecialMatch(
                 n,
             )
     {
-        (*pCsr).iSpecial = sqlite3Fts5IndexReads((*pTab).p.pIndex) as i64_0;
+        (*pCsr).iSpecial = sqlite3Fts5IndexReads((*pTab).p.pIndex) as I64_0;
     } else if n == 2 as ::core::ffi::c_int
         && 0 as ::core::ffi::c_int
             == crate::src::src::util::sqlite3_strnicmp(
@@ -18768,7 +18768,7 @@ unsafe extern "C" fn fts5ExprNodeNext_STRING(
     mut pExpr: *mut Fts5Expr,
     mut pNode: *mut Fts5ExprNode,
     mut bFromValid: ::core::ffi::c_int,
-    mut iFrom: i64_0,
+    mut iFrom: I64_0,
 ) -> ::core::ffi::c_int {
     let __pNode_ref = { &mut *pNode };
     let mut pTerm: *mut Fts5ExprTerm = (&raw mut (**(&raw mut (*__pNode_ref.pNear).apPhrase
@@ -18781,7 +18781,7 @@ unsafe extern "C" fn fts5ExprNodeNext_STRING(
     if !(*pTerm).pSynonym.is_null() {
         let mut bEof: ::core::ffi::c_int = 1 as ::core::ffi::c_int;
         let mut p: *mut Fts5ExprTerm = std::ptr::null_mut::<Fts5ExprTerm>();
-        let mut iRowid: i64_0 = fts5ExprSynonymRowid(
+        let mut iRowid: I64_0 = fts5ExprSynonymRowid(
             pTerm,
             (*pExpr).bDesc,
             std::ptr::null_mut::<::core::ffi::c_int>(),
@@ -18789,7 +18789,7 @@ unsafe extern "C" fn fts5ExprNodeNext_STRING(
         p = pTerm;
         while !p.is_null() {
             if (*(*p).pIter).bEof as ::core::ffi::c_int == 0 as ::core::ffi::c_int {
-                let mut ii: i64_0 = (*(*p).pIter).iRowid;
+                let mut ii: I64_0 = (*(*p).pIter).iRowid;
                 if ii == iRowid
                     || bFromValid != 0
                         && ii != iFrom
@@ -18856,8 +18856,8 @@ unsafe extern "C" fn fts5FindRankFunction(mut pCsr: *mut Fts5Cursor) -> ::core::
         let mut zSql: *mut ::core::ffi::c_char =
             sqlite3Fts5Mprintf(&raw mut rc, sqlite_printf!("SELECT %s", zRankArgs,));
         if !zSql.is_null() {
-            let mut pStmt: *mut crate::src::headers::sqlite3_h::sqlite3_stmt =
-                std::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_stmt>();
+            let mut pStmt: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt =
+                std::ptr::null_mut::<crate::src::headers::sqlite3_h::Sqlite3Stmt>();
             rc = crate::src::src::prepare::sqlite3_prepare_v3(
                 (*pConfig).db,
                 zSql,
@@ -18871,13 +18871,13 @@ unsafe extern "C" fn fts5FindRankFunction(mut pCsr: *mut Fts5Cursor) -> ::core::
                 if crate::src::headers::sqlite3_h::SQLITE_ROW
                     == crate::src::src::vdbeapi::sqlite3_step(pStmt)
                 {
-                    let mut nByte: crate::src::headers::sqlite3_h::sqlite3_int64 = 0;
+                    let mut nByte: crate::src::headers::sqlite3_h::Sqlite3Int64 = 0;
                     __pCsr_ref.nRankArg = crate::src::src::vdbeapi::sqlite3_column_count(pStmt);
                     nByte =
                         (std::mem::size_of::<*mut crate::src::headers::vdbeInt_h::sqlite3_value>()
                             as usize)
                             .wrapping_mul(__pCsr_ref.nRankArg as usize)
-                            as crate::src::headers::sqlite3_h::sqlite3_int64;
+                            as crate::src::headers::sqlite3_h::Sqlite3Int64;
                     __pCsr_ref.apRankArg = sqlite3Fts5MallocZero(&raw mut rc, nByte)
                         as *mut *mut crate::src::headers::vdbeInt_h::sqlite3_value;
                     if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
@@ -19000,29 +19000,29 @@ unsafe extern "C" fn sqlite3Fts5StorageIntegrity(
     let mut pConfig: *mut Fts5Config = (*p).pConfig;
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
     let mut aColSize: *mut ::core::ffi::c_int = std::ptr::null_mut::<::core::ffi::c_int>();
-    let mut aTotalSize: *mut i64_0 = std::ptr::null_mut::<i64_0>();
+    let mut aTotalSize: *mut I64_0 = std::ptr::null_mut::<I64_0>();
     let mut ctx: Fts5IntegrityCtx = { std::mem::zeroed() };
-    let mut pScan: *mut crate::src::headers::sqlite3_h::sqlite3_stmt =
-        std::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_stmt>();
+    let mut pScan: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt =
+        std::ptr::null_mut::<crate::src::headers::sqlite3_h::Sqlite3Stmt>();
     let mut bUseCksum: ::core::ffi::c_int = 0;
     ctx.pConfig = (*p).pConfig;
     let __pConfig_ref = { &mut *pConfig };
     aTotalSize = crate::src::src::malloc::sqlite3_malloc64(
         (__pConfig_ref.nCol as usize).wrapping_mul(
             (std::mem::size_of::<::core::ffi::c_int>() as usize)
-                .wrapping_add(std::mem::size_of::<i64_0>() as usize),
-        ) as crate::src::headers::sqlite3_h::sqlite3_uint64,
-    ) as *mut i64_0;
+                .wrapping_add(std::mem::size_of::<I64_0>() as usize),
+        ) as crate::src::headers::sqlite3_h::Sqlite3Uint64,
+    ) as *mut I64_0;
     if aTotalSize.is_null() {
         return crate::src::headers::sqlite3_h::SQLITE_NOMEM;
     }
     aColSize =
-        aTotalSize.offset(__pConfig_ref.nCol as isize) as *mut i64_0 as *mut ::core::ffi::c_int;
+        aTotalSize.offset(__pConfig_ref.nCol as isize) as *mut I64_0 as *mut ::core::ffi::c_int;
     std::ptr::write_bytes(
         aTotalSize as *mut ::core::ffi::c_void as *mut u8,
         0,
-        (std::mem::size_of::<i64_0>() as crate::__stddef_size_t_h::size_t)
-            .wrapping_mul(__pConfig_ref.nCol as crate::__stddef_size_t_h::size_t) as usize,
+        (std::mem::size_of::<I64_0>() as crate::__stddef_size_t_h::SizeT)
+            .wrapping_mul(__pConfig_ref.nCol as crate::__stddef_size_t_h::SizeT) as usize,
     );
     bUseCksum = (__pConfig_ref.eContent == FTS5_CONTENT_NORMAL
         || __pConfig_ref.eContent == FTS5_CONTENT_EXTERNAL && iArg != 0)
@@ -19030,7 +19030,7 @@ unsafe extern "C" fn sqlite3Fts5StorageIntegrity(
     if bUseCksum != 0 {
         rc = fts5StorageGetStmt(
             p,
-            Fts5SqlStmt::STMT_SCAN as ::core::ffi::c_int,
+            Fts5SqlStmt::StmtScan as ::core::ffi::c_int,
             &raw mut pScan,
             std::ptr::null_mut::<*mut ::core::ffi::c_char>(),
         );
@@ -19042,7 +19042,7 @@ unsafe extern "C" fn sqlite3Fts5StorageIntegrity(
                 let mut i: ::core::ffi::c_int = 0;
                 ctx.iRowid =
                     crate::src::src::vdbeapi::sqlite3_column_int64(pScan, 0 as ::core::ffi::c_int)
-                        as i64_0;
+                        as I64_0;
                 ctx.szCol = 0 as ::core::ffi::c_int;
                 if __pConfig_ref.bColumnsize != 0 {
                     rc = sqlite3Fts5StorageDocsize(p, ctx.iRowid, aColSize);
@@ -19128,7 +19128,7 @@ unsafe extern "C" fn sqlite3Fts5StorageIntegrity(
                         {
                             rc = FTS5_CORRUPT;
                         }
-                        *aTotalSize.offset(i as isize) += ctx.szCol as i64_0;
+                        *aTotalSize.offset(i as isize) += ctx.szCol as I64_0;
                         if __pConfig_ref.eDetail == FTS5_DETAIL_COLUMNS {
                             sqlite3Fts5TermsetFree(ctx.pTermset);
                             ctx.pTermset = std::ptr::null_mut::<Fts5Termset>();
@@ -19161,7 +19161,7 @@ unsafe extern "C" fn sqlite3Fts5StorageIntegrity(
         if rc == crate::src::headers::sqlite3_h::SQLITE_OK
             && __pConfig_ref.eContent == FTS5_CONTENT_NORMAL
         {
-            let mut nRow: i64_0 = 0 as i64_0;
+            let mut nRow: I64_0 = 0 as I64_0;
             rc = fts5StorageCount(
                 p,
                 b"content\0" as *const u8 as *const ::core::ffi::c_char,
@@ -19172,7 +19172,7 @@ unsafe extern "C" fn sqlite3Fts5StorageIntegrity(
             }
         }
         if rc == crate::src::headers::sqlite3_h::SQLITE_OK && __pConfig_ref.bColumnsize != 0 {
-            let mut nRow_0: i64_0 = 0 as i64_0;
+            let mut nRow_0: I64_0 = 0 as I64_0;
             rc = fts5StorageCount(
                 p,
                 b"docsize\0" as *const u8 as *const ::core::ffi::c_char,
@@ -19198,14 +19198,14 @@ unsafe extern "C" fn fts5StructureAddLevel(
     if *pRc == crate::src::headers::sqlite3_h::SQLITE_OK {
         let mut pStruct: *mut Fts5Structure = *ppStruct;
         let mut nLevel: ::core::ffi::c_int = (*pStruct).nLevel;
-        let mut nByte: crate::src::headers::sqlite3_h::sqlite3_int64 = (32 as usize).wrapping_add(
+        let mut nByte: crate::src::headers::sqlite3_h::Sqlite3Int64 = (32 as usize).wrapping_add(
             ((nLevel + 2 as ::core::ffi::c_int) as usize)
                 .wrapping_mul(std::mem::size_of::<Fts5StructureLevel>() as usize),
         )
-            as crate::src::headers::sqlite3_h::sqlite3_int64;
+            as crate::src::headers::sqlite3_h::Sqlite3Int64;
         pStruct = crate::src::src::malloc::sqlite3_realloc64(
             pStruct as *mut ::core::ffi::c_void,
-            nByte as crate::src::headers::sqlite3_h::sqlite3_uint64,
+            nByte as crate::src::headers::sqlite3_h::Sqlite3Uint64,
         ) as *mut Fts5Structure;
         if !pStruct.is_null() {
             std::ptr::write_bytes(
@@ -19274,7 +19274,7 @@ unsafe extern "C" fn fts5ExprNodeTest_TERM(
         (*(&raw mut __pPhrase_ref.aTerm as *mut Fts5ExprTerm).offset(0 as isize)).pIter;
     __pPhrase_ref.poslist.n = (*pIter).nData;
     if (*(*pExpr).pConfig).eDetail == FTS5_DETAIL_FULL {
-        __pPhrase_ref.poslist.p = (*pIter).pData as *mut u8_0;
+        __pPhrase_ref.poslist.p = (*pIter).pData as *mut U8_0;
     }
     __pNode_ref.iRowid = (*pIter).iRowid;
     __pNode_ref.bNomatch =
@@ -19294,13 +19294,13 @@ unsafe extern "C" fn fts5StructureExtendLevel(
             (&raw mut (*pStruct).aLevel as *mut Fts5StructureLevel).offset(iLvl as isize)
                 as *mut Fts5StructureLevel;
         let mut aNew: *mut Fts5StructureSegment = std::ptr::null_mut::<Fts5StructureSegment>();
-        let mut nByte: crate::src::headers::sqlite3_h::sqlite3_int64 = 0;
+        let mut nByte: crate::src::headers::sqlite3_h::Sqlite3Int64 = 0;
         nByte = (((*pLvl).nSeg + nExtra) as usize)
             .wrapping_mul(std::mem::size_of::<Fts5StructureSegment>() as usize)
-            as crate::src::headers::sqlite3_h::sqlite3_int64;
+            as crate::src::headers::sqlite3_h::Sqlite3Int64;
         aNew = crate::src::src::malloc::sqlite3_realloc64(
             (*pLvl).aSeg as *mut ::core::ffi::c_void,
-            nByte as crate::src::headers::sqlite3_h::sqlite3_uint64,
+            nByte as crate::src::headers::sqlite3_h::Sqlite3Uint64,
         ) as *mut Fts5StructureSegment;
         if !aNew.is_null() {
             if bInsert == 0 as ::core::ffi::c_int {
@@ -19309,8 +19309,8 @@ unsafe extern "C" fn fts5StructureExtendLevel(
                         as *mut ::core::ffi::c_void as *mut u8,
                     0,
                     (std::mem::size_of::<Fts5StructureSegment>()
-                        as crate::__stddef_size_t_h::size_t)
-                        .wrapping_mul(nExtra as crate::__stddef_size_t_h::size_t),
+                        as crate::__stddef_size_t_h::SizeT)
+                        .wrapping_mul(nExtra as crate::__stddef_size_t_h::SizeT),
                 );
             } else {
                 let mut nMove: ::core::ffi::c_int = ((*pLvl).nSeg as usize)
@@ -19325,8 +19325,8 @@ unsafe extern "C" fn fts5StructureExtendLevel(
                     aNew as *mut ::core::ffi::c_void as *mut u8,
                     0,
                     (std::mem::size_of::<Fts5StructureSegment>()
-                        as crate::__stddef_size_t_h::size_t)
-                        .wrapping_mul(nExtra as crate::__stddef_size_t_h::size_t),
+                        as crate::__stddef_size_t_h::SizeT)
+                        .wrapping_mul(nExtra as crate::__stddef_size_t_h::SizeT),
                 );
             }
             (*pLvl).aSeg = aNew;
@@ -19393,7 +19393,7 @@ unsafe extern "C" fn fts5ExprNodeNext_TERM(
     mut pExpr: *mut Fts5Expr,
     mut pNode: *mut Fts5ExprNode,
     mut bFromValid: ::core::ffi::c_int,
-    mut iFrom: i64_0,
+    mut iFrom: I64_0,
 ) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = 0;
     let mut pIter: *mut Fts5IndexIter = (*(&raw mut (**(&raw mut (*(*pNode).pNear).apPhrase
@@ -19420,12 +19420,12 @@ unsafe extern "C" fn fts5ExprNodeNext_TERM(
 
 unsafe extern "C" fn fts5GetRowidLimit(
     mut pVal: *mut crate::src::headers::vdbeInt_h::sqlite3_value,
-    mut iDefault: i64_0,
-) -> i64_0 {
+    mut iDefault: I64_0,
+) -> I64_0 {
     if !pVal.is_null() {
         let mut eType: ::core::ffi::c_int = crate::src::src::vdbe::sqlite3_value_numeric_type(pVal);
         if eType == crate::src::headers::sqlite3_h::SQLITE_INTEGER {
-            return crate::src::src::vdbeapi::sqlite3_value_int64(pVal) as i64_0;
+            return crate::src::src::vdbeapi::sqlite3_value_int64(pVal) as I64_0;
         }
     }
     iDefault
@@ -19436,11 +19436,11 @@ unsafe extern "C" fn fts5StructureReadUncached(mut p: *mut Fts5Index) -> *mut Ft
     let mut pConfig: *mut Fts5Config = (*p).pConfig;
     let mut iCookie: ::core::ffi::c_int = 0;
     let mut pData: *mut Fts5Data = std::ptr::null_mut::<Fts5Data>();
-    pData = fts5DataRead(p, FTS5_STRUCTURE_ROWID as i64_0);
+    pData = fts5DataRead(p, FTS5_STRUCTURE_ROWID as I64_0);
     if (*p).rc == crate::src::headers::sqlite3_h::SQLITE_OK {
         let __pData_ref = { &mut *pData };
         std::ptr::write_bytes(
-            __pData_ref.p.offset(__pData_ref.nn as isize) as *mut u8_0 as *mut ::core::ffi::c_void
+            __pData_ref.p.offset(__pData_ref.nn as isize) as *mut U8_0 as *mut ::core::ffi::c_void
                 as *mut u8,
             0,
             FTS5_DATA_PADDING as usize,
@@ -19610,10 +19610,10 @@ unsafe extern "C" fn fts5ExprNodeNext_OR(
     mut pExpr: *mut Fts5Expr,
     mut pNode: *mut Fts5ExprNode,
     mut bFromValid: ::core::ffi::c_int,
-    mut iFrom: i64_0,
+    mut iFrom: I64_0,
 ) -> ::core::ffi::c_int {
     let mut i: ::core::ffi::c_int = 0;
-    let mut iLast: i64_0 = (*pNode).iRowid;
+    let mut iLast: I64_0 = (*pNode).iRowid;
     i = 0 as ::core::ffi::c_int;
     while i < (*pNode).nChild {
         let mut p1: *mut Fts5ExprNode =
@@ -19637,8 +19637,8 @@ unsafe extern "C" fn fts5ExprNodeNext_OR(
     crate::src::headers::sqlite3_h::SQLITE_OK
 }
 
-unsafe extern "C" fn fts5IndexDataVersion(mut p: *mut Fts5Index) -> i64_0 {
-    let mut iVersion: i64_0 = 0 as i64_0;
+unsafe extern "C" fn fts5IndexDataVersion(mut p: *mut Fts5Index) -> I64_0 {
+    let mut iVersion: I64_0 = 0 as I64_0;
     if (*p).rc == crate::src::headers::sqlite3_h::SQLITE_OK {
         let __p_ref = { &mut *p };
         if __p_ref.pDataVersion.is_null() {
@@ -19648,7 +19648,7 @@ unsafe extern "C" fn fts5IndexDataVersion(mut p: *mut Fts5Index) -> i64_0 {
                 crate::sqlite_printf!("PRAGMA %Q.data_version", (*__p_ref.pConfig).zDb,),
             );
             if __p_ref.rc != 0 {
-                return 0 as i64_0;
+                return 0 as I64_0;
             }
         }
         if crate::src::headers::sqlite3_h::SQLITE_ROW
@@ -19657,7 +19657,7 @@ unsafe extern "C" fn fts5IndexDataVersion(mut p: *mut Fts5Index) -> i64_0 {
             iVersion = crate::src::src::vdbeapi::sqlite3_column_int64(
                 __p_ref.pDataVersion,
                 0 as ::core::ffi::c_int,
-            ) as i64_0;
+            ) as I64_0;
         }
         __p_ref.rc = crate::src::src::vdbeapi::sqlite3_reset(__p_ref.pDataVersion);
     }
@@ -19685,14 +19685,14 @@ unsafe extern "C" fn sqlite3Fts5IsLocaleValue(
     if crate::src::src::vdbeapi::sqlite3_value_type(pVal)
         == crate::src::headers::sqlite3_h::SQLITE_BLOB
     {
-        let mut pBlob: *const u8_0 =
-            crate::src::src::vdbeapi::sqlite3_value_blob(pVal) as *const u8_0;
+        let mut pBlob: *const U8_0 =
+            crate::src::src::vdbeapi::sqlite3_value_blob(pVal) as *const U8_0;
         let mut nBlob: ::core::ffi::c_int = crate::src::src::vdbeapi::sqlite3_value_bytes(pVal);
         if nBlob > FTS5_LOCALE_HDR_SIZE
             && 0 as ::core::ffi::c_int
                 == fts5_memcmp(
                     pBlob as *const ::core::ffi::c_void,
-                    &raw mut (*(*pConfig).pGlobal).aLocaleHdr as *mut u32_0 as *const u8_0
+                    &raw mut (*(*pConfig).pGlobal).aLocaleHdr as *mut U32_0 as *const U8_0
                         as *const ::core::ffi::c_void,
                     FTS5_LOCALE_HDR_SIZE as u64,
                 )
@@ -19709,7 +19709,7 @@ unsafe extern "C" fn fts5ExprNodeTest_AND(
 ) -> ::core::ffi::c_int {
     let mut iChild: ::core::ffi::c_int = 0;
     let __pAnd_ref = { &mut *pAnd };
-    let mut iLast: i64_0 = __pAnd_ref.iRowid;
+    let mut iLast: I64_0 = __pAnd_ref.iRowid;
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
     let mut bMatch: ::core::ffi::c_int = 0;
     loop {
@@ -19801,7 +19801,7 @@ unsafe extern "C" fn fts5TriTokenize(
     } else {
         std::ptr::null::<::core::ffi::c_uchar>()
     };
-    let mut iCode: u32_0 = 0 as u32_0;
+    let mut iCode: U32_0 = 0 as U32_0;
     let mut aStart: [::core::ffi::c_int; 3] = [0; 3];
     ii = 0 as ::core::ffi::c_int;
     while ii < 3 as ::core::ffi::c_int {
@@ -19813,9 +19813,9 @@ unsafe extern "C" fn fts5TriTokenize(
             }
             let fresh122 = zIn;
             zIn = zIn.offset(1);
-            iCode = *fresh122 as u32_0;
-            if iCode >= 0xc0 as u32_0 {
-                iCode = sqlite3Utf8Trans1[iCode.wrapping_sub(0xc0 as u32_0) as usize] as u32_0;
+            iCode = *fresh122 as U32_0;
+            if iCode >= 0xc0 as U32_0 {
+                iCode = sqlite3Utf8Trans1[iCode.wrapping_sub(0xc0 as U32_0) as usize] as U32_0;
                 while zIn < zEof
                     && *zIn as ::core::ffi::c_int & 0xc0 as ::core::ffi::c_int
                         == 0x80 as ::core::ffi::c_int
@@ -19823,77 +19823,77 @@ unsafe extern "C" fn fts5TriTokenize(
                     let fresh123 = zIn;
                     zIn = zIn.offset(1);
                     iCode = (iCode << 6 as ::core::ffi::c_int).wrapping_add(
-                        (0x3f as ::core::ffi::c_int & *fresh123 as ::core::ffi::c_int) as u32_0,
+                        (0x3f as ::core::ffi::c_int & *fresh123 as ::core::ffi::c_int) as U32_0,
                     );
                 }
-                if iCode < 0x80 as u32_0
+                if iCode < 0x80 as U32_0
                     || iCode as ::core::ffi::c_uint & 0xfffff800 as ::core::ffi::c_uint
                         == 0xd800 as ::core::ffi::c_uint
                     || iCode as ::core::ffi::c_uint & 0xfffffffe as ::core::ffi::c_uint
                         == 0xfffe as ::core::ffi::c_uint
                 {
-                    iCode = 0xfffd as u32_0;
+                    iCode = 0xfffd as U32_0;
                 }
             }
             if (*p).bFold != 0 {
                 iCode =
-                    sqlite3Fts5UnicodeFold(iCode as ::core::ffi::c_int, (*p).iFoldParam) as u32_0;
+                    sqlite3Fts5UnicodeFold(iCode as ::core::ffi::c_int, (*p).iFoldParam) as U32_0;
             }
-            if !(iCode == 0 as u32_0) {
+            if !(iCode == 0 as U32_0) {
                 break;
             }
         }
-        if iCode < 0x80 as u32_0 {
+        if iCode < 0x80 as U32_0 {
             let fresh124 = zOut;
             zOut = zOut.offset(1);
-            *fresh124 = (iCode & 0xff as u32_0) as ::core::ffi::c_uchar as ::core::ffi::c_char;
-        } else if iCode < 0x800 as u32_0 {
+            *fresh124 = (iCode & 0xff as U32_0) as ::core::ffi::c_uchar as ::core::ffi::c_char;
+        } else if iCode < 0x800 as U32_0 {
             let fresh125 = zOut;
             zOut = zOut.offset(1);
             *fresh125 = (0xc0 as ::core::ffi::c_int
-                + (iCode >> 6 as ::core::ffi::c_int & 0x1f as u32_0) as ::core::ffi::c_uchar
+                + (iCode >> 6 as ::core::ffi::c_int & 0x1f as U32_0) as ::core::ffi::c_uchar
                     as ::core::ffi::c_int) as ::core::ffi::c_char;
             let fresh126 = zOut;
             zOut = zOut.offset(1);
             *fresh126 = (0x80 as ::core::ffi::c_int
-                + (iCode & 0x3f as u32_0) as ::core::ffi::c_uchar as ::core::ffi::c_int)
+                + (iCode & 0x3f as U32_0) as ::core::ffi::c_uchar as ::core::ffi::c_int)
                 as ::core::ffi::c_char;
-        } else if iCode < 0x10000 as ::core::ffi::c_int as u32_0 {
+        } else if iCode < 0x10000 as ::core::ffi::c_int as U32_0 {
             let fresh127 = zOut;
             zOut = zOut.offset(1);
             *fresh127 = (0xe0 as ::core::ffi::c_int
-                + (iCode >> 12 as ::core::ffi::c_int & 0xf as u32_0) as ::core::ffi::c_uchar
+                + (iCode >> 12 as ::core::ffi::c_int & 0xf as U32_0) as ::core::ffi::c_uchar
                     as ::core::ffi::c_int) as ::core::ffi::c_char;
             let fresh128 = zOut;
             zOut = zOut.offset(1);
             *fresh128 = (0x80 as ::core::ffi::c_int
-                + (iCode >> 6 as ::core::ffi::c_int & 0x3f as u32_0) as ::core::ffi::c_uchar
+                + (iCode >> 6 as ::core::ffi::c_int & 0x3f as U32_0) as ::core::ffi::c_uchar
                     as ::core::ffi::c_int) as ::core::ffi::c_char;
             let fresh129 = zOut;
             zOut = zOut.offset(1);
             *fresh129 = (0x80 as ::core::ffi::c_int
-                + (iCode & 0x3f as u32_0) as ::core::ffi::c_uchar as ::core::ffi::c_int)
+                + (iCode & 0x3f as U32_0) as ::core::ffi::c_uchar as ::core::ffi::c_int)
                 as ::core::ffi::c_char;
         } else {
             let fresh130 = zOut;
             zOut = zOut.offset(1);
             *fresh130 = (0xf0 as ::core::ffi::c_int
-                + (iCode >> 18 as ::core::ffi::c_int & 0x7 as u32_0) as ::core::ffi::c_uchar
+                + (iCode >> 18 as ::core::ffi::c_int & 0x7 as U32_0) as ::core::ffi::c_uchar
                     as ::core::ffi::c_int) as ::core::ffi::c_char;
             let fresh131 = zOut;
             zOut = zOut.offset(1);
             *fresh131 = (0x80 as ::core::ffi::c_int
-                + (iCode >> 12 as ::core::ffi::c_int & 0x3f as u32_0) as ::core::ffi::c_uchar
+                + (iCode >> 12 as ::core::ffi::c_int & 0x3f as U32_0) as ::core::ffi::c_uchar
                     as ::core::ffi::c_int) as ::core::ffi::c_char;
             let fresh132 = zOut;
             zOut = zOut.offset(1);
             *fresh132 = (0x80 as ::core::ffi::c_int
-                + (iCode >> 6 as ::core::ffi::c_int & 0x3f as u32_0) as ::core::ffi::c_uchar
+                + (iCode >> 6 as ::core::ffi::c_int & 0x3f as U32_0) as ::core::ffi::c_uchar
                     as ::core::ffi::c_int) as ::core::ffi::c_char;
             let fresh133 = zOut;
             zOut = zOut.offset(1);
             *fresh133 = (0x80 as ::core::ffi::c_int
-                + (iCode & 0x3f as u32_0) as ::core::ffi::c_uchar as ::core::ffi::c_int)
+                + (iCode & 0x3f as U32_0) as ::core::ffi::c_uchar as ::core::ffi::c_int)
                 as ::core::ffi::c_char;
         }
         ii += 1;
@@ -19905,14 +19905,14 @@ unsafe extern "C" fn fts5TriTokenize(
             iNext = zIn.offset_from(pText as *const ::core::ffi::c_uchar) as ::core::ffi::c_long
                 as ::core::ffi::c_int;
             if zIn >= zEof {
-                iCode = 0 as u32_0;
+                iCode = 0 as U32_0;
                 break;
             } else {
                 let fresh134 = zIn;
                 zIn = zIn.offset(1);
-                iCode = *fresh134 as u32_0;
-                if iCode >= 0xc0 as u32_0 {
-                    iCode = sqlite3Utf8Trans1[iCode.wrapping_sub(0xc0 as u32_0) as usize] as u32_0;
+                iCode = *fresh134 as U32_0;
+                if iCode >= 0xc0 as U32_0 {
+                    iCode = sqlite3Utf8Trans1[iCode.wrapping_sub(0xc0 as U32_0) as usize] as U32_0;
                     while zIn < zEof
                         && *zIn as ::core::ffi::c_int & 0xc0 as ::core::ffi::c_int
                             == 0x80 as ::core::ffi::c_int
@@ -19920,23 +19920,23 @@ unsafe extern "C" fn fts5TriTokenize(
                         let fresh135 = zIn;
                         zIn = zIn.offset(1);
                         iCode = (iCode << 6 as ::core::ffi::c_int).wrapping_add(
-                            (0x3f as ::core::ffi::c_int & *fresh135 as ::core::ffi::c_int) as u32_0,
+                            (0x3f as ::core::ffi::c_int & *fresh135 as ::core::ffi::c_int) as U32_0,
                         );
                     }
-                    if iCode < 0x80 as u32_0
+                    if iCode < 0x80 as U32_0
                         || iCode as ::core::ffi::c_uint & 0xfffff800 as ::core::ffi::c_uint
                             == 0xd800 as ::core::ffi::c_uint
                         || iCode as ::core::ffi::c_uint & 0xfffffffe as ::core::ffi::c_uint
                             == 0xfffe as ::core::ffi::c_uint
                     {
-                        iCode = 0xfffd as u32_0;
+                        iCode = 0xfffd as U32_0;
                     }
                 }
                 if (*p).bFold != 0 {
                     iCode = sqlite3Fts5UnicodeFold(iCode as ::core::ffi::c_int, (*p).iFoldParam)
-                        as u32_0;
+                        as U32_0;
                 }
-                if !(iCode == 0 as u32_0) {
+                if !(iCode == 0 as U32_0) {
                     break;
                 }
             }
@@ -19950,7 +19950,7 @@ unsafe extern "C" fn fts5TriTokenize(
             aStart[0 as ::core::ffi::c_int as usize],
             iNext,
         );
-        if iCode == 0 as u32_0 || rc != crate::src::headers::sqlite3_h::SQLITE_OK {
+        if iCode == 0 as U32_0 || rc != crate::src::headers::sqlite3_h::SQLITE_OK {
             break;
         }
         z1 = &raw mut aBuf as *mut ::core::ffi::c_char;
@@ -19972,57 +19972,57 @@ unsafe extern "C" fn fts5TriTokenize(
             -(z1.offset_from(&raw mut aBuf as *mut ::core::ffi::c_char) as ::core::ffi::c_long
                 as isize),
         );
-        if iCode < 0x80 as u32_0 {
+        if iCode < 0x80 as U32_0 {
             let fresh137 = zOut;
             zOut = zOut.offset(1);
-            *fresh137 = (iCode & 0xff as u32_0) as ::core::ffi::c_uchar as ::core::ffi::c_char;
-        } else if iCode < 0x800 as u32_0 {
+            *fresh137 = (iCode & 0xff as U32_0) as ::core::ffi::c_uchar as ::core::ffi::c_char;
+        } else if iCode < 0x800 as U32_0 {
             let fresh138 = zOut;
             zOut = zOut.offset(1);
             *fresh138 = (0xc0 as ::core::ffi::c_int
-                + (iCode >> 6 as ::core::ffi::c_int & 0x1f as u32_0) as ::core::ffi::c_uchar
+                + (iCode >> 6 as ::core::ffi::c_int & 0x1f as U32_0) as ::core::ffi::c_uchar
                     as ::core::ffi::c_int) as ::core::ffi::c_char;
             let fresh139 = zOut;
             zOut = zOut.offset(1);
             *fresh139 = (0x80 as ::core::ffi::c_int
-                + (iCode & 0x3f as u32_0) as ::core::ffi::c_uchar as ::core::ffi::c_int)
+                + (iCode & 0x3f as U32_0) as ::core::ffi::c_uchar as ::core::ffi::c_int)
                 as ::core::ffi::c_char;
-        } else if iCode < 0x10000 as ::core::ffi::c_int as u32_0 {
+        } else if iCode < 0x10000 as ::core::ffi::c_int as U32_0 {
             let fresh140 = zOut;
             zOut = zOut.offset(1);
             *fresh140 = (0xe0 as ::core::ffi::c_int
-                + (iCode >> 12 as ::core::ffi::c_int & 0xf as u32_0) as ::core::ffi::c_uchar
+                + (iCode >> 12 as ::core::ffi::c_int & 0xf as U32_0) as ::core::ffi::c_uchar
                     as ::core::ffi::c_int) as ::core::ffi::c_char;
             let fresh141 = zOut;
             zOut = zOut.offset(1);
             *fresh141 = (0x80 as ::core::ffi::c_int
-                + (iCode >> 6 as ::core::ffi::c_int & 0x3f as u32_0) as ::core::ffi::c_uchar
+                + (iCode >> 6 as ::core::ffi::c_int & 0x3f as U32_0) as ::core::ffi::c_uchar
                     as ::core::ffi::c_int) as ::core::ffi::c_char;
             let fresh142 = zOut;
             zOut = zOut.offset(1);
             *fresh142 = (0x80 as ::core::ffi::c_int
-                + (iCode & 0x3f as u32_0) as ::core::ffi::c_uchar as ::core::ffi::c_int)
+                + (iCode & 0x3f as U32_0) as ::core::ffi::c_uchar as ::core::ffi::c_int)
                 as ::core::ffi::c_char;
         } else {
             let fresh143 = zOut;
             zOut = zOut.offset(1);
             *fresh143 = (0xf0 as ::core::ffi::c_int
-                + (iCode >> 18 as ::core::ffi::c_int & 0x7 as u32_0) as ::core::ffi::c_uchar
+                + (iCode >> 18 as ::core::ffi::c_int & 0x7 as U32_0) as ::core::ffi::c_uchar
                     as ::core::ffi::c_int) as ::core::ffi::c_char;
             let fresh144 = zOut;
             zOut = zOut.offset(1);
             *fresh144 = (0x80 as ::core::ffi::c_int
-                + (iCode >> 12 as ::core::ffi::c_int & 0x3f as u32_0) as ::core::ffi::c_uchar
+                + (iCode >> 12 as ::core::ffi::c_int & 0x3f as U32_0) as ::core::ffi::c_uchar
                     as ::core::ffi::c_int) as ::core::ffi::c_char;
             let fresh145 = zOut;
             zOut = zOut.offset(1);
             *fresh145 = (0x80 as ::core::ffi::c_int
-                + (iCode >> 6 as ::core::ffi::c_int & 0x3f as u32_0) as ::core::ffi::c_uchar
+                + (iCode >> 6 as ::core::ffi::c_int & 0x3f as U32_0) as ::core::ffi::c_uchar
                     as ::core::ffi::c_int) as ::core::ffi::c_char;
             let fresh146 = zOut;
             zOut = zOut.offset(1);
             *fresh146 = (0x80 as ::core::ffi::c_int
-                + (iCode & 0x3f as u32_0) as ::core::ffi::c_uchar as ::core::ffi::c_int)
+                + (iCode & 0x3f as U32_0) as ::core::ffi::c_uchar as ::core::ffi::c_int)
                 as ::core::ffi::c_char;
         }
         aStart[0 as ::core::ffi::c_int as usize] = aStart[1 as ::core::ffi::c_int as usize];
@@ -20110,14 +20110,14 @@ unsafe extern "C" fn sqlite3Fts5Parser(
 unsafe extern "C" fn sqlite3Fts5StorageStmt(
     mut p: *mut Fts5Storage,
     mut eStmt: ::core::ffi::c_int,
-    mut pp: *mut *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+    mut pp: *mut *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
     mut pzErrMsg: *mut *mut ::core::ffi::c_char,
 ) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = 0;
     rc = fts5StorageGetStmt(p, eStmt, pp, pzErrMsg);
     if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
         (*p).aStmt[eStmt as usize] =
-            std::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_stmt>();
+            std::ptr::null_mut::<crate::src::headers::sqlite3_h::Sqlite3Stmt>();
     }
     rc
 }
@@ -20132,7 +20132,7 @@ unsafe extern "C" fn fts5StructureInvalidate(mut p: *mut Fts5Index) {
 unsafe extern "C" fn sqlite3Fts5StorageStmtRelease(
     mut p: *mut Fts5Storage,
     mut eStmt: ::core::ffi::c_int,
-    mut pStmt: *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+    mut pStmt: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
 ) {
     if (*p).aStmt[eStmt as usize].is_null() {
         crate::src::src::vdbeapi::sqlite3_reset(pStmt);
@@ -20146,7 +20146,7 @@ unsafe extern "C" fn fts5ExprNodeNext_AND(
     mut pExpr: *mut Fts5Expr,
     mut pNode: *mut Fts5ExprNode,
     mut bFromValid: ::core::ffi::c_int,
-    mut iFrom: i64_0,
+    mut iFrom: I64_0,
 ) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = (**(&raw mut (*pNode).apChild as *mut *mut Fts5ExprNode)
         .offset(0 as isize))
@@ -20199,7 +20199,7 @@ unsafe extern "C" fn fts5ExtractExprText(
 unsafe extern "C" fn fts5StorageDecodeSizeArray(
     mut aCol: *mut ::core::ffi::c_int,
     mut nCol: ::core::ffi::c_int,
-    mut aBlob: *const u8_0,
+    mut aBlob: *const U8_0,
     mut nBlob: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
     let mut i: ::core::ffi::c_int = 0;
@@ -20211,7 +20211,7 @@ unsafe extern "C" fn fts5StorageDecodeSizeArray(
         }
         iOff += sqlite3Fts5GetVarint32(
             aBlob.offset(iOff as isize) as *const ::core::ffi::c_uchar,
-            aCol.offset(i as isize) as *mut ::core::ffi::c_int as *mut u32_0,
+            aCol.offset(i as isize) as *mut ::core::ffi::c_int as *mut U32_0,
         );
         i += 1;
     }
@@ -20249,7 +20249,7 @@ unsafe extern "C" fn fts5ExprNodeTest_NOT(
             pExpr,
             p1,
             0 as ::core::ffi::c_int,
-            0 as i64_0,
+            0 as I64_0,
         );
     }
     __pNode_ref.bEof = __p1_ref.bEof;
@@ -20266,7 +20266,7 @@ unsafe extern "C" fn fts5StructureWrite(mut p: *mut Fts5Index, mut pStruct: *mut
         let mut buf: Fts5Buffer = { std::mem::zeroed() };
         let mut iLvl: ::core::ffi::c_int = 0;
         let mut iCookie: ::core::ffi::c_int = 0;
-        let mut nHdr: ::core::ffi::c_int = if (*pStruct).nOriginCntr > 0 as u64_0 {
+        let mut nHdr: ::core::ffi::c_int = if (*pStruct).nOriginCntr > 0 as U64_0 {
             4 as ::core::ffi::c_int
                 + 4 as ::core::ffi::c_int
                 + 9 as ::core::ffi::c_int
@@ -20280,30 +20280,30 @@ unsafe extern "C" fn fts5StructureWrite(mut p: *mut Fts5Index, mut pStruct: *mut
             iCookie = 0 as ::core::ffi::c_int;
         }
         if 0 as ::core::ffi::c_int
-            == sqlite3Fts5BufferSize(&raw mut (*p).rc, &raw mut buf, nHdr as u32_0)
+            == sqlite3Fts5BufferSize(&raw mut (*p).rc, &raw mut buf, nHdr as U32_0)
         {
             sqlite3Fts5Put32(buf.p, iCookie);
             buf.n = 4 as ::core::ffi::c_int;
             let __pStruct_ref = { &*pStruct };
-            if __pStruct_ref.nOriginCntr > 0 as u64_0 {
+            if __pStruct_ref.nOriginCntr > 0 as U64_0 {
                 std::ptr::copy_nonoverlapping(
                     b"\xFF\0\0\x01\0" as *const u8 as *const ::core::ffi::c_char as *const u8,
-                    buf.p.offset(buf.n as isize) as *mut u8_0 as *mut u8,
+                    buf.p.offset(buf.n as isize) as *mut U8_0 as *mut u8,
                     4 as usize,
                 );
                 buf.n += 4 as ::core::ffi::c_int;
             }
             buf.n += sqlite3Fts5PutVarint(
                 buf.p.offset(buf.n as isize) as *mut ::core::ffi::c_uchar,
-                __pStruct_ref.nLevel as u64_0,
+                __pStruct_ref.nLevel as U64_0,
             );
             buf.n += sqlite3Fts5PutVarint(
                 buf.p.offset(buf.n as isize) as *mut ::core::ffi::c_uchar,
-                __pStruct_ref.nSegment as u64_0,
+                __pStruct_ref.nSegment as U64_0,
             );
             buf.n += sqlite3Fts5PutVarint(
                 buf.p.offset(buf.n as isize) as *mut ::core::ffi::c_uchar,
-                __pStruct_ref.nWriteCounter as i64_0 as u64_0,
+                __pStruct_ref.nWriteCounter as I64_0 as U64_0,
             );
         }
         iLvl = 0 as ::core::ffi::c_int;
@@ -20316,9 +20316,9 @@ unsafe extern "C" fn fts5StructureWrite(mut p: *mut Fts5Index, mut pStruct: *mut
             sqlite3Fts5BufferAppendVarint(
                 &raw mut (*p).rc,
                 &raw mut buf,
-                __pLvl_ref.nMerge as i64_0,
+                __pLvl_ref.nMerge as I64_0,
             );
-            sqlite3Fts5BufferAppendVarint(&raw mut (*p).rc, &raw mut buf, __pLvl_ref.nSeg as i64_0);
+            sqlite3Fts5BufferAppendVarint(&raw mut (*p).rc, &raw mut buf, __pLvl_ref.nSeg as I64_0);
             iSeg = 0 as ::core::ffi::c_int;
             while iSeg < __pLvl_ref.nSeg {
                 let mut pSeg: *mut Fts5StructureSegment =
@@ -20328,66 +20328,66 @@ unsafe extern "C" fn fts5StructureWrite(mut p: *mut Fts5Index, mut pStruct: *mut
                 sqlite3Fts5BufferAppendVarint(
                     &raw mut __p_ref.rc,
                     &raw mut buf,
-                    __pSeg_ref.iSegid as i64_0,
+                    __pSeg_ref.iSegid as I64_0,
                 );
                 sqlite3Fts5BufferAppendVarint(
                     &raw mut __p_ref.rc,
                     &raw mut buf,
-                    __pSeg_ref.pgnoFirst as i64_0,
+                    __pSeg_ref.pgnoFirst as I64_0,
                 );
                 sqlite3Fts5BufferAppendVarint(
                     &raw mut __p_ref.rc,
                     &raw mut buf,
-                    __pSeg_ref.pgnoLast as i64_0,
+                    __pSeg_ref.pgnoLast as I64_0,
                 );
-                if (*pStruct).nOriginCntr > 0 as u64_0 {
+                if (*pStruct).nOriginCntr > 0 as U64_0 {
                     sqlite3Fts5BufferAppendVarint(
                         &raw mut __p_ref.rc,
                         &raw mut buf,
-                        __pSeg_ref.iOrigin1 as i64_0,
+                        __pSeg_ref.iOrigin1 as I64_0,
                     );
                     sqlite3Fts5BufferAppendVarint(
                         &raw mut __p_ref.rc,
                         &raw mut buf,
-                        __pSeg_ref.iOrigin2 as i64_0,
+                        __pSeg_ref.iOrigin2 as I64_0,
                     );
                     sqlite3Fts5BufferAppendVarint(
                         &raw mut __p_ref.rc,
                         &raw mut buf,
-                        __pSeg_ref.nPgTombstone as i64_0,
+                        __pSeg_ref.nPgTombstone as I64_0,
                     );
                     sqlite3Fts5BufferAppendVarint(
                         &raw mut __p_ref.rc,
                         &raw mut buf,
-                        __pSeg_ref.nEntryTombstone as i64_0,
+                        __pSeg_ref.nEntryTombstone as I64_0,
                     );
                     sqlite3Fts5BufferAppendVarint(
                         &raw mut __p_ref.rc,
                         &raw mut buf,
-                        __pSeg_ref.nEntry as i64_0,
+                        __pSeg_ref.nEntry as I64_0,
                     );
                 }
                 iSeg += 1;
             }
             iLvl += 1;
         }
-        fts5DataWrite(p, FTS5_STRUCTURE_ROWID as i64_0, buf.p, buf.n);
+        fts5DataWrite(p, FTS5_STRUCTURE_ROWID as I64_0, buf.p, buf.n);
         sqlite3Fts5BufferFree(&raw mut buf);
     }
 }
 
 unsafe extern "C" fn sqlite3Fts5StorageDocsize(
     mut p: *mut Fts5Storage,
-    mut iRowid: i64_0,
+    mut iRowid: I64_0,
     mut aCol: *mut ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
     let mut nCol: ::core::ffi::c_int = (*(*p).pConfig).nCol;
-    let mut pLookup: *mut crate::src::headers::sqlite3_h::sqlite3_stmt =
-        std::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_stmt>();
+    let mut pLookup: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt =
+        std::ptr::null_mut::<crate::src::headers::sqlite3_h::Sqlite3Stmt>();
     let mut rc: ::core::ffi::c_int = 0;
     rc = fts5StorageGetStmt(
         p,
-        Fts5SqlStmt::STMT_LOOKUP_DOCSIZE as ::core::ffi::c_int,
+        Fts5SqlStmt::StmtLookupDocsize as ::core::ffi::c_int,
         &raw mut pLookup,
         std::ptr::null_mut::<*mut ::core::ffi::c_char>(),
     );
@@ -20396,14 +20396,14 @@ unsafe extern "C" fn sqlite3Fts5StorageDocsize(
         crate::src::src::vdbeapi::sqlite3_bind_int64(
             pLookup,
             1 as ::core::ffi::c_int,
-            iRowid as crate::src::headers::sqlite3_h::sqlite3_int64,
+            iRowid as crate::src::headers::sqlite3_h::Sqlite3Int64,
         );
         if crate::src::headers::sqlite3_h::SQLITE_ROW
             == crate::src::src::vdbeapi::sqlite3_step(pLookup)
         {
-            let mut aBlob: *const u8_0 =
+            let mut aBlob: *const U8_0 =
                 crate::src::src::vdbeapi::sqlite3_column_blob(pLookup, 0 as ::core::ffi::c_int)
-                    as *const u8_0;
+                    as *const U8_0;
             let mut nBlob: ::core::ffi::c_int =
                 crate::src::src::vdbeapi::sqlite3_column_bytes(pLookup, 0 as ::core::ffi::c_int);
             if 0 as ::core::ffi::c_int == fts5StorageDecodeSizeArray(aCol, nCol, aBlob, nBlob) {
@@ -20453,7 +20453,7 @@ unsafe extern "C" fn fts5FilterMethod(
             &raw mut (*pCsr).ePlan as *mut ::core::ffi::c_void as *mut u8,
             0,
             (std::mem::size_of::<Fts5Cursor>() as usize).wrapping_sub(
-                ((&raw mut (*pCsr).ePlan as *mut u8_0).offset_from(pCsr as *mut u8_0)
+                ((&raw mut (*pCsr).ePlan as *mut U8_0).offset_from(pCsr as *mut U8_0)
                     as ::core::ffi::c_long) as usize,
             ),
         );
@@ -20660,13 +20660,13 @@ unsafe extern "C" fn fts5FilterMethod(
                                 __pCsr_ref.pStmt,
                                 1 as ::core::ffi::c_int,
                                 __pCsr_ref.iFirstRowid
-                                    as crate::src::headers::sqlite3_h::sqlite3_int64,
+                                    as crate::src::headers::sqlite3_h::Sqlite3Int64,
                             );
                             crate::src::src::vdbeapi::sqlite3_bind_int64(
                                 __pCsr_ref.pStmt,
                                 2 as ::core::ffi::c_int,
                                 __pCsr_ref.iLastRowid
-                                    as crate::src::headers::sqlite3_h::sqlite3_int64,
+                                    as crate::src::headers::sqlite3_h::Sqlite3Int64,
                             );
                         }
                         rc = fts5NextMethod(pCursor);
@@ -20686,7 +20686,7 @@ unsafe extern "C" fn fts5ExprNodeNext_NOT(
     mut pExpr: *mut Fts5Expr,
     mut pNode: *mut Fts5ExprNode,
     mut bFromValid: ::core::ffi::c_int,
-    mut iFrom: i64_0,
+    mut iFrom: I64_0,
 ) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = (**(&raw mut (*pNode).apChild as *mut *mut Fts5ExprNode)
         .offset(0 as isize))
@@ -20754,11 +20754,11 @@ unsafe extern "C" fn sqlite3Fts5TokenizerPreload(
 unsafe extern "C" fn sqlite3Fts5StorageSize(
     mut p: *mut Fts5Storage,
     mut iCol: ::core::ffi::c_int,
-    mut pnToken: *mut i64_0,
+    mut pnToken: *mut I64_0,
 ) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = fts5StorageLoadTotals(p, 0 as ::core::ffi::c_int);
     if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
-        *pnToken = 0 as i64_0;
+        *pnToken = 0 as I64_0;
         if iCol < 0 as ::core::ffi::c_int {
             let mut i: ::core::ffi::c_int = 0;
             i = 0 as ::core::ffi::c_int;
@@ -20981,12 +20981,12 @@ unsafe extern "C" fn sqlite3Fts5TokenizerInit(mut pApi: *mut fts5_api) -> ::core
 
 unsafe extern "C" fn sqlite3Fts5StorageRowCount(
     mut p: *mut Fts5Storage,
-    mut pnRow: *mut i64_0,
+    mut pnRow: *mut I64_0,
 ) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = fts5StorageLoadTotals(p, 0 as ::core::ffi::c_int);
     if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
         *pnRow = (*p).nTotalRow;
-        if (*p).nTotalRow <= 0 as i64_0 {
+        if (*p).nTotalRow <= 0 as I64_0 {
             rc = FTS5_CORRUPT;
         }
     }
@@ -20996,8 +20996,8 @@ unsafe extern "C" fn sqlite3Fts5StorageRowCount(
 unsafe extern "C" fn sqlite3Fts5StorageSync(mut p: *mut Fts5Storage) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
     let __p_ref = { &mut *p };
-    let mut iLastRowid: i64_0 =
-        crate::src::src::main::sqlite3_last_insert_rowid((*__p_ref.pConfig).db) as i64_0;
+    let mut iLastRowid: I64_0 =
+        crate::src::src::main::sqlite3_last_insert_rowid((*__p_ref.pConfig).db) as I64_0;
     if __p_ref.bTotalsValid != 0 {
         rc = fts5StorageSaveTotals(p);
         if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
@@ -21009,7 +21009,7 @@ unsafe extern "C" fn sqlite3Fts5StorageSync(mut p: *mut Fts5Storage) -> ::core::
     }
     crate::src::src::main::sqlite3_set_last_insert_rowid(
         (*__p_ref.pConfig).db,
-        iLastRowid as crate::src::headers::sqlite3_h::sqlite3_int64,
+        iLastRowid as crate::src::headers::sqlite3_h::Sqlite3Int64,
     );
     rc
 }
@@ -21134,11 +21134,11 @@ unsafe extern "C" fn sqlite3Fts5StorageConfigValue(
     mut pVal: *mut crate::src::headers::vdbeInt_h::sqlite3_value,
     mut iVal: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    let mut pReplace: *mut crate::src::headers::sqlite3_h::sqlite3_stmt =
-        std::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_stmt>();
+    let mut pReplace: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt =
+        std::ptr::null_mut::<crate::src::headers::sqlite3_h::Sqlite3Stmt>();
     let mut rc: ::core::ffi::c_int = fts5StorageGetStmt(
         p,
-        Fts5SqlStmt::STMT_REPLACE_CONFIG as ::core::ffi::c_int,
+        Fts5SqlStmt::StmtReplaceConfig as ::core::ffi::c_int,
         &raw mut pReplace,
         std::ptr::null_mut::<*mut ::core::ffi::c_char>(),
     );
@@ -21236,8 +21236,8 @@ unsafe extern "C" fn fts5StructurePromote(
 unsafe extern "C" fn sqlite3Fts5ExprFirst(
     mut p: *mut Fts5Expr,
     mut pIdx: *mut Fts5Index,
-    mut iFirst: i64_0,
-    mut iLast: i64_0,
+    mut iFirst: I64_0,
+    mut iLast: I64_0,
     mut bDesc: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
     let __p_ref = { &mut *p };
@@ -21263,7 +21263,7 @@ unsafe extern "C" fn sqlite3Fts5ExprFirst(
             p,
             pRoot,
             0 as ::core::ffi::c_int,
-            0 as i64_0,
+            0 as I64_0,
         );
     }
     if fts5RowidCmp(p, __pRoot_ref.iRowid, iLast) > 0 as ::core::ffi::c_int {
@@ -21278,12 +21278,12 @@ unsafe extern "C" fn fts5DlidxLvlNext(mut pLvl: *mut Fts5DlidxLvl) -> ::core::ff
     if __pLvl_ref.iOff == 0 as ::core::ffi::c_int {
         __pLvl_ref.iOff = 1 as ::core::ffi::c_int;
         __pLvl_ref.iOff += sqlite3Fts5GetVarint32(
-            (*pData).p.offset(1 as isize) as *mut u8_0,
-            &raw mut __pLvl_ref.iLeafPgno as *mut u32_0,
+            (*pData).p.offset(1 as isize) as *mut U8_0,
+            &raw mut __pLvl_ref.iLeafPgno as *mut U32_0,
         );
         __pLvl_ref.iOff += sqlite3Fts5GetVarint(
-            (*pData).p.offset(__pLvl_ref.iOff as isize) as *mut u8_0,
-            &raw mut __pLvl_ref.iRowid as *mut u64_0,
+            (*pData).p.offset(__pLvl_ref.iOff as isize) as *mut U8_0,
+            &raw mut __pLvl_ref.iRowid as *mut U64_0,
         ) as ::core::ffi::c_int;
         __pLvl_ref.iFirstOff = __pLvl_ref.iOff;
     } else {
@@ -21296,12 +21296,12 @@ unsafe extern "C" fn fts5DlidxLvlNext(mut pLvl: *mut Fts5DlidxLvl) -> ::core::ff
             iOff += 1;
         }
         if iOff < (*pData).nn {
-            let mut iVal: u64_0 = 0;
+            let mut iVal: U64_0 = 0;
             __pLvl_ref.iLeafPgno += iOff - __pLvl_ref.iOff + 1 as ::core::ffi::c_int;
             iOff +=
-                sqlite3Fts5GetVarint((*pData).p.offset(iOff as isize) as *mut u8_0, &raw mut iVal)
+                sqlite3Fts5GetVarint((*pData).p.offset(iOff as isize) as *mut U8_0, &raw mut iVal)
                     as ::core::ffi::c_int;
-            __pLvl_ref.iRowid = (__pLvl_ref.iRowid as u64_0).wrapping_add(iVal) as i64_0 as i64_0;
+            __pLvl_ref.iRowid = (__pLvl_ref.iRowid as U64_0).wrapping_add(iVal) as I64_0 as I64_0;
             __pLvl_ref.iOff = iOff;
         } else {
             __pLvl_ref.bEof = 1 as ::core::ffi::c_int;
@@ -21312,7 +21312,7 @@ unsafe extern "C" fn fts5DlidxLvlNext(mut pLvl: *mut Fts5DlidxLvl) -> ::core::ff
 
 unsafe extern "C" fn sqlite3Fts5ExprNext(
     mut p: *mut Fts5Expr,
-    mut iLast: i64_0,
+    mut iLast: I64_0,
 ) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = 0;
     let mut pRoot: *mut Fts5ExprNode = (*p).pRoot;
@@ -21321,7 +21321,7 @@ unsafe extern "C" fn sqlite3Fts5ExprNext(
             p,
             pRoot,
             0 as ::core::ffi::c_int,
-            0 as i64_0,
+            0 as I64_0,
         );
         if !((*pRoot).bNomatch != 0) {
             break;
@@ -21337,7 +21337,7 @@ unsafe extern "C" fn sqlite3Fts5ExprEof(mut p: *mut Fts5Expr) -> ::core::ffi::c_
     (*(*p).pRoot).bEof
 }
 
-unsafe extern "C" fn sqlite3Fts5ExprRowid(mut p: *mut Fts5Expr) -> i64_0 {
+unsafe extern "C" fn sqlite3Fts5ExprRowid(mut p: *mut Fts5Expr) -> I64_0 {
     (*(*p).pRoot).iRowid
 }
 
@@ -21370,12 +21370,12 @@ unsafe extern "C" fn fts5DlidxIterNextR(
                 );
                 __pLvl_ref.pData = fts5DataRead(
                     p,
-                    (((*pIter).iSegid as i64_0)
+                    (((*pIter).iSegid as I64_0)
                         << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-                        + ((1 as ::core::ffi::c_int as i64_0)
+                        + ((1 as ::core::ffi::c_int as I64_0)
                             << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-                        + ((iLvl as i64_0) << 31 as ::core::ffi::c_int)
-                        + (*pLvl.offset(1 as isize)).iLeafPgno as i64_0,
+                        + ((iLvl as I64_0) << 31 as ::core::ffi::c_int)
+                        + (*pLvl.offset(1 as isize)).iLeafPgno as I64_0,
                 );
                 if !__pLvl_ref.pData.is_null() {
                     fts5DlidxLvlNext(pLvl);
@@ -21436,14 +21436,14 @@ unsafe extern "C" fn fts5DlidxIterNext(
     fts5DlidxIterNextR(p, pIter, 0 as ::core::ffi::c_int)
 }
 
-unsafe extern "C" fn fts5CursorRowid(mut pCsr: *mut Fts5Cursor) -> i64_0 {
+unsafe extern "C" fn fts5CursorRowid(mut pCsr: *mut Fts5Cursor) -> I64_0 {
     if !(*pCsr).pSorter.is_null() {
         return (*(*pCsr).pSorter).iRowid;
     } else if (*pCsr).ePlan >= FTS5_PLAN_SCAN {
         return crate::src::src::vdbeapi::sqlite3_column_int64(
             (*pCsr).pStmt,
             0 as ::core::ffi::c_int,
-        ) as i64_0;
+        ) as I64_0;
     } else {
         return sqlite3Fts5ExprRowid((*pCsr).pExpr);
     };
@@ -21451,7 +21451,7 @@ unsafe extern "C" fn fts5CursorRowid(mut pCsr: *mut Fts5Cursor) -> i64_0 {
 
 unsafe extern "C" fn sqlite3Fts5ParseSetCaret(mut pPhrase: *mut Fts5ExprPhrase) {
     if !pPhrase.is_null() && (*pPhrase).nTerm != 0 {
-        (*(&raw mut (*pPhrase).aTerm as *mut Fts5ExprTerm).offset(0 as isize)).bFirst = 1 as u8_0;
+        (*(&raw mut (*pPhrase).aTerm as *mut Fts5ExprTerm).offset(0 as isize)).bFirst = 1 as U8_0;
     }
 }
 
@@ -21469,14 +21469,14 @@ unsafe extern "C" fn fts5DlidxIterFirst(mut pIter: *mut Fts5DlidxIter) -> ::core
 
 unsafe extern "C" fn fts5RowidMethod(
     mut pCursor: *mut crate::src::headers::sqlite3_h::sqlite3_vtab_cursor,
-    mut pRowid: *mut crate::src::headers::sqlite3_h::sqlite_int64,
+    mut pRowid: *mut crate::src::headers::sqlite3_h::SqliteInt64,
 ) -> ::core::ffi::c_int {
     let mut pCsr: *mut Fts5Cursor = pCursor as *mut Fts5Cursor;
     let mut ePlan: ::core::ffi::c_int = (*pCsr).ePlan;
     if ePlan == FTS5_PLAN_SPECIAL {
-        *pRowid = 0 as crate::src::headers::sqlite3_h::sqlite_int64;
+        *pRowid = 0 as crate::src::headers::sqlite3_h::SqliteInt64;
     } else {
-        *pRowid = fts5CursorRowid(pCsr) as crate::src::headers::sqlite3_h::sqlite_int64;
+        *pRowid = fts5CursorRowid(pCsr) as crate::src::headers::sqlite3_h::SqliteInt64;
     }
     crate::src::headers::sqlite3_h::SQLITE_OK
 }
@@ -21490,13 +21490,13 @@ unsafe extern "C" fn sqlite3Fts5ParseNearset(
     let mut pRet: *mut Fts5ExprNearset = std::ptr::null_mut::<Fts5ExprNearset>();
     if (*pParse).rc == crate::src::headers::sqlite3_h::SQLITE_OK {
         if pNear.is_null() {
-            let mut nByte: crate::src::headers::sqlite3_h::sqlite3_int64 = 0;
+            let mut nByte: crate::src::headers::sqlite3_h::Sqlite3Int64 = 0;
             nByte = (24 as usize).wrapping_add(
                 ((SZALLOC + 1 as ::core::ffi::c_int) as usize)
                     .wrapping_mul(std::mem::size_of::<*mut Fts5ExprPhrase>() as usize),
-            ) as crate::src::headers::sqlite3_h::sqlite3_int64;
+            ) as crate::src::headers::sqlite3_h::Sqlite3Int64;
             pRet = crate::src::src::malloc::sqlite3_malloc64(
-                nByte as crate::src::headers::sqlite3_h::sqlite3_uint64,
+                nByte as crate::src::headers::sqlite3_h::Sqlite3Uint64,
             ) as *mut Fts5ExprNearset;
             if pRet.is_null() {
                 (*pParse).rc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
@@ -21509,14 +21509,14 @@ unsafe extern "C" fn sqlite3Fts5ParseNearset(
             }
         } else if (*pNear).nPhrase % SZALLOC == 0 as ::core::ffi::c_int {
             let mut nNew: ::core::ffi::c_int = (*pNear).nPhrase + SZALLOC;
-            let mut nByte_0: crate::src::headers::sqlite3_h::sqlite3_int64 = 0;
+            let mut nByte_0: crate::src::headers::sqlite3_h::Sqlite3Int64 = 0;
             nByte_0 = (24 as usize).wrapping_add(
                 ((nNew + 1 as ::core::ffi::c_int) as usize)
                     .wrapping_mul(std::mem::size_of::<*mut Fts5ExprPhrase>() as usize),
-            ) as crate::src::headers::sqlite3_h::sqlite3_int64;
+            ) as crate::src::headers::sqlite3_h::Sqlite3Int64;
             pRet = crate::src::src::malloc::sqlite3_realloc64(
                 pNear as *mut ::core::ffi::c_void,
-                nByte_0 as crate::src::headers::sqlite3_h::sqlite3_uint64,
+                nByte_0 as crate::src::headers::sqlite3_h::Sqlite3Uint64,
             ) as *mut Fts5ExprNearset;
             if pRet.is_null() {
                 (*pParse).rc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
@@ -21587,11 +21587,11 @@ unsafe extern "C" fn fts5DlidxIterLast(mut p: *mut Fts5Index, mut pIter: *mut Ft
             );
             (*pChild).pData = fts5DataRead(
                 p,
-                (((*pIter).iSegid as i64_0)
+                (((*pIter).iSegid as I64_0)
                     << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-                    + ((1 as ::core::ffi::c_int as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-                    + (((i - 1 as ::core::ffi::c_int) as i64_0) << 31 as ::core::ffi::c_int)
-                    + (*pLvl).iLeafPgno as i64_0,
+                    + ((1 as ::core::ffi::c_int as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
+                    + (((i - 1 as ::core::ffi::c_int) as I64_0) << 31 as ::core::ffi::c_int)
+                    + (*pLvl).iLeafPgno as I64_0,
             );
         }
         i -= 1;
@@ -21626,7 +21626,7 @@ unsafe extern "C" fn fts5SeekCursor(
         crate::src::src::vdbeapi::sqlite3_bind_int64(
             __pCsr_ref.pStmt,
             1 as ::core::ffi::c_int,
-            fts5CursorRowid(pCsr) as crate::src::headers::sqlite3_h::sqlite3_int64,
+            fts5CursorRowid(pCsr) as crate::src::headers::sqlite3_h::Sqlite3Int64,
         );
         let __pConfig_ref = &mut *(*pTab_0).pConfig;
         __pConfig_ref.bLock += 1;
@@ -21667,24 +21667,24 @@ unsafe extern "C" fn fts5DlidxLvlPrev(mut pLvl: *mut Fts5DlidxLvl) -> ::core::ff
     if iOff <= __pLvl_ref.iFirstOff {
         __pLvl_ref.bEof = 1 as ::core::ffi::c_int;
     } else {
-        let mut a: *mut u8_0 = (*__pLvl_ref.pData).p;
+        let mut a: *mut U8_0 = (*__pLvl_ref.pData).p;
         __pLvl_ref.iOff = 0 as ::core::ffi::c_int;
         fts5DlidxLvlNext(pLvl);
         loop {
             let mut nZero: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
             let mut ii: ::core::ffi::c_int = __pLvl_ref.iOff;
-            let mut delta: u64_0 = 0 as u64_0;
+            let mut delta: U64_0 = 0 as U64_0;
             while *a.offset(ii as isize) as ::core::ffi::c_int == 0 as ::core::ffi::c_int {
                 nZero += 1;
                 ii += 1;
             }
-            ii += sqlite3Fts5GetVarint(a.offset(ii as isize) as *mut u8_0, &raw mut delta)
+            ii += sqlite3Fts5GetVarint(a.offset(ii as isize) as *mut U8_0, &raw mut delta)
                 as ::core::ffi::c_int;
             if ii >= iOff {
                 break;
             }
             __pLvl_ref.iLeafPgno += nZero + 1 as ::core::ffi::c_int;
-            __pLvl_ref.iRowid = (__pLvl_ref.iRowid as u64_0).wrapping_add(delta) as i64_0 as i64_0;
+            __pLvl_ref.iRowid = (__pLvl_ref.iRowid as U64_0).wrapping_add(delta) as I64_0 as I64_0;
             __pLvl_ref.iOff = ii;
         }
     }
@@ -21711,12 +21711,12 @@ unsafe extern "C" fn fts5DlidxIterPrevR(
                 );
                 __pLvl_ref.pData = fts5DataRead(
                     p,
-                    (((*pIter).iSegid as i64_0)
+                    (((*pIter).iSegid as I64_0)
                         << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-                        + ((1 as ::core::ffi::c_int as i64_0)
+                        + ((1 as ::core::ffi::c_int as I64_0)
                             << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-                        + ((iLvl as i64_0) << 31 as ::core::ffi::c_int)
-                        + (*pLvl.offset(1 as isize)).iLeafPgno as i64_0,
+                        + ((iLvl as I64_0) << 31 as ::core::ffi::c_int)
+                        + (*pLvl.offset(1 as isize)).iLeafPgno as I64_0,
                 );
                 if !__pLvl_ref.pData.is_null() {
                     while fts5DlidxLvlNext(pLvl) == 0 as ::core::ffi::c_int {}
@@ -21752,14 +21752,14 @@ unsafe extern "C" fn fts5ParseTokenize(
         && tflags & FTS5_TOKEN_COLOCATED != 0
     {
         let mut pSyn: *mut Fts5ExprTerm = std::ptr::null_mut::<Fts5ExprTerm>();
-        let mut nByte: crate::src::headers::sqlite3_h::sqlite3_int64 =
+        let mut nByte: crate::src::headers::sqlite3_h::Sqlite3Int64 =
             (std::mem::size_of::<Fts5ExprTerm>() as usize)
                 .wrapping_add(std::mem::size_of::<Fts5Buffer>() as usize)
                 .wrapping_add(nToken as usize)
                 .wrapping_add(1 as usize)
-                as crate::src::headers::sqlite3_h::sqlite3_int64;
+                as crate::src::headers::sqlite3_h::Sqlite3Int64;
         pSyn = crate::src::src::malloc::sqlite3_malloc64(
-            nByte as crate::src::headers::sqlite3_h::sqlite3_uint64,
+            nByte as crate::src::headers::sqlite3_h::Sqlite3Uint64,
         ) as *mut Fts5ExprTerm;
         if pSyn.is_null() {
             rc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
@@ -21807,7 +21807,7 @@ unsafe extern "C" fn fts5ParseTokenize(
                 (32 as usize).wrapping_add(
                     ((nNew + 1 as ::core::ffi::c_int) as usize)
                         .wrapping_mul(std::mem::size_of::<Fts5ExprTerm>() as usize),
-                ) as crate::src::headers::sqlite3_h::sqlite3_uint64,
+                ) as crate::src::headers::sqlite3_h::Sqlite3Uint64,
             ) as *mut Fts5ExprPhrase;
             if pNew.is_null() {
                 rc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
@@ -21816,10 +21816,10 @@ unsafe extern "C" fn fts5ParseTokenize(
                     std::ptr::write_bytes(
                         pNew as *mut ::core::ffi::c_void as *mut u8,
                         0,
-                        (32 as crate::__stddef_size_t_h::size_t).wrapping_add(
-                            (1 as crate::__stddef_size_t_h::size_t)
+                        (32 as crate::__stddef_size_t_h::SizeT).wrapping_add(
+                            (1 as crate::__stddef_size_t_h::SizeT)
                                 .wrapping_mul(std::mem::size_of::<Fts5ExprTerm>()
-                                    as crate::__stddef_size_t_h::size_t),
+                                    as crate::__stddef_size_t_h::SizeT),
                         ),
                     );
                 }
@@ -21989,24 +21989,24 @@ unsafe extern "C" fn fts5DlidxIterInit(
     while __p_ref.rc == crate::src::headers::sqlite3_h::SQLITE_OK
         && bDone == 0 as ::core::ffi::c_int
     {
-        let mut nByte: crate::src::headers::sqlite3_h::sqlite3_int64 = (8 as usize).wrapping_add(
+        let mut nByte: crate::src::headers::sqlite3_h::Sqlite3Int64 = (8 as usize).wrapping_add(
             ((i + 1 as ::core::ffi::c_int) as usize)
                 .wrapping_mul(std::mem::size_of::<Fts5DlidxLvl>() as usize),
         )
-            as crate::src::headers::sqlite3_h::sqlite3_int64;
+            as crate::src::headers::sqlite3_h::Sqlite3Int64;
         let mut pNew: *mut Fts5DlidxIter = std::ptr::null_mut::<Fts5DlidxIter>();
         pNew = crate::src::src::malloc::sqlite3_realloc64(
             pIter as *mut ::core::ffi::c_void,
-            nByte as crate::src::headers::sqlite3_h::sqlite3_uint64,
+            nByte as crate::src::headers::sqlite3_h::Sqlite3Uint64,
         ) as *mut Fts5DlidxIter;
         if pNew.is_null() {
             __p_ref.rc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
         } else {
-            let mut iRowid: i64_0 = ((iSegid as i64_0)
+            let mut iRowid: I64_0 = ((iSegid as I64_0)
                 << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-                + ((1 as ::core::ffi::c_int as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-                + ((i as i64_0) << 31 as ::core::ffi::c_int)
-                + iLeafPg as i64_0;
+                + ((1 as ::core::ffi::c_int as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
+                + ((i as I64_0) << 31 as ::core::ffi::c_int)
+                + iLeafPg as I64_0;
             let mut pLvl: *mut Fts5DlidxLvl = (&raw mut (*pNew).aLvl as *mut Fts5DlidxLvl)
                 .offset(i as isize)
                 as *mut Fts5DlidxLvl;
@@ -22048,7 +22048,7 @@ unsafe extern "C" fn sqlite3Fts5ParsePhraseFree(mut pPhrase: *mut Fts5ExprPhrase
     fts5ExprPhraseFree(pPhrase);
 }
 
-unsafe extern "C" fn fts5DlidxIterRowid(mut pIter: *mut Fts5DlidxIter) -> i64_0 {
+unsafe extern "C" fn fts5DlidxIterRowid(mut pIter: *mut Fts5DlidxIter) -> I64_0 {
     (*(&raw mut (*pIter).aLvl as *mut Fts5DlidxLvl).offset(0 as isize)).iRowid
 }
 
@@ -22079,11 +22079,11 @@ unsafe extern "C" fn fts5SpecialDelete(
     let mut eType1: ::core::ffi::c_int =
         crate::src::src::vdbeapi::sqlite3_value_type(*apVal.offset(1 as isize));
     if eType1 == crate::src::headers::sqlite3_h::SQLITE_INTEGER {
-        let mut iDel: crate::src::headers::sqlite3_h::sqlite3_int64 =
+        let mut iDel: crate::src::headers::sqlite3_h::Sqlite3Int64 =
             crate::src::src::vdbeapi::sqlite3_value_int64(*apVal.offset(1 as isize));
         rc = sqlite3Fts5StorageDelete(
             (*pTab).pStorage,
-            iDel as i64_0,
+            iDel as I64_0,
             apVal.offset(2 as isize) as *mut *mut crate::src::headers::vdbeInt_h::sqlite3_value,
             0 as ::core::ffi::c_int,
         );
@@ -22103,10 +22103,10 @@ unsafe extern "C" fn fts5SegIterNextPage(mut p: *mut Fts5Index, mut pIter: *mut 
     } else if __pIter_ref.iLeafPgno <= (*pSeg).pgnoLast {
         __pIter_ref.pLeaf = fts5LeafRead(
             p,
-            (((*pSeg).iSegid as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-                + ((0 as ::core::ffi::c_int as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-                + ((0 as ::core::ffi::c_int as i64_0) << 31 as ::core::ffi::c_int)
-                + __pIter_ref.iLeafPgno as i64_0,
+            (((*pSeg).iSegid as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
+                + ((0 as ::core::ffi::c_int as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
+                + ((0 as ::core::ffi::c_int as I64_0) << 31 as ::core::ffi::c_int)
+                + __pIter_ref.iLeafPgno as I64_0,
         );
     } else {
         __pIter_ref.pLeaf = std::ptr::null_mut::<Fts5Data>();
@@ -22119,8 +22119,8 @@ unsafe extern "C" fn fts5SegIterNextPage(mut p: *mut Fts5Index, mut pIter: *mut 
             __pIter_ref.iEndofDoclist = __pLeaf_ref.nn + 1 as ::core::ffi::c_int;
         } else {
             __pIter_ref.iPgidxOff += sqlite3Fts5GetVarint32(
-                __pLeaf_ref.p.offset(__pIter_ref.iPgidxOff as isize) as *mut u8_0,
-                &raw mut __pIter_ref.iEndofDoclist as *mut u32_0,
+                __pLeaf_ref.p.offset(__pIter_ref.iPgidxOff as isize) as *mut U8_0,
+                &raw mut __pIter_ref.iEndofDoclist as *mut U32_0,
             );
         }
     }
@@ -22137,7 +22137,7 @@ unsafe extern "C" fn fts5StorageInsert(
     mut pRc: *mut ::core::ffi::c_int,
     mut pTab: *mut Fts5FullTable,
     mut apVal: *mut *mut crate::src::headers::vdbeInt_h::sqlite3_value,
-    mut piRowid: *mut i64_0,
+    mut piRowid: *mut I64_0,
 ) {
     let mut rc: ::core::ffi::c_int = *pRc;
     if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
@@ -22157,14 +22157,14 @@ unsafe extern "C" fn fts5StorageInsert(
 unsafe extern "C" fn parseGrowPhraseArray(mut pParse: *mut Fts5Parse) -> ::core::ffi::c_int {
     if (*pParse).nPhrase % 8 as ::core::ffi::c_int == 0 as ::core::ffi::c_int {
         let __pParse_ref = { &mut *pParse };
-        let mut nByte: crate::src::headers::sqlite3_h::sqlite3_int64 =
+        let mut nByte: crate::src::headers::sqlite3_h::Sqlite3Int64 =
             (std::mem::size_of::<*mut Fts5ExprPhrase>() as usize)
                 .wrapping_mul((__pParse_ref.nPhrase + 8 as ::core::ffi::c_int) as usize)
-                as crate::src::headers::sqlite3_h::sqlite3_int64;
+                as crate::src::headers::sqlite3_h::Sqlite3Int64;
         let mut apNew: *mut *mut Fts5ExprPhrase = std::ptr::null_mut::<*mut Fts5ExprPhrase>();
         apNew = crate::src::src::malloc::sqlite3_realloc64(
             __pParse_ref.apPhrase as *mut ::core::ffi::c_void,
-            nByte as crate::src::headers::sqlite3_h::sqlite3_uint64,
+            nByte as crate::src::headers::sqlite3_h::Sqlite3Uint64,
         ) as *mut *mut Fts5ExprPhrase;
         if apNew.is_null() {
             __pParse_ref.rc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
@@ -22238,12 +22238,12 @@ unsafe extern "C" fn sqlite3Fts5ParseTerm(
                 &raw mut (*pParse).rc,
                 (32 as usize).wrapping_add(
                     (1 as usize).wrapping_mul(std::mem::size_of::<Fts5ExprTerm>() as usize),
-                ) as crate::src::headers::sqlite3_h::sqlite3_int64,
+                ) as crate::src::headers::sqlite3_h::Sqlite3Int64,
             ) as *mut Fts5ExprPhrase;
         } else if (*sCtx.pPhrase).nTerm != 0 {
             (*(&raw mut (*sCtx.pPhrase).aTerm as *mut Fts5ExprTerm)
                 .offset(((*sCtx.pPhrase).nTerm - 1 as ::core::ffi::c_int) as isize))
-            .bPrefix = bPrefix as u8_0;
+            .bPrefix = bPrefix as U8_0;
         }
         let ref mut fresh82 = *(*pParse)
             .apPhrase
@@ -22254,7 +22254,7 @@ unsafe extern "C" fn sqlite3Fts5ParseTerm(
 }
 
 unsafe extern "C" fn fts5GetPoslistSize(
-    mut p: *const u8_0,
+    mut p: *const U8_0,
     mut pnSz: *mut ::core::ffi::c_int,
     mut pbDel: *mut ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
@@ -22267,7 +22267,7 @@ unsafe extern "C" fn fts5GetPoslistSize(
         n -= 1;
         n += sqlite3Fts5GetVarint32(
             p.offset(n as isize) as *const ::core::ffi::c_uchar,
-            &raw mut nSz as *mut u32_0,
+            &raw mut nSz as *mut U32_0,
         );
     }
     *pnSz = nSz / 2 as ::core::ffi::c_int;
@@ -22333,13 +22333,13 @@ unsafe extern "C" fn fts5SegIterLoadNPos(mut p: *mut Fts5Index, mut pIter: *mut 
                 } else {
                     (*__pIter_ref.pLeaf).szLeaf
                 };
-            __pIter_ref.bDel = 0 as u8_0;
+            __pIter_ref.bDel = 0 as U8_0;
             __pIter_ref.nPos = 1 as ::core::ffi::c_int;
             if iOff < iEod
                 && *(*__pIter_ref.pLeaf).p.offset(iOff as isize) as ::core::ffi::c_int
                     == 0 as ::core::ffi::c_int
             {
-                __pIter_ref.bDel = 1 as u8_0;
+                __pIter_ref.bDel = 1 as U8_0;
                 iOff += 1;
                 if iOff < iEod
                     && *(*__pIter_ref.pLeaf).p.offset(iOff as isize) as ::core::ffi::c_int
@@ -22360,14 +22360,14 @@ unsafe extern "C" fn fts5SegIterLoadNPos(mut p: *mut Fts5Index, mut pIter: *mut 
             if nSz & 0x80 as ::core::ffi::c_int != 0 {
                 iOff -= 1;
                 iOff += sqlite3Fts5GetVarint32(
-                    (*__pIter_ref.pLeaf).p.offset(iOff as isize) as *mut u8_0,
-                    &raw mut nSz as *mut u32_0,
+                    (*__pIter_ref.pLeaf).p.offset(iOff as isize) as *mut U8_0,
+                    &raw mut nSz as *mut U32_0,
                 );
             }
-            __pIter_ref.bDel = (nSz & 0x1 as ::core::ffi::c_int) as u8_0;
+            __pIter_ref.bDel = (nSz & 0x1 as ::core::ffi::c_int) as U8_0;
             __pIter_ref.nPos = nSz >> 1 as ::core::ffi::c_int;
         }
-        (*pIter).iLeafOffset = iOff as i64_0;
+        (*pIter).iLeafOffset = iOff as I64_0;
     }
 }
 
@@ -22386,14 +22386,14 @@ unsafe extern "C" fn sqlite3Fts5ExprClonePhrase(
         pOrig = *(*pExpr).apExprPhrase.offset(iPhrase as isize);
         pNew = sqlite3Fts5MallocZero(
             &raw mut rc,
-            std::mem::size_of::<Fts5Expr>() as crate::src::headers::sqlite3_h::sqlite3_int64,
+            std::mem::size_of::<Fts5Expr>() as crate::src::headers::sqlite3_h::Sqlite3Int64,
         ) as *mut Fts5Expr;
     }
     if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
         (*pNew).apExprPhrase = sqlite3Fts5MallocZero(
             &raw mut rc,
             std::mem::size_of::<*mut Fts5ExprPhrase>()
-                as crate::src::headers::sqlite3_h::sqlite3_int64,
+                as crate::src::headers::sqlite3_h::Sqlite3Int64,
         ) as *mut *mut Fts5ExprPhrase;
     }
     if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
@@ -22401,7 +22401,7 @@ unsafe extern "C" fn sqlite3Fts5ExprClonePhrase(
             &raw mut rc,
             (48 as usize).wrapping_add(
                 (1 as usize).wrapping_mul(std::mem::size_of::<*mut Fts5ExprNode>() as usize),
-            ) as crate::src::headers::sqlite3_h::sqlite3_int64,
+            ) as crate::src::headers::sqlite3_h::Sqlite3Int64,
         ) as *mut Fts5ExprNode;
     }
     if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
@@ -22409,18 +22409,18 @@ unsafe extern "C" fn sqlite3Fts5ExprClonePhrase(
             &raw mut rc,
             (24 as usize).wrapping_add(
                 (2 as usize).wrapping_mul(std::mem::size_of::<*mut Fts5ExprPhrase>() as usize),
-            ) as crate::src::headers::sqlite3_h::sqlite3_int64,
+            ) as crate::src::headers::sqlite3_h::Sqlite3Int64,
         ) as *mut Fts5ExprNearset;
     }
     if rc == crate::src::headers::sqlite3_h::SQLITE_OK && !pOrig.is_null() {
         let mut pColsetOrig: *mut Fts5Colset = (*(*(*pOrig).pNode).pNear).pColset;
         if !pColsetOrig.is_null() {
-            let mut nByte: crate::src::headers::sqlite3_h::sqlite3_int64 = 0;
+            let mut nByte: crate::src::headers::sqlite3_h::Sqlite3Int64 = 0;
             let mut pColset: *mut Fts5Colset = std::ptr::null_mut::<Fts5Colset>();
-            nByte = (std::mem::size_of::<i64_0>() as usize).wrapping_mul(
+            nByte = (std::mem::size_of::<I64_0>() as usize).wrapping_mul(
                 (((*pColsetOrig).nCol + 2 as ::core::ffi::c_int) / 2 as ::core::ffi::c_int)
                     as usize,
-            ) as crate::src::headers::sqlite3_h::sqlite3_int64;
+            ) as crate::src::headers::sqlite3_h::Sqlite3Int64;
             pColset = sqlite3Fts5MallocZero(&raw mut rc, nByte) as *mut Fts5Colset;
             if !pColset.is_null() {
                 std::ptr::copy_nonoverlapping(
@@ -22470,7 +22470,7 @@ unsafe extern "C" fn sqlite3Fts5ExprClonePhrase(
                 &raw mut rc,
                 (32 as usize).wrapping_add(
                     (1 as usize).wrapping_mul(std::mem::size_of::<Fts5ExprTerm>() as usize),
-                ) as crate::src::headers::sqlite3_h::sqlite3_int64,
+                ) as crate::src::headers::sqlite3_h::Sqlite3Int64,
             ) as *mut Fts5ExprPhrase;
         }
     }
@@ -22503,7 +22503,7 @@ unsafe extern "C" fn sqlite3Fts5ExprClonePhrase(
                         *mut Fts5Expr,
                         *mut Fts5ExprNode,
                         ::core::ffi::c_int,
-                        i64_0,
+                        I64_0,
                     ) -> ::core::ffi::c_int,
             )
                 as Option<
@@ -22511,7 +22511,7 @@ unsafe extern "C" fn sqlite3Fts5ExprClonePhrase(
                         *mut Fts5Expr,
                         *mut Fts5ExprNode,
                         ::core::ffi::c_int,
-                        i64_0,
+                        I64_0,
                     ) -> ::core::ffi::c_int,
                 >;
         } else {
@@ -22522,7 +22522,7 @@ unsafe extern "C" fn sqlite3Fts5ExprClonePhrase(
                         *mut Fts5Expr,
                         *mut Fts5ExprNode,
                         ::core::ffi::c_int,
-                        i64_0,
+                        I64_0,
                     ) -> ::core::ffi::c_int,
             )
                 as Option<
@@ -22530,7 +22530,7 @@ unsafe extern "C" fn sqlite3Fts5ExprClonePhrase(
                         *mut Fts5Expr,
                         *mut Fts5ExprNode,
                         ::core::ffi::c_int,
-                        i64_0,
+                        I64_0,
                     ) -> ::core::ffi::c_int,
                 >;
         }
@@ -22545,9 +22545,9 @@ unsafe extern "C" fn sqlite3Fts5ExprClonePhrase(
 
 unsafe extern "C" fn fts5SegIterLoadRowid(mut p: *mut Fts5Index, mut pIter: *mut Fts5SegIter) {
     let __pIter_ref = { &mut *pIter };
-    let mut a: *mut u8_0 = (*__pIter_ref.pLeaf).p;
-    let mut iOff: i64_0 = __pIter_ref.iLeafOffset;
-    while iOff >= (*__pIter_ref.pLeaf).szLeaf as i64_0 {
+    let mut a: *mut U8_0 = (*__pIter_ref.pLeaf).p;
+    let mut iOff: I64_0 = __pIter_ref.iLeafOffset;
+    while iOff >= (*__pIter_ref.pLeaf).szLeaf as I64_0 {
         fts5SegIterNextPage(p, pIter);
         if __pIter_ref.pLeaf.is_null() {
             if (*p).rc == crate::src::headers::sqlite3_h::SQLITE_OK {
@@ -22555,13 +22555,13 @@ unsafe extern "C" fn fts5SegIterLoadRowid(mut p: *mut Fts5Index, mut pIter: *mut
             }
             return;
         }
-        iOff = 4 as i64_0;
+        iOff = 4 as I64_0;
         a = (*__pIter_ref.pLeaf).p;
     }
     iOff += sqlite3Fts5GetVarint(
-        a.offset(iOff as isize) as *mut u8_0,
-        &raw mut __pIter_ref.iRowid as *mut u64_0,
-    ) as i64_0;
+        a.offset(iOff as isize) as *mut U8_0,
+        &raw mut __pIter_ref.iRowid as *mut U64_0,
+    ) as I64_0;
     __pIter_ref.iLeafOffset = iOff;
 }
 
@@ -22569,7 +22569,7 @@ unsafe extern "C" fn fts5UpdateMethod(
     mut pVtab: *mut crate::src::headers::sqlite3_h::sqlite3_vtab,
     mut nArg: ::core::ffi::c_int,
     mut apVal: *mut *mut crate::src::headers::vdbeInt_h::sqlite3_value,
-    mut pRowid: *mut crate::src::headers::sqlite3_h::sqlite_int64,
+    mut pRowid: *mut crate::src::headers::sqlite3_h::SqliteInt64,
 ) -> ::core::ffi::c_int {
     let mut current_block: u64;
     let mut pTab: *mut Fts5FullTable = pVtab as *mut Fts5FullTable;
@@ -22637,9 +22637,9 @@ unsafe extern "C" fn fts5UpdateMethod(
                 );
                 rc = crate::src::headers::sqlite3_h::SQLITE_ERROR;
             } else {
-                let mut iDel: i64_0 =
+                let mut iDel: I64_0 =
                     crate::src::src::vdbeapi::sqlite3_value_int64(*apVal.offset(0 as isize))
-                        as i64_0;
+                        as I64_0;
                 rc = sqlite3Fts5StorageDelete(
                     __pTab_ref.pStorage,
                     iDel,
@@ -22679,9 +22679,9 @@ unsafe extern "C" fn fts5UpdateMethod(
                         if eConflict == crate::src::headers::sqlite3_h::SQLITE_REPLACE
                             && eType1 == crate::src::headers::sqlite3_h::SQLITE_INTEGER
                         {
-                            let mut iNew: i64_0 = crate::src::src::vdbeapi::sqlite3_value_int64(
+                            let mut iNew: I64_0 = crate::src::src::vdbeapi::sqlite3_value_int64(
                                 *apVal.offset(1 as isize),
-                            ) as i64_0;
+                            ) as I64_0;
                             rc = sqlite3Fts5StorageDelete(
                                 __pTab_ref.pStorage,
                                 iNew,
@@ -22691,15 +22691,15 @@ unsafe extern "C" fn fts5UpdateMethod(
                                 0 as ::core::ffi::c_int,
                             );
                         }
-                        fts5StorageInsert(&raw mut rc, pTab, apVal, pRowid as *mut i64_0);
+                        fts5StorageInsert(&raw mut rc, pTab, apVal, pRowid as *mut I64_0);
                     } else {
                         let mut pStorage: *mut Fts5Storage = __pTab_ref.pStorage;
-                        let mut iOld: i64_0 = crate::src::src::vdbeapi::sqlite3_value_int64(
+                        let mut iOld: I64_0 = crate::src::src::vdbeapi::sqlite3_value_int64(
                             *apVal.offset(0 as isize),
-                        ) as i64_0;
-                        let mut iNew_0: i64_0 = crate::src::src::vdbeapi::sqlite3_value_int64(
+                        ) as I64_0;
+                        let mut iNew_0: I64_0 = crate::src::src::vdbeapi::sqlite3_value_int64(
                             *apVal.offset(1 as isize),
-                        ) as i64_0;
+                        ) as I64_0;
                         let mut bContent: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
                         if fts5IsContentless(pTab, 1 as ::core::ffi::c_int) != 0 {
                             rc = fts5ContentlessUpdate(
@@ -22744,7 +22744,7 @@ unsafe extern "C" fn fts5UpdateMethod(
                                             &raw mut rc,
                                             pTab,
                                             apVal,
-                                            pRowid as *mut i64_0,
+                                            pRowid as *mut I64_0,
                                         );
                                     } else {
                                         rc = sqlite3Fts5StorageFindDeleteRow(pStorage, iOld);
@@ -22753,7 +22753,7 @@ unsafe extern "C" fn fts5UpdateMethod(
                                                 pStorage,
                                                 0 as ::core::ffi::c_int,
                                                 apVal,
-                                                pRowid as *mut i64_0,
+                                                pRowid as *mut I64_0,
                                             );
                                         }
                                         if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
@@ -22777,7 +22777,7 @@ unsafe extern "C" fn fts5UpdateMethod(
                                             pStorage,
                                             1 as ::core::ffi::c_int,
                                             apVal,
-                                            pRowid as *mut i64_0,
+                                            pRowid as *mut I64_0,
                                         );
                                     }
                                 } else {
@@ -22793,7 +22793,7 @@ unsafe extern "C" fn fts5UpdateMethod(
                                         &raw mut rc,
                                         pTab,
                                         apVal,
-                                        pRowid as *mut i64_0,
+                                        pRowid as *mut I64_0,
                                     );
                                 }
                                 sqlite3Fts5StorageReleaseDeleteRow(pStorage);
@@ -22814,14 +22814,14 @@ unsafe extern "C" fn fts5SegIterLoadTerm(
     mut nKeep: ::core::ffi::c_int,
 ) {
     let __pIter_ref = { &mut *pIter };
-    let mut a: *mut u8_0 = (*__pIter_ref.pLeaf).p;
-    let mut iOff: i64_0 = __pIter_ref.iLeafOffset;
+    let mut a: *mut U8_0 = (*__pIter_ref.pLeaf).p;
+    let mut iOff: I64_0 = __pIter_ref.iLeafOffset;
     let mut nNew: ::core::ffi::c_int = 0;
     iOff += sqlite3Fts5GetVarint32(
-        a.offset(iOff as isize) as *mut u8_0,
-        &raw mut nNew as *mut u32_0,
-    ) as i64_0;
-    if iOff + nNew as i64_0 > (*__pIter_ref.pLeaf).szLeaf as i64_0
+        a.offset(iOff as isize) as *mut U8_0,
+        &raw mut nNew as *mut U32_0,
+    ) as I64_0;
+    if iOff + nNew as I64_0 > (*__pIter_ref.pLeaf).szLeaf as I64_0
         || nKeep > __pIter_ref.term.n
         || nNew == 0 as ::core::ffi::c_int
     {
@@ -22832,10 +22832,10 @@ unsafe extern "C" fn fts5SegIterLoadTerm(
     sqlite3Fts5BufferAppendBlob(
         &raw mut (*p).rc,
         &raw mut __pIter_ref.term,
-        nNew as u32_0,
-        a.offset(iOff as isize) as *mut u8_0,
+        nNew as U32_0,
+        a.offset(iOff as isize) as *mut U8_0,
     );
-    iOff += nNew as i64_0;
+    iOff += nNew as I64_0;
     __pIter_ref.iTermLeafOffset = iOff as ::core::ffi::c_int;
     __pIter_ref.iTermLeafPgno = __pIter_ref.iLeafPgno;
     __pIter_ref.iLeafOffset = iOff;
@@ -22844,8 +22844,8 @@ unsafe extern "C" fn fts5SegIterLoadTerm(
     } else {
         let mut nExtra: ::core::ffi::c_int = 0;
         __pIter_ref.iPgidxOff += sqlite3Fts5GetVarint32(
-            a.offset(__pIter_ref.iPgidxOff as isize) as *mut u8_0,
-            &raw mut nExtra as *mut u32_0,
+            a.offset(__pIter_ref.iPgidxOff as isize) as *mut U8_0,
+            &raw mut nExtra as *mut U32_0,
         );
         __pIter_ref.iEndofDoclist += nExtra;
     }
@@ -22905,16 +22905,16 @@ unsafe extern "C" fn fts5SegIterSetNext(mut p: *mut Fts5Index, mut pIter: *mut F
 }
 
 unsafe extern "C" fn fts5SegIterAllocTombstone(mut p: *mut Fts5Index, mut pIter: *mut Fts5SegIter) {
-    let nTomb: i64_0 = (*(*pIter).pSeg).nPgTombstone as i64_0;
-    if nTomb > 0 as i64_0 {
-        let mut nByte: i64_0 = (8 as ::core::ffi::c_ulong as ::core::ffi::c_ulonglong).wrapping_add(
-            ((nTomb + 1 as i64_0) as ::core::ffi::c_ulonglong)
+    let nTomb: I64_0 = (*(*pIter).pSeg).nPgTombstone as I64_0;
+    if nTomb > 0 as I64_0 {
+        let mut nByte: I64_0 = (8 as ::core::ffi::c_ulong as ::core::ffi::c_ulonglong).wrapping_add(
+            ((nTomb + 1 as I64_0) as ::core::ffi::c_ulonglong)
                 .wrapping_mul(std::mem::size_of::<*mut Fts5Data>() as ::core::ffi::c_ulonglong),
-        ) as i64_0;
+        ) as I64_0;
         let mut pNew: *mut Fts5TombstoneArray = std::ptr::null_mut::<Fts5TombstoneArray>();
         pNew = sqlite3Fts5MallocZero(
             &raw mut (*p).rc,
-            nByte as crate::src::headers::sqlite3_h::sqlite3_int64,
+            nByte as crate::src::headers::sqlite3_h::Sqlite3Int64,
         ) as *mut Fts5TombstoneArray;
         if !pNew.is_null() {
             (*pNew).nTombstone = nTomb as ::core::ffi::c_int;
@@ -23003,7 +23003,7 @@ unsafe extern "C" fn fts5SegIterInit(
     }
     if (*p).rc == crate::src::headers::sqlite3_h::SQLITE_OK && !(*pIter).pLeaf.is_null() {
         let __pIter_ref = { &mut *pIter };
-        __pIter_ref.iLeafOffset = 4 as i64_0;
+        __pIter_ref.iLeafOffset = 4 as I64_0;
         __pIter_ref.iPgidxOff = (*__pIter_ref.pLeaf).szLeaf + 1 as ::core::ffi::c_int;
         fts5SegIterLoadTerm(p, pIter, 0 as ::core::ffi::c_int);
         fts5SegIterLoadNPos(p, pIter);
@@ -23024,10 +23024,10 @@ unsafe extern "C" fn fts5ParseColset(
     let mut pNew: *mut Fts5Colset = std::ptr::null_mut::<Fts5Colset>();
     pNew = crate::src::src::malloc::sqlite3_realloc64(
         p as *mut ::core::ffi::c_void,
-        (std::mem::size_of::<i64_0>() as usize).wrapping_mul(
+        (std::mem::size_of::<I64_0>() as usize).wrapping_mul(
             ((nCol + 1 as ::core::ffi::c_int + 2 as ::core::ffi::c_int) / 2 as ::core::ffi::c_int)
                 as usize,
-        ) as crate::src::headers::sqlite3_h::sqlite3_uint64,
+        ) as crate::src::headers::sqlite3_h::Sqlite3Uint64,
     ) as *mut Fts5Colset;
     if pNew.is_null() {
         (*pParse).rc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
@@ -23064,13 +23064,13 @@ unsafe extern "C" fn fts5SegIterReverseInitPage(
     let __pIter_ref = { &mut *pIter };
     let mut n: ::core::ffi::c_int = (*__pIter_ref.pLeaf).szLeaf;
     let mut i: ::core::ffi::c_int = __pIter_ref.iLeafOffset as ::core::ffi::c_int;
-    let mut a: *mut u8_0 = (*__pIter_ref.pLeaf).p;
+    let mut a: *mut U8_0 = (*__pIter_ref.pLeaf).p;
     let mut iRowidOffset: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     if n > __pIter_ref.iEndofDoclist {
         n = __pIter_ref.iEndofDoclist;
     }
     loop {
-        let mut iDelta: u64_0 = 0 as u64_0;
+        let mut iDelta: U64_0 = 0 as U64_0;
         if i >= n {
             break;
         }
@@ -23085,7 +23085,7 @@ unsafe extern "C" fn fts5SegIterReverseInitPage(
             let mut nPos: ::core::ffi::c_int = 0;
             let mut bDummy: ::core::ffi::c_int = 0;
             i += fts5GetPoslistSize(
-                a.offset(i as isize) as *mut u8_0,
+                a.offset(i as isize) as *mut U8_0,
                 &raw mut nPos,
                 &raw mut bDummy,
             );
@@ -23094,15 +23094,15 @@ unsafe extern "C" fn fts5SegIterReverseInitPage(
         if i >= n {
             break;
         }
-        i += sqlite3Fts5GetVarint(a.offset(i as isize) as *mut u8_0, &raw mut iDelta)
+        i += sqlite3Fts5GetVarint(a.offset(i as isize) as *mut U8_0, &raw mut iDelta)
             as ::core::ffi::c_int;
-        __pIter_ref.iRowid = (__pIter_ref.iRowid as u64_0).wrapping_add(iDelta) as i64_0 as i64_0;
+        __pIter_ref.iRowid = (__pIter_ref.iRowid as U64_0).wrapping_add(iDelta) as I64_0 as I64_0;
         if iRowidOffset >= __pIter_ref.nRowidOffset {
             let mut nNew: ::core::ffi::c_int = __pIter_ref.nRowidOffset + 8 as ::core::ffi::c_int;
             let mut aNew: *mut ::core::ffi::c_int = crate::src::src::malloc::sqlite3_realloc64(
                 __pIter_ref.aRowidOffset as *mut ::core::ffi::c_void,
                 (nNew as usize).wrapping_mul(std::mem::size_of::<::core::ffi::c_int>() as usize)
-                    as crate::src::headers::sqlite3_h::sqlite3_uint64,
+                    as crate::src::headers::sqlite3_h::Sqlite3Uint64,
             ) as *mut ::core::ffi::c_int;
             if aNew.is_null() {
                 (*p).rc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
@@ -23116,7 +23116,7 @@ unsafe extern "C" fn fts5SegIterReverseInitPage(
         iRowidOffset += 1;
         *__pIter_ref.aRowidOffset.offset(fresh23 as isize) =
             __pIter_ref.iLeafOffset as ::core::ffi::c_int;
-        __pIter_ref.iLeafOffset = i as i64_0;
+        __pIter_ref.iLeafOffset = i as I64_0;
     }
     __pIter_ref.iRowidOffset = iRowidOffset;
     fts5SegIterLoadNPos(p, pIter);
@@ -23130,10 +23130,10 @@ unsafe extern "C" fn sqlite3Fts5ParseColsetInvert(
     let mut nCol: ::core::ffi::c_int = (*(*pParse).pConfig).nCol;
     pRet = sqlite3Fts5MallocZero(
         &raw mut (*pParse).rc,
-        (std::mem::size_of::<i64_0>() as usize).wrapping_mul(
+        (std::mem::size_of::<I64_0>() as usize).wrapping_mul(
             ((nCol + 1 as ::core::ffi::c_int + 2 as ::core::ffi::c_int) / 2 as ::core::ffi::c_int)
                 as usize,
-        ) as crate::src::headers::sqlite3_h::sqlite3_int64,
+        ) as crate::src::headers::sqlite3_h::Sqlite3Int64,
     ) as *mut Fts5Colset;
     if !pRet.is_null() {
         let mut i: ::core::ffi::c_int = 0;
@@ -23226,11 +23226,11 @@ unsafe extern "C" fn fts5SegIterReverseNewPage(mut p: *mut Fts5Index, mut pIter:
         __pIter_ref.iLeafPgno -= 1;
         pNew = fts5DataRead(
             p,
-            (((*__pIter_ref.pSeg).iSegid as i64_0)
+            (((*__pIter_ref.pSeg).iSegid as I64_0)
                 << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-                + ((0 as ::core::ffi::c_int as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-                + ((0 as ::core::ffi::c_int as i64_0) << 31 as ::core::ffi::c_int)
-                + __pIter_ref.iLeafPgno as i64_0,
+                + ((0 as ::core::ffi::c_int as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
+                + ((0 as ::core::ffi::c_int as I64_0) << 31 as ::core::ffi::c_int)
+                + __pIter_ref.iLeafPgno as I64_0,
         );
         if pNew.is_null() {
             continue;
@@ -23238,7 +23238,7 @@ unsafe extern "C" fn fts5SegIterReverseNewPage(mut p: *mut Fts5Index, mut pIter:
         if __pIter_ref.iLeafPgno == __pIter_ref.iTermLeafPgno {
             if __pIter_ref.iTermLeafOffset < (*pNew).szLeaf {
                 __pIter_ref.pLeaf = pNew;
-                __pIter_ref.iLeafOffset = __pIter_ref.iTermLeafOffset as i64_0;
+                __pIter_ref.iLeafOffset = __pIter_ref.iTermLeafOffset as I64_0;
             }
         } else {
             let mut iRowidOff: ::core::ffi::c_int = 0;
@@ -23248,17 +23248,17 @@ unsafe extern "C" fn fts5SegIterReverseNewPage(mut p: *mut Fts5Index, mut pIter:
                     fts5IndexCorruptIter(p, pIter);
                 } else {
                     __pIter_ref.pLeaf = pNew;
-                    __pIter_ref.iLeafOffset = iRowidOff as i64_0;
+                    __pIter_ref.iLeafOffset = iRowidOff as I64_0;
                 }
             }
         }
         if !__pIter_ref.pLeaf.is_null() {
-            let mut a: *mut u8_0 = (*__pIter_ref.pLeaf)
+            let mut a: *mut U8_0 = (*__pIter_ref.pLeaf)
                 .p
                 .offset(__pIter_ref.iLeafOffset as isize)
-                as *mut u8_0;
+                as *mut U8_0;
             __pIter_ref.iLeafOffset +=
-                sqlite3Fts5GetVarint(a, &raw mut __pIter_ref.iRowid as *mut u64_0) as i64_0;
+                sqlite3Fts5GetVarint(a, &raw mut __pIter_ref.iRowid as *mut U64_0) as I64_0;
             break;
         } else {
             fts5DataRelease(pNew);
@@ -23299,11 +23299,11 @@ unsafe extern "C" fn fts5ApiColumnCount(mut pCtx: *mut Fts5Context) -> ::core::f
 unsafe extern "C" fn fts5ApiColumnTotalSize(
     mut pCtx: *mut Fts5Context,
     mut iCol: ::core::ffi::c_int,
-    mut pnToken: *mut crate::src::headers::sqlite3_h::sqlite3_int64,
+    mut pnToken: *mut crate::src::headers::sqlite3_h::Sqlite3Int64,
 ) -> ::core::ffi::c_int {
     let pCsr = &*(pCtx as *mut Fts5Cursor);
     let mut pTab: *mut Fts5FullTable = pCsr.base.pVtab as *mut Fts5FullTable;
-    sqlite3Fts5StorageSize((*pTab).pStorage, iCol, pnToken as *mut i64_0)
+    sqlite3Fts5StorageSize((*pTab).pStorage, iCol, pnToken as *mut I64_0)
 }
 
 unsafe extern "C" fn fts5CloneColset(
@@ -23312,10 +23312,10 @@ unsafe extern "C" fn fts5CloneColset(
 ) -> *mut Fts5Colset {
     let mut pRet: *mut Fts5Colset = std::ptr::null_mut::<Fts5Colset>();
     if !pOrig.is_null() {
-        let mut nByte: crate::src::headers::sqlite3_h::sqlite3_int64 =
-            (std::mem::size_of::<i64_0>() as usize).wrapping_mul(
+        let mut nByte: crate::src::headers::sqlite3_h::Sqlite3Int64 =
+            (std::mem::size_of::<I64_0>() as usize).wrapping_mul(
                 (((*pOrig).nCol + 2 as ::core::ffi::c_int) / 2 as ::core::ffi::c_int) as usize,
-            ) as crate::src::headers::sqlite3_h::sqlite3_int64;
+            ) as crate::src::headers::sqlite3_h::Sqlite3Int64;
         pRet = sqlite3Fts5MallocZero(pRc, nByte) as *mut Fts5Colset;
         if !pRet.is_null() {
             std::ptr::copy_nonoverlapping(pOrig as *const u8, pRet as *mut u8, nByte as usize);
@@ -23328,7 +23328,7 @@ unsafe extern "C" fn fts5CloneColset(
 
 unsafe extern "C" fn fts5ApiRowCount(
     mut pCtx: *mut Fts5Context,
-    mut pnRow: *mut i64_0,
+    mut pnRow: *mut I64_0,
 ) -> ::core::ffi::c_int {
     let pCsr = &*(pCtx as *mut Fts5Cursor);
     let mut pTab: *mut Fts5FullTable = pCsr.base.pVtab as *mut Fts5FullTable;
@@ -23417,20 +23417,20 @@ unsafe extern "C" fn fts5SegIterNext_Reverse(
 ) {
     if (*pIter).iRowidOffset > 0 as ::core::ffi::c_int {
         let __pIter_ref = { &mut *pIter };
-        let mut a: *mut u8_0 = (*__pIter_ref.pLeaf).p;
+        let mut a: *mut U8_0 = (*__pIter_ref.pLeaf).p;
         let mut iOff: ::core::ffi::c_int = 0;
-        let mut iDelta: u64_0 = 0;
+        let mut iDelta: U64_0 = 0;
         __pIter_ref.iRowidOffset -= 1;
         __pIter_ref.iLeafOffset = *__pIter_ref
             .aRowidOffset
-            .offset(__pIter_ref.iRowidOffset as isize) as i64_0;
+            .offset(__pIter_ref.iRowidOffset as isize) as I64_0;
         fts5SegIterLoadNPos(p, pIter);
         iOff = __pIter_ref.iLeafOffset as ::core::ffi::c_int;
         if (*(*p).pConfig).eDetail != FTS5_DETAIL_NONE {
             iOff += __pIter_ref.nPos;
         }
-        sqlite3Fts5GetVarint(a.offset(iOff as isize) as *mut u8_0, &raw mut iDelta);
-        __pIter_ref.iRowid = (__pIter_ref.iRowid as u64_0).wrapping_sub(iDelta) as i64_0 as i64_0;
+        sqlite3Fts5GetVarint(a.offset(iOff as isize) as *mut U8_0, &raw mut iDelta);
+        __pIter_ref.iRowid = (__pIter_ref.iRowid as U64_0).wrapping_sub(iDelta) as I64_0 as I64_0;
     } else {
         fts5SegIterReverseNewPage(p, pIter);
     };
@@ -23527,32 +23527,32 @@ unsafe extern "C" fn fts5SegIterNext_None(
         if (*p).rc != 0 || __pIter_ref.pLeaf.is_null() {
             return;
         }
-        __pIter_ref.iRowid = 0 as i64_0;
+        __pIter_ref.iRowid = 0 as I64_0;
         iOff = 4 as ::core::ffi::c_int;
     }
     if iOff < __pIter_ref.iEndofDoclist {
-        let mut iDelta: u64_0 = 0;
+        let mut iDelta: U64_0 = 0;
         iOff += sqlite3Fts5GetVarint(
-            (*__pIter_ref.pLeaf).p.offset(iOff as isize) as *mut u8_0,
+            (*__pIter_ref.pLeaf).p.offset(iOff as isize) as *mut U8_0,
             &raw mut iDelta,
         ) as ::core::ffi::c_int;
-        __pIter_ref.iLeafOffset = iOff as i64_0;
-        __pIter_ref.iRowid = (__pIter_ref.iRowid as u64_0).wrapping_add(iDelta) as i64_0 as i64_0;
+        __pIter_ref.iLeafOffset = iOff as I64_0;
+        __pIter_ref.iRowid = (__pIter_ref.iRowid as U64_0).wrapping_add(iDelta) as I64_0 as I64_0;
     } else {
         if __pIter_ref.flags & FTS5_SEGITER_ONETERM == 0 as ::core::ffi::c_int {
             if !__pIter_ref.pSeg.is_null() {
                 let mut nKeep: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
                 if iOff != fts5LeafFirstTermOff(__pIter_ref.pLeaf) {
                     iOff += sqlite3Fts5GetVarint32(
-                        (*__pIter_ref.pLeaf).p.offset(iOff as isize) as *mut u8_0,
-                        &raw mut nKeep as *mut u32_0,
+                        (*__pIter_ref.pLeaf).p.offset(iOff as isize) as *mut U8_0,
+                        &raw mut nKeep as *mut U32_0,
                     );
                 }
-                __pIter_ref.iLeafOffset = iOff as i64_0;
+                __pIter_ref.iLeafOffset = iOff as I64_0;
                 fts5SegIterLoadTerm(p, pIter, nKeep);
                 current_block = 7056779235015430508;
             } else {
-                let mut pList: *const u8_0 = std::ptr::null::<u8_0>();
+                let mut pList: *const U8_0 = std::ptr::null::<U8_0>();
                 let mut zTerm: *const ::core::ffi::c_char = std::ptr::null::<::core::ffi::c_char>();
                 let mut nTerm: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
                 let mut nList: ::core::ffi::c_int = 0;
@@ -23567,7 +23567,7 @@ unsafe extern "C" fn fts5SegIterNext_None(
                 if pList.is_null() {
                     current_block = 703751814200128505;
                 } else {
-                    (*__pIter_ref.pLeaf).p = pList as *mut u8_0;
+                    (*__pIter_ref.pLeaf).p = pList as *mut U8_0;
                     (*__pIter_ref.pLeaf).nn = nList;
                     (*__pIter_ref.pLeaf).szLeaf = nList;
                     __pIter_ref.iEndofDoclist = nList;
@@ -23575,12 +23575,12 @@ unsafe extern "C" fn fts5SegIterNext_None(
                         &raw mut (*p).rc,
                         &raw mut __pIter_ref.term,
                         nTerm,
-                        zTerm as *mut u8_0,
+                        zTerm as *mut U8_0,
                     );
                     __pIter_ref.iLeafOffset = sqlite3Fts5GetVarint(
                         pList as *const ::core::ffi::c_uchar,
-                        &raw mut __pIter_ref.iRowid as *mut u64_0,
-                    ) as i64_0;
+                        &raw mut __pIter_ref.iRowid as *mut U64_0,
+                    ) as I64_0;
                     current_block = 7056779235015430508;
                 }
             }
@@ -23610,7 +23610,7 @@ unsafe extern "C" fn fts5SegIterNext_None(
 
 unsafe extern "C" fn fts5TextFromStmt(
     mut pConfig: *mut Fts5Config,
-    mut pStmt: *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+    mut pStmt: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
     mut iCol: ::core::ffi::c_int,
     mut ppText: *mut *const ::core::ffi::c_char,
     mut pnText: *mut ::core::ffi::c_int,
@@ -23690,7 +23690,7 @@ unsafe extern "C" fn fts5ExprAssignXNext(mut pNode: *mut Fts5ExprNode) {
                             *mut Fts5Expr,
                             *mut Fts5ExprNode,
                             ::core::ffi::c_int,
-                            i64_0,
+                            I64_0,
                         ) -> ::core::ffi::c_int,
                 )
                     as Option<
@@ -23698,7 +23698,7 @@ unsafe extern "C" fn fts5ExprAssignXNext(mut pNode: *mut Fts5ExprNode) {
                             *mut Fts5Expr,
                             *mut Fts5ExprNode,
                             ::core::ffi::c_int,
-                            i64_0,
+                            I64_0,
                         ) -> ::core::ffi::c_int,
                     >;
             } else {
@@ -23708,7 +23708,7 @@ unsafe extern "C" fn fts5ExprAssignXNext(mut pNode: *mut Fts5ExprNode) {
                             *mut Fts5Expr,
                             *mut Fts5ExprNode,
                             ::core::ffi::c_int,
-                            i64_0,
+                            I64_0,
                         ) -> ::core::ffi::c_int,
                 )
                     as Option<
@@ -23716,7 +23716,7 @@ unsafe extern "C" fn fts5ExprAssignXNext(mut pNode: *mut Fts5ExprNode) {
                             *mut Fts5Expr,
                             *mut Fts5ExprNode,
                             ::core::ffi::c_int,
-                            i64_0,
+                            I64_0,
                         ) -> ::core::ffi::c_int,
                     >;
             }
@@ -23728,7 +23728,7 @@ unsafe extern "C" fn fts5ExprAssignXNext(mut pNode: *mut Fts5ExprNode) {
                         *mut Fts5Expr,
                         *mut Fts5ExprNode,
                         ::core::ffi::c_int,
-                        i64_0,
+                        I64_0,
                     ) -> ::core::ffi::c_int,
             )
                 as Option<
@@ -23736,7 +23736,7 @@ unsafe extern "C" fn fts5ExprAssignXNext(mut pNode: *mut Fts5ExprNode) {
                         *mut Fts5Expr,
                         *mut Fts5ExprNode,
                         ::core::ffi::c_int,
-                        i64_0,
+                        I64_0,
                     ) -> ::core::ffi::c_int,
                 >;
         }
@@ -23747,7 +23747,7 @@ unsafe extern "C" fn fts5ExprAssignXNext(mut pNode: *mut Fts5ExprNode) {
                         *mut Fts5Expr,
                         *mut Fts5ExprNode,
                         ::core::ffi::c_int,
-                        i64_0,
+                        I64_0,
                     ) -> ::core::ffi::c_int,
             )
                 as Option<
@@ -23755,7 +23755,7 @@ unsafe extern "C" fn fts5ExprAssignXNext(mut pNode: *mut Fts5ExprNode) {
                         *mut Fts5Expr,
                         *mut Fts5ExprNode,
                         ::core::ffi::c_int,
-                        i64_0,
+                        I64_0,
                     ) -> ::core::ffi::c_int,
                 >;
         }
@@ -23766,7 +23766,7 @@ unsafe extern "C" fn fts5ExprAssignXNext(mut pNode: *mut Fts5ExprNode) {
                         *mut Fts5Expr,
                         *mut Fts5ExprNode,
                         ::core::ffi::c_int,
-                        i64_0,
+                        I64_0,
                     ) -> ::core::ffi::c_int,
             )
                 as Option<
@@ -23774,7 +23774,7 @@ unsafe extern "C" fn fts5ExprAssignXNext(mut pNode: *mut Fts5ExprNode) {
                         *mut Fts5Expr,
                         *mut Fts5ExprNode,
                         ::core::ffi::c_int,
-                        i64_0,
+                        I64_0,
                     ) -> ::core::ffi::c_int,
                 >;
         }
@@ -23849,7 +23849,7 @@ unsafe extern "C" fn fts5ExprAddChildren(mut p: *mut Fts5ExprNode, mut pSub: *mu
 unsafe extern "C" fn fts5CsrPoslist(
     mut pCsr: *mut Fts5Cursor,
     mut iPhrase: ::core::ffi::c_int,
-    mut pa: *mut *const u8_0,
+    mut pa: *mut *const U8_0,
     mut pn: *mut ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
     let __pCsr_ref = { &mut *pCsr };
@@ -23866,7 +23866,7 @@ unsafe extern "C" fn fts5CsrPoslist(
             1 as ::core::ffi::c_int,
         ) != 0
     {
-        *pa = std::ptr::null::<u8_0>();
+        *pa = std::ptr::null::<U8_0>();
         *pn = 0 as ::core::ffi::c_int;
         return crate::src::headers::sqlite3_h::SQLITE_OK;
     } else if __pCsr_ref.csrflags & 0x40 as ::core::ffi::c_int != 0 {
@@ -23917,12 +23917,12 @@ unsafe extern "C" fn fts5CsrPoslist(
             };
             *pn = *(&raw mut (*pSorter).aIdx as *mut ::core::ffi::c_int).offset(iPhrase as isize)
                 - i1;
-            *pa = (*pSorter).aPoslist.offset(i1 as isize) as *const u8_0;
+            *pa = (*pSorter).aPoslist.offset(i1 as isize) as *const U8_0;
         } else {
             *pn = sqlite3Fts5ExprPoslist(__pCsr_ref.pExpr, iPhrase, pa);
         }
     } else {
-        *pa = std::ptr::null::<u8_0>();
+        *pa = std::ptr::null::<U8_0>();
         *pn = 0 as ::core::ffi::c_int;
     }
     rc
@@ -23938,30 +23938,30 @@ unsafe extern "C" fn fts5SegIterNext(
     let mut iOff: ::core::ffi::c_int = 0;
     let mut bNewTerm: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut nKeep: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-    let mut a: *mut u8_0 = std::ptr::null_mut::<u8_0>();
+    let mut a: *mut U8_0 = std::ptr::null_mut::<U8_0>();
     let mut n: ::core::ffi::c_int = 0;
     a = (*pLeaf).p;
     n = (*pLeaf).szLeaf;
-    iOff = (__pIter_ref.iLeafOffset + __pIter_ref.nPos as i64_0) as ::core::ffi::c_int;
+    iOff = (__pIter_ref.iLeafOffset + __pIter_ref.nPos as I64_0) as ::core::ffi::c_int;
     if iOff < n {
         if iOff >= __pIter_ref.iEndofDoclist {
             bNewTerm = 1 as ::core::ffi::c_int;
             if iOff != fts5LeafFirstTermOff(pLeaf) {
                 iOff += sqlite3Fts5GetVarint32(
-                    a.offset(iOff as isize) as *mut u8_0,
-                    &raw mut nKeep as *mut u32_0,
+                    a.offset(iOff as isize) as *mut U8_0,
+                    &raw mut nKeep as *mut U32_0,
                 );
             }
         } else {
-            let mut iDelta: u64_0 = 0;
-            iOff += sqlite3Fts5GetVarint(a.offset(iOff as isize) as *mut u8_0, &raw mut iDelta)
+            let mut iDelta: U64_0 = 0;
+            iOff += sqlite3Fts5GetVarint(a.offset(iOff as isize) as *mut U8_0, &raw mut iDelta)
                 as ::core::ffi::c_int;
             __pIter_ref.iRowid =
-                (__pIter_ref.iRowid as u64_0).wrapping_add(iDelta) as i64_0 as i64_0;
+                (__pIter_ref.iRowid as U64_0).wrapping_add(iDelta) as I64_0 as I64_0;
         }
-        __pIter_ref.iLeafOffset = iOff as i64_0;
+        __pIter_ref.iLeafOffset = iOff as I64_0;
     } else if __pIter_ref.pSeg.is_null() {
-        let mut pList: *const u8_0 = std::ptr::null::<u8_0>();
+        let mut pList: *const U8_0 = std::ptr::null::<U8_0>();
         let mut zTerm: *const ::core::ffi::c_char = std::ptr::null::<::core::ffi::c_char>();
         let mut nTerm: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
         let mut nList: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
@@ -23979,7 +23979,7 @@ unsafe extern "C" fn fts5SegIterNext(
             fts5DataRelease(__pIter_ref.pLeaf);
             __pIter_ref.pLeaf = std::ptr::null_mut::<Fts5Data>();
         } else {
-            (*__pIter_ref.pLeaf).p = pList as *mut u8_0;
+            (*__pIter_ref.pLeaf).p = pList as *mut U8_0;
             (*__pIter_ref.pLeaf).nn = nList;
             (*__pIter_ref.pLeaf).szLeaf = nList;
             __pIter_ref.iEndofDoclist = nList + 1 as ::core::ffi::c_int;
@@ -23987,12 +23987,12 @@ unsafe extern "C" fn fts5SegIterNext(
                 &raw mut (*p).rc,
                 &raw mut __pIter_ref.term,
                 nTerm,
-                zTerm as *mut u8_0,
+                zTerm as *mut U8_0,
             );
             __pIter_ref.iLeafOffset = sqlite3Fts5GetVarint(
                 pList as *const ::core::ffi::c_uchar,
-                &raw mut __pIter_ref.iRowid as *mut u64_0,
-            ) as i64_0;
+                &raw mut __pIter_ref.iRowid as *mut U64_0,
+            ) as I64_0;
             *pbNewTerm = 1 as ::core::ffi::c_int;
         }
     } else {
@@ -24007,25 +24007,25 @@ unsafe extern "C" fn fts5SegIterNext(
             if iOff != 0 && iOff < (*pLeaf).szLeaf {
                 let __pLeaf_ref = { &mut *pLeaf };
                 iOff += sqlite3Fts5GetVarint(
-                    __pLeaf_ref.p.offset(iOff as isize) as *mut u8_0,
-                    &raw mut __pIter_ref.iRowid as *mut u64_0,
+                    __pLeaf_ref.p.offset(iOff as isize) as *mut U8_0,
+                    &raw mut __pIter_ref.iRowid as *mut U64_0,
                 ) as ::core::ffi::c_int;
-                __pIter_ref.iLeafOffset = iOff as i64_0;
+                __pIter_ref.iLeafOffset = iOff as I64_0;
                 if __pLeaf_ref.nn > __pLeaf_ref.szLeaf {
                     __pIter_ref.iPgidxOff = __pLeaf_ref.szLeaf
                         + sqlite3Fts5GetVarint32(
-                            __pLeaf_ref.p.offset(__pLeaf_ref.szLeaf as isize) as *mut u8_0,
-                            &raw mut __pIter_ref.iEndofDoclist as *mut u32_0,
+                            __pLeaf_ref.p.offset(__pLeaf_ref.szLeaf as isize) as *mut U8_0,
+                            &raw mut __pIter_ref.iEndofDoclist as *mut U32_0,
                         );
                 }
             } else if (*pLeaf).nn > (*pLeaf).szLeaf {
                 let __pLeaf_ref = { &mut *pLeaf };
                 __pIter_ref.iPgidxOff = __pLeaf_ref.szLeaf
                     + sqlite3Fts5GetVarint32(
-                        __pLeaf_ref.p.offset(__pLeaf_ref.szLeaf as isize) as *mut u8_0,
-                        &raw mut iOff as *mut u32_0,
+                        __pLeaf_ref.p.offset(__pLeaf_ref.szLeaf as isize) as *mut U8_0,
+                        &raw mut iOff as *mut U32_0,
                     );
-                __pIter_ref.iLeafOffset = iOff as i64_0;
+                __pIter_ref.iLeafOffset = iOff as I64_0;
                 __pIter_ref.iEndofDoclist = iOff;
                 bNewTerm = 1 as ::core::ffi::c_int;
             }
@@ -24057,11 +24057,11 @@ unsafe extern "C" fn fts5SegIterNext(
                 __pIter_ref.iLeafOffset += sqlite3Fts5GetVarint32(
                     (*__pIter_ref.pLeaf)
                         .p
-                        .offset(__pIter_ref.iLeafOffset as isize) as *mut u8_0,
-                    &raw mut nSz as *mut u32_0,
-                ) as i64_0;
+                        .offset(__pIter_ref.iLeafOffset as isize) as *mut U8_0,
+                    &raw mut nSz as *mut U32_0,
+                ) as I64_0;
             }
-            __pIter_ref.bDel = (nSz & 0x1 as ::core::ffi::c_int) as u8_0;
+            __pIter_ref.bDel = (nSz & 0x1 as ::core::ffi::c_int) as U8_0;
             __pIter_ref.nPos = nSz >> 1 as ::core::ffi::c_int;
         }
     }
@@ -24082,7 +24082,7 @@ unsafe extern "C" fn fts5ParsePhraseToAnd(
     ) as ::core::ffi::c_int;
     pRet = sqlite3Fts5MallocZero(
         &raw mut (*pParse).rc,
-        nByte as crate::src::headers::sqlite3_h::sqlite3_int64,
+        nByte as crate::src::headers::sqlite3_h::Sqlite3Int64,
     ) as *mut Fts5ExprNode;
     if !pRet.is_null() {
         (*pRet).eType = FTS5_AND;
@@ -24096,7 +24096,7 @@ unsafe extern "C" fn fts5ParsePhraseToAnd(
                 &raw mut (*pParse).rc,
                 (32 as usize).wrapping_add(
                     (1 as usize).wrapping_mul(std::mem::size_of::<Fts5ExprTerm>() as usize),
-                ) as crate::src::headers::sqlite3_h::sqlite3_int64,
+                ) as crate::src::headers::sqlite3_h::Sqlite3Int64,
             ) as *mut Fts5ExprPhrase;
             if !pPhrase.is_null() {
                 if parseGrowPhraseArray(pParse) != 0 {
@@ -24160,9 +24160,9 @@ unsafe extern "C" fn fts5CacheInstArray(mut pCsr: *mut Fts5Cursor) -> ::core::ff
     let mut nCol: ::core::ffi::c_int = (*(*(__pCsr_ref.base.pVtab as *mut Fts5Table)).pConfig).nCol;
     nIter = sqlite3Fts5ExprPhraseCount(__pCsr_ref.pExpr);
     if __pCsr_ref.aInstIter.is_null() {
-        let mut nByte: crate::src::headers::sqlite3_h::sqlite3_int64 =
+        let mut nByte: crate::src::headers::sqlite3_h::Sqlite3Int64 =
             (std::mem::size_of::<Fts5PoslistReader>() as usize).wrapping_mul(nIter as usize)
-                as crate::src::headers::sqlite3_h::sqlite3_int64;
+                as crate::src::headers::sqlite3_h::Sqlite3Int64;
         __pCsr_ref.aInstIter = sqlite3Fts5MallocZero(&raw mut rc, nByte) as *mut Fts5PoslistReader;
     }
     aIter = __pCsr_ref.aInstIter;
@@ -24171,7 +24171,7 @@ unsafe extern "C" fn fts5CacheInstArray(mut pCsr: *mut Fts5Cursor) -> ::core::ff
         let mut i: ::core::ffi::c_int = 0;
         i = 0 as ::core::ffi::c_int;
         while i < nIter && rc == crate::src::headers::sqlite3_h::SQLITE_OK {
-            let mut a: *const u8_0 = std::ptr::null::<u8_0>();
+            let mut a: *const U8_0 = std::ptr::null::<U8_0>();
             let mut n: ::core::ffi::c_int = 0;
             rc = fts5CsrPoslist(pCsr, i, &raw mut a, &raw mut n);
             if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
@@ -24214,7 +24214,7 @@ unsafe extern "C" fn fts5CacheInstArray(mut pCsr: *mut Fts5Cursor) -> ::core::ff
                         (nNewSize as usize)
                             .wrapping_mul(std::mem::size_of::<::core::ffi::c_int>() as usize)
                             .wrapping_mul(3 as usize)
-                            as crate::src::headers::sqlite3_h::sqlite3_uint64,
+                            as crate::src::headers::sqlite3_h::Sqlite3Uint64,
                     ) as *mut ::core::ffi::c_int;
                     if !aInst.is_null() {
                         __pCsr_ref.aInst = aInst;
@@ -24232,9 +24232,9 @@ unsafe extern "C" fn fts5CacheInstArray(mut pCsr: *mut Fts5Cursor) -> ::core::ff
                 *aInst.offset(0 as isize) = iBest;
                 *aInst.offset(1 as isize) =
                     ((*aIter.offset(iBest as isize)).iPos >> 32 as ::core::ffi::c_int
-                        & 0x7fffffff as i64_0) as ::core::ffi::c_int;
+                        & 0x7fffffff as I64_0) as ::core::ffi::c_int;
                 *aInst.offset(2 as isize) = ((*aIter.offset(iBest as isize)).iPos
-                    & 0x7fffffff as i64_0)
+                    & 0x7fffffff as I64_0)
                     as ::core::ffi::c_int;
                 if *aInst.offset(1 as isize) >= nCol {
                     rc = FTS5_CORRUPT;
@@ -24262,7 +24262,7 @@ unsafe extern "C" fn sqlite3Fts5ParseNode(
     let mut pRet: *mut Fts5ExprNode = std::ptr::null_mut::<Fts5ExprNode>();
     if (*pParse).rc == crate::src::headers::sqlite3_h::SQLITE_OK {
         let mut nChild: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-        let mut nByte: crate::src::headers::sqlite3_h::sqlite3_int64 = 0;
+        let mut nByte: crate::src::headers::sqlite3_h::Sqlite3Int64 = 0;
         if eType == FTS5_STRING && pNear.is_null() {
             return std::ptr::null_mut::<Fts5ExprNode>();
         }
@@ -24292,7 +24292,7 @@ unsafe extern "C" fn sqlite3Fts5ParseNode(
             }
             nByte = (48 as usize).wrapping_add(
                 (nChild as usize).wrapping_mul(std::mem::size_of::<*mut Fts5ExprNode>() as usize),
-            ) as crate::src::headers::sqlite3_h::sqlite3_int64;
+            ) as crate::src::headers::sqlite3_h::Sqlite3Int64;
             pRet = sqlite3Fts5MallocZero(&raw mut (*pParse).rc, nByte) as *mut Fts5ExprNode;
             if !pRet.is_null() {
                 (*pRet).eType = eType;
@@ -24383,10 +24383,10 @@ unsafe extern "C" fn fts5SegIterReverse(mut p: *mut Fts5Index, mut pIter: *mut F
         pgnoLast = fts5DlidxIterPgno(pDlidx);
         pLast = fts5LeafRead(
             p,
-            ((iSegid as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-                + ((0 as ::core::ffi::c_int as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-                + ((0 as ::core::ffi::c_int as i64_0) << 31 as ::core::ffi::c_int)
-                + pgnoLast as i64_0,
+            ((iSegid as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
+                + ((0 as ::core::ffi::c_int as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
+                + ((0 as ::core::ffi::c_int as I64_0) << 31 as ::core::ffi::c_int)
+                + pgnoLast as I64_0,
         );
     } else {
         let __pIter_ref = { &mut *pIter };
@@ -24409,17 +24409,17 @@ unsafe extern "C" fn fts5SegIterReverse(mut p: *mut Fts5Index, mut pIter: *mut F
                 break;
             }
         }
-        __pIter_ref.iLeafOffset = iPoslist as i64_0;
+        __pIter_ref.iLeafOffset = iPoslist as I64_0;
         if __pIter_ref.iEndofDoclist >= (*pLeaf).szLeaf {
             let mut pgno: ::core::ffi::c_int = 0;
             let mut pSeg: *mut Fts5StructureSegment = __pIter_ref.pSeg;
             pgno = __pIter_ref.iLeafPgno + 1 as ::core::ffi::c_int;
             while (*p).rc == 0 && pgno <= (*pSeg).pgnoLast {
-                let mut iAbs: i64_0 = (((*pSeg).iSegid as i64_0)
+                let mut iAbs: I64_0 = (((*pSeg).iSegid as I64_0)
                     << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-                    + ((0 as ::core::ffi::c_int as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-                    + ((0 as ::core::ffi::c_int as i64_0) << 31 as ::core::ffi::c_int)
-                    + pgno as i64_0;
+                    + ((0 as ::core::ffi::c_int as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
+                    + ((0 as ::core::ffi::c_int as I64_0) << 31 as ::core::ffi::c_int)
+                    + pgno as I64_0;
                 let mut pNew: *mut Fts5Data = fts5LeafRead(p, iAbs);
                 if !pNew.is_null() {
                     let mut iRowid: ::core::ffi::c_int = 0;
@@ -24456,10 +24456,10 @@ unsafe extern "C" fn fts5SegIterReverse(mut p: *mut Fts5Index, mut pIter: *mut F
                 return;
             }
             iOff += sqlite3Fts5GetVarint(
-                __pLast_ref.p.offset(iOff as isize) as *mut u8_0,
-                &raw mut __pIter_ref.iRowid as *mut u64_0,
+                __pLast_ref.p.offset(iOff as isize) as *mut U8_0,
+                &raw mut __pIter_ref.iRowid as *mut U64_0,
             ) as ::core::ffi::c_int;
-            __pIter_ref.iLeafOffset = iOff as i64_0;
+            __pIter_ref.iLeafOffset = iOff as I64_0;
             if __pLast_ref.szLeaf >= __pLast_ref.nn {
                 __pIter_ref.iEndofDoclist = __pLast_ref.nn + 1 as ::core::ffi::c_int;
             } else {
@@ -24555,8 +24555,8 @@ unsafe extern "C" fn sqlite3Fts5ParseImplicitAnd(
             std::ptr::copy(
                 ap.offset(1 as isize) as *mut *mut Fts5ExprPhrase as *const u8,
                 ap as *mut u8,
-                ((std::mem::size_of::<*mut Fts5ExprPhrase>() as crate::__stddef_size_t_h::size_t)
-                    .wrapping_mul(__pNear_ref.nPhrase as crate::__stddef_size_t_h::size_t))
+                ((std::mem::size_of::<*mut Fts5ExprPhrase>() as crate::__stddef_size_t_h::SizeT)
+                    .wrapping_mul(__pNear_ref.nPhrase as crate::__stddef_size_t_h::SizeT))
                     as usize,
             );
             __pParse_ref.nPhrase -= 1;
@@ -24576,8 +24576,8 @@ unsafe extern "C" fn sqlite3Fts5ParseImplicitAnd(
 
 unsafe extern "C" fn fts5ApiRowid(
     mut pCtx: *mut Fts5Context,
-) -> crate::src::headers::sqlite3_h::sqlite3_int64 {
-    fts5CursorRowid(pCtx as *mut Fts5Cursor) as crate::src::headers::sqlite3_h::sqlite3_int64
+) -> crate::src::headers::sqlite3_h::Sqlite3Int64 {
+    fts5CursorRowid(pCtx as *mut Fts5Cursor) as crate::src::headers::sqlite3_h::Sqlite3Int64
 }
 
 unsafe extern "C" fn fts5ColumnSizeCb(
@@ -24607,7 +24607,7 @@ unsafe extern "C" fn fts5ApiColumnSize(
     if (*pCsr).csrflags & 0x4 as ::core::ffi::c_int != 0 {
         let __pConfig_ref = { &mut *pConfig };
         if __pConfig_ref.bColumnsize != 0 {
-            let mut iRowid: i64_0 = fts5CursorRowid(pCsr);
+            let mut iRowid: I64_0 = fts5CursorRowid(pCsr);
             rc = sqlite3Fts5StorageDocsize((*pTab).pStorage, iRowid, (*pCsr).aColumnSize);
         } else if __pConfig_ref.zContent.is_null()
             || __pConfig_ref.eContent == FTS5_CONTENT_UNINDEXED
@@ -24694,8 +24694,8 @@ unsafe extern "C" fn fts5SegIterLoadDlidx(mut p: *mut Fts5Index, mut pIter: *mut
 }
 
 unsafe extern "C" fn fts5ExprTermPrint(mut pTerm: *mut Fts5ExprTerm) -> *mut ::core::ffi::c_char {
-    let mut nByte: crate::src::headers::sqlite3_h::sqlite3_int64 =
-        0 as crate::src::headers::sqlite3_h::sqlite3_int64;
+    let mut nByte: crate::src::headers::sqlite3_h::Sqlite3Int64 =
+        0 as crate::src::headers::sqlite3_h::Sqlite3Int64;
     let mut p: *mut Fts5ExprTerm = std::ptr::null_mut::<Fts5ExprTerm>();
     let mut zQuoted: *mut ::core::ffi::c_char = std::ptr::null_mut::<::core::ffi::c_char>();
     p = pTerm;
@@ -24703,11 +24703,11 @@ unsafe extern "C" fn fts5ExprTermPrint(mut pTerm: *mut Fts5ExprTerm) -> *mut ::c
         nByte += ((*pTerm).nQueryTerm * 2 as ::core::ffi::c_int
             + 3 as ::core::ffi::c_int
             + 2 as ::core::ffi::c_int)
-            as crate::src::headers::sqlite3_h::sqlite3_int64;
+            as crate::src::headers::sqlite3_h::Sqlite3Int64;
         p = (*p).pSynonym;
     }
     zQuoted = crate::src::src::malloc::sqlite3_malloc64(
-        nByte as crate::src::headers::sqlite3_h::sqlite3_uint64,
+        nByte as crate::src::headers::sqlite3_h::Sqlite3Uint64,
     ) as *mut ::core::ffi::c_char;
     if !zQuoted.is_null() {
         let mut i: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
@@ -24778,7 +24778,7 @@ unsafe extern "C" fn fts5ApiSetAuxdata(
         let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
         pData = sqlite3Fts5MallocZero(
             &raw mut rc,
-            std::mem::size_of::<Fts5Auxdata>() as crate::src::headers::sqlite3_h::sqlite3_int64,
+            std::mem::size_of::<Fts5Auxdata>() as crate::src::headers::sqlite3_h::Sqlite3Int64,
         ) as *mut Fts5Auxdata;
         if pData.is_null() {
             if xDelete.is_some() {
@@ -24800,25 +24800,25 @@ unsafe extern "C" fn fts5LeafSeek(
     mut p: *mut Fts5Index,
     mut bGe: ::core::ffi::c_int,
     mut pIter: *mut Fts5SegIter,
-    mut pTerm: *const u8_0,
+    mut pTerm: *const U8_0,
     mut nTerm: ::core::ffi::c_int,
 ) {
     let mut current_block: u64;
-    let mut iOff: u32_0 = 0;
+    let mut iOff: U32_0 = 0;
     let __pIter_ref = { &mut *pIter };
-    let mut a: *const u8_0 = (*__pIter_ref.pLeaf).p;
-    let mut n: u32_0 = (*__pIter_ref.pLeaf).nn as u32_0;
-    let mut nMatch: u32_0 = 0 as u32_0;
-    let mut nKeep: u32_0 = 0 as u32_0;
-    let mut nNew: u32_0 = 0 as u32_0;
-    let mut iTermOff: u32_0 = 0;
-    let mut iPgidx: u32_0 = 0;
+    let mut a: *const U8_0 = (*__pIter_ref.pLeaf).p;
+    let mut n: U32_0 = (*__pIter_ref.pLeaf).nn as U32_0;
+    let mut nMatch: U32_0 = 0 as U32_0;
+    let mut nKeep: U32_0 = 0 as U32_0;
+    let mut nNew: U32_0 = 0 as U32_0;
+    let mut iTermOff: U32_0 = 0;
+    let mut iPgidx: U32_0 = 0;
     let mut bEndOfPage: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-    iPgidx = (*__pIter_ref.pLeaf).szLeaf as u32_0;
+    iPgidx = (*__pIter_ref.pLeaf).szLeaf as U32_0;
     iPgidx = iPgidx.wrapping_add(sqlite3Fts5GetVarint32(
         a.offset(iPgidx as isize) as *const ::core::ffi::c_uchar,
         &raw mut iTermOff,
-    ) as u32_0);
+    ) as U32_0);
     iOff = iTermOff;
     if iOff > n {
         fts5IndexCorruptIter(p, pIter);
@@ -24827,27 +24827,27 @@ unsafe extern "C" fn fts5LeafSeek(
     loop {
         let fresh32 = iOff;
         iOff = iOff.wrapping_add(1);
-        nNew = *a.offset(fresh32 as isize) as u32_0;
-        if nNew & 0x80 as u32_0 != 0 {
+        nNew = *a.offset(fresh32 as isize) as U32_0;
+        if nNew & 0x80 as U32_0 != 0 {
             iOff = iOff.wrapping_sub(1);
             iOff = iOff.wrapping_add(sqlite3Fts5GetVarint32(
                 a.offset(iOff as isize) as *const ::core::ffi::c_uchar,
                 &raw mut nNew,
-            ) as u32_0);
+            ) as U32_0);
         }
         if nKeep < nMatch {
             current_block = 14715265129466113671;
             break;
         }
         if nKeep == nMatch {
-            let mut nCmp: u32_0 = 0;
-            let mut i: u32_0 = 0;
-            nCmp = if nNew < (nTerm as u32_0).wrapping_sub(nMatch) {
+            let mut nCmp: U32_0 = 0;
+            let mut i: U32_0 = 0;
+            nCmp = if nNew < (nTerm as U32_0).wrapping_sub(nMatch) {
                 nNew
             } else {
-                (nTerm as u32_0).wrapping_sub(nMatch)
+                (nTerm as U32_0).wrapping_sub(nMatch)
             };
-            i = 0 as u32_0;
+            i = 0 as U32_0;
             while i < nCmp {
                 if *a.offset(iOff.wrapping_add(i) as isize) as ::core::ffi::c_int
                     != *pTerm.offset(nMatch.wrapping_add(i) as isize) as ::core::ffi::c_int
@@ -24857,7 +24857,7 @@ unsafe extern "C" fn fts5LeafSeek(
                 i = i.wrapping_add(1);
             }
             nMatch = nMatch.wrapping_add(i);
-            if nTerm as u32_0 == nMatch {
+            if nTerm as U32_0 == nMatch {
                 if i == nNew {
                     current_block = 2388333040024217239;
                     break;
@@ -24881,7 +24881,7 @@ unsafe extern "C" fn fts5LeafSeek(
             iPgidx = iPgidx.wrapping_add(sqlite3Fts5GetVarint32(
                 a.offset(iPgidx as isize) as *const ::core::ffi::c_uchar,
                 &raw mut nKeep,
-            ) as u32_0);
+            ) as U32_0);
             iTermOff = iTermOff.wrapping_add(nKeep);
             iOff = iTermOff;
             if iOff >= n {
@@ -24890,13 +24890,13 @@ unsafe extern "C" fn fts5LeafSeek(
             }
             let fresh33 = iOff;
             iOff = iOff.wrapping_add(1);
-            nKeep = *a.offset(fresh33 as isize) as u32_0;
-            if nKeep & 0x80 as u32_0 != 0 {
+            nKeep = *a.offset(fresh33 as isize) as U32_0;
+            if nKeep & 0x80 as U32_0 != 0 {
                 iOff = iOff.wrapping_sub(1);
                 iOff = iOff.wrapping_add(sqlite3Fts5GetVarint32(
                     a.offset(iOff as isize) as *const ::core::ffi::c_uchar,
                     &raw mut nKeep,
-                ) as u32_0);
+                ) as U32_0);
             }
         }
     }
@@ -24919,22 +24919,22 @@ unsafe extern "C" fn fts5LeafSeek(
                     {
                         continue;
                     }
-                    iPgidx = (*__pIter_ref.pLeaf).szLeaf as u32_0;
+                    iPgidx = (*__pIter_ref.pLeaf).szLeaf as U32_0;
                     iPgidx = iPgidx.wrapping_add(sqlite3Fts5GetVarint32(
-                        (*__pIter_ref.pLeaf).p.offset(iPgidx as isize) as *mut u8_0,
+                        (*__pIter_ref.pLeaf).p.offset(iPgidx as isize) as *mut U8_0,
                         &raw mut iOff,
-                    ) as u32_0);
-                    if iOff < 4 as u32_0 || iOff as i64_0 >= (*__pIter_ref.pLeaf).szLeaf as i64_0 {
+                    ) as U32_0);
+                    if iOff < 4 as U32_0 || iOff as I64_0 >= (*__pIter_ref.pLeaf).szLeaf as I64_0 {
                         fts5IndexCorruptIter(p, pIter);
                         return;
                     } else {
-                        nKeep = 0 as u32_0;
+                        nKeep = 0 as U32_0;
                         iTermOff = iOff;
-                        n = (*__pIter_ref.pLeaf).nn as u32_0;
+                        n = (*__pIter_ref.pLeaf).nn as U32_0;
                         iOff = iOff.wrapping_add(sqlite3Fts5GetVarint32(
                             a.offset(iOff as isize) as *const ::core::ffi::c_uchar,
                             &raw mut nNew,
-                        ) as u32_0);
+                        ) as U32_0);
                         break;
                     }
                 }
@@ -24942,11 +24942,11 @@ unsafe extern "C" fn fts5LeafSeek(
         }
         _ => {}
     }
-    if iOff as i64_0 + nNew as i64_0 > n as i64_0 || nNew < 1 as u32_0 {
+    if iOff as I64_0 + nNew as I64_0 > n as I64_0 || nNew < 1 as U32_0 {
         fts5IndexCorruptIter(p, pIter);
         return;
     }
-    __pIter_ref.iLeafOffset = iOff.wrapping_add(nNew) as i64_0;
+    __pIter_ref.iLeafOffset = iOff.wrapping_add(nNew) as I64_0;
     __pIter_ref.iTermLeafOffset = __pIter_ref.iLeafOffset as ::core::ffi::c_int;
     __pIter_ref.iTermLeafPgno = __pIter_ref.iLeafPgno;
     sqlite3Fts5BufferSet(
@@ -24959,7 +24959,7 @@ unsafe extern "C" fn fts5LeafSeek(
         &raw mut (*p).rc,
         &raw mut __pIter_ref.term,
         nNew,
-        a.offset(iOff as isize) as *const u8_0,
+        a.offset(iOff as isize) as *const U8_0,
     );
     if iPgidx >= n {
         __pIter_ref.iEndofDoclist = (*__pIter_ref.pLeaf).nn + 1 as ::core::ffi::c_int;
@@ -24967,9 +24967,9 @@ unsafe extern "C" fn fts5LeafSeek(
         let mut nExtra: ::core::ffi::c_int = 0;
         iPgidx = iPgidx.wrapping_add(sqlite3Fts5GetVarint32(
             a.offset(iPgidx as isize) as *const ::core::ffi::c_uchar,
-            &raw mut nExtra as *mut u32_0,
-        ) as u32_0);
-        __pIter_ref.iEndofDoclist = iTermOff.wrapping_add(nExtra as u32_0) as ::core::ffi::c_int;
+            &raw mut nExtra as *mut U32_0,
+        ) as U32_0);
+        __pIter_ref.iEndofDoclist = iTermOff.wrapping_add(nExtra as U32_0) as ::core::ffi::c_int;
     }
     __pIter_ref.iPgidxOff = iPgidx as ::core::ffi::c_int;
     fts5SegIterLoadRowid(p, pIter);
@@ -25136,13 +25136,13 @@ unsafe extern "C" fn fts5ApiPhraseNext(
         let __pIter_ref = { &mut *pIter };
         __pIter_ref.a = (*pIter)
             .a
-            .offset(sqlite3Fts5GetVarint32(__pIter_ref.a, &raw mut iVal as *mut u32_0) as isize);
+            .offset(sqlite3Fts5GetVarint32(__pIter_ref.a, &raw mut iVal as *mut U32_0) as isize);
         if iVal == 1 as ::core::ffi::c_int {
             let mut nCol: ::core::ffi::c_int =
                 (*(*((*(pCtx as *mut Fts5Cursor)).base.pVtab as *mut Fts5Table)).pConfig).nCol;
             __pIter_ref.a =
                 (*pIter).a.offset(
-                    sqlite3Fts5GetVarint32(__pIter_ref.a, &raw mut iVal as *mut u32_0) as isize,
+                    sqlite3Fts5GetVarint32(__pIter_ref.a, &raw mut iVal as *mut U32_0) as isize,
                 );
             *piCol = if iVal >= nCol {
                 nCol - 1 as ::core::ffi::c_int
@@ -25152,7 +25152,7 @@ unsafe extern "C" fn fts5ApiPhraseNext(
             *piOff = 0 as ::core::ffi::c_int;
             __pIter_ref.a =
                 (*pIter).a.offset(
-                    sqlite3Fts5GetVarint32(__pIter_ref.a, &raw mut iVal as *mut u32_0) as isize,
+                    sqlite3Fts5GetVarint32(__pIter_ref.a, &raw mut iVal as *mut U32_0) as isize,
                 );
         }
         *piOff += iVal - 2 as ::core::ffi::c_int;
@@ -25197,7 +25197,7 @@ unsafe extern "C" fn fts5ApiPhraseNextColumn(
             let __pIter_ref = { &mut *pIter };
             __pIter_ref.a = __pIter_ref.a.offset(sqlite3Fts5GetVarint32(
                 __pIter_ref.a.offset(0 as isize) as *const ::core::ffi::c_uchar,
-                &raw mut iIncr as *mut u32_0,
+                &raw mut iIncr as *mut U32_0,
             ) as isize);
             *piCol += iIncr - 2 as ::core::ffi::c_int;
         }
@@ -25216,14 +25216,14 @@ unsafe extern "C" fn fts5ApiPhraseNextColumn(
             __pIter_ref.a = (*pIter)
                 .a
                 .offset(
-                    sqlite3Fts5GetVarint32(__pIter_ref.a, &raw mut dummy as *mut u32_0) as isize,
+                    sqlite3Fts5GetVarint32(__pIter_ref.a, &raw mut dummy as *mut U32_0) as isize,
                 );
         }
         __pIter_ref.a = __pIter_ref.a.offset(
             (1 as ::core::ffi::c_int
                 + sqlite3Fts5GetVarint32(
                     __pIter_ref.a.offset(1 as isize) as *const ::core::ffi::c_uchar,
-                    piCol as *mut u32_0,
+                    piCol as *mut U32_0,
                 )) as isize,
         );
     };
@@ -25418,7 +25418,7 @@ unsafe extern "C" fn fts5ApiPhraseFirstColumn(
             };
             n = *(&raw mut (*pSorter).aIdx as *mut ::core::ffi::c_int).offset(iPhrase as isize)
                 - i1;
-            (*pIter).a = (*pSorter).aPoslist.offset(i1 as isize) as *const u8_0
+            (*pIter).a = (*pSorter).aPoslist.offset(i1 as isize) as *const U8_0
                 as *const ::core::ffi::c_uchar;
         } else {
             rc = sqlite3Fts5ExprPhraseCollist(
@@ -25456,7 +25456,7 @@ unsafe extern "C" fn fts5ApiPhraseFirstColumn(
                     (1 as ::core::ffi::c_int
                         + sqlite3Fts5GetVarint32(
                             __pIter_ref.a.offset(1 as isize) as *const ::core::ffi::c_uchar,
-                            piCol as *mut u32_0,
+                            piCol as *mut U32_0,
                         )) as isize,
                 );
             } else {
@@ -25469,7 +25469,7 @@ unsafe extern "C" fn fts5ApiPhraseFirstColumn(
 
 unsafe extern "C" fn fts5IdxSelectStmt(
     mut p: *mut Fts5Index,
-) -> *mut crate::src::headers::sqlite3_h::sqlite3_stmt {
+) -> *mut crate::src::headers::sqlite3_h::Sqlite3Stmt {
     if (*p).pIdxSelect.is_null() {
         let mut pConfig: *mut Fts5Config = (*p).pConfig;
         fts5IndexPrepareStmt(
@@ -25487,7 +25487,7 @@ unsafe extern "C" fn fts5IdxSelectStmt(
 
 unsafe extern "C" fn fts5SegIterSeekInit(
     mut p: *mut Fts5Index,
-    mut pTerm: *const u8_0,
+    mut pTerm: *const U8_0,
     mut nTerm: ::core::ffi::c_int,
     mut flags: ::core::ffi::c_int,
     mut pSeg: *mut Fts5StructureSegment,
@@ -25496,8 +25496,8 @@ unsafe extern "C" fn fts5SegIterSeekInit(
     let mut iPg: ::core::ffi::c_int = 1 as ::core::ffi::c_int;
     let mut bGe: ::core::ffi::c_int = flags & FTS5INDEX_QUERY_SCAN;
     let mut bDlidx: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-    let mut pIdxSelect: *mut crate::src::headers::sqlite3_h::sqlite3_stmt =
-        std::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_stmt>();
+    let mut pIdxSelect: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt =
+        std::ptr::null_mut::<crate::src::headers::sqlite3_h::Sqlite3Stmt>();
     std::ptr::write_bytes(
         pIter as *mut ::core::ffi::c_void as *mut u8,
         0,
@@ -25521,11 +25521,11 @@ unsafe extern "C" fn fts5SegIterSeekInit(
     if crate::src::headers::sqlite3_h::SQLITE_ROW
         == crate::src::src::vdbeapi::sqlite3_step(pIdxSelect)
     {
-        let mut val: i64_0 =
+        let mut val: I64_0 =
             crate::src::src::vdbeapi::sqlite3_column_int(pIdxSelect, 0 as ::core::ffi::c_int)
-                as i64_0;
+                as I64_0;
         iPg = (val >> 1 as ::core::ffi::c_int) as ::core::ffi::c_int;
-        bDlidx = (val & 0x1 as i64_0) as ::core::ffi::c_int;
+        bDlidx = (val & 0x1 as I64_0) as ::core::ffi::c_int;
     }
     __p_ref.rc = crate::src::src::vdbeapi::sqlite3_reset(pIdxSelect);
     crate::src::src::vdbeapi::sqlite3_bind_null(pIdxSelect, 2 as ::core::ffi::c_int);
@@ -25597,7 +25597,7 @@ unsafe extern "C" fn fts5ApiInstToken(
             let mut iOff: ::core::ffi::c_int = *(*pCsr)
                 .aInst
                 .offset((iIdx * 3 as ::core::ffi::c_int + 2 as ::core::ffi::c_int) as isize);
-            let mut iRowid: i64_0 = fts5CursorRowid(pCsr);
+            let mut iRowid: I64_0 = fts5CursorRowid(pCsr);
             rc = sqlite3Fts5ExprInstToken(
                 __pCsr_ref.pExpr,
                 iRowid,
@@ -25656,7 +25656,7 @@ unsafe extern "C" fn fts5ExprFunction(
     nConfig = 3 as ::core::ffi::c_int + (nArg - iArg);
     azConfig = crate::src::src::malloc::sqlite3_malloc64(
         (std::mem::size_of::<*mut ::core::ffi::c_char>() as usize).wrapping_mul(nConfig as usize)
-            as crate::src::headers::sqlite3_h::sqlite3_uint64,
+            as crate::src::headers::sqlite3_h::Sqlite3Uint64,
     ) as *mut *const ::core::ffi::c_char;
     if azConfig.is_null() {
         crate::src::src::vdbeapi::sqlite3_result_error_nomem(pCtx);
@@ -25789,7 +25789,7 @@ unsafe extern "C" fn fts5ApiColumnLocale(
 
 unsafe extern "C" fn fts5IdxNextStmt(
     mut p: *mut Fts5Index,
-) -> *mut crate::src::headers::sqlite3_h::sqlite3_stmt {
+) -> *mut crate::src::headers::sqlite3_h::Sqlite3Stmt {
     if (*p).pIdxNextSelect.is_null() {
         let mut pConfig: *mut Fts5Config = (*p).pConfig;
         fts5IndexPrepareStmt(
@@ -25814,8 +25814,8 @@ unsafe extern "C" fn fts5SegIterNextInit(
 ) {
     let mut iPg: ::core::ffi::c_int = -(1 as ::core::ffi::c_int);
     let mut bDlidx: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-    let mut pSel: *mut crate::src::headers::sqlite3_h::sqlite3_stmt =
-        std::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_stmt>();
+    let mut pSel: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt =
+        std::ptr::null_mut::<crate::src::headers::sqlite3_h::Sqlite3Stmt>();
     pSel = fts5IdxNextStmt(p);
     if !pSel.is_null() {
         crate::src::src::vdbeapi::sqlite3_bind_int(pSel, 1 as ::core::ffi::c_int, (*pSeg).iSegid);
@@ -25829,11 +25829,11 @@ unsafe extern "C" fn fts5SegIterNextInit(
         if crate::src::src::vdbeapi::sqlite3_step(pSel)
             == crate::src::headers::sqlite3_h::SQLITE_ROW
         {
-            let mut val: i64_0 =
+            let mut val: I64_0 =
                 crate::src::src::vdbeapi::sqlite3_column_int64(pSel, 0 as ::core::ffi::c_int)
-                    as i64_0;
+                    as I64_0;
             iPg = (val >> 1 as ::core::ffi::c_int) as ::core::ffi::c_int;
-            bDlidx = (val & 0x1 as i64_0) as ::core::ffi::c_int;
+            bDlidx = (val & 0x1 as I64_0) as ::core::ffi::c_int;
         }
         (*p).rc = crate::src::src::vdbeapi::sqlite3_reset(pSel);
         crate::src::src::vdbeapi::sqlite3_bind_null(pSel, 2 as ::core::ffi::c_int);
@@ -25855,14 +25855,14 @@ unsafe extern "C" fn fts5SegIterNextInit(
         fts5SegIterSetNext(p, pIter);
     }
     if !__pIter_ref.pLeaf.is_null() {
-        let mut a: *const u8_0 = (*__pIter_ref.pLeaf).p;
+        let mut a: *const U8_0 = (*__pIter_ref.pLeaf).p;
         let mut iTermOff: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
         __pIter_ref.iPgidxOff = (*__pIter_ref.pLeaf).szLeaf;
         __pIter_ref.iPgidxOff += sqlite3Fts5GetVarint32(
             a.offset(__pIter_ref.iPgidxOff as isize) as *const ::core::ffi::c_uchar,
-            &raw mut iTermOff as *mut u32_0,
+            &raw mut iTermOff as *mut U32_0,
         );
-        __pIter_ref.iLeafOffset = iTermOff as i64_0;
+        __pIter_ref.iLeafOffset = iTermOff as I64_0;
         fts5SegIterLoadTerm(p, pIter, 0 as ::core::ffi::c_int);
         fts5SegIterLoadNPos(p, pIter);
         if bDlidx != 0 {
@@ -25882,14 +25882,14 @@ static mut sFts5Api: Fts5ExtensionApi = {
         ),
         xRowCount: Some(
             fts5ApiRowCount
-                as unsafe extern "C" fn(*mut Fts5Context, *mut i64_0) -> ::core::ffi::c_int,
+                as unsafe extern "C" fn(*mut Fts5Context, *mut I64_0) -> ::core::ffi::c_int,
         ),
         xColumnTotalSize: Some(
             fts5ApiColumnTotalSize
                 as unsafe extern "C" fn(
                     *mut Fts5Context,
                     ::core::ffi::c_int,
-                    *mut crate::src::headers::sqlite3_h::sqlite3_int64,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Int64,
                 ) -> ::core::ffi::c_int,
         ),
         xTokenize: Some(
@@ -25940,7 +25940,7 @@ static mut sFts5Api: Fts5ExtensionApi = {
                 as unsafe extern "C" fn(
                     *mut Fts5Context,
                 )
-                    -> crate::src::headers::sqlite3_h::sqlite3_int64,
+                    -> crate::src::headers::sqlite3_h::Sqlite3Int64,
         ),
         xColumnText: Some(
             fts5ApiColumnText
@@ -26150,17 +26150,17 @@ unsafe extern "C" fn fts5ExprFunctionTcl(
 
 unsafe extern "C" fn fts5SegIterHashInit(
     mut p: *mut Fts5Index,
-    mut pTerm: *const u8_0,
+    mut pTerm: *const U8_0,
     mut nTerm: ::core::ffi::c_int,
     mut flags: ::core::ffi::c_int,
     mut pIter: *mut Fts5SegIter,
 ) {
     let mut nList: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-    let mut z: *const u8_0 = std::ptr::null::<u8_0>();
+    let mut z: *const U8_0 = std::ptr::null::<U8_0>();
     let mut n: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut pLeaf: *mut Fts5Data = std::ptr::null_mut::<Fts5Data>();
     if pTerm.is_null() || flags & FTS5INDEX_QUERY_SCAN != 0 {
-        let mut pList: *const u8_0 = std::ptr::null::<u8_0>();
+        let mut pList: *const U8_0 = std::ptr::null::<U8_0>();
         let __p_ref = { &mut *p };
         __p_ref.rc =
             sqlite3Fts5HashScanInit(__p_ref.pHash, pTerm as *const ::core::ffi::c_char, nTerm);
@@ -26174,10 +26174,10 @@ unsafe extern "C" fn fts5SegIterHashInit(
         if !pList.is_null() {
             pLeaf = fts5IdxMalloc(
                 p,
-                std::mem::size_of::<Fts5Data>() as crate::src::headers::sqlite3_h::sqlite3_int64,
+                std::mem::size_of::<Fts5Data>() as crate::src::headers::sqlite3_h::Sqlite3Int64,
             ) as *mut Fts5Data;
             if !pLeaf.is_null() {
-                (*pLeaf).p = pList as *mut u8_0;
+                (*pLeaf).p = pList as *mut U8_0;
             }
         }
         __p_ref.bDelete = 0 as ::core::ffi::c_int;
@@ -26191,7 +26191,7 @@ unsafe extern "C" fn fts5SegIterHashInit(
             &raw mut nList,
         );
         if !pLeaf.is_null() {
-            (*pLeaf).p = pLeaf.offset(1 as isize) as *mut Fts5Data as *mut u8_0;
+            (*pLeaf).p = pLeaf.offset(1 as isize) as *mut Fts5Data as *mut U8_0;
         }
         z = pTerm;
         n = nTerm;
@@ -26205,7 +26205,7 @@ unsafe extern "C" fn fts5SegIterHashInit(
         __pLeaf_ref.nn = __pLeaf_ref.szLeaf;
         __pIter_ref.pLeaf = pLeaf;
         __pIter_ref.iLeafOffset =
-            sqlite3Fts5GetVarint(__pLeaf_ref.p, &raw mut __pIter_ref.iRowid as *mut u64_0) as i64_0;
+            sqlite3Fts5GetVarint(__pLeaf_ref.p, &raw mut __pIter_ref.iRowid as *mut U64_0) as I64_0;
         __pIter_ref.iEndofDoclist = __pLeaf_ref.nn;
         if flags & FTS5INDEX_QUERY_DESC != 0 {
             __pIter_ref.flags |= FTS5_SEGITER_REVERSE;
@@ -26223,7 +26223,7 @@ unsafe extern "C" fn fts5ExprIsAlnum(
     mut apVal: *mut *mut crate::src::headers::vdbeInt_h::sqlite3_value,
 ) {
     let mut iCode: ::core::ffi::c_int = 0;
-    let mut aArr: [u8_0; 32] = { std::mem::zeroed() };
+    let mut aArr: [U8_0; 32] = { std::mem::zeroed() };
     if nArg != 1 as ::core::ffi::c_int {
         crate::src::src::vdbeapi::sqlite3_result_error(
             pCtx,
@@ -26235,20 +26235,20 @@ unsafe extern "C" fn fts5ExprIsAlnum(
     }
     sqlite3Fts5UnicodeCatParse(
         b"L*\0" as *const u8 as *const ::core::ffi::c_char,
-        &raw mut aArr as *mut u8_0,
+        &raw mut aArr as *mut U8_0,
     );
     sqlite3Fts5UnicodeCatParse(
         b"N*\0" as *const u8 as *const ::core::ffi::c_char,
-        &raw mut aArr as *mut u8_0,
+        &raw mut aArr as *mut U8_0,
     );
     sqlite3Fts5UnicodeCatParse(
         b"Co\0" as *const u8 as *const ::core::ffi::c_char,
-        &raw mut aArr as *mut u8_0,
+        &raw mut aArr as *mut U8_0,
     );
     iCode = crate::src::src::vdbeapi::sqlite3_value_int(*apVal.offset(0 as isize));
     crate::src::src::vdbeapi::sqlite3_result_int(
         pCtx,
-        aArr[sqlite3Fts5UnicodeCategory(iCode as u32_0) as usize] as ::core::ffi::c_int,
+        aArr[sqlite3Fts5UnicodeCategory(iCode as U32_0) as usize] as ::core::ffi::c_int,
     );
 }
 
@@ -26299,7 +26299,7 @@ unsafe extern "C" fn fts5ExprFold(
 
 unsafe extern "C" fn fts5CursorFromCsrid(
     mut pGlobal: *mut Fts5Global,
-    mut iCsrId: i64_0,
+    mut iCsrId: I64_0,
 ) -> *mut Fts5Cursor {
     let mut pCsr: *mut Fts5Cursor = std::ptr::null_mut::<Fts5Cursor>();
     pCsr = (*pGlobal).pCsr;
@@ -26395,9 +26395,9 @@ unsafe extern "C" fn fts5ApiCallback(
 ) {
     let mut pAux: *mut Fts5Auxiliary = std::ptr::null_mut::<Fts5Auxiliary>();
     let mut pCsr: *mut Fts5Cursor = std::ptr::null_mut::<Fts5Cursor>();
-    let mut iCsrId: i64_0 = 0;
+    let mut iCsrId: I64_0 = 0;
     pAux = crate::src::src::vdbeapi::sqlite3_user_data(context) as *mut Fts5Auxiliary;
-    iCsrId = crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(0 as isize)) as i64_0;
+    iCsrId = crate::src::src::vdbeapi::sqlite3_value_int64(*argv.offset(0 as isize)) as I64_0;
     pCsr = fts5CursorFromCsrid((*pAux).pGlobal, iCsrId);
     if pCsr.is_null()
         || ((*pCsr).ePlan == 0 as ::core::ffi::c_int || (*pCsr).ePlan == FTS5_PLAN_SPECIAL)
@@ -26448,7 +26448,7 @@ unsafe extern "C" fn fts5TombstoneArrayDelete(mut p: *mut Fts5TombstoneArray) {
 
 unsafe extern "C" fn sqlite3Fts5TableFromCsrid(
     mut pGlobal: *mut Fts5Global,
-    mut iCsrId: i64_0,
+    mut iCsrId: I64_0,
 ) -> *mut Fts5Table {
     let mut pCsr: *mut Fts5Cursor = std::ptr::null_mut::<Fts5Cursor>();
     pCsr = fts5CursorFromCsrid(pGlobal, iCsrId);
@@ -26494,7 +26494,7 @@ unsafe extern "C" fn sqlite3Fts5ExprPhraseSize(
 unsafe extern "C" fn sqlite3Fts5ExprPoslist(
     mut pExpr: *mut Fts5Expr,
     mut iPhrase: ::core::ffi::c_int,
-    mut pa: *mut *const u8_0,
+    mut pa: *mut *const U8_0,
 ) -> ::core::ffi::c_int {
     let mut nRet: ::core::ffi::c_int = 0;
     let mut pPhrase: *mut Fts5ExprPhrase = *(*pExpr).apExprPhrase.offset(iPhrase as isize);
@@ -26503,7 +26503,7 @@ unsafe extern "C" fn sqlite3Fts5ExprPoslist(
         *pa = (*pPhrase).poslist.p;
         nRet = (*pPhrase).poslist.n;
     } else {
-        *pa = std::ptr::null::<u8_0>();
+        *pa = std::ptr::null::<U8_0>();
         nRet = 0 as ::core::ffi::c_int;
     }
     nRet
@@ -26521,18 +26521,18 @@ unsafe extern "C" fn fts5PoslistBlob(
         FTS5_DETAIL_FULL => {
             i = 0 as ::core::ffi::c_int;
             while i < nPhrase - 1 as ::core::ffi::c_int {
-                let mut dummy: *const u8_0 = std::ptr::null::<u8_0>();
+                let mut dummy: *const U8_0 = std::ptr::null::<U8_0>();
                 let mut nByte: ::core::ffi::c_int =
                     sqlite3Fts5ExprPoslist((*pCsr).pExpr, i, &raw mut dummy);
-                sqlite3Fts5BufferAppendVarint(&raw mut rc, &raw mut val, nByte as i64_0);
+                sqlite3Fts5BufferAppendVarint(&raw mut rc, &raw mut val, nByte as I64_0);
                 i += 1;
             }
             i = 0 as ::core::ffi::c_int;
             while i < nPhrase {
-                let mut pPoslist: *const u8_0 = std::ptr::null::<u8_0>();
+                let mut pPoslist: *const U8_0 = std::ptr::null::<U8_0>();
                 let mut nPoslist: ::core::ffi::c_int = 0;
                 nPoslist = sqlite3Fts5ExprPoslist((*pCsr).pExpr, i, &raw mut pPoslist);
-                sqlite3Fts5BufferAppendBlob(&raw mut rc, &raw mut val, nPoslist as u32_0, pPoslist);
+                sqlite3Fts5BufferAppendBlob(&raw mut rc, &raw mut val, nPoslist as U32_0, pPoslist);
                 i += 1;
             }
         }
@@ -26541,7 +26541,7 @@ unsafe extern "C" fn fts5PoslistBlob(
             while rc == crate::src::headers::sqlite3_h::SQLITE_OK
                 && i < nPhrase - 1 as ::core::ffi::c_int
             {
-                let mut dummy_0: *const u8_0 = std::ptr::null::<u8_0>();
+                let mut dummy_0: *const U8_0 = std::ptr::null::<U8_0>();
                 let mut nByte_0: ::core::ffi::c_int = 0;
                 rc = sqlite3Fts5ExprPhraseCollist(
                     (*pCsr).pExpr,
@@ -26549,12 +26549,12 @@ unsafe extern "C" fn fts5PoslistBlob(
                     &raw mut dummy_0,
                     &raw mut nByte_0,
                 );
-                sqlite3Fts5BufferAppendVarint(&raw mut rc, &raw mut val, nByte_0 as i64_0);
+                sqlite3Fts5BufferAppendVarint(&raw mut rc, &raw mut val, nByte_0 as I64_0);
                 i += 1;
             }
             i = 0 as ::core::ffi::c_int;
             while rc == crate::src::headers::sqlite3_h::SQLITE_OK && i < nPhrase {
-                let mut pPoslist_0: *const u8_0 = std::ptr::null::<u8_0>();
+                let mut pPoslist_0: *const U8_0 = std::ptr::null::<U8_0>();
                 let mut nPoslist_0: ::core::ffi::c_int = 0;
                 rc = sqlite3Fts5ExprPhraseCollist(
                     (*pCsr).pExpr,
@@ -26565,7 +26565,7 @@ unsafe extern "C" fn fts5PoslistBlob(
                 sqlite3Fts5BufferAppendBlob(
                     &raw mut rc,
                     &raw mut val,
-                    nPoslist_0 as u32_0,
+                    nPoslist_0 as U32_0,
                     pPoslist_0,
                 );
                 i += 1;
@@ -26593,15 +26593,15 @@ unsafe extern "C" fn sqlite3Fts5ExprClearPoslists(
     pRet = crate::src::src::malloc::sqlite3_malloc64(
         (std::mem::size_of::<Fts5PoslistPopulator>() as usize)
             .wrapping_mul((*pExpr).nPhrase as usize)
-            as crate::src::headers::sqlite3_h::sqlite3_uint64,
+            as crate::src::headers::sqlite3_h::Sqlite3Uint64,
     ) as *mut Fts5PoslistPopulator;
     if !pRet.is_null() {
         let mut i: ::core::ffi::c_int = 0;
         std::ptr::write_bytes(
             pRet as *mut ::core::ffi::c_void as *mut u8,
             0,
-            (std::mem::size_of::<Fts5PoslistPopulator>() as crate::__stddef_size_t_h::size_t)
-                .wrapping_mul((*pExpr).nPhrase as crate::__stddef_size_t_h::size_t),
+            (std::mem::size_of::<Fts5PoslistPopulator>() as crate::__stddef_size_t_h::SizeT)
+                .wrapping_mul((*pExpr).nPhrase as crate::__stddef_size_t_h::SizeT),
         );
         i = 0 as ::core::ffi::c_int;
         while i < (*pExpr).nPhrase {
@@ -26654,13 +26654,13 @@ unsafe extern "C" fn fts5ColumnMethod(
         if iCol == __pConfig_ref.nCol {
             crate::src::src::vdbeapi::sqlite3_result_int64(
                 pCtx,
-                (*pCsr).iSpecial as crate::src::headers::sqlite3_h::sqlite3_int64,
+                (*pCsr).iSpecial as crate::src::headers::sqlite3_h::Sqlite3Int64,
             );
         }
     } else if iCol == __pConfig_ref.nCol {
         crate::src::src::vdbeapi::sqlite3_result_int64(
             pCtx,
-            (*pCsr).iCsrId as crate::src::headers::sqlite3_h::sqlite3_int64,
+            (*pCsr).iCsrId as crate::src::headers::sqlite3_h::Sqlite3Int64,
         );
     } else if iCol == __pConfig_ref.nCol + 1 as ::core::ffi::c_int {
         let __pCsr_ref = { &mut *pCsr };
@@ -26745,7 +26745,7 @@ unsafe extern "C" fn fts5ExprPopulatePoslistsCb(
     let mut i: ::core::ffi::c_int = 0;
     let mut nQuery: ::core::ffi::c_int = nToken;
     let __pExpr_ref = { &mut *pExpr };
-    let mut iRowid: i64_0 = (*__pExpr_ref.pRoot).iRowid;
+    let mut iRowid: I64_0 = (*__pExpr_ref.pRoot).iRowid;
     if nQuery > FTS5_MAX_TOKEN_SIZE {
         nQuery = FTS5_MAX_TOKEN_SIZE;
     }
@@ -26783,7 +26783,7 @@ unsafe extern "C" fn fts5ExprPopulatePoslistsCb(
                         let mut iCol: ::core::ffi::c_int =
                             ((*p).iOff >> 32 as ::core::ffi::c_int) as ::core::ffi::c_int;
                         let mut iTokOff: ::core::ffi::c_int =
-                            ((*p).iOff & 0x7fffffff as i64_0) as ::core::ffi::c_int;
+                            ((*p).iOff & 0x7fffffff as I64_0) as ::core::ffi::c_int;
                         rc = sqlite3Fts5IndexIterWriteTokendata(
                             (*pT).pIter,
                             pToken,
@@ -26833,7 +26833,7 @@ unsafe extern "C" fn fts5MultiIterDoCompare(
     }
     p1 = (&raw mut __pIter_ref.aSeg as *mut Fts5SegIter).offset(i1 as isize) as *mut Fts5SegIter;
     p2 = (&raw mut __pIter_ref.aSeg as *mut Fts5SegIter).offset(i2 as isize) as *mut Fts5SegIter;
-    pRes.bTermEq = 0 as u8_0;
+    pRes.bTermEq = 0 as U8_0;
     if (*p1).pLeaf.is_null() {
         iRes = i2;
     } else if (*p2).pLeaf.is_null() {
@@ -26842,7 +26842,7 @@ unsafe extern "C" fn fts5MultiIterDoCompare(
         let mut res: ::core::ffi::c_int =
             fts5BufferCompare(&raw mut (*p1).term, &raw mut (*p2).term);
         if res == 0 as ::core::ffi::c_int {
-            pRes.bTermEq = 1 as u8_0;
+            pRes.bTermEq = 1 as U8_0;
             if (*p1).iRowid == (*p2).iRowid {
                 return i2;
             }
@@ -26858,7 +26858,7 @@ unsafe extern "C" fn fts5MultiIterDoCompare(
             iRes = i2;
         }
     }
-    pRes.iFirst = iRes as u16_0;
+    pRes.iFirst = iRes as U16_0;
     0 as ::core::ffi::c_int
 }
 
@@ -26874,7 +26874,7 @@ unsafe extern "C" fn sqlite3Fts5ExprPopulatePoslists(
     let mut sCtx: Fts5ExprCtx = { std::mem::zeroed() };
     sCtx.pExpr = pExpr;
     sCtx.aPopulator = aPopulator;
-    sCtx.iOff = ((iCol as i64_0) << 32 as ::core::ffi::c_int) - 1 as i64_0;
+    sCtx.iOff = ((iCol as I64_0) << 32 as ::core::ffi::c_int) - 1 as I64_0;
     i = 0 as ::core::ffi::c_int;
     while i < (*pExpr).nPhrase {
         let mut pNode: *mut Fts5ExprNode = (**(*pExpr).apExprPhrase.offset(i as isize)).pNode;
@@ -26968,16 +26968,16 @@ unsafe extern "C" fn fts5SegIterGotoPage(
             if !(iOff > 0 as ::core::ffi::c_int) {
                 continue;
             }
-            let mut a: *mut u8_0 = (*__pIter_ref.pLeaf).p;
+            let mut a: *mut U8_0 = (*__pIter_ref.pLeaf).p;
             let mut n: ::core::ffi::c_int = (*__pIter_ref.pLeaf).szLeaf;
             if iOff < 4 as ::core::ffi::c_int || iOff >= n {
                 fts5IndexCorruptIdx(p);
             } else {
                 iOff += sqlite3Fts5GetVarint(
-                    a.offset(iOff as isize) as *mut u8_0,
-                    &raw mut __pIter_ref.iRowid as *mut u64_0,
+                    a.offset(iOff as isize) as *mut U8_0,
+                    &raw mut __pIter_ref.iRowid as *mut U64_0,
                 ) as ::core::ffi::c_int;
-                __pIter_ref.iLeafOffset = iOff as i64_0;
+                __pIter_ref.iLeafOffset = iOff as I64_0;
                 fts5SegIterLoadNPos(p, pIter);
             }
             break;
@@ -27014,7 +27014,7 @@ unsafe extern "C" fn fts5RenameMethod(
 
 unsafe extern "C" fn fts5ExprCheckPoslists(
     mut pNode: *mut Fts5ExprNode,
-    mut iRowid: i64_0,
+    mut iRowid: I64_0,
 ) -> ::core::ffi::c_int {
     let __pNode_ref = { &mut *pNode };
     __pNode_ref.iRowid = iRowid;
@@ -27099,7 +27099,7 @@ unsafe extern "C" fn fts5SavepointMethod(
 unsafe extern "C" fn fts5SegIterNextFrom(
     mut p: *mut Fts5Index,
     mut pIter: *mut Fts5SegIter,
-    mut iMatch: i64_0,
+    mut iMatch: I64_0,
 ) {
     let __pIter_ref = { &mut *pIter };
     let mut bRev: ::core::ffi::c_int = __pIter_ref.flags & FTS5_SEGITER_REVERSE;
@@ -27165,7 +27165,7 @@ unsafe extern "C" fn fts5ReleaseMethod(
     rc
 }
 
-unsafe extern "C" fn sqlite3Fts5ExprCheckPoslists(mut pExpr: *mut Fts5Expr, mut iRowid: i64_0) {
+unsafe extern "C" fn sqlite3Fts5ExprCheckPoslists(mut pExpr: *mut Fts5Expr, mut iRowid: I64_0) {
     fts5ExprCheckPoslists((*pExpr).pRoot, iRowid);
 }
 
@@ -27186,7 +27186,7 @@ unsafe extern "C" fn fts5RollbackToMethod(
 unsafe extern "C" fn sqlite3Fts5ExprPhraseCollist(
     mut pExpr: *mut Fts5Expr,
     mut iPhrase: ::core::ffi::c_int,
-    mut ppCollist: *mut *const u8_0,
+    mut ppCollist: *mut *const U8_0,
     mut pnCollist: *mut ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
     let mut pPhrase: *mut Fts5ExprPhrase = *(*pExpr).apExprPhrase.offset(iPhrase as isize);
@@ -27205,7 +27205,7 @@ unsafe extern "C" fn sqlite3Fts5ExprPhraseCollist(
                 pTerm,
                 (*pNode).iRowid,
                 pBuf,
-                ppCollist as *mut *mut u8_0,
+                ppCollist as *mut *mut U8_0,
                 pnCollist,
             );
         } else {
@@ -27217,7 +27217,7 @@ unsafe extern "C" fn sqlite3Fts5ExprPhraseCollist(
                 .nData;
         }
     } else {
-        *ppCollist = std::ptr::null::<u8_0>();
+        *ppCollist = std::ptr::null::<U8_0>();
         *pnCollist = 0 as ::core::ffi::c_int;
     }
     rc
@@ -27227,7 +27227,7 @@ unsafe extern "C" fn fts5CreateAux(
     mut pApi: *mut fts5_api,
     mut zName: *const ::core::ffi::c_char,
     mut pUserData: *mut ::core::ffi::c_void,
-    mut xFunc: fts5_extension_function,
+    mut xFunc: Fts5ExtensionFunction,
     mut xDestroy: Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()>,
 ) -> ::core::ffi::c_int {
     let mut pGlobal: *mut Fts5Global = pApi as *mut Fts5Global;
@@ -27238,15 +27238,15 @@ unsafe extern "C" fn fts5CreateAux(
     );
     if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
         let mut pAux: *mut Fts5Auxiliary = std::ptr::null_mut::<Fts5Auxiliary>();
-        let mut nName: crate::src::headers::sqlite3_h::sqlite3_int64 = 0;
-        let mut nByte: crate::src::headers::sqlite3_h::sqlite3_int64 = 0;
-        nName = (fts5_cstr_len(zName) as crate::src::headers::sqlite3_h::sqlite3_int64)
-            .wrapping_add(1 as crate::src::headers::sqlite3_h::sqlite3_int64);
+        let mut nName: crate::src::headers::sqlite3_h::Sqlite3Int64 = 0;
+        let mut nByte: crate::src::headers::sqlite3_h::Sqlite3Int64 = 0;
+        nName = (fts5_cstr_len(zName) as crate::src::headers::sqlite3_h::Sqlite3Int64)
+            .wrapping_add(1 as crate::src::headers::sqlite3_h::Sqlite3Int64);
         nByte = (std::mem::size_of::<Fts5Auxiliary>() as ::core::ffi::c_ulonglong)
             .wrapping_add(nName as ::core::ffi::c_ulonglong)
-            as crate::src::headers::sqlite3_h::sqlite3_int64;
+            as crate::src::headers::sqlite3_h::Sqlite3Int64;
         pAux = crate::src::src::malloc::sqlite3_malloc64(
-            nByte as crate::src::headers::sqlite3_h::sqlite3_uint64,
+            nByte as crate::src::headers::sqlite3_h::Sqlite3Uint64,
         ) as *mut Fts5Auxiliary;
         if !pAux.is_null() {
             std::ptr::write_bytes(
@@ -27345,13 +27345,13 @@ unsafe extern "C" fn fts5NewTokenizerModule(
 ) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
     let mut pNew: *mut Fts5TokenizerModule = std::ptr::null_mut::<Fts5TokenizerModule>();
-    let mut nName: crate::src::headers::sqlite3_h::sqlite3_int64 = 0;
-    let mut nByte: crate::src::headers::sqlite3_h::sqlite3_int64 = 0;
-    nName = (fts5_cstr_len(zName) as crate::src::headers::sqlite3_h::sqlite3_int64)
-        .wrapping_add(1 as crate::src::headers::sqlite3_h::sqlite3_int64);
+    let mut nName: crate::src::headers::sqlite3_h::Sqlite3Int64 = 0;
+    let mut nByte: crate::src::headers::sqlite3_h::Sqlite3Int64 = 0;
+    nName = (fts5_cstr_len(zName) as crate::src::headers::sqlite3_h::Sqlite3Int64)
+        .wrapping_add(1 as crate::src::headers::sqlite3_h::Sqlite3Int64);
     nByte = (std::mem::size_of::<Fts5TokenizerModule>() as ::core::ffi::c_ulonglong)
         .wrapping_add(nName as ::core::ffi::c_ulonglong)
-        as crate::src::headers::sqlite3_h::sqlite3_int64;
+        as crate::src::headers::sqlite3_h::Sqlite3Int64;
     pNew = sqlite3Fts5MallocZero(&raw mut rc, nByte) as *mut Fts5TokenizerModule;
     *ppNew = pNew;
     if !pNew.is_null() {
@@ -27413,7 +27413,7 @@ unsafe extern "C" fn fts5MultiIterAdvanceRowid(
                 }
             }
             pRes.iFirst = pNew.offset_from(&raw mut __pIter_ref.aSeg as *mut Fts5SegIter)
-                as ::core::ffi::c_long as u16_0;
+                as ::core::ffi::c_long as U16_0;
             if i == 1 as ::core::ffi::c_int {
                 break;
             }
@@ -27432,7 +27432,7 @@ unsafe extern "C" fn fts5MultiIterAdvanceRowid(
 
 unsafe extern "C" fn sqlite3Fts5ExprInstToken(
     mut pExpr: *mut Fts5Expr,
-    mut iRowid: i64_0,
+    mut iRowid: I64_0,
     mut iPhrase: ::core::ffi::c_int,
     mut iCol: ::core::ffi::c_int,
     mut iOff: ::core::ffi::c_int,
@@ -27494,7 +27494,7 @@ unsafe extern "C" fn fts5MultiIterSetEof(mut pIter: *mut Fts5Iter) {
         as *mut Fts5SegIter);
 
     __pIter_ref.base.bEof =
-        (pSeg.pLeaf == std::ptr::null_mut::<Fts5Data>()) as ::core::ffi::c_int as u8_0;
+        (pSeg.pLeaf == std::ptr::null_mut::<Fts5Data>()) as ::core::ffi::c_int as U8_0;
     __pIter_ref.iSwitchRowid = pSeg.iRowid;
 }
 
@@ -27509,7 +27509,7 @@ unsafe extern "C" fn fts5VtoVCreate(
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
     pNew = sqlite3Fts5MallocZero(
         &raw mut rc,
-        std::mem::size_of::<Fts5VtoVTokenizer>() as crate::src::headers::sqlite3_h::sqlite3_int64,
+        std::mem::size_of::<Fts5VtoVTokenizer>() as crate::src::headers::sqlite3_h::Sqlite3Int64,
     ) as *mut Fts5VtoVTokenizer;
     if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
         let __pMod_ref = { &mut *pMod };
@@ -27543,7 +27543,7 @@ unsafe extern "C" fn fts5VtoVCreate(
 unsafe extern "C" fn fts5IndexTombstoneQuery(
     mut pHash: *mut Fts5Data,
     mut nHashTable: ::core::ffi::c_int,
-    mut iRowid: u64_0,
+    mut iRowid: U64_0,
 ) -> ::core::ffi::c_int {
     let szKey: ::core::ffi::c_int =
         if *(*pHash).p.offset(0 as isize) as ::core::ffi::c_int == 4 as ::core::ffi::c_int {
@@ -27562,15 +27562,15 @@ unsafe extern "C" fn fts5IndexTombstoneQuery(
         1 as ::core::ffi::c_int
     };
     let mut iSlot: ::core::ffi::c_int = iRowid
-        .wrapping_div(nHashTable as u64_0)
-        .wrapping_rem(nSlot as u64_0) as ::core::ffi::c_int;
+        .wrapping_div(nHashTable as U64_0)
+        .wrapping_rem(nSlot as U64_0) as ::core::ffi::c_int;
     let mut nCollide: ::core::ffi::c_int = nSlot;
-    if iRowid == 0 as u64_0 {
+    if iRowid == 0 as U64_0 {
         return *(*pHash).p.offset(1 as isize) as ::core::ffi::c_int;
     } else if szKey == 4 as ::core::ffi::c_int {
-        let mut aSlot: *mut u32_0 = (*pHash).p.offset(8 as isize) as *mut u8_0 as *mut u32_0;
+        let mut aSlot: *mut U32_0 = (*pHash).p.offset(8 as isize) as *mut U8_0 as *mut U32_0;
         while *aSlot.offset(iSlot as isize) != 0 {
-            if fts5GetU32(aSlot.offset(iSlot as isize) as *mut u32_0 as *mut u8_0) as u64_0
+            if fts5GetU32(aSlot.offset(iSlot as isize) as *mut U32_0 as *mut U8_0) as U64_0
                 == iRowid
             {
                 return 1 as ::core::ffi::c_int;
@@ -27583,9 +27583,9 @@ unsafe extern "C" fn fts5IndexTombstoneQuery(
             iSlot = (iSlot + 1 as ::core::ffi::c_int) % nSlot;
         }
     } else {
-        let mut aSlot_0: *mut u64_0 = (*pHash).p.offset(8 as isize) as *mut u8_0 as *mut u64_0;
+        let mut aSlot_0: *mut U64_0 = (*pHash).p.offset(8 as isize) as *mut U8_0 as *mut U64_0;
         while *aSlot_0.offset(iSlot as isize) != 0 {
-            if fts5GetU64(aSlot_0.offset(iSlot as isize) as *mut u64_0 as *mut u8_0) == iRowid {
+            if fts5GetU64(aSlot_0.offset(iSlot as isize) as *mut U64_0 as *mut U8_0) == iRowid {
                 return 1 as ::core::ffi::c_int;
             }
             let fresh27 = nCollide;
@@ -27649,8 +27649,8 @@ unsafe extern "C" fn fts5MultiIterIsDeleted(mut pIter: *mut Fts5Iter) -> ::core:
     let mut pArray: *mut Fts5TombstoneArray = (*pSeg).pTombArray;
     if !(*pSeg).pLeaf.is_null() && !pArray.is_null() {
         let __pArray_ref = { &mut *pArray };
-        let mut iPg: ::core::ffi::c_int = ((*pSeg).iRowid as u64_0)
-            .wrapping_rem(__pArray_ref.nTombstone as u64_0)
+        let mut iPg: ::core::ffi::c_int = ((*pSeg).iRowid as U64_0)
+            .wrapping_rem(__pArray_ref.nTombstone as U64_0)
             as ::core::ffi::c_int;
         if (*(&raw mut __pArray_ref.apTombstone as *mut *mut Fts5Data).offset(iPg as isize))
             .is_null()
@@ -27660,11 +27660,11 @@ unsafe extern "C" fn fts5MultiIterIsDeleted(mut pIter: *mut Fts5Iter) -> ::core:
             *fresh25 = fts5DataRead(
                 (*pIter).pIndex,
                 ((((*(*pSeg).pSeg).iSegid + ((1 as ::core::ffi::c_int) << 16 as ::core::ffi::c_int))
-                    as i64_0)
+                    as I64_0)
                     << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-                    + ((0 as ::core::ffi::c_int as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-                    + ((0 as ::core::ffi::c_int as i64_0) << 31 as ::core::ffi::c_int)
-                    + iPg as i64_0,
+                    + ((0 as ::core::ffi::c_int as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
+                    + ((0 as ::core::ffi::c_int as I64_0) << 31 as ::core::ffi::c_int)
+                    + iPg as I64_0,
             );
             if (*(&raw mut __pArray_ref.apTombstone as *mut *mut Fts5Data).offset(iPg as isize))
                 .is_null()
@@ -27675,7 +27675,7 @@ unsafe extern "C" fn fts5MultiIterIsDeleted(mut pIter: *mut Fts5Iter) -> ::core:
         return fts5IndexTombstoneQuery(
             *(&raw mut __pArray_ref.apTombstone as *mut *mut Fts5Data).offset(iPg as isize),
             __pArray_ref.nTombstone,
-            (*pSeg).iRowid as u64_0,
+            (*pSeg).iRowid as U64_0,
         );
     }
     0 as ::core::ffi::c_int
@@ -27797,7 +27797,7 @@ unsafe extern "C" fn fts5MultiIterNext(
     mut p: *mut Fts5Index,
     mut pIter: *mut Fts5Iter,
     mut bFrom: ::core::ffi::c_int,
-    mut iFrom: i64_0,
+    mut iFrom: I64_0,
 ) {
     let mut bUseFrom: ::core::ffi::c_int = bFrom;
     while (*p).rc == crate::src::headers::sqlite3_h::SQLITE_OK {
@@ -28010,10 +28010,10 @@ unsafe extern "C" fn fts5MultiIterAlloc(
     mut nSeg: ::core::ffi::c_int,
 ) -> *mut Fts5Iter {
     let mut pNew: *mut Fts5Iter = std::ptr::null_mut::<Fts5Iter>();
-    let mut nSlot: i64_0 = 0;
-    nSlot = 2 as i64_0;
-    while nSlot < nSeg as i64_0 {
-        nSlot *= 2 as i64_0;
+    let mut nSlot: I64_0 = 0;
+    nSlot = 2 as I64_0;
+    while nSlot < nSeg as I64_0 {
+        nSlot *= 2 as I64_0;
     }
     pNew = fts5IdxMalloc(
         p,
@@ -28025,7 +28025,7 @@ unsafe extern "C" fn fts5MultiIterAlloc(
             .wrapping_add(
                 (std::mem::size_of::<Fts5CResult>() as ::core::ffi::c_ulonglong)
                     .wrapping_mul(nSlot as ::core::ffi::c_ulonglong),
-            ) as crate::src::headers::sqlite3_h::sqlite3_int64,
+            ) as crate::src::headers::sqlite3_h::Sqlite3Int64,
     ) as *mut Fts5Iter;
     if !pNew.is_null() {
         let __pNew_ref = { &mut *pNew };
@@ -28044,7 +28044,7 @@ unsafe extern "C" fn fts5MultiIterAlloc(
 unsafe extern "C" fn fts5PoslistCallback(
     mut _pUnused: *mut Fts5Index,
     mut pContext: *mut ::core::ffi::c_void,
-    mut pChunk: *const u8_0,
+    mut pChunk: *const U8_0,
     mut nChunk: ::core::ffi::c_int,
 ) {
     if nChunk > 0 as ::core::ffi::c_int {
@@ -28052,7 +28052,7 @@ unsafe extern "C" fn fts5PoslistCallback(
             pChunk as *const u8,
             (*(pContext as *mut Fts5Buffer))
                 .p
-                .offset((*(pContext as *mut Fts5Buffer)).n as isize) as *mut u8_0
+                .offset((*(pContext as *mut Fts5Buffer)).n as isize) as *mut U8_0
                 as *mut u8,
             nChunk as usize,
         );
@@ -28174,7 +28174,7 @@ unsafe extern "C" fn sqlite3Fts5LoadTokenizer(mut pConfig: *mut Fts5Config) -> :
 unsafe extern "C" fn fts5PoslistOffsetsCallback(
     mut _pUnused: *mut Fts5Index,
     mut pContext: *mut ::core::ffi::c_void,
-    mut pChunk: *const u8_0,
+    mut pChunk: *const U8_0,
     mut nChunk: ::core::ffi::c_int,
 ) {
     let mut pCtx: *mut PoslistOffsetsCtx = pContext as *mut PoslistOffsetsCtx;
@@ -28184,7 +28184,7 @@ unsafe extern "C" fn fts5PoslistOffsetsCallback(
             let mut iVal: ::core::ffi::c_int = 0;
             i += sqlite3Fts5GetVarint32(
                 pChunk.offset(i as isize) as *const ::core::ffi::c_uchar,
-                &raw mut iVal as *mut u32_0,
+                &raw mut iVal as *mut U32_0,
             );
             let __pCtx_ref = { &mut *pCtx };
             iVal += __pCtx_ref.iRead - 2 as ::core::ffi::c_int;
@@ -28193,7 +28193,7 @@ unsafe extern "C" fn fts5PoslistOffsetsCallback(
                 (*__pCtx_ref.pBuf).n += sqlite3Fts5PutVarint(
                     (*__pCtx_ref.pBuf).p.offset((*__pCtx_ref.pBuf).n as isize)
                         as *mut ::core::ffi::c_uchar,
-                    (iVal + 2 as ::core::ffi::c_int - __pCtx_ref.iWrite) as u64_0,
+                    (iVal + 2 as ::core::ffi::c_int - __pCtx_ref.iWrite) as U64_0,
                 );
                 __pCtx_ref.iWrite = iVal;
             }
@@ -28204,7 +28204,7 @@ unsafe extern "C" fn fts5PoslistOffsetsCallback(
 unsafe extern "C" fn fts5PoslistFilterCallback(
     mut _pUnused: *mut Fts5Index,
     mut pContext: *mut ::core::ffi::c_void,
-    mut pChunk: *const u8_0,
+    mut pChunk: *const U8_0,
     mut nChunk: ::core::ffi::c_int,
 ) {
     let mut pCtx: *mut PoslistCallbackCtx = pContext as *mut PoslistCallbackCtx;
@@ -28220,7 +28220,7 @@ unsafe extern "C" fn fts5PoslistFilterCallback(
                 i -= 1;
                 i += sqlite3Fts5GetVarint32(
                     pChunk.offset(i as isize) as *const ::core::ffi::c_uchar,
-                    &raw mut iCol as *mut u32_0,
+                    &raw mut iCol as *mut U32_0,
                 );
             }
             if fts5IndexColsetTest((*pCtx).pColset, iCol) != 0 {
@@ -28229,7 +28229,7 @@ unsafe extern "C" fn fts5PoslistFilterCallback(
                 (*__pCtx_ref.pBuf).n += sqlite3Fts5PutVarint(
                     (*__pCtx_ref.pBuf).p.offset((*__pCtx_ref.pBuf).n as isize)
                         as *mut ::core::ffi::c_uchar,
-                    1 as u64_0,
+                    1 as U64_0,
                 );
             } else {
                 (*pCtx).eState = 0 as ::core::ffi::c_int;
@@ -28249,8 +28249,8 @@ unsafe extern "C" fn fts5PoslistFilterCallback(
             if (*pCtx).eState != 0 {
                 let __pCtx_ref = { &mut *pCtx };
                 std::ptr::copy_nonoverlapping(
-                    pChunk.offset(iStart as isize) as *const u8_0 as *const u8,
-                    (*__pCtx_ref.pBuf).p.offset((*__pCtx_ref.pBuf).n as isize) as *mut u8_0
+                    pChunk.offset(iStart as isize) as *const U8_0 as *const u8,
+                    (*__pCtx_ref.pBuf).p.offset((*__pCtx_ref.pBuf).n as isize) as *mut U8_0
                         as *mut u8,
                     (i - iStart) as usize,
                 );
@@ -28270,15 +28270,15 @@ unsafe extern "C" fn fts5PoslistFilterCallback(
                         i -= 1;
                         i += sqlite3Fts5GetVarint32(
                             pChunk.offset(i as isize) as *const ::core::ffi::c_uchar,
-                            &raw mut iCol_0 as *mut u32_0,
+                            &raw mut iCol_0 as *mut U32_0,
                         );
                     }
                     let __pCtx_ref = { &mut *pCtx };
                     __pCtx_ref.eState = fts5IndexColsetTest(__pCtx_ref.pColset, iCol_0);
                     if __pCtx_ref.eState != 0 {
                         std::ptr::copy_nonoverlapping(
-                            pChunk.offset(iStart as isize) as *const u8_0 as *const u8,
-                            (*__pCtx_ref.pBuf).p.offset((*__pCtx_ref.pBuf).n as isize) as *mut u8_0
+                            pChunk.offset(iStart as isize) as *const U8_0 as *const u8,
+                            (*__pCtx_ref.pBuf).p.offset((*__pCtx_ref.pBuf).n as isize) as *mut U8_0
                                 as *mut u8,
                             (i - iStart) as usize,
                         );
@@ -28346,7 +28346,7 @@ unsafe extern "C" fn fts5ChunkIterate(
         unsafe extern "C" fn(
             *mut Fts5Index,
             *mut ::core::ffi::c_void,
-            *const u8_0,
+            *const U8_0,
             ::core::ffi::c_int,
         ) -> (),
     >,
@@ -28354,14 +28354,14 @@ unsafe extern "C" fn fts5ChunkIterate(
     let __pSeg_ref = { &mut *pSeg };
     let mut nRem: ::core::ffi::c_int = __pSeg_ref.nPos;
     let mut pData: *mut Fts5Data = std::ptr::null_mut::<Fts5Data>();
-    let mut pChunk: *mut u8_0 = (*__pSeg_ref.pLeaf)
+    let mut pChunk: *mut U8_0 = (*__pSeg_ref.pLeaf)
         .p
-        .offset(__pSeg_ref.iLeafOffset as isize) as *mut u8_0;
+        .offset(__pSeg_ref.iLeafOffset as isize) as *mut U8_0;
     let mut nChunk: ::core::ffi::c_int =
-        (if (nRem as i64_0) < (*__pSeg_ref.pLeaf).szLeaf as i64_0 - __pSeg_ref.iLeafOffset {
-            nRem as i64_0
+        (if (nRem as I64_0) < (*__pSeg_ref.pLeaf).szLeaf as I64_0 - __pSeg_ref.iLeafOffset {
+            nRem as I64_0
         } else {
-            (*__pSeg_ref.pLeaf).szLeaf as i64_0 - __pSeg_ref.iLeafOffset
+            (*__pSeg_ref.pLeaf).szLeaf as I64_0 - __pSeg_ref.iLeafOffset
         }) as ::core::ffi::c_int;
     let mut pgno: ::core::ffi::c_int = __pSeg_ref.iLeafPgno;
     let mut pgnoSave: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
@@ -28382,16 +28382,16 @@ unsafe extern "C" fn fts5ChunkIterate(
             pgno += 1;
             pData = fts5LeafRead(
                 p,
-                (((*__pSeg_ref.pSeg).iSegid as i64_0)
+                (((*__pSeg_ref.pSeg).iSegid as I64_0)
                     << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-                    + ((0 as ::core::ffi::c_int as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-                    + ((0 as ::core::ffi::c_int as i64_0) << 31 as ::core::ffi::c_int)
-                    + pgno as i64_0,
+                    + ((0 as ::core::ffi::c_int as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
+                    + ((0 as ::core::ffi::c_int as I64_0) << 31 as ::core::ffi::c_int)
+                    + pgno as I64_0,
             );
             if pData.is_null() {
                 break;
             }
-            pChunk = (*pData).p.offset(4 as isize) as *mut u8_0;
+            pChunk = (*pData).p.offset(4 as isize) as *mut U8_0;
             nChunk = if nRem < (*pData).szLeaf - 4 as ::core::ffi::c_int {
                 nRem
             } else {
@@ -28428,15 +28428,15 @@ unsafe extern "C" fn fts5LocaleFunc(
     mut apArg: *mut *mut crate::src::headers::vdbeInt_h::sqlite3_value,
 ) {
     let mut zLocale: *const ::core::ffi::c_char = std::ptr::null::<::core::ffi::c_char>();
-    let mut nLocale: i64_0 = 0 as i64_0;
+    let mut nLocale: I64_0 = 0 as I64_0;
     let mut zText: *const ::core::ffi::c_char = std::ptr::null::<::core::ffi::c_char>();
-    let mut nText: i64_0 = 0 as i64_0;
+    let mut nText: I64_0 = 0 as I64_0;
     zLocale = crate::src::src::vdbeapi::sqlite3_value_text(*apArg.offset(0 as isize))
         as *const ::core::ffi::c_char;
-    nLocale = crate::src::src::vdbeapi::sqlite3_value_bytes(*apArg.offset(0 as isize)) as i64_0;
+    nLocale = crate::src::src::vdbeapi::sqlite3_value_bytes(*apArg.offset(0 as isize)) as I64_0;
     zText = crate::src::src::vdbeapi::sqlite3_value_text(*apArg.offset(1 as isize))
         as *const ::core::ffi::c_char;
-    nText = crate::src::src::vdbeapi::sqlite3_value_bytes(*apArg.offset(1 as isize)) as i64_0;
+    nText = crate::src::src::vdbeapi::sqlite3_value_bytes(*apArg.offset(1 as isize)) as I64_0;
     if zLocale.is_null() || *zLocale.offset(0 as isize) as ::core::ffi::c_int == '\0' as i32 {
         crate::src::src::vdbeapi::sqlite3_result_text(
             pCtx,
@@ -28450,20 +28450,20 @@ unsafe extern "C" fn fts5LocaleFunc(
     } else {
         let mut p: *mut Fts5Global =
             crate::src::src::vdbeapi::sqlite3_user_data(pCtx) as *mut Fts5Global;
-        let mut pBlob: *mut u8_0 = std::ptr::null_mut::<u8_0>();
-        let mut pCsr: *mut u8_0 = std::ptr::null_mut::<u8_0>();
-        let mut nBlob: i64_0 = 0 as i64_0;
-        nBlob = FTS5_LOCALE_HDR_SIZE as i64_0 + nLocale + 1 as i64_0 + nText;
+        let mut pBlob: *mut U8_0 = std::ptr::null_mut::<U8_0>();
+        let mut pCsr: *mut U8_0 = std::ptr::null_mut::<U8_0>();
+        let mut nBlob: I64_0 = 0 as I64_0;
+        nBlob = FTS5_LOCALE_HDR_SIZE as I64_0 + nLocale + 1 as I64_0 + nText;
         pBlob = crate::src::src::malloc::sqlite3_malloc64(
-            nBlob as crate::src::headers::sqlite3_h::sqlite3_uint64,
-        ) as *mut u8_0;
+            nBlob as crate::src::headers::sqlite3_h::Sqlite3Uint64,
+        ) as *mut U8_0;
         if pBlob.is_null() {
             crate::src::src::vdbeapi::sqlite3_result_error_nomem(pCtx);
             return;
         }
         pCsr = pBlob;
         std::ptr::copy_nonoverlapping(
-            &raw mut (*p).aLocaleHdr as *mut u32_0 as *const u8_0 as *const u8,
+            &raw mut (*p).aLocaleHdr as *mut U32_0 as *const U8_0 as *const u8,
             pCsr as *mut u8,
             FTS5_LOCALE_HDR_SIZE as usize,
         );
@@ -28472,7 +28472,7 @@ unsafe extern "C" fn fts5LocaleFunc(
         pCsr = pCsr.offset(nLocale as isize);
         let fresh184 = pCsr;
         pCsr = pCsr.offset(1);
-        *fresh184 = 0 as u8_0;
+        *fresh184 = 0 as U8_0;
         if !zText.is_null() {
             std::ptr::copy_nonoverlapping(zText as *const u8, pCsr as *mut u8, nText as usize);
         }
@@ -28495,20 +28495,20 @@ unsafe extern "C" fn fts5SegiterPoslist(
     mut pBuf: *mut Fts5Buffer,
 ) {
     if 0 as ::core::ffi::c_int
-        == (if ((*pBuf).n as u32_0).wrapping_add(((*pSeg).nPos + 8 as ::core::ffi::c_int) as u32_0)
-            <= (*pBuf).nSpace as u32_0
+        == (if ((*pBuf).n as U32_0).wrapping_add(((*pSeg).nPos + 8 as ::core::ffi::c_int) as U32_0)
+            <= (*pBuf).nSpace as U32_0
         {
             0 as ::core::ffi::c_int
         } else {
             sqlite3Fts5BufferSize(
                 &raw mut (*p).rc,
                 pBuf,
-                ((*pSeg).nPos + 8 as ::core::ffi::c_int + (*pBuf).n) as u32_0,
+                ((*pSeg).nPos + 8 as ::core::ffi::c_int + (*pBuf).n) as U32_0,
             )
         })
     {
         std::ptr::write_bytes(
-            (*pBuf).p.offset(((*pBuf).n + (*pSeg).nPos) as isize) as *mut u8_0
+            (*pBuf).p.offset(((*pBuf).n + (*pSeg).nPos) as isize) as *mut U8_0
                 as *mut ::core::ffi::c_void as *mut u8,
             0,
             FTS5_DATA_ZERO_PADDING as usize,
@@ -28523,7 +28523,7 @@ unsafe extern "C" fn fts5SegiterPoslist(
                         as unsafe extern "C" fn(
                             *mut Fts5Index,
                             *mut ::core::ffi::c_void,
-                            *const u8_0,
+                            *const U8_0,
                             ::core::ffi::c_int,
                         ) -> (),
                 ),
@@ -28542,7 +28542,7 @@ unsafe extern "C" fn fts5SegiterPoslist(
                         as unsafe extern "C" fn(
                             *mut Fts5Index,
                             *mut ::core::ffi::c_void,
-                            *const u8_0,
+                            *const U8_0,
                             ::core::ffi::c_int,
                         ) -> (),
                 ),
@@ -28560,7 +28560,7 @@ unsafe extern "C" fn fts5SegiterPoslist(
                         as unsafe extern "C" fn(
                             *mut Fts5Index,
                             *mut ::core::ffi::c_void,
-                            *const u8_0,
+                            *const U8_0,
                             ::core::ffi::c_int,
                         ) -> (),
                 ),
@@ -28584,18 +28584,18 @@ unsafe extern "C" fn fts5InsttokenFunc(
 unsafe extern "C" fn fts5IndexExtractColset(
     mut pRc: *mut ::core::ffi::c_int,
     mut pColset: *mut Fts5Colset,
-    mut pPos: *const u8_0,
+    mut pPos: *const U8_0,
     mut nPos: ::core::ffi::c_int,
     mut pIter: *mut Fts5Iter,
 ) {
     if *pRc == crate::src::headers::sqlite3_h::SQLITE_OK {
-        let mut p: *const u8_0 = pPos;
-        let mut aCopy: *const u8_0 = p;
-        let mut pEnd: *const u8_0 = p.offset(nPos as isize) as *const u8_0;
+        let mut p: *const U8_0 = pPos;
+        let mut aCopy: *const U8_0 = p;
+        let mut pEnd: *const U8_0 = p.offset(nPos as isize) as *const U8_0;
         let mut i: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
         let mut iCurrent: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
         if (*pColset).nCol > 1 as ::core::ffi::c_int
-            && sqlite3Fts5BufferSize(pRc, &raw mut (*pIter).poslist, nPos as u32_0) != 0
+            && sqlite3Fts5BufferSize(pRc, &raw mut (*pIter).poslist, nPos as U32_0) != 0
         {
             return;
         }
@@ -28632,7 +28632,7 @@ unsafe extern "C" fn fts5IndexExtractColset(
                 }
                 std::ptr::copy_nonoverlapping(
                     aCopy as *const u8,
-                    __pIter_ref.poslist.p.offset(__pIter_ref.poslist.n as isize) as *mut u8_0
+                    __pIter_ref.poslist.p.offset(__pIter_ref.poslist.n as isize) as *mut U8_0
                         as *mut u8,
                     p.offset_from(aCopy) as ::core::ffi::c_long as usize,
                 );
@@ -28656,7 +28656,7 @@ unsafe extern "C" fn fts5IndexExtractColset(
                 p = p.offset(-1);
                 p = p.offset(sqlite3Fts5GetVarint32(
                     p as *const ::core::ffi::c_uchar,
-                    &raw mut iCurrent as *mut u32_0,
+                    &raw mut iCurrent as *mut U32_0,
                 ) as isize);
             }
         }
@@ -28821,7 +28821,7 @@ unsafe extern "C" fn fts5Init(
                 fts5RowidMethod
                     as unsafe extern "C" fn(
                         *mut crate::src::headers::sqlite3_h::sqlite3_vtab_cursor,
-                        *mut crate::src::headers::sqlite3_h::sqlite_int64,
+                        *mut crate::src::headers::sqlite3_h::SqliteInt64,
                     ) -> ::core::ffi::c_int,
             ),
             xUpdate: Some(
@@ -28830,7 +28830,7 @@ unsafe extern "C" fn fts5Init(
                         *mut crate::src::headers::sqlite3_h::sqlite3_vtab,
                         ::core::ffi::c_int,
                         *mut *mut crate::src::headers::vdbeInt_h::sqlite3_value,
-                        *mut crate::src::headers::sqlite3_h::sqlite_int64,
+                        *mut crate::src::headers::sqlite3_h::SqliteInt64,
                     ) -> ::core::ffi::c_int,
             ),
             xBegin: Some(
@@ -28940,7 +28940,7 @@ unsafe extern "C" fn fts5Init(
                     *mut fts5_api,
                     *const ::core::ffi::c_char,
                     *mut ::core::ffi::c_void,
-                    fts5_extension_function,
+                    Fts5ExtensionFunction,
                     Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()>,
                 ) -> ::core::ffi::c_int,
         )
@@ -28949,7 +28949,7 @@ unsafe extern "C" fn fts5Init(
                     *mut fts5_api,
                     *const ::core::ffi::c_char,
                     *mut ::core::ffi::c_void,
-                    fts5_extension_function,
+                    Fts5ExtensionFunction,
                     Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()>,
                 ) -> ::core::ffi::c_int,
             >;
@@ -29026,15 +29026,15 @@ unsafe extern "C" fn fts5Init(
                 ) -> ::core::ffi::c_int,
             >;
         crate::src::src::random::sqlite3_randomness(
-            std::mem::size_of::<[u32_0; 4]>() as ::core::ffi::c_int,
-            &raw mut __pGlobal_ref.aLocaleHdr as *mut u32_0 as *mut ::core::ffi::c_void,
+            std::mem::size_of::<[U32_0; 4]>() as ::core::ffi::c_int,
+            &raw mut __pGlobal_ref.aLocaleHdr as *mut U32_0 as *mut ::core::ffi::c_void,
         );
         __pGlobal_ref.aLocaleHdr[0 as ::core::ffi::c_int as usize] ^=
             0xf924976d as ::core::ffi::c_uint;
         __pGlobal_ref.aLocaleHdr[1 as ::core::ffi::c_int as usize] ^=
-            0x16596e13 as ::core::ffi::c_int as u32_0;
+            0x16596e13 as ::core::ffi::c_int as U32_0;
         __pGlobal_ref.aLocaleHdr[2 as ::core::ffi::c_int as usize] ^=
-            0x7c80beaa as ::core::ffi::c_int as u32_0;
+            0x7c80beaa as ::core::ffi::c_int as U32_0;
         __pGlobal_ref.aLocaleHdr[3 as ::core::ffi::c_int as usize] ^=
             0x9b03a67f as ::core::ffi::c_uint;
         rc = crate::src::src::vtab::sqlite3_create_module_v2(
@@ -29158,10 +29158,10 @@ unsafe extern "C" fn fts5IterSetOutputs_Nocolset(
     let __pSeg_ref = { &mut *pSeg };
     (*pIter).base.iRowid = __pSeg_ref.iRowid;
     (*pIter).base.nData = __pSeg_ref.nPos;
-    if __pSeg_ref.iLeafOffset + __pSeg_ref.nPos as i64_0 <= (*__pSeg_ref.pLeaf).szLeaf as i64_0 {
+    if __pSeg_ref.iLeafOffset + __pSeg_ref.nPos as I64_0 <= (*__pSeg_ref.pLeaf).szLeaf as I64_0 {
         (*pIter).base.pData = (*__pSeg_ref.pLeaf)
             .p
-            .offset(__pSeg_ref.iLeafOffset as isize) as *mut u8_0;
+            .offset(__pSeg_ref.iLeafOffset as isize) as *mut U8_0;
     } else {
         let __pIter_ref = { &mut *pIter };
         sqlite3Fts5BufferZero(&raw mut __pIter_ref.poslist);
@@ -29201,20 +29201,20 @@ unsafe extern "C" fn fts5IterSetOutputs_Col100(
     mut pSeg: *mut Fts5SegIter,
 ) {
     let __pSeg_ref = { &mut *pSeg };
-    if __pSeg_ref.iLeafOffset + __pSeg_ref.nPos as i64_0 > (*__pSeg_ref.pLeaf).szLeaf as i64_0 {
+    if __pSeg_ref.iLeafOffset + __pSeg_ref.nPos as I64_0 > (*__pSeg_ref.pLeaf).szLeaf as I64_0 {
         fts5IterSetOutputs_Col(pIter, pSeg);
     } else {
-        let mut a: *mut u8_0 = (*__pSeg_ref.pLeaf)
+        let mut a: *mut U8_0 = (*__pSeg_ref.pLeaf)
             .p
-            .offset(__pSeg_ref.iLeafOffset as isize) as *mut u8_0;
-        let mut pEnd: *mut u8_0 = a.offset(__pSeg_ref.nPos as isize) as *mut u8_0;
+            .offset(__pSeg_ref.iLeafOffset as isize) as *mut U8_0;
+        let mut pEnd: *mut U8_0 = a.offset(__pSeg_ref.nPos as isize) as *mut U8_0;
         let mut iPrev: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
         let __pIter_ref = { &mut *pIter };
         let mut aiCol: *mut ::core::ffi::c_int =
             &raw mut (*__pIter_ref.pColset).aiCol as *mut ::core::ffi::c_int;
         let mut aiColEnd: *mut ::core::ffi::c_int =
             aiCol.offset((*__pIter_ref.pColset).nCol as isize) as *mut ::core::ffi::c_int;
-        let mut aOut: *mut u8_0 = __pIter_ref.poslist.p;
+        let mut aOut: *mut U8_0 = __pIter_ref.poslist.p;
         let mut iPrevOut: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
         __pIter_ref.base.iRowid = __pSeg_ref.iRowid;
         's_35: while a < pEnd {
@@ -29230,7 +29230,7 @@ unsafe extern "C" fn fts5IterSetOutputs_Col100(
             if *aiCol == iPrev {
                 let fresh15 = aOut;
                 aOut = aOut.offset(1);
-                *fresh15 = (iPrev - iPrevOut + 2 as ::core::ffi::c_int) as u8_0;
+                *fresh15 = (iPrev - iPrevOut + 2 as ::core::ffi::c_int) as U8_0;
                 iPrevOut = iPrev;
             }
         }
@@ -29244,10 +29244,10 @@ unsafe extern "C" fn fts5IterSetOutputs_Full(mut pIter: *mut Fts5Iter, mut pSeg:
     let mut pColset: *mut Fts5Colset = (*pIter).pColset;
     let __pSeg_ref = { &mut *pSeg };
     (*pIter).base.iRowid = __pSeg_ref.iRowid;
-    if __pSeg_ref.iLeafOffset + __pSeg_ref.nPos as i64_0 <= (*__pSeg_ref.pLeaf).szLeaf as i64_0 {
-        let mut a: *const u8_0 = (*__pSeg_ref.pLeaf)
+    if __pSeg_ref.iLeafOffset + __pSeg_ref.nPos as I64_0 <= (*__pSeg_ref.pLeaf).szLeaf as I64_0 {
+        let mut a: *const U8_0 = (*__pSeg_ref.pLeaf)
             .p
-            .offset(__pSeg_ref.iLeafOffset as isize) as *mut u8_0;
+            .offset(__pSeg_ref.iLeafOffset as isize) as *mut U8_0;
         let mut pRc: *mut ::core::ffi::c_int = &raw mut (*(*pIter).pIndex).rc;
         sqlite3Fts5BufferZero(&raw mut (*pIter).poslist);
         fts5IndexExtractColset(pRc, pColset, a, __pSeg_ref.nPos, pIter);
@@ -29306,7 +29306,7 @@ unsafe extern "C" fn fts5IterSetOutputCb(
             sqlite3Fts5BufferSize(
                 pRc,
                 &raw mut __pIter_ref.poslist,
-                __pConfig_ref.nCol as u32_0,
+                __pConfig_ref.nCol as U32_0,
             );
         } else {
             __pIter_ref.xSetOutputs = Some(
@@ -29351,7 +29351,7 @@ unsafe extern "C" fn fts5MultiIterFinishSetup(mut p: *mut Fts5Index, mut pIter: 
     if __pIter_ref.bSkipEmpty as ::core::ffi::c_int != 0 && fts5MultiIterIsEmpty(p, pIter) != 0
         || fts5MultiIterIsDeleted(pIter) != 0
     {
-        fts5MultiIterNext(p, pIter, 0 as ::core::ffi::c_int, 0 as i64_0);
+        fts5MultiIterNext(p, pIter, 0 as ::core::ffi::c_int, 0 as I64_0);
     } else if __pIter_ref.base.bEof as ::core::ffi::c_int == 0 as ::core::ffi::c_int {
         let mut pSeg_0: *mut Fts5SegIter = (&raw mut __pIter_ref.aSeg as *mut Fts5SegIter)
             .offset((*__pIter_ref.aFirst.offset(1 as isize)).iFirst as isize)
@@ -29365,7 +29365,7 @@ unsafe extern "C" fn fts5MultiIterNew(
     mut pStruct: *mut Fts5Structure,
     mut flags: ::core::ffi::c_int,
     mut pColset: *mut Fts5Colset,
-    mut pTerm: *const u8_0,
+    mut pTerm: *const U8_0,
     mut nTerm: ::core::ffi::c_int,
     mut iLevel: ::core::ffi::c_int,
     mut nSegment: ::core::ffi::c_int,
@@ -29402,7 +29402,7 @@ unsafe extern "C" fn fts5MultiIterNew(
         __pNew_ref.bRev =
             (0 as ::core::ffi::c_int != flags & FTS5INDEX_QUERY_DESC) as ::core::ffi::c_int;
         __pNew_ref.bSkipEmpty = (0 as ::core::ffi::c_int != flags & FTS5INDEX_QUERY_SKIPEMPTY)
-            as ::core::ffi::c_int as u8_0;
+            as ::core::ffi::c_int as U8_0;
         __pNew_ref.pColset = pColset;
         if flags & FTS5INDEX_QUERY_NOOUTPUT == 0 as ::core::ffi::c_int {
             fts5IterSetOutputCb(&raw mut (*p).rc, pNew);
@@ -29487,10 +29487,10 @@ unsafe extern "C" fn fts5MultiIterNew2(
             let __pIter_ref = { &mut *pIter };
             __pIter_ref.pLeaf = pData;
             __pIter_ref.iLeafOffset =
-                sqlite3Fts5GetVarint((*pData).p, &raw mut __pIter_ref.iRowid as *mut u64_0)
-                    as i64_0;
+                sqlite3Fts5GetVarint((*pData).p, &raw mut __pIter_ref.iRowid as *mut U64_0)
+                    as I64_0;
             __pIter_ref.iEndofDoclist = (*pData).nn;
-            (*(*pNew).aFirst.offset(1 as isize)).iFirst = 1 as u16_0;
+            (*(*pNew).aFirst.offset(1 as isize)).iFirst = 1 as U16_0;
             if bDesc != 0 {
                 (*pNew).bRev = 1 as ::core::ffi::c_int;
                 __pIter_ref.flags |= FTS5_SEGITER_REVERSE;
@@ -29500,7 +29500,7 @@ unsafe extern "C" fn fts5MultiIterNew2(
             }
             pData = std::ptr::null_mut::<Fts5Data>();
         } else {
-            (*pNew).base.bEof = 1 as u8_0;
+            (*pNew).base.bEof = 1 as U8_0;
         }
         fts5SegIterSetNext(p, pIter);
         *ppOut = pNew;
@@ -29515,7 +29515,7 @@ unsafe extern "C" fn fts5MultiIterEof(
     ((*p).rc != 0 || (*pIter).base.bEof as ::core::ffi::c_int != 0) as ::core::ffi::c_int
 }
 
-unsafe extern "C" fn fts5MultiIterRowid(mut pIter: *mut Fts5Iter) -> i64_0 {
+unsafe extern "C" fn fts5MultiIterRowid(mut pIter: *mut Fts5Iter) -> I64_0 {
     (*(&raw mut (*pIter).aSeg as *mut Fts5SegIter)
         .offset((*(*pIter).aFirst.offset(1 as isize)).iFirst as isize))
     .iRowid
@@ -29524,10 +29524,10 @@ unsafe extern "C" fn fts5MultiIterRowid(mut pIter: *mut Fts5Iter) -> i64_0 {
 unsafe extern "C" fn fts5MultiIterNextFrom(
     mut p: *mut Fts5Index,
     mut pIter: *mut Fts5Iter,
-    mut iMatch: i64_0,
+    mut iMatch: I64_0,
 ) {
     loop {
-        let mut iRowid: i64_0 = 0;
+        let mut iRowid: I64_0 = 0;
         fts5MultiIterNext(p, pIter, 1 as ::core::ffi::c_int, iMatch);
         if fts5MultiIterEof(p, pIter) != 0 {
             break;
@@ -29545,7 +29545,7 @@ unsafe extern "C" fn fts5MultiIterNextFrom(
 unsafe extern "C" fn fts5MultiIterTerm(
     mut pIter: *mut Fts5Iter,
     mut pn: *mut ::core::ffi::c_int,
-) -> *const u8_0 {
+) -> *const U8_0 {
     let mut p: *mut Fts5SegIter = (&raw mut (*pIter).aSeg as *mut Fts5SegIter)
         .offset((*(*pIter).aFirst.offset(1 as isize)).iFirst as isize)
         as *mut Fts5SegIter;
@@ -29562,11 +29562,11 @@ unsafe extern "C" fn fts5AllocateSegid(
         if (*pStruct).nSegment >= FTS5_MAX_SEGMENT {
             (*p).rc = crate::src::headers::sqlite3_h::SQLITE_FULL;
         } else {
-            let mut aUsed: [u32_0; 63] = { std::mem::zeroed() };
+            let mut aUsed: [U32_0; 63] = { std::mem::zeroed() };
             let mut iLvl: ::core::ffi::c_int = 0;
             let mut iSeg: ::core::ffi::c_int = 0;
             let mut i: ::core::ffi::c_int = 0;
-            let mut mask: u32_0 = 0;
+            let mut mask: U32_0 = 0;
             iLvl = 0 as ::core::ffi::c_int;
             while iLvl < (*pStruct).nLevel {
                 iSeg = 0 as ::core::ffi::c_int;
@@ -29583,7 +29583,7 @@ unsafe extern "C" fn fts5AllocateSegid(
                     .iSegid;
                     if iId <= FTS5_MAX_SEGMENT && iId > 0 as ::core::ffi::c_int {
                         aUsed[((iId - 1 as ::core::ffi::c_int) / 32 as ::core::ffi::c_int)
-                            as usize] |= (1 as ::core::ffi::c_int as u32_0)
+                            as usize] |= (1 as ::core::ffi::c_int as U32_0)
                             << (iId - 1 as ::core::ffi::c_int) % 32 as ::core::ffi::c_int;
                     }
                     iSeg += 1;
@@ -29596,7 +29596,7 @@ unsafe extern "C" fn fts5AllocateSegid(
             }
             mask = aUsed[i as usize];
             iSegid = 0 as ::core::ffi::c_int;
-            while mask & (1 as ::core::ffi::c_int as u32_0) << iSegid != 0 {
+            while mask & (1 as ::core::ffi::c_int as U32_0) << iSegid != 0 {
                 iSegid += 1;
             }
             iSegid += 1 as ::core::ffi::c_int + i * 32 as ::core::ffi::c_int;
@@ -29618,8 +29618,8 @@ unsafe extern "C" fn fts5IndexDiscardData(mut p: *mut Fts5Index) {
 
 unsafe extern "C" fn fts5PrefixCompress(
     mut nOld: ::core::ffi::c_int,
-    mut pOld: *const u8_0,
-    mut pNew: *const u8_0,
+    mut pOld: *const U8_0,
+    mut pNew: *const U8_0,
 ) -> ::core::ffi::c_int {
     let mut i: ::core::ffi::c_int = 0;
     i = 0 as ::core::ffi::c_int;
@@ -29651,11 +29651,11 @@ unsafe extern "C" fn fts5WriteDlidxClear(
         if bFlush != 0 {
             fts5DataWrite(
                 p,
-                (((*pWriter).iSegid as i64_0)
+                (((*pWriter).iSegid as I64_0)
                     << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-                    + ((1 as ::core::ffi::c_int as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-                    + ((i as i64_0) << 31 as ::core::ffi::c_int)
-                    + __pDlidx_ref.pgno as i64_0,
+                    + ((1 as ::core::ffi::c_int as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
+                    + ((i as I64_0) << 31 as ::core::ffi::c_int)
+                    + __pDlidx_ref.pgno as I64_0,
                 __pDlidx_ref.buf.p,
                 __pDlidx_ref.buf.n,
             );
@@ -29675,16 +29675,16 @@ unsafe extern "C" fn fts5WriteDlidxGrow(
         let mut aDlidx: *mut Fts5DlidxWriter = crate::src::src::malloc::sqlite3_realloc64(
             (*pWriter).aDlidx as *mut ::core::ffi::c_void,
             (std::mem::size_of::<Fts5DlidxWriter>() as usize).wrapping_mul(nLvl as usize)
-                as crate::src::headers::sqlite3_h::sqlite3_uint64,
+                as crate::src::headers::sqlite3_h::Sqlite3Uint64,
         ) as *mut Fts5DlidxWriter;
         if aDlidx.is_null() {
             (*p).rc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
         } else {
             let __pWriter_ref = { &mut *pWriter };
-            let mut nByte: crate::__stddef_size_t_h::size_t =
-                (std::mem::size_of::<Fts5DlidxWriter>() as crate::__stddef_size_t_h::size_t)
+            let mut nByte: crate::__stddef_size_t_h::SizeT =
+                (std::mem::size_of::<Fts5DlidxWriter>() as crate::__stddef_size_t_h::SizeT)
                     .wrapping_mul(
-                        (nLvl - __pWriter_ref.nDlidx) as crate::__stddef_size_t_h::size_t,
+                        (nLvl - __pWriter_ref.nDlidx) as crate::__stddef_size_t_h::SizeT,
                     );
             std::ptr::write_bytes(
                 aDlidx.offset(__pWriter_ref.nDlidx as isize) as *mut Fts5DlidxWriter
@@ -29740,8 +29740,8 @@ unsafe extern "C" fn fts5WriteFlushBtree(mut p: *mut Fts5Index, mut pWriter: *mu
         crate::src::src::vdbeapi::sqlite3_bind_int64(
             __p_ref.pIdxWriter,
             3 as ::core::ffi::c_int,
-            bFlag as crate::src::headers::sqlite3_h::sqlite3_int64
-                + ((__pWriter_ref.iBtPage as crate::src::headers::sqlite3_h::sqlite3_int64)
+            bFlag as crate::src::headers::sqlite3_h::Sqlite3Int64
+                + ((__pWriter_ref.iBtPage as crate::src::headers::sqlite3_h::Sqlite3Int64)
                     << 1 as ::core::ffi::c_int),
         );
         crate::src::src::vdbeapi::sqlite3_step(__p_ref.pIdxWriter);
@@ -29755,7 +29755,7 @@ unsafe extern "C" fn fts5WriteBtreeTerm(
     mut p: *mut Fts5Index,
     mut pWriter: *mut Fts5SegWriter,
     mut nTerm: ::core::ffi::c_int,
-    mut pTerm: *const u8_0,
+    mut pTerm: *const U8_0,
 ) {
     fts5WriteFlushBtree(p, pWriter);
     if (*p).rc == crate::src::headers::sqlite3_h::SQLITE_OK {
@@ -29777,22 +29777,22 @@ unsafe extern "C" fn fts5WriteBtreeNoTerm(mut p: *mut Fts5Index, mut pWriter: *m
     {
         let mut pDlidx: *mut Fts5DlidxWriter =
             __pWriter_ref.aDlidx.offset(0 as isize) as *mut Fts5DlidxWriter;
-        sqlite3Fts5BufferAppendVarint(&raw mut (*p).rc, &raw mut (*pDlidx).buf, 0 as i64_0);
+        sqlite3Fts5BufferAppendVarint(&raw mut (*p).rc, &raw mut (*pDlidx).buf, 0 as I64_0);
     }
     __pWriter_ref.nEmpty += 1;
 }
 
-unsafe extern "C" fn fts5DlidxExtractFirstRowid(mut pBuf: *mut Fts5Buffer) -> i64_0 {
-    let mut iRowid: i64_0 = 0;
+unsafe extern "C" fn fts5DlidxExtractFirstRowid(mut pBuf: *mut Fts5Buffer) -> I64_0 {
+    let mut iRowid: I64_0 = 0;
     let mut iOff: ::core::ffi::c_int = 0;
     iOff = 1 as ::core::ffi::c_int
         + sqlite3Fts5GetVarint(
-            (*pBuf).p.offset(1 as isize) as *mut u8_0,
-            &raw mut iRowid as *mut u64_0,
+            (*pBuf).p.offset(1 as isize) as *mut U8_0,
+            &raw mut iRowid as *mut U64_0,
         ) as ::core::ffi::c_int;
     sqlite3Fts5GetVarint(
-        (*pBuf).p.offset(iOff as isize) as *mut u8_0,
-        &raw mut iRowid as *mut u64_0,
+        (*pBuf).p.offset(iOff as isize) as *mut U8_0,
+        &raw mut iRowid as *mut U64_0,
     );
     iRowid
 }
@@ -29800,24 +29800,24 @@ unsafe extern "C" fn fts5DlidxExtractFirstRowid(mut pBuf: *mut Fts5Buffer) -> i6
 unsafe extern "C" fn fts5WriteDlidxAppend(
     mut p: *mut Fts5Index,
     mut pWriter: *mut Fts5SegWriter,
-    mut iRowid: i64_0,
+    mut iRowid: I64_0,
 ) {
     let mut i: ::core::ffi::c_int = 0;
     let mut bDone: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     i = 0 as ::core::ffi::c_int;
     while (*p).rc == crate::src::headers::sqlite3_h::SQLITE_OK && bDone == 0 as ::core::ffi::c_int {
-        let mut iVal: i64_0 = 0;
+        let mut iVal: I64_0 = 0;
         let mut pDlidx: *mut Fts5DlidxWriter =
             (*pWriter).aDlidx.offset(i as isize) as *mut Fts5DlidxWriter;
         if (*pDlidx).buf.n >= (*(*p).pConfig).pgsz {
-            *(*pDlidx).buf.p.offset(0 as isize) = 0x1 as u8_0;
+            *(*pDlidx).buf.p.offset(0 as isize) = 0x1 as U8_0;
             fts5DataWrite(
                 p,
-                (((*pWriter).iSegid as i64_0)
+                (((*pWriter).iSegid as I64_0)
                     << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-                    + ((1 as ::core::ffi::c_int as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-                    + ((i as i64_0) << 31 as ::core::ffi::c_int)
-                    + (*pDlidx).pgno as i64_0,
+                    + ((1 as ::core::ffi::c_int as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
+                    + ((i as I64_0) << 31 as ::core::ffi::c_int)
+                    + (*pDlidx).pgno as I64_0,
                 (*pDlidx).buf.p,
                 (*pDlidx).buf.n,
             );
@@ -29827,18 +29827,18 @@ unsafe extern "C" fn fts5WriteDlidxAppend(
                 && (*pDlidx.offset(1 as isize)).buf.n == 0 as ::core::ffi::c_int
             {
                 let __pDlidx_ref = { &mut *pDlidx };
-                let mut iFirst: i64_0 = fts5DlidxExtractFirstRowid(&raw mut __pDlidx_ref.buf);
+                let mut iFirst: I64_0 = fts5DlidxExtractFirstRowid(&raw mut __pDlidx_ref.buf);
                 (*pDlidx.offset(1 as isize)).pgno = __pDlidx_ref.pgno;
                 let __p_ref = { &mut *p };
                 sqlite3Fts5BufferAppendVarint(
                     &raw mut __p_ref.rc,
                     &raw mut (*pDlidx.offset(1 as isize)).buf,
-                    0 as i64_0,
+                    0 as I64_0,
                 );
                 sqlite3Fts5BufferAppendVarint(
                     &raw mut __p_ref.rc,
                     &raw mut (*pDlidx.offset(1 as isize)).buf,
-                    __pDlidx_ref.pgno as i64_0,
+                    __pDlidx_ref.pgno as I64_0,
                 );
                 sqlite3Fts5BufferAppendVarint(
                     &raw mut __p_ref.rc,
@@ -29855,17 +29855,17 @@ unsafe extern "C" fn fts5WriteDlidxAppend(
             bDone = 1 as ::core::ffi::c_int;
         }
         if (*pDlidx).bPrevValid != 0 {
-            iVal = (iRowid as u64_0).wrapping_sub((*pDlidx).iPrev as u64_0) as i64_0;
+            iVal = (iRowid as U64_0).wrapping_sub((*pDlidx).iPrev as U64_0) as I64_0;
         } else {
-            let mut iPgno: i64_0 = (if i == 0 as ::core::ffi::c_int {
+            let mut iPgno: I64_0 = (if i == 0 as ::core::ffi::c_int {
                 (*pWriter).writer.pgno
             } else {
                 (*pDlidx.offset(-(1 as ::core::ffi::c_int) as isize)).pgno
-            }) as i64_0;
+            }) as I64_0;
             sqlite3Fts5BufferAppendVarint(
                 &raw mut (*p).rc,
                 &raw mut (*pDlidx).buf,
-                (bDone == 0) as ::core::ffi::c_int as i64_0,
+                (bDone == 0) as ::core::ffi::c_int as I64_0,
             );
             sqlite3Fts5BufferAppendVarint(&raw mut (*p).rc, &raw mut (*pDlidx).buf, iPgno);
             iVal = iRowid;
@@ -29878,19 +29878,19 @@ unsafe extern "C" fn fts5WriteDlidxAppend(
 }
 
 unsafe extern "C" fn fts5WriteFlushLeaf(mut p: *mut Fts5Index, mut pWriter: *mut Fts5SegWriter) {
-    static mut zero: [u8_0; 4] = [
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
-        0 as ::core::ffi::c_int as u8_0,
+    static mut zero: [U8_0; 4] = [
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
+        0 as ::core::ffi::c_int as U8_0,
     ];
     let __pWriter_ref = { &mut *pWriter };
     let mut pPage: *mut Fts5PageWriter = &raw mut __pWriter_ref.writer;
-    let mut iRowid: i64_0 = 0;
+    let mut iRowid: I64_0 = 0;
     let __pPage_ref = { &mut *pPage };
     fts5PutU16(
-        __pPage_ref.buf.p.offset(2 as isize) as *mut u8_0,
-        __pPage_ref.buf.n as u16_0,
+        __pPage_ref.buf.p.offset(2 as isize) as *mut U8_0,
+        __pPage_ref.buf.n as U16_0,
     );
     if __pWriter_ref.bFirstTermInPage != 0 {
         fts5WriteBtreeNoTerm(p, pWriter);
@@ -29898,36 +29898,36 @@ unsafe extern "C" fn fts5WriteFlushLeaf(mut p: *mut Fts5Index, mut pWriter: *mut
         sqlite3Fts5BufferAppendBlob(
             &raw mut (*p).rc,
             &raw mut __pPage_ref.buf,
-            __pPage_ref.pgidx.n as u32_0,
+            __pPage_ref.pgidx.n as U32_0,
             __pPage_ref.pgidx.p,
         );
     }
-    iRowid = ((__pWriter_ref.iSegid as i64_0)
+    iRowid = ((__pWriter_ref.iSegid as I64_0)
         << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-        + ((0 as ::core::ffi::c_int as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-        + ((0 as ::core::ffi::c_int as i64_0) << 31 as ::core::ffi::c_int)
-        + __pPage_ref.pgno as i64_0;
+        + ((0 as ::core::ffi::c_int as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
+        + ((0 as ::core::ffi::c_int as I64_0) << 31 as ::core::ffi::c_int)
+        + __pPage_ref.pgno as I64_0;
     fts5DataWrite(p, iRowid, __pPage_ref.buf.p, __pPage_ref.buf.n);
     sqlite3Fts5BufferZero(&raw mut __pPage_ref.buf);
     sqlite3Fts5BufferZero(&raw mut __pPage_ref.pgidx);
     sqlite3Fts5BufferAppendBlob(
         &raw mut (*p).rc,
         &raw mut __pPage_ref.buf,
-        4 as u32_0,
-        &raw const zero as *const u8_0,
+        4 as U32_0,
+        &raw const zero as *const U8_0,
     );
     __pPage_ref.iPrevPgidx = 0 as ::core::ffi::c_int;
     __pPage_ref.pgno += 1;
     __pWriter_ref.nLeafWritten += 1;
-    __pWriter_ref.bFirstTermInPage = 1 as u8_0;
-    __pWriter_ref.bFirstRowidInPage = 1 as u8_0;
+    __pWriter_ref.bFirstTermInPage = 1 as U8_0;
+    __pWriter_ref.bFirstRowidInPage = 1 as U8_0;
 }
 
 unsafe extern "C" fn fts5WriteAppendTerm(
     mut p: *mut Fts5Index,
     mut pWriter: *mut Fts5SegWriter,
     mut nTerm: ::core::ffi::c_int,
-    mut pTerm: *const u8_0,
+    mut pTerm: *const U8_0,
 ) {
     let mut nPrefix: ::core::ffi::c_int = 0;
     let __pWriter_ref = { &mut *pWriter };
@@ -29949,20 +29949,20 @@ unsafe extern "C" fn fts5WriteAppendTerm(
                 return;
             }
         }
-        if (__pPage_ref.buf.n as u32_0).wrapping_add((nTerm + 20 as ::core::ffi::c_int) as u32_0)
-            <= __pPage_ref.buf.nSpace as u32_0
+        if (__pPage_ref.buf.n as U32_0).wrapping_add((nTerm + 20 as ::core::ffi::c_int) as U32_0)
+            <= __pPage_ref.buf.nSpace as U32_0
         {
         } else {
             sqlite3Fts5BufferSize(
                 &raw mut __p_ref.rc,
                 &raw mut __pPage_ref.buf,
-                (nTerm + 20 as ::core::ffi::c_int + __pPage_ref.buf.n) as u32_0,
+                (nTerm + 20 as ::core::ffi::c_int + __pPage_ref.buf.n) as U32_0,
             );
         };
     }
     __pPgidx_ref.n += sqlite3Fts5PutVarint(
         __pPgidx_ref.p.offset(__pPgidx_ref.n as isize) as *mut ::core::ffi::c_uchar,
-        ((*pPage).buf.n - (*pPage).iPrevPgidx) as u64_0,
+        ((*pPage).buf.n - (*pPage).iPrevPgidx) as U64_0,
     );
     (*pPage).iPrevPgidx = (*pPage).buf.n;
     if __pWriter_ref.bFirstTermInPage != 0 {
@@ -29980,30 +29980,30 @@ unsafe extern "C" fn fts5WriteAppendTerm(
         }
     } else {
         nPrefix = fts5PrefixCompress(nMin, (*pPage).term.p, pTerm);
-        sqlite3Fts5BufferAppendVarint(&raw mut __p_ref.rc, &raw mut (*pPage).buf, nPrefix as i64_0);
+        sqlite3Fts5BufferAppendVarint(&raw mut __p_ref.rc, &raw mut (*pPage).buf, nPrefix as I64_0);
     }
     sqlite3Fts5BufferAppendVarint(
         &raw mut __p_ref.rc,
         &raw mut (*pPage).buf,
-        nTerm as i64_0 - nPrefix as i64_0,
+        nTerm as I64_0 - nPrefix as I64_0,
     );
     sqlite3Fts5BufferAppendBlob(
         &raw mut __p_ref.rc,
         &raw mut (*pPage).buf,
-        (nTerm - nPrefix) as u32_0,
-        pTerm.offset(nPrefix as isize) as *const u8_0,
+        (nTerm - nPrefix) as U32_0,
+        pTerm.offset(nPrefix as isize) as *const U8_0,
     );
     sqlite3Fts5BufferSet(&raw mut __p_ref.rc, &raw mut (*pPage).term, nTerm, pTerm);
-    __pWriter_ref.bFirstTermInPage = 0 as u8_0;
-    __pWriter_ref.bFirstRowidInPage = 0 as u8_0;
-    __pWriter_ref.bFirstRowidInDoclist = 1 as u8_0;
+    __pWriter_ref.bFirstTermInPage = 0 as U8_0;
+    __pWriter_ref.bFirstRowidInPage = 0 as U8_0;
+    __pWriter_ref.bFirstRowidInDoclist = 1 as U8_0;
     (*__pWriter_ref.aDlidx.offset(0 as isize)).pgno = (*pPage).pgno;
 }
 
 unsafe extern "C" fn fts5WriteAppendRowid(
     mut p: *mut Fts5Index,
     mut pWriter: *mut Fts5SegWriter,
-    mut iRowid: i64_0,
+    mut iRowid: I64_0,
 ) {
     if (*p).rc == crate::src::headers::sqlite3_h::SQLITE_OK {
         let __pWriter_ref = { &mut *pWriter };
@@ -30012,7 +30012,7 @@ unsafe extern "C" fn fts5WriteAppendRowid(
             fts5WriteFlushLeaf(p, pWriter);
         }
         if __pWriter_ref.bFirstRowidInPage != 0 {
-            fts5PutU16((*pPage).buf.p, (*pPage).buf.n as u16_0);
+            fts5PutU16((*pPage).buf.p, (*pPage).buf.n as U16_0);
             fts5WriteDlidxAppend(p, pWriter, iRowid);
         }
         if __pWriter_ref.bFirstRowidInDoclist as ::core::ffi::c_int != 0
@@ -30023,24 +30023,24 @@ unsafe extern "C" fn fts5WriteAppendRowid(
             sqlite3Fts5BufferAppendVarint(
                 &raw mut (*p).rc,
                 &raw mut (*pPage).buf,
-                (iRowid as u64_0 as i64_0 as u64_0).wrapping_sub(__pWriter_ref.iPrevRowid as u64_0)
-                    as i64_0,
+                (iRowid as U64_0 as I64_0 as U64_0).wrapping_sub(__pWriter_ref.iPrevRowid as U64_0)
+                    as I64_0,
             );
         }
         __pWriter_ref.iPrevRowid = iRowid;
-        __pWriter_ref.bFirstRowidInDoclist = 0 as u8_0;
-        __pWriter_ref.bFirstRowidInPage = 0 as u8_0;
+        __pWriter_ref.bFirstRowidInDoclist = 0 as U8_0;
+        __pWriter_ref.bFirstRowidInPage = 0 as U8_0;
     }
 }
 
 unsafe extern "C" fn fts5WriteAppendPoslistData(
     mut p: *mut Fts5Index,
     mut pWriter: *mut Fts5SegWriter,
-    mut aData: *const u8_0,
+    mut aData: *const U8_0,
     mut nData: ::core::ffi::c_int,
 ) {
     let mut pPage: *mut Fts5PageWriter = &raw mut (*pWriter).writer;
-    let mut a: *const u8_0 = aData;
+    let mut a: *const U8_0 = aData;
     let mut n: ::core::ffi::c_int = nData;
     while (*p).rc == crate::src::headers::sqlite3_h::SQLITE_OK
         && (*pPage).buf.n + (*pPage).pgidx.n + n >= (*(*p).pConfig).pgsz
@@ -30050,16 +30050,16 @@ unsafe extern "C" fn fts5WriteAppendPoslistData(
             (*(*p).pConfig).pgsz - __pPage_ref.buf.n - __pPage_ref.pgidx.n;
         let mut nCopy: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
         while nCopy < nReq {
-            let mut dummy: i64_0 = 0;
+            let mut dummy: I64_0 = 0;
             nCopy += sqlite3Fts5GetVarint(
                 a.offset(nCopy as isize) as *const ::core::ffi::c_uchar,
-                &raw mut dummy as *mut u64_0,
+                &raw mut dummy as *mut U64_0,
             ) as ::core::ffi::c_int;
         }
         sqlite3Fts5BufferAppendBlob(
             &raw mut (*p).rc,
             &raw mut __pPage_ref.buf,
-            nCopy as u32_0,
+            nCopy as U32_0,
             a,
         );
         a = a.offset(nCopy as isize);
@@ -30067,7 +30067,7 @@ unsafe extern "C" fn fts5WriteAppendPoslistData(
         fts5WriteFlushLeaf(p, pWriter);
     }
     if n > 0 as ::core::ffi::c_int {
-        sqlite3Fts5BufferAppendBlob(&raw mut (*p).rc, &raw mut (*pPage).buf, n as u32_0, a);
+        sqlite3Fts5BufferAppendBlob(&raw mut (*p).rc, &raw mut (*pPage).buf, n as U32_0, a);
     }
 }
 
@@ -30117,17 +30117,17 @@ unsafe extern "C" fn fts5WriteInit(
     __pWriter_ref.iSegid = iSegid;
     fts5WriteDlidxGrow(p, pWriter, 1 as ::core::ffi::c_int);
     __pWriter_ref.writer.pgno = 1 as ::core::ffi::c_int;
-    __pWriter_ref.bFirstTermInPage = 1 as u8_0;
+    __pWriter_ref.bFirstTermInPage = 1 as U8_0;
     __pWriter_ref.iBtPage = 1 as ::core::ffi::c_int;
     sqlite3Fts5BufferSize(
         &raw mut __p_ref.rc,
         &raw mut __pWriter_ref.writer.pgidx,
-        nBuffer as u32_0,
+        nBuffer as U32_0,
     );
     sqlite3Fts5BufferSize(
         &raw mut __p_ref.rc,
         &raw mut __pWriter_ref.writer.buf,
-        nBuffer as u32_0,
+        nBuffer as U32_0,
     );
     if __p_ref.pIdxWriter.is_null() {
         let mut pConfig: *mut Fts5Config = __p_ref.pConfig;
@@ -30171,20 +30171,20 @@ unsafe extern "C" fn fts5TrimSegments(mut p: *mut Fts5Index, mut pIter: *mut Fts
             } else {
                 let __pSeg_ref = { &mut *pSeg };
                 let mut iOff: ::core::ffi::c_int = __pSeg_ref.iTermLeafOffset;
-                let mut iLeafRowid: i64_0 = 0;
+                let mut iLeafRowid: I64_0 = 0;
                 let mut pData: *mut Fts5Data = std::ptr::null_mut::<Fts5Data>();
                 let mut iId: ::core::ffi::c_int = (*__pSeg_ref.pSeg).iSegid;
-                let mut aHdr: [u8_0; 4] = [
-                    0 as ::core::ffi::c_int as u8_0,
-                    0 as ::core::ffi::c_int as u8_0,
-                    0 as ::core::ffi::c_int as u8_0,
-                    0 as ::core::ffi::c_int as u8_0,
+                let mut aHdr: [U8_0; 4] = [
+                    0 as ::core::ffi::c_int as U8_0,
+                    0 as ::core::ffi::c_int as U8_0,
+                    0 as ::core::ffi::c_int as U8_0,
+                    0 as ::core::ffi::c_int as U8_0,
                 ];
-                iLeafRowid = ((iId as i64_0)
+                iLeafRowid = ((iId as I64_0)
                     << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-                    + ((0 as ::core::ffi::c_int as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-                    + ((0 as ::core::ffi::c_int as i64_0) << 31 as ::core::ffi::c_int)
-                    + __pSeg_ref.iTermLeafPgno as i64_0;
+                    + ((0 as ::core::ffi::c_int as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
+                    + ((0 as ::core::ffi::c_int as I64_0) << 31 as ::core::ffi::c_int)
+                    + __pSeg_ref.iTermLeafPgno as I64_0;
                 pData = fts5LeafRead(p, iLeafRowid);
                 if !pData.is_null() {
                     if iOff > (*pData).szLeaf {
@@ -30193,46 +30193,46 @@ unsafe extern "C" fn fts5TrimSegments(mut p: *mut Fts5Index, mut pIter: *mut Fts
                         sqlite3Fts5BufferZero(&raw mut buf);
                         let __p_ref = { &mut *p };
                         let __pData_ref = { &mut *pData };
-                        if (buf.n as u32_0).wrapping_add(__pData_ref.nn as u32_0)
-                            <= buf.nSpace as u32_0
+                        if (buf.n as U32_0).wrapping_add(__pData_ref.nn as U32_0)
+                            <= buf.nSpace as U32_0
                         {
                         } else {
                             sqlite3Fts5BufferSize(
                                 &raw mut __p_ref.rc,
                                 &raw mut buf,
-                                (__pData_ref.nn + buf.n) as u32_0,
+                                (__pData_ref.nn + buf.n) as U32_0,
                             );
                         };
                         sqlite3Fts5BufferAppendBlob(
                             &raw mut __p_ref.rc,
                             &raw mut buf,
-                            std::mem::size_of::<[u8_0; 4]>() as u32_0,
-                            &raw mut aHdr as *mut u8_0,
+                            std::mem::size_of::<[U8_0; 4]>() as U32_0,
+                            &raw mut aHdr as *mut U8_0,
                         );
                         sqlite3Fts5BufferAppendVarint(
                             &raw mut __p_ref.rc,
                             &raw mut buf,
-                            __pSeg_ref.term.n as i64_0,
+                            __pSeg_ref.term.n as I64_0,
                         );
                         sqlite3Fts5BufferAppendBlob(
                             &raw mut __p_ref.rc,
                             &raw mut buf,
-                            __pSeg_ref.term.n as u32_0,
+                            __pSeg_ref.term.n as U32_0,
                             __pSeg_ref.term.p,
                         );
                         sqlite3Fts5BufferAppendBlob(
                             &raw mut __p_ref.rc,
                             &raw mut buf,
-                            (__pData_ref.szLeaf - iOff) as u32_0,
-                            __pData_ref.p.offset(iOff as isize) as *mut u8_0,
+                            (__pData_ref.szLeaf - iOff) as U32_0,
+                            __pData_ref.p.offset(iOff as isize) as *mut U8_0,
                         );
                         if __p_ref.rc == crate::src::headers::sqlite3_h::SQLITE_OK {
-                            fts5PutU16(buf.p.offset(2 as isize) as *mut u8_0, buf.n as u16_0);
+                            fts5PutU16(buf.p.offset(2 as isize) as *mut U8_0, buf.n as U16_0);
                         }
                         sqlite3Fts5BufferAppendVarint(
                             &raw mut __p_ref.rc,
                             &raw mut buf,
-                            4 as ::core::ffi::c_int as i64_0,
+                            4 as ::core::ffi::c_int as I64_0,
                         );
                         if __pSeg_ref.iLeafPgno == __pSeg_ref.iTermLeafPgno
                             && __pSeg_ref.iEndofDoclist < __pData_ref.szLeaf
@@ -30243,24 +30243,24 @@ unsafe extern "C" fn fts5TrimSegments(mut p: *mut Fts5Index, mut pIter: *mut Fts
                             sqlite3Fts5BufferAppendVarint(
                                 &raw mut __p_ref.rc,
                                 &raw mut buf,
-                                buf.n as i64_0 - 1 as i64_0 - nDiff as i64_0 - 4 as i64_0,
+                                buf.n as I64_0 - 1 as I64_0 - nDiff as I64_0 - 4 as I64_0,
                             );
                             sqlite3Fts5BufferAppendBlob(
                                 &raw mut __p_ref.rc,
                                 &raw mut buf,
-                                (__pData_ref.nn - __pSeg_ref.iPgidxOff) as u32_0,
-                                __pData_ref.p.offset(__pSeg_ref.iPgidxOff as isize) as *mut u8_0,
+                                (__pData_ref.nn - __pSeg_ref.iPgidxOff) as U32_0,
+                                __pData_ref.p.offset(__pSeg_ref.iPgidxOff as isize) as *mut U8_0,
                             );
                         }
                         (*__pSeg_ref.pSeg).pgnoFirst = __pSeg_ref.iTermLeafPgno;
                         fts5DataDelete(
                             p,
-                            ((iId as i64_0)
+                            ((iId as I64_0)
                                 << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-                                + ((0 as ::core::ffi::c_int as i64_0)
+                                + ((0 as ::core::ffi::c_int as I64_0)
                                     << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-                                + ((0 as ::core::ffi::c_int as i64_0) << 31 as ::core::ffi::c_int)
-                                + 1 as ::core::ffi::c_int as i64_0,
+                                + ((0 as ::core::ffi::c_int as I64_0) << 31 as ::core::ffi::c_int)
+                                + 1 as ::core::ffi::c_int as I64_0,
                             iLeafRowid,
                         );
                         fts5DataWrite(p, iLeafRowid, buf.p, buf.n);
@@ -30277,7 +30277,7 @@ unsafe extern "C" fn fts5TrimSegments(mut p: *mut Fts5Index, mut pIter: *mut Fts
 unsafe extern "C" fn fts5MergeChunkCallback(
     mut p: *mut Fts5Index,
     mut pCtx: *mut ::core::ffi::c_void,
-    mut pChunk: *const u8_0,
+    mut pChunk: *const U8_0,
     mut nChunk: ::core::ffi::c_int,
 ) {
     let mut pWriter: *mut Fts5SegWriter = pCtx as *mut Fts5SegWriter;
@@ -30349,7 +30349,7 @@ unsafe extern "C" fn fts5IndexMergeLevel(
         (*pSeg).iSegid = iSegid;
         (*pStruct).nSegment += 1;
         nInput = (*pLvl).nSeg;
-        if (*pStruct).nOriginCntr > 0 as u64_0 {
+        if (*pStruct).nOriginCntr > 0 as U64_0 {
             let __pLvl_ref = { &mut *pLvl };
             (*pSeg).iOrigin1 = (*__pLvl_ref.aSeg.offset(0 as isize)).iOrigin1;
             (*pSeg).iOrigin2 = (*(*pLvl)
@@ -30365,7 +30365,7 @@ unsafe extern "C" fn fts5IndexMergeLevel(
         pStruct,
         flags,
         std::ptr::null_mut::<Fts5Colset>(),
-        std::ptr::null::<u8_0>(),
+        std::ptr::null::<U8_0>(),
         0 as ::core::ffi::c_int,
         iLvl,
         nInput,
@@ -30377,7 +30377,7 @@ unsafe extern "C" fn fts5IndexMergeLevel(
             as *mut Fts5SegIter;
         let mut nPos: ::core::ffi::c_int = 0;
         let mut nTerm: ::core::ffi::c_int = 0;
-        let mut pTerm: *const u8_0 = std::ptr::null::<u8_0>();
+        let mut pTerm: *const U8_0 = std::ptr::null::<U8_0>();
         pTerm = fts5MultiIterTerm(pIter, &raw mut nTerm);
         if nTerm != term.n
             || (if nTerm <= 0 as ::core::ffi::c_int {
@@ -30411,13 +30411,13 @@ unsafe extern "C" fn fts5IndexMergeLevel(
                     sqlite3Fts5BufferAppendVarint(
                         &raw mut (*p).rc,
                         &raw mut writer.writer.buf,
-                        0 as ::core::ffi::c_int as i64_0,
+                        0 as ::core::ffi::c_int as I64_0,
                     );
                     if (*pSegIter).nPos > 0 as ::core::ffi::c_int {
                         sqlite3Fts5BufferAppendVarint(
                             &raw mut (*p).rc,
                             &raw mut writer.writer.buf,
-                            0 as ::core::ffi::c_int as i64_0,
+                            0 as ::core::ffi::c_int as I64_0,
                         );
                     }
                 }
@@ -30427,7 +30427,7 @@ unsafe extern "C" fn fts5IndexMergeLevel(
                 sqlite3Fts5BufferAppendVarint(
                     &raw mut (*p).rc,
                     &raw mut writer.writer.buf,
-                    nPos as i64_0,
+                    nPos as I64_0,
                 );
                 fts5ChunkIterate(
                     p,
@@ -30438,14 +30438,14 @@ unsafe extern "C" fn fts5IndexMergeLevel(
                             as unsafe extern "C" fn(
                                 *mut Fts5Index,
                                 *mut ::core::ffi::c_void,
-                                *const u8_0,
+                                *const U8_0,
                                 ::core::ffi::c_int,
                             ) -> (),
                     ),
                 );
             }
         }
-        fts5MultiIterNext(p, pIter, 0 as ::core::ffi::c_int, 0 as i64_0);
+        fts5MultiIterNext(p, pIter, 0 as ::core::ffi::c_int, 0 as I64_0);
     }
     fts5WriteFinish(p, &raw mut writer, &raw mut (*pSeg).pgnoLast);
     if fts5MultiIterEof(p, pIter) != 0 {
@@ -30503,22 +30503,22 @@ unsafe extern "C" fn fts5IndexFindDeleteMerge(
             let mut pLvl: *mut Fts5StructureLevel =
                 (&raw mut (*pStruct).aLevel as *mut Fts5StructureLevel).offset(ii as isize)
                     as *mut Fts5StructureLevel;
-            let mut nEntry: i64_0 = 0 as i64_0;
-            let mut nTomb: i64_0 = 0 as i64_0;
+            let mut nEntry: I64_0 = 0 as I64_0;
+            let mut nTomb: I64_0 = 0 as I64_0;
             let mut iSeg: ::core::ffi::c_int = 0;
             iSeg = 0 as ::core::ffi::c_int;
             while iSeg < (*pLvl).nSeg {
-                nEntry = (nEntry as u64_0)
+                nEntry = (nEntry as U64_0)
                     .wrapping_add((*(*pLvl).aSeg.offset(iSeg as isize)).nEntry)
-                    as i64_0 as i64_0;
-                nTomb = (nTomb as u64_0)
+                    as I64_0 as I64_0;
+                nTomb = (nTomb as U64_0)
                     .wrapping_add((*(*pLvl).aSeg.offset(iSeg as isize)).nEntryTombstone)
-                    as i64_0 as i64_0;
+                    as I64_0 as I64_0;
                 iSeg += 1;
             }
-            if nEntry > 0 as i64_0 {
+            if nEntry > 0 as I64_0 {
                 let mut nPercent: ::core::ffi::c_int =
-                    (nTomb * 100 as i64_0 / nEntry) as ::core::ffi::c_int;
+                    (nTomb * 100 as I64_0 / nEntry) as ::core::ffi::c_int;
                 if nPercent >= (*pConfig).nDeleteMerge && nPercent > nBest {
                     iRet = ii;
                     nBest = nPercent;
@@ -30598,18 +30598,18 @@ unsafe extern "C" fn fts5IndexAutomerge(
         && !(*ppStruct).is_null()
     {
         let mut pStruct: *mut Fts5Structure = *ppStruct;
-        let mut nWrite: u64_0 = 0;
+        let mut nWrite: U64_0 = 0;
         let mut nWork: ::core::ffi::c_int = 0;
         let mut nRem: ::core::ffi::c_int = 0;
         let __pStruct_ref = { &mut *pStruct };
         nWrite = __pStruct_ref.nWriteCounter;
         let __p_ref = { &mut *p };
         nWork = nWrite
-            .wrapping_add(nLeaf as u64_0)
-            .wrapping_div(__p_ref.nWorkUnit as u64_0)
-            .wrapping_sub(nWrite.wrapping_div(__p_ref.nWorkUnit as u64_0))
+            .wrapping_add(nLeaf as U64_0)
+            .wrapping_div(__p_ref.nWorkUnit as U64_0)
+            .wrapping_sub(nWrite.wrapping_div(__p_ref.nWorkUnit as U64_0))
             as ::core::ffi::c_int;
-        __pStruct_ref.nWriteCounter = __pStruct_ref.nWriteCounter.wrapping_add(nLeaf as u64_0);
+        __pStruct_ref.nWriteCounter = __pStruct_ref.nWriteCounter.wrapping_add(nLeaf as U64_0);
         nRem = __p_ref.nWorkUnit * nWork * __pStruct_ref.nLevel;
         fts5IndexMerge(p, ppStruct, nRem, (*__p_ref.pConfig).nAutomerge);
     }
@@ -30652,11 +30652,11 @@ unsafe extern "C" fn sqlite3Fts5IndexCloseReader(mut p: *mut Fts5Index) {
 }
 
 unsafe extern "C" fn fts5PoslistPrefix(
-    mut aBuf: *const u8_0,
+    mut aBuf: *const U8_0,
     mut nMax: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
     let mut ret: ::core::ffi::c_int = 0;
-    let mut dummy: u32_0 = 0;
+    let mut dummy: U32_0 = 0;
     ret = sqlite3Fts5GetVarint32(aBuf as *const ::core::ffi::c_uchar, &raw mut dummy);
     if ret < nMax {
         loop {
@@ -30722,41 +30722,41 @@ unsafe extern "C" fn fts5SecureDeleteOverflow(
     *pbLastInDoclist = 1 as ::core::ffi::c_int;
     pgno = iPgno;
     while (*p).rc == crate::src::headers::sqlite3_h::SQLITE_OK && pgno <= (*pSeg).pgnoLast {
-        let mut iRowid: i64_0 = (((*pSeg).iSegid as i64_0)
+        let mut iRowid: I64_0 = (((*pSeg).iSegid as I64_0)
             << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-            + ((0 as ::core::ffi::c_int as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-            + ((0 as ::core::ffi::c_int as i64_0) << 31 as ::core::ffi::c_int)
-            + pgno as i64_0;
+            + ((0 as ::core::ffi::c_int as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
+            + ((0 as ::core::ffi::c_int as I64_0) << 31 as ::core::ffi::c_int)
+            + pgno as I64_0;
         let mut iNext: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-        let mut aPg: *mut u8_0 = std::ptr::null_mut::<u8_0>();
+        let mut aPg: *mut U8_0 = std::ptr::null_mut::<U8_0>();
         pLeaf = fts5DataRead(p, iRowid);
         if pLeaf.is_null() {
             break;
         }
         aPg = (*pLeaf).p;
-        iNext = fts5GetU16(aPg.offset(0 as isize) as *mut u8_0) as ::core::ffi::c_int;
+        iNext = fts5GetU16(aPg.offset(0 as isize) as *mut U8_0) as ::core::ffi::c_int;
         if iNext != 0 as ::core::ffi::c_int {
             *pbLastInDoclist = 0 as ::core::ffi::c_int;
         }
         if iNext == 0 as ::core::ffi::c_int && (*pLeaf).szLeaf != (*pLeaf).nn {
             sqlite3Fts5GetVarint32(
-                aPg.offset((*pLeaf).szLeaf as isize) as *mut u8_0,
-                &raw mut iNext as *mut u32_0,
+                aPg.offset((*pLeaf).szLeaf as isize) as *mut U8_0,
+                &raw mut iNext as *mut U32_0,
             );
         }
         if iNext == 0 as ::core::ffi::c_int {
-            let aEmpty: [u8_0; 4] = [
-                0 as ::core::ffi::c_int as u8_0,
-                0 as ::core::ffi::c_int as u8_0,
-                0 as ::core::ffi::c_int as u8_0,
-                0x4 as ::core::ffi::c_int as u8_0,
+            let aEmpty: [U8_0; 4] = [
+                0 as ::core::ffi::c_int as U8_0,
+                0 as ::core::ffi::c_int as U8_0,
+                0 as ::core::ffi::c_int as U8_0,
+                0x4 as ::core::ffi::c_int as U8_0,
             ];
             if bDetailNone == 0 as ::core::ffi::c_int {
                 fts5DataWrite(
                     p,
                     iRowid,
-                    &raw const aEmpty as *const u8_0,
-                    std::mem::size_of::<[u8_0; 4]>() as ::core::ffi::c_int,
+                    &raw const aEmpty as *const U8_0,
+                    std::mem::size_of::<[U8_0; 4]>() as ::core::ffi::c_int,
                 );
             }
             fts5DataRelease(pLeaf);
@@ -30777,14 +30777,14 @@ unsafe extern "C" fn fts5SecureDeleteOverflow(
                 let mut nShift: ::core::ffi::c_int = iNext - 4 as ::core::ffi::c_int;
                 let mut nPg: ::core::ffi::c_int = 0;
                 let mut nIdx: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-                let mut aIdx: *mut u8_0 = std::ptr::null_mut::<u8_0>();
+                let mut aIdx: *mut U8_0 = std::ptr::null_mut::<U8_0>();
                 if __pLeaf_ref.nn > __pLeaf_ref.szLeaf {
                     let mut iFirst: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
                     let mut i1: ::core::ffi::c_int = __pLeaf_ref.szLeaf;
                     let mut i2: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
                     i1 += sqlite3Fts5GetVarint32(
-                        aPg.offset(i1 as isize) as *mut u8_0,
-                        &raw mut iFirst as *mut u32_0,
+                        aPg.offset(i1 as isize) as *mut U8_0,
+                        &raw mut iFirst as *mut U32_0,
                     );
                     if iFirst < iNext {
                         fts5IndexCorruptRowid(p, iRowid);
@@ -30793,19 +30793,19 @@ unsafe extern "C" fn fts5SecureDeleteOverflow(
                         aIdx = sqlite3Fts5MallocZero(
                             &raw mut (*p).rc,
                             (__pLeaf_ref.nn - __pLeaf_ref.szLeaf + 2 as ::core::ffi::c_int)
-                                as crate::src::headers::sqlite3_h::sqlite3_int64,
-                        ) as *mut u8_0;
+                                as crate::src::headers::sqlite3_h::Sqlite3Int64,
+                        ) as *mut U8_0;
                         if aIdx.is_null() {
                             break;
                         }
                         i2 = sqlite3Fts5PutVarint(
                             aIdx as *mut ::core::ffi::c_uchar,
-                            (iFirst - nShift) as u64_0,
+                            (iFirst - nShift) as U64_0,
                         );
                         if i1 < __pLeaf_ref.nn {
                             std::ptr::copy_nonoverlapping(
-                                aPg.offset(i1 as isize) as *mut u8_0 as *const u8,
-                                aIdx.offset(i2 as isize) as *mut u8_0 as *mut u8,
+                                aPg.offset(i1 as isize) as *mut U8_0 as *const u8,
+                                aIdx.offset(i2 as isize) as *mut U8_0 as *mut u8,
                                 (__pLeaf_ref.nn - i1) as usize,
                             );
                             i2 += __pLeaf_ref.nn - i1;
@@ -30815,19 +30815,19 @@ unsafe extern "C" fn fts5SecureDeleteOverflow(
                 }
                 nPg = __pLeaf_ref.szLeaf - nShift;
                 std::ptr::copy(
-                    aPg.offset((4 as ::core::ffi::c_int + nShift) as isize) as *mut u8_0
+                    aPg.offset((4 as ::core::ffi::c_int + nShift) as isize) as *mut U8_0
                         as *const u8,
-                    aPg.offset(4 as isize) as *mut u8_0 as *mut u8,
+                    aPg.offset(4 as isize) as *mut U8_0 as *mut u8,
                     (nPg - 4 as ::core::ffi::c_int) as usize,
                 );
-                fts5PutU16(aPg.offset(2 as isize) as *mut u8_0, nPg as u16_0);
-                if fts5GetU16(aPg.offset(0 as isize) as *mut u8_0) != 0 {
-                    fts5PutU16(aPg.offset(0 as isize) as *mut u8_0, 4 as u16_0);
+                fts5PutU16(aPg.offset(2 as isize) as *mut U8_0, nPg as U16_0);
+                if fts5GetU16(aPg.offset(0 as isize) as *mut U8_0) != 0 {
+                    fts5PutU16(aPg.offset(0 as isize) as *mut U8_0, 4 as U16_0);
                 }
                 if nIdx > 0 as ::core::ffi::c_int {
                     std::ptr::copy_nonoverlapping(
                         aIdx as *const u8,
-                        aPg.offset(nPg as isize) as *mut u8_0 as *mut u8,
+                        aPg.offset(nPg as isize) as *mut U8_0 as *mut u8,
                         nIdx as usize,
                     );
                     nPg += nIdx;
@@ -30847,14 +30847,14 @@ unsafe extern "C" fn fts5DoSecureDelete(mut p: *mut Fts5Index, mut pSeg: *mut Ft
         ((*__p_ref.pConfig).eDetail == FTS5_DETAIL_NONE) as ::core::ffi::c_int;
     let __pSeg_ref = { &mut *pSeg };
     let mut iSegid: ::core::ffi::c_int = (*__pSeg_ref.pSeg).iSegid;
-    let mut aPg: *mut u8_0 = (*__pSeg_ref.pLeaf).p;
+    let mut aPg: *mut U8_0 = (*__pSeg_ref.pLeaf).p;
     let mut nPg: ::core::ffi::c_int = (*__pSeg_ref.pLeaf).nn;
     let mut iPgIdx: ::core::ffi::c_int = (*__pSeg_ref.pLeaf).szLeaf;
-    let mut iDelta: u64_0 = 0 as u64_0;
+    let mut iDelta: U64_0 = 0 as U64_0;
     let mut iNextOff: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut iOff: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut nIdx: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-    let mut aIdx: *mut u8_0 = std::ptr::null_mut::<u8_0>();
+    let mut aIdx: *mut U8_0 = std::ptr::null_mut::<U8_0>();
     let mut bLastInDoclist: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut iIdx: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut iStart: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
@@ -30862,14 +30862,14 @@ unsafe extern "C" fn fts5DoSecureDelete(mut p: *mut Fts5Index, mut pSeg: *mut Ft
     nIdx = nPg - iPgIdx;
     aIdx = sqlite3Fts5MallocZero(
         &raw mut __p_ref.rc,
-        nIdx as crate::src::headers::sqlite3_h::sqlite3_int64
-            + 16 as crate::src::headers::sqlite3_h::sqlite3_int64,
-    ) as *mut u8_0;
+        nIdx as crate::src::headers::sqlite3_h::Sqlite3Int64
+            + 16 as crate::src::headers::sqlite3_h::Sqlite3Int64,
+    ) as *mut U8_0;
     if __p_ref.rc != 0 {
         return;
     }
     std::ptr::copy_nonoverlapping(
-        aPg.offset(iPgIdx as isize) as *mut u8_0 as *const u8,
+        aPg.offset(iPgIdx as isize) as *mut U8_0 as *const u8,
         aIdx as *mut u8,
         nIdx as usize,
     );
@@ -30877,13 +30877,13 @@ unsafe extern "C" fn fts5DoSecureDelete(mut p: *mut Fts5Index, mut pSeg: *mut Ft
     if __pSeg_ref.iLeafPgno == __pSeg_ref.iTermLeafPgno {
         iStart = __pSeg_ref.iTermLeafOffset;
     } else {
-        iStart = fts5GetU16(aPg.offset(0 as isize) as *mut u8_0) as ::core::ffi::c_int;
+        iStart = fts5GetU16(aPg.offset(0 as isize) as *mut U8_0) as ::core::ffi::c_int;
     }
     iSOP = iStart
-        + sqlite3Fts5GetVarint(aPg.offset(iStart as isize) as *mut u8_0, &raw mut iDelta)
+        + sqlite3Fts5GetVarint(aPg.offset(iStart as isize) as *mut U8_0, &raw mut iDelta)
             as ::core::ffi::c_int;
     if bDetailNone != 0 {
-        while (iSOP as i64_0) < __pSeg_ref.iLeafOffset {
+        while (iSOP as I64_0) < __pSeg_ref.iLeafOffset {
             if *aPg.offset(iSOP as isize) as ::core::ffi::c_int == 0 as ::core::ffi::c_int {
                 iSOP += 1;
             }
@@ -30892,7 +30892,7 @@ unsafe extern "C" fn fts5DoSecureDelete(mut p: *mut Fts5Index, mut pSeg: *mut Ft
             }
             iStart = iSOP;
             iSOP = iStart
-                + sqlite3Fts5GetVarint(aPg.offset(iStart as isize) as *mut u8_0, &raw mut iDelta)
+                + sqlite3Fts5GetVarint(aPg.offset(iStart as isize) as *mut U8_0, &raw mut iDelta)
                     as ::core::ffi::c_int;
         }
         iNextOff = iSOP;
@@ -30909,20 +30909,20 @@ unsafe extern "C" fn fts5DoSecureDelete(mut p: *mut Fts5Index, mut pSeg: *mut Ft
     } else {
         let mut nPos: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
         iSOP += sqlite3Fts5GetVarint32(
-            aPg.offset(iSOP as isize) as *mut u8_0,
-            &raw mut nPos as *mut u32_0,
+            aPg.offset(iSOP as isize) as *mut U8_0,
+            &raw mut nPos as *mut U32_0,
         );
-        while (iSOP as i64_0) < __pSeg_ref.iLeafOffset {
+        while (iSOP as I64_0) < __pSeg_ref.iLeafOffset {
             iStart = iSOP + nPos / 2 as ::core::ffi::c_int;
             iSOP = iStart
-                + sqlite3Fts5GetVarint(aPg.offset(iStart as isize) as *mut u8_0, &raw mut iDelta)
+                + sqlite3Fts5GetVarint(aPg.offset(iStart as isize) as *mut U8_0, &raw mut iDelta)
                     as ::core::ffi::c_int;
             iSOP += sqlite3Fts5GetVarint32(
-                aPg.offset(iSOP as isize) as *mut u8_0,
-                &raw mut nPos as *mut u32_0,
+                aPg.offset(iSOP as isize) as *mut U8_0,
+                &raw mut nPos as *mut U32_0,
             );
         }
-        iNextOff = (__pSeg_ref.iLeafOffset + __pSeg_ref.nPos as i64_0) as ::core::ffi::c_int;
+        iNextOff = (__pSeg_ref.iLeafOffset + __pSeg_ref.nPos as I64_0) as ::core::ffi::c_int;
     }
     iOff = iStart;
     if iNextOff >= iPgIdx {
@@ -30935,20 +30935,20 @@ unsafe extern "C" fn fts5DoSecureDelete(mut p: *mut Fts5Index, mut pSeg: *mut Ft
             let mut iKeyOff: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
             iIdx = 0 as ::core::ffi::c_int;
             while iIdx < nIdx {
-                let mut iVal: u32_0 = 0 as u32_0;
+                let mut iVal: U32_0 = 0 as U32_0;
                 iIdx +=
-                    sqlite3Fts5GetVarint32(aIdx.offset(iIdx as isize) as *mut u8_0, &raw mut iVal);
-                iKeyOff = (iKeyOff as u32_0).wrapping_add(iVal) as ::core::ffi::c_int
+                    sqlite3Fts5GetVarint32(aIdx.offset(iIdx as isize) as *mut U8_0, &raw mut iVal);
+                iKeyOff = (iKeyOff as U32_0).wrapping_add(iVal) as ::core::ffi::c_int
                     as ::core::ffi::c_int;
                 if iKeyOff == iNextOff {
                     bLastInDoclist = 1 as ::core::ffi::c_int;
                 }
             }
         }
-        if fts5GetU16(aPg.offset(0 as isize) as *mut u8_0) as ::core::ffi::c_int == iStart
+        if fts5GetU16(aPg.offset(0 as isize) as *mut U8_0) as ::core::ffi::c_int == iStart
             && (bLastInDoclist != 0 || iNextOff == iPgIdx)
         {
-            fts5PutU16(aPg.offset(0 as isize) as *mut u8_0, 0 as u16_0);
+            fts5PutU16(aPg.offset(0 as isize) as *mut U8_0, 0 as U16_0);
         }
     }
     if __pSeg_ref.bDel != 0 {
@@ -30958,12 +30958,12 @@ unsafe extern "C" fn fts5DoSecureDelete(mut p: *mut Fts5Index, mut pSeg: *mut Ft
         );
         let fresh44 = iOff;
         iOff += 1;
-        *aPg.offset(fresh44 as isize) = 0x1 as u8_0;
+        *aPg.offset(fresh44 as isize) = 0x1 as U8_0;
     } else if bLastInDoclist == 0 as ::core::ffi::c_int {
         if iNextOff != iPgIdx {
-            let mut iNextDelta: u64_0 = 0 as u64_0;
+            let mut iNextDelta: U64_0 = 0 as U64_0;
             iNextOff += sqlite3Fts5GetVarint(
-                aPg.offset(iNextOff as isize) as *mut u8_0,
+                aPg.offset(iNextOff as isize) as *mut U8_0,
                 &raw mut iNextDelta,
             ) as ::core::ffi::c_int;
             iOff += sqlite3Fts5PutVarint(
@@ -30978,13 +30978,13 @@ unsafe extern "C" fn fts5DoSecureDelete(mut p: *mut Fts5Index, mut pSeg: *mut Ft
         let mut iKeyOff_0: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
         iIdx = 0 as ::core::ffi::c_int;
         while iIdx < nIdx {
-            let mut iVal_0: u32_0 = 0 as u32_0;
+            let mut iVal_0: U32_0 = 0 as U32_0;
             iIdx +=
-                sqlite3Fts5GetVarint32(aIdx.offset(iIdx as isize) as *mut u8_0, &raw mut iVal_0);
-            if (iKeyOff_0 as u32_0).wrapping_add(iVal_0) > iStart as u32_0 {
+                sqlite3Fts5GetVarint32(aIdx.offset(iIdx as isize) as *mut U8_0, &raw mut iVal_0);
+            if (iKeyOff_0 as U32_0).wrapping_add(iVal_0) > iStart as U32_0 {
                 break;
             }
-            iKeyOff_0 = (iKeyOff_0 as u32_0).wrapping_add(iVal_0) as ::core::ffi::c_int
+            iKeyOff_0 = (iKeyOff_0 as U32_0).wrapping_add(iVal_0) as ::core::ffi::c_int
                 as ::core::ffi::c_int;
             iKey += 1;
         }
@@ -30997,22 +30997,22 @@ unsafe extern "C" fn fts5DoSecureDelete(mut p: *mut Fts5Index, mut pSeg: *mut Ft
             let mut nSuffix2: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
             iDelKeyOff = iNextOff;
             iNextOff += sqlite3Fts5GetVarint32(
-                aPg.offset(iNextOff as isize) as *mut u8_0,
-                &raw mut nPrefix2 as *mut u32_0,
+                aPg.offset(iNextOff as isize) as *mut U8_0,
+                &raw mut nPrefix2 as *mut U32_0,
             );
             iNextOff += sqlite3Fts5GetVarint32(
-                aPg.offset(iNextOff as isize) as *mut u8_0,
-                &raw mut nSuffix2 as *mut u32_0,
+                aPg.offset(iNextOff as isize) as *mut U8_0,
+                &raw mut nSuffix2 as *mut U32_0,
             );
             if iKey != 1 as ::core::ffi::c_int {
                 iKeyOff_0 += sqlite3Fts5GetVarint32(
-                    aPg.offset(iKeyOff_0 as isize) as *mut u8_0,
-                    &raw mut nPrefix as *mut u32_0,
+                    aPg.offset(iKeyOff_0 as isize) as *mut U8_0,
+                    &raw mut nPrefix as *mut U32_0,
                 );
             }
             iKeyOff_0 += sqlite3Fts5GetVarint32(
-                aPg.offset(iKeyOff_0 as isize) as *mut u8_0,
-                &raw mut nSuffix as *mut u32_0,
+                aPg.offset(iKeyOff_0 as isize) as *mut U8_0,
+                &raw mut nSuffix as *mut U32_0,
             );
             nPrefix = if nPrefix < nPrefix2 {
                 nPrefix
@@ -31026,26 +31026,26 @@ unsafe extern "C" fn fts5DoSecureDelete(mut p: *mut Fts5Index, mut pSeg: *mut Ft
                 if iKey != 1 as ::core::ffi::c_int {
                     iOff += sqlite3Fts5PutVarint(
                         aPg.offset(iOff as isize) as *mut ::core::ffi::c_uchar,
-                        nPrefix as u64_0,
+                        nPrefix as U64_0,
                     );
                 }
                 iOff += sqlite3Fts5PutVarint(
                     aPg.offset(iOff as isize) as *mut ::core::ffi::c_uchar,
-                    nSuffix as u64_0,
+                    nSuffix as U64_0,
                 );
                 if nPrefix2 > __pSeg_ref.term.n {
                     fts5IndexCorruptIdx(p);
                 } else if nPrefix2 > nPrefix {
                     std::ptr::copy_nonoverlapping(
-                        __pSeg_ref.term.p.offset(nPrefix as isize) as *mut u8_0 as *const u8,
-                        aPg.offset(iOff as isize) as *mut u8_0 as *mut u8,
+                        __pSeg_ref.term.p.offset(nPrefix as isize) as *mut U8_0 as *const u8,
+                        aPg.offset(iOff as isize) as *mut U8_0 as *mut u8,
                         (nPrefix2 - nPrefix) as usize,
                     );
                     iOff += nPrefix2 - nPrefix;
                 }
                 std::ptr::copy(
-                    aPg.offset(iNextOff as isize) as *mut u8_0 as *const u8,
-                    aPg.offset(iOff as isize) as *mut u8_0 as *mut u8,
+                    aPg.offset(iNextOff as isize) as *mut U8_0 as *const u8,
+                    aPg.offset(iOff as isize) as *mut U8_0 as *mut u8,
                     nSuffix2 as usize,
                 );
                 iOff += nSuffix2;
@@ -31058,10 +31058,10 @@ unsafe extern "C" fn fts5DoSecureDelete(mut p: *mut Fts5Index, mut pSeg: *mut Ft
         while iPgno > __pSeg_ref.iTermLeafPgno {
             let mut pPg: *mut Fts5Data = fts5DataRead(
                 p,
-                ((iSegid as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-                    + ((0 as ::core::ffi::c_int as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-                    + ((0 as ::core::ffi::c_int as i64_0) << 31 as ::core::ffi::c_int)
-                    + iPgno as i64_0,
+                ((iSegid as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
+                    + ((0 as ::core::ffi::c_int as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
+                    + ((0 as ::core::ffi::c_int as I64_0) << 31 as ::core::ffi::c_int)
+                    + iPgno as I64_0,
             );
             let mut bEmpty: ::core::ffi::c_int =
                 (!pPg.is_null() && (*pPg).nn == 4 as ::core::ffi::c_int) as ::core::ffi::c_int;
@@ -31072,26 +31072,26 @@ unsafe extern "C" fn fts5DoSecureDelete(mut p: *mut Fts5Index, mut pSeg: *mut Ft
             iPgno -= 1;
         }
         if iPgno == __pSeg_ref.iTermLeafPgno {
-            let mut iId: i64_0 = ((iSegid as i64_0)
+            let mut iId: I64_0 = ((iSegid as I64_0)
                 << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-                + ((0 as ::core::ffi::c_int as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-                + ((0 as ::core::ffi::c_int as i64_0) << 31 as ::core::ffi::c_int)
-                + __pSeg_ref.iTermLeafPgno as i64_0;
+                + ((0 as ::core::ffi::c_int as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
+                + ((0 as ::core::ffi::c_int as I64_0) << 31 as ::core::ffi::c_int)
+                + __pSeg_ref.iTermLeafPgno as I64_0;
             let mut pTerm: *mut Fts5Data = fts5DataRead(p, iId);
             if !pTerm.is_null() && (*pTerm).szLeaf == __pSeg_ref.iTermLeafOffset {
                 let __pTerm_ref = { &mut *pTerm };
-                let mut aTermIdx: *mut u8_0 =
-                    __pTerm_ref.p.offset(__pTerm_ref.szLeaf as isize) as *mut u8_0;
+                let mut aTermIdx: *mut U8_0 =
+                    __pTerm_ref.p.offset(__pTerm_ref.szLeaf as isize) as *mut U8_0;
                 let mut nTermIdx: ::core::ffi::c_int = __pTerm_ref.nn - __pTerm_ref.szLeaf;
                 let mut iTermIdx: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
                 let mut iTermOff: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
                 loop {
-                    let mut iVal_1: u32_0 = 0 as u32_0;
+                    let mut iVal_1: U32_0 = 0 as U32_0;
                     let mut nByte: ::core::ffi::c_int = sqlite3Fts5GetVarint32(
-                        aTermIdx.offset(iTermIdx as isize) as *mut u8_0,
+                        aTermIdx.offset(iTermIdx as isize) as *mut U8_0,
                         &raw mut iVal_1,
                     );
-                    iTermOff = (iTermOff as u32_0).wrapping_add(iVal_1) as ::core::ffi::c_int
+                    iTermOff = (iTermOff as U32_0).wrapping_add(iVal_1) as ::core::ffi::c_int
                         as ::core::ffi::c_int;
                     if iTermIdx + nByte >= nTermIdx {
                         break;
@@ -31100,13 +31100,13 @@ unsafe extern "C" fn fts5DoSecureDelete(mut p: *mut Fts5Index, mut pSeg: *mut Ft
                 }
                 nTermIdx = iTermIdx;
                 std::ptr::copy(
-                    __pTerm_ref.p.offset(__pTerm_ref.szLeaf as isize) as *mut u8_0 as *const u8,
-                    __pTerm_ref.p.offset(iTermOff as isize) as *mut u8_0 as *mut u8,
+                    __pTerm_ref.p.offset(__pTerm_ref.szLeaf as isize) as *mut U8_0 as *const u8,
+                    __pTerm_ref.p.offset(iTermOff as isize) as *mut U8_0 as *mut u8,
                     nTermIdx as usize,
                 );
                 fts5PutU16(
-                    __pTerm_ref.p.offset(2 as isize) as *mut u8_0,
-                    iTermOff as u16_0,
+                    __pTerm_ref.p.offset(2 as isize) as *mut U8_0,
+                    iTermOff as U16_0,
                 );
                 fts5DataWrite(p, iId, __pTerm_ref.p, iTermOff + nTermIdx);
                 if nTermIdx == 0 as ::core::ffi::c_int {
@@ -31122,20 +31122,20 @@ unsafe extern "C" fn fts5DoSecureDelete(mut p: *mut Fts5Index, mut pSeg: *mut Ft
         let mut iPrevKeyOut: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
         let mut iKeyIn: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
         std::ptr::copy(
-            aPg.offset(iNextOff as isize) as *mut u8_0 as *const u8,
-            aPg.offset(iOff as isize) as *mut u8_0 as *mut u8,
+            aPg.offset(iNextOff as isize) as *mut U8_0 as *const u8,
+            aPg.offset(iOff as isize) as *mut U8_0 as *mut u8,
             nMove as usize,
         );
         iPgIdx -= nShift;
         nPg = iPgIdx;
-        fts5PutU16(aPg.offset(2 as isize) as *mut u8_0, iPgIdx as u16_0);
+        fts5PutU16(aPg.offset(2 as isize) as *mut U8_0, iPgIdx as U16_0);
         iIdx = 0 as ::core::ffi::c_int;
         while iIdx < nIdx {
-            let mut iVal_2: u32_0 = 0 as u32_0;
+            let mut iVal_2: U32_0 = 0 as U32_0;
             iIdx +=
-                sqlite3Fts5GetVarint32(aIdx.offset(iIdx as isize) as *mut u8_0, &raw mut iVal_2);
+                sqlite3Fts5GetVarint32(aIdx.offset(iIdx as isize) as *mut U8_0, &raw mut iVal_2);
             iKeyIn =
-                (iKeyIn as u32_0).wrapping_add(iVal_2) as ::core::ffi::c_int as ::core::ffi::c_int;
+                (iKeyIn as U32_0).wrapping_add(iVal_2) as ::core::ffi::c_int as ::core::ffi::c_int;
             if iKeyIn != iDelKeyOff {
                 let mut iKeyOut: ::core::ffi::c_int = iKeyIn
                     - (if iKeyIn > iOff {
@@ -31145,7 +31145,7 @@ unsafe extern "C" fn fts5DoSecureDelete(mut p: *mut Fts5Index, mut pSeg: *mut Ft
                     });
                 nPg += sqlite3Fts5PutVarint(
                     aPg.offset(nPg as isize) as *mut ::core::ffi::c_uchar,
-                    (iKeyOut - iPrevKeyOut) as u64_0,
+                    (iKeyOut - iPrevKeyOut) as U64_0,
                 );
                 iPrevKeyOut = iKeyOut;
             }
@@ -31158,10 +31158,10 @@ unsafe extern "C" fn fts5DoSecureDelete(mut p: *mut Fts5Index, mut pSeg: *mut Ft
         }
         fts5DataWrite(
             p,
-            ((iSegid as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-                + ((0 as ::core::ffi::c_int as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-                + ((0 as ::core::ffi::c_int as i64_0) << 31 as ::core::ffi::c_int)
-                + __pSeg_ref.iLeafPgno as i64_0,
+            ((iSegid as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
+                + ((0 as ::core::ffi::c_int as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
+                + ((0 as ::core::ffi::c_int as I64_0) << 31 as ::core::ffi::c_int)
+                + __pSeg_ref.iLeafPgno as I64_0,
             aPg,
             nPg,
         );
@@ -31174,14 +31174,14 @@ unsafe extern "C" fn fts5FlushSecureDelete(
     mut pStruct: *mut Fts5Structure,
     mut zTerm: *const ::core::ffi::c_char,
     mut nTerm: ::core::ffi::c_int,
-    mut iRowid: i64_0,
+    mut iRowid: I64_0,
 ) -> ::core::ffi::c_int {
     let f: ::core::ffi::c_int = FTS5INDEX_QUERY_SKIPHASH;
     let mut pIter: *mut Fts5Iter = std::ptr::null_mut::<Fts5Iter>();
     if (*(*p).pConfig).iVersion != FTS5_CURRENT_VERSION_SECUREDELETE {
         let mut pConfig: *mut Fts5Config = (*p).pConfig;
-        let mut pStmt: *mut crate::src::headers::sqlite3_h::sqlite3_stmt =
-            std::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_stmt>();
+        let mut pStmt: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt =
+            std::ptr::null_mut::<crate::src::headers::sqlite3_h::Sqlite3Stmt>();
         fts5IndexPrepareStmt(
             p,
             &raw mut pStmt,
@@ -31208,14 +31208,14 @@ unsafe extern "C" fn fts5FlushSecureDelete(
         pStruct,
         f,
         std::ptr::null_mut::<Fts5Colset>(),
-        zTerm as *const u8_0,
+        zTerm as *const U8_0,
         nTerm,
         -(1 as ::core::ffi::c_int),
         0 as ::core::ffi::c_int,
         &raw mut pIter,
     );
     if fts5MultiIterEof(p, pIter) == 0 as ::core::ffi::c_int {
-        let mut iThis: i64_0 = fts5MultiIterRowid(pIter);
+        let mut iThis: I64_0 = fts5MultiIterRowid(pIter);
         if iThis < iRowid {
             fts5MultiIterNextFrom(p, pIter, iRowid);
         }
@@ -31266,7 +31266,7 @@ unsafe extern "C" fn fts5FlushOneHash(mut p: *mut Fts5Index) {
             {
                 let mut zTerm: *const ::core::ffi::c_char = std::ptr::null::<::core::ffi::c_char>();
                 let mut nTerm: ::core::ffi::c_int = 0;
-                let mut pDoclist: *const u8_0 = std::ptr::null::<u8_0>();
+                let mut pDoclist: *const U8_0 = std::ptr::null::<U8_0>();
                 let mut nDoclist: ::core::ffi::c_int = 0;
                 sqlite3Fts5HashScanEntry(
                     pHash,
@@ -31276,7 +31276,7 @@ unsafe extern "C" fn fts5FlushOneHash(mut p: *mut Fts5Index) {
                     &raw mut nDoclist,
                 );
                 if bSecureDelete == 0 as ::core::ffi::c_int {
-                    fts5WriteAppendTerm(p, &raw mut writer, nTerm, zTerm as *const u8_0);
+                    fts5WriteAppendTerm(p, &raw mut writer, nTerm, zTerm as *const U8_0);
                     if __p_ref.rc != crate::src::headers::sqlite3_h::SQLITE_OK {
                         break;
                     }
@@ -31287,24 +31287,24 @@ unsafe extern "C" fn fts5FlushOneHash(mut p: *mut Fts5Index) {
                     let __pBuf_ref = { &mut *pBuf };
                     std::ptr::copy_nonoverlapping(
                         pDoclist as *const u8,
-                        __pBuf_ref.p.offset(__pBuf_ref.n as isize) as *mut u8_0 as *mut u8,
+                        __pBuf_ref.p.offset(__pBuf_ref.n as isize) as *mut U8_0 as *mut u8,
                         nDoclist as usize,
                     );
                     __pBuf_ref.n += nDoclist;
                 } else {
                     let mut bTermWritten: ::core::ffi::c_int =
                         (bSecureDelete == 0) as ::core::ffi::c_int;
-                    let mut iRowid: i64_0 = 0 as i64_0;
-                    let mut iPrev: i64_0 = 0 as i64_0;
+                    let mut iRowid: I64_0 = 0 as I64_0;
+                    let mut iPrev: I64_0 = 0 as I64_0;
                     let mut iOff: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
                     while __p_ref.rc == crate::src::headers::sqlite3_h::SQLITE_OK && iOff < nDoclist
                     {
-                        let mut iDelta: u64_0 = 0 as u64_0;
+                        let mut iDelta: U64_0 = 0 as U64_0;
                         iOff += sqlite3Fts5GetVarint(
                             pDoclist.offset(iOff as isize) as *const ::core::ffi::c_uchar,
                             &raw mut iDelta,
                         ) as ::core::ffi::c_int;
-                        iRowid = (iRowid as u64_0).wrapping_add(iDelta) as i64_0 as i64_0;
+                        iRowid = (iRowid as U64_0).wrapping_add(iDelta) as I64_0 as I64_0;
                         if bSecureDelete != 0 {
                             if eDetail == FTS5_DETAIL_NONE {
                                 if iOff < nDoclist
@@ -31339,25 +31339,25 @@ unsafe extern "C" fn fts5FlushOneHash(mut p: *mut Fts5Index) {
                         if __p_ref.rc == crate::src::headers::sqlite3_h::SQLITE_OK
                             && bTermWritten == 0 as ::core::ffi::c_int
                         {
-                            fts5WriteAppendTerm(p, &raw mut writer, nTerm, zTerm as *const u8_0);
+                            fts5WriteAppendTerm(p, &raw mut writer, nTerm, zTerm as *const U8_0);
                             bTermWritten = 1 as ::core::ffi::c_int;
                         }
                         if writer.bFirstRowidInPage != 0 {
                             let __pBuf_ref = { &mut *pBuf };
                             fts5PutU16(
-                                __pBuf_ref.p.offset(0 as isize) as *mut u8_0,
-                                __pBuf_ref.n as u16_0,
+                                __pBuf_ref.p.offset(0 as isize) as *mut U8_0,
+                                __pBuf_ref.n as U16_0,
                             );
                             __pBuf_ref.n += sqlite3Fts5PutVarint(
                                 __pBuf_ref.p.offset(__pBuf_ref.n as isize)
                                     as *mut ::core::ffi::c_uchar,
-                                iRowid as u64_0,
+                                iRowid as U64_0,
                             );
-                            writer.bFirstRowidInPage = 0 as u8_0;
+                            writer.bFirstRowidInPage = 0 as U8_0;
                             fts5WriteDlidxAppend(p, &raw mut writer, iRowid);
                         } else {
-                            let mut iRowidDelta: u64_0 =
-                                (iRowid as u64_0).wrapping_sub(iPrev as u64_0);
+                            let mut iRowidDelta: U64_0 =
+                                (iRowid as U64_0).wrapping_sub(iPrev as U64_0);
                             let __pBuf_ref = { &mut *pBuf };
                             __pBuf_ref.n += sqlite3Fts5PutVarint(
                                 __pBuf_ref.p.offset(__pBuf_ref.n as isize)
@@ -31377,7 +31377,7 @@ unsafe extern "C" fn fts5FlushOneHash(mut p: *mut Fts5Index) {
                                 let __pBuf_ref = { &mut *pBuf };
                                 let fresh39 = __pBuf_ref.n;
                                 __pBuf_ref.n += 1;
-                                *__pBuf_ref.p.offset(fresh39 as isize) = 0 as u8_0;
+                                *__pBuf_ref.p.offset(fresh39 as isize) = 0 as U8_0;
                                 iOff += 1;
                                 if iOff < nDoclist
                                     && *pDoclist.offset(iOff as isize) as ::core::ffi::c_int
@@ -31385,7 +31385,7 @@ unsafe extern "C" fn fts5FlushOneHash(mut p: *mut Fts5Index) {
                                 {
                                     let fresh40 = __pBuf_ref.n;
                                     __pBuf_ref.n += 1;
-                                    *__pBuf_ref.p.offset(fresh40 as isize) = 0 as u8_0;
+                                    *__pBuf_ref.p.offset(fresh40 as isize) = 0 as U8_0;
                                     iOff += 1;
                                 }
                             }
@@ -31396,7 +31396,7 @@ unsafe extern "C" fn fts5FlushOneHash(mut p: *mut Fts5Index) {
                             let mut bDel: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
                             let mut nPos: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
                             let mut nCopy: ::core::ffi::c_int = fts5GetPoslistSize(
-                                pDoclist.offset(iOff as isize) as *const u8_0,
+                                pDoclist.offset(iOff as isize) as *const U8_0,
                                 &raw mut nPos,
                                 &raw mut bDel,
                             );
@@ -31404,7 +31404,7 @@ unsafe extern "C" fn fts5FlushOneHash(mut p: *mut Fts5Index) {
                                 sqlite3Fts5BufferAppendVarint(
                                     &raw mut __p_ref.rc,
                                     pBuf,
-                                    nPos as i64_0 * 2 as i64_0,
+                                    nPos as I64_0 * 2 as I64_0,
                                 );
                                 iOff += nCopy;
                                 nCopy = nPos;
@@ -31414,15 +31414,15 @@ unsafe extern "C" fn fts5FlushOneHash(mut p: *mut Fts5Index) {
                             if (*pBuf).n + (*pPgidx).n + nCopy <= pgsz {
                                 let __pBuf_ref = { &mut *pBuf };
                                 std::ptr::copy_nonoverlapping(
-                                    pDoclist.offset(iOff as isize) as *const u8_0 as *const u8,
-                                    __pBuf_ref.p.offset(__pBuf_ref.n as isize) as *mut u8_0
+                                    pDoclist.offset(iOff as isize) as *const U8_0 as *const u8,
+                                    __pBuf_ref.p.offset(__pBuf_ref.n as isize) as *mut U8_0
                                         as *mut u8,
                                     nCopy as usize,
                                 );
                                 __pBuf_ref.n += nCopy;
                             } else {
-                                let mut pPoslist: *const u8_0 =
-                                    pDoclist.offset(iOff as isize) as *const u8_0;
+                                let mut pPoslist: *const U8_0 =
+                                    pDoclist.offset(iOff as isize) as *const U8_0;
                                 let mut iPos: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
                                 while __p_ref.rc == crate::src::headers::sqlite3_h::SQLITE_OK {
                                     let __pBuf_ref = { &mut *pBuf };
@@ -31433,13 +31433,13 @@ unsafe extern "C" fn fts5FlushOneHash(mut p: *mut Fts5Index) {
                                         n = nCopy - iPos;
                                     } else {
                                         n = fts5PoslistPrefix(
-                                            pPoslist.offset(iPos as isize) as *const u8_0,
+                                            pPoslist.offset(iPos as isize) as *const U8_0,
                                             nSpace,
                                         );
                                     }
                                     std::ptr::copy_nonoverlapping(
-                                        pPoslist.offset(iPos as isize) as *const u8_0 as *const u8,
-                                        __pBuf_ref.p.offset(__pBuf_ref.n as isize) as *mut u8_0
+                                        pPoslist.offset(iPos as isize) as *const U8_0 as *const u8,
+                                        __pBuf_ref.p.offset(__pBuf_ref.n as isize) as *mut U8_0
                                             as *mut u8,
                                         n as usize,
                                     );
@@ -31489,11 +31489,11 @@ unsafe extern "C" fn fts5FlushOneHash(mut p: *mut Fts5Index) {
                     (*pSeg).iSegid = iSegid;
                     (*pSeg).pgnoFirst = 1 as ::core::ffi::c_int;
                     (*pSeg).pgnoLast = pgnoLast;
-                    if __pStruct_ref.nOriginCntr > 0 as u64_0 {
+                    if __pStruct_ref.nOriginCntr > 0 as U64_0 {
                         let __pSeg_ref = { &mut *pSeg };
                         __pSeg_ref.iOrigin1 = __pStruct_ref.nOriginCntr;
                         __pSeg_ref.iOrigin2 = __pStruct_ref.nOriginCntr;
-                        __pSeg_ref.nEntry = __p_ref.nPendingRow as u64_0;
+                        __pSeg_ref.nEntry = __p_ref.nPendingRow as U64_0;
                         __pStruct_ref.nOriginCntr = __pStruct_ref.nOriginCntr.wrapping_add(1);
                     }
                     __pStruct_ref.nSegment += 1;
@@ -31532,9 +31532,9 @@ unsafe extern "C" fn fts5IndexOptimizeStruct(
     mut pStruct: *mut Fts5Structure,
 ) -> *mut Fts5Structure {
     let mut pNew: *mut Fts5Structure = std::ptr::null_mut::<Fts5Structure>();
-    let mut nByte: crate::src::headers::sqlite3_h::sqlite3_int64 = (32 as usize)
+    let mut nByte: crate::src::headers::sqlite3_h::Sqlite3Int64 = (32 as usize)
         .wrapping_add((1 as usize).wrapping_mul(std::mem::size_of::<Fts5StructureLevel>() as usize))
-        as crate::src::headers::sqlite3_h::sqlite3_int64;
+        as crate::src::headers::sqlite3_h::Sqlite3Int64;
     let __pStruct_ref = { &mut *pStruct };
     let mut nSeg: ::core::ffi::c_int = __pStruct_ref.nSegment;
     let mut i: ::core::ffi::c_int = 0;
@@ -31567,15 +31567,15 @@ unsafe extern "C" fn fts5IndexOptimizeStruct(
         i += 1;
     }
     nByte = (nByte as ::core::ffi::c_ulonglong).wrapping_add(
-        ((__pStruct_ref.nLevel as i64_0 + 1 as i64_0) as ::core::ffi::c_ulonglong)
+        ((__pStruct_ref.nLevel as I64_0 + 1 as I64_0) as ::core::ffi::c_ulonglong)
             .wrapping_mul(std::mem::size_of::<Fts5StructureLevel>() as ::core::ffi::c_ulonglong),
-    ) as crate::src::headers::sqlite3_h::sqlite3_int64
-        as crate::src::headers::sqlite3_h::sqlite3_int64;
+    ) as crate::src::headers::sqlite3_h::Sqlite3Int64
+        as crate::src::headers::sqlite3_h::Sqlite3Int64;
     pNew = sqlite3Fts5MallocZero(&raw mut (*p).rc, nByte) as *mut Fts5Structure;
     if !pNew.is_null() {
         let mut pLvl: *mut Fts5StructureLevel = std::ptr::null_mut::<Fts5StructureLevel>();
         nByte = (nSeg as usize).wrapping_mul(std::mem::size_of::<Fts5StructureSegment>() as usize)
-            as crate::src::headers::sqlite3_h::sqlite3_int64;
+            as crate::src::headers::sqlite3_h::Sqlite3Int64;
         (*pNew).nLevel =
             if (__pStruct_ref.nLevel + 1 as ::core::ffi::c_int) < 64 as ::core::ffi::c_int {
                 __pStruct_ref.nLevel + 1 as ::core::ffi::c_int
@@ -31685,16 +31685,16 @@ unsafe extern "C" fn sqlite3Fts5IndexMerge(
 
 unsafe extern "C" fn fts5AppendRowid(
     mut p: *mut Fts5Index,
-    mut iDelta: u64_0,
+    mut iDelta: U64_0,
     mut _pUnused: *mut Fts5Iter,
     mut pBuf: *mut Fts5Buffer,
 ) {
-    sqlite3Fts5BufferAppendVarint(&raw mut (*p).rc, pBuf, iDelta as i64_0);
+    sqlite3Fts5BufferAppendVarint(&raw mut (*p).rc, pBuf, iDelta as I64_0);
 }
 
 unsafe extern "C" fn fts5AppendPoslist(
     mut p: *mut Fts5Index,
-    mut iDelta: u64_0,
+    mut iDelta: U64_0,
     mut pMulti: *mut Fts5Iter,
     mut pBuf: *mut Fts5Buffer,
 ) {
@@ -31703,10 +31703,10 @@ unsafe extern "C" fn fts5AppendPoslist(
         nData + 9 as ::core::ffi::c_int + 9 as ::core::ffi::c_int + FTS5_DATA_ZERO_PADDING;
     if (*p).rc == crate::src::headers::sqlite3_h::SQLITE_OK
         && 0 as ::core::ffi::c_int
-            == (if ((*pBuf).n as u32_0).wrapping_add(nByte as u32_0) <= (*pBuf).nSpace as u32_0 {
+            == (if ((*pBuf).n as U32_0).wrapping_add(nByte as U32_0) <= (*pBuf).nSpace as U32_0 {
                 0 as ::core::ffi::c_int
             } else {
-                sqlite3Fts5BufferSize(&raw mut (*p).rc, pBuf, (nByte + (*pBuf).n) as u32_0)
+                sqlite3Fts5BufferSize(&raw mut (*p).rc, pBuf, (nByte + (*pBuf).n) as U32_0)
             })
     {
         let __pBuf_ref = { &mut *pBuf };
@@ -31716,16 +31716,16 @@ unsafe extern "C" fn fts5AppendPoslist(
         );
         __pBuf_ref.n += sqlite3Fts5PutVarint(
             __pBuf_ref.p.offset(__pBuf_ref.n as isize) as *mut ::core::ffi::c_uchar,
-            (nData * 2 as ::core::ffi::c_int) as u64_0,
+            (nData * 2 as ::core::ffi::c_int) as U64_0,
         );
         std::ptr::copy_nonoverlapping(
             (*pMulti).base.pData as *const u8,
-            __pBuf_ref.p.offset(__pBuf_ref.n as isize) as *mut u8_0 as *mut u8,
+            __pBuf_ref.p.offset(__pBuf_ref.n as isize) as *mut U8_0 as *mut u8,
             nData as usize,
         );
         __pBuf_ref.n += nData;
         std::ptr::write_bytes(
-            __pBuf_ref.p.offset(__pBuf_ref.n as isize) as *mut u8_0 as *mut ::core::ffi::c_void
+            __pBuf_ref.p.offset(__pBuf_ref.n as isize) as *mut U8_0 as *mut ::core::ffi::c_void
                 as *mut u8,
             0,
             FTS5_DATA_ZERO_PADDING as usize,
@@ -31735,21 +31735,21 @@ unsafe extern "C" fn fts5AppendPoslist(
 
 unsafe extern "C" fn fts5DoclistIterNext(mut pIter: *mut Fts5DoclistIter) {
     let __pIter_ref = { &mut *pIter };
-    let mut p: *mut u8_0 = (*pIter)
+    let mut p: *mut U8_0 = (*pIter)
         .aPoslist
         .offset(__pIter_ref.nSize as isize)
         .offset(__pIter_ref.nPoslist as isize);
     if p >= __pIter_ref.aEof {
-        __pIter_ref.aPoslist = std::ptr::null_mut::<u8_0>();
+        __pIter_ref.aPoslist = std::ptr::null_mut::<U8_0>();
     } else {
-        let mut iDelta: i64_0 = 0;
+        let mut iDelta: I64_0 = 0;
         p = p.offset(
-            sqlite3Fts5GetVarint(p, &raw mut iDelta as *mut u64_0) as ::core::ffi::c_int as isize,
+            sqlite3Fts5GetVarint(p, &raw mut iDelta as *mut U64_0) as ::core::ffi::c_int as isize,
         );
         __pIter_ref.iRowid += iDelta;
         if *p.offset(0 as isize) as ::core::ffi::c_int & 0x80 as ::core::ffi::c_int != 0 {
             let mut nPos: ::core::ffi::c_int = 0;
-            __pIter_ref.nSize = sqlite3Fts5GetVarint32(p, &raw mut nPos as *mut u32_0);
+            __pIter_ref.nSize = sqlite3Fts5GetVarint32(p, &raw mut nPos as *mut U32_0);
             __pIter_ref.nPoslist = nPos >> 1 as ::core::ffi::c_int;
         } else {
             __pIter_ref.nPoslist =
@@ -31757,10 +31757,10 @@ unsafe extern "C" fn fts5DoclistIterNext(mut pIter: *mut Fts5DoclistIter) {
             __pIter_ref.nSize = 1 as ::core::ffi::c_int;
         }
         __pIter_ref.aPoslist = p;
-        if __pIter_ref.aPoslist.offset(__pIter_ref.nPoslist as isize) as *mut u8_0
+        if __pIter_ref.aPoslist.offset(__pIter_ref.nPoslist as isize) as *mut U8_0
             > __pIter_ref.aEof
         {
-            __pIter_ref.aPoslist = std::ptr::null_mut::<u8_0>();
+            __pIter_ref.aPoslist = std::ptr::null_mut::<U8_0>();
         }
     };
 }
@@ -31777,7 +31777,7 @@ unsafe extern "C" fn fts5DoclistIterInit(
     if (*pBuf).n > 0 as ::core::ffi::c_int {
         let __pBuf_ref = { &mut *pBuf };
         (*pIter).aPoslist = __pBuf_ref.p;
-        (*pIter).aEof = __pBuf_ref.p.offset(__pBuf_ref.n as isize) as *mut u8_0;
+        (*pIter).aEof = __pBuf_ref.p.offset(__pBuf_ref.n as isize) as *mut U8_0;
         fts5DoclistIterNext(pIter);
     }
 }
@@ -31791,16 +31791,16 @@ unsafe extern "C" fn fts5BufferSwap(mut p1: *mut Fts5Buffer, mut p2: *mut Fts5Bu
 unsafe extern "C" fn fts5NextRowid(
     mut pBuf: *mut Fts5Buffer,
     mut piOff: *mut ::core::ffi::c_int,
-    mut piRowid: *mut i64_0,
+    mut piRowid: *mut I64_0,
 ) {
     let mut i: ::core::ffi::c_int = *piOff;
     if i >= (*pBuf).n {
         *piOff = -(1 as ::core::ffi::c_int);
     } else {
-        let mut iVal: u64_0 = 0;
-        *piOff = i + sqlite3Fts5GetVarint((*pBuf).p.offset(i as isize) as *mut u8_0, &raw mut iVal)
+        let mut iVal: U64_0 = 0;
+        *piOff = i + sqlite3Fts5GetVarint((*pBuf).p.offset(i as isize) as *mut U8_0, &raw mut iVal)
             as ::core::ffi::c_int;
-        *piRowid = (*piRowid as u64_0).wrapping_add(iVal) as i64_0 as i64_0;
+        *piRowid = (*piRowid as U64_0).wrapping_add(iVal) as I64_0 as I64_0;
     };
 }
 
@@ -31812,12 +31812,12 @@ unsafe extern "C" fn fts5MergeRowidLists(
 ) {
     let mut i1: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut i2: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-    let mut iRowid1: i64_0 = 0 as i64_0;
-    let mut iRowid2: i64_0 = 0 as i64_0;
-    let mut iOut: i64_0 = 0 as i64_0;
+    let mut iRowid1: I64_0 = 0 as I64_0;
+    let mut iRowid2: I64_0 = 0 as I64_0;
+    let mut iOut: I64_0 = 0 as I64_0;
     let mut p2: *mut Fts5Buffer = aBuf.offset(0 as isize) as *mut Fts5Buffer;
     let mut out: Fts5Buffer = { std::mem::zeroed() };
-    sqlite3Fts5BufferSize(&raw mut (*p).rc, &raw mut out, ((*p1).n + (*p2).n) as u32_0);
+    sqlite3Fts5BufferSize(&raw mut (*p).rc, &raw mut out, ((*p1).n + (*p2).n) as U32_0);
     if (*p).rc != 0 {
         return;
     }
@@ -31827,14 +31827,14 @@ unsafe extern "C" fn fts5MergeRowidLists(
         if i1 >= 0 as ::core::ffi::c_int && (i2 < 0 as ::core::ffi::c_int || iRowid1 < iRowid2) {
             out.n += sqlite3Fts5PutVarint(
                 out.p.offset(out.n as isize) as *mut ::core::ffi::c_uchar,
-                (iRowid1 - iOut) as u64_0,
+                (iRowid1 - iOut) as U64_0,
             );
             iOut = iRowid1;
             fts5NextRowid(p1, &raw mut i1, &raw mut iRowid1);
         } else {
             out.n += sqlite3Fts5PutVarint(
                 out.p.offset(out.n as isize) as *mut ::core::ffi::c_uchar,
-                (iRowid2 - iOut) as u64_0,
+                (iRowid2 - iOut) as U64_0,
             );
             iOut = iRowid2;
             if i1 >= 0 as ::core::ffi::c_int && iRowid1 == iRowid2 {
@@ -31865,7 +31865,7 @@ unsafe extern "C" fn fts5PrefixMergerInsertByPosition(
     mut ppHead: *mut *mut PrefixMerger,
     mut p: *mut PrefixMerger,
 ) {
-    if (*p).iPos >= 0 as i64_0 {
+    if (*p).iPos >= 0 as I64_0 {
         let mut pp: *mut *mut PrefixMerger = ppHead;
         while !(*pp).is_null() && (*p).iPos > (**pp).iPos {
             pp = &raw mut (**pp).pNext;
@@ -31886,12 +31886,12 @@ unsafe extern "C" fn fts5MergePrefixLists(
     let mut i: ::core::ffi::c_int = 0;
     let mut nOut: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut out: Fts5Buffer = Fts5Buffer {
-        p: std::ptr::null_mut::<u8_0>(),
+        p: std::ptr::null_mut::<U8_0>(),
         n: 0 as ::core::ffi::c_int,
         nSpace: 0 as ::core::ffi::c_int,
     };
     let mut tmp: Fts5Buffer = { std::mem::zeroed() };
-    let mut iLastRowid: i64_0 = 0 as i64_0;
+    let mut iLastRowid: I64_0 = 0 as I64_0;
     pHead = (&raw mut aMerger as *mut PrefixMerger).offset(nBuf as isize) as *mut PrefixMerger;
     fts5DoclistIterInit(p1, &raw mut (*pHead).iter);
     i = 0 as ::core::ffi::c_int;
@@ -31911,17 +31911,17 @@ unsafe extern "C" fn fts5MergePrefixLists(
         return;
     }
     nOut += (*p1).n + 9 as ::core::ffi::c_int + 10 as ::core::ffi::c_int * nBuf;
-    if sqlite3Fts5BufferSize(&raw mut (*p).rc, &raw mut out, nOut as u32_0) != 0 {
+    if sqlite3Fts5BufferSize(&raw mut (*p).rc, &raw mut out, nOut as U32_0) != 0 {
         return;
     }
     while !pHead.is_null() {
         out.n += sqlite3Fts5PutVarint(
             out.p.offset(out.n as isize) as *mut ::core::ffi::c_uchar,
-            ((*pHead).iter.iRowid as u64_0).wrapping_sub(iLastRowid as u64_0),
+            ((*pHead).iter.iRowid as U64_0).wrapping_sub(iLastRowid as U64_0),
         );
         iLastRowid = (*pHead).iter.iRowid;
         if !(*pHead).pNext.is_null() && iLastRowid == (*(*pHead).pNext).iter.iRowid {
-            let mut iPrev: i64_0 = 0 as i64_0;
+            let mut iPrev: I64_0 = 0 as I64_0;
             let mut nTmp: ::core::ffi::c_int = FTS5_DATA_ZERO_PADDING;
             let mut nMerge: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
             let mut pSave: *mut PrefixMerger = pHead;
@@ -31931,9 +31931,9 @@ unsafe extern "C" fn fts5MergePrefixLists(
             while !pSave.is_null() && (*pSave).iter.iRowid == iLastRowid {
                 let mut pNext: *mut PrefixMerger = (*pSave).pNext;
                 (*pSave).iOff = 0 as ::core::ffi::c_int;
-                (*pSave).iPos = 0 as i64_0;
+                (*pSave).iPos = 0 as I64_0;
                 (*pSave).aPos =
-                    (*pSave).iter.aPoslist.offset((*pSave).iter.nSize as isize) as *mut u8_0;
+                    (*pSave).iter.aPoslist.offset((*pSave).iter.nSize as isize) as *mut U8_0;
                 sqlite3Fts5PoslistNext64(
                     (*pSave).aPos,
                     (*pSave).iter.nPoslist,
@@ -31952,7 +31952,7 @@ unsafe extern "C" fn fts5MergePrefixLists(
                 if sqlite3Fts5BufferSize(
                     &raw mut (*p).rc,
                     &raw mut tmp,
-                    (nTmp + nMerge * 10 as ::core::ffi::c_int) as u32_0,
+                    (nTmp + nMerge * 10 as ::core::ffi::c_int) as U32_0,
                 ) != 0
                 {
                     break;
@@ -31994,18 +31994,18 @@ unsafe extern "C" fn fts5MergePrefixLists(
                 } else {
                     out.n += sqlite3Fts5PutVarint(
                         out.p.offset(out.n as isize) as *mut ::core::ffi::c_uchar,
-                        ((tmp.n + nTail) * 2 as ::core::ffi::c_int) as u64_0,
+                        ((tmp.n + nTail) * 2 as ::core::ffi::c_int) as U64_0,
                     );
                     std::ptr::copy_nonoverlapping(
                         tmp.p as *const u8,
-                        out.p.offset(out.n as isize) as *mut u8_0 as *mut u8,
+                        out.p.offset(out.n as isize) as *mut U8_0 as *mut u8,
                         tmp.n as usize,
                     );
                     out.n += tmp.n;
                     if nTail > 0 as ::core::ffi::c_int {
                         std::ptr::copy_nonoverlapping(
-                            (*pHead).aPos.offset((*pHead).iOff as isize) as *mut u8_0 as *const u8,
-                            out.p.offset(out.n as isize) as *mut u8_0 as *mut u8,
+                            (*pHead).aPos.offset((*pHead).iOff as isize) as *mut U8_0 as *const u8,
+                            out.p.offset(out.n as isize) as *mut U8_0 as *mut u8,
                             nTail as usize,
                         );
                         out.n += nTail;
@@ -32030,7 +32030,7 @@ unsafe extern "C" fn fts5MergePrefixLists(
             let __pI_ref = { &*pI };
             std::ptr::copy_nonoverlapping(
                 __pI_ref.aPoslist as *const u8,
-                out.p.offset(out.n as isize) as *mut u8_0 as *mut u8,
+                out.p.offset(out.n as isize) as *mut U8_0 as *mut u8,
                 (__pI_ref.nPoslist + __pI_ref.nSize) as usize,
             );
             out.n += __pI_ref.nPoslist + __pI_ref.nSize;
@@ -32042,7 +32042,7 @@ unsafe extern "C" fn fts5MergePrefixLists(
     sqlite3Fts5BufferFree(p1);
     sqlite3Fts5BufferFree(&raw mut tmp);
     std::ptr::write_bytes(
-        out.p.offset(out.n as isize) as *mut u8_0 as *mut ::core::ffi::c_void as *mut u8,
+        out.p.offset(out.n as isize) as *mut U8_0 as *mut ::core::ffi::c_void as *mut u8,
         0,
         FTS5_DATA_ZERO_PADDING as usize,
     );
@@ -32054,7 +32054,7 @@ pub const FTS5_MERGE_NLIST: ::core::ffi::c_int = 16 as ::core::ffi::c_int;
 unsafe extern "C" fn fts5VisitEntries(
     mut p: *mut Fts5Index,
     mut pColset: *mut Fts5Colset,
-    mut pToken: *mut u8_0,
+    mut pToken: *mut U8_0,
     mut nToken: ::core::ffi::c_int,
     mut bPrefix: ::core::ffi::c_int,
     mut xVisit: Option<
@@ -32062,7 +32062,7 @@ unsafe extern "C" fn fts5VisitEntries(
             *mut Fts5Index,
             *mut ::core::ffi::c_void,
             *mut Fts5Iter,
-            *const u8_0,
+            *const U8_0,
             ::core::ffi::c_int,
         ) -> (),
     >,
@@ -32095,7 +32095,7 @@ unsafe extern "C" fn fts5VisitEntries(
             .offset((*__p1_ref.aFirst.offset(1 as isize)).iFirst as isize)
             as *mut Fts5SegIter;
         let mut nNew: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-        let mut pNew: *const u8_0 = std::ptr::null::<u8_0>();
+        let mut pNew: *const U8_0 = std::ptr::null::<U8_0>();
         __p1_ref.xSetOutputs.expect("non-null function pointer")(p1, pSeg);
         if (*p).rc != 0 {
             break;
@@ -32161,8 +32161,8 @@ unsafe extern "C" fn fts5TokendataIterAppendMap(
     mut pT: *mut Fts5TokenDataIter,
     mut iIter: ::core::ffi::c_int,
     mut nByte: ::core::ffi::c_int,
-    mut iRowid: i64_0,
-    mut iPos: i64_0,
+    mut iRowid: I64_0,
+    mut iPos: I64_0,
 ) {
     if (*p).rc == crate::src::headers::sqlite3_h::SQLITE_OK {
         let __pT_ref = { &mut *pT };
@@ -32205,27 +32205,27 @@ unsafe extern "C" fn fts5TokendataIterSortMap(
         as ::core::ffi::c_int;
     aTmp = sqlite3Fts5MallocZero(
         &raw mut (*p).rc,
-        nByte as crate::src::headers::sqlite3_h::sqlite3_int64,
+        nByte as crate::src::headers::sqlite3_h::Sqlite3Int64,
     ) as *mut Fts5TokenDataMap;
     if !aTmp.is_null() {
         let __pT_ref = { &mut *pT };
         let mut a1: *mut Fts5TokenDataMap = __pT_ref.aMap;
         let mut a2: *mut Fts5TokenDataMap = aTmp;
-        let mut nHalf: i64_0 = 0;
-        nHalf = 1 as i64_0;
-        while nHalf < __pT_ref.nMap as i64_0 {
+        let mut nHalf: I64_0 = 0;
+        nHalf = 1 as I64_0;
+        while nHalf < __pT_ref.nMap as I64_0 {
             let mut i1: ::core::ffi::c_int = 0;
             i1 = 0 as ::core::ffi::c_int;
             while i1 < __pT_ref.nMap {
-                let mut n1: ::core::ffi::c_int = (if nHalf < (__pT_ref.nMap - i1) as i64_0 {
+                let mut n1: ::core::ffi::c_int = (if nHalf < (__pT_ref.nMap - i1) as I64_0 {
                     nHalf
                 } else {
-                    (__pT_ref.nMap - i1) as i64_0
+                    (__pT_ref.nMap - i1) as I64_0
                 }) as ::core::ffi::c_int;
-                let mut n2: ::core::ffi::c_int = (if nHalf < (__pT_ref.nMap - i1 - n1) as i64_0 {
+                let mut n2: ::core::ffi::c_int = (if nHalf < (__pT_ref.nMap - i1 - n1) as I64_0 {
                     nHalf
                 } else {
-                    (__pT_ref.nMap - i1 - n1) as i64_0
+                    (__pT_ref.nMap - i1 - n1) as I64_0
                 }) as ::core::ffi::c_int;
                 fts5TokendataMerge(
                     a1.offset(i1 as isize) as *mut Fts5TokenDataMap,
@@ -32234,20 +32234,20 @@ unsafe extern "C" fn fts5TokendataIterSortMap(
                     n2,
                     a2.offset(i1 as isize) as *mut Fts5TokenDataMap,
                 );
-                i1 = (i1 as i64_0 + nHalf * 2 as i64_0) as ::core::ffi::c_int;
+                i1 = (i1 as I64_0 + nHalf * 2 as I64_0) as ::core::ffi::c_int;
             }
             let mut tmp: *mut Fts5TokenDataMap = std::ptr::null_mut::<Fts5TokenDataMap>();
             tmp = a1;
             a1 = a2;
             a2 = tmp;
-            nHalf *= 2 as i64_0;
+            nHalf *= 2 as I64_0;
         }
         if a1 != __pT_ref.aMap {
             std::ptr::copy_nonoverlapping(
                 a1 as *const u8,
                 __pT_ref.aMap as *mut u8,
-                ((__pT_ref.nMap as crate::__stddef_size_t_h::size_t).wrapping_mul(
-                    std::mem::size_of::<Fts5TokenDataMap>() as crate::__stddef_size_t_h::size_t,
+                ((__pT_ref.nMap as crate::__stddef_size_t_h::SizeT).wrapping_mul(
+                    std::mem::size_of::<Fts5TokenDataMap>() as crate::__stddef_size_t_h::SizeT,
                 )) as usize,
             );
         }
@@ -32279,12 +32279,12 @@ unsafe extern "C" fn prefixIterSetupTokendataCb(
     mut p: *mut Fts5Index,
     mut pCtx: *mut ::core::ffi::c_void,
     mut p1: *mut Fts5Iter,
-    mut pNew: *const u8_0,
+    mut pNew: *const U8_0,
     mut nNew: ::core::ffi::c_int,
 ) {
     let mut pSetup: *mut TokendataSetupCtx = pCtx as *mut TokendataSetupCtx;
     let mut iPosOff: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-    let mut iPos: i64_0 = 0 as i64_0;
+    let mut iPos: I64_0 = 0 as I64_0;
     if !pNew.is_null() {
         let __pSetup_ref = { &mut *pSetup };
         __pSetup_ref.nTermByte = nNew - 1 as ::core::ffi::c_int;
@@ -32292,7 +32292,7 @@ unsafe extern "C" fn prefixIterSetupTokendataCb(
         sqlite3Fts5BufferAppendBlob(
             &raw mut (*p).rc,
             &raw mut (*__pSetup_ref.pT).terms,
-            (nNew - 1 as ::core::ffi::c_int) as u32_0,
+            (nNew - 1 as ::core::ffi::c_int) as U32_0,
             pNew.offset(1 as isize),
         );
     }
@@ -32320,7 +32320,7 @@ unsafe extern "C" fn prefixIterSetupCb(
     mut p: *mut Fts5Index,
     mut pCtx: *mut ::core::ffi::c_void,
     mut p1: *mut Fts5Iter,
-    mut pNew: *const u8_0,
+    mut pNew: *const U8_0,
     mut nNew: ::core::ffi::c_int,
 ) {
     let mut pSetup: *mut PrefixSetupCtx = pCtx as *mut PrefixSetupCtx;
@@ -32368,11 +32368,11 @@ unsafe extern "C" fn prefixIterSetupCb(
                 }
                 i += 1;
             }
-            __pSetup_ref.iLastRowid = 0 as i64_0;
+            __pSetup_ref.iLastRowid = 0 as I64_0;
         }
         __pSetup_ref.xAppend.expect("non-null function pointer")(
             p,
-            (__p1_ref.base.iRowid as u64_0).wrapping_sub(__pSetup_ref.iLastRowid as u64_0),
+            (__p1_ref.base.iRowid as U64_0).wrapping_sub(__pSetup_ref.iLastRowid as U64_0),
             p1,
             &raw mut __pSetup_ref.doclist,
         );
@@ -32393,7 +32393,7 @@ unsafe extern "C" fn fts5SetupPrefixIter(
     mut p: *mut Fts5Index,
     mut bDesc: ::core::ffi::c_int,
     mut iIdx: ::core::ffi::c_int,
-    mut pToken: *mut u8_0,
+    mut pToken: *mut U8_0,
     mut nToken: ::core::ffi::c_int,
     mut pColset: *mut Fts5Colset,
     mut ppIter: *mut *mut Fts5Iter,
@@ -32402,7 +32402,7 @@ unsafe extern "C" fn fts5SetupPrefixIter(
     let mut s: PrefixSetupCtx = { std::mem::zeroed() };
     let mut s2: TokendataSetupCtx = { std::mem::zeroed() };
     s.nMerge = 1 as ::core::ffi::c_int;
-    s.iLastRowid = 0 as i64_0;
+    s.iLastRowid = 0 as I64_0;
     s.nBuf = 32 as ::core::ffi::c_int;
     let __p_ref = { &*p };
     if iIdx == 0 as ::core::ffi::c_int
@@ -32414,7 +32414,7 @@ unsafe extern "C" fn fts5SetupPrefixIter(
             p,
             (56 as usize)
                 .wrapping_add((1 as usize).wrapping_mul(std::mem::size_of::<Fts5Iter>() as usize))
-                as crate::src::headers::sqlite3_h::sqlite3_int64,
+                as crate::src::headers::sqlite3_h::Sqlite3Int64,
         ) as *mut Fts5TokenDataIter;
     }
     if (*__p_ref.pConfig).eDetail == FTS5_DETAIL_NONE {
@@ -32439,13 +32439,13 @@ unsafe extern "C" fn fts5SetupPrefixIter(
             fts5AppendRowid
                 as unsafe extern "C" fn(
                     *mut Fts5Index,
-                    u64_0,
+                    U64_0,
                     *mut Fts5Iter,
                     *mut Fts5Buffer,
                 ) -> (),
         )
             as Option<
-                unsafe extern "C" fn(*mut Fts5Index, u64_0, *mut Fts5Iter, *mut Fts5Buffer) -> (),
+                unsafe extern "C" fn(*mut Fts5Index, U64_0, *mut Fts5Iter, *mut Fts5Buffer) -> (),
             >;
     } else {
         s.nMerge = FTS5_MERGE_NLIST - 1 as ::core::ffi::c_int;
@@ -32471,19 +32471,19 @@ unsafe extern "C" fn fts5SetupPrefixIter(
             fts5AppendPoslist
                 as unsafe extern "C" fn(
                     *mut Fts5Index,
-                    u64_0,
+                    U64_0,
                     *mut Fts5Iter,
                     *mut Fts5Buffer,
                 ) -> (),
         )
             as Option<
-                unsafe extern "C" fn(*mut Fts5Index, u64_0, *mut Fts5Iter, *mut Fts5Buffer) -> (),
+                unsafe extern "C" fn(*mut Fts5Index, U64_0, *mut Fts5Iter, *mut Fts5Buffer) -> (),
             >;
     }
     s.aBuf = fts5IdxMalloc(
         p,
         (std::mem::size_of::<Fts5Buffer>() as usize).wrapping_mul(s.nBuf as usize)
-            as crate::src::headers::sqlite3_h::sqlite3_int64,
+            as crate::src::headers::sqlite3_h::Sqlite3Int64,
     ) as *mut Fts5Buffer;
     pStruct = fts5StructureRead(p);
     if __p_ref.rc == crate::src::headers::sqlite3_h::SQLITE_OK {
@@ -32491,7 +32491,7 @@ unsafe extern "C" fn fts5SetupPrefixIter(
         let mut i: ::core::ffi::c_int = 0;
         let mut pData: *mut Fts5Data = std::ptr::null_mut::<Fts5Data>();
         if iIdx != 0 as ::core::ffi::c_int {
-            *pToken.offset(0 as isize) = FTS5_MAIN_PREFIX as u8_0;
+            *pToken.offset(0 as isize) = FTS5_MAIN_PREFIX as U8_0;
             fts5VisitEntries(
                 p,
                 pColset,
@@ -32504,14 +32504,14 @@ unsafe extern "C" fn fts5SetupPrefixIter(
                             *mut Fts5Index,
                             *mut ::core::ffi::c_void,
                             *mut Fts5Iter,
-                            *const u8_0,
+                            *const U8_0,
                             ::core::ffi::c_int,
                         ) -> (),
                 ),
                 pCtx,
             );
         }
-        *pToken.offset(0 as isize) = (FTS5_MAIN_PREFIX + iIdx) as u8_0;
+        *pToken.offset(0 as isize) = (FTS5_MAIN_PREFIX + iIdx) as U8_0;
         fts5VisitEntries(
             p,
             pColset,
@@ -32524,7 +32524,7 @@ unsafe extern "C" fn fts5SetupPrefixIter(
                         *mut Fts5Index,
                         *mut ::core::ffi::c_void,
                         *mut Fts5Iter,
-                        *const u8_0,
+                        *const U8_0,
                         ::core::ffi::c_int,
                     ) -> (),
             ),
@@ -32551,13 +32551,13 @@ unsafe extern "C" fn fts5SetupPrefixIter(
         pData = fts5IdxMalloc(
             p,
             (std::mem::size_of::<Fts5Data>() as ::core::ffi::c_ulonglong)
-                .wrapping_add(s.doclist.n as i64_0 as ::core::ffi::c_ulonglong)
+                .wrapping_add(s.doclist.n as I64_0 as ::core::ffi::c_ulonglong)
                 .wrapping_add(FTS5_DATA_ZERO_PADDING as ::core::ffi::c_ulonglong)
-                as crate::src::headers::sqlite3_h::sqlite3_int64,
+                as crate::src::headers::sqlite3_h::Sqlite3Int64,
         ) as *mut Fts5Data;
         if !pData.is_null() {
             let __pData_ref = { &mut *pData };
-            __pData_ref.p = pData.offset(1 as isize) as *mut Fts5Data as *mut u8_0;
+            __pData_ref.p = pData.offset(1 as isize) as *mut Fts5Data as *mut U8_0;
             __pData_ref.szLeaf = s.doclist.n;
             __pData_ref.nn = __pData_ref.szLeaf;
             if s.doclist.n != 0 {
@@ -32584,7 +32584,7 @@ unsafe extern "C" fn fts5SetupPrefixIter(
 unsafe extern "C" fn sqlite3Fts5IndexBeginWrite(
     mut p: *mut Fts5Index,
     mut bDelete: ::core::ffi::c_int,
-    mut iRowid: i64_0,
+    mut iRowid: I64_0,
 ) -> ::core::ffi::c_int {
     let __p_ref = { &mut *p };
     if __p_ref.pHash.is_null() {
@@ -32628,12 +32628,12 @@ unsafe extern "C" fn sqlite3Fts5IndexReinit(mut p: *mut Fts5Index) -> ::core::ff
     fts5IndexDiscardData(p);
     pTmp = &raw mut uFts.sFts;
     if (*(*p).pConfig).bContentlessDelete != 0 {
-        (*pTmp).nOriginCntr = 1 as u64_0;
+        (*pTmp).nOriginCntr = 1 as U64_0;
     }
     fts5DataWrite(
         p,
-        FTS5_AVERAGES_ROWID as i64_0,
-        b"\0" as *const u8 as *const ::core::ffi::c_char as *const u8_0,
+        FTS5_AVERAGES_ROWID as I64_0,
+        b"\0" as *const u8 as *const ::core::ffi::c_char as *const U8_0,
         0 as ::core::ffi::c_int,
     );
     fts5StructureWrite(p, pTmp);
@@ -32650,7 +32650,7 @@ unsafe extern "C" fn sqlite3Fts5IndexOpen(
     let mut p: *mut Fts5Index = std::ptr::null_mut::<Fts5Index>();
     p = sqlite3Fts5MallocZero(
         &raw mut rc,
-        std::mem::size_of::<Fts5Index>() as crate::src::headers::sqlite3_h::sqlite3_int64,
+        std::mem::size_of::<Fts5Index>() as crate::src::headers::sqlite3_h::Sqlite3Int64,
     ) as *mut Fts5Index;
     *pp = p;
     if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
@@ -32813,7 +32813,7 @@ unsafe extern "C" fn sqlite3Fts5IndexWrite(
 
 unsafe extern "C" fn fts5IsTokendataPrefix(
     mut pBuf: *mut Fts5Buffer,
-    mut pToken: *const u8_0,
+    mut pToken: *const U8_0,
     mut nToken: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
     let __pBuf_ref = { &mut *pBuf };
@@ -32895,12 +32895,12 @@ unsafe extern "C" fn fts5AppendTokendataIter(
 unsafe extern "C" fn fts5IterSetOutputsTokendata(mut pIter: *mut Fts5Iter) {
     let mut ii: ::core::ffi::c_int = 0;
     let mut nHit: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-    let mut iRowid: i64_0 = SMALLEST_INT64;
+    let mut iRowid: I64_0 = SMALLEST_INT64;
     let mut iMin: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let __pIter_ref = { &mut *pIter };
     let mut pT: *mut Fts5TokenDataIter = __pIter_ref.pTokenDataIter;
     __pIter_ref.base.nData = 0 as ::core::ffi::c_int;
-    __pIter_ref.base.pData = std::ptr::null::<u8_0>();
+    __pIter_ref.base.pData = std::ptr::null::<U8_0>();
     ii = 0 as ::core::ffi::c_int;
     while ii < (*pT).nIter {
         let mut p: *mut Fts5Iter =
@@ -32920,10 +32920,10 @@ unsafe extern "C" fn fts5IterSetOutputsTokendata(mut pIter: *mut Fts5Iter) {
         ii += 1;
     }
     if nHit == 0 as ::core::ffi::c_int {
-        __pIter_ref.base.bEof = 1 as u8_0;
+        __pIter_ref.base.bEof = 1 as U8_0;
     } else {
         let mut eDetail: ::core::ffi::c_int = (*(*__pIter_ref.pIndex).pConfig).eDetail;
-        __pIter_ref.base.bEof = 0 as u8_0;
+        __pIter_ref.base.bEof = 0 as U8_0;
         __pIter_ref.base.iRowid = iRowid;
         if nHit == 1 as ::core::ffi::c_int && eDetail == FTS5_DETAIL_FULL {
             fts5TokendataIterAppendMap(
@@ -32932,12 +32932,12 @@ unsafe extern "C" fn fts5IterSetOutputsTokendata(mut pIter: *mut Fts5Iter) {
                 iMin,
                 0 as ::core::ffi::c_int,
                 iRowid,
-                -(1 as ::core::ffi::c_int) as i64_0,
+                -(1 as ::core::ffi::c_int) as I64_0,
             );
         } else if nHit > 1 as ::core::ffi::c_int && eDetail != FTS5_DETAIL_NONE {
             let mut nReader: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
             let mut nByte: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-            let mut iPrev: i64_0 = 0 as i64_0;
+            let mut iPrev: I64_0 = 0 as I64_0;
             let __pT_ref = { &mut *pT };
             if __pT_ref.aPoslistReader.is_null() {
                 __pT_ref.aPoslistReader = sqlite3Fts5MallocZero(
@@ -32945,7 +32945,7 @@ unsafe extern "C" fn fts5IterSetOutputsTokendata(mut pIter: *mut Fts5Iter) {
                     (__pT_ref.nIter as usize).wrapping_mul(
                         (std::mem::size_of::<Fts5PoslistReader>() as usize)
                             .wrapping_add(std::mem::size_of::<::core::ffi::c_int>() as usize),
-                    ) as crate::src::headers::sqlite3_h::sqlite3_int64,
+                    ) as crate::src::headers::sqlite3_h::Sqlite3Int64,
                 ) as *mut Fts5PoslistReader;
                 if __pT_ref.aPoslistReader.is_null() {
                     return;
@@ -32972,16 +32972,16 @@ unsafe extern "C" fn fts5IterSetOutputsTokendata(mut pIter: *mut Fts5Iter) {
                 }
                 ii += 1;
             }
-            if if (__pIter_ref.poslist.n as u32_0)
-                .wrapping_add((nByte + nHit * 10 as ::core::ffi::c_int) as u32_0)
-                <= __pIter_ref.poslist.nSpace as u32_0
+            if if (__pIter_ref.poslist.n as U32_0)
+                .wrapping_add((nByte + nHit * 10 as ::core::ffi::c_int) as U32_0)
+                <= __pIter_ref.poslist.nSpace as U32_0
             {
                 0 as ::core::ffi::c_int
             } else {
                 sqlite3Fts5BufferSize(
                     &raw mut (*__pIter_ref.pIndex).rc,
                     &raw mut __pIter_ref.poslist,
-                    (nByte + nHit * 10 as ::core::ffi::c_int + __pIter_ref.poslist.n) as u32_0,
+                    (nByte + nHit * 10 as ::core::ffi::c_int + __pIter_ref.poslist.n) as U32_0,
                 )
             } != 0
             {
@@ -33004,7 +33004,7 @@ unsafe extern "C" fn fts5IterSetOutputsTokendata(mut pIter: *mut Fts5Iter) {
             }
             __pIter_ref.poslist.n = 0 as ::core::ffi::c_int;
             loop {
-                let mut iMinPos: i64_0 = LARGEST_INT64;
+                let mut iMinPos: I64_0 = LARGEST_INT64;
                 iMin = 0 as ::core::ffi::c_int;
                 ii = 0 as ::core::ffi::c_int;
                 while ii < nReader {
@@ -33043,7 +33043,7 @@ unsafe extern "C" fn fts5IterSetOutputsTokendata(mut pIter: *mut Fts5Iter) {
 unsafe extern "C" fn fts5TokendataIterNext(
     mut pIter: *mut Fts5Iter,
     mut bFrom: ::core::ffi::c_int,
-    mut iFrom: i64_0,
+    mut iFrom: I64_0,
 ) {
     let mut ii: ::core::ffi::c_int = 0;
     let mut pT: *mut Fts5TokenDataIter = (*pIter).pTokenDataIter;
@@ -33063,7 +33063,7 @@ unsafe extern "C" fn fts5TokendataIterNext(
                 && __p_ref.base.iRowid < iFrom
                 && (*pIndex).rc == crate::src::headers::sqlite3_h::SQLITE_OK
             {
-                fts5MultiIterNext(pIndex, p, 0 as ::core::ffi::c_int, 0 as i64_0);
+                fts5MultiIterNext(pIndex, p, 0 as ::core::ffi::c_int, 0 as I64_0);
             }
         }
         ii += 1;
@@ -33093,7 +33093,7 @@ unsafe extern "C" fn fts5TokendataSetTermIfEof(
 
 unsafe extern "C" fn fts5SetupTokendataIter(
     mut p: *mut Fts5Index,
-    mut pToken: *const u8_0,
+    mut pToken: *const U8_0,
     mut nToken: ::core::ffi::c_int,
     mut pColset: *mut Fts5Colset,
 ) -> *mut Fts5Iter {
@@ -33130,8 +33130,8 @@ unsafe extern "C" fn fts5SetupTokendataIter(
             sqlite3Fts5BufferAppendBlob(
                 &raw mut __p_ref.rc,
                 &raw mut bSeek,
-                1 as u32_0,
-                b"\0\0" as *const u8 as *const ::core::ffi::c_char as *const u8_0,
+                1 as U32_0,
+                b"\0\0" as *const u8 as *const ::core::ffi::c_char as *const U8_0,
             );
         } else {
             sqlite3Fts5BufferSet(&raw mut __p_ref.rc, &raw mut bSeek, nToken, pToken);
@@ -33209,7 +33209,7 @@ unsafe extern "C" fn fts5SetupTokendataIter(
                 iLvl += 1;
             }
             fts5TokendataSetTermIfEof(pPrev, pSmall);
-            __pNew_ref.bSkipEmpty = 1 as u8_0;
+            __pNew_ref.bSkipEmpty = 1 as U8_0;
             __pNew_ref.pColset = pColset;
             fts5IterSetOutputCb(&raw mut __p_ref.rc, pNew);
             pSmall = std::ptr::null_mut::<Fts5Buffer>();
@@ -33267,7 +33267,7 @@ unsafe extern "C" fn fts5SetupTokendataIter(
         if !pSet.is_null() {
             fts5IterSetOutputsTokendata(pRet);
         } else {
-            (*pRet).base.bEof = 1 as u8_0;
+            (*pRet).base.bEof = 1 as U8_0;
         }
     } else {
         fts5TokendataIterDelete(pSet);
@@ -33291,7 +33291,7 @@ unsafe extern "C" fn sqlite3Fts5IndexQuery(
     if sqlite3Fts5BufferSize(
         &raw mut (*p).rc,
         &raw mut buf,
-        (nToken + 1 as ::core::ffi::c_int) as u32_0,
+        (nToken + 1 as ::core::ffi::c_int) as U32_0,
     ) == 0 as ::core::ffi::c_int
     {
         let mut iIdx: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
@@ -33300,7 +33300,7 @@ unsafe extern "C" fn sqlite3Fts5IndexQuery(
         if nToken > 0 as ::core::ffi::c_int {
             std::ptr::copy_nonoverlapping(
                 pToken as *const u8,
-                buf.p.offset(1 as isize) as *mut u8_0 as *mut u8,
+                buf.p.offset(1 as isize) as *mut U8_0 as *mut u8,
                 nToken as usize,
             );
         }
@@ -33324,11 +33324,11 @@ unsafe extern "C" fn sqlite3Fts5IndexQuery(
             }
         }
         if bTokendata != 0 && iIdx == 0 as ::core::ffi::c_int {
-            *buf.p.offset(0 as isize) = FTS5_MAIN_PREFIX as u8_0;
+            *buf.p.offset(0 as isize) = FTS5_MAIN_PREFIX as U8_0;
             pRet = fts5SetupTokendataIter(p, buf.p, nToken + 1 as ::core::ffi::c_int, pColset);
         } else if iIdx <= (*pConfig).nPrefix {
             let mut pStruct: *mut Fts5Structure = fts5StructureRead(p);
-            *buf.p.offset(0 as isize) = (FTS5_MAIN_PREFIX + iIdx) as u8_0;
+            *buf.p.offset(0 as isize) = (FTS5_MAIN_PREFIX + iIdx) as U8_0;
             if !pStruct.is_null() {
                 fts5MultiIterNew(
                     p,
@@ -33381,9 +33381,9 @@ unsafe extern "C" fn sqlite3Fts5IndexQuery(
 unsafe extern "C" fn sqlite3Fts5IterNext(mut pIndexIter: *mut Fts5IndexIter) -> ::core::ffi::c_int {
     let mut pIter: *mut Fts5Iter = pIndexIter as *mut Fts5Iter;
     if (*pIter).nSeg == 0 as ::core::ffi::c_int {
-        fts5TokendataIterNext(pIter, 0 as ::core::ffi::c_int, 0 as i64_0);
+        fts5TokendataIterNext(pIter, 0 as ::core::ffi::c_int, 0 as I64_0);
     } else {
-        fts5MultiIterNext((*pIter).pIndex, pIter, 0 as ::core::ffi::c_int, 0 as i64_0);
+        fts5MultiIterNext((*pIter).pIndex, pIter, 0 as ::core::ffi::c_int, 0 as I64_0);
     }
     fts5IndexReturn((*pIter).pIndex)
 }
@@ -33393,7 +33393,7 @@ unsafe extern "C" fn sqlite3Fts5IterNextScan(
 ) -> ::core::ffi::c_int {
     let mut pIter: *mut Fts5Iter = pIndexIter as *mut Fts5Iter;
     let mut p: *mut Fts5Index = (*pIter).pIndex;
-    fts5MultiIterNext(p, pIter, 0 as ::core::ffi::c_int, 0 as i64_0);
+    fts5MultiIterNext(p, pIter, 0 as ::core::ffi::c_int, 0 as I64_0);
     if (*p).rc == crate::src::headers::sqlite3_h::SQLITE_OK {
         let mut pSeg: *mut Fts5SegIter = (&raw mut (*pIter).aSeg as *mut Fts5SegIter)
             .offset((*(*pIter).aFirst.offset(1 as isize)).iFirst as isize)
@@ -33403,7 +33403,7 @@ unsafe extern "C" fn sqlite3Fts5IterNextScan(
         {
             fts5DataRelease((*pSeg).pLeaf);
             (*pSeg).pLeaf = std::ptr::null_mut::<Fts5Data>();
-            (*pIter).base.bEof = 1 as u8_0;
+            (*pIter).base.bEof = 1 as U8_0;
         }
     }
     fts5IndexReturn((*pIter).pIndex)
@@ -33411,7 +33411,7 @@ unsafe extern "C" fn sqlite3Fts5IterNextScan(
 
 unsafe extern "C" fn sqlite3Fts5IterNextFrom(
     mut pIndexIter: *mut Fts5IndexIter,
-    mut iMatch: i64_0,
+    mut iMatch: I64_0,
 ) -> ::core::ffi::c_int {
     let mut pIter: *mut Fts5Iter = pIndexIter as *mut Fts5Iter;
     if (*pIter).nSeg == 0 as ::core::ffi::c_int {
@@ -33446,27 +33446,27 @@ unsafe extern "C" fn fts5SetupPrefixIterTokendata(
     let mut token: Fts5Buffer = { std::mem::zeroed() };
     let mut ctx: TokendataSetupCtx = { std::mem::zeroed() };
     let __p_ref = { &mut *p };
-    if (token.n as u32_0).wrapping_add((nToken + 1 as ::core::ffi::c_int) as u32_0)
-        <= token.nSpace as u32_0
+    if (token.n as U32_0).wrapping_add((nToken + 1 as ::core::ffi::c_int) as U32_0)
+        <= token.nSpace as U32_0
     {
     } else {
         sqlite3Fts5BufferSize(
             &raw mut __p_ref.rc,
             &raw mut token,
-            (nToken + 1 as ::core::ffi::c_int + token.n) as u32_0,
+            (nToken + 1 as ::core::ffi::c_int + token.n) as U32_0,
         );
     };
     ctx.pT = sqlite3Fts5MallocZero(
         &raw mut __p_ref.rc,
         (56 as usize)
             .wrapping_add((1 as usize).wrapping_mul(std::mem::size_of::<Fts5Iter>() as usize))
-            as crate::src::headers::sqlite3_h::sqlite3_int64,
+            as crate::src::headers::sqlite3_h::Sqlite3Int64,
     ) as *mut Fts5TokenDataIter;
     if __p_ref.rc == crate::src::headers::sqlite3_h::SQLITE_OK {
-        *token.p.offset(0 as isize) = FTS5_MAIN_PREFIX as u8_0;
+        *token.p.offset(0 as isize) = FTS5_MAIN_PREFIX as U8_0;
         std::ptr::copy_nonoverlapping(
             pToken as *const u8,
-            token.p.offset(1 as isize) as *mut u8_0 as *mut u8,
+            token.p.offset(1 as isize) as *mut U8_0 as *mut u8,
             nToken as usize,
         );
         token.n = nToken + 1 as ::core::ffi::c_int;
@@ -33482,7 +33482,7 @@ unsafe extern "C" fn fts5SetupPrefixIterTokendata(
                         *mut Fts5Index,
                         *mut ::core::ffi::c_void,
                         *mut Fts5Iter,
-                        *const u8_0,
+                        *const U8_0,
                         ::core::ffi::c_int,
                     ) -> (),
             ),
@@ -33503,7 +33503,7 @@ unsafe extern "C" fn sqlite3Fts5IterToken(
     mut pIndexIter: *mut Fts5IndexIter,
     mut pToken: *const ::core::ffi::c_char,
     mut nToken: ::core::ffi::c_int,
-    mut iRowid: i64_0,
+    mut iRowid: I64_0,
     mut iCol: ::core::ffi::c_int,
     mut iOff: ::core::ffi::c_int,
     mut ppOut: *mut *const ::core::ffi::c_char,
@@ -33511,7 +33511,7 @@ unsafe extern "C" fn sqlite3Fts5IterToken(
 ) -> ::core::ffi::c_int {
     let mut pIter: *mut Fts5Iter = pIndexIter as *mut Fts5Iter;
     let mut pT: *mut Fts5TokenDataIter = (*pIter).pTokenDataIter;
-    let mut iPos: i64_0 = ((iCol as i64_0) << 32 as ::core::ffi::c_int) + iOff as i64_0;
+    let mut iPos: I64_0 = ((iCol as I64_0) << 32 as ::core::ffi::c_int) + iOff as I64_0;
     let mut aMap: *mut Fts5TokenDataMap = std::ptr::null_mut::<Fts5TokenDataMap>();
     let mut i1: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut i2: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
@@ -33532,7 +33532,7 @@ unsafe extern "C" fn sqlite3Fts5IterToken(
         } else if (*aMap.offset(iTest as isize)).iRowid > iRowid {
             i2 = iTest;
         } else if (*aMap.offset(iTest as isize)).iPos < iPos {
-            if (*aMap.offset(iTest as isize)).iPos < 0 as i64_0 {
+            if (*aMap.offset(iTest as isize)).iPos < 0 as I64_0 {
                 break;
             }
             i1 = iTest + 1 as ::core::ffi::c_int;
@@ -33557,7 +33557,7 @@ unsafe extern "C" fn sqlite3Fts5IterToken(
                 - 1 as ::core::ffi::c_int;
         } else {
             let mut p: *mut Fts5TokenDataMap = aMap.offset(iTest as isize) as *mut Fts5TokenDataMap;
-            *ppOut = (*pT).terms.p.offset((*p).iIter as isize) as *mut u8_0
+            *ppOut = (*pT).terms.p.offset((*p).iIter as isize) as *mut U8_0
                 as *const ::core::ffi::c_char;
             *pnOut = (*aMap.offset(iTest as isize)).nByte;
         }
@@ -33581,7 +33581,7 @@ unsafe extern "C" fn sqlite3Fts5IndexIterWriteTokendata(
     mut pIndexIter: *mut Fts5IndexIter,
     mut pToken: *const ::core::ffi::c_char,
     mut nToken: ::core::ffi::c_int,
-    mut iRowid: i64_0,
+    mut iRowid: I64_0,
     mut iCol: ::core::ffi::c_int,
     mut iOff: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
@@ -33589,14 +33589,14 @@ unsafe extern "C" fn sqlite3Fts5IndexIterWriteTokendata(
     let __pIter_ref = { &mut *pIter };
     let mut pT: *mut Fts5TokenDataIter = __pIter_ref.pTokenDataIter;
     let mut p: *mut Fts5Index = __pIter_ref.pIndex;
-    let mut iPos: i64_0 = ((iCol as i64_0) << 32 as ::core::ffi::c_int) + iOff as i64_0;
+    let mut iPos: I64_0 = ((iCol as I64_0) << 32 as ::core::ffi::c_int) + iOff as I64_0;
     if __pIter_ref.nSeg > 0 as ::core::ffi::c_int {
         if pT.is_null() {
             pT = sqlite3Fts5MallocZero(
                 &raw mut (*p).rc,
                 (56 as usize).wrapping_add(
                     (1 as usize).wrapping_mul(std::mem::size_of::<Fts5Iter>() as usize),
-                ) as crate::src::headers::sqlite3_h::sqlite3_int64,
+                ) as crate::src::headers::sqlite3_h::Sqlite3Int64,
             ) as *mut Fts5TokenDataIter;
             __pIter_ref.pTokenDataIter = pT;
         }
@@ -33605,8 +33605,8 @@ unsafe extern "C" fn sqlite3Fts5IndexIterWriteTokendata(
             sqlite3Fts5BufferAppendBlob(
                 &raw mut (*p).rc,
                 &raw mut (*pT).terms,
-                nToken as u32_0,
-                pToken as *const u8_0,
+                nToken as U32_0,
+                pToken as *const U8_0,
             );
         }
     } else {
@@ -33647,31 +33647,31 @@ unsafe extern "C" fn sqlite3Fts5IterClose(mut pIndexIter: *mut Fts5IndexIter) {
 
 unsafe extern "C" fn sqlite3Fts5IndexGetAverages(
     mut p: *mut Fts5Index,
-    mut pnRow: *mut i64_0,
-    mut anSize: *mut i64_0,
+    mut pnRow: *mut I64_0,
+    mut anSize: *mut I64_0,
 ) -> ::core::ffi::c_int {
     let mut nCol: ::core::ffi::c_int = (*(*p).pConfig).nCol;
     let mut pData: *mut Fts5Data = std::ptr::null_mut::<Fts5Data>();
-    *pnRow = 0 as i64_0;
+    *pnRow = 0 as I64_0;
     std::ptr::write_bytes(
         anSize as *mut ::core::ffi::c_void as *mut u8,
         0,
-        (std::mem::size_of::<i64_0>() as crate::__stddef_size_t_h::size_t)
-            .wrapping_mul(nCol as crate::__stddef_size_t_h::size_t) as usize,
+        (std::mem::size_of::<I64_0>() as crate::__stddef_size_t_h::SizeT)
+            .wrapping_mul(nCol as crate::__stddef_size_t_h::SizeT) as usize,
     );
-    pData = fts5DataRead(p, FTS5_AVERAGES_ROWID as i64_0);
+    pData = fts5DataRead(p, FTS5_AVERAGES_ROWID as I64_0);
     if (*p).rc == crate::src::headers::sqlite3_h::SQLITE_OK && (*pData).nn != 0 {
         let mut i: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
         let mut iCol: ::core::ffi::c_int = 0;
         i += sqlite3Fts5GetVarint(
-            (*pData).p.offset(i as isize) as *mut u8_0,
-            pnRow as *mut u64_0,
+            (*pData).p.offset(i as isize) as *mut U8_0,
+            pnRow as *mut U64_0,
         ) as ::core::ffi::c_int;
         iCol = 0 as ::core::ffi::c_int;
         while i < (*pData).nn && iCol < nCol {
             i += sqlite3Fts5GetVarint(
-                (*pData).p.offset(i as isize) as *mut u8_0,
-                anSize.offset(iCol as isize) as *mut i64_0 as *mut u64_0,
+                (*pData).p.offset(i as isize) as *mut U8_0,
+                anSize.offset(iCol as isize) as *mut I64_0 as *mut U64_0,
             ) as ::core::ffi::c_int;
             iCol += 1;
         }
@@ -33682,10 +33682,10 @@ unsafe extern "C" fn sqlite3Fts5IndexGetAverages(
 
 unsafe extern "C" fn sqlite3Fts5IndexSetAverages(
     mut p: *mut Fts5Index,
-    mut pData: *const u8_0,
+    mut pData: *const U8_0,
     mut nData: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    fts5DataWrite(p, FTS5_AVERAGES_ROWID as i64_0, pData, nData);
+    fts5DataWrite(p, FTS5_AVERAGES_ROWID as I64_0, pData, nData);
     fts5IndexReturn(p)
 }
 
@@ -33699,23 +33699,23 @@ unsafe extern "C" fn sqlite3Fts5IndexSetCookie(
 ) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = 0;
     let mut pConfig: *mut Fts5Config = (*p).pConfig;
-    let mut aCookie: [u8_0; 4] = [0; 4];
-    let mut pBlob: *mut crate::src::headers::sqlite3_h::sqlite3_blob =
-        std::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_blob>();
-    sqlite3Fts5Put32(&raw mut aCookie as *mut u8_0, iNew);
+    let mut aCookie: [U8_0; 4] = [0; 4];
+    let mut pBlob: *mut crate::src::headers::sqlite3_h::Sqlite3Blob =
+        std::ptr::null_mut::<crate::src::headers::sqlite3_h::Sqlite3Blob>();
+    sqlite3Fts5Put32(&raw mut aCookie as *mut U8_0, iNew);
     rc = crate::src::src::vdbeblob::sqlite3_blob_open(
         (*pConfig).db,
         (*pConfig).zDb,
         (*p).zDataTbl,
         b"block\0" as *const u8 as *const ::core::ffi::c_char,
-        FTS5_STRUCTURE_ROWID as crate::src::headers::sqlite3_h::sqlite3_int64,
+        FTS5_STRUCTURE_ROWID as crate::src::headers::sqlite3_h::Sqlite3Int64,
         1 as ::core::ffi::c_int,
         &raw mut pBlob,
     );
     if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
         crate::src::src::vdbeblob::sqlite3_blob_write(
             pBlob,
-            &raw mut aCookie as *mut u8_0 as *const ::core::ffi::c_void,
+            &raw mut aCookie as *mut U8_0 as *const ::core::ffi::c_void,
             4 as ::core::ffi::c_int,
             0 as ::core::ffi::c_int,
         );
@@ -33733,12 +33733,12 @@ unsafe extern "C" fn sqlite3Fts5IndexLoadConfig(mut p: *mut Fts5Index) -> ::core
 
 unsafe extern "C" fn sqlite3Fts5IndexGetOrigin(
     mut p: *mut Fts5Index,
-    mut piOrigin: *mut i64_0,
+    mut piOrigin: *mut I64_0,
 ) -> ::core::ffi::c_int {
     let mut pStruct: *mut Fts5Structure = std::ptr::null_mut::<Fts5Structure>();
     pStruct = fts5StructureRead(p);
     if !pStruct.is_null() {
-        *piOrigin = (*pStruct).nOriginCntr as i64_0;
+        *piOrigin = (*pStruct).nOriginCntr as I64_0;
         fts5StructureRelease(pStruct);
     }
     fts5IndexReturn(p)
@@ -33748,7 +33748,7 @@ unsafe extern "C" fn fts5IndexTombstoneAddToPage(
     mut pPg: *mut Fts5Data,
     mut bForce: ::core::ffi::c_int,
     mut nPg: ::core::ffi::c_int,
-    mut iRowid: u64_0,
+    mut iRowid: U64_0,
 ) -> ::core::ffi::c_int {
     let __pPg_ref = { &mut *pPg };
     let szKey: ::core::ffi::c_int =
@@ -33768,27 +33768,27 @@ unsafe extern "C" fn fts5IndexTombstoneAddToPage(
         1 as ::core::ffi::c_int
     };
     let nElem: ::core::ffi::c_int =
-        fts5GetU32(__pPg_ref.p.offset(4 as isize) as *mut u8_0) as ::core::ffi::c_int;
+        fts5GetU32(__pPg_ref.p.offset(4 as isize) as *mut U8_0) as ::core::ffi::c_int;
     let mut iSlot: ::core::ffi::c_int = iRowid
-        .wrapping_div(nPg as u64_0)
-        .wrapping_rem(nSlot as u64_0) as ::core::ffi::c_int;
+        .wrapping_div(nPg as U64_0)
+        .wrapping_rem(nSlot as U64_0) as ::core::ffi::c_int;
     let mut nCollide: ::core::ffi::c_int = nSlot;
-    if szKey == 4 as ::core::ffi::c_int && iRowid > 0xffffffff as u64_0 {
+    if szKey == 4 as ::core::ffi::c_int && iRowid > 0xffffffff as U64_0 {
         return 2 as ::core::ffi::c_int;
     }
-    if iRowid == 0 as u64_0 {
-        *__pPg_ref.p.offset(1 as isize) = 0x1 as u8_0;
+    if iRowid == 0 as U64_0 {
+        *__pPg_ref.p.offset(1 as isize) = 0x1 as U8_0;
         return 0 as ::core::ffi::c_int;
     }
     if bForce == 0 as ::core::ffi::c_int && nElem >= nSlot / 2 as ::core::ffi::c_int {
         return 1 as ::core::ffi::c_int;
     }
     fts5PutU32(
-        __pPg_ref.p.offset(4 as isize) as *mut u8_0,
-        (nElem + 1 as ::core::ffi::c_int) as u32_0,
+        __pPg_ref.p.offset(4 as isize) as *mut U8_0,
+        (nElem + 1 as ::core::ffi::c_int) as U32_0,
     );
     if szKey == 4 as ::core::ffi::c_int {
-        let mut aSlot: *mut u32_0 = __pPg_ref.p.offset(8 as isize) as *mut u8_0 as *mut u32_0;
+        let mut aSlot: *mut U32_0 = __pPg_ref.p.offset(8 as isize) as *mut U8_0 as *mut U32_0;
         while *aSlot.offset(iSlot as isize) != 0 {
             iSlot = (iSlot + 1 as ::core::ffi::c_int) % nSlot;
             let fresh53 = nCollide;
@@ -33798,11 +33798,11 @@ unsafe extern "C" fn fts5IndexTombstoneAddToPage(
             }
         }
         fts5PutU32(
-            aSlot.offset(iSlot as isize) as *mut u32_0 as *mut u8_0,
-            iRowid as u32_0,
+            aSlot.offset(iSlot as isize) as *mut U32_0 as *mut U8_0,
+            iRowid as U32_0,
         );
     } else {
-        let mut aSlot_0: *mut u64_0 = __pPg_ref.p.offset(8 as isize) as *mut u8_0 as *mut u64_0;
+        let mut aSlot_0: *mut U64_0 = __pPg_ref.p.offset(8 as isize) as *mut U8_0 as *mut U64_0;
         while *aSlot_0.offset(iSlot as isize) != 0 {
             iSlot = (iSlot + 1 as ::core::ffi::c_int) % nSlot;
             let fresh54 = nCollide;
@@ -33812,7 +33812,7 @@ unsafe extern "C" fn fts5IndexTombstoneAddToPage(
             }
         }
         fts5PutU64(
-            aSlot_0.offset(iSlot as isize) as *mut u64_0 as *mut u8_0,
+            aSlot_0.offset(iSlot as isize) as *mut U64_0 as *mut U8_0,
             iRowid,
         );
     }
@@ -33832,10 +33832,10 @@ unsafe extern "C" fn fts5IndexTombstoneRehash(
     let mut res: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     ii = 0 as ::core::ffi::c_int;
     while ii < nOut {
-        *(**apOut.offset(ii as isize)).p.offset(0 as isize) = szKey as u8_0;
+        *(**apOut.offset(ii as isize)).p.offset(0 as isize) = szKey as U8_0;
         fts5PutU32(
-            (**apOut.offset(ii as isize)).p.offset(4 as isize) as *mut u8_0,
-            0 as u32_0,
+            (**apOut.offset(ii as isize)).p.offset(4 as isize) as *mut U8_0,
+            0 as U32_0,
         );
         ii += 1;
     }
@@ -33849,11 +33849,11 @@ unsafe extern "C" fn fts5IndexTombstoneRehash(
             pData = fts5DataRead(
                 p,
                 ((((*pSeg).iSegid + ((1 as ::core::ffi::c_int) << 16 as ::core::ffi::c_int))
-                    as i64_0)
+                    as I64_0)
                     << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-                    + ((0 as ::core::ffi::c_int as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-                    + ((0 as ::core::ffi::c_int as i64_0) << 31 as ::core::ffi::c_int)
-                    + ii as i64_0,
+                    + ((0 as ::core::ffi::c_int as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
+                    + ((0 as ::core::ffi::c_int as I64_0) << 31 as ::core::ffi::c_int)
+                    + ii as I64_0,
             );
             pFree = pData;
         }
@@ -33870,24 +33870,24 @@ unsafe extern "C" fn fts5IndexTombstoneRehash(
             let mut iIn: ::core::ffi::c_int = 0;
             iIn = 0 as ::core::ffi::c_int;
             while iIn < nSlotIn {
-                let mut iVal: u64_0 = 0 as u64_0;
+                let mut iVal: U64_0 = 0 as U64_0;
                 if szKeyIn == 4 as ::core::ffi::c_int {
-                    let mut aSlot: *mut u32_0 =
-                        (*pData).p.offset(8 as isize) as *mut u8_0 as *mut u32_0;
+                    let mut aSlot: *mut U32_0 =
+                        (*pData).p.offset(8 as isize) as *mut U8_0 as *mut U32_0;
                     if *aSlot.offset(iIn as isize) != 0 {
-                        iVal = fts5GetU32(aSlot.offset(iIn as isize) as *mut u32_0 as *mut u8_0)
-                            as u64_0;
+                        iVal = fts5GetU32(aSlot.offset(iIn as isize) as *mut U32_0 as *mut U8_0)
+                            as U64_0;
                     }
                 } else {
-                    let mut aSlot_0: *mut u64_0 =
-                        (*pData).p.offset(8 as isize) as *mut u8_0 as *mut u64_0;
+                    let mut aSlot_0: *mut U64_0 =
+                        (*pData).p.offset(8 as isize) as *mut U8_0 as *mut U64_0;
                     if *aSlot_0.offset(iIn as isize) != 0 {
-                        iVal = fts5GetU64(aSlot_0.offset(iIn as isize) as *mut u64_0 as *mut u8_0);
+                        iVal = fts5GetU64(aSlot_0.offset(iIn as isize) as *mut U64_0 as *mut U8_0);
                     }
                 }
                 if iVal != 0 {
                     let mut pPg: *mut Fts5Data =
-                        *apOut.offset(iVal.wrapping_rem(nOut as u64_0) as isize);
+                        *apOut.offset(iVal.wrapping_rem(nOut as U64_0) as isize);
                     res = fts5IndexTombstoneAddToPage(pPg, 0 as ::core::ffi::c_int, nOut, iVal);
                     if res != 0 {
                         break;
@@ -33928,7 +33928,7 @@ unsafe extern "C" fn fts5IndexTombstoneRebuild(
         nSlot = MINSLOT;
     } else if (*pSeg).nPgTombstone == 1 as ::core::ffi::c_int {
         let mut nElem: ::core::ffi::c_int =
-            fts5GetU32((*pData1).p.offset(4 as isize) as *mut u8_0) as ::core::ffi::c_int;
+            fts5GetU32((*pData1).p.offset(4 as isize) as *mut U8_0) as ::core::ffi::c_int;
         nOut = 1 as ::core::ffi::c_int;
         nSlot = if nElem * 4 as ::core::ffi::c_int > MINSLOT {
             nElem * 4 as ::core::ffi::c_int
@@ -33951,7 +33951,7 @@ unsafe extern "C" fn fts5IndexTombstoneRebuild(
         apOut = sqlite3Fts5MallocZero(
             &raw mut (*p).rc,
             (std::mem::size_of::<*mut Fts5Data>() as usize).wrapping_mul(nOut as usize)
-                as crate::src::headers::sqlite3_h::sqlite3_int64,
+                as crate::src::headers::sqlite3_h::Sqlite3Int64,
         ) as *mut *mut Fts5Data;
         szPage = 8 as ::core::ffi::c_int + nSlot * szKey;
         ii = 0 as ::core::ffi::c_int;
@@ -33959,11 +33959,11 @@ unsafe extern "C" fn fts5IndexTombstoneRebuild(
             let mut pNew: *mut Fts5Data = sqlite3Fts5MallocZero(
                 &raw mut (*p).rc,
                 (std::mem::size_of::<Fts5Data>() as usize).wrapping_add(szPage as usize)
-                    as crate::src::headers::sqlite3_h::sqlite3_int64,
+                    as crate::src::headers::sqlite3_h::Sqlite3Int64,
             ) as *mut Fts5Data;
             if !pNew.is_null() {
                 (*pNew).nn = szPage;
-                (*pNew).p = pNew.offset(1 as isize) as *mut Fts5Data as *mut u8_0;
+                (*pNew).p = pNew.offset(1 as isize) as *mut Fts5Data as *mut U8_0;
                 let ref mut fresh55 = *apOut.offset(ii as isize);
                 *fresh55 = pNew;
             }
@@ -33992,7 +33992,7 @@ unsafe extern "C" fn fts5IndexTombstoneRebuild(
 unsafe extern "C" fn fts5IndexTombstoneAdd(
     mut p: *mut Fts5Index,
     mut pSeg: *mut Fts5StructureSegment,
-    mut iRowid: u64_0,
+    mut iRowid: U64_0,
 ) {
     let mut pPg: *mut Fts5Data = std::ptr::null_mut::<Fts5Data>();
     let mut iPg: ::core::ffi::c_int = -(1 as ::core::ffi::c_int);
@@ -34002,15 +34002,15 @@ unsafe extern "C" fn fts5IndexTombstoneAdd(
     (*p).nContentlessDelete += 1;
     if (*pSeg).nPgTombstone > 0 as ::core::ffi::c_int {
         let __pSeg_ref = { &*pSeg };
-        iPg = iRowid.wrapping_rem(__pSeg_ref.nPgTombstone as u64_0) as ::core::ffi::c_int;
+        iPg = iRowid.wrapping_rem(__pSeg_ref.nPgTombstone as U64_0) as ::core::ffi::c_int;
         pPg = fts5DataRead(
             p,
             (((__pSeg_ref.iSegid + ((1 as ::core::ffi::c_int) << 16 as ::core::ffi::c_int))
-                as i64_0)
+                as I64_0)
                 << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-                + ((0 as ::core::ffi::c_int as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-                + ((0 as ::core::ffi::c_int as i64_0) << 31 as ::core::ffi::c_int)
-                + iPg as i64_0,
+                + ((0 as ::core::ffi::c_int as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
+                + ((0 as ::core::ffi::c_int as I64_0) << 31 as ::core::ffi::c_int)
+                + iPg as I64_0,
         );
         if pPg.is_null() {
             return;
@@ -34026,11 +34026,11 @@ unsafe extern "C" fn fts5IndexTombstoneAdd(
             fts5DataWrite(
                 p,
                 (((__pSeg_ref.iSegid + ((1 as ::core::ffi::c_int) << 16 as ::core::ffi::c_int))
-                    as i64_0)
+                    as I64_0)
                     << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-                    + ((0 as ::core::ffi::c_int as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-                    + ((0 as ::core::ffi::c_int as i64_0) << 31 as ::core::ffi::c_int)
-                    + iPg as i64_0,
+                    + ((0 as ::core::ffi::c_int as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
+                    + ((0 as ::core::ffi::c_int as I64_0) << 31 as ::core::ffi::c_int)
+                    + iPg as I64_0,
                 (*pPg).p,
                 (*pPg).nn,
             );
@@ -34047,27 +34047,27 @@ unsafe extern "C" fn fts5IndexTombstoneAdd(
     } else {
         4 as ::core::ffi::c_int
     };
-    if iRowid > 0xffffffff as u64_0 {
+    if iRowid > 0xffffffff as U64_0 {
         szKey = 8 as ::core::ffi::c_int;
     }
     fts5IndexTombstoneRebuild(p, pSeg, pPg, iPg, szKey, &raw mut nHash, &raw mut apHash);
     if nHash != 0 {
         let mut ii: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
         fts5IndexTombstoneAddToPage(
-            *apHash.offset(iRowid.wrapping_rem(nHash as u64_0) as isize),
+            *apHash.offset(iRowid.wrapping_rem(nHash as U64_0) as isize),
             1 as ::core::ffi::c_int,
             nHash,
             iRowid,
         );
         ii = 0 as ::core::ffi::c_int;
         while ii < nHash {
-            let mut iTombstoneRowid: i64_0 = ((((*pSeg).iSegid
+            let mut iTombstoneRowid: I64_0 = ((((*pSeg).iSegid
                 + ((1 as ::core::ffi::c_int) << 16 as ::core::ffi::c_int))
-                as i64_0)
+                as I64_0)
                 << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-                + ((0 as ::core::ffi::c_int as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-                + ((0 as ::core::ffi::c_int as i64_0) << 31 as ::core::ffi::c_int)
-                + ii as i64_0;
+                + ((0 as ::core::ffi::c_int as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
+                + ((0 as ::core::ffi::c_int as I64_0) << 31 as ::core::ffi::c_int)
+                + ii as I64_0;
             fts5DataWrite(
                 p,
                 iTombstoneRowid,
@@ -34085,8 +34085,8 @@ unsafe extern "C" fn fts5IndexTombstoneAdd(
 
 unsafe extern "C" fn sqlite3Fts5IndexContentlessDelete(
     mut p: *mut Fts5Index,
-    mut iOrigin: i64_0,
-    mut iRowid: i64_0,
+    mut iOrigin: I64_0,
+    mut iRowid: I64_0,
 ) -> ::core::ffi::c_int {
     let mut pStruct: *mut Fts5Structure = std::ptr::null_mut::<Fts5Structure>();
     pStruct = fts5StructureRead(p);
@@ -34106,12 +34106,12 @@ unsafe extern "C" fn sqlite3Fts5IndexContentlessDelete(
                 .aSeg
                 .offset(iSeg as isize)
                     as *mut Fts5StructureSegment;
-                if (*pSeg).iOrigin1 <= iOrigin as u64_0 && (*pSeg).iOrigin2 >= iOrigin as u64_0 {
+                if (*pSeg).iOrigin1 <= iOrigin as U64_0 && (*pSeg).iOrigin2 >= iOrigin as U64_0 {
                     if bFound == 0 as ::core::ffi::c_int {
                         (*pSeg).nEntryTombstone = (*pSeg).nEntryTombstone.wrapping_add(1);
                         bFound = 1 as ::core::ffi::c_int;
                     }
-                    fts5IndexTombstoneAdd(p, pSeg, iRowid as u64_0);
+                    fts5IndexTombstoneAdd(p, pSeg, iRowid as U64_0);
                 }
                 iSeg -= 1;
             }
@@ -34123,26 +34123,26 @@ unsafe extern "C" fn sqlite3Fts5IndexContentlessDelete(
 }
 
 unsafe extern "C" fn sqlite3Fts5IndexEntryCksum(
-    mut iRowid: i64_0,
+    mut iRowid: I64_0,
     mut iCol: ::core::ffi::c_int,
     mut iPos: ::core::ffi::c_int,
     mut iIdx: ::core::ffi::c_int,
     mut pTerm: *const ::core::ffi::c_char,
     mut nTerm: ::core::ffi::c_int,
-) -> u64_0 {
+) -> U64_0 {
     let mut i: ::core::ffi::c_int = 0;
-    let mut ret: u64_0 = iRowid as u64_0;
-    ret = ret.wrapping_add((ret << 3 as ::core::ffi::c_int).wrapping_add(iCol as u64_0));
-    ret = ret.wrapping_add((ret << 3 as ::core::ffi::c_int).wrapping_add(iPos as u64_0));
+    let mut ret: U64_0 = iRowid as U64_0;
+    ret = ret.wrapping_add((ret << 3 as ::core::ffi::c_int).wrapping_add(iCol as U64_0));
+    ret = ret.wrapping_add((ret << 3 as ::core::ffi::c_int).wrapping_add(iPos as U64_0));
     if iIdx >= 0 as ::core::ffi::c_int {
         ret = ret.wrapping_add(
-            (ret << 3 as ::core::ffi::c_int).wrapping_add((FTS5_MAIN_PREFIX + iIdx) as u64_0),
+            (ret << 3 as ::core::ffi::c_int).wrapping_add((FTS5_MAIN_PREFIX + iIdx) as U64_0),
         );
     }
     i = 0 as ::core::ffi::c_int;
     while i < nTerm {
         ret = ret.wrapping_add(
-            (ret << 3 as ::core::ffi::c_int).wrapping_add(*pTerm.offset(i as isize) as u64_0),
+            (ret << 3 as ::core::ffi::c_int).wrapping_add(*pTerm.offset(i as isize) as U64_0),
         );
         i += 1;
     }
@@ -34161,10 +34161,10 @@ unsafe extern "C" fn fts5IndexIntegrityCheckEmpty(
     while (*p).rc == crate::src::headers::sqlite3_h::SQLITE_OK && i <= iLast {
         let mut pLeaf: *mut Fts5Data = fts5DataRead(
             p,
-            (((*pSeg).iSegid as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-                + ((0 as ::core::ffi::c_int as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-                + ((0 as ::core::ffi::c_int as i64_0) << 31 as ::core::ffi::c_int)
-                + i as i64_0,
+            (((*pSeg).iSegid as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
+                + ((0 as ::core::ffi::c_int as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
+                + ((0 as ::core::ffi::c_int as I64_0) << 31 as ::core::ffi::c_int)
+                + i as I64_0,
         );
         if !pLeaf.is_null() {
             let __pLeaf_ref = { &*pLeaf };
@@ -34174,14 +34174,14 @@ unsafe extern "C" fn fts5IndexIntegrityCheckEmpty(
             {
                 fts5IndexCorruptRowid(
                     p,
-                    (((*pSeg).iSegid as i64_0)
+                    (((*pSeg).iSegid as I64_0)
                         << 31 as ::core::ffi::c_int
                             + 5 as ::core::ffi::c_int
                             + 1 as ::core::ffi::c_int)
-                        + ((0 as ::core::ffi::c_int as i64_0)
+                        + ((0 as ::core::ffi::c_int as I64_0)
                             << 31 as ::core::ffi::c_int + 5 as ::core::ffi::c_int)
-                        + ((0 as ::core::ffi::c_int as i64_0) << 31 as ::core::ffi::c_int)
-                        + i as i64_0,
+                        + ((0 as ::core::ffi::c_int as I64_0) << 31 as ::core::ffi::c_int)
+                        + i as I64_0,
                 );
             }
         }
@@ -34192,40 +34192,40 @@ unsafe extern "C" fn fts5IndexIntegrityCheckEmpty(
 
 unsafe extern "C" fn fts5IntegrityCheckPgidx(
     mut p: *mut Fts5Index,
-    mut iRowid: i64_0,
+    mut iRowid: I64_0,
     mut pLeaf: *mut Fts5Data,
 ) {
-    let mut iTermOff: i64_0 = 0 as i64_0;
+    let mut iTermOff: I64_0 = 0 as I64_0;
     let mut ii: ::core::ffi::c_int = 0;
     let mut buf1: Fts5Buffer = { std::mem::zeroed() };
     let mut buf2: Fts5Buffer = { std::mem::zeroed() };
     ii = (*pLeaf).szLeaf;
     while ii < (*pLeaf).nn && (*p).rc == crate::src::headers::sqlite3_h::SQLITE_OK {
         let mut res: ::core::ffi::c_int = 0;
-        let mut iOff: i64_0 = 0;
+        let mut iOff: I64_0 = 0;
         let mut nIncr: ::core::ffi::c_int = 0;
         ii += sqlite3Fts5GetVarint32(
-            (*pLeaf).p.offset(ii as isize) as *mut u8_0,
-            &raw mut nIncr as *mut u32_0,
+            (*pLeaf).p.offset(ii as isize) as *mut U8_0,
+            &raw mut nIncr as *mut U32_0,
         );
-        iTermOff += nIncr as i64_0;
+        iTermOff += nIncr as I64_0;
         iOff = iTermOff;
-        if iOff >= (*pLeaf).szLeaf as i64_0 {
+        if iOff >= (*pLeaf).szLeaf as I64_0 {
             fts5IndexCorruptRowid(p, iRowid);
-        } else if iTermOff == nIncr as i64_0 {
+        } else if iTermOff == nIncr as I64_0 {
             let mut nByte: ::core::ffi::c_int = 0;
             iOff += sqlite3Fts5GetVarint32(
-                (*pLeaf).p.offset(iOff as isize) as *mut u8_0,
-                &raw mut nByte as *mut u32_0,
-            ) as i64_0;
-            if iOff + nByte as i64_0 > (*pLeaf).szLeaf as i64_0 {
+                (*pLeaf).p.offset(iOff as isize) as *mut U8_0,
+                &raw mut nByte as *mut U32_0,
+            ) as I64_0;
+            if iOff + nByte as I64_0 > (*pLeaf).szLeaf as I64_0 {
                 fts5IndexCorruptRowid(p, iRowid);
             } else {
                 sqlite3Fts5BufferSet(
                     &raw mut (*p).rc,
                     &raw mut buf1,
                     nByte,
-                    (*pLeaf).p.offset(iOff as isize) as *mut u8_0,
+                    (*pLeaf).p.offset(iOff as isize) as *mut U8_0,
                 );
             }
         } else {
@@ -34233,22 +34233,22 @@ unsafe extern "C" fn fts5IntegrityCheckPgidx(
             let mut nByte_0: ::core::ffi::c_int = 0;
             let __pLeaf_ref = { &mut *pLeaf };
             iOff += sqlite3Fts5GetVarint32(
-                __pLeaf_ref.p.offset(iOff as isize) as *mut u8_0,
-                &raw mut nKeep as *mut u32_0,
-            ) as i64_0;
+                __pLeaf_ref.p.offset(iOff as isize) as *mut U8_0,
+                &raw mut nKeep as *mut U32_0,
+            ) as I64_0;
             iOff += sqlite3Fts5GetVarint32(
-                __pLeaf_ref.p.offset(iOff as isize) as *mut u8_0,
-                &raw mut nByte_0 as *mut u32_0,
-            ) as i64_0;
-            if nKeep > buf1.n || iOff + nByte_0 as i64_0 > __pLeaf_ref.szLeaf as i64_0 {
+                __pLeaf_ref.p.offset(iOff as isize) as *mut U8_0,
+                &raw mut nByte_0 as *mut U32_0,
+            ) as I64_0;
+            if nKeep > buf1.n || iOff + nByte_0 as I64_0 > __pLeaf_ref.szLeaf as I64_0 {
                 fts5IndexCorruptRowid(p, iRowid);
             } else {
                 buf1.n = nKeep;
                 sqlite3Fts5BufferAppendBlob(
                     &raw mut (*p).rc,
                     &raw mut buf1,
-                    nByte_0 as u32_0,
-                    __pLeaf_ref.p.offset(iOff as isize) as *mut u8_0,
+                    nByte_0 as U32_0,
+                    __pLeaf_ref.p.offset(iOff as isize) as *mut U8_0,
                 );
             }
             if (*p).rc == crate::src::headers::sqlite3_h::SQLITE_OK {
@@ -34273,8 +34273,8 @@ unsafe extern "C" fn fts5IndexIntegrityCheckSegment(
     let __pConfig_ref = { &*pConfig };
     let mut bSecureDelete: ::core::ffi::c_int =
         (__pConfig_ref.iVersion == FTS5_CURRENT_VERSION_SECUREDELETE) as ::core::ffi::c_int;
-    let mut pStmt: *mut crate::src::headers::sqlite3_h::sqlite3_stmt =
-        std::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_stmt>();
+    let mut pStmt: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt =
+        std::ptr::null_mut::<crate::src::headers::sqlite3_h::Sqlite3Stmt>();
     let mut rc2: ::core::ffi::c_int = 0;
     let __pSeg_ref = { &*pSeg };
     let mut iIdxPrevLeaf: ::core::ffi::c_int = __pSeg_ref.pgnoFirst - 1 as ::core::ffi::c_int;
@@ -34296,7 +34296,7 @@ unsafe extern "C" fn fts5IndexIntegrityCheckSegment(
         && crate::src::headers::sqlite3_h::SQLITE_ROW
             == crate::src::src::vdbeapi::sqlite3_step(pStmt)
     {
-        let mut iRow: i64_0 = 0;
+        let mut iRow: I64_0 = 0;
         let mut pLeaf: *mut Fts5Data = std::ptr::null_mut::<Fts5Data>();
         let mut zIdxTerm: *const ::core::ffi::c_char =
             crate::src::src::vdbeapi::sqlite3_column_blob(pStmt, 1 as ::core::ffi::c_int)
@@ -34310,11 +34310,11 @@ unsafe extern "C" fn fts5IndexIntegrityCheckSegment(
         if iIdxLeaf < __pSeg_ref.pgnoFirst {
             continue;
         }
-        iRow = ((__pSeg_ref.iSegid as i64_0)
+        iRow = ((__pSeg_ref.iSegid as I64_0)
             << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-            + ((0 as ::core::ffi::c_int as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-            + ((0 as ::core::ffi::c_int as i64_0) << 31 as ::core::ffi::c_int)
-            + iIdxLeaf as i64_0;
+            + ((0 as ::core::ffi::c_int as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
+            + ((0 as ::core::ffi::c_int as I64_0) << 31 as ::core::ffi::c_int)
+            + iIdxLeaf as I64_0;
         pLeaf = fts5LeafRead(p, iRow);
         if pLeaf.is_null() {
             break;
@@ -34339,8 +34339,8 @@ unsafe extern "C" fn fts5IndexIntegrityCheckSegment(
                 fts5IndexCorruptRowid(p, iRow);
             } else {
                 iOff += sqlite3Fts5GetVarint32(
-                    (*pLeaf).p.offset(iOff as isize) as *mut u8_0,
-                    &raw mut nTerm as *mut u32_0,
+                    (*pLeaf).p.offset(iOff as isize) as *mut U8_0,
+                    &raw mut nTerm as *mut U32_0,
                 );
                 res = if (if nTerm < nIdxTerm { nTerm } else { nIdxTerm })
                     <= 0 as ::core::ffi::c_int
@@ -34348,7 +34348,7 @@ unsafe extern "C" fn fts5IndexIntegrityCheckSegment(
                     0 as ::core::ffi::c_int
                 } else {
                     fts5_memcmp(
-                        (*pLeaf).p.offset(iOff as isize) as *mut u8_0 as *const ::core::ffi::c_void,
+                        (*pLeaf).p.offset(iOff as isize) as *mut U8_0 as *const ::core::ffi::c_void,
                         zIdxTerm as *const ::core::ffi::c_void,
                         (if nTerm < nIdxTerm { nTerm } else { nIdxTerm }) as u64,
                     )
@@ -34381,17 +34381,17 @@ unsafe extern "C" fn fts5IndexIntegrityCheckSegment(
             let mut iPrevLeaf: ::core::ffi::c_int = iIdxLeaf;
             let mut iSegid: ::core::ffi::c_int = __pSeg_ref.iSegid;
             let mut iPg: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-            let mut iKey: i64_0 = 0;
+            let mut iKey: I64_0 = 0;
             pDlidx = fts5DlidxIterInit(p, 0 as ::core::ffi::c_int, iSegid, iIdxLeaf);
             while fts5DlidxIterEof(p, pDlidx) == 0 as ::core::ffi::c_int {
                 iPg = iPrevLeaf + 1 as ::core::ffi::c_int;
                 while iPg < fts5DlidxIterPgno(pDlidx) {
-                    iKey = ((iSegid as i64_0)
+                    iKey = ((iSegid as I64_0)
                         << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-                        + ((0 as ::core::ffi::c_int as i64_0)
+                        + ((0 as ::core::ffi::c_int as I64_0)
                             << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-                        + ((0 as ::core::ffi::c_int as i64_0) << 31 as ::core::ffi::c_int)
-                        + iPg as i64_0;
+                        + ((0 as ::core::ffi::c_int as I64_0) << 31 as ::core::ffi::c_int)
+                        + iPg as I64_0;
                     pLeaf = fts5DataRead(p, iKey);
                     if !pLeaf.is_null() {
                         if fts5GetU16((*pLeaf).p) as ::core::ffi::c_int != 0 as ::core::ffi::c_int {
@@ -34402,14 +34402,14 @@ unsafe extern "C" fn fts5IndexIntegrityCheckSegment(
                     iPg += 1;
                 }
                 iPrevLeaf = fts5DlidxIterPgno(pDlidx);
-                iKey = ((iSegid as i64_0)
+                iKey = ((iSegid as I64_0)
                     << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-                    + ((0 as ::core::ffi::c_int as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-                    + ((0 as ::core::ffi::c_int as i64_0) << 31 as ::core::ffi::c_int)
-                    + iPrevLeaf as i64_0;
+                    + ((0 as ::core::ffi::c_int as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
+                    + ((0 as ::core::ffi::c_int as I64_0) << 31 as ::core::ffi::c_int)
+                    + iPrevLeaf as I64_0;
                 pLeaf = fts5DataRead(p, iKey);
                 if !pLeaf.is_null() {
-                    let mut iRowid: i64_0 = 0;
+                    let mut iRowid: I64_0 = 0;
                     let mut iRowidOff_0: ::core::ffi::c_int =
                         fts5GetU16((*pLeaf).p) as ::core::ffi::c_int;
                     if iRowidOff_0 >= (*pLeaf).szLeaf {
@@ -34417,10 +34417,10 @@ unsafe extern "C" fn fts5IndexIntegrityCheckSegment(
                     } else if bSecureDelete == 0 as ::core::ffi::c_int
                         || iRowidOff_0 > 0 as ::core::ffi::c_int
                     {
-                        let mut iDlRowid: i64_0 = fts5DlidxIterRowid(pDlidx);
+                        let mut iDlRowid: I64_0 = fts5DlidxIterRowid(pDlidx);
                         sqlite3Fts5GetVarint(
-                            (*pLeaf).p.offset(iRowidOff_0 as isize) as *mut u8_0,
-                            &raw mut iRowid as *mut u64_0,
+                            (*pLeaf).p.offset(iRowidOff_0 as isize) as *mut U8_0,
+                            &raw mut iRowid as *mut U64_0,
                         );
                         if iRowid < iDlRowid
                             || bSecureDelete == 0 as ::core::ffi::c_int && iRowid != iDlRowid
@@ -34447,11 +34447,11 @@ unsafe extern "C" fn fts5IndexIntegrityCheckSegment(
 
 unsafe extern "C" fn sqlite3Fts5IndexIntegrityCheck(
     mut p: *mut Fts5Index,
-    mut cksum: u64_0,
+    mut cksum: U64_0,
     mut bUseCksum: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
     let mut eDetail: ::core::ffi::c_int = (*(*p).pConfig).eDetail;
-    let mut cksum2: u64_0 = 0 as u64_0;
+    let mut cksum2: U64_0 = 0 as U64_0;
     let mut poslist: Fts5Buffer = { std::mem::zeroed() };
     let mut pIter: *mut Fts5Iter = std::ptr::null_mut::<Fts5Iter>();
     let mut pStruct: *mut Fts5Structure = std::ptr::null_mut::<Fts5Structure>();
@@ -34482,7 +34482,7 @@ unsafe extern "C" fn sqlite3Fts5IndexIntegrityCheck(
         pStruct,
         flags,
         std::ptr::null_mut::<Fts5Colset>(),
-        std::ptr::null::<u8_0>(),
+        std::ptr::null::<U8_0>(),
         0 as ::core::ffi::c_int,
         -(1 as ::core::ffi::c_int),
         0 as ::core::ffi::c_int,
@@ -34490,9 +34490,9 @@ unsafe extern "C" fn sqlite3Fts5IndexIntegrityCheck(
     );
     while fts5MultiIterEof(p, pIter) == 0 as ::core::ffi::c_int {
         let mut n: ::core::ffi::c_int = 0;
-        let mut iPos: i64_0 = 0 as i64_0;
+        let mut iPos: I64_0 = 0 as I64_0;
         let mut iOff: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-        let mut iRowid: i64_0 = fts5MultiIterRowid(pIter);
+        let mut iRowid: I64_0 = fts5MultiIterRowid(pIter);
         let mut z: *mut ::core::ffi::c_char =
             fts5MultiIterTerm(pIter, &raw mut n) as *mut ::core::ffi::c_char;
         if (*p).rc != 0 {
@@ -34522,16 +34522,16 @@ unsafe extern "C" fn sqlite3Fts5IndexIntegrityCheck(
             sqlite3Fts5BufferAppendBlob(
                 &raw mut (*p).rc,
                 &raw mut poslist,
-                4 as u32_0,
-                b"\0\0\0\0\0" as *const u8 as *const ::core::ffi::c_char as *const u8_0,
+                4 as U32_0,
+                b"\0\0\0\0\0" as *const u8 as *const ::core::ffi::c_char as *const U8_0,
             );
             while 0 as ::core::ffi::c_int
                 == sqlite3Fts5PoslistNext64(poslist.p, poslist.n, &raw mut iOff, &raw mut iPos)
             {
                 let mut iCol: ::core::ffi::c_int =
-                    (iPos >> 32 as ::core::ffi::c_int & 0x7fffffff as i64_0) as ::core::ffi::c_int;
+                    (iPos >> 32 as ::core::ffi::c_int & 0x7fffffff as I64_0) as ::core::ffi::c_int;
                 let mut iTokOff: ::core::ffi::c_int =
-                    (iPos & 0x7fffffff as i64_0) as ::core::ffi::c_int;
+                    (iPos & 0x7fffffff as I64_0) as ::core::ffi::c_int;
                 cksum2 ^= sqlite3Fts5IndexEntryCksum(
                     iRowid,
                     iCol,
@@ -34542,7 +34542,7 @@ unsafe extern "C" fn sqlite3Fts5IndexIntegrityCheck(
                 );
             }
         }
-        fts5MultiIterNext(p, pIter, 0 as ::core::ffi::c_int, 0 as i64_0);
+        fts5MultiIterNext(p, pIter, 0 as ::core::ffi::c_int, 0 as I64_0);
     }
     fts5MultiIterFree(pIter);
     if (*p).rc == crate::src::headers::sqlite3_h::SQLITE_OK && bUseCksum != 0 && cksum != cksum2 {
@@ -34562,31 +34562,31 @@ unsafe extern "C" fn sqlite3Fts5IndexIntegrityCheck(
 }
 
 unsafe extern "C" fn fts5DecodeRowid(
-    mut iRowid: i64_0,
+    mut iRowid: I64_0,
     mut pbTombstone: *mut ::core::ffi::c_int,
     mut piSegid: *mut ::core::ffi::c_int,
     mut pbDlidx: *mut ::core::ffi::c_int,
     mut piHeight: *mut ::core::ffi::c_int,
     mut piPgno: *mut ::core::ffi::c_int,
 ) {
-    *piPgno = (iRowid & ((1 as ::core::ffi::c_int as i64_0) << FTS5_DATA_PAGE_B) - 1 as i64_0)
+    *piPgno = (iRowid & ((1 as ::core::ffi::c_int as I64_0) << FTS5_DATA_PAGE_B) - 1 as I64_0)
         as ::core::ffi::c_int;
     iRowid >>= FTS5_DATA_PAGE_B;
-    *piHeight = (iRowid & ((1 as ::core::ffi::c_int as i64_0) << FTS5_DATA_HEIGHT_B) - 1 as i64_0)
+    *piHeight = (iRowid & ((1 as ::core::ffi::c_int as I64_0) << FTS5_DATA_HEIGHT_B) - 1 as I64_0)
         as ::core::ffi::c_int;
     iRowid >>= FTS5_DATA_HEIGHT_B;
-    *pbDlidx = (iRowid & 0x1 as i64_0) as ::core::ffi::c_int;
+    *pbDlidx = (iRowid & 0x1 as I64_0) as ::core::ffi::c_int;
     iRowid >>= FTS5_DATA_DLI_B;
-    *piSegid = (iRowid & ((1 as ::core::ffi::c_int as i64_0) << FTS5_DATA_ID_B) - 1 as i64_0)
+    *piSegid = (iRowid & ((1 as ::core::ffi::c_int as I64_0) << FTS5_DATA_ID_B) - 1 as I64_0)
         as ::core::ffi::c_int;
     iRowid >>= FTS5_DATA_ID_B;
-    *pbTombstone = (iRowid & 0x1 as i64_0) as ::core::ffi::c_int;
+    *pbTombstone = (iRowid & 0x1 as I64_0) as ::core::ffi::c_int;
 }
 
 unsafe extern "C" fn fts5DebugRowid(
     mut pRc: *mut ::core::ffi::c_int,
     mut pBuf: *mut Fts5Buffer,
-    mut iKey: i64_0,
+    mut iKey: I64_0,
 ) {
     let mut iSegid: ::core::ffi::c_int = 0;
     let mut iHeight: ::core::ffi::c_int = 0;
@@ -34602,7 +34602,7 @@ unsafe extern "C" fn fts5DebugRowid(
         &raw mut iPgno,
     );
     if iSegid == 0 as ::core::ffi::c_int {
-        if iKey == FTS5_AVERAGES_ROWID as i64_0 {
+        if iKey == FTS5_AVERAGES_ROWID as I64_0 {
             sqlite3Fts5BufferAppendPrintf(pRc, pBuf, sqlite_printf!("{averages} "));
         } else {
             sqlite3Fts5BufferAppendPrintf(pRc, pBuf, sqlite_printf!("{structure}"));
@@ -34671,7 +34671,7 @@ unsafe extern "C" fn fts5DebugStructure(
                     __pSeg_ref.pgnoLast,
                 ),
             );
-            if __pSeg_ref.iOrigin1 > 0 as u64_0 {
+            if __pSeg_ref.iOrigin1 > 0 as U64_0 {
                 sqlite3Fts5BufferAppendPrintf(
                     pRc,
                     pBuf,
@@ -34693,7 +34693,7 @@ unsafe extern "C" fn fts5DebugStructure(
 unsafe extern "C" fn fts5DecodeStructure(
     mut pRc: *mut ::core::ffi::c_int,
     mut pBuf: *mut Fts5Buffer,
-    mut pBlob: *const u8_0,
+    mut pBlob: *const U8_0,
     mut nBlob: ::core::ffi::c_int,
 ) {
     let mut rc: ::core::ffi::c_int = 0;
@@ -34715,13 +34715,13 @@ unsafe extern "C" fn fts5DecodeStructure(
 unsafe extern "C" fn fts5DecodeAverages(
     mut pRc: *mut ::core::ffi::c_int,
     mut pBuf: *mut Fts5Buffer,
-    mut pBlob: *const u8_0,
+    mut pBlob: *const U8_0,
     mut nBlob: ::core::ffi::c_int,
 ) {
     let mut i: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut zSpace: *const ::core::ffi::c_char = b"\0" as *const u8 as *const ::core::ffi::c_char;
     while i < nBlob {
-        let mut iVal: u64_0 = 0;
+        let mut iVal: U64_0 = 0;
         i += sqlite3Fts5GetVarint(
             pBlob.offset(i as isize) as *const ::core::ffi::c_uchar,
             &raw mut iVal,
@@ -34738,7 +34738,7 @@ unsafe extern "C" fn fts5DecodeAverages(
 unsafe extern "C" fn fts5DecodePoslist(
     mut pRc: *mut ::core::ffi::c_int,
     mut pBuf: *mut Fts5Buffer,
-    mut a: *const u8_0,
+    mut a: *const U8_0,
     mut n: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
     let mut iOff: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
@@ -34746,7 +34746,7 @@ unsafe extern "C" fn fts5DecodePoslist(
         let mut iVal: ::core::ffi::c_int = 0;
         iOff += sqlite3Fts5GetVarint32(
             a.offset(iOff as isize) as *const ::core::ffi::c_uchar,
-            &raw mut iVal as *mut u32_0,
+            &raw mut iVal as *mut U32_0,
         );
         sqlite3Fts5BufferAppendPrintf(pRc, pBuf, sqlite_printf!(" %d", iVal,));
     }
@@ -34756,15 +34756,15 @@ unsafe extern "C" fn fts5DecodePoslist(
 unsafe extern "C" fn fts5DecodeDoclist(
     mut pRc: *mut ::core::ffi::c_int,
     mut pBuf: *mut Fts5Buffer,
-    mut a: *const u8_0,
+    mut a: *const U8_0,
     mut n: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    let mut iDocid: i64_0 = 0 as i64_0;
+    let mut iDocid: I64_0 = 0 as I64_0;
     let mut iOff: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     if n > 0 as ::core::ffi::c_int {
         iOff = sqlite3Fts5GetVarint(
             a as *const ::core::ffi::c_uchar,
-            &raw mut iDocid as *mut u64_0,
+            &raw mut iDocid as *mut U64_0,
         ) as ::core::ffi::c_int;
         sqlite3Fts5BufferAppendPrintf(pRc, pBuf, sqlite_printf!(" id=%lld", iDocid,));
     }
@@ -34772,7 +34772,7 @@ unsafe extern "C" fn fts5DecodeDoclist(
         let mut nPos: ::core::ffi::c_int = 0;
         let mut bDel: ::core::ffi::c_int = 0;
         iOff += fts5GetPoslistSize(
-            a.offset(iOff as isize) as *const u8_0,
+            a.offset(iOff as isize) as *const U8_0,
             &raw mut nPos,
             &raw mut bDel,
         );
@@ -34792,14 +34792,14 @@ unsafe extern "C" fn fts5DecodeDoclist(
         iOff += fts5DecodePoslist(
             pRc,
             pBuf,
-            a.offset(iOff as isize) as *const u8_0,
+            a.offset(iOff as isize) as *const U8_0,
             if n - iOff < nPos { n - iOff } else { nPos },
         );
         if iOff < n {
-            let mut iDelta: i64_0 = 0;
+            let mut iDelta: I64_0 = 0;
             iOff += sqlite3Fts5GetVarint(
                 a.offset(iOff as isize) as *const ::core::ffi::c_uchar,
-                &raw mut iDelta as *mut u64_0,
+                &raw mut iDelta as *mut U64_0,
             ) as ::core::ffi::c_int;
             iDocid += iDelta;
             sqlite3Fts5BufferAppendPrintf(pRc, pBuf, sqlite_printf!(" id=%lld", iDocid,));
@@ -34811,19 +34811,19 @@ unsafe extern "C" fn fts5DecodeDoclist(
 unsafe extern "C" fn fts5DecodeRowidList(
     mut pRc: *mut ::core::ffi::c_int,
     mut pBuf: *mut Fts5Buffer,
-    mut pData: *const u8_0,
+    mut pData: *const U8_0,
     mut nData: ::core::ffi::c_int,
 ) {
     let mut i: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-    let mut iRowid: i64_0 = 0 as i64_0;
+    let mut iRowid: I64_0 = 0 as I64_0;
     while i < nData {
         let mut zApp: *const ::core::ffi::c_char = b"\0" as *const u8 as *const ::core::ffi::c_char;
-        let mut iVal: u64_0 = 0;
+        let mut iVal: U64_0 = 0;
         i += sqlite3Fts5GetVarint(
             pData.offset(i as isize) as *const ::core::ffi::c_uchar,
             &raw mut iVal,
         ) as ::core::ffi::c_int;
-        iRowid = (iRowid as u64_0).wrapping_add(iVal) as i64_0 as i64_0;
+        iRowid = (iRowid as U64_0).wrapping_add(iVal) as I64_0 as I64_0;
         if i < nData && *pData.offset(i as isize) as ::core::ffi::c_int == 0 as ::core::ffi::c_int {
             i += 1;
             if i < nData
@@ -34845,15 +34845,15 @@ unsafe extern "C" fn fts5BufferAppendTerm(
     mut pTerm: *mut Fts5Buffer,
 ) {
     let mut ii: ::core::ffi::c_int = 0;
-    if ((*pBuf).n as u32_0)
-        .wrapping_add(((*pTerm).n * 2 as ::core::ffi::c_int + 1 as ::core::ffi::c_int) as u32_0)
-        <= (*pBuf).nSpace as u32_0
+    if ((*pBuf).n as U32_0)
+        .wrapping_add(((*pTerm).n * 2 as ::core::ffi::c_int + 1 as ::core::ffi::c_int) as U32_0)
+        <= (*pBuf).nSpace as U32_0
     {
     } else {
         sqlite3Fts5BufferSize(
             pRc,
             pBuf,
-            ((*pTerm).n * 2 as ::core::ffi::c_int + 1 as ::core::ffi::c_int + (*pBuf).n) as u32_0,
+            ((*pTerm).n * 2 as ::core::ffi::c_int + 1 as ::core::ffi::c_int + (*pBuf).n) as U32_0,
         );
     };
     if *pRc == crate::src::headers::sqlite3_h::SQLITE_OK {
@@ -34863,10 +34863,10 @@ unsafe extern "C" fn fts5BufferAppendTerm(
                 let __pBuf_ref = { &mut *pBuf };
                 let fresh50 = __pBuf_ref.n;
                 __pBuf_ref.n += 1;
-                *__pBuf_ref.p.offset(fresh50 as isize) = '\\' as i32 as u8_0;
+                *__pBuf_ref.p.offset(fresh50 as isize) = '\\' as i32 as U8_0;
                 let fresh51 = __pBuf_ref.n;
                 __pBuf_ref.n += 1;
-                *__pBuf_ref.p.offset(fresh51 as isize) = '0' as i32 as u8_0;
+                *__pBuf_ref.p.offset(fresh51 as isize) = '0' as i32 as U8_0;
             } else {
                 let __pBuf_ref = { &mut *pBuf };
                 let fresh52 = __pBuf_ref.n;
@@ -34875,7 +34875,7 @@ unsafe extern "C" fn fts5BufferAppendTerm(
             }
             ii += 1;
         }
-        *(*pBuf).p.offset((*pBuf).n as isize) = 0 as u8_0;
+        *(*pBuf).p.offset((*pBuf).n as isize) = 0 as U8_0;
     }
 }
 
@@ -34885,28 +34885,28 @@ unsafe extern "C" fn fts5DecodeFunction(
     mut apVal: *mut *mut crate::src::headers::vdbeInt_h::sqlite3_value,
 ) {
     let mut current_block: u64;
-    let mut iRowid: i64_0 = 0;
+    let mut iRowid: I64_0 = 0;
     let mut iSegid: ::core::ffi::c_int = 0;
     let mut iHeight: ::core::ffi::c_int = 0;
     let mut iPgno: ::core::ffi::c_int = 0;
     let mut bDlidx: ::core::ffi::c_int = 0;
     let mut bTomb: ::core::ffi::c_int = 0;
-    let mut aBlob: *const u8_0 = std::ptr::null::<u8_0>();
+    let mut aBlob: *const U8_0 = std::ptr::null::<U8_0>();
     let mut n: ::core::ffi::c_int = 0;
-    let mut a: *mut u8_0 = std::ptr::null_mut::<u8_0>();
+    let mut a: *mut U8_0 = std::ptr::null_mut::<U8_0>();
     let mut s: Fts5Buffer = { std::mem::zeroed() };
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
-    let mut nSpace: crate::src::headers::sqlite3_h::sqlite3_int64 =
-        0 as crate::src::headers::sqlite3_h::sqlite3_int64;
+    let mut nSpace: crate::src::headers::sqlite3_h::Sqlite3Int64 =
+        0 as crate::src::headers::sqlite3_h::Sqlite3Int64;
     let mut eDetailNone: ::core::ffi::c_int = (crate::src::src::vdbeapi::sqlite3_user_data(pCtx)
         != std::ptr::null_mut::<::core::ffi::c_void>())
         as ::core::ffi::c_int;
-    iRowid = crate::src::src::vdbeapi::sqlite3_value_int64(*apVal.offset(0 as isize)) as i64_0;
+    iRowid = crate::src::src::vdbeapi::sqlite3_value_int64(*apVal.offset(0 as isize)) as I64_0;
     n = crate::src::src::vdbeapi::sqlite3_value_bytes(*apVal.offset(1 as isize));
-    aBlob = crate::src::src::vdbeapi::sqlite3_value_blob(*apVal.offset(1 as isize)) as *const u8_0;
-    nSpace = (n as i64_0 + FTS5_DATA_ZERO_PADDING as i64_0)
-        as crate::src::headers::sqlite3_h::sqlite3_int64;
-    a = sqlite3Fts5MallocZero(&raw mut rc, nSpace) as *mut u8_0;
+    aBlob = crate::src::src::vdbeapi::sqlite3_value_blob(*apVal.offset(1 as isize)) as *const U8_0;
+    nSpace = (n as I64_0 + FTS5_DATA_ZERO_PADDING as I64_0)
+        as crate::src::headers::sqlite3_h::Sqlite3Int64;
+    a = sqlite3Fts5MallocZero(&raw mut rc, nSpace) as *mut U8_0;
     if !a.is_null() {
         if n > 0 as ::core::ffi::c_int {
             std::ptr::copy_nonoverlapping(aBlob as *const u8, a as *mut u8, n as usize);
@@ -34937,7 +34937,7 @@ unsafe extern "C" fn fts5DecodeFunction(
                 fts5DlidxLvlNext(&raw mut lvl);
             }
         } else if bTomb != 0 {
-            let mut nElem: u32_0 = fts5GetU32(a.offset(4 as isize) as *mut u8_0);
+            let mut nElem: U32_0 = fts5GetU32(a.offset(4 as isize) as *mut U8_0);
             let mut szKey: ::core::ffi::c_int = if *aBlob.offset(0 as isize) as ::core::ffi::c_int
                 == 4 as ::core::ffi::c_int
                 || *aBlob.offset(0 as isize) as ::core::ffi::c_int == 8 as ::core::ffi::c_int
@@ -34958,32 +34958,32 @@ unsafe extern "C" fn fts5DecodeFunction(
             }
             ii = 0 as ::core::ffi::c_int;
             while ii < nSlot {
-                let mut iVal: u64_0 = 0 as u64_0;
+                let mut iVal: U64_0 = 0 as U64_0;
                 if szKey == 4 as ::core::ffi::c_int {
-                    let mut aSlot: *mut u32_0 =
-                        aBlob.offset(8 as isize) as *const u8_0 as *mut u32_0;
+                    let mut aSlot: *mut U32_0 =
+                        aBlob.offset(8 as isize) as *const U8_0 as *mut U32_0;
                     if *aSlot.offset(ii as isize) != 0 {
-                        iVal = fts5GetU32(aSlot.offset(ii as isize) as *mut u32_0 as *mut u8_0)
-                            as u64_0;
+                        iVal = fts5GetU32(aSlot.offset(ii as isize) as *mut U32_0 as *mut U8_0)
+                            as U64_0;
                     }
                 } else {
-                    let mut aSlot_0: *mut u64_0 =
-                        aBlob.offset(8 as isize) as *const u8_0 as *mut u64_0;
+                    let mut aSlot_0: *mut U64_0 =
+                        aBlob.offset(8 as isize) as *const U8_0 as *mut U64_0;
                     if *aSlot_0.offset(ii as isize) != 0 {
-                        iVal = fts5GetU64(aSlot_0.offset(ii as isize) as *mut u64_0 as *mut u8_0);
+                        iVal = fts5GetU64(aSlot_0.offset(ii as isize) as *mut U64_0 as *mut U8_0);
                     }
                 }
-                if iVal != 0 as u64_0 {
+                if iVal != 0 as U64_0 {
                     sqlite3Fts5BufferAppendPrintf(
                         &raw mut rc,
                         &raw mut s,
-                        sqlite_printf!(" %lld", iVal as i64_0),
+                        sqlite_printf!(" %lld", iVal as I64_0),
                     );
                 }
                 ii += 1;
             }
         } else if iSegid == 0 as ::core::ffi::c_int {
-            if iRowid == FTS5_AVERAGES_ROWID as i64_0 {
+            if iRowid == FTS5_AVERAGES_ROWID as I64_0 {
                 fts5DecodeAverages(&raw mut rc, &raw mut s, a, n);
             } else {
                 fts5DecodeStructure(&raw mut rc, &raw mut s, a, n);
@@ -34991,15 +34991,15 @@ unsafe extern "C" fn fts5DecodeFunction(
         } else if eDetailNone != 0 {
             let mut term: Fts5Buffer = { std::mem::zeroed() };
             let mut szLeaf: ::core::ffi::c_int = 0;
-            szLeaf = fts5GetU16(a.offset(2 as isize) as *mut u8_0) as ::core::ffi::c_int;
+            szLeaf = fts5GetU16(a.offset(2 as isize) as *mut U8_0) as ::core::ffi::c_int;
             let mut iPgidxOff: ::core::ffi::c_int = szLeaf;
             let mut iTermOff: ::core::ffi::c_int = 0;
             let mut nKeep: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
             let mut iOff: ::core::ffi::c_int = 0;
             if szLeaf < n {
                 iPgidxOff += sqlite3Fts5GetVarint32(
-                    a.offset(iPgidxOff as isize) as *mut u8_0,
-                    &raw mut iTermOff as *mut u32_0,
+                    a.offset(iPgidxOff as isize) as *mut U8_0,
+                    &raw mut iTermOff as *mut U32_0,
                 );
             } else {
                 iTermOff = szLeaf;
@@ -35007,22 +35007,22 @@ unsafe extern "C" fn fts5DecodeFunction(
             fts5DecodeRowidList(
                 &raw mut rc,
                 &raw mut s,
-                a.offset(4 as isize) as *mut u8_0,
+                a.offset(4 as isize) as *mut U8_0,
                 iTermOff - 4 as ::core::ffi::c_int,
             );
             iOff = iTermOff;
             while iOff < szLeaf && rc == crate::src::headers::sqlite3_h::SQLITE_OK {
                 let mut nAppend: ::core::ffi::c_int = 0;
                 iOff += sqlite3Fts5GetVarint32(
-                    a.offset(iOff as isize) as *mut u8_0,
-                    &raw mut nAppend as *mut u32_0,
+                    a.offset(iOff as isize) as *mut U8_0,
+                    &raw mut nAppend as *mut U32_0,
                 );
                 term.n = nKeep;
                 sqlite3Fts5BufferAppendBlob(
                     &raw mut rc,
                     &raw mut term,
-                    nAppend as u32_0,
-                    a.offset(iOff as isize) as *mut u8_0,
+                    nAppend as U32_0,
+                    a.offset(iOff as isize) as *mut U8_0,
                 );
                 sqlite3Fts5BufferAppendPrintf(&raw mut rc, &raw mut s, sqlite_printf!(" term="));
                 fts5BufferAppendTerm(&raw mut rc, &raw mut s, &raw mut term);
@@ -35030,8 +35030,8 @@ unsafe extern "C" fn fts5DecodeFunction(
                 if iPgidxOff < n {
                     let mut nIncr: ::core::ffi::c_int = 0;
                     iPgidxOff += sqlite3Fts5GetVarint32(
-                        a.offset(iPgidxOff as isize) as *mut u8_0,
-                        &raw mut nIncr as *mut u32_0,
+                        a.offset(iPgidxOff as isize) as *mut U8_0,
+                        &raw mut nIncr as *mut U32_0,
                     );
                     iTermOff += nIncr;
                 } else {
@@ -35043,15 +35043,15 @@ unsafe extern "C" fn fts5DecodeFunction(
                     fts5DecodeRowidList(
                         &raw mut rc,
                         &raw mut s,
-                        a.offset(iOff as isize) as *mut u8_0,
+                        a.offset(iOff as isize) as *mut U8_0,
                         iTermOff - iOff,
                     );
                 }
                 iOff = iTermOff;
                 if iOff < szLeaf {
                     iOff += sqlite3Fts5GetVarint32(
-                        a.offset(iOff as isize) as *mut u8_0,
-                        &raw mut nKeep as *mut u32_0,
+                        a.offset(iOff as isize) as *mut U8_0,
+                        &raw mut nKeep as *mut U32_0,
                     );
                 }
             }
@@ -35070,16 +35070,16 @@ unsafe extern "C" fn fts5DecodeFunction(
                     &raw mut rc,
                     &raw mut s,
                     7 as ::core::ffi::c_int,
-                    b"corrupt\0" as *const u8 as *const ::core::ffi::c_char as *const u8_0,
+                    b"corrupt\0" as *const u8 as *const ::core::ffi::c_char as *const U8_0,
                 );
             } else {
-                iRowidOff = fts5GetU16(a.offset(0 as isize) as *mut u8_0) as ::core::ffi::c_int;
-                szLeaf_0 = fts5GetU16(a.offset(2 as isize) as *mut u8_0) as ::core::ffi::c_int;
+                iRowidOff = fts5GetU16(a.offset(0 as isize) as *mut U8_0) as ::core::ffi::c_int;
+                szLeaf_0 = fts5GetU16(a.offset(2 as isize) as *mut U8_0) as ::core::ffi::c_int;
                 iPgidxOff_0 = szLeaf_0;
                 if iPgidxOff_0 < n {
                     sqlite3Fts5GetVarint32(
-                        a.offset(iPgidxOff_0 as isize) as *mut u8_0,
-                        &raw mut iTermOff_0 as *mut u32_0,
+                        a.offset(iPgidxOff_0 as isize) as *mut U8_0,
+                        &raw mut iTermOff_0 as *mut U32_0,
                     );
                     current_block = 15237655884915618618;
                 } else if iPgidxOff_0 > n {
@@ -35104,7 +35104,7 @@ unsafe extern "C" fn fts5DecodeFunction(
                             fts5DecodePoslist(
                                 &raw mut rc,
                                 &raw mut s,
-                                a.offset(4 as isize) as *mut u8_0,
+                                a.offset(4 as isize) as *mut U8_0,
                                 iOff_0 - 4 as ::core::ffi::c_int,
                             );
                             nDoclist = (if iTermOff_0 != 0 {
@@ -35118,7 +35118,7 @@ unsafe extern "C" fn fts5DecodeFunction(
                                 fts5DecodeDoclist(
                                     &raw mut rc,
                                     &raw mut s,
-                                    a.offset(iOff_0 as isize) as *mut u8_0,
+                                    a.offset(iOff_0 as isize) as *mut U8_0,
                                     nDoclist,
                                 );
                                 while iPgidxOff_0 < n
@@ -35129,15 +35129,15 @@ unsafe extern "C" fn fts5DecodeFunction(
                                     let mut nByte: ::core::ffi::c_int = 0;
                                     let mut iEnd: ::core::ffi::c_int = 0;
                                     iPgidxOff_0 += sqlite3Fts5GetVarint32(
-                                        a.offset(iPgidxOff_0 as isize) as *mut u8_0,
-                                        &raw mut nByte as *mut u32_0,
+                                        a.offset(iPgidxOff_0 as isize) as *mut U8_0,
+                                        &raw mut nByte as *mut U32_0,
                                     );
                                     iPgidxPrev += nByte;
                                     iOff_0 = iPgidxPrev;
                                     if iPgidxOff_0 < n {
                                         sqlite3Fts5GetVarint32(
-                                            a.offset(iPgidxOff_0 as isize) as *mut u8_0,
-                                            &raw mut nByte as *mut u32_0,
+                                            a.offset(iPgidxOff_0 as isize) as *mut U8_0,
+                                            &raw mut nByte as *mut U32_0,
                                         );
                                         iEnd = iPgidxPrev + nByte;
                                     } else {
@@ -35149,8 +35149,8 @@ unsafe extern "C" fn fts5DecodeFunction(
                                     } else {
                                         if bFirst == 0 as ::core::ffi::c_int {
                                             iOff_0 += sqlite3Fts5GetVarint32(
-                                                a.offset(iOff_0 as isize) as *mut u8_0,
-                                                &raw mut nByte as *mut u32_0,
+                                                a.offset(iOff_0 as isize) as *mut U8_0,
+                                                &raw mut nByte as *mut U32_0,
                                             );
                                             if nByte > term_0.n {
                                                 rc = FTS5_CORRUPT;
@@ -35160,8 +35160,8 @@ unsafe extern "C" fn fts5DecodeFunction(
                                             }
                                         }
                                         iOff_0 += sqlite3Fts5GetVarint32(
-                                            a.offset(iOff_0 as isize) as *mut u8_0,
-                                            &raw mut nByte as *mut u32_0,
+                                            a.offset(iOff_0 as isize) as *mut U8_0,
+                                            &raw mut nByte as *mut U32_0,
                                         );
                                         if iOff_0 + nByte > n {
                                             rc = FTS5_CORRUPT;
@@ -35170,8 +35170,8 @@ unsafe extern "C" fn fts5DecodeFunction(
                                             sqlite3Fts5BufferAppendBlob(
                                                 &raw mut rc,
                                                 &raw mut term_0,
-                                                nByte as u32_0,
-                                                a.offset(iOff_0 as isize) as *mut u8_0,
+                                                nByte as U32_0,
+                                                a.offset(iOff_0 as isize) as *mut U8_0,
                                             );
                                             iOff_0 += nByte;
                                             sqlite3Fts5BufferAppendPrintf(
@@ -35187,7 +35187,7 @@ unsafe extern "C" fn fts5DecodeFunction(
                                             iOff_0 += fts5DecodeDoclist(
                                                 &raw mut rc,
                                                 &raw mut s,
-                                                a.offset(iOff_0 as isize) as *mut u8_0,
+                                                a.offset(iOff_0 as isize) as *mut U8_0,
                                                 iEnd - iOff_0,
                                             );
                                         }
@@ -35239,7 +35239,7 @@ unsafe extern "C" fn fts5RowidFunction(
                 b"segment\0" as *const u8 as *const ::core::ffi::c_char,
             )
         {
-            let mut iRowid: i64_0 = 0;
+            let mut iRowid: I64_0 = 0;
             let mut segid: ::core::ffi::c_int = 0;
             let mut pgno: ::core::ffi::c_int = 0;
             if nArg != 3 as ::core::ffi::c_int {
@@ -35252,14 +35252,14 @@ unsafe extern "C" fn fts5RowidFunction(
             } else {
                 segid = crate::src::src::vdbeapi::sqlite3_value_int(*apVal.offset(1 as isize));
                 pgno = crate::src::src::vdbeapi::sqlite3_value_int(*apVal.offset(2 as isize));
-                iRowid = ((segid as i64_0)
+                iRowid = ((segid as I64_0)
                     << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B + FTS5_DATA_DLI_B)
-                    + ((0 as ::core::ffi::c_int as i64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
-                    + ((0 as ::core::ffi::c_int as i64_0) << 31 as ::core::ffi::c_int)
-                    + pgno as i64_0;
+                    + ((0 as ::core::ffi::c_int as I64_0) << FTS5_DATA_PAGE_B + FTS5_DATA_HEIGHT_B)
+                    + ((0 as ::core::ffi::c_int as I64_0) << 31 as ::core::ffi::c_int)
+                    + pgno as I64_0;
                 crate::src::src::vdbeapi::sqlite3_result_int64(
                     pCtx,
-                    iRowid as crate::src::headers::sqlite3_h::sqlite3_int64,
+                    iRowid as crate::src::headers::sqlite3_h::Sqlite3Int64,
                 );
             }
         } else {
@@ -35291,7 +35291,7 @@ unsafe extern "C" fn fts5structConnectMethod(
     if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
         pNew = sqlite3Fts5MallocZero(
             &raw mut rc,
-            std::mem::size_of::<Fts5StructVtab>() as crate::src::headers::sqlite3_h::sqlite3_int64,
+            std::mem::size_of::<Fts5StructVtab>() as crate::src::headers::sqlite3_h::Sqlite3Int64,
         ) as *mut Fts5StructVtab;
     }
     *ppVtab = pNew as *mut crate::src::headers::sqlite3_h::sqlite3_vtab;
@@ -35308,7 +35308,7 @@ unsafe extern "C" fn fts5structBestIndexMethod(
         std::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_index_constraint>();
     let __pIdxInfo_ref = { &mut *pIdxInfo };
     __pIdxInfo_ref.estimatedCost = 100 as ::core::ffi::c_int as ::core::ffi::c_double;
-    __pIdxInfo_ref.estimatedRows = 100 as crate::src::headers::sqlite3_h::sqlite3_int64;
+    __pIdxInfo_ref.estimatedRows = 100 as crate::src::headers::sqlite3_h::Sqlite3Int64;
     __pIdxInfo_ref.idxNum = 0 as ::core::ffi::c_int;
     i = 0 as ::core::ffi::c_int;
     p = __pIdxInfo_ref.aConstraint as *mut crate::src::headers::sqlite3_h::sqlite3_index_constraint;
@@ -35348,7 +35348,7 @@ unsafe extern "C" fn fts5structOpenMethod(
     let mut pNew: *mut Fts5StructVcsr = std::ptr::null_mut::<Fts5StructVcsr>();
     pNew = sqlite3Fts5MallocZero(
         &raw mut rc,
-        std::mem::size_of::<Fts5StructVcsr>() as crate::src::headers::sqlite3_h::sqlite3_int64,
+        std::mem::size_of::<Fts5StructVcsr>() as crate::src::headers::sqlite3_h::Sqlite3Int64,
     ) as *mut Fts5StructVcsr;
     *ppCsr = pNew as *mut crate::src::headers::sqlite3_h::sqlite3_vtab_cursor;
     crate::src::headers::sqlite3_h::SQLITE_OK
@@ -35397,10 +35397,10 @@ unsafe extern "C" fn fts5structEofMethod(
 
 unsafe extern "C" fn fts5structRowidMethod(
     mut cur: *mut crate::src::headers::sqlite3_h::sqlite3_vtab_cursor,
-    mut piRowid: *mut crate::src::headers::sqlite3_h::sqlite_int64,
+    mut piRowid: *mut crate::src::headers::sqlite3_h::SqliteInt64,
 ) -> ::core::ffi::c_int {
     let pCsr = &*(cur as *mut Fts5StructVcsr);
-    *piRowid = pCsr.iRowid as crate::src::headers::sqlite3_h::sqlite_int64;
+    *piRowid = pCsr.iRowid as crate::src::headers::sqlite3_h::SqliteInt64;
     crate::src::headers::sqlite3_h::SQLITE_OK
 }
 
@@ -35444,13 +35444,13 @@ unsafe extern "C" fn fts5structColumnMethod(
         6 => {
             crate::src::src::vdbeapi::sqlite3_result_int64(
                 ctx,
-                (*pSeg).iOrigin1 as crate::src::headers::sqlite3_h::sqlite3_int64,
+                (*pSeg).iOrigin1 as crate::src::headers::sqlite3_h::Sqlite3Int64,
             );
         }
         7 => {
             crate::src::src::vdbeapi::sqlite3_result_int64(
                 ctx,
-                (*pSeg).iOrigin2 as crate::src::headers::sqlite3_h::sqlite3_int64,
+                (*pSeg).iOrigin2 as crate::src::headers::sqlite3_h::Sqlite3Int64,
             );
         }
         8 => {
@@ -35459,13 +35459,13 @@ unsafe extern "C" fn fts5structColumnMethod(
         9 => {
             crate::src::src::vdbeapi::sqlite3_result_int64(
                 ctx,
-                (*pSeg).nEntryTombstone as crate::src::headers::sqlite3_h::sqlite3_int64,
+                (*pSeg).nEntryTombstone as crate::src::headers::sqlite3_h::Sqlite3Int64,
             );
         }
         10 => {
             crate::src::src::vdbeapi::sqlite3_result_int64(
                 ctx,
-                (*pSeg).nEntry as crate::src::headers::sqlite3_h::sqlite3_int64,
+                (*pSeg).nEntry as crate::src::headers::sqlite3_h::Sqlite3Int64,
             );
         }
         _ => {}
@@ -35482,13 +35482,13 @@ unsafe extern "C" fn fts5structFilterMethod(
 ) -> ::core::ffi::c_int {
     let mut pCsr: *mut Fts5StructVcsr = pVtabCursor as *mut Fts5StructVcsr;
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
-    let mut aBlob: *const u8_0 = std::ptr::null::<u8_0>();
+    let mut aBlob: *const U8_0 = std::ptr::null::<U8_0>();
     let mut nBlob: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let __pCsr_ref = { &mut *pCsr };
     fts5StructureRelease(__pCsr_ref.pStruct);
     __pCsr_ref.pStruct = std::ptr::null_mut::<Fts5Structure>();
     nBlob = crate::src::src::vdbeapi::sqlite3_value_bytes(*argv.offset(0 as isize));
-    aBlob = crate::src::src::vdbeapi::sqlite3_value_blob(*argv.offset(0 as isize)) as *const u8_0;
+    aBlob = crate::src::src::vdbeapi::sqlite3_value_blob(*argv.offset(0 as isize)) as *const U8_0;
     rc = fts5StructureDecode(
         aBlob,
         nBlob,
@@ -35639,7 +35639,7 @@ unsafe extern "C" fn sqlite3Fts5IndexInit(
                     fts5structRowidMethod
                         as unsafe extern "C" fn(
                             *mut crate::src::headers::sqlite3_h::sqlite3_vtab_cursor,
-                            *mut crate::src::headers::sqlite3_h::sqlite_int64,
+                            *mut crate::src::headers::sqlite3_h::SqliteInt64,
                         ) -> ::core::ffi::c_int,
                 ),
                 xUpdate: None,
@@ -35676,11 +35676,11 @@ unsafe extern "C" fn sqlite3Fts5IndexReset(mut p: *mut Fts5Index) -> ::core::ffi
 
 // Re-export variadic functions from printf_c_variadic module
 unsafe fn fts5PrepareStatement(
-    ppStmt: *mut *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+    ppStmt: *mut *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
     pConfig: *mut Fts5Config,
     zSql: *mut ::core::ffi::c_char,
 ) -> ::core::ffi::c_int {
-    let mut pRet: *mut crate::src::headers::sqlite3_h::sqlite3_stmt = std::ptr::null_mut();
+    let mut pRet: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt = std::ptr::null_mut();
     let rc;
     if zSql.is_null() {
         rc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;

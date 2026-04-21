@@ -1,4 +1,4 @@
-pub use crate::__stddef_size_t_h::size_t;
+pub use crate::__stddef_size_t_h::SizeT;
 
 pub use crate::src::headers::opcodes_h::OP_OpenWrite;
 pub use crate::src::src::hash::_ht;
@@ -6,12 +6,12 @@ pub use crate::src::src::hash::Hash;
 pub use crate::src::src::hash::HashElem;
 pub use crate::src::src::pager::Pgno;
 
-pub use crate::src::ext::rtree::rtree::i64_0;
-pub use crate::src::ext::rtree::rtree::u8_0;
-pub use crate::src::ext::rtree::rtree::u32_0;
-pub use crate::src::ext::rtree::rtree::u64_0;
-pub use crate::src::fts5::i16_0;
-pub use crate::src::fts5::u16_0;
+pub use crate::src::ext::rtree::rtree::I64_0;
+pub use crate::src::ext::rtree::rtree::U8_0;
+pub use crate::src::ext::rtree::rtree::U32_0;
+pub use crate::src::ext::rtree::rtree::U64_0;
+pub use crate::src::fts5::I16_0;
+pub use crate::src::fts5::U16_0;
 pub use crate::src::headers::sqlite3_h::SQLITE_CONSTRAINT;
 pub use crate::src::headers::sqlite3_h::SQLITE_ERROR;
 pub use crate::src::headers::sqlite3_h::SQLITE_INDEX_CONSTRAINT_EQ;
@@ -20,21 +20,21 @@ pub use crate::src::headers::sqlite3_h::SQLITE_NOMEM;
 pub use crate::src::headers::sqlite3_h::SQLITE_OK;
 pub use crate::src::headers::sqlite3_h::SQLITE_STATIC;
 pub use crate::src::headers::sqlite3_h::SQLITE_TEXT;
-pub use crate::src::headers::sqlite3_h::sqlite_int64;
-pub use crate::src::headers::sqlite3_h::sqlite_uint64;
-pub use crate::src::headers::sqlite3_h::sqlite3_destructor_type;
+pub use crate::src::headers::sqlite3_h::SqliteInt64;
+pub use crate::src::headers::sqlite3_h::SqliteUint64;
+pub use crate::src::headers::sqlite3_h::Sqlite3DestructorType;
 pub use crate::src::headers::sqlite3_h::sqlite3_file;
-pub use crate::src::headers::sqlite3_h::sqlite3_filename;
+pub use crate::src::headers::sqlite3_h::Sqlite3Filename;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_constraint;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_constraint_usage;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_info;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_orderby;
-pub use crate::src::headers::sqlite3_h::sqlite3_int64;
+pub use crate::src::headers::sqlite3_h::Sqlite3Int64;
 pub use crate::src::headers::sqlite3_h::sqlite3_io_methods;
 pub use crate::src::headers::sqlite3_h::sqlite3_module;
-pub use crate::src::headers::sqlite3_h::sqlite3_stmt;
-pub use crate::src::headers::sqlite3_h::sqlite3_syscall_ptr;
-pub use crate::src::headers::sqlite3_h::sqlite3_uint64;
+pub use crate::src::headers::sqlite3_h::Sqlite3Stmt;
+pub use crate::src::headers::sqlite3_h::Sqlite3SyscallPtr;
+pub use crate::src::headers::sqlite3_h::Sqlite3Uint64;
 pub use crate::src::headers::sqlite3_h::sqlite3_vfs;
 pub use crate::src::headers::sqlite3_h::sqlite3_vtab;
 pub use crate::src::headers::sqlite3_h::sqlite3_vtab_cursor;
@@ -113,19 +113,19 @@ pub use crate::src::headers::sqliteInt_h::VTable;
 pub use crate::src::headers::sqliteInt_h::VtabCtx;
 pub use crate::src::headers::sqliteInt_h::Window;
 pub use crate::src::headers::sqliteInt_h::With;
-pub use crate::src::headers::sqliteInt_h::bft;
-pub use crate::src::headers::sqliteInt_h::i8_0;
+pub use crate::src::headers::sqliteInt_h::Bft;
+pub use crate::src::headers::sqliteInt_h::I8_0;
 pub use crate::src::headers::sqliteInt_h::sColMap;
 pub use crate::src::headers::sqliteInt_h::sqlite3;
-pub use crate::src::headers::sqliteInt_h::sqlite3_xauth;
+pub use crate::src::headers::sqliteInt_h::Sqlite3Xauth;
 pub use crate::src::headers::sqliteInt_h::sqlite3InitInfo;
-pub use crate::src::headers::sqliteInt_h::yDbMask;
-pub use crate::src::headers::sqliteInt_h::ynVar;
-pub use crate::src::headers::stdlib::int8_t;
-pub use crate::src::headers::stdlib::int16_t;
-pub use crate::src::headers::stdlib::uint8_t;
-pub use crate::src::headers::stdlib::uint16_t;
-pub use crate::src::headers::stdlib::uint32_t;
+pub use crate::src::headers::sqliteInt_h::YDbMask;
+pub use crate::src::headers::sqliteInt_h::YnVar;
+pub use crate::src::headers::stdlib::Int8T;
+pub use crate::src::headers::stdlib::Int16T;
+pub use crate::src::headers::stdlib::Uint8T;
+pub use crate::src::headers::stdlib::Uint16T;
+pub use crate::src::headers::stdlib::Uint32T;
 pub use crate::src::src::malloc::sqlite3_free;
 pub use crate::src::src::malloc::sqlite3_malloc;
 pub use crate::src::src::mutex_unix::sqlite3_mutex;
@@ -139,11 +139,6 @@ pub use crate::src::src::vdbeapi::sqlite3_value_type;
 pub use crate::src::src::vtab::sqlite3_create_module;
 pub use crate::src::src::vtab::sqlite3_declare_vtab;
 
-pub use crate::src::headers::stdlib::__int8_t;
-pub use crate::src::headers::stdlib::__int16_t;
-pub use crate::src::headers::stdlib::__uint8_t;
-pub use crate::src::headers::stdlib::__uint16_t;
-pub use crate::src::headers::stdlib::__uint32_t;
 pub use crate::src::headers::vdbeInt_h::__anon_struct_10;
 pub use crate::src::headers::vdbeInt_h::__anon_union_17;
 pub use crate::src::headers::vdbeInt_h::__anon_union_18;
@@ -177,7 +172,7 @@ use crate::sqlite_printf;
 #[repr(C)]
 pub struct bytecodevtab_cursor {
     pub base: crate::src::headers::sqlite3_h::sqlite3_vtab_cursor,
-    pub pStmt: *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+    pub pStmt: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
     pub iRowid: ::core::ffi::c_int,
     pub iAddr: ::core::ffi::c_int,
     pub needFinalize: ::core::ffi::c_int,
@@ -230,7 +225,7 @@ unsafe extern "C" fn bytecodevtabConnect(
         ::libc::memset(
             pNew as *mut ::core::ffi::c_void,
             0 as ::core::ffi::c_int,
-            ::core::mem::size_of::<bytecodevtab>() as crate::__stddef_size_t_h::size_t,
+            ::core::mem::size_of::<bytecodevtab>() as crate::__stddef_size_t_h::SizeT,
         );
         (*pNew).db = db;
         (*pNew).bTablesUsed = isTabUsed * 2 as ::core::ffi::c_int;
@@ -261,12 +256,12 @@ unsafe extern "C" fn bytecodevtabOpen(
     ::libc::memset(
         pCur as *mut ::core::ffi::c_void,
         0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<bytecodevtab_cursor>() as crate::__stddef_size_t_h::size_t,
+        ::core::mem::size_of::<bytecodevtab_cursor>() as crate::__stddef_size_t_h::SizeT,
     );
     crate::src::src::vdbemem::sqlite3VdbeMemInit(
         &raw mut (*pCur).sub as *mut _ as *mut crate::src::headers::vdbeInt_h::sqlite3_value,
         (*pVTab).db as *mut crate::src::headers::sqliteInt_h::sqlite3,
-        1 as crate::src::fts5::u16_0,
+        1 as crate::src::fts5::U16_0,
     );
     *ppCursor = &raw mut (*pCur).base;
     crate::src::headers::sqlite3_h::SQLITE_OK
@@ -285,7 +280,7 @@ unsafe extern "C" fn bytecodevtabCursorClear(mut pCur: *mut bytecodevtab_cursor)
     if __pCur_ref.needFinalize != 0 {
         crate::src::src::vdbeapi::sqlite3_finalize(__pCur_ref.pStmt);
     }
-    __pCur_ref.pStmt = ::core::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_stmt>();
+    __pCur_ref.pStmt = ::core::ptr::null_mut::<crate::src::headers::sqlite3_h::Sqlite3Stmt>();
     __pCur_ref.needFinalize = 0 as ::core::ffi::c_int;
     __pCur_ref.zType = ::core::ptr::null::<::core::ffi::c_char>();
     __pCur_ref.zSchema = ::core::ptr::null::<::core::ffi::c_char>();
@@ -524,10 +519,10 @@ unsafe extern "C" fn bytecodevtabColumn(
 
 unsafe extern "C" fn bytecodevtabRowid(
     mut cur: *mut crate::src::headers::sqlite3_h::sqlite3_vtab_cursor,
-    mut pRowid: *mut crate::src::headers::sqlite3_h::sqlite_int64,
+    mut pRowid: *mut crate::src::headers::sqlite3_h::SqliteInt64,
 ) -> ::core::ffi::c_int {
     let pCur = &*(cur as *mut bytecodevtab_cursor);
-    *pRowid = pCur.iRowid as crate::src::headers::sqlite3_h::sqlite_int64;
+    *pRowid = pCur.iRowid as crate::src::headers::sqlite3_h::SqliteInt64;
     crate::src::headers::sqlite3_h::SQLITE_OK
 }
 
@@ -569,7 +564,7 @@ unsafe extern "C" fn bytecodevtabFilter(
         __pCur_ref.pStmt = crate::src::src::vdbeapi::sqlite3_value_pointer(
             *argv.offset(0 as isize) as *mut crate::src::headers::vdbeInt_h::sqlite3_value,
             b"stmt-pointer\0" as *const u8 as *const ::core::ffi::c_char,
-        ) as *mut crate::src::headers::sqlite3_h::sqlite3_stmt;
+        ) as *mut crate::src::headers::sqlite3_h::Sqlite3Stmt;
     }
     if __pCur_ref.pStmt.is_null() {
         (*pVTab).base.zErrMsg = sqlite_printf!(
@@ -603,7 +598,7 @@ unsafe extern "C" fn bytecodevtabBestIndex(
     };
     let __pIdxInfo_ref = { &mut *pIdxInfo };
     __pIdxInfo_ref.estimatedCost = 100 as ::core::ffi::c_int as ::core::ffi::c_double;
-    __pIdxInfo_ref.estimatedRows = 100 as crate::src::headers::sqlite3_h::sqlite3_int64;
+    __pIdxInfo_ref.estimatedRows = 100 as crate::src::headers::sqlite3_h::Sqlite3Int64;
     __pIdxInfo_ref.idxNum = 0 as ::core::ffi::c_int;
     i = 0 as ::core::ffi::c_int;
     p = __pIdxInfo_ref.aConstraint as *mut crate::src::headers::sqlite3_h::sqlite3_index_constraint;
@@ -711,7 +706,7 @@ static mut bytecodevtabModule: crate::src::headers::sqlite3_h::sqlite3_module = 
             bytecodevtabRowid
                 as unsafe extern "C" fn(
                     *mut crate::src::headers::sqlite3_h::sqlite3_vtab_cursor,
-                    *mut crate::src::headers::sqlite3_h::sqlite_int64,
+                    *mut crate::src::headers::sqlite3_h::SqliteInt64,
                 ) -> ::core::ffi::c_int,
         ),
         xUpdate: None,

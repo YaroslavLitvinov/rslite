@@ -1,13 +1,13 @@
-pub use crate::__stddef_size_t_h::size_t;
+pub use crate::__stddef_size_t_h::SizeT;
 
-pub use crate::src::ext::rtree::rtree::u64_0;
+pub use crate::src::ext::rtree::rtree::U64_0;
 pub use crate::src::headers::sqlite3_h::SQLITE_ERROR;
 pub use crate::src::headers::sqlite3_h::SQLITE_NOMEM;
 pub use crate::src::headers::sqlite3_h::SQLITE_OK;
-pub use crate::src::headers::sqlite3_h::sqlite_uint64;
+pub use crate::src::headers::sqlite3_h::SqliteUint64;
 pub use crate::src::headers::sqliteInt_h::SQLITE_NOMEM_BKPT;
 pub use crate::src::headers::stdlib::pthread_attr_t;
-pub use crate::src::headers::stdlib::pthread_t;
+pub use crate::src::headers::stdlib::PthreadT;
 pub use crate::src::src::malloc::sqlite3_free;
 pub use crate::src::src::malloc::sqlite3Malloc;
 pub use crate::src::src::util::sqlite3FaultSim;
@@ -15,7 +15,7 @@ pub use crate::src::src::util::sqlite3FaultSim;
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct SQLiteThread {
-    pub tid: crate::src::headers::stdlib::pthread_t,
+    pub tid: crate::src::headers::stdlib::PthreadT,
     pub done: ::core::ffi::c_int,
     pub pOut: *mut ::core::ffi::c_void,
     pub xTask: Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> *mut ::core::ffi::c_void>,
@@ -32,7 +32,7 @@ pub unsafe extern "C" fn sqlite3ThreadCreate(
     let mut rc: ::core::ffi::c_int = 0;
     *ppThread = ::core::ptr::null_mut::<SQLiteThread>();
     p = crate::src::src::malloc::sqlite3Malloc(
-        ::core::mem::size_of::<SQLiteThread>() as crate::src::ext::rtree::rtree::u64_0
+        ::core::mem::size_of::<SQLiteThread>() as crate::src::ext::rtree::rtree::U64_0
     ) as *mut SQLiteThread;
     if p.is_null() {
         return crate::src::headers::sqliteInt_h::SQLITE_NOMEM_BKPT;
@@ -40,7 +40,7 @@ pub unsafe extern "C" fn sqlite3ThreadCreate(
     ::libc::memset(
         p as *mut ::core::ffi::c_void,
         0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<SQLiteThread>() as crate::__stddef_size_t_h::size_t,
+        ::core::mem::size_of::<SQLiteThread>() as crate::__stddef_size_t_h::SizeT,
     );
     (*p).xTask = xTask;
     (*p).pIn = pIn;
@@ -75,7 +75,7 @@ pub unsafe extern "C" fn sqlite3ThreadJoin(
         *ppOut = (*p).pOut;
         rc = crate::src::headers::sqlite3_h::SQLITE_OK;
     } else {
-        rc = if ::libc::pthread_join((*p).tid as ::libc::pthread_t, ppOut) != 0 {
+        rc = if ::libc::pthread_join((*p).tid as crate::src::headers::stdlib::PthreadT, ppOut) != 0 {
             crate::src::headers::sqlite3_h::SQLITE_ERROR
         } else {
             crate::src::headers::sqlite3_h::SQLITE_OK

@@ -1,4 +1,4 @@
-pub use crate::__stddef_size_t_h::size_t;
+pub use crate::__stddef_size_t_h::SizeT;
 
 pub use crate::src::headers::opcodes_h::OP_Affinity;
 pub use crate::src::headers::opcodes_h::OP_Close;
@@ -21,28 +21,28 @@ pub use crate::src::src::hash::sqlite3HashInsert;
 pub use crate::src::src::pager::Pgno;
 
 
-pub use crate::src::ext::rtree::rtree::i64_0;
-pub use crate::src::ext::rtree::rtree::u8_0;
-pub use crate::src::ext::rtree::rtree::u32_0;
-pub use crate::src::ext::rtree::rtree::u64_0;
-pub use crate::src::fts5::i16_0;
-pub use crate::src::fts5::u16_0;
+pub use crate::src::ext::rtree::rtree::I64_0;
+pub use crate::src::ext::rtree::rtree::U8_0;
+pub use crate::src::ext::rtree::rtree::U32_0;
+pub use crate::src::ext::rtree::rtree::U64_0;
+pub use crate::src::fts5::I16_0;
+pub use crate::src::fts5::U16_0;
 pub use crate::src::headers::sqlite3_h::SQLITE_CONSTRAINT;
 pub use crate::src::headers::sqlite3_h::SQLITE_CONSTRAINT_FOREIGNKEY;
 pub use crate::src::headers::sqlite3_h::SQLITE_IGNORE;
-pub use crate::src::headers::sqlite3_h::sqlite_int64;
-pub use crate::src::headers::sqlite3_h::sqlite_uint64;
+pub use crate::src::headers::sqlite3_h::SqliteInt64;
+pub use crate::src::headers::sqlite3_h::SqliteUint64;
 pub use crate::src::headers::sqlite3_h::sqlite3_file;
-pub use crate::src::headers::sqlite3_h::sqlite3_filename;
+pub use crate::src::headers::sqlite3_h::Sqlite3Filename;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_constraint;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_constraint_usage;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_info;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_orderby;
-pub use crate::src::headers::sqlite3_h::sqlite3_int64;
+pub use crate::src::headers::sqlite3_h::Sqlite3Int64;
 pub use crate::src::headers::sqlite3_h::sqlite3_io_methods;
 pub use crate::src::headers::sqlite3_h::sqlite3_module;
-pub use crate::src::headers::sqlite3_h::sqlite3_syscall_ptr;
-pub use crate::src::headers::sqlite3_h::sqlite3_uint64;
+pub use crate::src::headers::sqlite3_h::Sqlite3SyscallPtr;
+pub use crate::src::headers::sqlite3_h::Sqlite3Uint64;
 pub use crate::src::headers::sqlite3_h::sqlite3_vfs;
 pub use crate::src::headers::sqlite3_h::sqlite3_vtab;
 pub use crate::src::headers::sqlite3_h::sqlite3_vtab_cursor;
@@ -138,24 +138,19 @@ pub use crate::src::headers::sqliteInt_h::VTable;
 pub use crate::src::headers::sqliteInt_h::VtabCtx;
 pub use crate::src::headers::sqliteInt_h::Window;
 pub use crate::src::headers::sqliteInt_h::With;
-pub use crate::src::headers::sqliteInt_h::bft;
-pub use crate::src::headers::sqliteInt_h::i8_0;
+pub use crate::src::headers::sqliteInt_h::Bft;
+pub use crate::src::headers::sqliteInt_h::I8_0;
 pub use crate::src::headers::sqliteInt_h::sColMap;
 pub use crate::src::headers::sqliteInt_h::sqlite3;
-pub use crate::src::headers::sqliteInt_h::sqlite3_xauth;
+pub use crate::src::headers::sqliteInt_h::Sqlite3Xauth;
 pub use crate::src::headers::sqliteInt_h::sqlite3InitInfo;
-pub use crate::src::headers::sqliteInt_h::yDbMask;
-pub use crate::src::headers::sqliteInt_h::ynVar;
-pub use crate::src::headers::stdlib::__int8_t;
-pub use crate::src::headers::stdlib::__int16_t;
-pub use crate::src::headers::stdlib::__uint8_t;
-pub use crate::src::headers::stdlib::__uint16_t;
-pub use crate::src::headers::stdlib::__uint32_t;
-pub use crate::src::headers::stdlib::int8_t;
-pub use crate::src::headers::stdlib::int16_t;
-pub use crate::src::headers::stdlib::uint8_t;
-pub use crate::src::headers::stdlib::uint16_t;
-pub use crate::src::headers::stdlib::uint32_t;
+pub use crate::src::headers::sqliteInt_h::YDbMask;
+pub use crate::src::headers::sqliteInt_h::YnVar;
+pub use crate::src::headers::stdlib::Int8T;
+pub use crate::src::headers::stdlib::Int16T;
+pub use crate::src::headers::stdlib::Uint8T;
+pub use crate::src::headers::stdlib::Uint16T;
+pub use crate::src::headers::stdlib::Uint32T;
 pub use crate::src::headers::vdbeInt_h::PreUpdate;
 pub use crate::src::headers::vdbeInt_h::Vdbe;
 pub use crate::src::headers::vdbeInt_h::sqlite3_context;
@@ -276,7 +271,7 @@ pub unsafe extern "C" fn sqlite3FkLocateIndex(
         aiCol = crate::src::src::malloc::sqlite3DbMallocRawNN(
             (*pParse).db as *mut crate::src::headers::sqliteInt_h::sqlite3,
             (nCol as usize).wrapping_mul(::core::mem::size_of::<::core::ffi::c_int>() as usize)
-                as crate::src::ext::rtree::rtree::u64_0,
+                as crate::src::ext::rtree::rtree::U64_0,
         ) as *mut ::core::ffi::c_int;
         if aiCol.is_null() {
             return 1 as ::core::ffi::c_int;
@@ -311,7 +306,7 @@ pub unsafe extern "C" fn sqlite3FkLocateIndex(
                 let mut j: ::core::ffi::c_int = 0;
                 i_0 = 0 as ::core::ffi::c_int;
                 while i_0 < nCol {
-                    let mut iCol: crate::src::fts5::i16_0 = *(*pIdx).aiColumn.offset(i_0 as isize);
+                    let mut iCol: crate::src::fts5::I16_0 = *(*pIdx).aiColumn.offset(i_0 as isize);
                     let mut zDfltColl: *const ::core::ffi::c_char =
                         ::core::ptr::null::<::core::ffi::c_char>();
                     let mut zIdxCol: *mut ::core::ffi::c_char =
@@ -427,7 +422,7 @@ unsafe extern "C" fn fkLookupParent(
     while i < (*pFKey).nCol {
         let mut iReg: ::core::ffi::c_int = crate::src::src::build::sqlite3TableColumnToStorage(
             (*pFKey).pFrom as *mut crate::src::headers::sqliteInt_h::Table,
-            *aiCol.offset(i as isize) as crate::src::fts5::i16_0,
+            *aiCol.offset(i as isize) as crate::src::fts5::I16_0,
         ) as ::core::ffi::c_int
             + regData
             + 1 as ::core::ffi::c_int;
@@ -450,7 +445,7 @@ unsafe extern "C" fn fkLookupParent(
                 crate::src::headers::opcodes_h::OP_SCopy,
                 crate::src::src::build::sqlite3TableColumnToStorage(
                     (*pFKey).pFrom as *mut crate::src::headers::sqliteInt_h::Table,
-                    *aiCol.offset(0 as isize) as crate::src::fts5::i16_0,
+                    *aiCol.offset(0 as isize) as crate::src::fts5::I16_0,
                 ) as ::core::ffi::c_int
                     + 1 as ::core::ffi::c_int
                     + regData,
@@ -472,7 +467,7 @@ unsafe extern "C" fn fkLookupParent(
                 );
                 crate::src::src::vdbeaux::sqlite3VdbeChangeP5(
                     v,
-                    crate::src::headers::sqliteInt_h::SQLITE_NOTNULL as crate::src::fts5::u16_0,
+                    crate::src::headers::sqliteInt_h::SQLITE_NOTNULL as crate::src::fts5::U16_0,
                 );
             }
             crate::src::src::insert::sqlite3OpenTable(
@@ -523,7 +518,7 @@ unsafe extern "C" fn fkLookupParent(
                     crate::src::headers::opcodes_h::OP_Copy,
                     crate::src::src::build::sqlite3TableColumnToStorage(
                         (*pFKey).pFrom as *mut crate::src::headers::sqliteInt_h::Table,
-                        *aiCol.offset(i as isize) as crate::src::fts5::i16_0,
+                        *aiCol.offset(i as isize) as crate::src::fts5::I16_0,
                     ) as ::core::ffi::c_int
                         + 1 as ::core::ffi::c_int
                         + regData,
@@ -541,7 +536,7 @@ unsafe extern "C" fn fkLookupParent(
                     let mut iChild: ::core::ffi::c_int =
                         crate::src::src::build::sqlite3TableColumnToStorage(
                             (*pFKey).pFrom as *mut crate::src::headers::sqliteInt_h::Table,
-                            *aiCol.offset(i as isize) as crate::src::fts5::i16_0,
+                            *aiCol.offset(i as isize) as crate::src::fts5::I16_0,
                         ) as ::core::ffi::c_int
                             + 1 as ::core::ffi::c_int
                             + regData;
@@ -566,7 +561,7 @@ unsafe extern "C" fn fkLookupParent(
                     crate::src::src::vdbeaux::sqlite3VdbeChangeP5(
                         v,
                         crate::src::headers::sqliteInt_h::SQLITE_JUMPIFNULL
-                            as crate::src::fts5::u16_0,
+                            as crate::src::fts5::U16_0,
                     );
                     i += 1;
                 }
@@ -602,7 +597,7 @@ unsafe extern "C" fn fkLookupParent(
     if (*pFKey).isDeferred == 0
         && (*__pParse_ref.db).flags
             & crate::src::headers::sqliteInt_h::SQLITE_DeferFKs
-                as crate::src::ext::rtree::rtree::u64_0
+                as crate::src::ext::rtree::rtree::U64_0
             == 0
         && __pParse_ref.pToplevel.is_null()
         && __pParse_ref.isMultiWrite == 0
@@ -612,8 +607,8 @@ unsafe extern "C" fn fkLookupParent(
             crate::src::headers::sqlite3_h::SQLITE_CONSTRAINT_FOREIGNKEY,
             crate::src::headers::sqliteInt_h::OE_Abort,
             ::core::ptr::null_mut::<::core::ffi::c_char>(),
-            crate::src::src::vdbe::P4_STATIC as crate::src::headers::sqliteInt_h::i8_0,
-            crate::src::src::vdbe::P5_ConstraintFK as crate::src::ext::rtree::rtree::u8_0,
+            crate::src::src::vdbe::P4_STATIC as crate::src::headers::sqliteInt_h::I8_0,
+            crate::src::src::vdbe::P5_ConstraintFK as crate::src::ext::rtree::rtree::U8_0,
         );
     } else {
         if nIncr > 0 as ::core::ffi::c_int
@@ -638,7 +633,7 @@ unsafe extern "C" fn exprTableRegister(
     mut pParse: *mut crate::src::headers::sqliteInt_h::Parse,
     mut pTab: *mut crate::src::headers::sqliteInt_h::Table,
     mut regBase: ::core::ffi::c_int,
-    mut iCol: crate::src::fts5::i16_0,
+    mut iCol: crate::src::fts5::I16_0,
 ) -> *mut crate::src::headers::sqliteInt_h::Expr {
     let mut pExpr: *mut crate::src::headers::sqliteInt_h::Expr =
         ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Expr>();
@@ -688,7 +683,7 @@ unsafe extern "C" fn exprTableColumn(
     mut db: *mut crate::src::headers::sqliteInt_h::sqlite3,
     mut pTab: *mut crate::src::headers::sqliteInt_h::Table,
     mut iCursor: ::core::ffi::c_int,
-    mut iCol: crate::src::fts5::i16_0,
+    mut iCol: crate::src::fts5::I16_0,
 ) -> *mut crate::src::headers::sqliteInt_h::Expr {
     let mut pExpr: *mut crate::src::headers::sqliteInt_h::Expr = crate::src::src::expr::sqlite3Expr(
         db as *mut crate::src::headers::sqliteInt_h::sqlite3,
@@ -700,7 +695,7 @@ unsafe extern "C" fn exprTableColumn(
         let __pExpr_ref = unsafe { &mut *pExpr };
         __pExpr_ref.y.pTab = pTab;
         __pExpr_ref.iTable = iCursor;
-        __pExpr_ref.iColumn = iCol as crate::src::headers::sqliteInt_h::ynVar;
+        __pExpr_ref.iColumn = iCol as crate::src::headers::sqliteInt_h::YnVar;
     }
     pExpr
 }
@@ -743,13 +738,13 @@ unsafe extern "C" fn fkScanChildren(
             ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Expr>();
         let mut pEq: *mut crate::src::headers::sqliteInt_h::Expr =
             ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Expr>();
-        let mut iCol: crate::src::fts5::i16_0 = 0;
+        let mut iCol: crate::src::fts5::I16_0 = 0;
         let mut zCol: *const ::core::ffi::c_char = ::core::ptr::null::<::core::ffi::c_char>();
         iCol = (if !pIdx.is_null() {
             *(*pIdx).aiColumn.offset(i as isize) as ::core::ffi::c_int
         } else {
             -(1 as ::core::ffi::c_int)
-        }) as crate::src::fts5::i16_0;
+        }) as crate::src::fts5::I16_0;
         pLeft = exprTableRegister(pParse, pTab, regData, iCol);
         iCol = (if !aiCol.is_null() {
             *aiCol.offset(i as isize)
@@ -757,7 +752,7 @@ unsafe extern "C" fn fkScanChildren(
             (*(&raw mut (*pFKey).aCol as *mut crate::src::headers::sqliteInt_h::sColMap)
                 .offset(0 as isize))
             .iFrom
-        }) as crate::src::fts5::i16_0;
+        }) as crate::src::fts5::I16_0;
         zCol = (*(*(*pFKey).pFrom).aCol.offset(iCol as isize)).zCnName;
         pRight = crate::src::src::expr::sqlite3Expr(
             db as *mut crate::src::headers::sqliteInt_h::sqlite3,
@@ -786,14 +781,14 @@ unsafe extern "C" fn fkScanChildren(
             ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Expr>();
         if (*pTab).tabFlags
             & crate::src::headers::sqliteInt_h::TF_WithoutRowid
-                as crate::src::ext::rtree::rtree::u32_0
-            == 0 as crate::src::ext::rtree::rtree::u32_0
+                as crate::src::ext::rtree::rtree::U32_0
+            == 0 as crate::src::ext::rtree::rtree::U32_0
         {
             pLeft_0 = exprTableRegister(
                 pParse,
                 pTab,
                 regData,
-                -(1 as ::core::ffi::c_int) as crate::src::fts5::i16_0,
+                -(1 as ::core::ffi::c_int) as crate::src::fts5::I16_0,
             );
             pRight_0 = exprTableColumn(
                 db,
@@ -801,7 +796,7 @@ unsafe extern "C" fn fkScanChildren(
                 (*(&raw mut (*pSrc).a as *mut crate::src::headers::sqliteInt_h::SrcItem)
                     .offset(0 as isize))
                 .iCursor,
-                -(1 as ::core::ffi::c_int) as crate::src::fts5::i16_0,
+                -(1 as ::core::ffi::c_int) as crate::src::fts5::I16_0,
             );
             pNe = crate::src::src::expr::sqlite3PExpr(
                 pParse as *mut crate::src::headers::sqliteInt_h::Parse,
@@ -816,7 +811,7 @@ unsafe extern "C" fn fkScanChildren(
                 ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Expr>();
             i = 0 as ::core::ffi::c_int;
             while i < (*pIdx).nKeyCol as ::core::ffi::c_int {
-                let mut iCol_0: crate::src::fts5::i16_0 = *(*pIdx).aiColumn.offset(i as isize);
+                let mut iCol_0: crate::src::fts5::I16_0 = *(*pIdx).aiColumn.offset(i as isize);
                 pLeft_0 = exprTableRegister(pParse, pTab, regData, iCol_0);
                 pRight_0 = crate::src::src::expr::sqlite3Expr(
                     db as *mut crate::src::headers::sqliteInt_h::sqlite3,
@@ -867,7 +862,7 @@ unsafe extern "C" fn fkScanChildren(
                 as *mut crate::src::headers::sqliteInt_h::ExprList,
             ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Select>()
                 as *mut crate::src::headers::sqliteInt_h::Select,
-            0 as crate::src::fts5::u16_0,
+            0 as crate::src::fts5::U16_0,
             0 as ::core::ffi::c_int,
         );
         crate::src::src::vdbeaux::sqlite3VdbeAddOp2(
@@ -969,7 +964,7 @@ pub unsafe extern "C" fn sqlite3FkDropTable(
     let mut db: *mut crate::src::headers::sqliteInt_h::sqlite3 = (*pParse).db;
     if (*db).flags
         & crate::src::headers::sqliteInt_h::SQLITE_ForeignKeys
-            as crate::src::ext::rtree::rtree::u64_0
+            as crate::src::ext::rtree::rtree::U64_0
         != 0
         && (*pTab).eTabType as ::core::ffi::c_int == crate::src::headers::sqliteInt_h::TABTYP_NORM
     {
@@ -986,7 +981,7 @@ pub unsafe extern "C" fn sqlite3FkDropTable(
                 if (*p).isDeferred as ::core::ffi::c_int != 0
                     || (*db).flags
                         & crate::src::headers::sqliteInt_h::SQLITE_DeferFKs
-                            as crate::src::ext::rtree::rtree::u64_0
+                            as crate::src::ext::rtree::rtree::U64_0
                         != 0
                 {
                     break;
@@ -1006,7 +1001,7 @@ pub unsafe extern "C" fn sqlite3FkDropTable(
                 iSkip,
             );
         }
-        (*pParse).disableTriggers = 1 as crate::src::ext::rtree::rtree::u8_0;
+        (*pParse).disableTriggers = 1 as crate::src::ext::rtree::rtree::U8_0;
         crate::src::src::delete::sqlite3DeleteFrom(
             pParse as *mut crate::src::headers::sqliteInt_h::Parse,
             crate::src::src::expr::sqlite3SrcListDup(
@@ -1022,11 +1017,11 @@ pub unsafe extern "C" fn sqlite3FkDropTable(
             ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Expr>()
                 as *mut crate::src::headers::sqliteInt_h::Expr,
         );
-        (*pParse).disableTriggers = 0 as crate::src::ext::rtree::rtree::u8_0;
+        (*pParse).disableTriggers = 0 as crate::src::ext::rtree::rtree::U8_0;
         if (*db).flags
             & crate::src::headers::sqliteInt_h::SQLITE_DeferFKs
-                as crate::src::ext::rtree::rtree::u64_0
-            == 0 as crate::src::ext::rtree::rtree::u64_0
+                as crate::src::ext::rtree::rtree::U64_0
+            == 0 as crate::src::ext::rtree::rtree::U64_0
         {
             crate::src::src::vdbeaux::sqlite3VdbeAddOp2(
                 v,
@@ -1039,8 +1034,8 @@ pub unsafe extern "C" fn sqlite3FkDropTable(
                 crate::src::headers::sqlite3_h::SQLITE_CONSTRAINT_FOREIGNKEY,
                 crate::src::headers::sqliteInt_h::OE_Abort,
                 ::core::ptr::null_mut::<::core::ffi::c_char>(),
-                crate::src::src::vdbe::P4_STATIC as crate::src::headers::sqliteInt_h::i8_0,
-                crate::src::src::vdbe::P5_ConstraintFK as crate::src::ext::rtree::rtree::u8_0,
+                crate::src::src::vdbe::P4_STATIC as crate::src::headers::sqliteInt_h::I8_0,
+                crate::src::src::vdbe::P5_ConstraintFK as crate::src::ext::rtree::rtree::U8_0,
             );
         }
         if iSkip != 0 {
@@ -1157,8 +1152,8 @@ pub unsafe extern "C" fn sqlite3FkCheck(
     let mut isIgnoreErrors: ::core::ffi::c_int = (*pParse).disableTriggers as ::core::ffi::c_int;
     if (*db).flags
         & crate::src::headers::sqliteInt_h::SQLITE_ForeignKeys
-            as crate::src::ext::rtree::rtree::u64_0
-        == 0 as crate::src::ext::rtree::rtree::u64_0
+            as crate::src::ext::rtree::rtree::U64_0
+        == 0 as crate::src::ext::rtree::rtree::U64_0
     {
         return;
     }
@@ -1197,7 +1192,7 @@ pub unsafe extern "C" fn sqlite3FkCheck(
             } else {
                 pTo = crate::src::src::build::sqlite3LocateTable(
                     pParse as *mut crate::src::headers::sqliteInt_h::Parse,
-                    0 as crate::src::ext::rtree::rtree::u32_0,
+                    0 as crate::src::ext::rtree::rtree::U32_0,
                     (*pFKey).zTo,
                     zDb,
                 ) as *mut crate::src::headers::sqliteInt_h::Table;
@@ -1228,7 +1223,7 @@ pub unsafe extern "C" fn sqlite3FkCheck(
                         .iFrom;
                         iReg = crate::src::src::build::sqlite3TableColumnToStorage(
                             __pFKey_ref.pFrom as *mut crate::src::headers::sqliteInt_h::Table,
-                            iFromCol as crate::src::fts5::i16_0,
+                            iFromCol as crate::src::fts5::I16_0,
                         ) as ::core::ffi::c_int
                             + regOld
                             + 1 as ::core::ffi::c_int;
@@ -1287,7 +1282,7 @@ pub unsafe extern "C" fn sqlite3FkCheck(
                     pParse as *mut crate::src::headers::sqliteInt_h::Parse,
                     iDb,
                     (*pTo).tnum,
-                    0 as crate::src::ext::rtree::rtree::u8_0,
+                    0 as crate::src::ext::rtree::rtree::U8_0,
                     (*pTo).zName,
                 );
                 (*pParse).nTab += 1;
@@ -1338,7 +1333,7 @@ pub unsafe extern "C" fn sqlite3FkCheck(
             if !((*pFKey).isDeferred == 0
                 && (*db).flags
                     & crate::src::headers::sqliteInt_h::SQLITE_DeferFKs
-                        as crate::src::ext::rtree::rtree::u64_0
+                        as crate::src::ext::rtree::rtree::U64_0
                     == 0
                 && (*pParse).pToplevel.is_null()
                 && (*pParse).isMultiWrite == 0)
@@ -1432,11 +1427,11 @@ pub unsafe extern "C" fn sqlite3FkCheck(
 pub unsafe extern "C" fn sqlite3FkOldmask(
     mut pParse: *mut crate::src::headers::sqliteInt_h::Parse,
     mut pTab: *mut crate::src::headers::sqliteInt_h::Table,
-) -> crate::src::ext::rtree::rtree::u32_0 {
-    let mut mask: crate::src::ext::rtree::rtree::u32_0 = 0 as crate::src::ext::rtree::rtree::u32_0;
+) -> crate::src::ext::rtree::rtree::U32_0 {
+    let mut mask: crate::src::ext::rtree::rtree::U32_0 = 0 as crate::src::ext::rtree::rtree::U32_0;
     if (*(*pParse).db).flags
         & crate::src::headers::sqliteInt_h::SQLITE_ForeignKeys
-            as crate::src::ext::rtree::rtree::u64_0
+            as crate::src::ext::rtree::rtree::U64_0
         != 0
         && (*pTab).eTabType as ::core::ffi::c_int == crate::src::headers::sqliteInt_h::TABTYP_NORM
     {
@@ -1453,15 +1448,15 @@ pub unsafe extern "C" fn sqlite3FkOldmask(
                     .iFrom
                         > 31 as ::core::ffi::c_int
                     {
-                        0xffffffff as crate::src::ext::rtree::rtree::u32_0
+                        0xffffffff as crate::src::ext::rtree::rtree::U32_0
                     } else {
-                        (1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u32_0)
+                        (1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U32_0)
                             << (*(&raw mut (*p).aCol
                                 as *mut crate::src::headers::sqliteInt_h::sColMap)
                                 .offset(i as isize))
                             .iFrom
                     }) as ::core::ffi::c_uint)
-                    as crate::src::ext::rtree::rtree::u32_0;
+                    as crate::src::ext::rtree::rtree::U32_0;
                 i += 1;
             }
             p = (*p).pNextFrom;
@@ -1484,12 +1479,12 @@ pub unsafe extern "C" fn sqlite3FkOldmask(
                         | (if *(*pIdx).aiColumn.offset(i as isize) as ::core::ffi::c_int
                             > 31 as ::core::ffi::c_int
                         {
-                            0xffffffff as crate::src::ext::rtree::rtree::u32_0
+                            0xffffffff as crate::src::ext::rtree::rtree::U32_0
                         } else {
-                            (1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u32_0)
+                            (1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U32_0)
                                 << *(*pIdx).aiColumn.offset(i as isize) as ::core::ffi::c_int
                         }) as ::core::ffi::c_uint)
-                        as crate::src::ext::rtree::rtree::u32_0;
+                        as crate::src::ext::rtree::rtree::U32_0;
                     i += 1;
                 }
             }
@@ -1510,7 +1505,7 @@ pub unsafe extern "C" fn sqlite3FkRequired(
     let mut bHaveFK: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     if (*(*pParse).db).flags
         & crate::src::headers::sqliteInt_h::SQLITE_ForeignKeys
-            as crate::src::ext::rtree::rtree::u64_0
+            as crate::src::ext::rtree::rtree::U64_0
         != 0
         && (*pTab).eTabType as ::core::ffi::c_int == crate::src::headers::sqliteInt_h::TABTYP_NORM
     {
@@ -1536,7 +1531,7 @@ pub unsafe extern "C" fn sqlite3FkRequired(
             while !p.is_null() {
                 if fkParentIsModified(pTab, p, aChange, chngRowid) != 0 {
                     if (*(*pParse).db).flags & crate::src::headers::sqliteInt_h::SQLITE_FkNoAction
-                        == 0 as crate::src::ext::rtree::rtree::u64_0
+                        == 0 as crate::src::ext::rtree::rtree::U64_0
                         && (*p).aAction[1 as ::core::ffi::c_int as usize] as ::core::ffi::c_int
                             != crate::src::headers::sqliteInt_h::OE_None
                     {
@@ -1575,7 +1570,7 @@ unsafe extern "C" fn fkActionTrigger(
     if action == crate::src::headers::sqliteInt_h::OE_Restrict_1
         && (*db).flags
             & crate::src::headers::sqliteInt_h::SQLITE_DeferFKs
-                as crate::src::ext::rtree::rtree::u64_0
+                as crate::src::ext::rtree::rtree::U64_0
             != 0
     {
         return ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Trigger>();
@@ -1891,14 +1886,14 @@ unsafe extern "C" fn fkActionTrigger(
                     as *mut crate::src::headers::sqliteInt_h::Expr,
                 ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::ExprList>()
                     as *mut crate::src::headers::sqliteInt_h::ExprList,
-                0 as crate::src::ext::rtree::rtree::u32_0,
+                0 as crate::src::ext::rtree::rtree::U32_0,
                 ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Expr>()
                     as *mut crate::src::headers::sqliteInt_h::Expr,
             ) as *mut crate::src::headers::sqliteInt_h::Select;
             pWhere = ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Expr>();
         }
         __db_ref.lookaside.bDisable = __db_ref.lookaside.bDisable.wrapping_add(1);
-        __db_ref.lookaside.sz = 0 as crate::src::fts5::u16_0;
+        __db_ref.lookaside.sz = 0 as crate::src::fts5::U16_0;
         pTrigger = crate::src::src::malloc::sqlite3DbMallocZero(
             db as *mut crate::src::headers::sqliteInt_h::sqlite3,
             (::core::mem::size_of::<crate::src::headers::sqliteInt_h::Trigger>() as usize)
@@ -1907,7 +1902,7 @@ unsafe extern "C" fn fkActionTrigger(
                         as usize,
                 )
                 .wrapping_add(nFrom as usize)
-                .wrapping_add(1 as usize) as crate::src::ext::rtree::rtree::u64_0,
+                .wrapping_add(1 as usize) as crate::src::ext::rtree::rtree::U64_0,
         ) as *mut crate::src::headers::sqliteInt_h::Trigger;
         if !pTrigger.is_null() {
             (*pTrigger).step_list = pTrigger.offset(1 as isize)
@@ -1958,7 +1953,7 @@ unsafe extern "C" fn fkActionTrigger(
             0 as ::core::ffi::c_int
         } else {
             __db_ref.lookaside.szTrue as ::core::ffi::c_int
-        }) as crate::src::fts5::u16_0;
+        }) as crate::src::fts5::U16_0;
         crate::src::src::expr::sqlite3ExprDelete(
             db as *mut crate::src::headers::sqliteInt_h::sqlite3,
             pWhere as *mut crate::src::headers::sqliteInt_h::Expr,
@@ -1982,13 +1977,13 @@ unsafe extern "C" fn fkActionTrigger(
         let mut current_block_96: u64;
         match action {
             crate::src::headers::sqliteInt_h::OE_Restrict_1 => {
-                (*pStep).op = crate::src::parse::TK_SELECT as crate::src::ext::rtree::rtree::u8_0;
+                (*pStep).op = crate::src::parse::TK_SELECT as crate::src::ext::rtree::rtree::U8_0;
                 current_block_96 = 17711149709958600598;
             }
             crate::src::headers::sqliteInt_h::OE_Cascade => {
                 if pChanges.is_null() {
                     (*pStep).op =
-                        crate::src::parse::TK_DELETE as crate::src::ext::rtree::rtree::u8_0;
+                        crate::src::parse::TK_DELETE as crate::src::ext::rtree::rtree::U8_0;
                     current_block_96 = 17711149709958600598;
                 } else {
                     current_block_96 = 16943022006405211372;
@@ -2000,7 +1995,7 @@ unsafe extern "C" fn fkActionTrigger(
         }
         match current_block_96 {
             16943022006405211372 => {
-                (*pStep).op = crate::src::parse::TK_UPDATE as crate::src::ext::rtree::rtree::u8_0;
+                (*pStep).op = crate::src::parse::TK_UPDATE as crate::src::ext::rtree::rtree::U8_0;
             }
             _ => {}
         }
@@ -2012,7 +2007,7 @@ unsafe extern "C" fn fkActionTrigger(
             crate::src::parse::TK_UPDATE
         } else {
             crate::src::parse::TK_DELETE
-        }) as crate::src::ext::rtree::rtree::u8_0;
+        }) as crate::src::ext::rtree::rtree::U8_0;
     }
     pTrigger
 }
@@ -2028,7 +2023,7 @@ pub unsafe extern "C" fn sqlite3FkActions(
 ) {
     if (*(*pParse).db).flags
         & crate::src::headers::sqliteInt_h::SQLITE_ForeignKeys
-            as crate::src::ext::rtree::rtree::u64_0
+            as crate::src::ext::rtree::rtree::U64_0
         != 0
     {
         let mut pFKey: *mut crate::src::headers::sqliteInt_h::FKey =

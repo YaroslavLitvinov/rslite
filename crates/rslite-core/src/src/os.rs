@@ -20,13 +20,13 @@ pub const EXCLUSIVE_LOCK: ::core::ffi::c_int = 4;
 pub const EXCLUSIVE_LOCK_1: ::core::ffi::c_int = 4 as ::core::ffi::c_int;
 
 pub const SHARED_SIZE: ::core::ffi::c_int = 510 as ::core::ffi::c_int;
-pub use crate::__stddef_size_t_h::size_t;
+pub use crate::__stddef_size_t_h::SizeT;
 
 
-pub use crate::src::ext::rtree::rtree::i64_0;
-pub use crate::src::ext::rtree::rtree::u8_0;
-pub use crate::src::ext::rtree::rtree::u32_0;
-pub use crate::src::ext::rtree::rtree::u64_0;
+pub use crate::src::ext::rtree::rtree::I64_0;
+pub use crate::src::ext::rtree::rtree::U8_0;
+pub use crate::src::ext::rtree::rtree::U32_0;
+pub use crate::src::ext::rtree::rtree::U64_0;
 pub use crate::src::headers::sqlite3_h::SQLITE_FCNTL_CKPT_DONE;
 pub use crate::src::headers::sqlite3_h::SQLITE_FCNTL_CKPT_START;
 pub use crate::src::headers::sqlite3_h::SQLITE_FCNTL_COMMIT_PHASETWO;
@@ -37,26 +37,24 @@ pub use crate::src::headers::sqlite3_h::SQLITE_MUTEX_STATIC_MAIN;
 pub use crate::src::headers::sqlite3_h::SQLITE_NOMEM;
 pub use crate::src::headers::sqlite3_h::SQLITE_NOTFOUND;
 pub use crate::src::headers::sqlite3_h::SQLITE_OK;
-pub use crate::src::headers::sqlite3_h::sqlite_int64;
-pub use crate::src::headers::sqlite3_h::sqlite_uint64;
+pub use crate::src::headers::sqlite3_h::SqliteInt64;
+pub use crate::src::headers::sqlite3_h::SqliteUint64;
 pub use crate::src::headers::sqlite3_h::sqlite3_file;
-pub use crate::src::headers::sqlite3_h::sqlite3_filename;
-pub use crate::src::headers::sqlite3_h::sqlite3_int64;
+pub use crate::src::headers::sqlite3_h::Sqlite3Filename;
+pub use crate::src::headers::sqlite3_h::Sqlite3Int64;
 pub use crate::src::headers::sqlite3_h::sqlite3_io_methods;
 pub use crate::src::headers::sqlite3_h::sqlite3_mem_methods;
 pub use crate::src::headers::sqlite3_h::sqlite3_mutex_methods;
-pub use crate::src::headers::sqlite3_h::sqlite3_pcache;
+pub use crate::src::headers::sqlite3_h::Sqlite3Pcache;
 pub use crate::src::headers::sqlite3_h::sqlite3_pcache_methods2;
 pub use crate::src::headers::sqlite3_h::sqlite3_pcache_page;
-pub use crate::src::headers::sqlite3_h::sqlite3_syscall_ptr;
+pub use crate::src::headers::sqlite3_h::Sqlite3SyscallPtr;
 pub use crate::src::headers::sqlite3_h::sqlite3_vfs;
 pub use crate::src::headers::sqliteInt_h::SQLITE_IOERR_NOMEM_BKPT;
 pub use crate::src::headers::sqliteInt_h::SQLITE_NOMEM_BKPT;
 pub use crate::src::headers::sqliteInt_h::Sqlite3Config;
-pub use crate::src::headers::stdlib::__uint8_t;
-pub use crate::src::headers::stdlib::__uint32_t;
-pub use crate::src::headers::stdlib::uint8_t;
-pub use crate::src::headers::stdlib::uint32_t;
+pub use crate::src::headers::stdlib::Uint8T;
+pub use crate::src::headers::stdlib::Uint32T;
 pub use crate::src::src::global::sqlite3Config;
 pub use crate::src::src::main::sqlite3_initialize;
 pub use crate::src::src::malloc::sqlite3_free;
@@ -103,7 +101,7 @@ pub unsafe extern "C" fn sqlite3OsRead(
     mut id: *mut crate::src::headers::sqlite3_h::sqlite3_file,
     mut pBuf: *mut ::core::ffi::c_void,
     mut amt: ::core::ffi::c_int,
-    mut offset: crate::src::ext::rtree::rtree::i64_0,
+    mut offset: crate::src::ext::rtree::rtree::I64_0,
 ) -> ::core::ffi::c_int {
     if sqlite3_memdebug_vfs_oom_test != 0
         && (id.is_null()
@@ -112,7 +110,7 @@ pub unsafe extern "C" fn sqlite3OsRead(
             ) == 0)
     {
         let mut pTstAlloc: *mut ::core::ffi::c_void =
-            crate::src::src::malloc::sqlite3Malloc(10 as crate::src::ext::rtree::rtree::u64_0);
+            crate::src::src::malloc::sqlite3Malloc(10 as crate::src::ext::rtree::rtree::U64_0);
         if pTstAlloc.is_null() {
             return crate::src::headers::sqliteInt_h::SQLITE_IOERR_NOMEM_BKPT;
         }
@@ -122,7 +120,7 @@ pub unsafe extern "C" fn sqlite3OsRead(
         id,
         pBuf,
         amt,
-        offset as crate::src::headers::sqlite3_h::sqlite3_int64,
+        offset as crate::src::headers::sqlite3_h::Sqlite3Int64,
     )
 }
 #[cfg_attr(feature = "test", unsafe(no_mangle))]
@@ -131,7 +129,7 @@ pub unsafe extern "C" fn sqlite3OsWrite(
     mut id: *mut crate::src::headers::sqlite3_h::sqlite3_file,
     mut pBuf: *const ::core::ffi::c_void,
     mut amt: ::core::ffi::c_int,
-    mut offset: crate::src::ext::rtree::rtree::i64_0,
+    mut offset: crate::src::ext::rtree::rtree::I64_0,
 ) -> ::core::ffi::c_int {
     if sqlite3_memdebug_vfs_oom_test != 0
         && (id.is_null()
@@ -140,7 +138,7 @@ pub unsafe extern "C" fn sqlite3OsWrite(
             ) == 0)
     {
         let mut pTstAlloc: *mut ::core::ffi::c_void =
-            crate::src::src::malloc::sqlite3Malloc(10 as crate::src::ext::rtree::rtree::u64_0);
+            crate::src::src::malloc::sqlite3Malloc(10 as crate::src::ext::rtree::rtree::U64_0);
         if pTstAlloc.is_null() {
             return crate::src::headers::sqliteInt_h::SQLITE_IOERR_NOMEM_BKPT;
         }
@@ -150,20 +148,20 @@ pub unsafe extern "C" fn sqlite3OsWrite(
         id,
         pBuf,
         amt,
-        offset as crate::src::headers::sqlite3_h::sqlite3_int64,
+        offset as crate::src::headers::sqlite3_h::Sqlite3Int64,
     )
 }
 #[cfg_attr(feature = "test", unsafe(no_mangle))]
 
 pub unsafe extern "C" fn sqlite3OsTruncate(
     mut id: *mut crate::src::headers::sqlite3_h::sqlite3_file,
-    mut size: crate::src::ext::rtree::rtree::i64_0,
+    mut size: crate::src::ext::rtree::rtree::I64_0,
 ) -> ::core::ffi::c_int {
     (*(*id).pMethods)
         .xTruncate
         .expect("non-null function pointer")(
         id,
-        size as crate::src::headers::sqlite3_h::sqlite3_int64,
+        size as crate::src::headers::sqlite3_h::Sqlite3Int64,
     )
 }
 #[cfg_attr(feature = "test", unsafe(no_mangle))]
@@ -179,7 +177,7 @@ pub unsafe extern "C" fn sqlite3OsSync(
             ) == 0)
     {
         let mut pTstAlloc: *mut ::core::ffi::c_void =
-            crate::src::src::malloc::sqlite3Malloc(10 as crate::src::ext::rtree::rtree::u64_0);
+            crate::src::src::malloc::sqlite3Malloc(10 as crate::src::ext::rtree::rtree::U64_0);
         if pTstAlloc.is_null() {
             return crate::src::headers::sqliteInt_h::SQLITE_IOERR_NOMEM_BKPT;
         }
@@ -195,7 +193,7 @@ pub unsafe extern "C" fn sqlite3OsSync(
 
 pub unsafe extern "C" fn sqlite3OsFileSize(
     mut id: *mut crate::src::headers::sqlite3_h::sqlite3_file,
-    mut pSize: *mut crate::src::ext::rtree::rtree::i64_0,
+    mut pSize: *mut crate::src::ext::rtree::rtree::I64_0,
 ) -> ::core::ffi::c_int {
     if sqlite3_memdebug_vfs_oom_test != 0
         && (id.is_null()
@@ -204,7 +202,7 @@ pub unsafe extern "C" fn sqlite3OsFileSize(
             ) == 0)
     {
         let mut pTstAlloc: *mut ::core::ffi::c_void =
-            crate::src::src::malloc::sqlite3Malloc(10 as crate::src::ext::rtree::rtree::u64_0);
+            crate::src::src::malloc::sqlite3Malloc(10 as crate::src::ext::rtree::rtree::U64_0);
         if pTstAlloc.is_null() {
             return crate::src::headers::sqliteInt_h::SQLITE_IOERR_NOMEM_BKPT;
         }
@@ -214,7 +212,7 @@ pub unsafe extern "C" fn sqlite3OsFileSize(
         .xFileSize
         .expect("non-null function pointer")(
         id,
-        pSize as *mut crate::src::headers::sqlite3_h::sqlite3_int64,
+        pSize as *mut crate::src::headers::sqlite3_h::Sqlite3Int64,
     )
 }
 #[cfg_attr(feature = "test", unsafe(no_mangle))]
@@ -230,7 +228,7 @@ pub unsafe extern "C" fn sqlite3OsLock(
             ) == 0)
     {
         let mut pTstAlloc: *mut ::core::ffi::c_void =
-            crate::src::src::malloc::sqlite3Malloc(10 as crate::src::ext::rtree::rtree::u64_0);
+            crate::src::src::malloc::sqlite3Malloc(10 as crate::src::ext::rtree::rtree::U64_0);
         if pTstAlloc.is_null() {
             return crate::src::headers::sqliteInt_h::SQLITE_IOERR_NOMEM_BKPT;
         }
@@ -261,7 +259,7 @@ pub unsafe extern "C" fn sqlite3OsCheckReservedLock(
             ) == 0)
     {
         let mut pTstAlloc: *mut ::core::ffi::c_void =
-            crate::src::src::malloc::sqlite3Malloc(10 as crate::src::ext::rtree::rtree::u64_0);
+            crate::src::src::malloc::sqlite3Malloc(10 as crate::src::ext::rtree::rtree::U64_0);
         if pTstAlloc.is_null() {
             return crate::src::headers::sqliteInt_h::SQLITE_IOERR_NOMEM_BKPT;
         }
@@ -293,7 +291,7 @@ pub unsafe extern "C" fn sqlite3OsFileControl(
                 ) == 0)
         {
             let mut pTstAlloc: *mut ::core::ffi::c_void =
-                crate::src::src::malloc::sqlite3Malloc(10 as crate::src::ext::rtree::rtree::u64_0);
+                crate::src::src::malloc::sqlite3Malloc(10 as crate::src::ext::rtree::rtree::U64_0);
             if pTstAlloc.is_null() {
                 return crate::src::headers::sqliteInt_h::SQLITE_IOERR_NOMEM_BKPT;
             }
@@ -392,7 +390,7 @@ pub unsafe extern "C" fn sqlite3OsShmMap(
             ) == 0)
     {
         let mut pTstAlloc: *mut ::core::ffi::c_void =
-            crate::src::src::malloc::sqlite3Malloc(10 as crate::src::ext::rtree::rtree::u64_0);
+            crate::src::src::malloc::sqlite3Malloc(10 as crate::src::ext::rtree::rtree::U64_0);
         if pTstAlloc.is_null() {
             return crate::src::headers::sqliteInt_h::SQLITE_IOERR_NOMEM_BKPT;
         }
@@ -406,7 +404,7 @@ pub unsafe extern "C" fn sqlite3OsShmMap(
 
 pub unsafe extern "C" fn sqlite3OsFetch(
     mut id: *mut crate::src::headers::sqlite3_h::sqlite3_file,
-    mut iOff: crate::src::ext::rtree::rtree::i64_0,
+    mut iOff: crate::src::ext::rtree::rtree::I64_0,
     mut iAmt: ::core::ffi::c_int,
     mut pp: *mut *mut ::core::ffi::c_void,
 ) -> ::core::ffi::c_int {
@@ -417,7 +415,7 @@ pub unsafe extern "C" fn sqlite3OsFetch(
             ) == 0)
     {
         let mut pTstAlloc: *mut ::core::ffi::c_void =
-            crate::src::src::malloc::sqlite3Malloc(10 as crate::src::ext::rtree::rtree::u64_0);
+            crate::src::src::malloc::sqlite3Malloc(10 as crate::src::ext::rtree::rtree::U64_0);
         if pTstAlloc.is_null() {
             return crate::src::headers::sqliteInt_h::SQLITE_IOERR_NOMEM_BKPT;
         }
@@ -425,7 +423,7 @@ pub unsafe extern "C" fn sqlite3OsFetch(
     }
     (*(*id).pMethods).xFetch.expect("non-null function pointer")(
         id,
-        iOff as crate::src::headers::sqlite3_h::sqlite3_int64,
+        iOff as crate::src::headers::sqlite3_h::Sqlite3Int64,
         iAmt,
         pp,
     )
@@ -434,14 +432,14 @@ pub unsafe extern "C" fn sqlite3OsFetch(
 
 pub unsafe extern "C" fn sqlite3OsUnfetch(
     mut id: *mut crate::src::headers::sqlite3_h::sqlite3_file,
-    mut iOff: crate::src::ext::rtree::rtree::i64_0,
+    mut iOff: crate::src::ext::rtree::rtree::I64_0,
     mut p: *mut ::core::ffi::c_void,
 ) -> ::core::ffi::c_int {
     (*(*id).pMethods)
         .xUnfetch
         .expect("non-null function pointer")(
         id,
-        iOff as crate::src::headers::sqlite3_h::sqlite3_int64,
+        iOff as crate::src::headers::sqlite3_h::Sqlite3Int64,
         p,
     )
 }
@@ -464,7 +462,7 @@ pub unsafe extern "C" fn sqlite3OsOpen(
                 == 0)
     {
         let mut pTstAlloc: *mut ::core::ffi::c_void =
-            crate::src::src::malloc::sqlite3Malloc(10 as crate::src::ext::rtree::rtree::u64_0);
+            crate::src::src::malloc::sqlite3Malloc(10 as crate::src::ext::rtree::rtree::U64_0);
         if pTstAlloc.is_null() {
             return crate::src::headers::sqliteInt_h::SQLITE_IOERR_NOMEM_BKPT;
         }
@@ -472,7 +470,7 @@ pub unsafe extern "C" fn sqlite3OsOpen(
     }
     rc = (*pVfs).xOpen.expect("non-null function pointer")(
         pVfs,
-        zPath as crate::src::headers::sqlite3_h::sqlite3_filename,
+        zPath as crate::src::headers::sqlite3_h::Sqlite3Filename,
         pFile,
         flags & 0x1087f7f as ::core::ffi::c_int,
         pFlagsOut,
@@ -495,7 +493,7 @@ pub unsafe extern "C" fn sqlite3OsDelete(
                 == 0)
     {
         let mut pTstAlloc: *mut ::core::ffi::c_void =
-            crate::src::src::malloc::sqlite3Malloc(10 as crate::src::ext::rtree::rtree::u64_0);
+            crate::src::src::malloc::sqlite3Malloc(10 as crate::src::ext::rtree::rtree::U64_0);
         if pTstAlloc.is_null() {
             return crate::src::headers::sqliteInt_h::SQLITE_IOERR_NOMEM_BKPT;
         }
@@ -524,7 +522,7 @@ pub unsafe extern "C" fn sqlite3OsAccess(
                 == 0)
     {
         let mut pTstAlloc: *mut ::core::ffi::c_void =
-            crate::src::src::malloc::sqlite3Malloc(10 as crate::src::ext::rtree::rtree::u64_0);
+            crate::src::src::malloc::sqlite3Malloc(10 as crate::src::ext::rtree::rtree::U64_0);
         if pTstAlloc.is_null() {
             return crate::src::headers::sqliteInt_h::SQLITE_IOERR_NOMEM_BKPT;
         }
@@ -549,7 +547,7 @@ pub unsafe extern "C" fn sqlite3OsFullPathname(
                 == 0)
     {
         let mut pTstAlloc: *mut ::core::ffi::c_void =
-            crate::src::src::malloc::sqlite3Malloc(10 as crate::src::ext::rtree::rtree::u64_0);
+            crate::src::src::malloc::sqlite3Malloc(10 as crate::src::ext::rtree::rtree::U64_0);
         if pTstAlloc.is_null() {
             return crate::src::headers::sqliteInt_h::SQLITE_IOERR_NOMEM_BKPT;
         }
@@ -603,7 +601,7 @@ pub unsafe extern "C" fn sqlite3OsRandomness(
         ::libc::memset(
             zBufOut as *mut ::core::ffi::c_void,
             0 as ::core::ffi::c_int,
-            nByte as crate::__stddef_size_t_h::size_t,
+            nByte as crate::__stddef_size_t_h::SizeT,
         );
         if nByte > ::core::mem::size_of::<::core::ffi::c_uint>() as ::core::ffi::c_int {
             nByte = ::core::mem::size_of::<::core::ffi::c_uint>() as ::core::ffi::c_int;
@@ -645,7 +643,7 @@ pub unsafe extern "C" fn sqlite3OsGetLastError(
 
 pub unsafe extern "C" fn sqlite3OsCurrentTimeInt64(
     mut pVfs: *mut crate::src::headers::sqlite3_h::sqlite3_vfs,
-    mut pTimeOut: *mut crate::src::headers::sqlite3_h::sqlite3_int64,
+    mut pTimeOut: *mut crate::src::headers::sqlite3_h::Sqlite3Int64,
 ) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = 0;
     if (*pVfs).iVersion >= 2 as ::core::ffi::c_int && (*pVfs).xCurrentTimeInt64.is_some() {
@@ -655,7 +653,7 @@ pub unsafe extern "C" fn sqlite3OsCurrentTimeInt64(
     } else {
         let mut r: ::core::ffi::c_double = 0.;
         rc = (*pVfs).xCurrentTime.expect("non-null function pointer")(pVfs, &raw mut r);
-        *pTimeOut = (r * 86400000.0f64) as crate::src::headers::sqlite3_h::sqlite3_int64;
+        *pTimeOut = (r * 86400000.0f64) as crate::src::headers::sqlite3_h::Sqlite3Int64;
     }
     rc
 }
@@ -672,7 +670,7 @@ pub unsafe extern "C" fn sqlite3OsOpenMalloc(
     let mut pFile: *mut crate::src::headers::sqlite3_h::sqlite3_file =
         ::core::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_file>();
     pFile = crate::src::src::malloc::sqlite3MallocZero(
-        (*pVfs).szOsFile as crate::src::ext::rtree::rtree::u64_0,
+        (*pVfs).szOsFile as crate::src::ext::rtree::rtree::U64_0,
     ) as *mut crate::src::headers::sqlite3_h::sqlite3_file;
     if !pFile.is_null() {
         rc = sqlite3OsOpen(pVfs, zFile, pFile, flags, pOutFlags);

@@ -1,4 +1,4 @@
-pub use crate::__stddef_size_t_h::size_t;
+pub use crate::__stddef_size_t_h::SizeT;
 
 pub use crate::src::parse::TK_VARIABLE;
 pub use crate::src::src::hash::_ht;
@@ -6,30 +6,30 @@ pub use crate::src::src::hash::Hash;
 pub use crate::src::src::hash::HashElem;
 pub use crate::src::src::pager::Pgno;
 
-pub use crate::src::ext::rtree::rtree::i64_0;
-pub use crate::src::ext::rtree::rtree::u8_0;
-pub use crate::src::ext::rtree::rtree::u32_0;
-pub use crate::src::ext::rtree::rtree::u64_0;
-pub use crate::src::fts5::i16_0;
-pub use crate::src::fts5::u16_0;
+pub use crate::src::ext::rtree::rtree::I64_0;
+pub use crate::src::ext::rtree::rtree::U8_0;
+pub use crate::src::ext::rtree::rtree::U32_0;
+pub use crate::src::ext::rtree::rtree::U64_0;
+pub use crate::src::fts5::I16_0;
+pub use crate::src::fts5::U16_0;
 pub use crate::src::headers::sqlite3_h::SQLITE_LIMIT_LENGTH;
 pub use crate::src::headers::sqlite3_h::SQLITE_NOMEM;
 pub use crate::src::headers::sqlite3_h::SQLITE_STATIC;
 pub use crate::src::headers::sqlite3_h::SQLITE_UTF8;
-pub use crate::src::headers::sqlite3_h::sqlite_int64;
-pub use crate::src::headers::sqlite3_h::sqlite_uint64;
-pub use crate::src::headers::sqlite3_h::sqlite3_destructor_type;
+pub use crate::src::headers::sqlite3_h::SqliteInt64;
+pub use crate::src::headers::sqlite3_h::SqliteUint64;
+pub use crate::src::headers::sqlite3_h::Sqlite3DestructorType;
 pub use crate::src::headers::sqlite3_h::sqlite3_file;
-pub use crate::src::headers::sqlite3_h::sqlite3_filename;
+pub use crate::src::headers::sqlite3_h::Sqlite3Filename;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_constraint;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_constraint_usage;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_info;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_orderby;
-pub use crate::src::headers::sqlite3_h::sqlite3_int64;
+pub use crate::src::headers::sqlite3_h::Sqlite3Int64;
 pub use crate::src::headers::sqlite3_h::sqlite3_io_methods;
 pub use crate::src::headers::sqlite3_h::sqlite3_module;
-pub use crate::src::headers::sqlite3_h::sqlite3_syscall_ptr;
-pub use crate::src::headers::sqlite3_h::sqlite3_uint64;
+pub use crate::src::headers::sqlite3_h::Sqlite3SyscallPtr;
+pub use crate::src::headers::sqlite3_h::Sqlite3Uint64;
 pub use crate::src::headers::sqlite3_h::sqlite3_vfs;
 pub use crate::src::headers::sqlite3_h::sqlite3_vtab;
 pub use crate::src::headers::sqlite3_h::sqlite3_vtab_cursor;
@@ -108,20 +108,20 @@ pub use crate::src::headers::sqliteInt_h::VTable;
 pub use crate::src::headers::sqliteInt_h::VtabCtx;
 pub use crate::src::headers::sqliteInt_h::Window;
 pub use crate::src::headers::sqliteInt_h::With;
-pub use crate::src::headers::sqliteInt_h::bft;
-pub use crate::src::headers::sqliteInt_h::i8_0;
+pub use crate::src::headers::sqliteInt_h::Bft;
+pub use crate::src::headers::sqliteInt_h::I8_0;
 pub use crate::src::headers::sqliteInt_h::sColMap;
 pub use crate::src::headers::sqliteInt_h::sqlite3;
 pub use crate::src::headers::sqliteInt_h::sqlite3_str;
-pub use crate::src::headers::sqliteInt_h::sqlite3_xauth;
+pub use crate::src::headers::sqliteInt_h::Sqlite3Xauth;
 pub use crate::src::headers::sqliteInt_h::sqlite3InitInfo;
-pub use crate::src::headers::sqliteInt_h::yDbMask;
-pub use crate::src::headers::sqliteInt_h::ynVar;
-pub use crate::src::headers::stdlib::int8_t;
-pub use crate::src::headers::stdlib::int16_t;
-pub use crate::src::headers::stdlib::uint8_t;
-pub use crate::src::headers::stdlib::uint16_t;
-pub use crate::src::headers::stdlib::uint32_t;
+pub use crate::src::headers::sqliteInt_h::YDbMask;
+pub use crate::src::headers::sqliteInt_h::YnVar;
+pub use crate::src::headers::stdlib::Int8T;
+pub use crate::src::headers::stdlib::Int16T;
+pub use crate::src::headers::stdlib::Uint8T;
+pub use crate::src::headers::stdlib::Uint16T;
+pub use crate::src::headers::stdlib::Uint32T;
 pub use crate::src::src::mutex_unix::sqlite3_mutex;
 pub use crate::src::src::printf::sqlite3_str_append;
 pub use crate::src::src::printf::sqlite3_str_reset;
@@ -132,11 +132,6 @@ pub use crate::src::src::util::sqlite3GetInt32;
 pub use crate::src::src::util::sqlite3Strlen30;
 pub use crate::src::src::vdbeapi::sqlite3VdbeParameterIndex;
 
-pub use crate::src::headers::stdlib::__int8_t;
-pub use crate::src::headers::stdlib::__int16_t;
-pub use crate::src::headers::stdlib::__uint8_t;
-pub use crate::src::headers::stdlib::__uint16_t;
-pub use crate::src::headers::stdlib::__uint32_t;
 pub use crate::src::headers::vdbeInt_h::__anon_struct_10;
 pub use crate::src::headers::vdbeInt_h::__anon_union_17;
 pub use crate::src::headers::vdbeInt_h::__anon_union_18;
@@ -172,16 +167,16 @@ use crate::printf_args;
 
 unsafe extern "C" fn findNextHostParameter(
     mut zSql: *const ::core::ffi::c_char,
-    mut pnToken: *mut crate::src::ext::rtree::rtree::i64_0,
-) -> crate::src::ext::rtree::rtree::i64_0 {
+    mut pnToken: *mut crate::src::ext::rtree::rtree::I64_0,
+) -> crate::src::ext::rtree::rtree::I64_0 {
     let mut tokenType: ::core::ffi::c_int = 0;
-    let mut nTotal: crate::src::ext::rtree::rtree::i64_0 =
-        0 as crate::src::ext::rtree::rtree::i64_0;
-    let mut n: crate::src::ext::rtree::rtree::i64_0 = 0;
-    *pnToken = 0 as crate::src::ext::rtree::rtree::i64_0;
+    let mut nTotal: crate::src::ext::rtree::rtree::I64_0 =
+        0 as crate::src::ext::rtree::rtree::I64_0;
+    let mut n: crate::src::ext::rtree::rtree::I64_0 = 0;
+    *pnToken = 0 as crate::src::ext::rtree::rtree::I64_0;
     while *zSql.offset(0 as isize) != 0 {
         n = crate::src::src::tokenize::sqlite3GetToken(
-            zSql as *mut crate::src::ext::rtree::rtree::u8_0,
+            zSql as *mut crate::src::ext::rtree::rtree::U8_0,
             &raw mut tokenType,
         );
         if tokenType == crate::src::parse::TK_VARIABLE {
@@ -204,8 +199,8 @@ pub unsafe extern "C" fn sqlite3VdbeExpandSql(
         ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::sqlite3>();
     let mut idx: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut nextIndex: ::core::ffi::c_int = 1 as ::core::ffi::c_int;
-    let mut n: crate::src::ext::rtree::rtree::i64_0 = 0;
-    let mut nToken: crate::src::ext::rtree::rtree::i64_0 = 0;
+    let mut n: crate::src::ext::rtree::rtree::I64_0 = 0;
+    let mut nToken: crate::src::ext::rtree::rtree::I64_0 = 0;
     let mut i: ::core::ffi::c_int = 0;
     let mut pVar: *mut crate::src::src::vdbe::Mem =
         ::core::ptr::null_mut::<crate::src::src::vdbe::Mem>();
@@ -267,11 +262,11 @@ pub unsafe extern "C" fn sqlite3VdbeExpandSql(
                 n as ::core::ffi::c_int,
             );
             zRawSql = zRawSql.offset(n as isize);
-            if nToken == 0 as crate::src::ext::rtree::rtree::i64_0 {
+            if nToken == 0 as crate::src::ext::rtree::rtree::I64_0 {
                 break;
             }
             if *zRawSql.offset(0 as isize) as ::core::ffi::c_int == '?' as i32 {
-                if nToken > 1 as crate::src::ext::rtree::rtree::i64_0 {
+                if nToken > 1 as crate::src::ext::rtree::rtree::I64_0 {
                     crate::src::src::util::sqlite3GetInt32(
                         zRawSql.offset(1 as isize) as *const ::core::ffi::c_char,
                         &raw mut idx,
@@ -322,14 +317,14 @@ pub unsafe extern "C" fn sqlite3VdbeExpandSql(
                 != 0
             {
                 let mut nOut: ::core::ffi::c_int = 0;
-                let mut enc: crate::src::ext::rtree::rtree::u8_0 = (*db).enc;
+                let mut enc: crate::src::ext::rtree::rtree::U8_0 = (*db).enc;
                 if enc as ::core::ffi::c_int != crate::src::headers::sqlite3_h::SQLITE_UTF8 {
                     utf8.db = db;
                     crate::src::src::vdbemem::sqlite3VdbeMemSetStr(
                         &raw mut utf8 as *mut _
                             as *mut crate::src::headers::vdbeInt_h::sqlite3_value,
                         (*pVar).z,
-                        (*pVar).n as crate::src::ext::rtree::rtree::i64_0,
+                        (*pVar).n as crate::src::ext::rtree::rtree::I64_0,
                         enc,
                         crate::src::headers::sqlite3_h::SQLITE_STATIC,
                     );
@@ -341,8 +336,8 @@ pub unsafe extern "C" fn sqlite3VdbeExpandSql(
                         )
                     {
                         out.accError = crate::src::headers::sqlite3_h::SQLITE_NOMEM
-                            as crate::src::ext::rtree::rtree::u8_0;
-                        out.nAlloc = 0 as crate::src::ext::rtree::rtree::u32_0;
+                            as crate::src::ext::rtree::rtree::U8_0;
+                        out.nAlloc = 0 as crate::src::ext::rtree::rtree::U32_0;
                     }
                     pVar = &raw mut utf8;
                 }

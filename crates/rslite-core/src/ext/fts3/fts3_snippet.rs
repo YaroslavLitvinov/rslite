@@ -1,4 +1,4 @@
-pub use crate::__stddef_size_t_h::size_t;
+pub use crate::__stddef_size_t_h::SizeT;
 
 pub use crate::fts3Int_h::FTS_CORRUPT_VTAB;
 pub use crate::fts3Int_h::FTSQUERY_NOT_1;
@@ -33,11 +33,11 @@ pub use crate::src::ext::fts3::fts3_tokenizer::sqlite3_tokenizer_module;
 pub use crate::src::ext::fts3::fts3_write::sqlite3Fts3SegmentsClose;
 pub use crate::src::ext::fts3::fts3_write::sqlite3Fts3SelectDocsize;
 pub use crate::src::ext::fts3::fts3_write::sqlite3Fts3SelectDoctotal;
-pub use crate::src::ext::rtree::rtree::i64_0;
-pub use crate::src::ext::rtree::rtree::u8_0;
-pub use crate::src::ext::rtree::rtree::u32_0;
-pub use crate::src::ext::rtree::rtree::u64_0;
-pub use crate::src::fts5::i16_0;
+pub use crate::src::ext::rtree::rtree::I64_0;
+pub use crate::src::ext::rtree::rtree::U8_0;
+pub use crate::src::ext::rtree::rtree::U32_0;
+pub use crate::src::ext::rtree::rtree::U64_0;
+pub use crate::src::fts5::I16_0;
 pub use crate::src::headers::sqlite3_h::SQLITE_CORRUPT;
 pub use crate::src::headers::sqlite3_h::SQLITE_CORRUPT_VTAB;
 pub use crate::src::headers::sqlite3_h::SQLITE_DONE;
@@ -46,18 +46,18 @@ pub use crate::src::headers::sqlite3_h::SQLITE_NOMEM;
 pub use crate::src::headers::sqlite3_h::SQLITE_NULL;
 pub use crate::src::headers::sqlite3_h::SQLITE_OK;
 pub use crate::src::headers::sqlite3_h::SQLITE_STATIC;
-pub use crate::src::headers::sqlite3_h::sqlite_int64;
-pub use crate::src::headers::sqlite3_h::sqlite_uint64;
-pub use crate::src::headers::sqlite3_h::sqlite3_blob;
-pub use crate::src::headers::sqlite3_h::sqlite3_destructor_type;
+pub use crate::src::headers::sqlite3_h::SqliteInt64;
+pub use crate::src::headers::sqlite3_h::SqliteUint64;
+pub use crate::src::headers::sqlite3_h::Sqlite3Blob;
+pub use crate::src::headers::sqlite3_h::Sqlite3DestructorType;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_constraint;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_constraint_usage;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_info;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_orderby;
-pub use crate::src::headers::sqlite3_h::sqlite3_int64;
+pub use crate::src::headers::sqlite3_h::Sqlite3Int64;
 pub use crate::src::headers::sqlite3_h::sqlite3_module;
-pub use crate::src::headers::sqlite3_h::sqlite3_stmt;
-pub use crate::src::headers::sqlite3_h::sqlite3_uint64;
+pub use crate::src::headers::sqlite3_h::Sqlite3Stmt;
+pub use crate::src::headers::sqlite3_h::Sqlite3Uint64;
 pub use crate::src::headers::sqlite3_h::sqlite3_vtab;
 pub use crate::src::headers::sqlite3_h::sqlite3_vtab_cursor;
 pub use crate::src::headers::sqliteInt_h::sqlite3;
@@ -78,11 +78,11 @@ pub use crate::src::src::vdbeapi::sqlite3_result_text;
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct MatchinfoBuffer {
-    pub aRef: [crate::src::ext::rtree::rtree::u8_0; 3],
+    pub aRef: [crate::src::ext::rtree::rtree::U8_0; 3],
     pub nElem: ::core::ffi::c_int,
     pub bGlobal: ::core::ffi::c_int,
     pub zMatchinfo: *mut ::core::ffi::c_char,
-    pub aMI: [crate::src::ext::rtree::rtree::u32_0; 0],
+    pub aMI: [crate::src::ext::rtree::rtree::U32_0; 0],
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -95,8 +95,8 @@ pub struct StrBuffer {
 #[repr(C)]
 pub struct TermOffset {
     pub pList: *mut ::core::ffi::c_char,
-    pub iPos: crate::src::ext::rtree::rtree::i64_0,
-    pub iOff: crate::src::ext::rtree::rtree::i64_0,
+    pub iPos: crate::src::ext::rtree::rtree::I64_0,
+    pub iOff: crate::src::ext::rtree::rtree::I64_0,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -104,7 +104,7 @@ pub struct TermOffsetCtx {
     pub pCsr: *mut crate::fts3Int_h::Fts3Cursor,
     pub iCol: ::core::ffi::c_int,
     pub iTerm: ::core::ffi::c_int,
-    pub iDocid: crate::src::headers::sqlite3_h::sqlite3_int64,
+    pub iDocid: crate::src::headers::sqlite3_h::Sqlite3Int64,
     pub aTerm: *mut TermOffset,
 }
 #[derive(Copy, Clone)]
@@ -119,17 +119,17 @@ pub struct LoadDoclistCtx {
 pub struct SnippetFragment {
     pub iCol: ::core::ffi::c_int,
     pub iPos: ::core::ffi::c_int,
-    pub covered: crate::src::ext::rtree::rtree::u64_0,
-    pub hlmask: crate::src::ext::rtree::rtree::u64_0,
+    pub covered: crate::src::ext::rtree::rtree::U64_0,
+    pub hlmask: crate::src::ext::rtree::rtree::U64_0,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct SnippetPhrase {
     pub nToken: ::core::ffi::c_int,
     pub pList: *mut ::core::ffi::c_char,
-    pub iHead: crate::src::ext::rtree::rtree::i64_0,
+    pub iHead: crate::src::ext::rtree::rtree::I64_0,
     pub pHead: *mut ::core::ffi::c_char,
-    pub iTail: crate::src::ext::rtree::rtree::i64_0,
+    pub iTail: crate::src::ext::rtree::rtree::I64_0,
     pub pTail: *mut ::core::ffi::c_char,
 }
 #[derive(Copy, Clone)]
@@ -148,9 +148,9 @@ pub struct MatchInfo {
     pub pCursor: *mut crate::fts3Int_h::Fts3Cursor,
     pub nCol: ::core::ffi::c_int,
     pub nPhrase: ::core::ffi::c_int,
-    pub nDoc: crate::src::headers::sqlite3_h::sqlite3_int64,
+    pub nDoc: crate::src::headers::sqlite3_h::Sqlite3Int64,
     pub flag: ::core::ffi::c_char,
-    pub aMatchinfo: *mut crate::src::ext::rtree::rtree::u32_0,
+    pub aMatchinfo: *mut crate::src::ext::rtree::rtree::U32_0,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -183,18 +183,18 @@ pub const FTS3_MATCHINFO_DEFAULT: [::core::ffi::c_char; 4] =
     unsafe { ::core::mem::transmute::<[u8; 4], [::core::ffi::c_char; 4]>(*b"pcx\0") };
 
 unsafe extern "C" fn fts3MIBufferNew(
-    mut nElem: crate::__stddef_size_t_h::size_t,
+    mut nElem: crate::__stddef_size_t_h::SizeT,
     mut zMatchinfo: *const ::core::ffi::c_char,
 ) -> *mut MatchinfoBuffer {
     let mut pRet: *mut MatchinfoBuffer = ::core::ptr::null_mut::<MatchinfoBuffer>();
-    let mut nByte: crate::src::headers::sqlite3_h::sqlite3_int64 = (::core::mem::size_of::<
-        crate::src::ext::rtree::rtree::u32_0,
+    let mut nByte: crate::src::headers::sqlite3_h::Sqlite3Int64 = (::core::mem::size_of::<
+        crate::src::ext::rtree::rtree::U32_0,
     >()
         as ::core::ffi::c_ulonglong)
         .wrapping_mul(
-            (2 as crate::src::headers::sqlite3_h::sqlite3_int64
-                * nElem as crate::src::headers::sqlite3_h::sqlite3_int64
-                + 1 as crate::src::headers::sqlite3_h::sqlite3_int64)
+            (2 as crate::src::headers::sqlite3_h::Sqlite3Int64
+                * nElem as crate::src::headers::sqlite3_h::Sqlite3Int64
+                + 1 as crate::src::headers::sqlite3_h::Sqlite3Int64)
                 as ::core::ffi::c_ulonglong,
         )
         .wrapping_add(
@@ -202,65 +202,65 @@ unsafe extern "C" fn fts3MIBufferNew(
                 (((1 as ::core::ffi::c_int + 1 as ::core::ffi::c_int) / 2 as ::core::ffi::c_int)
                     as usize)
                     .wrapping_mul(
-                        ::core::mem::size_of::<crate::src::ext::rtree::rtree::u64_0>() as usize,
+                        ::core::mem::size_of::<crate::src::ext::rtree::rtree::U64_0>() as usize,
                     ),
             ) as ::core::ffi::c_ulonglong,
         )
-        as crate::src::headers::sqlite3_h::sqlite3_int64;
-    let mut nStr: crate::src::headers::sqlite3_h::sqlite3_int64 =
-        ::libc::strlen(zMatchinfo) as crate::src::headers::sqlite3_h::sqlite3_int64;
+        as crate::src::headers::sqlite3_h::Sqlite3Int64;
+    let mut nStr: crate::src::headers::sqlite3_h::Sqlite3Int64 =
+        ::libc::strlen(zMatchinfo) as crate::src::headers::sqlite3_h::Sqlite3Int64;
     pRet = crate::src::ext::fts3::fts3_expr::sqlite3Fts3MallocZero(
-        nByte as crate::src::ext::rtree::rtree::i64_0
-            + nStr as crate::src::ext::rtree::rtree::i64_0
-            + 1 as crate::src::ext::rtree::rtree::i64_0,
+        nByte as crate::src::ext::rtree::rtree::I64_0
+            + nStr as crate::src::ext::rtree::rtree::I64_0
+            + 1 as crate::src::ext::rtree::rtree::I64_0,
     ) as *mut MatchinfoBuffer;
     if !pRet.is_null() {
         let __pRet_ref = unsafe { &mut *pRet };
-        *(&raw mut __pRet_ref.aMI as *mut crate::src::ext::rtree::rtree::u32_0)
+        *(&raw mut __pRet_ref.aMI as *mut crate::src::ext::rtree::rtree::U32_0)
             .offset(0 as isize) =
-            ((&raw mut __pRet_ref.aMI as *mut crate::src::ext::rtree::rtree::u32_0)
-                .offset(1 as isize) as *mut crate::src::ext::rtree::rtree::u32_0
-                as *mut crate::src::ext::rtree::rtree::u8_0)
-                .offset_from(pRet as *mut crate::src::ext::rtree::rtree::u8_0)
-                as ::core::ffi::c_long as crate::src::ext::rtree::rtree::u32_0;
-        *(&raw mut __pRet_ref.aMI as *mut crate::src::ext::rtree::rtree::u32_0)
-            .offset((1 as crate::__stddef_size_t_h::size_t).wrapping_add(nElem) as isize) =
-            (*(&raw mut __pRet_ref.aMI as *mut crate::src::ext::rtree::rtree::u32_0)
+            ((&raw mut __pRet_ref.aMI as *mut crate::src::ext::rtree::rtree::U32_0)
+                .offset(1 as isize) as *mut crate::src::ext::rtree::rtree::U32_0
+                as *mut crate::src::ext::rtree::rtree::U8_0)
+                .offset_from(pRet as *mut crate::src::ext::rtree::rtree::U8_0)
+                as ::core::ffi::c_long as crate::src::ext::rtree::rtree::U32_0;
+        *(&raw mut __pRet_ref.aMI as *mut crate::src::ext::rtree::rtree::U32_0)
+            .offset((1 as crate::__stddef_size_t_h::SizeT).wrapping_add(nElem) as isize) =
+            (*(&raw mut __pRet_ref.aMI as *mut crate::src::ext::rtree::rtree::U32_0)
                 .offset(0 as isize) as usize)
                 .wrapping_add(
-                    (::core::mem::size_of::<crate::src::ext::rtree::rtree::u32_0>() as usize)
+                    (::core::mem::size_of::<crate::src::ext::rtree::rtree::U32_0>() as usize)
                         .wrapping_mul(
                             (nElem as ::core::ffi::c_int + 1 as ::core::ffi::c_int) as usize,
                         ),
-                ) as crate::src::ext::rtree::rtree::u32_0;
+                ) as crate::src::ext::rtree::rtree::U32_0;
         __pRet_ref.nElem = nElem as ::core::ffi::c_int;
         __pRet_ref.zMatchinfo = (pRet as *mut ::core::ffi::c_char).offset(nByte as isize);
         ::core::ptr::copy_nonoverlapping(
             zMatchinfo as *const u8,
             __pRet_ref.zMatchinfo as *mut u8,
-            (nStr + 1 as crate::src::headers::sqlite3_h::sqlite3_int64) as usize,
+            (nStr + 1 as crate::src::headers::sqlite3_h::Sqlite3Int64) as usize,
         );
         __pRet_ref.aRef[0 as ::core::ffi::c_int as usize] =
-            1 as crate::src::ext::rtree::rtree::u8_0;
+            1 as crate::src::ext::rtree::rtree::U8_0;
     }
     pRet
 }
 
 unsafe extern "C" fn fts3MIBufferFree(mut p: *mut ::core::ffi::c_void) {
-    let mut pBuf: *mut MatchinfoBuffer = (p as *mut crate::src::ext::rtree::rtree::u8_0).offset(
-        -(*(p as *mut crate::src::ext::rtree::rtree::u32_0)
+    let mut pBuf: *mut MatchinfoBuffer = (p as *mut crate::src::ext::rtree::rtree::U8_0).offset(
+        -(*(p as *mut crate::src::ext::rtree::rtree::U32_0)
             .offset(-(1 as ::core::ffi::c_int) as isize) as isize),
     ) as *mut MatchinfoBuffer;
     let __pBuf_ref = unsafe { &mut *pBuf };
-    if p as *mut crate::src::ext::rtree::rtree::u32_0
-        == (&raw mut __pBuf_ref.aMI as *mut crate::src::ext::rtree::rtree::u32_0).offset(1 as isize)
-            as *mut crate::src::ext::rtree::rtree::u32_0
+    if p as *mut crate::src::ext::rtree::rtree::U32_0
+        == (&raw mut __pBuf_ref.aMI as *mut crate::src::ext::rtree::rtree::U32_0).offset(1 as isize)
+            as *mut crate::src::ext::rtree::rtree::U32_0
     {
         __pBuf_ref.aRef[1 as ::core::ffi::c_int as usize] =
-            0 as crate::src::ext::rtree::rtree::u8_0;
+            0 as crate::src::ext::rtree::rtree::U8_0;
     } else {
         __pBuf_ref.aRef[2 as ::core::ffi::c_int as usize] =
-            0 as crate::src::ext::rtree::rtree::u8_0;
+            0 as crate::src::ext::rtree::rtree::U8_0;
     }
     if __pBuf_ref.aRef[0 as ::core::ffi::c_int as usize] as ::core::ffi::c_int
         == 0 as ::core::ffi::c_int
@@ -275,34 +275,34 @@ unsafe extern "C" fn fts3MIBufferFree(mut p: *mut ::core::ffi::c_void) {
 
 unsafe extern "C" fn fts3MIBufferAlloc(
     mut p: *mut MatchinfoBuffer,
-    mut paOut: *mut *mut crate::src::ext::rtree::rtree::u32_0,
+    mut paOut: *mut *mut crate::src::ext::rtree::rtree::U32_0,
 ) -> Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()> {
     let mut xRet: Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()> = None;
-    let mut aOut: *mut crate::src::ext::rtree::rtree::u32_0 =
-        ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u32_0>();
+    let mut aOut: *mut crate::src::ext::rtree::rtree::U32_0 =
+        ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::U32_0>();
     if (*p).aRef[1 as ::core::ffi::c_int as usize] as ::core::ffi::c_int == 0 as ::core::ffi::c_int
     {
-        (*p).aRef[1 as ::core::ffi::c_int as usize] = 1 as crate::src::ext::rtree::rtree::u8_0;
-        aOut = (&raw mut (*p).aMI as *mut crate::src::ext::rtree::rtree::u32_0).offset(1 as isize)
-            as *mut crate::src::ext::rtree::rtree::u32_0;
+        (*p).aRef[1 as ::core::ffi::c_int as usize] = 1 as crate::src::ext::rtree::rtree::U8_0;
+        aOut = (&raw mut (*p).aMI as *mut crate::src::ext::rtree::rtree::U32_0).offset(1 as isize)
+            as *mut crate::src::ext::rtree::rtree::U32_0;
         xRet = Some(fts3MIBufferFree as unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ())
             as Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()>;
     } else if (*p).aRef[2 as ::core::ffi::c_int as usize] as ::core::ffi::c_int
         == 0 as ::core::ffi::c_int
     {
         let __p_ref = unsafe { &mut *p };
-        __p_ref.aRef[2 as ::core::ffi::c_int as usize] = 1 as crate::src::ext::rtree::rtree::u8_0;
-        aOut = (&raw mut __p_ref.aMI as *mut crate::src::ext::rtree::rtree::u32_0)
+        __p_ref.aRef[2 as ::core::ffi::c_int as usize] = 1 as crate::src::ext::rtree::rtree::U8_0;
+        aOut = (&raw mut __p_ref.aMI as *mut crate::src::ext::rtree::rtree::U32_0)
             .offset((__p_ref.nElem + 2 as ::core::ffi::c_int) as isize)
-            as *mut crate::src::ext::rtree::rtree::u32_0;
+            as *mut crate::src::ext::rtree::rtree::U32_0;
         xRet = Some(fts3MIBufferFree as unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ())
             as Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()>;
     } else {
         aOut = crate::src::src::malloc::sqlite3_malloc64(
             ((*p).nElem as usize).wrapping_mul(::core::mem::size_of::<
-                crate::src::ext::rtree::rtree::u32_0,
-            >() as usize) as crate::src::headers::sqlite3_h::sqlite3_uint64,
-        ) as *mut crate::src::ext::rtree::rtree::u32_0;
+                crate::src::ext::rtree::rtree::U32_0,
+            >() as usize) as crate::src::headers::sqlite3_h::Sqlite3Uint64,
+        ) as *mut crate::src::ext::rtree::rtree::U32_0;
         if !aOut.is_null() {
             xRet = Some(
                 crate::src::src::malloc::sqlite3_free
@@ -310,14 +310,14 @@ unsafe extern "C" fn fts3MIBufferAlloc(
             ) as Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()>;
             if (*p).bGlobal != 0 {
                 ::core::ptr::copy_nonoverlapping(
-                    (&raw mut (*p).aMI as *mut crate::src::ext::rtree::rtree::u32_0)
+                    (&raw mut (*p).aMI as *mut crate::src::ext::rtree::rtree::U32_0)
                         .offset(1 as isize)
-                        as *mut crate::src::ext::rtree::rtree::u32_0
+                        as *mut crate::src::ext::rtree::rtree::U32_0
                         as *const u8,
                     aOut as *mut u8,
-                    (((*p).nElem as crate::__stddef_size_t_h::size_t).wrapping_mul(
-                        ::core::mem::size_of::<crate::src::ext::rtree::rtree::u32_0>()
-                            as crate::__stddef_size_t_h::size_t,
+                    (((*p).nElem as crate::__stddef_size_t_h::SizeT).wrapping_mul(
+                        ::core::mem::size_of::<crate::src::ext::rtree::rtree::U32_0>()
+                            as crate::__stddef_size_t_h::SizeT,
                     )) as usize,
                 );
             }
@@ -331,15 +331,15 @@ unsafe extern "C" fn fts3MIBufferSetGlobal(mut p: *mut MatchinfoBuffer) {
     let __p_ref = unsafe { &mut *p };
     __p_ref.bGlobal = 1 as ::core::ffi::c_int;
     ::core::ptr::copy_nonoverlapping(
-        (&raw mut __p_ref.aMI as *mut crate::src::ext::rtree::rtree::u32_0).offset(1 as isize)
-            as *mut crate::src::ext::rtree::rtree::u32_0 as *const u8,
-        (&raw mut __p_ref.aMI as *mut crate::src::ext::rtree::rtree::u32_0)
+        (&raw mut __p_ref.aMI as *mut crate::src::ext::rtree::rtree::U32_0).offset(1 as isize)
+            as *mut crate::src::ext::rtree::rtree::U32_0 as *const u8,
+        (&raw mut __p_ref.aMI as *mut crate::src::ext::rtree::rtree::U32_0)
             .offset((2 as ::core::ffi::c_int + __p_ref.nElem) as isize)
-            as *mut crate::src::ext::rtree::rtree::u32_0 as *mut u8,
-        ((__p_ref.nElem as crate::__stddef_size_t_h::size_t).wrapping_mul(::core::mem::size_of::<
-            crate::src::ext::rtree::rtree::u32_0,
+            as *mut crate::src::ext::rtree::rtree::U32_0 as *mut u8,
+        ((__p_ref.nElem as crate::__stddef_size_t_h::SizeT).wrapping_mul(::core::mem::size_of::<
+            crate::src::ext::rtree::rtree::U32_0,
         >()
-            as crate::__stddef_size_t_h::size_t)) as usize,
+            as crate::__stddef_size_t_h::SizeT)) as usize,
     );
 }
 
@@ -347,7 +347,7 @@ unsafe extern "C" fn fts3MIBufferSetGlobal(mut p: *mut MatchinfoBuffer) {
 pub unsafe extern "C" fn sqlite3Fts3MIBufferFree(mut p: *mut MatchinfoBuffer) {
     if !p.is_null() {
         let __p_ref = unsafe { &mut *p };
-        __p_ref.aRef[0 as ::core::ffi::c_int as usize] = 0 as crate::src::ext::rtree::rtree::u8_0;
+        __p_ref.aRef[0 as ::core::ffi::c_int as usize] = 0 as crate::src::ext::rtree::rtree::U8_0;
         if __p_ref.aRef[0 as ::core::ffi::c_int as usize] as ::core::ffi::c_int
             == 0 as ::core::ffi::c_int
             && __p_ref.aRef[1 as ::core::ffi::c_int as usize] as ::core::ffi::c_int
@@ -362,21 +362,21 @@ pub unsafe extern "C" fn sqlite3Fts3MIBufferFree(mut p: *mut MatchinfoBuffer) {
 
 unsafe extern "C" fn fts3GetDeltaPosition(
     mut pp: *mut *mut ::core::ffi::c_char,
-    mut piPos: *mut crate::src::ext::rtree::rtree::i64_0,
+    mut piPos: *mut crate::src::ext::rtree::rtree::I64_0,
 ) {
     let mut iVal: ::core::ffi::c_int = 0;
     *pp = (*pp).offset(
-        (if *(*pp as *mut crate::src::ext::rtree::rtree::u8_0) as ::core::ffi::c_int
+        (if *(*pp as *mut crate::src::ext::rtree::rtree::U8_0) as ::core::ffi::c_int
             & 0x80 as ::core::ffi::c_int
             != 0
         {
             crate::src::ext::fts3::fts3::sqlite3Fts3GetVarint32(*pp, &raw mut iVal)
         } else {
-            iVal = *(*pp as *mut crate::src::ext::rtree::rtree::u8_0) as ::core::ffi::c_int;
+            iVal = *(*pp as *mut crate::src::ext::rtree::rtree::U8_0) as ::core::ffi::c_int;
             1 as ::core::ffi::c_int
         }) as isize,
     );
-    *piPos += (iVal - 2 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::i64_0;
+    *piPos += (iVal - 2 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::I64_0;
 }
 
 unsafe extern "C" fn fts3ExprIterate2(
@@ -497,16 +497,16 @@ unsafe extern "C" fn fts3ExprPhraseCount(
 
 unsafe extern "C" fn fts3SnippetAdvance(
     mut ppIter: *mut *mut ::core::ffi::c_char,
-    mut piIter: *mut crate::src::ext::rtree::rtree::i64_0,
+    mut piIter: *mut crate::src::ext::rtree::rtree::I64_0,
     mut iNext: ::core::ffi::c_int,
 ) {
     let mut pIter: *mut ::core::ffi::c_char = *ppIter;
     if !pIter.is_null() {
-        let mut iIter: crate::src::ext::rtree::rtree::i64_0 = *piIter;
-        while iIter < iNext as crate::src::ext::rtree::rtree::i64_0 {
+        let mut iIter: crate::src::ext::rtree::rtree::I64_0 = *piIter;
+        while iIter < iNext as crate::src::ext::rtree::rtree::I64_0 {
             if 0 as ::core::ffi::c_int == *pIter as ::core::ffi::c_int & 0xfe as ::core::ffi::c_int
             {
-                iIter = -(1 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::i64_0;
+                iIter = -(1 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::I64_0;
                 pIter = ::core::ptr::null_mut::<::core::ffi::c_char>();
                 break;
             } else {
@@ -542,7 +542,7 @@ unsafe extern "C" fn fts3SnippetNextCandidate(mut pIter: *mut SnippetIter) -> ::
             let pPhrase_0 = &*(__pIter_ref.aPhrase.offset(i as isize) as *mut SnippetPhrase);
 
             if !pPhrase_0.pHead.is_null()
-                && pPhrase_0.iHead < iEnd as crate::src::ext::rtree::rtree::i64_0
+                && pPhrase_0.iHead < iEnd as crate::src::ext::rtree::rtree::I64_0
             {
                 iEnd = pPhrase_0.iHead as ::core::ffi::c_int;
             }
@@ -576,36 +576,36 @@ unsafe extern "C" fn fts3SnippetNextCandidate(mut pIter: *mut SnippetIter) -> ::
 
 unsafe extern "C" fn fts3SnippetDetails(
     mut pIter: *mut SnippetIter,
-    mut mCovered: crate::src::ext::rtree::rtree::u64_0,
+    mut mCovered: crate::src::ext::rtree::rtree::U64_0,
     mut piToken: *mut ::core::ffi::c_int,
     mut piScore: *mut ::core::ffi::c_int,
-    mut pmCover: *mut crate::src::ext::rtree::rtree::u64_0,
-    mut pmHighlight: *mut crate::src::ext::rtree::rtree::u64_0,
+    mut pmCover: *mut crate::src::ext::rtree::rtree::U64_0,
+    mut pmHighlight: *mut crate::src::ext::rtree::rtree::U64_0,
 ) {
     let mut iStart: ::core::ffi::c_int = (*pIter).iCurrent;
     let mut iScore: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let mut i: ::core::ffi::c_int = 0;
-    let mut mCover: crate::src::ext::rtree::rtree::u64_0 =
-        0 as crate::src::ext::rtree::rtree::u64_0;
-    let mut mHighlight: crate::src::ext::rtree::rtree::u64_0 =
-        0 as crate::src::ext::rtree::rtree::u64_0;
+    let mut mCover: crate::src::ext::rtree::rtree::U64_0 =
+        0 as crate::src::ext::rtree::rtree::U64_0;
+    let mut mHighlight: crate::src::ext::rtree::rtree::U64_0 =
+        0 as crate::src::ext::rtree::rtree::U64_0;
     i = 0 as ::core::ffi::c_int;
     while i < (*pIter).nPhrase {
         let mut pPhrase: *mut SnippetPhrase =
             (*pIter).aPhrase.offset(i as isize) as *mut SnippetPhrase;
         if !(*pPhrase).pTail.is_null() {
             let mut pCsr: *mut ::core::ffi::c_char = (*pPhrase).pTail;
-            let mut iCsr: crate::src::ext::rtree::rtree::i64_0 = (*pPhrase).iTail;
-            while iCsr < (iStart + (*pIter).nSnippet) as crate::src::ext::rtree::rtree::i64_0
-                && iCsr >= iStart as crate::src::ext::rtree::rtree::i64_0
+            let mut iCsr: crate::src::ext::rtree::rtree::I64_0 = (*pPhrase).iTail;
+            while iCsr < (iStart + (*pIter).nSnippet) as crate::src::ext::rtree::rtree::I64_0
+                && iCsr >= iStart as crate::src::ext::rtree::rtree::I64_0
             {
                 let mut j: ::core::ffi::c_int = 0;
-                let mut mPhrase: crate::src::ext::rtree::rtree::u64_0 = (1 as ::core::ffi::c_int
-                    as crate::src::ext::rtree::rtree::u64_0)
+                let mut mPhrase: crate::src::ext::rtree::rtree::U64_0 = (1 as ::core::ffi::c_int
+                    as crate::src::ext::rtree::rtree::U64_0)
                     << i % 64 as ::core::ffi::c_int;
-                let mut mPos: crate::src::ext::rtree::rtree::u64_0 = (1 as ::core::ffi::c_int
-                    as crate::src::ext::rtree::rtree::u64_0)
-                    << iCsr - iStart as crate::src::ext::rtree::rtree::i64_0;
+                let mut mPos: crate::src::ext::rtree::rtree::U64_0 = (1 as ::core::ffi::c_int
+                    as crate::src::ext::rtree::rtree::U64_0)
+                    << iCsr - iStart as crate::src::ext::rtree::rtree::I64_0;
                 if (mCover | mCovered) & mPhrase != 0 {
                     iScore += 1;
                 } else {
@@ -652,11 +652,11 @@ unsafe extern "C" fn fts3SnippetFindPositions(
         &raw mut pCsr,
     );
     if !pCsr.is_null() {
-        let mut iFirst: crate::src::ext::rtree::rtree::i64_0 =
-            0 as crate::src::ext::rtree::rtree::i64_0;
+        let mut iFirst: crate::src::ext::rtree::rtree::I64_0 =
+            0 as crate::src::ext::rtree::rtree::I64_0;
         (*pPhrase).pList = pCsr;
         fts3GetDeltaPosition(&raw mut pCsr, &raw mut iFirst);
-        if iFirst < 0 as crate::src::ext::rtree::rtree::i64_0 {
+        if iFirst < 0 as crate::src::ext::rtree::rtree::I64_0 {
             rc = crate::fts3Int_h::FTS_CORRUPT_VTAB;
         } else {
             let __pPhrase_ref = unsafe { &mut *pPhrase };
@@ -673,15 +673,15 @@ unsafe extern "C" fn fts3BestSnippet(
     mut nSnippet: ::core::ffi::c_int,
     mut pCsr: *mut crate::fts3Int_h::Fts3Cursor,
     mut iCol: ::core::ffi::c_int,
-    mut mCovered: crate::src::ext::rtree::rtree::u64_0,
-    mut pmSeen: *mut crate::src::ext::rtree::rtree::u64_0,
+    mut mCovered: crate::src::ext::rtree::rtree::U64_0,
+    mut pmSeen: *mut crate::src::ext::rtree::rtree::U64_0,
     mut pFragment: *mut SnippetFragment,
     mut piScore: *mut ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = 0;
     let mut nList: ::core::ffi::c_int = 0;
     let mut sIter: SnippetIter = unsafe { ::core::mem::zeroed() };
-    let mut nByte: crate::src::headers::sqlite3_h::sqlite3_int64 = 0;
+    let mut nByte: crate::src::headers::sqlite3_h::Sqlite3Int64 = 0;
     let mut iBestScore: ::core::ffi::c_int = -(1 as ::core::ffi::c_int);
     let mut i: ::core::ffi::c_int = 0;
     rc = fts3ExprLoadDoclists(
@@ -693,9 +693,9 @@ unsafe extern "C" fn fts3BestSnippet(
         return rc;
     }
     nByte = (::core::mem::size_of::<SnippetPhrase>() as usize).wrapping_mul(nList as usize)
-        as crate::src::headers::sqlite3_h::sqlite3_int64;
+        as crate::src::headers::sqlite3_h::Sqlite3Int64;
     sIter.aPhrase = crate::src::ext::fts3::fts3_expr::sqlite3Fts3MallocZero(
-        nByte as crate::src::ext::rtree::rtree::i64_0,
+        nByte as crate::src::ext::rtree::rtree::I64_0,
     ) as *mut SnippetPhrase;
     if sIter.aPhrase.is_null() {
         return crate::src::headers::sqlite3_h::SQLITE_NOMEM;
@@ -721,7 +721,7 @@ unsafe extern "C" fn fts3BestSnippet(
         i = 0 as ::core::ffi::c_int;
         while i < nList {
             if !(*sIter.aPhrase.offset(i as isize)).pHead.is_null() {
-                *pmSeen |= (1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u64_0)
+                *pmSeen |= (1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U64_0)
                     << i % 64 as ::core::ffi::c_int;
             }
             i += 1;
@@ -730,8 +730,8 @@ unsafe extern "C" fn fts3BestSnippet(
         while fts3SnippetNextCandidate(&raw mut sIter) == 0 {
             let mut iPos: ::core::ffi::c_int = 0;
             let mut iScore: ::core::ffi::c_int = 0;
-            let mut mCover: crate::src::ext::rtree::rtree::u64_0 = 0;
-            let mut mHighlite: crate::src::ext::rtree::rtree::u64_0 = 0;
+            let mut mCover: crate::src::ext::rtree::rtree::U64_0 = 0;
+            let mut mHighlite: crate::src::ext::rtree::rtree::U64_0 = 0;
             fts3SnippetDetails(
                 &raw mut sIter,
                 mCovered,
@@ -764,13 +764,13 @@ unsafe extern "C" fn fts3StringAppend(
     }
     let __pStr_ref = unsafe { &mut *pStr };
     if __pStr_ref.n + nAppend + 1 as ::core::ffi::c_int >= __pStr_ref.nAlloc {
-        let mut nAlloc: crate::src::headers::sqlite3_h::sqlite3_int64 = __pStr_ref.nAlloc
-            as crate::src::headers::sqlite3_h::sqlite3_int64
-            + nAppend as crate::src::headers::sqlite3_h::sqlite3_int64
-            + 100 as crate::src::headers::sqlite3_h::sqlite3_int64;
+        let mut nAlloc: crate::src::headers::sqlite3_h::Sqlite3Int64 = __pStr_ref.nAlloc
+            as crate::src::headers::sqlite3_h::Sqlite3Int64
+            + nAppend as crate::src::headers::sqlite3_h::Sqlite3Int64
+            + 100 as crate::src::headers::sqlite3_h::Sqlite3Int64;
         let mut zNew: *mut ::core::ffi::c_char = crate::src::src::malloc::sqlite3_realloc64(
             __pStr_ref.z as *mut ::core::ffi::c_void,
-            nAlloc as crate::src::headers::sqlite3_h::sqlite3_uint64,
+            nAlloc as crate::src::headers::sqlite3_h::Sqlite3Uint64,
         ) as *mut ::core::ffi::c_char;
         if zNew.is_null() {
             return crate::src::headers::sqlite3_h::SQLITE_NOMEM;
@@ -795,22 +795,22 @@ unsafe extern "C" fn fts3SnippetShift(
     mut zDoc: *const ::core::ffi::c_char,
     mut nDoc: ::core::ffi::c_int,
     mut piPos: *mut ::core::ffi::c_int,
-    mut pHlmask: *mut crate::src::ext::rtree::rtree::u64_0,
+    mut pHlmask: *mut crate::src::ext::rtree::rtree::U64_0,
 ) -> ::core::ffi::c_int {
-    let mut hlmask: crate::src::ext::rtree::rtree::u64_0 = *pHlmask;
+    let mut hlmask: crate::src::ext::rtree::rtree::U64_0 = *pHlmask;
     if hlmask != 0 {
         let mut nLeft: ::core::ffi::c_int = 0;
         let mut nRight: ::core::ffi::c_int = 0;
         let mut nDesired: ::core::ffi::c_int = 0;
         nLeft = 0 as ::core::ffi::c_int;
-        while hlmask & (1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u64_0) << nLeft
+        while hlmask & (1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U64_0) << nLeft
             == 0
         {
             nLeft += 1;
         }
         nRight = 0 as ::core::ffi::c_int;
         while hlmask
-            & (1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u64_0)
+            & (1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U64_0)
                 << nSnippet - 1 as ::core::ffi::c_int - nRight
             == 0
         {
@@ -898,7 +898,7 @@ unsafe extern "C" fn fts3SnippetText(
     let mut isShiftDone: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     let __pFragment_ref = unsafe { &*pFragment };
     let mut iPos: ::core::ffi::c_int = __pFragment_ref.iPos;
-    let mut hlmask: crate::src::ext::rtree::rtree::u64_0 = __pFragment_ref.hlmask;
+    let mut hlmask: crate::src::ext::rtree::rtree::U64_0 = __pFragment_ref.hlmask;
     let mut iCol: ::core::ffi::c_int = __pFragment_ref.iCol + 1 as ::core::ffi::c_int;
     let mut pMod: *mut crate::src::ext::fts3::fts3_tokenizer::sqlite3_tokenizer_module =
         ::core::ptr::null_mut::<crate::src::ext::fts3::fts3_tokenizer::sqlite3_tokenizer_module>();
@@ -985,9 +985,9 @@ unsafe extern "C" fn fts3SnippetText(
                 break;
             } else {
                 isHighlight = (hlmask
-                    & (1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u64_0)
+                    & (1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U64_0)
                         << iCurrent - iPos
-                    != 0 as crate::src::ext::rtree::rtree::u64_0)
+                    != 0 as crate::src::ext::rtree::rtree::U64_0)
                     as ::core::ffi::c_int;
                 if iCurrent > iPos {
                     rc = fts3StringAppend(
@@ -1058,13 +1058,13 @@ unsafe extern "C" fn fts3ExprLHits(
             if (*pPhrase).iColumn >= (*pTab).nColumn || (*pPhrase).iColumn == iCol {
                 if (*p).flag as ::core::ffi::c_int == FTS3_MATCHINFO_LHITS {
                     *(*p).aMatchinfo.offset((iStart + iCol) as isize) =
-                        nHit as crate::src::ext::rtree::rtree::u32_0;
+                        nHit as crate::src::ext::rtree::rtree::U32_0;
                 } else if nHit != 0 {
                     *(*p).aMatchinfo.offset(
                         (iStart + (iCol + 1 as ::core::ffi::c_int) / 32 as ::core::ffi::c_int)
                             as isize,
                     ) |= ((1 as ::core::ffi::c_int) << (iCol & 0x1f as ::core::ffi::c_int))
-                        as crate::src::ext::rtree::rtree::u32_0;
+                        as crate::src::ext::rtree::rtree::U32_0;
                 }
             }
             if *pIter as ::core::ffi::c_int != 0x1 as ::core::ffi::c_int {
@@ -1072,14 +1072,14 @@ unsafe extern "C" fn fts3ExprLHits(
             }
             pIter = pIter.offset(1);
             pIter = pIter.offset(
-                (if *(pIter as *mut crate::src::ext::rtree::rtree::u8_0) as ::core::ffi::c_int
+                (if *(pIter as *mut crate::src::ext::rtree::rtree::U8_0) as ::core::ffi::c_int
                     & 0x80 as ::core::ffi::c_int
                     != 0
                 {
                     crate::src::ext::fts3::fts3::sqlite3Fts3GetVarint32(pIter, &raw mut iCol)
                 } else {
                     iCol =
-                        *(pIter as *mut crate::src::ext::rtree::rtree::u8_0) as ::core::ffi::c_int;
+                        *(pIter as *mut crate::src::ext::rtree::rtree::U8_0) as ::core::ffi::c_int;
                     1 as ::core::ffi::c_int
                 }) as isize,
             );
@@ -1124,7 +1124,7 @@ unsafe extern "C" fn fts3ExprGlobalHitsCb(
         __p_ref
             .aMatchinfo
             .offset((3 as ::core::ffi::c_int * iPhrase * __p_ref.nCol) as isize)
-            as *mut crate::src::ext::rtree::rtree::u32_0,
+            as *mut crate::src::ext::rtree::rtree::U32_0,
     )
 }
 
@@ -1150,12 +1150,12 @@ unsafe extern "C" fn fts3ExprLocalHitsCb(
             *(*p)
                 .aMatchinfo
                 .offset((iStart + i * 3 as ::core::ffi::c_int) as isize) =
-                fts3ColumnlistCount(&raw mut pCsr) as crate::src::ext::rtree::rtree::u32_0;
+                fts3ColumnlistCount(&raw mut pCsr) as crate::src::ext::rtree::rtree::U32_0;
         } else {
             *(*p)
                 .aMatchinfo
                 .offset((iStart + i * 3 as ::core::ffi::c_int) as isize) =
-                0 as crate::src::ext::rtree::rtree::u32_0;
+                0 as crate::src::ext::rtree::rtree::U32_0;
         }
         i += 1;
     }
@@ -1194,29 +1194,29 @@ unsafe extern "C" fn fts3MatchinfoCheck(
 unsafe extern "C" fn fts3MatchinfoSize(
     mut pInfo: *mut MatchInfo,
     mut cArg: ::core::ffi::c_char,
-) -> crate::__stddef_size_t_h::size_t {
-    let mut nVal: crate::__stddef_size_t_h::size_t = 0;
+) -> crate::__stddef_size_t_h::SizeT {
+    let mut nVal: crate::__stddef_size_t_h::SizeT = 0;
     match cArg as ::core::ffi::c_int {
         FTS3_MATCHINFO_NDOC | FTS3_MATCHINFO_NPHRASE | FTS3_MATCHINFO_NCOL => {
-            nVal = 1 as crate::__stddef_size_t_h::size_t;
+            nVal = 1 as crate::__stddef_size_t_h::SizeT;
         }
         FTS3_MATCHINFO_AVGLENGTH | FTS3_MATCHINFO_LENGTH | FTS3_MATCHINFO_LCS => {
-            nVal = (*pInfo).nCol as crate::__stddef_size_t_h::size_t;
+            nVal = (*pInfo).nCol as crate::__stddef_size_t_h::SizeT;
         }
         FTS3_MATCHINFO_LHITS => {
-            nVal = ((*pInfo).nCol as crate::__stddef_size_t_h::size_t)
-                .wrapping_mul((*pInfo).nPhrase as crate::__stddef_size_t_h::size_t);
+            nVal = ((*pInfo).nCol as crate::__stddef_size_t_h::SizeT)
+                .wrapping_mul((*pInfo).nPhrase as crate::__stddef_size_t_h::SizeT);
         }
         FTS3_MATCHINFO_LHITS_BM => {
-            nVal = ((*pInfo).nPhrase as crate::__stddef_size_t_h::size_t).wrapping_mul(
+            nVal = ((*pInfo).nPhrase as crate::__stddef_size_t_h::SizeT).wrapping_mul(
                 (((*pInfo).nCol + 31 as ::core::ffi::c_int) / 32 as ::core::ffi::c_int)
-                    as crate::__stddef_size_t_h::size_t,
+                    as crate::__stddef_size_t_h::SizeT,
             );
         }
         _ => {
-            nVal = ((*pInfo).nCol as crate::__stddef_size_t_h::size_t)
-                .wrapping_mul((*pInfo).nPhrase as crate::__stddef_size_t_h::size_t)
-                .wrapping_mul(3 as crate::__stddef_size_t_h::size_t);
+            nVal = ((*pInfo).nCol as crate::__stddef_size_t_h::SizeT)
+                .wrapping_mul((*pInfo).nPhrase as crate::__stddef_size_t_h::SizeT)
+                .wrapping_mul(3 as crate::__stddef_size_t_h::SizeT);
         }
     }
     nVal
@@ -1224,16 +1224,16 @@ unsafe extern "C" fn fts3MatchinfoSize(
 
 unsafe extern "C" fn fts3MatchinfoSelectDoctotal(
     mut pTab: *mut crate::fts3Int_h::Fts3Table,
-    mut ppStmt: *mut *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
-    mut pnDoc: *mut crate::src::headers::sqlite3_h::sqlite3_int64,
+    mut ppStmt: *mut *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
+    mut pnDoc: *mut crate::src::headers::sqlite3_h::Sqlite3Int64,
     mut paLen: *mut *const ::core::ffi::c_char,
     mut ppEnd: *mut *const ::core::ffi::c_char,
 ) -> ::core::ffi::c_int {
-    let mut pStmt: *mut crate::src::headers::sqlite3_h::sqlite3_stmt =
-        ::core::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_stmt>();
+    let mut pStmt: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt =
+        ::core::ptr::null_mut::<crate::src::headers::sqlite3_h::Sqlite3Stmt>();
     let mut a: *const ::core::ffi::c_char = ::core::ptr::null::<::core::ffi::c_char>();
     let mut pEnd: *const ::core::ffi::c_char = ::core::ptr::null::<::core::ffi::c_char>();
-    let mut nDoc: crate::src::headers::sqlite3_h::sqlite3_int64 = 0;
+    let mut nDoc: crate::src::headers::sqlite3_h::Sqlite3Int64 = 0;
     let mut n: ::core::ffi::c_int = 0;
     if (*ppStmt).is_null() {
         let mut rc: ::core::ffi::c_int =
@@ -1256,7 +1256,7 @@ unsafe extern "C" fn fts3MatchinfoSelectDoctotal(
     a = a.offset(
         crate::src::ext::fts3::fts3::sqlite3Fts3GetVarintBounded(a, pEnd, &raw mut nDoc) as isize,
     );
-    if nDoc <= 0 as crate::src::headers::sqlite3_h::sqlite3_int64 || a > pEnd {
+    if nDoc <= 0 as crate::src::headers::sqlite3_h::Sqlite3Int64 || a > pEnd {
         return crate::fts3Int_h::FTS_CORRUPT_VTAB;
     }
     *pnDoc = nDoc;
@@ -1282,7 +1282,7 @@ unsafe extern "C" fn fts3MatchinfoLcsCb(
 
 unsafe extern "C" fn fts3LcsIteratorAdvance(mut pIter: *mut LcsIterator) -> ::core::ffi::c_int {
     let mut pRead: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
-    let mut iRead: crate::src::headers::sqlite3_h::sqlite3_int64 = 0;
+    let mut iRead: crate::src::headers::sqlite3_h::Sqlite3Int64 = 0;
     let mut rc: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     if pIter.is_null() {
         return 1 as ::core::ffi::c_int;
@@ -1290,14 +1290,14 @@ unsafe extern "C" fn fts3LcsIteratorAdvance(mut pIter: *mut LcsIterator) -> ::co
     pRead = (*pIter).pRead;
     pRead = pRead
         .offset(crate::src::ext::fts3::fts3::sqlite3Fts3GetVarint(pRead, &raw mut iRead) as isize);
-    if iRead == 0 as crate::src::headers::sqlite3_h::sqlite3_int64
-        || iRead == 1 as crate::src::headers::sqlite3_h::sqlite3_int64
+    if iRead == 0 as crate::src::headers::sqlite3_h::Sqlite3Int64
+        || iRead == 1 as crate::src::headers::sqlite3_h::Sqlite3Int64
     {
         pRead = ::core::ptr::null_mut::<::core::ffi::c_char>();
         rc = 1 as ::core::ffi::c_int;
     } else {
         (*pIter).iPos +=
-            (iRead - 2 as crate::src::headers::sqlite3_h::sqlite3_int64) as ::core::ffi::c_int;
+            (iRead - 2 as crate::src::headers::sqlite3_h::Sqlite3Int64) as ::core::ffi::c_int;
     }
     (*pIter).pRead = pRead;
     rc
@@ -1314,7 +1314,7 @@ unsafe extern "C" fn fts3MatchinfoLcs(
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
     aIter = crate::src::ext::fts3::fts3_expr::sqlite3Fts3MallocZero(
         (::core::mem::size_of::<LcsIterator>() as usize).wrapping_mul((*pCsr).nPhrase as usize)
-            as crate::src::ext::rtree::rtree::i64_0,
+            as crate::src::ext::rtree::rtree::I64_0,
     ) as *mut LcsIterator;
     if aIter.is_null() {
         return crate::src::headers::sqlite3_h::SQLITE_NOMEM;
@@ -1397,7 +1397,7 @@ unsafe extern "C" fn fts3MatchinfoLcs(
                 nLive -= 1;
             }
         }
-        *(*pInfo).aMatchinfo.offset(iCol as isize) = nLcs as crate::src::ext::rtree::rtree::u32_0;
+        *(*pInfo).aMatchinfo.offset(iCol as isize) = nLcs as crate::src::ext::rtree::rtree::U32_0;
         iCol += 1;
     }
     crate::src::src::malloc::sqlite3_free(aIter as *mut ::core::ffi::c_void);
@@ -1414,8 +1414,8 @@ unsafe extern "C" fn fts3MatchinfoValues(
     let mut i: ::core::ffi::c_int = 0;
     let mut pTab: *mut crate::fts3Int_h::Fts3Table =
         (*pCsr).base.pVtab as *mut crate::fts3Int_h::Fts3Table;
-    let mut pSelect: *mut crate::src::headers::sqlite3_h::sqlite3_stmt =
-        ::core::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_stmt>();
+    let mut pSelect: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt =
+        ::core::ptr::null_mut::<crate::src::headers::sqlite3_h::Sqlite3Stmt>();
     i = 0 as ::core::ffi::c_int;
     while rc == crate::src::headers::sqlite3_h::SQLITE_OK
         && *zArg.offset(i as isize) as ::core::ffi::c_int != 0
@@ -1427,19 +1427,19 @@ unsafe extern "C" fn fts3MatchinfoValues(
             FTS3_MATCHINFO_NPHRASE => {
                 if bGlobal != 0 {
                     *__pInfo_ref.aMatchinfo.offset(0 as isize) =
-                        __pInfo_ref.nPhrase as crate::src::ext::rtree::rtree::u32_0;
+                        __pInfo_ref.nPhrase as crate::src::ext::rtree::rtree::U32_0;
                 }
             }
             FTS3_MATCHINFO_NCOL => {
                 if bGlobal != 0 {
                     *__pInfo_ref.aMatchinfo.offset(0 as isize) =
-                        __pInfo_ref.nCol as crate::src::ext::rtree::rtree::u32_0;
+                        __pInfo_ref.nCol as crate::src::ext::rtree::rtree::U32_0;
                 }
             }
             FTS3_MATCHINFO_NDOC => {
                 if bGlobal != 0 {
-                    let mut nDoc: crate::src::headers::sqlite3_h::sqlite3_int64 =
-                        0 as crate::src::headers::sqlite3_h::sqlite3_int64;
+                    let mut nDoc: crate::src::headers::sqlite3_h::Sqlite3Int64 =
+                        0 as crate::src::headers::sqlite3_h::Sqlite3Int64;
                     rc = fts3MatchinfoSelectDoctotal(
                         pTab,
                         &raw mut pSelect,
@@ -1448,12 +1448,12 @@ unsafe extern "C" fn fts3MatchinfoValues(
                         ::core::ptr::null_mut::<*const ::core::ffi::c_char>(),
                     );
                     *__pInfo_ref.aMatchinfo.offset(0 as isize) =
-                        nDoc as crate::src::ext::rtree::rtree::u32_0;
+                        nDoc as crate::src::ext::rtree::rtree::U32_0;
                 }
             }
             FTS3_MATCHINFO_AVGLENGTH => {
                 if bGlobal != 0 {
-                    let mut nDoc_0: crate::src::headers::sqlite3_h::sqlite3_int64 = 0;
+                    let mut nDoc_0: crate::src::headers::sqlite3_h::Sqlite3Int64 = 0;
                     let mut a: *const ::core::ffi::c_char =
                         ::core::ptr::null::<::core::ffi::c_char>();
                     let mut pEnd: *const ::core::ffi::c_char =
@@ -1469,8 +1469,8 @@ unsafe extern "C" fn fts3MatchinfoValues(
                         let mut iCol: ::core::ffi::c_int = 0;
                         iCol = 0 as ::core::ffi::c_int;
                         while iCol < __pInfo_ref.nCol {
-                            let mut iVal: crate::src::ext::rtree::rtree::u32_0 = 0;
-                            let mut nToken: crate::src::headers::sqlite3_h::sqlite3_int64 = 0;
+                            let mut iVal: crate::src::ext::rtree::rtree::U32_0 = 0;
+                            let mut nToken: crate::src::headers::sqlite3_h::Sqlite3Int64 = 0;
                             a = a.offset(crate::src::ext::fts3::fts3::sqlite3Fts3GetVarint(
                                 a,
                                 &raw mut nToken,
@@ -1480,12 +1480,12 @@ unsafe extern "C" fn fts3MatchinfoValues(
                                 break;
                             } else {
                                 iVal = (((nToken
-                                    & 0xffffffff as crate::src::headers::sqlite3_h::sqlite3_int64)
-                                    as crate::src::ext::rtree::rtree::u32_0
-                                    as crate::src::headers::sqlite3_h::sqlite3_int64
-                                    + nDoc_0 / 2 as crate::src::headers::sqlite3_h::sqlite3_int64)
+                                    & 0xffffffff as crate::src::headers::sqlite3_h::Sqlite3Int64)
+                                    as crate::src::ext::rtree::rtree::U32_0
+                                    as crate::src::headers::sqlite3_h::Sqlite3Int64
+                                    + nDoc_0 / 2 as crate::src::headers::sqlite3_h::Sqlite3Int64)
                                     / nDoc_0)
-                                    as crate::src::ext::rtree::rtree::u32_0;
+                                    as crate::src::ext::rtree::rtree::U32_0;
                                 *__pInfo_ref.aMatchinfo.offset(iCol as isize) = iVal;
                                 iCol += 1;
                             }
@@ -1494,8 +1494,8 @@ unsafe extern "C" fn fts3MatchinfoValues(
                 }
             }
             FTS3_MATCHINFO_LENGTH => {
-                let mut pSelectDocsize: *mut crate::src::headers::sqlite3_h::sqlite3_stmt =
-                    ::core::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_stmt>();
+                let mut pSelectDocsize: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt =
+                    ::core::ptr::null_mut::<crate::src::headers::sqlite3_h::Sqlite3Stmt>();
                 rc = crate::src::ext::fts3::fts3_write::sqlite3Fts3SelectDocsize(
                     pTab as *mut crate::fts3Int_h::Fts3Table,
                     (*pCsr).iPrevId,
@@ -1515,7 +1515,7 @@ unsafe extern "C" fn fts3MatchinfoValues(
                         ) as isize);
                     iCol_0 = 0 as ::core::ffi::c_int;
                     while iCol_0 < __pInfo_ref.nCol {
-                        let mut nToken_0: crate::src::headers::sqlite3_h::sqlite3_int64 = 0;
+                        let mut nToken_0: crate::src::headers::sqlite3_h::Sqlite3Int64 = 0;
                         a_0 = a_0.offset(crate::src::ext::fts3::fts3::sqlite3Fts3GetVarintBounded(
                             a_0,
                             pEnd_0,
@@ -1526,7 +1526,7 @@ unsafe extern "C" fn fts3MatchinfoValues(
                             break;
                         } else {
                             *__pInfo_ref.aMatchinfo.offset(iCol_0 as isize) =
-                                nToken_0 as crate::src::ext::rtree::rtree::u32_0;
+                                nToken_0 as crate::src::ext::rtree::rtree::U32_0;
                             iCol_0 += 1;
                         }
                     }
@@ -1544,10 +1544,10 @@ unsafe extern "C" fn fts3MatchinfoValues(
                 }
             }
             FTS3_MATCHINFO_LHITS_BM | FTS3_MATCHINFO_LHITS => {
-                let mut nZero: crate::__stddef_size_t_h::size_t =
+                let mut nZero: crate::__stddef_size_t_h::SizeT =
                     fts3MatchinfoSize(pInfo, *zArg.offset(i as isize)).wrapping_mul(
-                        ::core::mem::size_of::<crate::src::ext::rtree::rtree::u32_0>()
-                            as crate::__stddef_size_t_h::size_t,
+                        ::core::mem::size_of::<crate::src::ext::rtree::rtree::U32_0>()
+                            as crate::__stddef_size_t_h::SizeT,
                     );
                 ::libc::memset(
                     __pInfo_ref.aMatchinfo as *mut ::core::ffi::c_void,
@@ -1654,8 +1654,8 @@ unsafe extern "C" fn fts3GetMatchinfo(
         __pCsr_ref.base.pVtab as *mut crate::fts3Int_h::Fts3Table;
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
     let mut bGlobal: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-    let mut aOut: *mut crate::src::ext::rtree::rtree::u32_0 =
-        ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u32_0>();
+    let mut aOut: *mut crate::src::ext::rtree::rtree::U32_0 =
+        ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::U32_0>();
     let mut xDestroyOut: Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()> = None;
     sInfo.pCursor = pCsr;
     sInfo.nCol = (*pTab).nColumn;
@@ -1666,8 +1666,8 @@ unsafe extern "C" fn fts3GetMatchinfo(
         __pCsr_ref.pMIBuffer = ::core::ptr::null_mut::<MatchinfoBuffer>();
     }
     if __pCsr_ref.pMIBuffer.is_null() {
-        let mut nMatchinfo: crate::__stddef_size_t_h::size_t =
-            0 as crate::__stddef_size_t_h::size_t;
+        let mut nMatchinfo: crate::__stddef_size_t_h::SizeT =
+            0 as crate::__stddef_size_t_h::SizeT;
         let mut i: ::core::ffi::c_int = 0;
         __pCsr_ref.nPhrase = fts3ExprPhraseCount(__pCsr_ref.pExpr);
         sInfo.nPhrase = __pCsr_ref.nPhrase;
@@ -1715,7 +1715,7 @@ unsafe extern "C" fn fts3GetMatchinfo(
         }
     } else {
         let mut n: ::core::ffi::c_int = ((*__pCsr_ref.pMIBuffer).nElem as usize)
-            .wrapping_mul(::core::mem::size_of::<crate::src::ext::rtree::rtree::u32_0>() as usize)
+            .wrapping_mul(::core::mem::size_of::<crate::src::ext::rtree::rtree::U32_0>() as usize)
             as ::core::ffi::c_int;
         crate::src::src::vdbeapi::sqlite3_result_blob(
             pCtx,
@@ -1768,10 +1768,10 @@ pub unsafe extern "C" fn sqlite3Fts3Snippet(
     nSnippet = 1 as ::core::ffi::c_int;
     's_52: loop {
         let mut iSnip: ::core::ffi::c_int = 0;
-        let mut mCovered: crate::src::ext::rtree::rtree::u64_0 =
-            0 as crate::src::ext::rtree::rtree::u64_0;
-        let mut mSeen: crate::src::ext::rtree::rtree::u64_0 =
-            0 as crate::src::ext::rtree::rtree::u64_0;
+        let mut mCovered: crate::src::ext::rtree::rtree::U64_0 =
+            0 as crate::src::ext::rtree::rtree::U64_0;
+        let mut mSeen: crate::src::ext::rtree::rtree::U64_0 =
+            0 as crate::src::ext::rtree::rtree::U64_0;
         if nToken >= 0 as ::core::ffi::c_int {
             nFToken = (nToken + nSnippet - 1 as ::core::ffi::c_int) / nSnippet;
         } else {
@@ -1787,7 +1787,7 @@ pub unsafe extern "C" fn sqlite3Fts3Snippet(
             ::libc::memset(
                 pFragment as *mut ::core::ffi::c_void,
                 0 as ::core::ffi::c_int,
-                ::core::mem::size_of::<SnippetFragment>() as crate::__stddef_size_t_h::size_t,
+                ::core::mem::size_of::<SnippetFragment>() as crate::__stddef_size_t_h::SizeT,
             );
             iRead = 0 as ::core::ffi::c_int;
             while iRead < (*pTab).nColumn {
@@ -1877,7 +1877,7 @@ unsafe extern "C" fn fts3ExprTermOffsetInit(
     let mut nTerm: ::core::ffi::c_int = 0;
     let mut iTerm: ::core::ffi::c_int = 0;
     let mut pList: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
-    let mut iPos: crate::src::ext::rtree::rtree::i64_0 = 0 as crate::src::ext::rtree::rtree::i64_0;
+    let mut iPos: crate::src::ext::rtree::rtree::I64_0 = 0 as crate::src::ext::rtree::rtree::I64_0;
     let mut rc: ::core::ffi::c_int = 0;
     rc = crate::src::ext::fts3::fts3::sqlite3Fts3EvalPhrasePoslist(
         (*p).pCsr as *mut crate::fts3Int_h::Fts3Cursor,
@@ -1897,7 +1897,7 @@ unsafe extern "C" fn fts3ExprTermOffsetInit(
         let mut pT: *mut TermOffset = __p_ref.aTerm.offset(fresh0 as isize) as *mut TermOffset;
         let __pT_ref = unsafe { &mut *pT };
         __pT_ref.iOff =
-            (nTerm - iTerm - 1 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::i64_0;
+            (nTerm - iTerm - 1 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::I64_0;
         __pT_ref.pList = pList;
         __pT_ref.iPos = iPos;
         iTerm += 1;
@@ -1953,7 +1953,7 @@ pub unsafe extern "C" fn sqlite3Fts3Offsets(
     if !(rc != crate::src::headers::sqlite3_h::SQLITE_OK) {
         sCtx.aTerm = crate::src::ext::fts3::fts3_expr::sqlite3Fts3MallocZero(
             (::core::mem::size_of::<TermOffset>() as usize).wrapping_mul(nToken as usize)
-                as crate::src::ext::rtree::rtree::i64_0,
+                as crate::src::ext::rtree::rtree::I64_0,
         ) as *mut TermOffset;
         if sCtx.aTerm.is_null() {
             rc = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
@@ -2056,7 +2056,7 @@ pub unsafe extern "C" fn sqlite3Fts3Offsets(
                                 let __pT_ref = unsafe { &mut *pT };
                                 if !__pT_ref.pList.is_null()
                                     && __pT_ref.iPos - __pT_ref.iOff
-                                        < iMinPos as crate::src::ext::rtree::rtree::i64_0
+                                        < iMinPos as crate::src::ext::rtree::rtree::I64_0
                                 {
                                     iMinPos = (__pT_ref.iPos - __pT_ref.iOff) as ::core::ffi::c_int;
                                     pTerm = pT;

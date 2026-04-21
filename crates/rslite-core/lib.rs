@@ -1,4 +1,3 @@
-#![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
 #![allow(non_upper_case_globals)]
 #![allow(unused_assignments)]
@@ -129,7 +128,7 @@ pub(crate) mod compat {
         count: usize,
         offset: i64,
     ) -> isize {
-        ::libc::pread(fd, buf, count, offset as ::libc::off_t)
+        ::libc::pread(fd, buf, count, offset as ::libc::OffT)
     }
     #[cfg(target_os = "macos")]
     #[unsafe(no_mangle)]
@@ -139,7 +138,7 @@ pub(crate) mod compat {
         count: usize,
         offset: i64,
     ) -> isize {
-        ::libc::pwrite(fd, buf, count, offset as ::libc::off_t)
+        ::libc::pwrite(fd, buf, count, offset as ::libc::OffT)
     }
 
     #[cfg(target_os = "macos")]
@@ -209,13 +208,13 @@ pub(crate) mod pcache_h {
     pub use crate::src::src::pcache::PCache;
 }
 pub(crate) mod __stddef_ptrdiff_t_h {
-    pub type ptrdiff_t = isize;
+    pub type PtrdiffT = isize;
 }
-pub(crate) mod __stdarg___gnuc_va_list_h {
-    pub type __gnuc_va_list = crate::internal::__builtin_va_list;
+pub(crate) mod __stdarg_GnucVaList_h {
+    pub type GnucVaList = crate::internal::BuiltinVaList;
 }
 pub(crate) mod __stddef_size_t_h {
-    pub type size_t = usize;
+    pub type SizeT = usize;
 }
 pub(crate) mod keywordhash_h {
     pub const SQLITE_N_KEYWORD: ::core::ffi::c_int = 147 as ::core::ffi::c_int;
@@ -259,11 +258,11 @@ pub(crate) mod sqliteLimit_h {
     pub const SQLITE_MAX_TRIGGER_DEPTH: ::core::ffi::c_int = 1000 as ::core::ffi::c_int;
 }
 pub(crate) mod internal {
-    pub type __builtin_va_list = [crate::internal::__va_list_tag; 1];
+    pub type BuiltinVaList = [crate::internal::VaListTag; 1];
 
     #[derive(Copy, Clone)]
     #[repr(C)]
-    pub struct __va_list_tag {
+    pub struct VaListTag {
         pub gp_offset: ::core::ffi::c_uint,
         pub fp_offset: ::core::ffi::c_uint,
         pub overflow_arg_area: *mut ::core::ffi::c_void,
@@ -356,7 +355,7 @@ pub(crate) mod geopoly_c {
 
     #[derive(Copy, Clone)]
     #[repr(C)]
-    pub struct C2RustUnnamed_1 {
+    pub struct C2RustUnnamed1 {
         pub xStep: Option<
             unsafe extern "C" fn(
                 *mut crate::src::headers::vdbeInt_h::sqlite3_context,
@@ -416,13 +415,13 @@ pub(crate) mod fts3Int_h {
     pub const POS_END: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
 
     // LARGEST_INT64 / SMALLEST_INT64 are used throughout core SQLite (not FTS3-specific)
-    pub const LARGEST_INT64: crate::src::ext::rtree::rtree::i64_0 = 0xffffffff
-        as crate::src::ext::rtree::rtree::i64_0
-        | (0x7fffffff as ::core::ffi::c_int as crate::src::ext::rtree::rtree::i64_0)
+    pub const LARGEST_INT64: crate::src::ext::rtree::rtree::I64_0 = 0xffffffff
+        as crate::src::ext::rtree::rtree::I64_0
+        | (0x7fffffff as ::core::ffi::c_int as crate::src::ext::rtree::rtree::I64_0)
             << 32 as ::core::ffi::c_int;
 
-    pub const SMALLEST_INT64: crate::src::ext::rtree::rtree::i64_0 = -(1 as ::core::ffi::c_int)
-        as crate::src::ext::rtree::rtree::i64_0
+    pub const SMALLEST_INT64: crate::src::ext::rtree::rtree::I64_0 = -(1 as ::core::ffi::c_int)
+        as crate::src::ext::rtree::rtree::I64_0
         - crate::fts3Int_h::LARGEST_INT64;
 
     #[cfg(feature = "fts3")]
@@ -439,32 +438,32 @@ pub(crate) mod fts3Int_h {
         pub zName: *const ::core::ffi::c_char,
         pub nColumn: ::core::ffi::c_int,
         pub azColumn: *mut *mut ::core::ffi::c_char,
-        pub abNotindexed: *mut crate::src::ext::rtree::rtree::u8_0,
+        pub abNotindexed: *mut crate::src::ext::rtree::rtree::U8_0,
         pub pTokenizer: *mut crate::src::ext::fts3::fts3_tokenizer::sqlite3_tokenizer,
         pub zContentTbl: *mut ::core::ffi::c_char,
         pub zLanguageid: *mut ::core::ffi::c_char,
         pub nAutoincrmerge: ::core::ffi::c_int,
-        pub nLeafAdd: crate::src::ext::rtree::rtree::u32_0,
+        pub nLeafAdd: crate::src::ext::rtree::rtree::U32_0,
         pub bLock: ::core::ffi::c_int,
-        pub aStmt: [*mut crate::src::headers::sqlite3_h::sqlite3_stmt; 40],
-        pub pSeekStmt: *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+        pub aStmt: [*mut crate::src::headers::sqlite3_h::Sqlite3Stmt; 40],
+        pub pSeekStmt: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
         pub zReadExprlist: *mut ::core::ffi::c_char,
         pub zWriteExprlist: *mut ::core::ffi::c_char,
         pub nNodeSize: ::core::ffi::c_int,
-        pub bFts4: crate::src::ext::rtree::rtree::u8_0,
-        pub bHasStat: crate::src::ext::rtree::rtree::u8_0,
-        pub bHasDocsize: crate::src::ext::rtree::rtree::u8_0,
-        pub bDescIdx: crate::src::ext::rtree::rtree::u8_0,
-        pub bIgnoreSavepoint: crate::src::ext::rtree::rtree::u8_0,
+        pub bFts4: crate::src::ext::rtree::rtree::U8_0,
+        pub bHasStat: crate::src::ext::rtree::rtree::U8_0,
+        pub bHasDocsize: crate::src::ext::rtree::rtree::U8_0,
+        pub bDescIdx: crate::src::ext::rtree::rtree::U8_0,
+        pub bIgnoreSavepoint: crate::src::ext::rtree::rtree::U8_0,
         pub nPgsz: ::core::ffi::c_int,
         pub zSegmentsTbl: *mut ::core::ffi::c_char,
-        pub pSegments: *mut crate::src::headers::sqlite3_h::sqlite3_blob,
+        pub pSegments: *mut crate::src::headers::sqlite3_h::Sqlite3Blob,
         pub iSavepoint: ::core::ffi::c_int,
         pub nIndex: ::core::ffi::c_int,
         pub aIndex: *mut crate::fts3Int_h::Fts3Index,
         pub nMaxPendingData: ::core::ffi::c_int,
         pub nPendingData: ::core::ffi::c_int,
-        pub iPrevDocid: crate::src::headers::sqlite3_h::sqlite_int64,
+        pub iPrevDocid: crate::src::headers::sqlite3_h::SqliteInt64,
         pub iPrevLangid: ::core::ffi::c_int,
         pub bPrevDelete: ::core::ffi::c_int,
         pub bNoIncrDoclist: ::core::ffi::c_int,
@@ -484,25 +483,25 @@ pub(crate) mod fts3Int_h {
     #[cfg(feature = "fts3")]
     pub struct Fts3Cursor {
         pub base: crate::src::headers::sqlite3_h::sqlite3_vtab_cursor,
-        pub eSearch: crate::src::fts5::i16_0,
-        pub isEof: crate::src::ext::rtree::rtree::u8_0,
-        pub isRequireSeek: crate::src::ext::rtree::rtree::u8_0,
-        pub bSeekStmt: crate::src::ext::rtree::rtree::u8_0,
-        pub pStmt: *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+        pub eSearch: crate::src::fts5::I16_0,
+        pub isEof: crate::src::ext::rtree::rtree::U8_0,
+        pub isRequireSeek: crate::src::ext::rtree::rtree::U8_0,
+        pub bSeekStmt: crate::src::ext::rtree::rtree::U8_0,
+        pub pStmt: *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
         pub pExpr: *mut crate::fts3Int_h::Fts3Expr,
         pub iLangid: ::core::ffi::c_int,
         pub nPhrase: ::core::ffi::c_int,
         pub pDeferred: *mut crate::fts3Int_h::Fts3DeferredToken,
-        pub iPrevId: crate::src::headers::sqlite3_h::sqlite3_int64,
+        pub iPrevId: crate::src::headers::sqlite3_h::Sqlite3Int64,
         pub pNextId: *mut ::core::ffi::c_char,
         pub aDoclist: *mut ::core::ffi::c_char,
         pub nDoclist: ::core::ffi::c_int,
-        pub bDesc: crate::src::ext::rtree::rtree::u8_0,
+        pub bDesc: crate::src::ext::rtree::rtree::U8_0,
         pub eEvalmode: ::core::ffi::c_int,
         pub nRowAvg: ::core::ffi::c_int,
-        pub nDoc: crate::src::headers::sqlite3_h::sqlite3_int64,
-        pub iMinDocid: crate::src::ext::rtree::rtree::i64_0,
-        pub iMaxDocid: crate::src::ext::rtree::rtree::i64_0,
+        pub nDoc: crate::src::headers::sqlite3_h::Sqlite3Int64,
+        pub iMinDocid: crate::src::ext::rtree::rtree::I64_0,
+        pub iMaxDocid: crate::src::ext::rtree::rtree::I64_0,
         pub isMatchinfoNeeded: ::core::ffi::c_int,
         pub pMIBuffer: *mut crate::fts3Int_h::MatchinfoBuffer,
     }
@@ -532,7 +531,7 @@ pub(crate) mod fts3Int_h {
         pub aAll: *mut ::core::ffi::c_char,
         pub nAll: ::core::ffi::c_int,
         pub pNextDocid: *mut ::core::ffi::c_char,
-        pub iDocid: crate::src::headers::sqlite3_h::sqlite3_int64,
+        pub iDocid: crate::src::headers::sqlite3_h::Sqlite3Int64,
         pub bFreeList: ::core::ffi::c_int,
         pub pList: *mut ::core::ffi::c_char,
         pub nList: ::core::ffi::c_int,
@@ -558,7 +557,7 @@ pub(crate) mod fts3Int_h {
         pub bIncr: ::core::ffi::c_int,
         pub iDoclistToken: ::core::ffi::c_int,
         pub pOrPoslist: *mut ::core::ffi::c_char,
-        pub iOrDocid: crate::src::ext::rtree::rtree::i64_0,
+        pub iOrDocid: crate::src::ext::rtree::rtree::I64_0,
         pub nToken: ::core::ffi::c_int,
         pub iColumn: ::core::ffi::c_int,
         pub aToken: [crate::fts3Int_h::Fts3PhraseToken; 0],
@@ -574,12 +573,12 @@ pub(crate) mod fts3Int_h {
         pub pLeft: *mut crate::fts3Int_h::Fts3Expr,
         pub pRight: *mut crate::fts3Int_h::Fts3Expr,
         pub pPhrase: *mut crate::fts3Int_h::Fts3Phrase,
-        pub iDocid: crate::src::headers::sqlite3_h::sqlite3_int64,
-        pub bEof: crate::src::ext::rtree::rtree::u8_0,
-        pub bStart: crate::src::ext::rtree::rtree::u8_0,
-        pub bDeferred: crate::src::ext::rtree::rtree::u8_0,
+        pub iDocid: crate::src::headers::sqlite3_h::Sqlite3Int64,
+        pub bEof: crate::src::ext::rtree::rtree::U8_0,
+        pub bStart: crate::src::ext::rtree::rtree::U8_0,
+        pub bDeferred: crate::src::ext::rtree::rtree::U8_0,
         pub iPhrase: ::core::ffi::c_int,
-        pub aMI: *mut crate::src::ext::rtree::rtree::u32_0,
+        pub aMI: *mut crate::src::ext::rtree::rtree::U32_0,
     }
 
     #[cfg(feature = "fts3")]
@@ -649,7 +648,7 @@ pub(crate) mod fts3Int_h {
         pub nAdvance: ::core::ffi::c_int,
         pub pFilter: *mut crate::fts3Int_h::Fts3SegFilter,
         pub aBuffer: *mut ::core::ffi::c_char,
-        pub nBuffer: crate::src::ext::rtree::rtree::i64_0,
+        pub nBuffer: crate::src::ext::rtree::rtree::I64_0,
         pub iColFilter: ::core::ffi::c_int,
         pub bRestart: ::core::ffi::c_int,
         pub nCost: ::core::ffi::c_int,
@@ -792,12 +791,12 @@ pub(crate) mod src {
 
 // ── Public API re-exports (stable C API, matching the rslite-raw surface) ────
 
-pub use crate::src::headers::sqlite3_h::sqlite3_stmt;
+pub use crate::src::headers::sqlite3_h::Sqlite3Stmt;
 pub use crate::src::headers::vdbeInt_h::sqlite3_value;
 pub use crate::src::headers::vdbeInt_h::sqlite3_context;
 pub use crate::src::headers::sqlite3_h::sqlite3_vfs;
 pub use crate::src::headers::sqlite3_h::sqlite3_file;
-pub use crate::src::headers::sqlite3_h::sqlite3_filename;
+pub use crate::src::headers::sqlite3_h::Sqlite3Filename;
 pub use crate::src::headers::sqlite3_h::sqlite3_io_methods;
 pub use crate::src::headers::sqlite3_h::sqlite3_module;
 pub use crate::src::headers::sqlite3_h::sqlite3_vtab;
@@ -807,14 +806,14 @@ pub use crate::src::headers::sqlite3_h::sqlite3_index_constraint;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_constraint_usage;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_orderby;
 pub use crate::src::headers::sqlite3_h::sqlite3_mem_methods;
-pub use crate::src::headers::sqlite3_h::sqlite3_pcache;
+pub use crate::src::headers::sqlite3_h::Sqlite3Pcache;
 pub use crate::src::headers::sqlite3_h::sqlite3_pcache_methods2;
 pub use crate::src::headers::sqlite3_h::sqlite3_pcache_page;
 pub use crate::src::headers::sqlite3_h::sqlite3_mutex_methods;
-pub use crate::src::headers::sqlite3_h::sqlite3_int64;
-pub use crate::src::headers::sqlite3_h::sqlite3_uint64;
-pub use crate::src::headers::sqlite3_h::sqlite3_destructor_type;
-pub use crate::src::headers::sqlite3_h::sqlite3_syscall_ptr;
+pub use crate::src::headers::sqlite3_h::Sqlite3Int64;
+pub use crate::src::headers::sqlite3_h::Sqlite3Uint64;
+pub use crate::src::headers::sqlite3_h::Sqlite3DestructorType;
+pub use crate::src::headers::sqlite3_h::Sqlite3SyscallPtr;
 pub use crate::src::headers::sqliteInt_h::sqlite3;
 pub use crate::src::src::mutex_unix::sqlite3_mutex;
 pub use crate::src::src::backup::sqlite3_backup;

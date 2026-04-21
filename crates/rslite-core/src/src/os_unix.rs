@@ -11,7 +11,7 @@ pub mod os_common_h {
 }
 
 pub use crate::__stddef_null_h::NULL;
-pub use crate::__stddef_size_t_h::size_t;
+pub use crate::__stddef_size_t_h::SizeT;
 pub use crate::src::headers::stdlib::__S_IFMT;
 
 pub use crate::compat::O_LARGEFILE;
@@ -235,7 +235,7 @@ pub use crate::src::headers::stdlib::_SC_XOPEN_XCU_VERSION;
 pub use crate::src::headers::stdlib::_SC_XOPEN_XPG2;
 pub use crate::src::headers::stdlib::_SC_XOPEN_XPG3;
 pub use crate::src::headers::stdlib::_SC_XOPEN_XPG4;
-pub use crate::src::headers::stdlib::C2RustUnnamed_1;
+pub use crate::src::headers::stdlib::C2RustUnnamed1;
 pub use crate::src::headers::stdlib::F_GETLK64;
 pub use crate::src::headers::stdlib::F_SETLK64;
 pub use ::libc::EACCES;
@@ -279,11 +279,11 @@ pub use ::libc::PROT_WRITE;
 pub use ::libc::mmap;
 pub use ::libc::munmap;
 
-pub use crate::src::ext::rtree::rtree::i64_0;
-pub use crate::src::ext::rtree::rtree::u8_0;
-pub use crate::src::ext::rtree::rtree::u32_0;
-pub use crate::src::ext::rtree::rtree::u64_0;
-pub use crate::src::fts5::u16_0;
+pub use crate::src::ext::rtree::rtree::I64_0;
+pub use crate::src::ext::rtree::rtree::U8_0;
+pub use crate::src::ext::rtree::rtree::U32_0;
+pub use crate::src::ext::rtree::rtree::U64_0;
+pub use crate::src::fts5::U16_0;
 pub use crate::src::headers::sqlite3_h::SQLITE_ACCESS_EXISTS;
 pub use crate::src::headers::sqlite3_h::SQLITE_BUSY;
 pub use crate::src::headers::sqlite3_h::SQLITE_ERROR;
@@ -346,31 +346,31 @@ pub use crate::src::headers::sqlite3_h::SQLITE_SHM_UNLOCK;
 pub use crate::src::headers::sqlite3_h::SQLITE_SYNC_DATAONLY;
 pub use crate::src::headers::sqlite3_h::SQLITE_SYNC_FULL;
 pub use crate::src::headers::sqlite3_h::SQLITE_WARNING;
-pub use crate::src::headers::sqlite3_h::sqlite_int64;
-pub use crate::src::headers::sqlite3_h::sqlite_uint64;
+pub use crate::src::headers::sqlite3_h::SqliteInt64;
+pub use crate::src::headers::sqlite3_h::SqliteUint64;
 pub use crate::src::headers::sqlite3_h::sqlite3_file;
-pub use crate::src::headers::sqlite3_h::sqlite3_filename;
-pub use crate::src::headers::sqlite3_h::sqlite3_int64;
+pub use crate::src::headers::sqlite3_h::Sqlite3Filename;
+pub use crate::src::headers::sqlite3_h::Sqlite3Int64;
 pub use crate::src::headers::sqlite3_h::sqlite3_io_methods;
 pub use crate::src::headers::sqlite3_h::sqlite3_mem_methods;
 pub use crate::src::headers::sqlite3_h::sqlite3_mutex_methods;
-pub use crate::src::headers::sqlite3_h::sqlite3_pcache;
+pub use crate::src::headers::sqlite3_h::Sqlite3Pcache;
 pub use crate::src::headers::sqlite3_h::sqlite3_pcache_methods2;
 pub use crate::src::headers::sqlite3_h::sqlite3_pcache_page;
-pub use crate::src::headers::sqlite3_h::sqlite3_syscall_ptr;
-pub use crate::src::headers::sqlite3_h::sqlite3_uint64;
+pub use crate::src::headers::sqlite3_h::Sqlite3SyscallPtr;
+pub use crate::src::headers::sqlite3_h::Sqlite3Uint64;
 pub use crate::src::headers::sqlite3_h::sqlite3_vfs;
 pub use crate::src::headers::sqliteInt_h::SQLITE_IOERR_NOMEM_BKPT;
 pub use crate::src::headers::sqliteInt_h::SQLITE_MUTEX_STATIC_TEMPDIR;
 pub use crate::src::headers::sqliteInt_h::SQLITE_NOMEM_BKPT;
 pub use crate::src::headers::sqliteInt_h::SQLITE_POWERSAFE_OVERWRITE;
 pub use crate::src::headers::sqliteInt_h::Sqlite3Config;
-pub use crate::src::headers::stdlib::off_t;
-pub use crate::src::headers::stdlib::off64_t;
-pub use crate::src::headers::stdlib::ssize_t;
-pub use crate::src::headers::stdlib::uint8_t;
-pub use crate::src::headers::stdlib::uint16_t;
-pub use crate::src::headers::stdlib::uint32_t;
+pub use crate::src::headers::stdlib::OffT;
+pub use crate::src::headers::stdlib::Off64T;
+pub use crate::src::headers::stdlib::SsizeT;
+pub use crate::src::headers::stdlib::Uint8T;
+pub use crate::src::headers::stdlib::Uint16T;
+pub use crate::src::headers::stdlib::Uint32T;
 pub use crate::src::src::global::sqlite3Config;
 pub use crate::src::src::global::sqlite3PendingByte;
 pub use crate::src::src::main::sqlite3_temp_directory;
@@ -409,32 +409,21 @@ pub use crate::src::src::os_unix::os_common_h::local_ioerr;
 pub use crate::src::src::random::sqlite3_randomness;
 pub use crate::src::src::util::sqlite3Strlen30;
 
-pub use crate::src::headers::stdlib::dev_t;
-pub use crate::src::headers::stdlib::gid_t;
-pub use crate::src::headers::stdlib::mode_t;
-pub use crate::src::headers::stdlib::pid_t;
-pub use crate::src::headers::stdlib::uid_t;
+pub use crate::src::headers::stdlib::DevT;
+pub use crate::src::headers::stdlib::GidT;
+pub use crate::src::headers::stdlib::ModeT;
+pub use crate::src::headers::stdlib::PidT;
+pub use crate::src::headers::stdlib::UidT;
 pub use ::libc::timespec;
 pub use ::libc::timeval;
 
-pub use crate::src::headers::stdlib::__blkcnt_t;
-pub use crate::src::headers::stdlib::__blksize_t;
-pub use crate::src::headers::stdlib::__dev_t;
-pub use crate::src::headers::stdlib::__gid_t;
-pub use crate::src::headers::stdlib::__ino_t;
-pub use crate::src::headers::stdlib::__mode_t;
-pub use crate::src::headers::stdlib::__nlink_t;
-pub use crate::src::headers::stdlib::__off_t;
-pub use crate::src::headers::stdlib::__off64_t;
-pub use crate::src::headers::stdlib::__pid_t;
-pub use crate::src::headers::stdlib::__ssize_t;
-pub use crate::src::headers::stdlib::__suseconds_t;
-pub use crate::src::headers::stdlib::__syscall_slong_t;
-pub use crate::src::headers::stdlib::__time_t;
-pub use crate::src::headers::stdlib::__uid_t;
-pub use crate::src::headers::stdlib::__uint8_t;
-pub use crate::src::headers::stdlib::__uint16_t;
-pub use crate::src::headers::stdlib::__uint32_t;
+pub use crate::src::headers::stdlib::BlkcntT;
+pub use crate::src::headers::stdlib::BlksizeT;
+pub use crate::src::headers::stdlib::InoT;
+pub use crate::src::headers::stdlib::NlinkT;
+pub use crate::src::headers::stdlib::SusecondsT;
+pub use crate::src::headers::stdlib::SyscallSlongT;
+pub use crate::src::headers::stdlib::TimeT;
 pub use crate::src::headers::stdlib::pread64;
 pub use crate::src::headers::stdlib::pwrite64;
 pub use crate::src::headers::stdlib::read;
@@ -460,8 +449,8 @@ pub use ::libc::utime;
 #[repr(C)]
 pub struct unix_syscall {
     pub zName: *const ::core::ffi::c_char,
-    pub pCurrent: crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
-    pub pDefault: crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+    pub pCurrent: crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
+    pub pDefault: crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -488,9 +477,9 @@ pub struct unixFile {
     pub pShm: *mut unixShm,
     pub szChunk: ::core::ffi::c_int,
     pub nFetchOut: ::core::ffi::c_int,
-    pub mmapSize: crate::src::headers::sqlite3_h::sqlite3_int64,
-    pub mmapSizeActual: crate::src::headers::sqlite3_h::sqlite3_int64,
-    pub mmapSizeMax: crate::src::headers::sqlite3_h::sqlite3_int64,
+    pub mmapSize: crate::src::headers::sqlite3_h::Sqlite3Int64,
+    pub mmapSizeActual: crate::src::headers::sqlite3_h::Sqlite3Int64,
+    pub mmapSizeMax: crate::src::headers::sqlite3_h::Sqlite3Int64,
     pub pMapRegion: *mut ::core::ffi::c_void,
     pub sectorSize: ::core::ffi::c_int,
     pub deviceCharacteristics: ::core::ffi::c_int,
@@ -501,10 +490,10 @@ pub struct unixFile {
 pub struct unixShm {
     pub pShmNode: *mut unixShmNode,
     pub pNext: *mut unixShm,
-    pub hasMutex: crate::src::ext::rtree::rtree::u8_0,
-    pub id: crate::src::ext::rtree::rtree::u8_0,
-    pub sharedMask: crate::src::fts5::u16_0,
-    pub exclMask: crate::src::fts5::u16_0,
+    pub hasMutex: crate::src::ext::rtree::rtree::U8_0,
+    pub id: crate::src::ext::rtree::rtree::U8_0,
+    pub sharedMask: crate::src::fts5::U16_0,
+    pub exclMask: crate::src::fts5::U16_0,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -514,9 +503,9 @@ pub struct unixShmNode {
     pub zFilename: *mut ::core::ffi::c_char,
     pub hShm: ::core::ffi::c_int,
     pub szRegion: ::core::ffi::c_int,
-    pub nRegion: crate::src::fts5::u16_0,
-    pub isReadonly: crate::src::ext::rtree::rtree::u8_0,
-    pub isUnlocked: crate::src::ext::rtree::rtree::u8_0,
+    pub nRegion: crate::src::fts5::U16_0,
+    pub isReadonly: crate::src::ext::rtree::rtree::U8_0,
+    pub isUnlocked: crate::src::ext::rtree::rtree::U8_0,
     pub apRegion: *mut *mut ::core::ffi::c_char,
     pub nRef: ::core::ffi::c_int,
     pub pFirst: *mut unixShm,
@@ -547,11 +536,11 @@ pub struct UnixUnusedFd {
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct unixFileId {
-    pub dev: crate::src::headers::stdlib::dev_t,
-    pub ino: crate::src::ext::rtree::rtree::u64_0,
+    pub dev: crate::src::headers::stdlib::DevT,
+    pub ino: crate::src::ext::rtree::rtree::U64_0,
 }
 
-pub type finder_type = Option<
+pub type FinderType = Option<
     unsafe extern "C" fn(
         *const ::core::ffi::c_char,
         *mut unixFile,
@@ -562,8 +551,8 @@ pub const SQLITE_DEFAULT_FILE_PERMISSIONS: ::core::ffi::c_int = 0o644 as ::core:
 
 pub const MAX_PATHNAME: ::core::ffi::c_int = 512 as ::core::ffi::c_int;
 
-static mut randomnessPid: crate::src::headers::stdlib::pid_t =
-    0 as crate::src::headers::stdlib::pid_t;
+static mut randomnessPid: crate::src::headers::stdlib::PidT =
+    0 as crate::src::headers::stdlib::PidT;
 
 pub const UNIXFILE_EXCL: ::core::ffi::c_int = 0x1 as ::core::ffi::c_int;
 
@@ -604,7 +593,7 @@ static mut aSyscall: [unix_syscall; 29] = {
                             ::core::ffi::c_int,
                         ) -> ::core::ffi::c_int,
                     >,
-                    crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                    crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 >(Some(
                     posixOpen
                         as unsafe extern "C" fn(
@@ -621,7 +610,7 @@ static mut aSyscall: [unix_syscall; 29] = {
             pCurrent: unsafe {
                 ::core::mem::transmute::<
                     Option<unsafe extern "C" fn(::core::ffi::c_int) -> ::core::ffi::c_int>,
-                    crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                    crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 >(Some(
                     ::libc::close as unsafe extern "C" fn(::core::ffi::c_int) -> ::core::ffi::c_int,
                 ))
@@ -638,7 +627,7 @@ static mut aSyscall: [unix_syscall; 29] = {
                             ::core::ffi::c_int,
                         ) -> ::core::ffi::c_int,
                     >,
-                    crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                    crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 >(Some(
                     ::libc::access
                         as unsafe extern "C" fn(
@@ -656,15 +645,15 @@ static mut aSyscall: [unix_syscall; 29] = {
                     Option<
                         unsafe extern "C" fn(
                             *mut ::core::ffi::c_char,
-                            crate::__stddef_size_t_h::size_t,
+                            crate::__stddef_size_t_h::SizeT,
                         ) -> *mut ::core::ffi::c_char,
                     >,
-                    crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                    crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 >(Some(
                     ::libc::getcwd
                         as unsafe extern "C" fn(
                             *mut ::core::ffi::c_char,
-                            crate::__stddef_size_t_h::size_t,
+                            crate::__stddef_size_t_h::SizeT,
                         )
                             -> *mut ::core::ffi::c_char,
                 ))
@@ -681,7 +670,7 @@ static mut aSyscall: [unix_syscall; 29] = {
                             *mut crate::src::headers::stdlib::stat,
                         ) -> ::core::ffi::c_int,
                     >,
-                    crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                    crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 >(Some(
                     crate::src::headers::stdlib::stat
                         as unsafe extern "C" fn(
@@ -702,7 +691,7 @@ static mut aSyscall: [unix_syscall; 29] = {
                             *mut crate::src::headers::stdlib::stat,
                         ) -> ::core::ffi::c_int,
                     >,
-                    crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                    crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 >(Some(
                     crate::src::headers::stdlib::fstat
                         as unsafe extern "C" fn(
@@ -720,15 +709,15 @@ static mut aSyscall: [unix_syscall; 29] = {
                     Option<
                         unsafe extern "C" fn(
                             ::core::ffi::c_int,
-                            crate::src::headers::stdlib::__off64_t,
+                            crate::src::headers::stdlib::Off64T,
                         ) -> ::core::ffi::c_int,
                     >,
-                    crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                    crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 >(Some(
                     ::libc::ftruncate
                         as unsafe extern "C" fn(
                             ::core::ffi::c_int,
-                            crate::src::headers::stdlib::__off64_t,
+                            crate::src::headers::stdlib::Off64T,
                         ) -> ::core::ffi::c_int,
                 ))
             },
@@ -745,7 +734,7 @@ static mut aSyscall: [unix_syscall; 29] = {
                             ...
                         ) -> ::core::ffi::c_int,
                     >,
-                    crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                    crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 >(Some(
                     ::libc::fcntl
                         as unsafe extern "C" fn(
@@ -765,19 +754,19 @@ static mut aSyscall: [unix_syscall; 29] = {
                         unsafe extern "C" fn(
                             ::core::ffi::c_int,
                             *mut ::core::ffi::c_void,
-                            crate::__stddef_size_t_h::size_t,
+                            crate::__stddef_size_t_h::SizeT,
                         )
-                            -> crate::src::headers::stdlib::ssize_t,
+                            -> crate::src::headers::stdlib::SsizeT,
                     >,
-                    crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                    crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 >(Some(
                     crate::src::headers::stdlib::read
                         as unsafe extern "C" fn(
                             ::core::ffi::c_int,
                             *mut ::core::ffi::c_void,
-                            crate::__stddef_size_t_h::size_t,
+                            crate::__stddef_size_t_h::SizeT,
                         )
-                            -> crate::src::headers::stdlib::ssize_t,
+                            -> crate::src::headers::stdlib::SsizeT,
                 ))
             },
             pDefault: None,
@@ -795,21 +784,21 @@ static mut aSyscall: [unix_syscall; 29] = {
                         unsafe extern "C" fn(
                             ::core::ffi::c_int,
                             *mut ::core::ffi::c_void,
-                            crate::__stddef_size_t_h::size_t,
-                            crate::src::headers::stdlib::__off64_t,
+                            crate::__stddef_size_t_h::SizeT,
+                            crate::src::headers::stdlib::Off64T,
                         )
-                            -> crate::src::headers::stdlib::ssize_t,
+                            -> crate::src::headers::stdlib::SsizeT,
                     >,
-                    crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                    crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 >(Some(
                     crate::src::headers::stdlib::pread64
                         as unsafe extern "C" fn(
                             ::core::ffi::c_int,
                             *mut ::core::ffi::c_void,
-                            crate::__stddef_size_t_h::size_t,
-                            crate::src::headers::stdlib::__off64_t,
+                            crate::__stddef_size_t_h::SizeT,
+                            crate::src::headers::stdlib::Off64T,
                         )
-                            -> crate::src::headers::stdlib::ssize_t,
+                            -> crate::src::headers::stdlib::SsizeT,
                 ))
             },
             pDefault: None,
@@ -822,19 +811,19 @@ static mut aSyscall: [unix_syscall; 29] = {
                         unsafe extern "C" fn(
                             ::core::ffi::c_int,
                             *const ::core::ffi::c_void,
-                            crate::__stddef_size_t_h::size_t,
+                            crate::__stddef_size_t_h::SizeT,
                         )
-                            -> crate::src::headers::stdlib::ssize_t,
+                            -> crate::src::headers::stdlib::SsizeT,
                     >,
-                    crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                    crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 >(Some(
                     crate::src::headers::stdlib::write
                         as unsafe extern "C" fn(
                             ::core::ffi::c_int,
                             *const ::core::ffi::c_void,
-                            crate::__stddef_size_t_h::size_t,
+                            crate::__stddef_size_t_h::SizeT,
                         )
-                            -> crate::src::headers::stdlib::ssize_t,
+                            -> crate::src::headers::stdlib::SsizeT,
                 ))
             },
             pDefault: None,
@@ -852,21 +841,21 @@ static mut aSyscall: [unix_syscall; 29] = {
                         unsafe extern "C" fn(
                             ::core::ffi::c_int,
                             *const ::core::ffi::c_void,
-                            crate::__stddef_size_t_h::size_t,
-                            crate::src::headers::stdlib::__off64_t,
+                            crate::__stddef_size_t_h::SizeT,
+                            crate::src::headers::stdlib::Off64T,
                         )
-                            -> crate::src::headers::stdlib::ssize_t,
+                            -> crate::src::headers::stdlib::SsizeT,
                     >,
-                    crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                    crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 >(Some(
                     crate::src::headers::stdlib::pwrite64
                         as unsafe extern "C" fn(
                             ::core::ffi::c_int,
                             *const ::core::ffi::c_void,
-                            crate::__stddef_size_t_h::size_t,
-                            crate::src::headers::stdlib::__off64_t,
+                            crate::__stddef_size_t_h::SizeT,
+                            crate::src::headers::stdlib::Off64T,
                         )
-                            -> crate::src::headers::stdlib::ssize_t,
+                            -> crate::src::headers::stdlib::SsizeT,
                 ))
             },
             pDefault: None,
@@ -878,15 +867,15 @@ static mut aSyscall: [unix_syscall; 29] = {
                     Option<
                         unsafe extern "C" fn(
                             ::core::ffi::c_int,
-                            ::libc::mode_t,
+                            crate::src::headers::stdlib::ModeT,
                         ) -> ::core::ffi::c_int,
                     >,
-                    crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                    crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 >(Some(
                     ::libc::fchmod
                         as unsafe extern "C" fn(
                             ::core::ffi::c_int,
-                            ::libc::mode_t,
+                            crate::src::headers::stdlib::ModeT,
                         ) -> ::core::ffi::c_int,
                 ))
             },
@@ -902,7 +891,7 @@ static mut aSyscall: [unix_syscall; 29] = {
             pCurrent: unsafe {
                 ::core::mem::transmute::<
                     Option<unsafe extern "C" fn(*const ::core::ffi::c_char) -> ::core::ffi::c_int>,
-                    crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                    crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 >(Some(
                     ::libc::unlink
                         as unsafe extern "C" fn(*const ::core::ffi::c_char) -> ::core::ffi::c_int,
@@ -920,7 +909,7 @@ static mut aSyscall: [unix_syscall; 29] = {
                             *mut ::core::ffi::c_int,
                         ) -> ::core::ffi::c_int,
                     >,
-                    crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                    crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 >(Some(
                     openDirectory
                         as unsafe extern "C" fn(
@@ -938,15 +927,15 @@ static mut aSyscall: [unix_syscall; 29] = {
                     Option<
                         unsafe extern "C" fn(
                             *const ::core::ffi::c_char,
-                            ::libc::mode_t,
+                            crate::src::headers::stdlib::ModeT,
                         ) -> ::core::ffi::c_int,
                     >,
-                    crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                    crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 >(Some(
                     ::libc::mkdir
                         as unsafe extern "C" fn(
                             *const ::core::ffi::c_char,
-                            ::libc::mode_t,
+                            crate::src::headers::stdlib::ModeT,
                         ) -> ::core::ffi::c_int,
                 ))
             },
@@ -957,7 +946,7 @@ static mut aSyscall: [unix_syscall; 29] = {
             pCurrent: unsafe {
                 ::core::mem::transmute::<
                     Option<unsafe extern "C" fn(*const ::core::ffi::c_char) -> ::core::ffi::c_int>,
-                    crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                    crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 >(Some(
                     ::libc::rmdir
                         as unsafe extern "C" fn(*const ::core::ffi::c_char) -> ::core::ffi::c_int,
@@ -972,17 +961,17 @@ static mut aSyscall: [unix_syscall; 29] = {
                     Option<
                         unsafe extern "C" fn(
                             ::core::ffi::c_int,
-                            crate::src::headers::stdlib::__uid_t,
-                            crate::src::headers::stdlib::__gid_t,
+                            crate::src::headers::stdlib::UidT,
+                            crate::src::headers::stdlib::GidT,
                         ) -> ::core::ffi::c_int,
                     >,
-                    crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                    crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 >(Some(
                     ::libc::fchown
                         as unsafe extern "C" fn(
                             ::core::ffi::c_int,
-                            crate::src::headers::stdlib::__uid_t,
-                            crate::src::headers::stdlib::__gid_t,
+                            crate::src::headers::stdlib::UidT,
+                            crate::src::headers::stdlib::GidT,
                         ) -> ::core::ffi::c_int,
                 ))
             },
@@ -992,11 +981,11 @@ static mut aSyscall: [unix_syscall; 29] = {
             zName: b"geteuid\0" as *const u8 as *const ::core::ffi::c_char,
             pCurrent: unsafe {
                 ::core::mem::transmute::<
-                    Option<unsafe extern "C" fn() -> crate::src::headers::stdlib::__uid_t>,
-                    crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                    Option<unsafe extern "C" fn() -> crate::src::headers::stdlib::UidT>,
+                    crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 >(Some(
                     ::libc::geteuid
-                        as unsafe extern "C" fn() -> crate::src::headers::stdlib::__uid_t,
+                        as unsafe extern "C" fn() -> crate::src::headers::stdlib::UidT,
                 ))
             },
             pDefault: None,
@@ -1008,23 +997,23 @@ static mut aSyscall: [unix_syscall; 29] = {
                     Option<
                         unsafe extern "C" fn(
                             *mut ::core::ffi::c_void,
-                            crate::__stddef_size_t_h::size_t,
+                            crate::__stddef_size_t_h::SizeT,
                             ::core::ffi::c_int,
                             ::core::ffi::c_int,
                             ::core::ffi::c_int,
-                            crate::src::headers::stdlib::__off64_t,
+                            crate::src::headers::stdlib::Off64T,
                         ) -> *mut ::core::ffi::c_void,
                     >,
-                    crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                    crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 >(Some(
                     ::libc::mmap
                         as unsafe extern "C" fn(
                             *mut ::core::ffi::c_void,
-                            crate::__stddef_size_t_h::size_t,
+                            crate::__stddef_size_t_h::SizeT,
                             ::core::ffi::c_int,
                             ::core::ffi::c_int,
                             ::core::ffi::c_int,
-                            crate::src::headers::stdlib::__off64_t,
+                            crate::src::headers::stdlib::Off64T,
                         )
                             -> *mut ::core::ffi::c_void,
                 ))
@@ -1038,15 +1027,15 @@ static mut aSyscall: [unix_syscall; 29] = {
                     Option<
                         unsafe extern "C" fn(
                             *mut ::core::ffi::c_void,
-                            crate::__stddef_size_t_h::size_t,
+                            crate::__stddef_size_t_h::SizeT,
                         ) -> ::core::ffi::c_int,
                     >,
-                    crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                    crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 >(Some(
                     ::libc::munmap
                         as unsafe extern "C" fn(
                             *mut ::core::ffi::c_void,
-                            crate::__stddef_size_t_h::size_t,
+                            crate::__stddef_size_t_h::SizeT,
                         ) -> ::core::ffi::c_int,
                 ))
             },
@@ -1060,19 +1049,19 @@ static mut aSyscall: [unix_syscall; 29] = {
                     Option<
                         unsafe extern "C" fn(
                             *mut ::core::ffi::c_void,
-                            crate::__stddef_size_t_h::size_t,
-                            crate::__stddef_size_t_h::size_t,
+                            crate::__stddef_size_t_h::SizeT,
+                            crate::__stddef_size_t_h::SizeT,
                             ::core::ffi::c_int,
                             ...
                         ) -> *mut ::core::ffi::c_void,
                     >,
-                    crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                    crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 >(Some(
                     ::libc::mremap
                         as unsafe extern "C" fn(
                             *mut ::core::ffi::c_void,
-                            crate::__stddef_size_t_h::size_t,
-                            crate::__stddef_size_t_h::size_t,
+                            crate::__stddef_size_t_h::SizeT,
+                            crate::__stddef_size_t_h::SizeT,
                             ::core::ffi::c_int,
                             ...
                         )
@@ -1085,18 +1074,18 @@ static mut aSyscall: [unix_syscall; 29] = {
                     Option<
                         unsafe extern "C" fn(
                             *mut ::core::ffi::c_void,
-                            crate::__stddef_size_t_h::size_t,
-                            crate::__stddef_size_t_h::size_t,
+                            crate::__stddef_size_t_h::SizeT,
+                            crate::__stddef_size_t_h::SizeT,
                             ::core::ffi::c_int,
                         ) -> *mut ::core::ffi::c_void,
                     >,
-                    crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                    crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 >(Some(
                     crate::compat::mremap
                         as unsafe extern "C" fn(
                             *mut ::core::ffi::c_void,
-                            crate::__stddef_size_t_h::size_t,
-                            crate::__stddef_size_t_h::size_t,
+                            crate::__stddef_size_t_h::SizeT,
+                            crate::__stddef_size_t_h::SizeT,
                             ::core::ffi::c_int,
                         )
                             -> *mut ::core::ffi::c_void,
@@ -1109,7 +1098,7 @@ static mut aSyscall: [unix_syscall; 29] = {
             pCurrent: unsafe {
                 ::core::mem::transmute::<
                     Option<unsafe extern "C" fn() -> ::core::ffi::c_int>,
-                    crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                    crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 >(Some(
                     unixGetpagesize as unsafe extern "C" fn() -> ::core::ffi::c_int,
                 ))
@@ -1124,19 +1113,19 @@ static mut aSyscall: [unix_syscall; 29] = {
                         unsafe extern "C" fn(
                             *const ::core::ffi::c_char,
                             *mut ::core::ffi::c_char,
-                            crate::__stddef_size_t_h::size_t,
+                            crate::__stddef_size_t_h::SizeT,
                         )
-                            -> crate::src::headers::stdlib::ssize_t,
+                            -> crate::src::headers::stdlib::SsizeT,
                     >,
-                    crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                    crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 >(Some(
                     crate::src::headers::stdlib::readlink
                         as unsafe extern "C" fn(
                             *const ::core::ffi::c_char,
                             *mut ::core::ffi::c_char,
-                            crate::__stddef_size_t_h::size_t,
+                            crate::__stddef_size_t_h::SizeT,
                         )
-                            -> crate::src::headers::stdlib::ssize_t,
+                            -> crate::src::headers::stdlib::SsizeT,
                 ))
             },
             pDefault: None,
@@ -1151,7 +1140,7 @@ static mut aSyscall: [unix_syscall; 29] = {
                             *mut crate::src::headers::stdlib::stat,
                         ) -> ::core::ffi::c_int,
                     >,
-                    crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                    crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 >(Some(
                     crate::src::headers::stdlib::lstat
                         as unsafe extern "C" fn(
@@ -1172,12 +1161,12 @@ static mut aSyscall: [unix_syscall; 29] = {
 
 unsafe extern "C" fn robustFchown(
     mut fd: ::core::ffi::c_int,
-    mut uid: crate::src::headers::stdlib::uid_t,
-    mut gid: crate::src::headers::stdlib::gid_t,
+    mut uid: crate::src::headers::stdlib::UidT,
+    mut gid: crate::src::headers::stdlib::GidT,
 ) -> ::core::ffi::c_int {
     if ::core::mem::transmute::<
-        crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
-        Option<unsafe extern "C" fn() -> crate::src::headers::stdlib::uid_t>,
+        crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
+        Option<unsafe extern "C" fn() -> crate::src::headers::stdlib::UidT>,
     >(aSyscall[21 as ::core::ffi::c_int as usize].pCurrent)
     .expect("non-null function pointer")()
         != 0
@@ -1185,12 +1174,12 @@ unsafe extern "C" fn robustFchown(
         0 as ::core::ffi::c_int
     } else {
         ::core::mem::transmute::<
-            crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+            crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
             Option<
                 unsafe extern "C" fn(
                     ::core::ffi::c_int,
-                    crate::src::headers::stdlib::uid_t,
-                    crate::src::headers::stdlib::gid_t,
+                    crate::src::headers::stdlib::UidT,
+                    crate::src::headers::stdlib::GidT,
                 ) -> ::core::ffi::c_int,
             >,
         >(aSyscall[20 as ::core::ffi::c_int as usize].pCurrent)
@@ -1201,7 +1190,7 @@ unsafe extern "C" fn robustFchown(
 unsafe extern "C" fn unixSetSystemCall(
     mut _pNotUsed: *mut crate::src::headers::sqlite3_h::sqlite3_vfs,
     mut zName: *const ::core::ffi::c_char,
-    mut pNewFunc: crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+    mut pNewFunc: crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
 ) -> ::core::ffi::c_int {
     let mut i: ::core::ffi::c_uint = 0;
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_NOTFOUND;
@@ -1244,7 +1233,7 @@ unsafe extern "C" fn unixSetSystemCall(
 unsafe extern "C" fn unixGetSystemCall(
     mut _pNotUsed: *mut crate::src::headers::sqlite3_h::sqlite3_vfs,
     mut zName: *const ::core::ffi::c_char,
-) -> crate::src::headers::sqlite3_h::sqlite3_syscall_ptr {
+) -> crate::src::headers::sqlite3_h::Sqlite3SyscallPtr {
     let mut i: ::core::ffi::c_uint = 0;
     i = 0 as ::core::ffi::c_uint;
     while (i as usize)
@@ -1297,17 +1286,17 @@ pub const SQLITE_MINIMUM_FILE_DESCRIPTOR: ::core::ffi::c_int = 3 as ::core::ffi:
 unsafe extern "C" fn robust_open(
     mut z: *const ::core::ffi::c_char,
     mut f: ::core::ffi::c_int,
-    mut m: crate::src::headers::stdlib::mode_t,
+    mut m: crate::src::headers::stdlib::ModeT,
 ) -> ::core::ffi::c_int {
     let mut fd: ::core::ffi::c_int = 0;
-    let mut m2: crate::src::headers::stdlib::mode_t = if m != 0 {
+    let mut m2: crate::src::headers::stdlib::ModeT = if m != 0 {
         m
     } else {
-        SQLITE_DEFAULT_FILE_PERMISSIONS as crate::src::headers::stdlib::mode_t
+        SQLITE_DEFAULT_FILE_PERMISSIONS as crate::src::headers::stdlib::ModeT
     };
     loop {
         fd = ::core::mem::transmute::<
-            crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+            crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
             Option<
                 unsafe extern "C" fn(
                     *const ::core::ffi::c_char,
@@ -1329,13 +1318,13 @@ unsafe extern "C" fn robust_open(
             }
             if f & (::libc::O_EXCL | ::libc::O_CREAT) == ::libc::O_EXCL | ::libc::O_CREAT {
                 ::core::mem::transmute::<
-                    crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                    crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                     Option<unsafe extern "C" fn(*const ::core::ffi::c_char) -> ::core::ffi::c_int>,
                 >(aSyscall[16 as ::core::ffi::c_int as usize].pCurrent)
                 .expect("non-null function pointer")(z);
             }
             ::core::mem::transmute::<
-                crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 Option<unsafe extern "C" fn(::core::ffi::c_int) -> ::core::ffi::c_int>,
             >(aSyscall[1 as ::core::ffi::c_int as usize].pCurrent)
             .expect("non-null function pointer")(fd);
@@ -1346,13 +1335,13 @@ unsafe extern "C" fn robust_open(
                 &[
                     crate::src::src::printf::PrintfArg::Str(z as *mut ::core::ffi::c_char),
                     crate::src::src::printf::PrintfArg::Int(
-                        fd as crate::src::ext::rtree::rtree::i64_0,
+                        fd as crate::src::ext::rtree::rtree::I64_0,
                     ),
                 ],
             );
             fd = -(1 as ::core::ffi::c_int);
             if ::core::mem::transmute::<
-                crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 Option<
                     unsafe extern "C" fn(
                         *const ::core::ffi::c_char,
@@ -1372,10 +1361,10 @@ unsafe extern "C" fn robust_open(
         }
     }
     if fd >= 0 as ::core::ffi::c_int {
-        if m != 0 as crate::src::headers::stdlib::mode_t {
+        if m != 0 as crate::src::headers::stdlib::ModeT {
             let mut statbuf: crate::src::headers::stdlib::stat = { ::core::mem::zeroed() };
             if ::core::mem::transmute::<
-                crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 Option<
                     unsafe extern "C" fn(
                         ::core::ffi::c_int,
@@ -1385,15 +1374,15 @@ unsafe extern "C" fn robust_open(
             >(aSyscall[5 as ::core::ffi::c_int as usize].pCurrent)
             .expect("non-null function pointer")(fd, &raw mut statbuf)
                 == 0 as ::core::ffi::c_int
-                && statbuf.st_size == 0 as crate::src::headers::stdlib::__off_t
-                && statbuf.st_mode & 0o777 as crate::src::headers::stdlib::__mode_t != m
+                && statbuf.st_size == 0 as crate::src::headers::stdlib::OffT
+                && statbuf.st_mode & 0o777 as crate::src::headers::stdlib::ModeT != m
             {
                 ::core::mem::transmute::<
-                    crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                    crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                     Option<
                         unsafe extern "C" fn(
                             ::core::ffi::c_int,
-                            crate::src::headers::stdlib::mode_t,
+                            crate::src::headers::stdlib::ModeT,
                         ) -> ::core::ffi::c_int,
                     >,
                 >(aSyscall[14 as ::core::ffi::c_int as usize].pCurrent)
@@ -1440,21 +1429,21 @@ unsafe extern "C" fn azFileLock(mut eFileLock: ::core::ffi::c_int) -> *const ::c
 
 unsafe extern "C" fn robust_ftruncate(
     mut h: ::core::ffi::c_int,
-    mut sz: crate::src::headers::sqlite3_h::sqlite3_int64,
+    mut sz: crate::src::headers::sqlite3_h::Sqlite3Int64,
 ) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = 0;
     loop {
         rc = ::core::mem::transmute::<
-            crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+            crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
             Option<
                 unsafe extern "C" fn(
                     ::core::ffi::c_int,
-                    crate::src::headers::stdlib::off_t,
+                    crate::src::headers::stdlib::OffT,
                 ) -> ::core::ffi::c_int,
             >,
         >(aSyscall[6 as ::core::ffi::c_int as usize].pCurrent)
         .expect("non-null function pointer")(
-            h, sz as crate::src::headers::stdlib::off_t
+            h, sz as crate::src::headers::stdlib::OffT
         );
         if !(rc < 0 as ::core::ffi::c_int && *crate::compat::errno_location() == ::libc::EINTR) {
             break;
@@ -1498,8 +1487,8 @@ unsafe extern "C" fn unixLogErrorAtLine(
         errcode,
         b"os_unix.c:%d: (%d) %s(%s) - %s\0" as *const u8 as *const ::core::ffi::c_char,
         &[
-            crate::src::src::printf::PrintfArg::Int(iLine as crate::src::ext::rtree::rtree::i64_0),
-            crate::src::src::printf::PrintfArg::Int(iErrno as crate::src::ext::rtree::rtree::i64_0),
+            crate::src::src::printf::PrintfArg::Int(iLine as crate::src::ext::rtree::rtree::I64_0),
+            crate::src::src::printf::PrintfArg::Int(iErrno as crate::src::ext::rtree::rtree::I64_0),
             crate::src::src::printf::PrintfArg::Str(zFunc as *mut ::core::ffi::c_char),
             crate::src::src::printf::PrintfArg::Str(zPath as *mut ::core::ffi::c_char),
             crate::src::src::printf::PrintfArg::Str(zErr),
@@ -1514,7 +1503,7 @@ unsafe extern "C" fn robust_close(
     mut lineno: ::core::ffi::c_int,
 ) {
     if ::core::mem::transmute::<
-        crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+        crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
         Option<unsafe extern "C" fn(::core::ffi::c_int) -> ::core::ffi::c_int>,
     >(aSyscall[1 as ::core::ffi::c_int as usize].pCurrent)
     .expect("non-null function pointer")(h)
@@ -1585,7 +1574,7 @@ unsafe extern "C" fn findInodeInfo(
     let mut pInode: *mut unixInodeInfo = ::core::ptr::null_mut::<unixInodeInfo>();
     fd = (*pFile).h;
     rc = ::core::mem::transmute::<
-        crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+        crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
         Option<
             unsafe extern "C" fn(
                 ::core::ffi::c_int,
@@ -1598,21 +1587,21 @@ unsafe extern "C" fn findInodeInfo(
         storeLastErrno(pFile, *crate::compat::errno_location());
         return crate::src::headers::sqlite3_h::SQLITE_IOERR;
     }
-    fileId.dev = statbuf.st_dev as crate::src::headers::stdlib::dev_t;
-    fileId.ino = statbuf.st_ino as crate::src::ext::rtree::rtree::u64_0;
+    fileId.dev = statbuf.st_dev as crate::src::headers::stdlib::DevT;
+    fileId.ino = statbuf.st_ino as crate::src::ext::rtree::rtree::U64_0;
     pInode = inodeList;
     while !pInode.is_null()
         && ::libc::memcmp(
             &raw mut fileId as *const ::core::ffi::c_void,
             &raw mut (*pInode).fileId as *const ::core::ffi::c_void,
-            ::core::mem::size_of::<unixFileId>() as crate::__stddef_size_t_h::size_t,
+            ::core::mem::size_of::<unixFileId>() as crate::__stddef_size_t_h::SizeT,
         ) != 0
     {
         pInode = (*pInode).pNext;
     }
     if pInode.is_null() {
         pInode = crate::src::src::malloc::sqlite3_malloc64(::core::mem::size_of::<unixInodeInfo>()
-            as crate::src::headers::sqlite3_h::sqlite3_uint64)
+            as crate::src::headers::sqlite3_h::Sqlite3Uint64)
             as *mut unixInodeInfo;
         if pInode.is_null() {
             return crate::src::headers::sqliteInt_h::SQLITE_NOMEM_BKPT;
@@ -1620,7 +1609,7 @@ unsafe extern "C" fn findInodeInfo(
         ::libc::memset(
             pInode as *mut ::core::ffi::c_void,
             0 as ::core::ffi::c_int,
-            ::core::mem::size_of::<unixInodeInfo>() as crate::__stddef_size_t_h::size_t,
+            ::core::mem::size_of::<unixInodeInfo>() as crate::__stddef_size_t_h::SizeT,
         );
         ::core::ptr::copy_nonoverlapping(
             &raw mut fileId as *const u8,
@@ -1655,7 +1644,7 @@ unsafe extern "C" fn fileHasMoved(mut pFile: *mut unixFile) -> ::core::ffi::c_in
     let __pFile_ref = { &mut *pFile };
     (!__pFile_ref.pInode.is_null()
         && (::core::mem::transmute::<
-            crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+            crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
             Option<
                 unsafe extern "C" fn(
                     *const ::core::ffi::c_char,
@@ -1665,7 +1654,7 @@ unsafe extern "C" fn fileHasMoved(mut pFile: *mut unixFile) -> ::core::ffi::c_in
         >(aSyscall[4 as ::core::ffi::c_int as usize].pCurrent)
         .expect("non-null function pointer")(__pFile_ref.zPath, &raw mut buf)
             != 0 as ::core::ffi::c_int
-            || buf.st_ino as crate::src::ext::rtree::rtree::u64_0
+            || buf.st_ino as crate::src::ext::rtree::rtree::U64_0
                 != (*__pFile_ref.pInode).fileId.ino)) as ::core::ffi::c_int
 }
 
@@ -1676,7 +1665,7 @@ unsafe extern "C" fn verifyDbFile(mut pFile: *mut unixFile) {
         return;
     }
     rc = ::core::mem::transmute::<
-        crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+        crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
         Option<
             unsafe extern "C" fn(
                 ::core::ffi::c_int,
@@ -1695,7 +1684,7 @@ unsafe extern "C" fn verifyDbFile(mut pFile: *mut unixFile) {
         );
         return;
     }
-    if buf.st_nlink == 0 as crate::src::headers::stdlib::__nlink_t {
+    if buf.st_nlink == 0 as crate::src::headers::stdlib::NlinkT {
         crate::src::printf_c_variadic::sqlite3_log_args(
             crate::src::headers::sqlite3_h::SQLITE_WARNING,
             b"file unlinked while open: %s\0" as *const u8 as *const ::core::ffi::c_char,
@@ -1705,7 +1694,7 @@ unsafe extern "C" fn verifyDbFile(mut pFile: *mut unixFile) {
         );
         return;
     }
-    if buf.st_nlink > 1 as crate::src::headers::stdlib::__nlink_t {
+    if buf.st_nlink > 1 as crate::src::headers::stdlib::NlinkT {
         crate::src::printf_c_variadic::sqlite3_log_args(
             crate::src::headers::sqlite3_h::SQLITE_WARNING,
             b"multiple links to file: %s\0" as *const u8 as *const ::core::ffi::c_char,
@@ -1754,11 +1743,11 @@ unsafe extern "C" fn unixCheckReservedLock(
         let mut lock: ::libc::flock = { ::core::mem::zeroed() };
         lock.l_whence = ::libc::SEEK_SET as ::core::ffi::c_short;
         lock.l_start = (crate::src::src::global::sqlite3PendingByte + 1 as ::core::ffi::c_int)
-            as crate::src::headers::stdlib::__off64_t;
-        lock.l_len = 1 as crate::src::headers::stdlib::__off64_t;
+            as crate::src::headers::stdlib::Off64T;
+        lock.l_len = 1 as crate::src::headers::stdlib::Off64T;
         lock.l_type = ::libc::F_WRLCK as ::core::ffi::c_short;
         if ::core::mem::transmute::<
-            crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+            crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
             Option<
                 unsafe extern "C" fn(
                     ::core::ffi::c_int,
@@ -1783,11 +1772,11 @@ unsafe extern "C" fn unixCheckReservedLock(
             b"TEST WR-LOCK %d %d %d (unix)\n\0" as *const u8 as *const ::core::ffi::c_char,
             &[
                 crate::src::src::printf::PrintfArg::Int(
-                    __pFile_ref.h as crate::src::ext::rtree::rtree::i64_0,
+                    __pFile_ref.h as crate::src::ext::rtree::rtree::I64_0,
                 ),
-                crate::src::src::printf::PrintfArg::Int(rc as crate::src::ext::rtree::rtree::i64_0),
+                crate::src::src::printf::PrintfArg::Int(rc as crate::src::ext::rtree::rtree::I64_0),
                 crate::src::src::printf::PrintfArg::Int(
-                    reserved as crate::src::ext::rtree::rtree::i64_0,
+                    reserved as crate::src::ext::rtree::rtree::I64_0,
                 ),
             ],
         );
@@ -1808,11 +1797,11 @@ unsafe extern "C" fn unixFileLock(
             let mut lock: ::libc::flock = { ::core::mem::zeroed() };
             lock.l_whence = ::libc::SEEK_SET as ::core::ffi::c_short;
             lock.l_start = (crate::src::src::global::sqlite3PendingByte + 2 as ::core::ffi::c_int)
-                as crate::src::headers::stdlib::__off64_t;
-            lock.l_len = crate::src::src::os::SHARED_SIZE as crate::src::headers::stdlib::__off64_t;
+                as crate::src::headers::stdlib::Off64T;
+            lock.l_len = crate::src::src::os::SHARED_SIZE as crate::src::headers::stdlib::Off64T;
             lock.l_type = ::libc::F_WRLCK as ::core::ffi::c_short;
             rc = ::core::mem::transmute::<
-                crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 Option<
                     unsafe extern "C" fn(
                         ::core::ffi::c_int,
@@ -1834,7 +1823,7 @@ unsafe extern "C" fn unixFileLock(
         }
     } else {
         rc = ::core::mem::transmute::<
-            crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+            crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
             Option<
                 unsafe extern "C" fn(
                     ::core::ffi::c_int,
@@ -1865,7 +1854,7 @@ unsafe extern "C" fn unixLock(
                 as *const ::core::ffi::c_char,
             &[
                 crate::src::src::printf::PrintfArg::Int(
-                    __pFile_ref.h as crate::src::ext::rtree::rtree::i64_0,
+                    __pFile_ref.h as crate::src::ext::rtree::rtree::I64_0,
                 ),
                 crate::src::src::printf::PrintfArg::Str(
                     azFileLock(eFileLock) as *mut ::core::ffi::c_char
@@ -1879,10 +1868,10 @@ unsafe extern "C" fn unixLock(
                 )
                     as *mut ::core::ffi::c_char),
                 crate::src::src::printf::PrintfArg::Int(
-                    (*__pFile_ref.pInode).nShared as crate::src::ext::rtree::rtree::i64_0,
+                    (*__pFile_ref.pInode).nShared as crate::src::ext::rtree::rtree::I64_0,
                 ),
                 crate::src::src::printf::PrintfArg::Int(
-                    ::libc::getpid() as crate::src::ext::rtree::rtree::i64_0
+                    ::libc::getpid() as crate::src::ext::rtree::rtree::I64_0
                 ),
             ],
         );
@@ -1894,7 +1883,7 @@ unsafe extern "C" fn unixLock(
                     as *const ::core::ffi::c_char,
                 &[
                     crate::src::src::printf::PrintfArg::Int(
-                        __pFile_ref.h as crate::src::ext::rtree::rtree::i64_0,
+                        __pFile_ref.h as crate::src::ext::rtree::rtree::I64_0,
                     ),
                     crate::src::src::printf::PrintfArg::Str(
                         azFileLock(eFileLock) as *mut ::core::ffi::c_char
@@ -1919,7 +1908,7 @@ unsafe extern "C" fn unixLock(
         (*pInode).nShared += 1;
         (*pInode).nLock += 1;
     } else {
-        lock.l_len = 1 as ::core::ffi::c_long as crate::src::headers::stdlib::__off64_t;
+        lock.l_len = 1 as ::core::ffi::c_long as crate::src::headers::stdlib::Off64T;
         lock.l_whence = ::libc::SEEK_SET as ::core::ffi::c_short;
         if eFileLock == crate::src::src::os::SHARED_LOCK
             || eFileLock == crate::src::src::os::EXCLUSIVE_LOCK
@@ -1931,7 +1920,7 @@ unsafe extern "C" fn unixLock(
                 ::libc::F_WRLCK
             }) as ::core::ffi::c_short;
             lock.l_start = crate::src::src::global::sqlite3PendingByte
-                as crate::src::headers::stdlib::__off64_t;
+                as crate::src::headers::stdlib::Off64T;
             if unixFileLock(pFile, &raw mut lock) != 0 {
                 tErrno = *crate::compat::errno_location();
                 rc = sqliteErrorFromPosixError(
@@ -1959,9 +1948,9 @@ unsafe extern "C" fn unixLock(
                 if eFileLock == crate::src::src::os::SHARED_LOCK {
                     lock.l_start = (crate::src::src::global::sqlite3PendingByte
                         + 2 as ::core::ffi::c_int)
-                        as crate::src::headers::stdlib::__off64_t;
+                        as crate::src::headers::stdlib::Off64T;
                     lock.l_len =
-                        crate::src::src::os::SHARED_SIZE as crate::src::headers::stdlib::__off64_t;
+                        crate::src::src::os::SHARED_SIZE as crate::src::headers::stdlib::Off64T;
                     if unixFileLock(pFile, &raw mut lock) != 0 {
                         tErrno = *crate::compat::errno_location();
                         rc = sqliteErrorFromPosixError(
@@ -1970,8 +1959,8 @@ unsafe extern "C" fn unixLock(
                         );
                     }
                     lock.l_start = crate::src::src::global::sqlite3PendingByte
-                        as crate::src::headers::stdlib::__off64_t;
-                    lock.l_len = 1 as ::core::ffi::c_long as crate::src::headers::stdlib::__off64_t;
+                        as crate::src::headers::stdlib::Off64T;
+                    lock.l_len = 1 as ::core::ffi::c_long as crate::src::headers::stdlib::Off64T;
                     lock.l_type = ::libc::F_UNLCK as ::core::ffi::c_short;
                     if unixFileLock(pFile, &raw mut lock) != 0
                         && rc == crate::src::headers::sqlite3_h::SQLITE_OK
@@ -2003,15 +1992,15 @@ unsafe extern "C" fn unixLock(
                         if eFileLock == crate::src::src::os::RESERVED_LOCK {
                             lock.l_start = (crate::src::src::global::sqlite3PendingByte
                                 + 1 as ::core::ffi::c_int)
-                                as crate::src::headers::stdlib::__off64_t;
+                                as crate::src::headers::stdlib::Off64T;
                             lock.l_len =
-                                1 as ::core::ffi::c_long as crate::src::headers::stdlib::__off64_t;
+                                1 as ::core::ffi::c_long as crate::src::headers::stdlib::Off64T;
                         } else {
                             lock.l_start = (crate::src::src::global::sqlite3PendingByte
                                 + 2 as ::core::ffi::c_int)
-                                as crate::src::headers::stdlib::__off64_t;
+                                as crate::src::headers::stdlib::Off64T;
                             lock.l_len = crate::src::src::os::SHARED_SIZE
-                                as crate::src::headers::stdlib::__off64_t;
+                                as crate::src::headers::stdlib::Off64T;
                         }
                         if unixFileLock(pFile, &raw mut lock) != 0 {
                             tErrno = *crate::compat::errno_location();
@@ -2044,7 +2033,7 @@ unsafe extern "C" fn unixLock(
             b"LOCK    %d %s %s (unix)\n\0" as *const u8 as *const ::core::ffi::c_char,
             &[
                 crate::src::src::printf::PrintfArg::Int(
-                    __pFile_ref.h as crate::src::ext::rtree::rtree::i64_0,
+                    __pFile_ref.h as crate::src::ext::rtree::rtree::I64_0,
                 ),
                 crate::src::src::printf::PrintfArg::Str(
                     azFileLock(eFileLock) as *mut ::core::ffi::c_char
@@ -2088,22 +2077,22 @@ unsafe extern "C" fn posixUnlock(
                 as *const ::core::ffi::c_char,
             &[
                 crate::src::src::printf::PrintfArg::Int(
-                    __pFile_ref.h as crate::src::ext::rtree::rtree::i64_0,
+                    __pFile_ref.h as crate::src::ext::rtree::rtree::I64_0,
                 ),
                 crate::src::src::printf::PrintfArg::Int(
-                    eFileLock as crate::src::ext::rtree::rtree::i64_0,
+                    eFileLock as crate::src::ext::rtree::rtree::I64_0,
                 ),
                 crate::src::src::printf::PrintfArg::Int(
-                    __pFile_ref.eFileLock as crate::src::ext::rtree::rtree::i64_0,
+                    __pFile_ref.eFileLock as crate::src::ext::rtree::rtree::I64_0,
                 ),
                 crate::src::src::printf::PrintfArg::Int(
-                    (*__pFile_ref.pInode).eFileLock as crate::src::ext::rtree::rtree::i64_0,
+                    (*__pFile_ref.pInode).eFileLock as crate::src::ext::rtree::rtree::I64_0,
                 ),
                 crate::src::src::printf::PrintfArg::Int(
-                    (*__pFile_ref.pInode).nShared as crate::src::ext::rtree::rtree::i64_0,
+                    (*__pFile_ref.pInode).nShared as crate::src::ext::rtree::rtree::I64_0,
                 ),
                 crate::src::src::printf::PrintfArg::Int(
-                    ::libc::getpid() as crate::src::ext::rtree::rtree::i64_0
+                    ::libc::getpid() as crate::src::ext::rtree::rtree::I64_0
                 ),
             ],
         );
@@ -2118,8 +2107,8 @@ unsafe extern "C" fn posixUnlock(
             lock.l_type = ::libc::F_RDLCK as ::core::ffi::c_short;
             lock.l_whence = ::libc::SEEK_SET as ::core::ffi::c_short;
             lock.l_start = (crate::src::src::global::sqlite3PendingByte + 2 as ::core::ffi::c_int)
-                as crate::src::headers::stdlib::__off64_t;
-            lock.l_len = crate::src::src::os::SHARED_SIZE as crate::src::headers::stdlib::__off64_t;
+                as crate::src::headers::stdlib::Off64T;
+            lock.l_len = crate::src::src::os::SHARED_SIZE as crate::src::headers::stdlib::Off64T;
             if unixFileLock(pFile, &raw mut lock) != 0 {
                 rc = crate::src::headers::sqlite3_h::SQLITE_IOERR_RDLOCK_1;
                 storeLastErrno(pFile, *crate::compat::errno_location());
@@ -2136,8 +2125,8 @@ unsafe extern "C" fn posixUnlock(
                 lock.l_type = ::libc::F_UNLCK as ::core::ffi::c_short;
                 lock.l_whence = ::libc::SEEK_SET as ::core::ffi::c_short;
                 lock.l_start = crate::src::src::global::sqlite3PendingByte
-                    as crate::src::headers::stdlib::__off64_t;
-                lock.l_len = 2 as ::core::ffi::c_long as crate::src::headers::stdlib::__off64_t;
+                    as crate::src::headers::stdlib::Off64T;
+                lock.l_len = 2 as ::core::ffi::c_long as crate::src::headers::stdlib::Off64T;
                 if unixFileLock(pFile, &raw mut lock) == 0 as ::core::ffi::c_int {
                     (*pInode).eFileLock = crate::src::src::os::SHARED_LOCK as ::core::ffi::c_uchar;
                     current_block = 16203760046146113240;
@@ -2159,7 +2148,7 @@ unsafe extern "C" fn posixUnlock(
                 if __pInode_ref.nShared == 0 as ::core::ffi::c_int {
                     lock.l_type = ::libc::F_UNLCK as ::core::ffi::c_short;
                     lock.l_whence = ::libc::SEEK_SET as ::core::ffi::c_short;
-                    lock.l_len = 0 as ::core::ffi::c_long as crate::src::headers::stdlib::__off64_t;
+                    lock.l_len = 0 as ::core::ffi::c_long as crate::src::headers::stdlib::Off64T;
                     lock.l_start = lock.l_len;
                     if unixFileLock(pFile, &raw mut lock) == 0 as ::core::ffi::c_int {
                         __pInode_ref.eFileLock =
@@ -2208,7 +2197,7 @@ unsafe extern "C" fn closeUnixFile(
         crate::src::printf_c_variadic::sqlite3DebugPrintf_args(
             b"CLOSE   %-3d\n\0" as *const u8 as *const ::core::ffi::c_char,
             &[crate::src::src::printf::PrintfArg::Int(
-                (*pFile).h as crate::src::ext::rtree::rtree::i64_0,
+                (*pFile).h as crate::src::ext::rtree::rtree::I64_0,
             )],
         );
     }
@@ -2217,7 +2206,7 @@ unsafe extern "C" fn closeUnixFile(
     ::libc::memset(
         pFile as *mut ::core::ffi::c_void,
         0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<unixFile>() as crate::__stddef_size_t_h::size_t,
+        ::core::mem::size_of::<unixFile>() as crate::__stddef_size_t_h::SizeT,
     );
     crate::src::headers::sqlite3_h::SQLITE_OK
 }
@@ -2291,7 +2280,7 @@ unsafe extern "C" fn dotlockCheckReservedLock(
         *pResOut = 0 as ::core::ffi::c_int;
     } else {
         *pResOut = (::core::mem::transmute::<
-            crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+            crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
             Option<
                 unsafe extern "C" fn(
                     *const ::core::ffi::c_char,
@@ -2309,11 +2298,11 @@ unsafe extern "C" fn dotlockCheckReservedLock(
             b"TEST WR-LOCK %d %d %d (dotlock)\n\0" as *const u8 as *const ::core::ffi::c_char,
             &[
                 crate::src::src::printf::PrintfArg::Int(
-                    (*pFile).h as crate::src::ext::rtree::rtree::i64_0,
+                    (*pFile).h as crate::src::ext::rtree::rtree::I64_0,
                 ),
-                crate::src::src::printf::PrintfArg::Int(0 as crate::src::ext::rtree::rtree::i64_0),
+                crate::src::src::printf::PrintfArg::Int(0 as crate::src::ext::rtree::rtree::I64_0),
                 crate::src::src::printf::PrintfArg::Int(
-                    *pResOut as crate::src::ext::rtree::rtree::i64_0,
+                    *pResOut as crate::src::ext::rtree::rtree::I64_0,
                 ),
             ],
         );
@@ -2339,16 +2328,16 @@ unsafe extern "C" fn dotlockLock(
         return crate::src::headers::sqlite3_h::SQLITE_OK;
     }
     rc = ::core::mem::transmute::<
-        crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+        crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
         Option<
             unsafe extern "C" fn(
                 *const ::core::ffi::c_char,
-                crate::src::headers::stdlib::mode_t,
+                crate::src::headers::stdlib::ModeT,
             ) -> ::core::ffi::c_int,
         >,
     >(aSyscall[18 as ::core::ffi::c_int as usize].pCurrent)
     .expect("non-null function pointer")(
-        zLockFile, 0o777 as crate::src::headers::stdlib::mode_t
+        zLockFile, 0o777 as crate::src::headers::stdlib::ModeT
     );
     if rc < 0 as ::core::ffi::c_int {
         let mut tErrno: ::core::ffi::c_int = *crate::compat::errno_location();
@@ -2383,16 +2372,16 @@ unsafe extern "C" fn dotlockUnlock(
             b"UNLOCK  %d %d was %d pid=%d (dotlock)\n\0" as *const u8 as *const ::core::ffi::c_char,
             &[
                 crate::src::src::printf::PrintfArg::Int(
-                    __pFile_ref.h as crate::src::ext::rtree::rtree::i64_0,
+                    __pFile_ref.h as crate::src::ext::rtree::rtree::I64_0,
                 ),
                 crate::src::src::printf::PrintfArg::Int(
-                    eFileLock as crate::src::ext::rtree::rtree::i64_0,
+                    eFileLock as crate::src::ext::rtree::rtree::I64_0,
                 ),
                 crate::src::src::printf::PrintfArg::Int(
-                    __pFile_ref.eFileLock as crate::src::ext::rtree::rtree::i64_0,
+                    __pFile_ref.eFileLock as crate::src::ext::rtree::rtree::I64_0,
                 ),
                 crate::src::src::printf::PrintfArg::Int(
-                    ::libc::getpid() as crate::src::ext::rtree::rtree::i64_0
+                    ::libc::getpid() as crate::src::ext::rtree::rtree::I64_0
                 ),
             ],
         );
@@ -2405,7 +2394,7 @@ unsafe extern "C" fn dotlockUnlock(
         return crate::src::headers::sqlite3_h::SQLITE_OK;
     }
     rc = ::core::mem::transmute::<
-        crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+        crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
         Option<unsafe extern "C" fn(*const ::core::ffi::c_char) -> ::core::ffi::c_int>,
     >(aSyscall[19 as ::core::ffi::c_int as usize].pCurrent)
     .expect("non-null function pointer")(zLockFile);
@@ -2434,7 +2423,7 @@ unsafe extern "C" fn dotlockClose(
 
 unsafe extern "C" fn seekAndRead(
     mut id: *mut unixFile,
-    mut offset: crate::src::headers::sqlite3_h::sqlite3_int64,
+    mut offset: crate::src::headers::sqlite3_h::Sqlite3Int64,
     mut pBuf: *mut ::core::ffi::c_void,
     mut cnt: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
@@ -2442,21 +2431,21 @@ unsafe extern "C" fn seekAndRead(
     let mut prior: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     loop {
         got = ::core::mem::transmute::<
-            crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+            crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
             Option<
                 unsafe extern "C" fn(
                     ::core::ffi::c_int,
                     *mut ::core::ffi::c_void,
-                    crate::__stddef_size_t_h::size_t,
-                    crate::src::headers::stdlib::off64_t,
-                ) -> crate::src::headers::stdlib::ssize_t,
+                    crate::__stddef_size_t_h::SizeT,
+                    crate::src::headers::stdlib::Off64T,
+                ) -> crate::src::headers::stdlib::SsizeT,
             >,
         >(aSyscall[10 as ::core::ffi::c_int as usize].pCurrent)
         .expect("non-null function pointer")(
             (*id).h,
             pBuf,
-            cnt as crate::__stddef_size_t_h::size_t,
-            offset as crate::src::headers::stdlib::off64_t,
+            cnt as crate::__stddef_size_t_h::SizeT,
+            offset as crate::src::headers::stdlib::Off64T,
         ) as ::core::ffi::c_int;
         if crate::src::src::os::sqlite3_io_error_persist != 0
             && crate::src::src::os::sqlite3_io_error_hit != 0
@@ -2482,7 +2471,7 @@ unsafe extern "C" fn seekAndRead(
             }
         } else if got > 0 as ::core::ffi::c_int {
             cnt -= got;
-            offset += got as crate::src::headers::sqlite3_h::sqlite3_int64;
+            offset += got as crate::src::headers::sqlite3_h::Sqlite3Int64;
             prior += got;
             pBuf =
                 (pBuf as *mut ::core::ffi::c_char).offset(got as isize) as *mut ::core::ffi::c_void;
@@ -2496,13 +2485,13 @@ unsafe extern "C" fn seekAndRead(
             b"READ    %-3d %5d %7lld %llu\n\0" as *const u8 as *const ::core::ffi::c_char,
             &[
                 crate::src::src::printf::PrintfArg::Int(
-                    (*id).h as crate::src::ext::rtree::rtree::i64_0,
+                    (*id).h as crate::src::ext::rtree::rtree::I64_0,
                 ),
                 crate::src::src::printf::PrintfArg::Int(
-                    (got + prior) as crate::src::ext::rtree::rtree::i64_0,
+                    (got + prior) as crate::src::ext::rtree::rtree::I64_0,
                 ),
                 crate::src::src::printf::PrintfArg::Int(
-                    offset - prior as crate::src::headers::sqlite3_h::sqlite3_int64,
+                    offset - prior as crate::src::headers::sqlite3_h::Sqlite3Int64,
                 ),
                 crate::src::src::printf::PrintfArg::UInt(0 as u64),
             ],
@@ -2515,36 +2504,36 @@ unsafe extern "C" fn unixRead(
     mut id: *mut crate::src::headers::sqlite3_h::sqlite3_file,
     mut pBuf: *mut ::core::ffi::c_void,
     mut amt: ::core::ffi::c_int,
-    mut offset: crate::src::headers::sqlite3_h::sqlite3_int64,
+    mut offset: crate::src::headers::sqlite3_h::Sqlite3Int64,
 ) -> ::core::ffi::c_int {
     let mut pFile: *mut unixFile = id as *mut unixFile;
     let mut got: ::core::ffi::c_int = 0;
     if offset < (*pFile).mmapSize {
-        if offset + amt as crate::src::headers::sqlite3_h::sqlite3_int64 <= (*pFile).mmapSize {
+        if offset + amt as crate::src::headers::sqlite3_h::Sqlite3Int64 <= (*pFile).mmapSize {
             ::libc::memcpy(
                 pBuf,
-                ((*pFile).pMapRegion as *mut crate::src::ext::rtree::rtree::u8_0)
+                ((*pFile).pMapRegion as *mut crate::src::ext::rtree::rtree::U8_0)
                     .offset(offset as isize)
-                    as *mut crate::src::ext::rtree::rtree::u8_0
+                    as *mut crate::src::ext::rtree::rtree::U8_0
                     as *const ::core::ffi::c_void,
-                amt as crate::__stddef_size_t_h::size_t,
+                amt as crate::__stddef_size_t_h::SizeT,
             );
             return crate::src::headers::sqlite3_h::SQLITE_OK;
         } else {
             let mut nCopy: ::core::ffi::c_int = ((*pFile).mmapSize - offset) as ::core::ffi::c_int;
             ::libc::memcpy(
                 pBuf,
-                ((*pFile).pMapRegion as *mut crate::src::ext::rtree::rtree::u8_0)
+                ((*pFile).pMapRegion as *mut crate::src::ext::rtree::rtree::U8_0)
                     .offset(offset as isize)
-                    as *mut crate::src::ext::rtree::rtree::u8_0
+                    as *mut crate::src::ext::rtree::rtree::U8_0
                     as *const ::core::ffi::c_void,
-                nCopy as crate::__stddef_size_t_h::size_t,
+                nCopy as crate::__stddef_size_t_h::SizeT,
             );
-            pBuf = (pBuf as *mut crate::src::ext::rtree::rtree::u8_0).offset(nCopy as isize)
-                as *mut crate::src::ext::rtree::rtree::u8_0
+            pBuf = (pBuf as *mut crate::src::ext::rtree::rtree::U8_0).offset(nCopy as isize)
+                as *mut crate::src::ext::rtree::rtree::U8_0
                 as *mut ::core::ffi::c_void;
             amt -= nCopy;
-            offset += nCopy as crate::src::headers::sqlite3_h::sqlite3_int64;
+            offset += nCopy as crate::src::headers::sqlite3_h::Sqlite3Int64;
         }
     }
     got = seekAndRead(pFile, offset, pBuf, amt);
@@ -2564,7 +2553,7 @@ unsafe extern "C" fn unixRead(
             (pBuf as *mut ::core::ffi::c_char).offset(got as isize) as *mut ::core::ffi::c_char
                 as *mut ::core::ffi::c_void,
             0 as ::core::ffi::c_int,
-            (amt - got) as crate::__stddef_size_t_h::size_t,
+            (amt - got) as crate::__stddef_size_t_h::SizeT,
         );
         return crate::src::headers::sqlite3_h::SQLITE_IOERR_SHORT_READ_1;
     };
@@ -2572,7 +2561,7 @@ unsafe extern "C" fn unixRead(
 
 unsafe extern "C" fn seekAndWriteFd(
     mut fd: ::core::ffi::c_int,
-    mut iOff: crate::src::ext::rtree::rtree::i64_0,
+    mut iOff: crate::src::ext::rtree::rtree::I64_0,
     mut pBuf: *const ::core::ffi::c_void,
     mut nBuf: ::core::ffi::c_int,
     mut piErrno: *mut ::core::ffi::c_int,
@@ -2581,21 +2570,21 @@ unsafe extern "C" fn seekAndWriteFd(
     nBuf &= 0x1ffff as ::core::ffi::c_int;
     loop {
         rc = ::core::mem::transmute::<
-            crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+            crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
             Option<
                 unsafe extern "C" fn(
                     ::core::ffi::c_int,
                     *const ::core::ffi::c_void,
-                    crate::__stddef_size_t_h::size_t,
-                    crate::src::headers::stdlib::off64_t,
-                ) -> crate::src::headers::stdlib::ssize_t,
+                    crate::__stddef_size_t_h::SizeT,
+                    crate::src::headers::stdlib::Off64T,
+                ) -> crate::src::headers::stdlib::SsizeT,
             >,
         >(aSyscall[13 as ::core::ffi::c_int as usize].pCurrent)
         .expect("non-null function pointer")(
             fd,
             pBuf,
-            nBuf as crate::__stddef_size_t_h::size_t,
-            iOff as crate::src::headers::stdlib::off64_t,
+            nBuf as crate::__stddef_size_t_h::SizeT,
+            iOff as crate::src::headers::stdlib::Off64T,
         ) as ::core::ffi::c_int;
         if !(rc < 0 as ::core::ffi::c_int && *crate::compat::errno_location() == ::libc::EINTR) {
             break;
@@ -2605,8 +2594,8 @@ unsafe extern "C" fn seekAndWriteFd(
         crate::src::printf_c_variadic::sqlite3DebugPrintf_args(
             b"WRITE   %-3d %5d %7lld %llu\n\0" as *const u8 as *const ::core::ffi::c_char,
             &[
-                crate::src::src::printf::PrintfArg::Int(fd as crate::src::ext::rtree::rtree::i64_0),
-                crate::src::src::printf::PrintfArg::Int(rc as crate::src::ext::rtree::rtree::i64_0),
+                crate::src::src::printf::PrintfArg::Int(fd as crate::src::ext::rtree::rtree::I64_0),
+                crate::src::src::printf::PrintfArg::Int(rc as crate::src::ext::rtree::rtree::I64_0),
                 crate::src::src::printf::PrintfArg::Int(iOff),
                 crate::src::src::printf::PrintfArg::UInt(0 as u64),
             ],
@@ -2620,7 +2609,7 @@ unsafe extern "C" fn seekAndWriteFd(
 
 unsafe extern "C" fn seekAndWrite(
     mut id: *mut unixFile,
-    mut offset: crate::src::ext::rtree::rtree::i64_0,
+    mut offset: crate::src::ext::rtree::rtree::I64_0,
     mut pBuf: *const ::core::ffi::c_void,
     mut cnt: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
@@ -2631,14 +2620,14 @@ unsafe extern "C" fn unixWrite(
     mut id: *mut crate::src::headers::sqlite3_h::sqlite3_file,
     mut pBuf: *const ::core::ffi::c_void,
     mut amt: ::core::ffi::c_int,
-    mut offset: crate::src::headers::sqlite3_h::sqlite3_int64,
+    mut offset: crate::src::headers::sqlite3_h::Sqlite3Int64,
 ) -> ::core::ffi::c_int {
     let mut pFile: *mut unixFile = id as *mut unixFile;
     let mut wrote: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
     loop {
         wrote = seekAndWrite(
             pFile,
-            offset as crate::src::ext::rtree::rtree::i64_0,
+            offset as crate::src::ext::rtree::rtree::I64_0,
             pBuf,
             amt,
         );
@@ -2646,7 +2635,7 @@ unsafe extern "C" fn unixWrite(
             break;
         }
         amt -= wrote;
-        offset += wrote as crate::src::headers::sqlite3_h::sqlite3_int64;
+        offset += wrote as crate::src::headers::sqlite3_h::Sqlite3Int64;
         pBuf = (pBuf as *mut ::core::ffi::c_char).offset(wrote as isize) as *mut ::core::ffi::c_char
             as *const ::core::ffi::c_void;
     }
@@ -2701,7 +2690,7 @@ unsafe extern "C" fn full_fsync(
     sqlite3_sync_count += 1;
     let mut buf: crate::src::headers::stdlib::stat = { ::core::mem::zeroed() };
     rc = ::core::mem::transmute::<
-        crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+        crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
         Option<
             unsafe extern "C" fn(
                 ::core::ffi::c_int,
@@ -2745,7 +2734,7 @@ unsafe extern "C" fn openDirectory(
     fd = robust_open(
         &raw mut zDirname as *mut ::core::ffi::c_char,
         ::libc::O_RDONLY | O_BINARY,
-        0 as crate::src::headers::stdlib::mode_t,
+        0 as crate::src::headers::stdlib::ModeT,
     );
     if fd >= 0 as ::core::ffi::c_int {
         if crate::src::src::main::sqlite3OSTrace != 0 {
@@ -2753,7 +2742,7 @@ unsafe extern "C" fn openDirectory(
                 b"OPENDIR %-3d %s\n\0" as *const u8 as *const ::core::ffi::c_char,
                 &[
                     crate::src::src::printf::PrintfArg::Int(
-                        fd as crate::src::ext::rtree::rtree::i64_0,
+                        fd as crate::src::ext::rtree::rtree::I64_0,
                     ),
                     crate::src::src::printf::PrintfArg::Str(
                         &raw mut zDirname as *mut ::core::ffi::c_char,
@@ -2799,7 +2788,7 @@ unsafe extern "C" fn unixSync(
         crate::src::printf_c_variadic::sqlite3DebugPrintf_args(
             b"SYNC    %-3d\n\0" as *const u8 as *const ::core::ffi::c_char,
             &[crate::src::src::printf::PrintfArg::Int(
-                (*pFile).h as crate::src::ext::rtree::rtree::i64_0,
+                (*pFile).h as crate::src::ext::rtree::rtree::I64_0,
             )],
         );
     }
@@ -2836,16 +2825,16 @@ unsafe extern "C" fn unixSync(
                         __pFile_ref.zPath as *mut ::core::ffi::c_char,
                     ),
                     crate::src::src::printf::PrintfArg::Int(
-                        0 as crate::src::ext::rtree::rtree::i64_0,
+                        0 as crate::src::ext::rtree::rtree::I64_0,
                     ),
                     crate::src::src::printf::PrintfArg::Int(
-                        isFullsync as crate::src::ext::rtree::rtree::i64_0,
+                        isFullsync as crate::src::ext::rtree::rtree::I64_0,
                     ),
                 ],
             );
         }
         rc = ::core::mem::transmute::<
-            crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+            crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
             Option<
                 unsafe extern "C" fn(
                     *const ::core::ffi::c_char,
@@ -2868,7 +2857,7 @@ unsafe extern "C" fn unixSync(
 
 unsafe extern "C" fn unixTruncate(
     mut id: *mut crate::src::headers::sqlite3_h::sqlite3_file,
-    mut nByte: crate::src::ext::rtree::rtree::i64_0,
+    mut nByte: crate::src::ext::rtree::rtree::I64_0,
 ) -> ::core::ffi::c_int {
     let mut pFile: *mut unixFile = id as *mut unixFile;
     let mut rc: ::core::ffi::c_int = 0;
@@ -2885,14 +2874,14 @@ unsafe extern "C" fn unixTruncate(
     }
     if (*pFile).szChunk > 0 as ::core::ffi::c_int {
         let __pFile_ref = { &*pFile };
-        nByte = (nByte + __pFile_ref.szChunk as crate::src::ext::rtree::rtree::i64_0
-            - 1 as crate::src::ext::rtree::rtree::i64_0)
-            / __pFile_ref.szChunk as crate::src::ext::rtree::rtree::i64_0
-            * __pFile_ref.szChunk as crate::src::ext::rtree::rtree::i64_0;
+        nByte = (nByte + __pFile_ref.szChunk as crate::src::ext::rtree::rtree::I64_0
+            - 1 as crate::src::ext::rtree::rtree::I64_0)
+            / __pFile_ref.szChunk as crate::src::ext::rtree::rtree::I64_0
+            * __pFile_ref.szChunk as crate::src::ext::rtree::rtree::I64_0;
     }
     rc = robust_ftruncate(
         (*pFile).h,
-        nByte as crate::src::headers::sqlite3_h::sqlite3_int64,
+        nByte as crate::src::headers::sqlite3_h::Sqlite3Int64,
     );
     if rc != 0 {
         storeLastErrno(pFile, *crate::compat::errno_location());
@@ -2904,7 +2893,7 @@ unsafe extern "C" fn unixTruncate(
         );
     } else {
         if nByte < (*pFile).mmapSize {
-            (*pFile).mmapSize = nByte as crate::src::headers::sqlite3_h::sqlite3_int64;
+            (*pFile).mmapSize = nByte as crate::src::headers::sqlite3_h::Sqlite3Int64;
         }
         return crate::src::headers::sqlite3_h::SQLITE_OK;
     };
@@ -2912,12 +2901,12 @@ unsafe extern "C" fn unixTruncate(
 
 unsafe extern "C" fn unixFileSize(
     mut id: *mut crate::src::headers::sqlite3_h::sqlite3_file,
-    mut pSize: *mut crate::src::ext::rtree::rtree::i64_0,
+    mut pSize: *mut crate::src::ext::rtree::rtree::I64_0,
 ) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = 0;
     let mut buf: crate::src::headers::stdlib::stat = { ::core::mem::zeroed() };
     rc = ::core::mem::transmute::<
-        crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+        crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
         Option<
             unsafe extern "C" fn(
                 ::core::ffi::c_int,
@@ -2941,23 +2930,23 @@ unsafe extern "C" fn unixFileSize(
         storeLastErrno(id as *mut unixFile, *crate::compat::errno_location());
         return crate::src::headers::sqlite3_h::SQLITE_IOERR_FSTAT_1;
     }
-    *pSize = buf.st_size as crate::src::ext::rtree::rtree::i64_0;
-    if *pSize == 1 as crate::src::ext::rtree::rtree::i64_0 {
-        *pSize = 0 as crate::src::ext::rtree::rtree::i64_0;
+    *pSize = buf.st_size as crate::src::ext::rtree::rtree::I64_0;
+    if *pSize == 1 as crate::src::ext::rtree::rtree::I64_0 {
+        *pSize = 0 as crate::src::ext::rtree::rtree::I64_0;
     }
     crate::src::headers::sqlite3_h::SQLITE_OK
 }
 
 unsafe extern "C" fn fcntlSizeHint(
     mut pFile: *mut unixFile,
-    mut nByte: crate::src::ext::rtree::rtree::i64_0,
+    mut nByte: crate::src::ext::rtree::rtree::I64_0,
 ) -> ::core::ffi::c_int {
     let __pFile_ref = { &*pFile };
     if __pFile_ref.szChunk > 0 as ::core::ffi::c_int {
-        let mut nSize: crate::src::ext::rtree::rtree::i64_0 = 0;
+        let mut nSize: crate::src::ext::rtree::rtree::I64_0 = 0;
         let mut buf: crate::src::headers::stdlib::stat = { ::core::mem::zeroed() };
         if ::core::mem::transmute::<
-            crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+            crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
             Option<
                 unsafe extern "C" fn(
                     ::core::ffi::c_int,
@@ -2970,25 +2959,25 @@ unsafe extern "C" fn fcntlSizeHint(
         {
             return crate::src::headers::sqlite3_h::SQLITE_IOERR_FSTAT_1;
         }
-        nSize = (nByte + __pFile_ref.szChunk as crate::src::ext::rtree::rtree::i64_0
-            - 1 as crate::src::ext::rtree::rtree::i64_0)
-            / __pFile_ref.szChunk as crate::src::ext::rtree::rtree::i64_0
-            * __pFile_ref.szChunk as crate::src::ext::rtree::rtree::i64_0;
-        if nSize > buf.st_size as crate::src::ext::rtree::rtree::i64_0 {
+        nSize = (nByte + __pFile_ref.szChunk as crate::src::ext::rtree::rtree::I64_0
+            - 1 as crate::src::ext::rtree::rtree::I64_0)
+            / __pFile_ref.szChunk as crate::src::ext::rtree::rtree::I64_0
+            * __pFile_ref.szChunk as crate::src::ext::rtree::rtree::I64_0;
+        if nSize > buf.st_size as crate::src::ext::rtree::rtree::I64_0 {
             let mut nBlk: ::core::ffi::c_int = buf.st_blksize as ::core::ffi::c_int;
             let mut nWrite: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
-            let mut iWrite: crate::src::ext::rtree::rtree::i64_0 = 0;
-            iWrite = (buf.st_size / nBlk as crate::src::headers::stdlib::__off_t
-                * nBlk as crate::src::headers::stdlib::__off_t
-                + nBlk as crate::src::headers::stdlib::__off_t
-                - 1 as crate::src::headers::stdlib::__off_t)
-                as crate::src::ext::rtree::rtree::i64_0;
+            let mut iWrite: crate::src::ext::rtree::rtree::I64_0 = 0;
+            iWrite = (buf.st_size / nBlk as crate::src::headers::stdlib::OffT
+                * nBlk as crate::src::headers::stdlib::OffT
+                + nBlk as crate::src::headers::stdlib::OffT
+                - 1 as crate::src::headers::stdlib::OffT)
+                as crate::src::ext::rtree::rtree::I64_0;
             while iWrite
-                < nSize + nBlk as crate::src::ext::rtree::rtree::i64_0
-                    - 1 as crate::src::ext::rtree::rtree::i64_0
+                < nSize + nBlk as crate::src::ext::rtree::rtree::I64_0
+                    - 1 as crate::src::ext::rtree::rtree::I64_0
             {
                 if iWrite >= nSize {
-                    iWrite = nSize - 1 as crate::src::ext::rtree::rtree::i64_0;
+                    iWrite = nSize - 1 as crate::src::ext::rtree::rtree::I64_0;
                 }
                 nWrite = seekAndWrite(
                     pFile,
@@ -2999,18 +2988,18 @@ unsafe extern "C" fn fcntlSizeHint(
                 if nWrite != 1 as ::core::ffi::c_int {
                     return crate::src::headers::sqlite3_h::SQLITE_IOERR_WRITE_1;
                 }
-                iWrite += nBlk as crate::src::ext::rtree::rtree::i64_0;
+                iWrite += nBlk as crate::src::ext::rtree::rtree::I64_0;
             }
         }
     }
-    if __pFile_ref.mmapSizeMax > 0 as crate::src::headers::sqlite3_h::sqlite3_int64
+    if __pFile_ref.mmapSizeMax > 0 as crate::src::headers::sqlite3_h::Sqlite3Int64
         && nByte > __pFile_ref.mmapSize
     {
         let mut rc: ::core::ffi::c_int = 0;
         if __pFile_ref.szChunk <= 0 as ::core::ffi::c_int {
             if robust_ftruncate(
                 __pFile_ref.h,
-                nByte as crate::src::headers::sqlite3_h::sqlite3_int64,
+                nByte as crate::src::headers::sqlite3_h::Sqlite3Int64,
             ) != 0
             {
                 storeLastErrno(pFile, *crate::compat::errno_location());
@@ -3054,7 +3043,7 @@ unsafe extern "C" fn unixFileControl(
     match op {
         crate::src::headers::sqlite3_h::SQLITE_FCNTL_NULL_IO => {
             ::core::mem::transmute::<
-                crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 Option<unsafe extern "C" fn(::core::ffi::c_int) -> ::core::ffi::c_int>,
             >(aSyscall[1 as ::core::ffi::c_int as usize].pCurrent)
             .expect("non-null function pointer")((*pFile).h);
@@ -3076,7 +3065,7 @@ unsafe extern "C" fn unixFileControl(
         crate::src::headers::sqlite3_h::SQLITE_FCNTL_SIZE_HINT => {
             let mut rc: ::core::ffi::c_int = 0;
             crate::src::src::os::sqlite3_io_error_benign = 1 as ::core::ffi::c_int;
-            rc = fcntlSizeHint(pFile, *(pArg as *mut crate::src::ext::rtree::rtree::i64_0));
+            rc = fcntlSizeHint(pFile, *(pArg as *mut crate::src::ext::rtree::rtree::I64_0));
             crate::src::src::os::sqlite3_io_error_benign = 0 as ::core::ffi::c_int;
             return rc;
         }
@@ -3103,7 +3092,7 @@ unsafe extern "C" fn unixFileControl(
         }
         crate::src::headers::sqlite3_h::SQLITE_FCNTL_TEMPFILENAME => {
             let mut zTFile: *mut ::core::ffi::c_char = crate::src::src::malloc::sqlite3_malloc64(
-                (*(*pFile).pVfs).mxPathname as crate::src::headers::sqlite3_h::sqlite3_uint64,
+                (*(*pFile).pVfs).mxPathname as crate::src::headers::sqlite3_h::Sqlite3Uint64,
             ) as *mut ::core::ffi::c_char;
             if !zTFile.is_null() {
                 unixGetTempname((*(*pFile).pVfs).mxPathname, zTFile);
@@ -3117,32 +3106,32 @@ unsafe extern "C" fn unixFileControl(
             return crate::src::headers::sqlite3_h::SQLITE_OK;
         }
         crate::src::headers::sqlite3_h::SQLITE_FCNTL_MMAP_SIZE => {
-            let mut newLimit: crate::src::ext::rtree::rtree::i64_0 =
-                *(pArg as *mut crate::src::ext::rtree::rtree::i64_0);
+            let mut newLimit: crate::src::ext::rtree::rtree::I64_0 =
+                *(pArg as *mut crate::src::ext::rtree::rtree::I64_0);
             let mut rc_0: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
             if newLimit > crate::src::src::global::sqlite3Config.mxMmap {
                 newLimit = crate::src::src::global::sqlite3Config.mxMmap
-                    as crate::src::ext::rtree::rtree::i64_0;
+                    as crate::src::ext::rtree::rtree::I64_0;
             }
-            if newLimit > 0 as crate::src::ext::rtree::rtree::i64_0
-                && (::core::mem::size_of::<crate::__stddef_size_t_h::size_t>() as usize)
+            if newLimit > 0 as crate::src::ext::rtree::rtree::I64_0
+                && (::core::mem::size_of::<crate::__stddef_size_t_h::SizeT>() as usize)
                     < 8 as usize
             {
-                newLimit &= 0x7fffffff as crate::src::ext::rtree::rtree::i64_0;
+                newLimit &= 0x7fffffff as crate::src::ext::rtree::rtree::I64_0;
             }
             let __pFile_ref = { &mut *pFile };
-            *(pArg as *mut crate::src::ext::rtree::rtree::i64_0) =
-                __pFile_ref.mmapSizeMax as crate::src::ext::rtree::rtree::i64_0;
-            if newLimit >= 0 as crate::src::ext::rtree::rtree::i64_0
+            *(pArg as *mut crate::src::ext::rtree::rtree::I64_0) =
+                __pFile_ref.mmapSizeMax as crate::src::ext::rtree::rtree::I64_0;
+            if newLimit >= 0 as crate::src::ext::rtree::rtree::I64_0
                 && newLimit != __pFile_ref.mmapSizeMax
                 && __pFile_ref.nFetchOut == 0 as ::core::ffi::c_int
             {
-                __pFile_ref.mmapSizeMax = newLimit as crate::src::headers::sqlite3_h::sqlite3_int64;
-                if __pFile_ref.mmapSize > 0 as crate::src::headers::sqlite3_h::sqlite3_int64 {
+                __pFile_ref.mmapSizeMax = newLimit as crate::src::headers::sqlite3_h::Sqlite3Int64;
+                if __pFile_ref.mmapSize > 0 as crate::src::headers::sqlite3_h::Sqlite3Int64 {
                     unixUnmapfile(pFile);
                     rc_0 = unixMapfile(
                         pFile,
-                        -(1 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::i64_0,
+                        -(1 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::I64_0,
                     );
                 }
             }
@@ -3209,13 +3198,13 @@ unsafe extern "C" fn unixFcntlExternalReader(
         f.l_type = ::libc::F_WRLCK as ::core::ffi::c_short;
         f.l_whence = ::libc::SEEK_SET as ::core::ffi::c_short;
         f.l_start =
-            (UNIX_SHM_BASE + 3 as ::core::ffi::c_int) as crate::src::headers::stdlib::__off64_t;
+            (UNIX_SHM_BASE + 3 as ::core::ffi::c_int) as crate::src::headers::stdlib::Off64T;
         f.l_len = (crate::src::headers::sqlite3_h::SQLITE_SHM_NLOCK - 3 as ::core::ffi::c_int)
-            as crate::src::headers::stdlib::__off64_t;
+            as crate::src::headers::stdlib::Off64T;
         let __pShmNode_ref = { &*pShmNode };
         crate::src::src::mutex::sqlite3_mutex_enter(__pShmNode_ref.pShmMutex);
         if ::core::mem::transmute::<
-            crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+            crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
             Option<
                 unsafe extern "C" fn(
                     ::core::ffi::c_int,
@@ -3250,11 +3239,11 @@ unsafe extern "C" fn unixIsSharingShmNode(mut pFile: *mut unixFile) -> ::core::f
     }
     pShmNode = (*__pFile_ref.pShm).pShmNode;
     lock.l_whence = ::libc::SEEK_SET as ::core::ffi::c_short;
-    lock.l_start = UNIX_SHM_DMS as crate::src::headers::stdlib::__off64_t;
-    lock.l_len = 1 as crate::src::headers::stdlib::__off64_t;
+    lock.l_start = UNIX_SHM_DMS as crate::src::headers::stdlib::Off64T;
+    lock.l_len = 1 as crate::src::headers::stdlib::Off64T;
     lock.l_type = ::libc::F_WRLCK as ::core::ffi::c_short;
     ::core::mem::transmute::<
-        crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+        crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
         Option<
             unsafe extern "C" fn(::core::ffi::c_int, ::core::ffi::c_int, ...) -> ::core::ffi::c_int,
         >,
@@ -3279,10 +3268,10 @@ unsafe extern "C" fn unixShmSystemLock(
         let mut res: ::core::ffi::c_int = 0;
         f.l_type = lockType as ::core::ffi::c_short;
         f.l_whence = ::libc::SEEK_SET as ::core::ffi::c_short;
-        f.l_start = ofst as crate::src::headers::stdlib::__off64_t;
-        f.l_len = n as crate::src::headers::stdlib::__off64_t;
+        f.l_start = ofst as crate::src::headers::stdlib::Off64T;
+        f.l_len = n as crate::src::headers::stdlib::Off64T;
         res = ::core::mem::transmute::<
-            crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+            crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
             Option<
                 unsafe extern "C" fn(
                     ::core::ffi::c_int,
@@ -3304,7 +3293,7 @@ unsafe extern "C" fn unixShmSystemLock(
 unsafe extern "C" fn unixShmRegionPerMap() -> ::core::ffi::c_int {
     let mut shmsz: ::core::ffi::c_int = 32 as ::core::ffi::c_int * 1024 as ::core::ffi::c_int;
     let mut pgsz: ::core::ffi::c_int = ::core::mem::transmute::<
-        crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+        crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
         Option<unsafe extern "C" fn() -> ::core::ffi::c_int>,
     >(aSyscall[25 as ::core::ffi::c_int as usize].pCurrent)
     .expect("non-null function pointer")();
@@ -3325,17 +3314,17 @@ unsafe extern "C" fn unixShmPurge(mut pFd: *mut unixFile) {
         while i < __p_ref.nRegion as ::core::ffi::c_int {
             if __p_ref.hShm >= 0 as ::core::ffi::c_int {
                 ::core::mem::transmute::<
-                    crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                    crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                     Option<
                         unsafe extern "C" fn(
                             *mut ::core::ffi::c_void,
-                            crate::__stddef_size_t_h::size_t,
+                            crate::__stddef_size_t_h::SizeT,
                         ) -> ::core::ffi::c_int,
                     >,
                 >(aSyscall[23 as ::core::ffi::c_int as usize].pCurrent)
                 .expect("non-null function pointer")(
                     *__p_ref.apRegion.offset(i as isize) as *mut ::core::ffi::c_void,
-                    __p_ref.szRegion as crate::__stddef_size_t_h::size_t,
+                    __p_ref.szRegion as crate::__stddef_size_t_h::SizeT,
                 );
             } else {
                 crate::src::src::malloc::sqlite3_free(
@@ -3361,11 +3350,11 @@ unsafe extern "C" fn unixLockSharedMemory(
     let mut lock: ::libc::flock = { ::core::mem::zeroed() };
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
     lock.l_whence = ::libc::SEEK_SET as ::core::ffi::c_short;
-    lock.l_start = UNIX_SHM_DMS as crate::src::headers::stdlib::__off64_t;
-    lock.l_len = 1 as crate::src::headers::stdlib::__off64_t;
+    lock.l_start = UNIX_SHM_DMS as crate::src::headers::stdlib::Off64T;
+    lock.l_len = 1 as crate::src::headers::stdlib::Off64T;
     lock.l_type = ::libc::F_WRLCK as ::core::ffi::c_short;
     if ::core::mem::transmute::<
-        crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+        crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
         Option<
             unsafe extern "C" fn(::core::ffi::c_int, ::core::ffi::c_int, ...) -> ::core::ffi::c_int,
         >,
@@ -3376,7 +3365,7 @@ unsafe extern "C" fn unixLockSharedMemory(
         rc = crate::src::headers::sqlite3_h::SQLITE_IOERR_LOCK_1;
     } else if lock.l_type as ::core::ffi::c_int == ::libc::F_UNLCK as ::core::ffi::c_int {
         if (*pShmNode).isReadonly != 0 {
-            (*pShmNode).isUnlocked = 1 as crate::src::ext::rtree::rtree::u8_0;
+            (*pShmNode).isUnlocked = 1 as crate::src::ext::rtree::rtree::U8_0;
             rc = crate::src::headers::sqlite3_h::SQLITE_READONLY_CANTINIT_1;
         } else {
             rc = unixShmSystemLock(
@@ -3388,7 +3377,7 @@ unsafe extern "C" fn unixLockSharedMemory(
             if rc == crate::src::headers::sqlite3_h::SQLITE_OK
                 && robust_ftruncate(
                     (*pShmNode).hShm,
-                    3 as crate::src::headers::sqlite3_h::sqlite3_int64,
+                    3 as crate::src::headers::sqlite3_h::Sqlite3Int64,
                 ) != 0
             {
                 rc = unixLogErrorAtLine(
@@ -3423,7 +3412,7 @@ unsafe extern "C" fn unixOpenSharedMemory(mut pDbFd: *mut unixFile) -> ::core::f
     let mut zShm: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
     let mut nShmFilename: ::core::ffi::c_int = 0;
     p = crate::src::src::malloc::sqlite3_malloc64(
-        ::core::mem::size_of::<unixShm>() as crate::src::headers::sqlite3_h::sqlite3_uint64
+        ::core::mem::size_of::<unixShm>() as crate::src::headers::sqlite3_h::Sqlite3Uint64
     ) as *mut unixShm;
     if p.is_null() {
         return crate::src::headers::sqliteInt_h::SQLITE_NOMEM_BKPT;
@@ -3431,7 +3420,7 @@ unsafe extern "C" fn unixOpenSharedMemory(mut pDbFd: *mut unixFile) -> ::core::f
     ::libc::memset(
         p as *mut ::core::ffi::c_void,
         0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<unixShm>() as crate::__stddef_size_t_h::size_t,
+        ::core::mem::size_of::<unixShm>() as crate::__stddef_size_t_h::SizeT,
     );
     unixEnterMutex();
     pInode = (*pDbFd).pInode;
@@ -3440,7 +3429,7 @@ unsafe extern "C" fn unixOpenSharedMemory(mut pDbFd: *mut unixFile) -> ::core::f
         let mut sStat: crate::src::headers::stdlib::stat = { ::core::mem::zeroed() };
         let mut zBasePath: *const ::core::ffi::c_char = (*pDbFd).zPath;
         if ::core::mem::transmute::<
-            crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+            crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
             Option<
                 unsafe extern "C" fn(
                     ::core::ffi::c_int,
@@ -3458,7 +3447,7 @@ unsafe extern "C" fn unixOpenSharedMemory(mut pDbFd: *mut unixFile) -> ::core::f
                 6 as ::core::ffi::c_int + ::libc::strlen(zBasePath) as ::core::ffi::c_int;
             pShmNode = crate::src::src::malloc::sqlite3_malloc64(
                 (::core::mem::size_of::<unixShmNode>() as usize).wrapping_add(nShmFilename as usize)
-                    as crate::src::headers::sqlite3_h::sqlite3_uint64,
+                    as crate::src::headers::sqlite3_h::Sqlite3Uint64,
             ) as *mut unixShmNode;
             if pShmNode.is_null() {
                 rc = crate::src::headers::sqliteInt_h::SQLITE_NOMEM_BKPT;
@@ -3467,8 +3456,8 @@ unsafe extern "C" fn unixOpenSharedMemory(mut pDbFd: *mut unixFile) -> ::core::f
                 ::libc::memset(
                     pShmNode as *mut ::core::ffi::c_void,
                     0 as ::core::ffi::c_int,
-                    (::core::mem::size_of::<unixShmNode>() as crate::__stddef_size_t_h::size_t)
-                        .wrapping_add(nShmFilename as crate::__stddef_size_t_h::size_t),
+                    (::core::mem::size_of::<unixShmNode>() as crate::__stddef_size_t_h::SizeT)
+                        .wrapping_add(nShmFilename as crate::__stddef_size_t_h::SizeT),
                 );
                 let __pShmNode_ref = { &mut *pShmNode };
                 __pShmNode_ref.zFilename =
@@ -3498,7 +3487,7 @@ unsafe extern "C" fn unixOpenSharedMemory(mut pDbFd: *mut unixFile) -> ::core::f
                             if 0 as ::core::ffi::c_int
                                 == crate::src::src::main::sqlite3_uri_boolean(
                                     (*pDbFd).zPath
-                                        as crate::src::headers::sqlite3_h::sqlite3_filename,
+                                        as crate::src::headers::sqlite3_h::Sqlite3Filename,
                                     b"readonly_shm\0" as *const u8 as *const ::core::ffi::c_char,
                                     0 as ::core::ffi::c_int,
                                 )
@@ -3506,16 +3495,16 @@ unsafe extern "C" fn unixOpenSharedMemory(mut pDbFd: *mut unixFile) -> ::core::f
                                 __pShmNode_ref.hShm = robust_open(
                                     zShm,
                                     ::libc::O_RDWR | ::libc::O_CREAT | ::libc::O_NOFOLLOW,
-                                    sStat.st_mode as crate::src::headers::stdlib::mode_t
-                                        & 0o777 as crate::src::headers::stdlib::mode_t,
+                                    sStat.st_mode as crate::src::headers::stdlib::ModeT
+                                        & 0o777 as crate::src::headers::stdlib::ModeT,
                                 );
                             }
                             if __pShmNode_ref.hShm < 0 as ::core::ffi::c_int {
                                 __pShmNode_ref.hShm = robust_open(
                                     zShm,
                                     ::libc::O_RDONLY | ::libc::O_NOFOLLOW,
-                                    sStat.st_mode as crate::src::headers::stdlib::mode_t
-                                        & 0o777 as crate::src::headers::stdlib::mode_t,
+                                    sStat.st_mode as crate::src::headers::stdlib::ModeT
+                                        & 0o777 as crate::src::headers::stdlib::ModeT,
                                 );
                                 if __pShmNode_ref.hShm < 0 as ::core::ffi::c_int {
                                     rc = unixLogErrorAtLine(
@@ -3529,7 +3518,7 @@ unsafe extern "C" fn unixOpenSharedMemory(mut pDbFd: *mut unixFile) -> ::core::f
                                     current_block = 15838364395331891352;
                                 } else {
                                     __pShmNode_ref.isReadonly =
-                                        1 as crate::src::ext::rtree::rtree::u8_0;
+                                        1 as crate::src::ext::rtree::rtree::U8_0;
                                     current_block = 11932355480408055363;
                                 }
                             } else {
@@ -3540,8 +3529,8 @@ unsafe extern "C" fn unixOpenSharedMemory(mut pDbFd: *mut unixFile) -> ::core::f
                                 _ => {
                                     robustFchown(
                                         __pShmNode_ref.hShm,
-                                        sStat.st_uid as crate::src::headers::stdlib::uid_t,
-                                        sStat.st_gid as crate::src::headers::stdlib::gid_t,
+                                        sStat.st_uid as crate::src::headers::stdlib::UidT,
+                                        sStat.st_gid as crate::src::headers::stdlib::GidT,
                                     );
                                     rc = unixLockSharedMemory(pDbFd, pShmNode as *mut unixShmNode);
                                     if rc != crate::src::headers::sqlite3_h::SQLITE_OK && rc != crate::src::headers::sqlite3_h::SQLITE_READONLY_CANTINIT_1 {
@@ -3607,7 +3596,7 @@ unsafe extern "C" fn unixShmMap(
         if rc != crate::src::headers::sqlite3_h::SQLITE_OK {
             current_block = 3940646464161370556;
         } else {
-            (*pShmNode).isUnlocked = 0 as crate::src::ext::rtree::rtree::u8_0;
+            (*pShmNode).isUnlocked = 0 as crate::src::ext::rtree::rtree::U8_0;
             current_block = 4166486009154926805;
         }
     } else {
@@ -3624,7 +3613,7 @@ unsafe extern "C" fn unixShmMap(
                 (*pShmNode).szRegion = szRegion;
                 if (*pShmNode).hShm >= 0 as ::core::ffi::c_int {
                     if ::core::mem::transmute::<
-                        crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                        crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                         Option<
                             unsafe extern "C" fn(
                                 ::core::ffi::c_int,
@@ -3638,13 +3627,13 @@ unsafe extern "C" fn unixShmMap(
                     {
                         rc = crate::src::headers::sqlite3_h::SQLITE_IOERR_SHMSIZE_1;
                         current_block = 3940646464161370556;
-                    } else if sStat.st_size < nByte as crate::src::headers::stdlib::__off_t {
+                    } else if sStat.st_size < nByte as crate::src::headers::stdlib::OffT {
                         if bExtend == 0 {
                             current_block = 3940646464161370556;
                         } else {
                             static mut pgsz: ::core::ffi::c_int = 4096 as ::core::ffi::c_int;
                             let mut iPg: ::core::ffi::c_int = 0;
-                            iPg = (sStat.st_size / pgsz as crate::src::headers::stdlib::__off_t)
+                            iPg = (sStat.st_size / pgsz as crate::src::headers::stdlib::OffT)
                                 as ::core::ffi::c_int;
                             loop {
                                 if !(iPg < nByte / pgsz) {
@@ -3655,7 +3644,7 @@ unsafe extern "C" fn unixShmMap(
                                 if seekAndWriteFd(
                                     (*pShmNode).hShm,
                                     (iPg * pgsz + pgsz - 1 as ::core::ffi::c_int)
-                                        as crate::src::ext::rtree::rtree::i64_0,
+                                        as crate::src::ext::rtree::rtree::I64_0,
                                     b"\0" as *const u8 as *const ::core::ffi::c_char
                                         as *const ::core::ffi::c_void,
                                     1 as ::core::ffi::c_int,
@@ -3706,15 +3695,15 @@ unsafe extern "C" fn unixShmMap(
                                 let __pShmNode_ref = { &mut *pShmNode };
                                 if __pShmNode_ref.hShm >= 0 as ::core::ffi::c_int {
                                     pMem = ::core::mem::transmute::<
-                                        crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                                        crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                                         Option<
                                             unsafe extern "C" fn(
                                                 *mut ::core::ffi::c_void,
-                                                crate::__stddef_size_t_h::size_t,
+                                                crate::__stddef_size_t_h::SizeT,
                                                 ::core::ffi::c_int,
                                                 ::core::ffi::c_int,
                                                 ::core::ffi::c_int,
-                                                crate::src::headers::stdlib::off_t,
+                                                crate::src::headers::stdlib::OffT,
                                             )
                                                 -> *mut ::core::ffi::c_void,
                                         >,
@@ -3723,7 +3712,7 @@ unsafe extern "C" fn unixShmMap(
                                     )
                                     .expect("non-null function pointer")(
                                         ::core::ptr::null_mut::<::core::ffi::c_void>(),
-                                        nMap as crate::__stddef_size_t_h::size_t,
+                                        nMap as crate::__stddef_size_t_h::SizeT,
                                         if __pShmNode_ref.isReadonly as ::core::ffi::c_int != 0 {
                                             ::libc::PROT_READ
                                         } else {
@@ -3731,10 +3720,10 @@ unsafe extern "C" fn unixShmMap(
                                         },
                                         ::libc::MAP_SHARED,
                                         __pShmNode_ref.hShm,
-                                        (szRegion as crate::src::ext::rtree::rtree::i64_0
+                                        (szRegion as crate::src::ext::rtree::rtree::I64_0
                                             * __pShmNode_ref.nRegion
-                                                as crate::src::ext::rtree::rtree::i64_0)
-                                            as crate::src::headers::stdlib::off_t,
+                                                as crate::src::ext::rtree::rtree::I64_0)
+                                            as crate::src::headers::stdlib::OffT,
                                     );
                                     if pMem == ::libc::MAP_FAILED {
                                         rc = unixLogErrorAtLine(
@@ -3749,7 +3738,7 @@ unsafe extern "C" fn unixShmMap(
                                     }
                                 } else {
                                     pMem = crate::src::src::malloc::sqlite3_malloc64(
-                                        nMap as crate::src::headers::sqlite3_h::sqlite3_uint64,
+                                        nMap as crate::src::headers::sqlite3_h::Sqlite3Uint64,
                                     );
                                     if pMem.is_null() {
                                         rc = crate::src::headers::sqliteInt_h::SQLITE_NOMEM_BKPT;
@@ -3758,7 +3747,7 @@ unsafe extern "C" fn unixShmMap(
                                         ::libc::memset(
                                             pMem,
                                             0 as ::core::ffi::c_int,
-                                            nMap as crate::__stddef_size_t_h::size_t,
+                                            nMap as crate::__stddef_size_t_h::SizeT,
                                         );
                                     }
                                 }
@@ -3774,7 +3763,7 @@ unsafe extern "C" fn unixShmMap(
                                 }
                                 __pShmNode_ref.nRegion =
                                     (__pShmNode_ref.nRegion as ::core::ffi::c_int + nShmPerMap)
-                                        as crate::src::fts5::u16_0;
+                                        as crate::src::fts5::U16_0;
                             }
                         }
                     }
@@ -3807,9 +3796,9 @@ unsafe extern "C" fn unixShmLock(
     let mut p: *mut unixShm = ::core::ptr::null_mut::<unixShm>();
     let mut pShmNode: *mut unixShmNode = ::core::ptr::null_mut::<unixShmNode>();
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
-    let mut mask: crate::src::fts5::u16_0 = (((1 as ::core::ffi::c_int) << ofst + n)
+    let mut mask: crate::src::fts5::U16_0 = (((1 as ::core::ffi::c_int) << ofst + n)
         - ((1 as ::core::ffi::c_int) << ofst))
-        as crate::src::fts5::u16_0;
+        as crate::src::fts5::U16_0;
     let mut aLock: *mut ::core::ffi::c_int = ::core::ptr::null_mut::<::core::ffi::c_int>();
     p = (*pDbFd).pShm;
     if p.is_null() {
@@ -3844,7 +3833,7 @@ unsafe extern "C" fn unixShmLock(
                         *fresh5 -= 1;
                         (*p).sharedMask = ((*p).sharedMask as ::core::ffi::c_int
                             & !(mask as ::core::ffi::c_int))
-                            as crate::src::fts5::u16_0;
+                            as crate::src::fts5::U16_0;
                     }
                 }
                 if bUnlock != 0 {
@@ -3860,16 +3849,16 @@ unsafe extern "C" fn unixShmLock(
                                 as *mut ::core::ffi::c_void,
                             0 as ::core::ffi::c_int,
                             (::core::mem::size_of::<::core::ffi::c_int>()
-                                as crate::__stddef_size_t_h::size_t)
-                                .wrapping_mul(n as crate::__stddef_size_t_h::size_t),
+                                as crate::__stddef_size_t_h::SizeT)
+                                .wrapping_mul(n as crate::__stddef_size_t_h::SizeT),
                         );
                         let __p_ref = { &mut *p };
                         __p_ref.sharedMask = (__p_ref.sharedMask as ::core::ffi::c_int
                             & !(mask as ::core::ffi::c_int))
-                            as crate::src::fts5::u16_0;
+                            as crate::src::fts5::U16_0;
                         __p_ref.exclMask = (__p_ref.exclMask as ::core::ffi::c_int
                             & !(mask as ::core::ffi::c_int))
-                            as crate::src::fts5::u16_0;
+                            as crate::src::fts5::U16_0;
                     }
                 }
             } else if flags & crate::src::headers::sqlite3_h::SQLITE_SHM_SHARED != 0 {
@@ -3886,7 +3875,7 @@ unsafe extern "C" fn unixShmLock(
                 if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
                     (*p).sharedMask = ((*p).sharedMask as ::core::ffi::c_int
                         | mask as ::core::ffi::c_int)
-                        as crate::src::fts5::u16_0;
+                        as crate::src::fts5::U16_0;
                     let ref mut fresh6 = *aLock.offset(ofst as isize);
                     *fresh6 += 1;
                 }
@@ -3911,7 +3900,7 @@ unsafe extern "C" fn unixShmLock(
                     if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
                         (*p).exclMask = ((*p).exclMask as ::core::ffi::c_int
                             | mask as ::core::ffi::c_int)
-                            as crate::src::fts5::u16_0;
+                            as crate::src::fts5::U16_0;
                         ii = ofst;
                         while ii < ofst + n {
                             *aLock.offset(ii as isize) = -(1 as ::core::ffi::c_int);
@@ -3930,10 +3919,10 @@ unsafe extern "C" fn unixShmLock(
                 as *const ::core::ffi::c_char,
             &[
                 crate::src::src::printf::PrintfArg::Int(
-                    __p_ref.id as crate::src::ext::rtree::rtree::i64_0,
+                    __p_ref.id as crate::src::ext::rtree::rtree::I64_0,
                 ),
                 crate::src::src::printf::PrintfArg::Int(
-                    ::libc::getpid() as crate::src::ext::rtree::rtree::i64_0
+                    ::libc::getpid() as crate::src::ext::rtree::rtree::I64_0
                 ),
                 crate::src::src::printf::PrintfArg::UInt(__p_ref.sharedMask as u64),
                 crate::src::src::printf::PrintfArg::UInt(__p_ref.exclMask as u64),
@@ -3977,7 +3966,7 @@ unsafe extern "C" fn unixShmUnmap(
     if (*pShmNode).nRef == 0 as ::core::ffi::c_int {
         if deleteFlag != 0 && (*pShmNode).hShm >= 0 as ::core::ffi::c_int {
             ::core::mem::transmute::<
-                crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 Option<unsafe extern "C" fn(*const ::core::ffi::c_char) -> ::core::ffi::c_int>,
             >(aSyscall[16 as ::core::ffi::c_int as usize].pCurrent)
             .expect("non-null function pointer")((*pShmNode).zFilename);
@@ -3992,67 +3981,67 @@ unsafe extern "C" fn unixUnmapfile(mut pFd: *mut unixFile) {
     if !(*pFd).pMapRegion.is_null() {
         let __pFd_ref = { &mut *pFd };
         ::core::mem::transmute::<
-            crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+            crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
             Option<
                 unsafe extern "C" fn(
                     *mut ::core::ffi::c_void,
-                    crate::__stddef_size_t_h::size_t,
+                    crate::__stddef_size_t_h::SizeT,
                 ) -> ::core::ffi::c_int,
             >,
         >(aSyscall[23 as ::core::ffi::c_int as usize].pCurrent)
         .expect("non-null function pointer")(
             __pFd_ref.pMapRegion,
-            __pFd_ref.mmapSizeActual as crate::__stddef_size_t_h::size_t,
+            __pFd_ref.mmapSizeActual as crate::__stddef_size_t_h::SizeT,
         );
         __pFd_ref.pMapRegion = ::core::ptr::null_mut::<::core::ffi::c_void>();
-        __pFd_ref.mmapSize = 0 as crate::src::headers::sqlite3_h::sqlite3_int64;
-        __pFd_ref.mmapSizeActual = 0 as crate::src::headers::sqlite3_h::sqlite3_int64;
+        __pFd_ref.mmapSize = 0 as crate::src::headers::sqlite3_h::Sqlite3Int64;
+        __pFd_ref.mmapSizeActual = 0 as crate::src::headers::sqlite3_h::Sqlite3Int64;
     }
 }
 
 unsafe extern "C" fn unixRemapfile(
     mut pFd: *mut unixFile,
-    mut nNew: crate::src::ext::rtree::rtree::i64_0,
+    mut nNew: crate::src::ext::rtree::rtree::I64_0,
 ) {
     let mut zErr: *const ::core::ffi::c_char = b"mmap\0" as *const u8 as *const ::core::ffi::c_char;
     let __pFd_ref = { &mut *pFd };
     let mut h: ::core::ffi::c_int = __pFd_ref.h;
-    let mut pOrig: *mut crate::src::ext::rtree::rtree::u8_0 =
-        __pFd_ref.pMapRegion as *mut crate::src::ext::rtree::rtree::u8_0;
-    let mut nOrig: crate::src::ext::rtree::rtree::i64_0 =
-        __pFd_ref.mmapSizeActual as crate::src::ext::rtree::rtree::i64_0;
-    let mut pNew: *mut crate::src::ext::rtree::rtree::u8_0 =
-        ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>();
+    let mut pOrig: *mut crate::src::ext::rtree::rtree::U8_0 =
+        __pFd_ref.pMapRegion as *mut crate::src::ext::rtree::rtree::U8_0;
+    let mut nOrig: crate::src::ext::rtree::rtree::I64_0 =
+        __pFd_ref.mmapSizeActual as crate::src::ext::rtree::rtree::I64_0;
+    let mut pNew: *mut crate::src::ext::rtree::rtree::U8_0 =
+        ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::U8_0>();
     let mut flags: ::core::ffi::c_int = ::libc::PROT_READ;
     if !pOrig.is_null() {
-        let mut nReuse: crate::src::ext::rtree::rtree::i64_0 =
-            __pFd_ref.mmapSize as crate::src::ext::rtree::rtree::i64_0;
-        let mut pReq: *mut crate::src::ext::rtree::rtree::u8_0 =
-            pOrig.offset(nReuse as isize) as *mut crate::src::ext::rtree::rtree::u8_0;
+        let mut nReuse: crate::src::ext::rtree::rtree::I64_0 =
+            __pFd_ref.mmapSize as crate::src::ext::rtree::rtree::I64_0;
+        let mut pReq: *mut crate::src::ext::rtree::rtree::U8_0 =
+            pOrig.offset(nReuse as isize) as *mut crate::src::ext::rtree::rtree::U8_0;
         if nReuse != nOrig {
             ::core::mem::transmute::<
-                crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 Option<
                     unsafe extern "C" fn(
                         *mut ::core::ffi::c_void,
-                        crate::__stddef_size_t_h::size_t,
+                        crate::__stddef_size_t_h::SizeT,
                     ) -> ::core::ffi::c_int,
                 >,
             >(aSyscall[23 as ::core::ffi::c_int as usize].pCurrent)
             .expect("non-null function pointer")(
                 pReq as *mut ::core::ffi::c_void,
-                (nOrig - nReuse) as crate::__stddef_size_t_h::size_t,
+                (nOrig - nReuse) as crate::__stddef_size_t_h::SizeT,
             );
         }
         #[cfg(not(target_os = "macos"))]
         {
             pNew = ::core::mem::transmute::<
-                crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 Option<
                     unsafe extern "C" fn(
                         *mut ::core::ffi::c_void,
-                        crate::__stddef_size_t_h::size_t,
-                        crate::__stddef_size_t_h::size_t,
+                        crate::__stddef_size_t_h::SizeT,
+                        crate::__stddef_size_t_h::SizeT,
                         ::core::ffi::c_int,
                         ...
                     ) -> *mut ::core::ffi::c_void,
@@ -4060,100 +4049,100 @@ unsafe extern "C" fn unixRemapfile(
             >(aSyscall[24 as ::core::ffi::c_int as usize].pCurrent)
             .expect("non-null function pointer")(
                 pOrig as *mut ::core::ffi::c_void,
-                nReuse as crate::__stddef_size_t_h::size_t,
-                nNew as crate::__stddef_size_t_h::size_t,
+                nReuse as crate::__stddef_size_t_h::SizeT,
+                nNew as crate::__stddef_size_t_h::SizeT,
                 crate::compat::MREMAP_MAYMOVE,
-            ) as *mut crate::src::ext::rtree::rtree::u8_0;
+            ) as *mut crate::src::ext::rtree::rtree::U8_0;
         }
         #[cfg(target_os = "macos")]
         {
             pNew = ::core::mem::transmute::<
-                crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 Option<
                     unsafe extern "C" fn(
                         *mut ::core::ffi::c_void,
-                        crate::__stddef_size_t_h::size_t,
-                        crate::__stddef_size_t_h::size_t,
+                        crate::__stddef_size_t_h::SizeT,
+                        crate::__stddef_size_t_h::SizeT,
                         ::core::ffi::c_int,
                     ) -> *mut ::core::ffi::c_void,
                 >,
             >(aSyscall[24 as ::core::ffi::c_int as usize].pCurrent)
             .expect("non-null function pointer")(
                 pOrig as *mut ::core::ffi::c_void,
-                nReuse as crate::__stddef_size_t_h::size_t,
-                nNew as crate::__stddef_size_t_h::size_t,
+                nReuse as crate::__stddef_size_t_h::SizeT,
+                nNew as crate::__stddef_size_t_h::SizeT,
                 crate::compat::MREMAP_MAYMOVE,
-            ) as *mut crate::src::ext::rtree::rtree::u8_0;
+            ) as *mut crate::src::ext::rtree::rtree::U8_0;
         }
         zErr = b"mremap\0" as *const u8 as *const ::core::ffi::c_char;
-        if pNew == ::libc::MAP_FAILED as *mut crate::src::ext::rtree::rtree::u8_0 || pNew.is_null()
+        if pNew == ::libc::MAP_FAILED as *mut crate::src::ext::rtree::rtree::U8_0 || pNew.is_null()
         {
             ::core::mem::transmute::<
-                crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 Option<
                     unsafe extern "C" fn(
                         *mut ::core::ffi::c_void,
-                        crate::__stddef_size_t_h::size_t,
+                        crate::__stddef_size_t_h::SizeT,
                     ) -> ::core::ffi::c_int,
                 >,
             >(aSyscall[23 as ::core::ffi::c_int as usize].pCurrent)
             .expect("non-null function pointer")(
                 pOrig as *mut ::core::ffi::c_void,
-                nReuse as crate::__stddef_size_t_h::size_t,
+                nReuse as crate::__stddef_size_t_h::SizeT,
             );
         }
     }
     if pNew.is_null() {
         pNew = ::core::mem::transmute::<
-            crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+            crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
             Option<
                 unsafe extern "C" fn(
                     *mut ::core::ffi::c_void,
-                    crate::__stddef_size_t_h::size_t,
+                    crate::__stddef_size_t_h::SizeT,
                     ::core::ffi::c_int,
                     ::core::ffi::c_int,
                     ::core::ffi::c_int,
-                    crate::src::headers::stdlib::off_t,
+                    crate::src::headers::stdlib::OffT,
                 ) -> *mut ::core::ffi::c_void,
             >,
         >(aSyscall[22 as ::core::ffi::c_int as usize].pCurrent)
         .expect("non-null function pointer")(
             ::core::ptr::null_mut::<::core::ffi::c_void>(),
-            nNew as crate::__stddef_size_t_h::size_t,
+            nNew as crate::__stddef_size_t_h::SizeT,
             flags,
             ::libc::MAP_SHARED,
             h,
-            0 as crate::src::headers::stdlib::off_t,
-        ) as *mut crate::src::ext::rtree::rtree::u8_0;
+            0 as crate::src::headers::stdlib::OffT,
+        ) as *mut crate::src::ext::rtree::rtree::U8_0;
     }
-    if pNew == ::libc::MAP_FAILED as *mut crate::src::ext::rtree::rtree::u8_0 {
-        pNew = ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::u8_0>();
-        nNew = 0 as crate::src::ext::rtree::rtree::i64_0;
+    if pNew == ::libc::MAP_FAILED as *mut crate::src::ext::rtree::rtree::U8_0 {
+        pNew = ::core::ptr::null_mut::<crate::src::ext::rtree::rtree::U8_0>();
+        nNew = 0 as crate::src::ext::rtree::rtree::I64_0;
         unixLogErrorAtLine(
             0 as ::core::ffi::c_int,
             zErr,
             __pFd_ref.zPath,
             5650 as ::core::ffi::c_int,
         );
-        __pFd_ref.mmapSizeMax = 0 as crate::src::headers::sqlite3_h::sqlite3_int64;
+        __pFd_ref.mmapSizeMax = 0 as crate::src::headers::sqlite3_h::Sqlite3Int64;
     }
     __pFd_ref.pMapRegion = pNew as *mut ::core::ffi::c_void;
-    __pFd_ref.mmapSizeActual = nNew as crate::src::headers::sqlite3_h::sqlite3_int64;
+    __pFd_ref.mmapSizeActual = nNew as crate::src::headers::sqlite3_h::Sqlite3Int64;
     __pFd_ref.mmapSize = __pFd_ref.mmapSizeActual;
 }
 
 unsafe extern "C" fn unixMapfile(
     mut pFd: *mut unixFile,
-    mut nMap: crate::src::ext::rtree::rtree::i64_0,
+    mut nMap: crate::src::ext::rtree::rtree::I64_0,
 ) -> ::core::ffi::c_int {
     let __pFd_ref = { &*pFd };
     if __pFd_ref.nFetchOut > 0 as ::core::ffi::c_int {
         return crate::src::headers::sqlite3_h::SQLITE_OK;
     }
-    if nMap < 0 as crate::src::ext::rtree::rtree::i64_0 {
+    if nMap < 0 as crate::src::ext::rtree::rtree::I64_0 {
         let mut statbuf: crate::src::headers::stdlib::stat = { ::core::mem::zeroed() };
         if ::core::mem::transmute::<
-            crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+            crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
             Option<
                 unsafe extern "C" fn(
                     ::core::ffi::c_int,
@@ -4166,10 +4155,10 @@ unsafe extern "C" fn unixMapfile(
         {
             return crate::src::headers::sqlite3_h::SQLITE_IOERR_FSTAT_1;
         }
-        nMap = statbuf.st_size as crate::src::ext::rtree::rtree::i64_0;
+        nMap = statbuf.st_size as crate::src::ext::rtree::rtree::I64_0;
     }
     if nMap > __pFd_ref.mmapSizeMax {
-        nMap = __pFd_ref.mmapSizeMax as crate::src::ext::rtree::rtree::i64_0;
+        nMap = __pFd_ref.mmapSizeMax as crate::src::ext::rtree::rtree::I64_0;
     }
     if nMap != __pFd_ref.mmapSize {
         unixRemapfile(pFd, nMap);
@@ -4179,18 +4168,18 @@ unsafe extern "C" fn unixMapfile(
 
 unsafe extern "C" fn unixFetch(
     mut fd: *mut crate::src::headers::sqlite3_h::sqlite3_file,
-    mut iOff: crate::src::ext::rtree::rtree::i64_0,
+    mut iOff: crate::src::ext::rtree::rtree::I64_0,
     mut nAmt: ::core::ffi::c_int,
     mut pp: *mut *mut ::core::ffi::c_void,
 ) -> ::core::ffi::c_int {
     let mut pFd: *mut unixFile = fd as *mut unixFile;
     *pp = ::core::ptr::null_mut::<::core::ffi::c_void>();
-    if (*pFd).mmapSizeMax > 0 as crate::src::headers::sqlite3_h::sqlite3_int64 {
+    if (*pFd).mmapSizeMax > 0 as crate::src::headers::sqlite3_h::Sqlite3Int64 {
         let nEofBuffer: ::core::ffi::c_int = 256 as ::core::ffi::c_int;
         if (*pFd).pMapRegion.is_null() {
             let mut rc: ::core::ffi::c_int = unixMapfile(
                 pFd,
-                -(1 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::i64_0,
+                -(1 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::I64_0,
             );
             if rc != crate::src::headers::sqlite3_h::SQLITE_OK {
                 return rc;
@@ -4198,11 +4187,11 @@ unsafe extern "C" fn unixFetch(
         }
         if (*pFd).mmapSize
             >= iOff
-                + nAmt as crate::src::ext::rtree::rtree::i64_0
-                + nEofBuffer as crate::src::ext::rtree::rtree::i64_0
+                + nAmt as crate::src::ext::rtree::rtree::I64_0
+                + nEofBuffer as crate::src::ext::rtree::rtree::I64_0
         {
-            *pp = ((*pFd).pMapRegion as *mut crate::src::ext::rtree::rtree::u8_0)
-                .offset(iOff as isize) as *mut crate::src::ext::rtree::rtree::u8_0
+            *pp = ((*pFd).pMapRegion as *mut crate::src::ext::rtree::rtree::U8_0)
+                .offset(iOff as isize) as *mut crate::src::ext::rtree::rtree::U8_0
                 as *mut ::core::ffi::c_void;
             (*pFd).nFetchOut += 1;
         }
@@ -4212,7 +4201,7 @@ unsafe extern "C" fn unixFetch(
 
 unsafe extern "C" fn unixUnfetch(
     mut fd: *mut crate::src::headers::sqlite3_h::sqlite3_file,
-    mut _iOff: crate::src::ext::rtree::rtree::i64_0,
+    mut _iOff: crate::src::ext::rtree::rtree::I64_0,
     mut p: *mut ::core::ffi::c_void,
 ) -> ::core::ffi::c_int {
     let mut pFd: *mut unixFile = fd as *mut unixFile;
@@ -4239,7 +4228,7 @@ static mut posixIoMethods: crate::src::headers::sqlite3_h::sqlite3_io_methods = 
                     *mut crate::src::headers::sqlite3_h::sqlite3_file,
                     *mut ::core::ffi::c_void,
                     ::core::ffi::c_int,
-                    crate::src::headers::sqlite3_h::sqlite3_int64,
+                    crate::src::headers::sqlite3_h::Sqlite3Int64,
                 ) -> ::core::ffi::c_int,
         ),
         xWrite: Some(
@@ -4248,14 +4237,14 @@ static mut posixIoMethods: crate::src::headers::sqlite3_h::sqlite3_io_methods = 
                     *mut crate::src::headers::sqlite3_h::sqlite3_file,
                     *const ::core::ffi::c_void,
                     ::core::ffi::c_int,
-                    crate::src::headers::sqlite3_h::sqlite3_int64,
+                    crate::src::headers::sqlite3_h::Sqlite3Int64,
                 ) -> ::core::ffi::c_int,
         ),
         xTruncate: Some(
             unixTruncate
                 as unsafe extern "C" fn(
                     *mut crate::src::headers::sqlite3_h::sqlite3_file,
-                    crate::src::ext::rtree::rtree::i64_0,
+                    crate::src::ext::rtree::rtree::I64_0,
                 ) -> ::core::ffi::c_int,
         ),
         xSync: Some(
@@ -4269,7 +4258,7 @@ static mut posixIoMethods: crate::src::headers::sqlite3_h::sqlite3_io_methods = 
             unixFileSize
                 as unsafe extern "C" fn(
                     *mut crate::src::headers::sqlite3_h::sqlite3_file,
-                    *mut crate::src::ext::rtree::rtree::i64_0,
+                    *mut crate::src::ext::rtree::rtree::I64_0,
                 ) -> ::core::ffi::c_int,
         ),
         xLock: Some(
@@ -4347,7 +4336,7 @@ static mut posixIoMethods: crate::src::headers::sqlite3_h::sqlite3_io_methods = 
             unixFetch
                 as unsafe extern "C" fn(
                     *mut crate::src::headers::sqlite3_h::sqlite3_file,
-                    crate::src::ext::rtree::rtree::i64_0,
+                    crate::src::ext::rtree::rtree::I64_0,
                     ::core::ffi::c_int,
                     *mut *mut ::core::ffi::c_void,
                 ) -> ::core::ffi::c_int,
@@ -4356,7 +4345,7 @@ static mut posixIoMethods: crate::src::headers::sqlite3_h::sqlite3_io_methods = 
             unixUnfetch
                 as unsafe extern "C" fn(
                     *mut crate::src::headers::sqlite3_h::sqlite3_file,
-                    crate::src::ext::rtree::rtree::i64_0,
+                    crate::src::ext::rtree::rtree::I64_0,
                     *mut ::core::ffi::c_void,
                 ) -> ::core::ffi::c_int,
         ),
@@ -4417,7 +4406,7 @@ static mut nolockIoMethods: crate::src::headers::sqlite3_h::sqlite3_io_methods =
                     *mut crate::src::headers::sqlite3_h::sqlite3_file,
                     *mut ::core::ffi::c_void,
                     ::core::ffi::c_int,
-                    crate::src::headers::sqlite3_h::sqlite3_int64,
+                    crate::src::headers::sqlite3_h::Sqlite3Int64,
                 ) -> ::core::ffi::c_int,
         ),
         xWrite: Some(
@@ -4426,14 +4415,14 @@ static mut nolockIoMethods: crate::src::headers::sqlite3_h::sqlite3_io_methods =
                     *mut crate::src::headers::sqlite3_h::sqlite3_file,
                     *const ::core::ffi::c_void,
                     ::core::ffi::c_int,
-                    crate::src::headers::sqlite3_h::sqlite3_int64,
+                    crate::src::headers::sqlite3_h::Sqlite3Int64,
                 ) -> ::core::ffi::c_int,
         ),
         xTruncate: Some(
             unixTruncate
                 as unsafe extern "C" fn(
                     *mut crate::src::headers::sqlite3_h::sqlite3_file,
-                    crate::src::ext::rtree::rtree::i64_0,
+                    crate::src::ext::rtree::rtree::I64_0,
                 ) -> ::core::ffi::c_int,
         ),
         xSync: Some(
@@ -4447,7 +4436,7 @@ static mut nolockIoMethods: crate::src::headers::sqlite3_h::sqlite3_io_methods =
             unixFileSize
                 as unsafe extern "C" fn(
                     *mut crate::src::headers::sqlite3_h::sqlite3_file,
-                    *mut crate::src::ext::rtree::rtree::i64_0,
+                    *mut crate::src::ext::rtree::rtree::I64_0,
                 ) -> ::core::ffi::c_int,
         ),
         xLock: Some(
@@ -4516,7 +4505,7 @@ static mut nolockIoMethods: crate::src::headers::sqlite3_h::sqlite3_io_methods =
             unixFetch
                 as unsafe extern "C" fn(
                     *mut crate::src::headers::sqlite3_h::sqlite3_file,
-                    crate::src::ext::rtree::rtree::i64_0,
+                    crate::src::ext::rtree::rtree::I64_0,
                     ::core::ffi::c_int,
                     *mut *mut ::core::ffi::c_void,
                 ) -> ::core::ffi::c_int,
@@ -4525,7 +4514,7 @@ static mut nolockIoMethods: crate::src::headers::sqlite3_h::sqlite3_io_methods =
             unixUnfetch
                 as unsafe extern "C" fn(
                     *mut crate::src::headers::sqlite3_h::sqlite3_file,
-                    crate::src::ext::rtree::rtree::i64_0,
+                    crate::src::ext::rtree::rtree::I64_0,
                     *mut ::core::ffi::c_void,
                 ) -> ::core::ffi::c_int,
         ),
@@ -4554,7 +4543,7 @@ static mut dotlockIoMethods: crate::src::headers::sqlite3_h::sqlite3_io_methods 
                     *mut crate::src::headers::sqlite3_h::sqlite3_file,
                     *mut ::core::ffi::c_void,
                     ::core::ffi::c_int,
-                    crate::src::headers::sqlite3_h::sqlite3_int64,
+                    crate::src::headers::sqlite3_h::Sqlite3Int64,
                 ) -> ::core::ffi::c_int,
         ),
         xWrite: Some(
@@ -4563,14 +4552,14 @@ static mut dotlockIoMethods: crate::src::headers::sqlite3_h::sqlite3_io_methods 
                     *mut crate::src::headers::sqlite3_h::sqlite3_file,
                     *const ::core::ffi::c_void,
                     ::core::ffi::c_int,
-                    crate::src::headers::sqlite3_h::sqlite3_int64,
+                    crate::src::headers::sqlite3_h::Sqlite3Int64,
                 ) -> ::core::ffi::c_int,
         ),
         xTruncate: Some(
             unixTruncate
                 as unsafe extern "C" fn(
                     *mut crate::src::headers::sqlite3_h::sqlite3_file,
-                    crate::src::ext::rtree::rtree::i64_0,
+                    crate::src::ext::rtree::rtree::I64_0,
                 ) -> ::core::ffi::c_int,
         ),
         xSync: Some(
@@ -4584,7 +4573,7 @@ static mut dotlockIoMethods: crate::src::headers::sqlite3_h::sqlite3_io_methods 
             unixFileSize
                 as unsafe extern "C" fn(
                     *mut crate::src::headers::sqlite3_h::sqlite3_file,
-                    *mut crate::src::ext::rtree::rtree::i64_0,
+                    *mut crate::src::ext::rtree::rtree::I64_0,
                 ) -> ::core::ffi::c_int,
         ),
         xLock: Some(
@@ -4653,7 +4642,7 @@ static mut dotlockIoMethods: crate::src::headers::sqlite3_h::sqlite3_io_methods 
             unixFetch
                 as unsafe extern "C" fn(
                     *mut crate::src::headers::sqlite3_h::sqlite3_file,
-                    crate::src::ext::rtree::rtree::i64_0,
+                    crate::src::ext::rtree::rtree::I64_0,
                     ::core::ffi::c_int,
                     *mut *mut ::core::ffi::c_void,
                 ) -> ::core::ffi::c_int,
@@ -4662,7 +4651,7 @@ static mut dotlockIoMethods: crate::src::headers::sqlite3_h::sqlite3_io_methods 
             unixUnfetch
                 as unsafe extern "C" fn(
                     *mut crate::src::headers::sqlite3_h::sqlite3_file,
-                    crate::src::ext::rtree::rtree::i64_0,
+                    crate::src::ext::rtree::rtree::I64_0,
                     *mut ::core::ffi::c_void,
                 ) -> ::core::ffi::c_int,
         ),
@@ -4707,7 +4696,7 @@ unsafe extern "C" fn fillInUnixFile(
         crate::src::printf_c_variadic::sqlite3DebugPrintf_args(
             b"OPEN    %-3d %s\n\0" as *const u8 as *const ::core::ffi::c_char,
             &[
-                crate::src::src::printf::PrintfArg::Int(h as crate::src::ext::rtree::rtree::i64_0),
+                crate::src::src::printf::PrintfArg::Int(h as crate::src::ext::rtree::rtree::I64_0),
                 crate::src::src::printf::PrintfArg::Str(zFilename as *mut ::core::ffi::c_char),
             ],
         );
@@ -4717,11 +4706,11 @@ unsafe extern "C" fn fillInUnixFile(
     __pNew_ref.pVfs = pVfs;
     __pNew_ref.zPath = zFilename;
     __pNew_ref.ctrlFlags =
-        ctrlFlags as crate::src::ext::rtree::rtree::u8_0 as ::core::ffi::c_ushort;
+        ctrlFlags as crate::src::ext::rtree::rtree::U8_0 as ::core::ffi::c_ushort;
     __pNew_ref.mmapSizeMax = crate::src::src::global::sqlite3Config.szMmap;
     if crate::src::src::main::sqlite3_uri_boolean(
         if ctrlFlags & UNIXFILE_URI != 0 {
-            zFilename as crate::src::headers::sqlite3_h::sqlite3_filename
+            zFilename as crate::src::headers::sqlite3_h::Sqlite3Filename
         } else {
             ::core::ptr::null::<::core::ffi::c_char>()
         },
@@ -4744,7 +4733,7 @@ unsafe extern "C" fn fillInUnixFile(
         pLockingStyle = &raw const nolockIoMethods;
     } else {
         pLockingStyle =
-            Some((*((*pVfs).pAppData as *mut finder_type)).expect("non-null function pointer"))
+            Some((*((*pVfs).pAppData as *mut FinderType)).expect("non-null function pointer"))
                 .expect("non-null function pointer")(zFilename, pNew);
     }
     if pLockingStyle == &raw const posixIoMethods {
@@ -4761,7 +4750,7 @@ unsafe extern "C" fn fillInUnixFile(
         let mut nFilename: ::core::ffi::c_int = 0;
         nFilename = ::libc::strlen(zFilename) as ::core::ffi::c_int + 6 as ::core::ffi::c_int;
         zLockFile = crate::src::src::malloc::sqlite3_malloc64(
-            nFilename as crate::src::headers::sqlite3_h::sqlite3_uint64,
+            nFilename as crate::src::headers::sqlite3_h::Sqlite3Uint64,
         ) as *mut ::core::ffi::c_char;
         if zLockFile.is_null() {
             rc = crate::src::headers::sqliteInt_h::SQLITE_NOMEM_BKPT;
@@ -4807,7 +4796,7 @@ unsafe extern "C" fn unixTempFileDir() -> *const ::core::ffi::c_char {
     loop {
         if !zDir.is_null()
             && ::core::mem::transmute::<
-                crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 Option<
                     unsafe extern "C" fn(
                         *const ::core::ffi::c_char,
@@ -4818,10 +4807,10 @@ unsafe extern "C" fn unixTempFileDir() -> *const ::core::ffi::c_char {
             .expect("non-null function pointer")(zDir, &raw mut buf)
                 == 0 as ::core::ffi::c_int
             && buf.st_mode
-                & crate::src::headers::stdlib::__S_IFMT as crate::src::headers::stdlib::__mode_t
-                == 0o40000 as crate::src::headers::stdlib::__mode_t
+                & crate::src::headers::stdlib::__S_IFMT as crate::src::headers::stdlib::ModeT
+                == 0o40000 as crate::src::headers::stdlib::ModeT
             && ::core::mem::transmute::<
-                crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 Option<
                     unsafe extern "C" fn(
                         *const ::core::ffi::c_char,
@@ -4874,9 +4863,9 @@ unsafe extern "C" fn unixGetTempname(
         rc = crate::src::headers::sqlite3_h::SQLITE_IOERR_GETTEMPPATH_1;
     } else {
         loop {
-            let mut r: crate::src::ext::rtree::rtree::u64_0 = 0;
+            let mut r: crate::src::ext::rtree::rtree::U64_0 = 0;
             crate::src::src::random::sqlite3_randomness(
-                ::core::mem::size_of::<crate::src::ext::rtree::rtree::u64_0>()
+                ::core::mem::size_of::<crate::src::ext::rtree::rtree::U64_0>()
                     as ::core::ffi::c_int,
                 &raw mut r as *mut ::core::ffi::c_void,
             );
@@ -4900,7 +4889,7 @@ unsafe extern "C" fn unixGetTempname(
                 rc = crate::src::headers::sqlite3_h::SQLITE_ERROR;
                 break;
             } else if !(::core::mem::transmute::<
-                crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 Option<
                     unsafe extern "C" fn(
                         *const ::core::ffi::c_char,
@@ -4932,7 +4921,7 @@ unsafe extern "C" fn findReusableFd(
     if !inodeList.is_null()
         && 0 as ::core::ffi::c_int
             == ::core::mem::transmute::<
-                crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 Option<
                     unsafe extern "C" fn(
                         *const ::core::ffi::c_char,
@@ -4946,7 +4935,7 @@ unsafe extern "C" fn findReusableFd(
         pInode = inodeList;
         while !pInode.is_null()
             && ((*pInode).fileId.dev != sStat.st_dev
-                || (*pInode).fileId.ino != sStat.st_ino as crate::src::ext::rtree::rtree::u64_0)
+                || (*pInode).fileId.ino != sStat.st_ino as crate::src::ext::rtree::rtree::U64_0)
         {
             pInode = (*pInode).pNext;
         }
@@ -4973,15 +4962,15 @@ unsafe extern "C" fn findReusableFd(
 
 unsafe extern "C" fn getFileMode(
     mut zFile: *const ::core::ffi::c_char,
-    mut pMode: *mut crate::src::headers::stdlib::mode_t,
-    mut pUid: *mut crate::src::headers::stdlib::uid_t,
-    mut pGid: *mut crate::src::headers::stdlib::gid_t,
+    mut pMode: *mut crate::src::headers::stdlib::ModeT,
+    mut pUid: *mut crate::src::headers::stdlib::UidT,
+    mut pGid: *mut crate::src::headers::stdlib::GidT,
 ) -> ::core::ffi::c_int {
     let mut sStat: crate::src::headers::stdlib::stat = { ::core::mem::zeroed() };
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
     if 0 as ::core::ffi::c_int
         == ::core::mem::transmute::<
-            crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+            crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
             Option<
                 unsafe extern "C" fn(
                     *const ::core::ffi::c_char,
@@ -4991,10 +4980,10 @@ unsafe extern "C" fn getFileMode(
         >(aSyscall[4 as ::core::ffi::c_int as usize].pCurrent)
         .expect("non-null function pointer")(zFile, &raw mut sStat)
     {
-        *pMode = (sStat.st_mode & 0o777 as crate::src::headers::stdlib::__mode_t)
-            as crate::src::headers::stdlib::mode_t;
-        *pUid = sStat.st_uid as crate::src::headers::stdlib::uid_t;
-        *pGid = sStat.st_gid as crate::src::headers::stdlib::gid_t;
+        *pMode = (sStat.st_mode & 0o777 as crate::src::headers::stdlib::ModeT)
+            as crate::src::headers::stdlib::ModeT;
+        *pUid = sStat.st_uid as crate::src::headers::stdlib::UidT;
+        *pGid = sStat.st_gid as crate::src::headers::stdlib::GidT;
     } else {
         rc = crate::src::headers::sqlite3_h::SQLITE_IOERR_FSTAT_1;
     }
@@ -5004,14 +4993,14 @@ unsafe extern "C" fn getFileMode(
 unsafe extern "C" fn findCreateFileMode(
     mut zPath: *const ::core::ffi::c_char,
     mut flags: ::core::ffi::c_int,
-    mut pMode: *mut crate::src::headers::stdlib::mode_t,
-    mut pUid: *mut crate::src::headers::stdlib::uid_t,
-    mut pGid: *mut crate::src::headers::stdlib::gid_t,
+    mut pMode: *mut crate::src::headers::stdlib::ModeT,
+    mut pUid: *mut crate::src::headers::stdlib::UidT,
+    mut pGid: *mut crate::src::headers::stdlib::GidT,
 ) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
-    *pMode = 0 as crate::src::headers::stdlib::mode_t;
-    *pUid = 0 as crate::src::headers::stdlib::uid_t;
-    *pGid = 0 as crate::src::headers::stdlib::gid_t;
+    *pMode = 0 as crate::src::headers::stdlib::ModeT;
+    *pUid = 0 as crate::src::headers::stdlib::UidT;
+    *pGid = 0 as crate::src::headers::stdlib::GidT;
     if flags
         & (crate::src::headers::sqlite3_h::SQLITE_OPEN_WAL
             | crate::src::headers::sqlite3_h::SQLITE_OPEN_MAIN_JOURNAL)
@@ -5037,10 +5026,10 @@ unsafe extern "C" fn findCreateFileMode(
             }
         }
     } else if flags & crate::src::headers::sqlite3_h::SQLITE_OPEN_DELETEONCLOSE != 0 {
-        *pMode = 0o600 as crate::src::headers::stdlib::mode_t;
+        *pMode = 0o600 as crate::src::headers::stdlib::ModeT;
     } else if flags & crate::src::headers::sqlite3_h::SQLITE_OPEN_URI != 0 {
         let mut z: *const ::core::ffi::c_char = crate::src::src::main::sqlite3_uri_parameter(
-            zPath as crate::src::headers::sqlite3_h::sqlite3_filename,
+            zPath as crate::src::headers::sqlite3_h::Sqlite3Filename,
             b"modeof\0" as *const u8 as *const ::core::ffi::c_char,
         );
         if !z.is_null() {
@@ -5092,7 +5081,7 @@ unsafe extern "C" fn unixOpen(
     ::libc::memset(
         p as *mut ::core::ffi::c_void,
         0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<unixFile>() as crate::__stddef_size_t_h::size_t,
+        ::core::mem::size_of::<unixFile>() as crate::__stddef_size_t_h::SizeT,
     );
     if eType == crate::src::headers::sqlite3_h::SQLITE_OPEN_MAIN_DB {
         let mut pUnused: *mut UnixUnusedFd = ::core::ptr::null_mut::<UnixUnusedFd>();
@@ -5102,7 +5091,7 @@ unsafe extern "C" fn unixOpen(
         } else {
             pUnused =
                 crate::src::src::malloc::sqlite3_malloc64(::core::mem::size_of::<UnixUnusedFd>()
-                    as crate::src::headers::sqlite3_h::sqlite3_uint64)
+                    as crate::src::headers::sqlite3_h::Sqlite3Uint64)
                     as *mut UnixUnusedFd;
             if pUnused.is_null() {
                 return crate::src::headers::sqliteInt_h::SQLITE_NOMEM_BKPT;
@@ -5133,9 +5122,9 @@ unsafe extern "C" fn unixOpen(
     }
     openFlags |= crate::compat::O_LARGEFILE | O_BINARY | ::libc::O_NOFOLLOW;
     if fd < 0 as ::core::ffi::c_int {
-        let mut openMode: crate::src::headers::stdlib::mode_t = 0;
-        let mut uid: crate::src::headers::stdlib::uid_t = 0;
-        let mut gid: crate::src::headers::stdlib::gid_t = 0;
+        let mut openMode: crate::src::headers::stdlib::ModeT = 0;
+        let mut uid: crate::src::headers::stdlib::UidT = 0;
+        let mut gid: crate::src::headers::stdlib::GidT = 0;
         rc = findCreateFileMode(zName, flags, &raw mut openMode, &raw mut uid, &raw mut gid);
         if rc != crate::src::headers::sqlite3_h::SQLITE_OK {
             return rc;
@@ -5146,7 +5135,7 @@ unsafe extern "C" fn unixOpen(
                 b"OPENX   %-3d %s 0%o\n\0" as *const u8 as *const ::core::ffi::c_char,
                 &[
                     crate::src::src::printf::PrintfArg::Int(
-                        fd as crate::src::ext::rtree::rtree::i64_0,
+                        fd as crate::src::ext::rtree::rtree::I64_0,
                     ),
                     crate::src::src::printf::PrintfArg::Str(zName as *mut ::core::ffi::c_char),
                     crate::src::src::printf::PrintfArg::UInt(openFlags as u64),
@@ -5157,7 +5146,7 @@ unsafe extern "C" fn unixOpen(
             if isNewJrnl != 0
                 && *crate::compat::errno_location() == ::libc::EACCES
                 && ::core::mem::transmute::<
-                    crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                    crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                     Option<
                         unsafe extern "C" fn(
                             *const ::core::ffi::c_char,
@@ -5225,7 +5214,7 @@ unsafe extern "C" fn unixOpen(
             }
             if isDelete != 0 {
                 ::core::mem::transmute::<
-                    crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                    crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                     Option<unsafe extern "C" fn(*const ::core::ffi::c_char) -> ::core::ffi::c_int>,
                 >(aSyscall[16 as ::core::ffi::c_int as usize].pCurrent)
                 .expect("non-null function pointer")(zName);
@@ -5275,7 +5264,7 @@ unsafe extern "C" fn unixDelete(
         return 10 as ::core::ffi::c_int | (10 as ::core::ffi::c_int) << 8 as ::core::ffi::c_int;
     }
     if ::core::mem::transmute::<
-        crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+        crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
         Option<unsafe extern "C" fn(*const ::core::ffi::c_char) -> ::core::ffi::c_int>,
     >(aSyscall[16 as ::core::ffi::c_int as usize].pCurrent)
     .expect("non-null function pointer")(zPath)
@@ -5296,7 +5285,7 @@ unsafe extern "C" fn unixDelete(
     if dirSync & 1 as ::core::ffi::c_int != 0 as ::core::ffi::c_int {
         let mut fd: ::core::ffi::c_int = 0;
         rc = ::core::mem::transmute::<
-            crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+            crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
             Option<
                 unsafe extern "C" fn(
                     *const ::core::ffi::c_char,
@@ -5347,7 +5336,7 @@ unsafe extern "C" fn unixAccess(
         let mut buf: crate::src::headers::stdlib::stat = { ::core::mem::zeroed() };
         *pResOut = (0 as ::core::ffi::c_int
             == ::core::mem::transmute::<
-                crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 Option<
                     unsafe extern "C" fn(
                         *const ::core::ffi::c_char,
@@ -5357,13 +5346,13 @@ unsafe extern "C" fn unixAccess(
             >(aSyscall[4 as ::core::ffi::c_int as usize].pCurrent)
             .expect("non-null function pointer")(zPath, &raw mut buf)
             && (!(buf.st_mode
-                & crate::src::headers::stdlib::__S_IFMT as crate::src::headers::stdlib::__mode_t
-                == 0o100000 as crate::src::headers::stdlib::__mode_t)
-                || buf.st_size > 0 as crate::src::headers::stdlib::__off_t))
+                & crate::src::headers::stdlib::__S_IFMT as crate::src::headers::stdlib::ModeT
+                == 0o100000 as crate::src::headers::stdlib::ModeT)
+                || buf.st_size > 0 as crate::src::headers::stdlib::OffT))
             as ::core::ffi::c_int;
     } else {
         *pResOut = (::core::mem::transmute::<
-            crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+            crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
             Option<
                 unsafe extern "C" fn(
                     *const ::core::ffi::c_char,
@@ -5422,7 +5411,7 @@ unsafe extern "C" fn appendOnePathElement(
         *__pPath_ref.zOut.offset(__pPath_ref.nUsed as isize) = 0 as ::core::ffi::c_char;
         zIn = __pPath_ref.zOut;
         if ::core::mem::transmute::<
-            crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+            crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
             Option<
                 unsafe extern "C" fn(
                     *const ::core::ffi::c_char,
@@ -5442,10 +5431,10 @@ unsafe extern "C" fn appendOnePathElement(
                 );
             }
         } else if buf.st_mode
-            & crate::src::headers::stdlib::__S_IFMT as crate::src::headers::stdlib::__mode_t
-            == 0o120000 as crate::src::headers::stdlib::__mode_t
+            & crate::src::headers::stdlib::__S_IFMT as crate::src::headers::stdlib::ModeT
+            == 0o120000 as crate::src::headers::stdlib::ModeT
         {
-            let mut got: crate::src::headers::stdlib::ssize_t = 0;
+            let mut got: crate::src::headers::stdlib::SsizeT = 0;
             let mut zLnk: [::core::ffi::c_char; 4098] = [0; 4098];
             let fresh2 = __pPath_ref.nSymlink;
             __pPath_ref.nSymlink += 1;
@@ -5455,28 +5444,28 @@ unsafe extern "C" fn appendOnePathElement(
                 return;
             }
             got = ::core::mem::transmute::<
-                crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 Option<
                     unsafe extern "C" fn(
                         *const ::core::ffi::c_char,
                         *mut ::core::ffi::c_char,
-                        crate::__stddef_size_t_h::size_t,
+                        crate::__stddef_size_t_h::SizeT,
                     )
-                        -> crate::src::headers::stdlib::ssize_t,
+                        -> crate::src::headers::stdlib::SsizeT,
                 >,
             >(aSyscall[26 as ::core::ffi::c_int as usize].pCurrent)
             .expect("non-null function pointer")(
                 zIn,
                 &raw mut zLnk as *mut ::core::ffi::c_char,
                 (::core::mem::size_of::<[::core::ffi::c_char; 4098]>()
-                    as crate::__stddef_size_t_h::size_t)
-                    .wrapping_sub(2 as crate::__stddef_size_t_h::size_t),
+                    as crate::__stddef_size_t_h::SizeT)
+                    .wrapping_sub(2 as crate::__stddef_size_t_h::SizeT),
             );
-            if got <= 0 as crate::src::headers::stdlib::ssize_t
+            if got <= 0 as crate::src::headers::stdlib::SsizeT
                 || got
                     >= ::core::mem::size_of::<[::core::ffi::c_char; 4098]>()
-                        as crate::src::headers::stdlib::ssize_t
-                        - 2 as crate::src::headers::stdlib::ssize_t
+                        as crate::src::headers::stdlib::SsizeT
+                        - 2 as crate::src::headers::stdlib::SsizeT
             {
                 __pPath_ref.rc = unixLogErrorAtLine(
                     crate::src::src::main::sqlite3CantopenError(6966 as ::core::ffi::c_int),
@@ -5540,19 +5529,19 @@ unsafe extern "C" fn unixFullPathname(
     if *zPath.offset(0 as isize) as ::core::ffi::c_int != '/' as i32 {
         let mut zPwd: [::core::ffi::c_char; 4098] = [0; 4098];
         if ::core::mem::transmute::<
-            crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+            crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
             Option<
                 unsafe extern "C" fn(
                     *mut ::core::ffi::c_char,
-                    crate::__stddef_size_t_h::size_t,
+                    crate::__stddef_size_t_h::SizeT,
                 ) -> *mut ::core::ffi::c_char,
             >,
         >(aSyscall[3 as ::core::ffi::c_int as usize].pCurrent)
         .expect("non-null function pointer")(
             &raw mut zPwd as *mut ::core::ffi::c_char,
             (::core::mem::size_of::<[::core::ffi::c_char; 4098]>()
-                as crate::__stddef_size_t_h::size_t)
-                .wrapping_sub(2 as crate::__stddef_size_t_h::size_t),
+                as crate::__stddef_size_t_h::SizeT)
+                .wrapping_sub(2 as crate::__stddef_size_t_h::SizeT),
         )
         .is_null()
         {
@@ -5646,7 +5635,7 @@ unsafe extern "C" fn unixRandomness(
     ::libc::memset(
         zBuf as *mut ::core::ffi::c_void,
         0 as ::core::ffi::c_int,
-        nBuf as crate::__stddef_size_t_h::size_t,
+        nBuf as crate::__stddef_size_t_h::SizeT,
     );
     randomnessPid = ::libc::getpid();
     nBuf
@@ -5658,9 +5647,9 @@ unsafe extern "C" fn unixSleep(
 ) -> ::core::ffi::c_int {
     let mut sp: ::libc::timespec = { ::core::mem::zeroed() };
     sp.tv_sec =
-        (microseconds / 1000000 as ::core::ffi::c_int) as crate::src::headers::stdlib::__time_t;
+        (microseconds / 1000000 as ::core::ffi::c_int) as crate::src::headers::stdlib::TimeT;
     sp.tv_nsec = (microseconds % 1000000 as ::core::ffi::c_int * 1000 as ::core::ffi::c_int)
-        as crate::src::headers::stdlib::__syscall_slong_t;
+        as crate::src::headers::stdlib::SyscallSlongT;
     ::libc::nanosleep(
         &raw mut sp as *mut _ as *const ::libc::timespec,
         ::core::ptr::null_mut::<::libc::timespec>() as *mut ::libc::timespec,
@@ -5673,11 +5662,11 @@ pub static mut sqlite3_current_time: ::core::ffi::c_int = 0 as ::core::ffi::c_in
 
 unsafe extern "C" fn unixCurrentTimeInt64(
     mut _NotUsed: *mut crate::src::headers::sqlite3_h::sqlite3_vfs,
-    mut piNow: *mut crate::src::headers::sqlite3_h::sqlite3_int64,
+    mut piNow: *mut crate::src::headers::sqlite3_h::Sqlite3Int64,
 ) -> ::core::ffi::c_int {
-    static mut unixEpoch: crate::src::headers::sqlite3_h::sqlite3_int64 = 24405875
-        as crate::src::headers::sqlite3_h::sqlite3_int64
-        * 8640000 as ::core::ffi::c_int as crate::src::headers::sqlite3_h::sqlite3_int64;
+    static mut unixEpoch: crate::src::headers::sqlite3_h::Sqlite3Int64 = 24405875
+        as crate::src::headers::sqlite3_h::Sqlite3Int64
+        * 8640000 as ::core::ffi::c_int as crate::src::headers::sqlite3_h::Sqlite3Int64;
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
     let mut sNow: ::libc::timeval = { ::core::mem::zeroed() };
     crate::src::headers::stdlib::gettimeofday(
@@ -5685,14 +5674,14 @@ unsafe extern "C" fn unixCurrentTimeInt64(
         ::core::ptr::null_mut::<::core::ffi::c_void>(),
     );
     *piNow = unixEpoch
-        + 1000 as crate::src::headers::sqlite3_h::sqlite3_int64
-            * sNow.tv_sec as crate::src::headers::sqlite3_h::sqlite3_int64
-        + (sNow.tv_usec as crate::src::headers::stdlib::__suseconds_t
-            / 1000 as crate::src::headers::stdlib::__suseconds_t)
-            as crate::src::headers::sqlite3_h::sqlite3_int64;
+        + 1000 as crate::src::headers::sqlite3_h::Sqlite3Int64
+            * sNow.tv_sec as crate::src::headers::sqlite3_h::Sqlite3Int64
+        + (sNow.tv_usec as crate::src::headers::stdlib::SusecondsT
+            / 1000 as crate::src::headers::stdlib::SusecondsT)
+            as crate::src::headers::sqlite3_h::Sqlite3Int64;
     if sqlite3_current_time != 0 {
-        *piNow = 1000 as crate::src::headers::sqlite3_h::sqlite3_int64
-            * sqlite3_current_time as crate::src::headers::sqlite3_h::sqlite3_int64
+        *piNow = 1000 as crate::src::headers::sqlite3_h::Sqlite3Int64
+            * sqlite3_current_time as crate::src::headers::sqlite3_h::Sqlite3Int64
             + unixEpoch;
     }
     rc
@@ -5702,8 +5691,8 @@ unsafe extern "C" fn unixCurrentTime(
     mut _NotUsed: *mut crate::src::headers::sqlite3_h::sqlite3_vfs,
     mut prNow: *mut ::core::ffi::c_double,
 ) -> ::core::ffi::c_int {
-    let mut i: crate::src::headers::sqlite3_h::sqlite3_int64 =
-        0 as crate::src::headers::sqlite3_h::sqlite3_int64;
+    let mut i: crate::src::headers::sqlite3_h::Sqlite3Int64 =
+        0 as crate::src::headers::sqlite3_h::Sqlite3Int64;
     let mut rc: ::core::ffi::c_int = 0;
     rc = unixCurrentTimeInt64(
         ::core::ptr::null_mut::<crate::src::headers::sqlite3_h::sqlite3_vfs>(),
@@ -5830,7 +5819,7 @@ pub unsafe extern "C" fn sqlite3_os_init() -> ::core::ffi::c_int {
                     unixCurrentTimeInt64
                         as unsafe extern "C" fn(
                             *mut crate::src::headers::sqlite3_h::sqlite3_vfs,
-                            *mut crate::src::headers::sqlite3_h::sqlite3_int64,
+                            *mut crate::src::headers::sqlite3_h::Sqlite3Int64,
                         ) -> ::core::ffi::c_int,
                 ),
     xSetSystemCall:  Some(
@@ -5838,7 +5827,7 @@ pub unsafe extern "C" fn sqlite3_os_init() -> ::core::ffi::c_int {
                         as unsafe extern "C" fn(
                             *mut crate::src::headers::sqlite3_h::sqlite3_vfs,
                             *const ::core::ffi::c_char,
-                            crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                            crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                         ) -> ::core::ffi::c_int,
                 ),
     xGetSystemCall:  Some(
@@ -5846,7 +5835,7 @@ pub unsafe extern "C" fn sqlite3_os_init() -> ::core::ffi::c_int {
                         as unsafe extern "C" fn(
                             *mut crate::src::headers::sqlite3_h::sqlite3_vfs,
                             *const ::core::ffi::c_char,
-                        ) -> crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                        ) -> crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 ),
     xNextSystemCall:  Some(
                     unixNextSystemCall
@@ -5963,7 +5952,7 @@ pub unsafe extern "C" fn sqlite3_os_init() -> ::core::ffi::c_int {
                     unixCurrentTimeInt64
                         as unsafe extern "C" fn(
                             *mut crate::src::headers::sqlite3_h::sqlite3_vfs,
-                            *mut crate::src::headers::sqlite3_h::sqlite3_int64,
+                            *mut crate::src::headers::sqlite3_h::Sqlite3Int64,
                         ) -> ::core::ffi::c_int,
                 ),
     xSetSystemCall:  Some(
@@ -5971,7 +5960,7 @@ pub unsafe extern "C" fn sqlite3_os_init() -> ::core::ffi::c_int {
                         as unsafe extern "C" fn(
                             *mut crate::src::headers::sqlite3_h::sqlite3_vfs,
                             *const ::core::ffi::c_char,
-                            crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                            crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                         ) -> ::core::ffi::c_int,
                 ),
     xGetSystemCall:  Some(
@@ -5979,7 +5968,7 @@ pub unsafe extern "C" fn sqlite3_os_init() -> ::core::ffi::c_int {
                         as unsafe extern "C" fn(
                             *mut crate::src::headers::sqlite3_h::sqlite3_vfs,
                             *const ::core::ffi::c_char,
-                        ) -> crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                        ) -> crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 ),
     xNextSystemCall:  Some(
                     unixNextSystemCall
@@ -6096,7 +6085,7 @@ pub unsafe extern "C" fn sqlite3_os_init() -> ::core::ffi::c_int {
                     unixCurrentTimeInt64
                         as unsafe extern "C" fn(
                             *mut crate::src::headers::sqlite3_h::sqlite3_vfs,
-                            *mut crate::src::headers::sqlite3_h::sqlite3_int64,
+                            *mut crate::src::headers::sqlite3_h::Sqlite3Int64,
                         ) -> ::core::ffi::c_int,
                 ),
     xSetSystemCall:  Some(
@@ -6104,7 +6093,7 @@ pub unsafe extern "C" fn sqlite3_os_init() -> ::core::ffi::c_int {
                         as unsafe extern "C" fn(
                             *mut crate::src::headers::sqlite3_h::sqlite3_vfs,
                             *const ::core::ffi::c_char,
-                            crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                            crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                         ) -> ::core::ffi::c_int,
                 ),
     xGetSystemCall:  Some(
@@ -6112,7 +6101,7 @@ pub unsafe extern "C" fn sqlite3_os_init() -> ::core::ffi::c_int {
                         as unsafe extern "C" fn(
                             *mut crate::src::headers::sqlite3_h::sqlite3_vfs,
                             *const ::core::ffi::c_char,
-                        ) -> crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                        ) -> crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 ),
     xNextSystemCall:  Some(
                     unixNextSystemCall
@@ -6229,7 +6218,7 @@ pub unsafe extern "C" fn sqlite3_os_init() -> ::core::ffi::c_int {
                     unixCurrentTimeInt64
                         as unsafe extern "C" fn(
                             *mut crate::src::headers::sqlite3_h::sqlite3_vfs,
-                            *mut crate::src::headers::sqlite3_h::sqlite3_int64,
+                            *mut crate::src::headers::sqlite3_h::Sqlite3Int64,
                         ) -> ::core::ffi::c_int,
                 ),
     xSetSystemCall:  Some(
@@ -6237,7 +6226,7 @@ pub unsafe extern "C" fn sqlite3_os_init() -> ::core::ffi::c_int {
                         as unsafe extern "C" fn(
                             *mut crate::src::headers::sqlite3_h::sqlite3_vfs,
                             *const ::core::ffi::c_char,
-                            crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                            crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                         ) -> ::core::ffi::c_int,
                 ),
     xGetSystemCall:  Some(
@@ -6245,7 +6234,7 @@ pub unsafe extern "C" fn sqlite3_os_init() -> ::core::ffi::c_int {
                         as unsafe extern "C" fn(
                             *mut crate::src::headers::sqlite3_h::sqlite3_vfs,
                             *const ::core::ffi::c_char,
-                        ) -> crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+                        ) -> crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
                 ),
     xNextSystemCall:  Some(
                     unixNextSystemCall

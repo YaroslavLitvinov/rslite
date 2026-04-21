@@ -12,6 +12,10 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
       - [constraint_build_all](#constraint_build_all)
     - [Feature: clippy_checks](#feature-clippy_checks)
       - [clippy_checks](#clippy_checks)
+      - [forbid_non_camel_case_types_allow](#forbid_non_camel_case_types_allow)
+      - [forbid_non_camel_case_types_allow_robust](#forbid_non_camel_case_types_allow_robust)
+      - [forbid_non_camel_case_types_any](#forbid_non_camel_case_types_any)
+      - [forbid_non_camel_case_types_with_warnings_robust](#forbid_non_camel_case_types_with_warnings_robust)
       - [no_forbidden_allows_robust](#no_forbidden_allows_robust)
     - [Feature: fts5_no_libc_global](#feature-fts5_no_libc_global)
       - [fts5_no_libc_calls](#fts5_no_libc_calls)
@@ -43,6 +47,18 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
 
 #### clippy_checks
 **Description:** Run cargo clippy and ensure no warnings reported
+
+#### forbid_non_camel_case_types_allow
+**Description:** Structural: Forbid allow() attributes for clippy::non_camel_case_types rule. Types must follow camelCase naming convention.
+
+#### forbid_non_camel_case_types_allow_robust
+**Description:** Structural: Robust whitespace-tolerant detection of forbidden clippy::non_camel_case_types allow. Forbids any formatting of allow() with this single lint, ignoring whitespace between allow and (.
+
+#### forbid_non_camel_case_types_any
+**Description:** Structural: Forbid any allow() attribute for non_camel_case_types in any form: bare rustc lint or clippy:: prefix, inner (#![...]) or outer (#[...]), alone or combined with other lints, with arbitrary whitespace. Word boundaries prevent false positives on longer identifiers.
+
+#### forbid_non_camel_case_types_with_warnings_robust
+**Description:** Structural: Robust whitespace-tolerant detection of forbidden clippy::non_camel_case_types and warnings allows. Forbids any formatting of allow() with non_camel_case_types or warnings, ignoring whitespace between allow and (.
 
 #### no_forbidden_allows_robust
 **Description:** Structural: Robust whitespace-tolerant detection of forbidden clippy allows. Detects any formatting of allow() with forbidden lints, ignoring whitespace between allow and (.

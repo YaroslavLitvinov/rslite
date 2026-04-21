@@ -1,16 +1,16 @@
-pub use crate::__stddef_size_t_h::size_t;
+pub use crate::__stddef_size_t_h::SizeT;
 
 pub use crate::src::headers::opcodes_h::OP_Expire;
 pub use crate::src::src::hash::_ht;
 pub use crate::src::src::hash::Hash;
 pub use crate::src::src::hash::HashElem;
 
-pub use crate::src::ext::rtree::rtree::i64_0;
-pub use crate::src::ext::rtree::rtree::u8_0;
-pub use crate::src::ext::rtree::rtree::u32_0;
-pub use crate::src::ext::rtree::rtree::u64_0;
-pub use crate::src::fts5::i16_0;
-pub use crate::src::fts5::u16_0;
+pub use crate::src::ext::rtree::rtree::I64_0;
+pub use crate::src::ext::rtree::rtree::U8_0;
+pub use crate::src::ext::rtree::rtree::U32_0;
+pub use crate::src::ext::rtree::rtree::U64_0;
+pub use crate::src::fts5::I16_0;
+pub use crate::src::fts5::U16_0;
 pub use crate::src::headers::sqlite3_h::SQLITE_ATTACH;
 pub use crate::src::headers::sqlite3_h::SQLITE_CONSTRAINT;
 pub use crate::src::headers::sqlite3_h::SQLITE_DETACH;
@@ -26,19 +26,19 @@ pub use crate::src::headers::sqlite3_h::SQLITE_OPEN_READONLY;
 pub use crate::src::headers::sqlite3_h::SQLITE_OPEN_READWRITE;
 pub use crate::src::headers::sqlite3_h::SQLITE_TXN_NONE;
 pub use crate::src::headers::sqlite3_h::SQLITE_UTF8;
-pub use crate::src::headers::sqlite3_h::sqlite_int64;
-pub use crate::src::headers::sqlite3_h::sqlite_uint64;
+pub use crate::src::headers::sqlite3_h::SqliteInt64;
+pub use crate::src::headers::sqlite3_h::SqliteUint64;
 pub use crate::src::headers::sqlite3_h::sqlite3_file;
-pub use crate::src::headers::sqlite3_h::sqlite3_filename;
+pub use crate::src::headers::sqlite3_h::Sqlite3Filename;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_constraint;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_constraint_usage;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_info;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_orderby;
-pub use crate::src::headers::sqlite3_h::sqlite3_int64;
+pub use crate::src::headers::sqlite3_h::Sqlite3Int64;
 pub use crate::src::headers::sqlite3_h::sqlite3_io_methods;
 pub use crate::src::headers::sqlite3_h::sqlite3_module;
-pub use crate::src::headers::sqlite3_h::sqlite3_syscall_ptr;
-pub use crate::src::headers::sqlite3_h::sqlite3_uint64;
+pub use crate::src::headers::sqlite3_h::Sqlite3SyscallPtr;
+pub use crate::src::headers::sqlite3_h::Sqlite3Uint64;
 pub use crate::src::headers::sqlite3_h::sqlite3_vfs;
 pub use crate::src::headers::sqlite3_h::sqlite3_vtab;
 pub use crate::src::headers::sqlite3_h::sqlite3_vtab_cursor;
@@ -134,14 +134,14 @@ pub use crate::src::headers::sqliteInt_h::WhereConst;
 pub use crate::src::headers::sqliteInt_h::Window;
 pub use crate::src::headers::sqliteInt_h::WindowRewrite;
 pub use crate::src::headers::sqliteInt_h::With;
-pub use crate::src::headers::sqliteInt_h::bft;
+pub use crate::src::headers::sqliteInt_h::Bft;
 pub use crate::src::headers::sqliteInt_h::sColMap;
 pub use crate::src::headers::sqliteInt_h::sqlite3;
-pub use crate::src::headers::sqliteInt_h::sqlite3_xauth;
+pub use crate::src::headers::sqliteInt_h::Sqlite3Xauth;
 pub use crate::src::headers::sqliteInt_h::sqlite3InitInfo;
-pub use crate::src::headers::sqliteInt_h::yDbMask;
-pub use crate::src::headers::sqliteInt_h::ynVar;
-pub use crate::src::headers::stdlib::int16_t;
+pub use crate::src::headers::sqliteInt_h::YDbMask;
+pub use crate::src::headers::sqliteInt_h::YnVar;
+pub use crate::src::headers::stdlib::Int16T;
 pub use crate::src::headers::vdbeInt_h::PreUpdate;
 pub use crate::src::headers::vdbeInt_h::sqlite3_context;
 pub use crate::src::headers::vdbeInt_h::sqlite3_value;
@@ -186,13 +186,9 @@ pub use crate::src::src::walker::sqlite3WalkExprList;
 pub use crate::src::src::walker::sqlite3WalkSelect;
 pub use crate::src::src::walker::sqlite3WalkWinDefnDummyCallback;
 
-pub use crate::src::headers::stdlib::__int16_t;
-pub use crate::src::headers::stdlib::__uint8_t;
-pub use crate::src::headers::stdlib::__uint16_t;
-pub use crate::src::headers::stdlib::__uint32_t;
-pub use crate::src::headers::stdlib::uint8_t;
-pub use crate::src::headers::stdlib::uint16_t;
-pub use crate::src::headers::stdlib::uint32_t;
+pub use crate::src::headers::stdlib::Uint8T;
+pub use crate::src::headers::stdlib::Uint16T;
+pub use crate::src::headers::stdlib::Uint32T;
 pub use crate::src::headers::vdbeInt_h::Vdbe;
 pub use crate::src::src::vdbe::Mem;
 pub use crate::src::src::vdbe::SubProgram;
@@ -214,7 +210,7 @@ unsafe extern "C" fn resolveAttachExpr(
                 pExpr as *mut crate::src::headers::sqliteInt_h::Expr,
             );
         } else {
-            (*pExpr).op = crate::src::parse::TK_STRING as crate::src::ext::rtree::rtree::u8_0;
+            (*pExpr).op = crate::src::parse::TK_STRING as crate::src::ext::rtree::rtree::U8_0;
         }
     }
     rc
@@ -319,7 +315,7 @@ unsafe extern "C" fn attachFunc(
             b"too many attached databases - max %d\0" as *const u8 as *const ::core::ffi::c_char,
             &[crate::src::src::printf::PrintfArg::Int(
                 __db_ref.aLimit[crate::src::headers::sqlite3_h::SQLITE_LIMIT_ATTACHED as usize]
-                    as crate::src::ext::rtree::rtree::i64_0,
+                    as crate::src::ext::rtree::rtree::I64_0,
             )],
         );
         current_block = 2825258041278731976;
@@ -354,7 +350,7 @@ unsafe extern "C" fn attachFunc(
                         db as *mut crate::src::headers::sqliteInt_h::sqlite3,
                         (::core::mem::size_of::<crate::src::headers::sqliteInt_h::Db>() as usize)
                             .wrapping_mul(3 as usize)
-                            as crate::src::ext::rtree::rtree::u64_0,
+                            as crate::src::ext::rtree::rtree::U64_0,
                     ) as *mut crate::src::headers::sqliteInt_h::Db;
                     if aNew.is_null() {
                         return;
@@ -363,8 +359,8 @@ unsafe extern "C" fn attachFunc(
                         __db_ref.aDb as *const u8,
                         aNew as *mut u8,
                         ((::core::mem::size_of::<crate::src::headers::sqliteInt_h::Db>()
-                            as crate::__stddef_size_t_h::size_t)
-                            .wrapping_mul(2 as crate::__stddef_size_t_h::size_t))
+                            as crate::__stddef_size_t_h::SizeT)
+                            .wrapping_mul(2 as crate::__stddef_size_t_h::SizeT))
                             as usize,
                     );
                 } else {
@@ -372,11 +368,11 @@ unsafe extern "C" fn attachFunc(
                         db as *mut crate::src::headers::sqliteInt_h::sqlite3,
                         __db_ref.aDb as *mut ::core::ffi::c_void,
                         (::core::mem::size_of::<crate::src::headers::sqliteInt_h::Db>()
-                            as crate::src::ext::rtree::rtree::u64_0)
+                            as crate::src::ext::rtree::rtree::U64_0)
                             .wrapping_mul(
-                                (1 as crate::src::ext::rtree::rtree::i64_0
-                                    + __db_ref.nDb as crate::src::ext::rtree::rtree::i64_0)
-                                    as crate::src::ext::rtree::rtree::u64_0,
+                                (1 as crate::src::ext::rtree::rtree::I64_0
+                                    + __db_ref.nDb as crate::src::ext::rtree::rtree::I64_0)
+                                    as crate::src::ext::rtree::rtree::U64_0,
                             ),
                     ) as *mut crate::src::headers::sqliteInt_h::Db;
                     if aNew.is_null() {
@@ -390,7 +386,7 @@ unsafe extern "C" fn attachFunc(
                     pNew as *mut ::core::ffi::c_void,
                     0 as ::core::ffi::c_int,
                     ::core::mem::size_of::<crate::src::headers::sqliteInt_h::Db>()
-                        as crate::__stddef_size_t_h::size_t,
+                        as crate::__stddef_size_t_h::SizeT,
                 );
                 flags = __db_ref.openFlags;
                 rc = crate::src::src::main::sqlite3ParseUri(
@@ -417,7 +413,7 @@ unsafe extern "C" fn attachFunc(
                     return;
                 }
                 if __db_ref.flags & crate::src::headers::sqliteInt_h::SQLITE_AttachWrite
-                    == 0 as crate::src::ext::rtree::rtree::u64_0
+                    == 0 as crate::src::ext::rtree::rtree::U64_0
                 {
                     flags &= !(crate::src::headers::sqlite3_h::SQLITE_OPEN_CREATE
                         | crate::src::headers::sqlite3_h::SQLITE_OPEN_READWRITE)
@@ -425,7 +421,7 @@ unsafe extern "C" fn attachFunc(
                     flags |=
                         crate::src::headers::sqlite3_h::SQLITE_OPEN_READONLY as ::core::ffi::c_uint;
                 } else if __db_ref.flags & crate::src::headers::sqliteInt_h::SQLITE_AttachCreate
-                    == 0 as crate::src::ext::rtree::rtree::u64_0
+                    == 0 as crate::src::ext::rtree::rtree::U64_0
                 {
                     flags &=
                         !crate::src::headers::sqlite3_h::SQLITE_OPEN_CREATE as ::core::ffi::c_uint;
@@ -450,7 +446,7 @@ unsafe extern "C" fn attachFunc(
     }
     match current_block {
         10380409671385728102 => {
-            __db_ref.noSharedCache = 0 as crate::src::ext::rtree::rtree::u8_0;
+            __db_ref.noSharedCache = 0 as crate::src::ext::rtree::rtree::U8_0;
             if rc == crate::src::headers::sqlite3_h::SQLITE_CONSTRAINT {
                 rc = crate::src::headers::sqlite3_h::SQLITE_ERROR;
                 zErrDyn = crate::src::src::printf::sqlite3MPrintf_args(
@@ -498,30 +494,30 @@ unsafe extern "C" fn attachFunc(
                 crate::src::src::btree::sqlite3BtreeSetPagerFlags(
                     __pNew_ref.pBt,
                     (crate::src::src::pager::PAGER_SYNCHRONOUS_FULL
-                        as crate::src::ext::rtree::rtree::u64_0
+                        as crate::src::ext::rtree::rtree::U64_0
                         | __db_ref.flags
                             & crate::src::src::pager::PAGER_FLAGS_MASK
-                                as crate::src::ext::rtree::rtree::u64_0)
+                                as crate::src::ext::rtree::rtree::U64_0)
                         as ::core::ffi::c_uint,
                 );
                 crate::src::src::btmutex::sqlite3BtreeLeave(__pNew_ref.pBt);
             }
             (*pNew).safety_level = (crate::src::headers::sqliteInt_h::SQLITE_DEFAULT_SYNCHRONOUS
                 + 1 as ::core::ffi::c_int)
-                as crate::src::ext::rtree::rtree::u8_0;
+                as crate::src::ext::rtree::rtree::U8_0;
             if rc == crate::src::headers::sqlite3_h::SQLITE_OK && (*pNew).zDbSName.is_null() {
                 rc = crate::src::headers::sqliteInt_h::SQLITE_NOMEM_BKPT;
             }
             crate::src::src::main::sqlite3_free_filename(
-                zPath as crate::src::headers::sqlite3_h::sqlite3_filename,
+                zPath as crate::src::headers::sqlite3_h::Sqlite3Filename,
             );
             if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
                 crate::src::src::btmutex::sqlite3BtreeEnterAll(
                     db as *mut crate::src::headers::sqliteInt_h::sqlite3,
                 );
-                __db_ref.init.iDb = 0 as crate::src::ext::rtree::rtree::u8_0;
+                __db_ref.init.iDb = 0 as crate::src::ext::rtree::rtree::U8_0;
                 __db_ref.mDbFlags &=
-                    !(0x10 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u32_0;
+                    !(0x10 as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::U32_0;
                 if __db_ref.init.reopenMemdb() == 0 {
                     rc = crate::src::src::prepare::sqlite3Init(
                         db as *mut crate::src::headers::sqliteInt_h::sqlite3,
@@ -799,9 +795,9 @@ pub unsafe extern "C" fn sqlite3Detach(
 ) {
     static mut detach_func: crate::src::headers::sqliteInt_h::FuncDef = {
         crate::src::headers::sqliteInt_h::FuncDef {
-            nArg: 1 as crate::src::fts5::i16_0,
+            nArg: 1 as crate::src::fts5::I16_0,
             funcFlags: crate::src::headers::sqlite3_h::SQLITE_UTF8
-                as crate::src::ext::rtree::rtree::u32_0,
+                as crate::src::ext::rtree::rtree::U32_0,
             pUserData: ::core::ptr::null::<::core::ffi::c_void>() as *mut ::core::ffi::c_void,
             pNext: ::core::ptr::null::<crate::src::headers::sqliteInt_h::FuncDef>()
                 as *mut crate::src::headers::sqliteInt_h::FuncDef,
@@ -843,9 +839,9 @@ pub unsafe extern "C" fn sqlite3Attach(
 ) {
     static mut attach_func: crate::src::headers::sqliteInt_h::FuncDef = {
         crate::src::headers::sqliteInt_h::FuncDef {
-            nArg: 3 as crate::src::fts5::i16_0,
+            nArg: 3 as crate::src::fts5::I16_0,
             funcFlags: crate::src::headers::sqlite3_h::SQLITE_UTF8
-                as crate::src::ext::rtree::rtree::u32_0,
+                as crate::src::ext::rtree::rtree::U32_0,
             pUserData: ::core::ptr::null::<::core::ffi::c_void>() as *mut ::core::ffi::c_void,
             pNext: ::core::ptr::null::<crate::src::headers::sqliteInt_h::FuncDef>()
                 as *mut crate::src::headers::sqliteInt_h::FuncDef,
@@ -884,11 +880,11 @@ unsafe extern "C" fn fixExprCb(
 ) -> ::core::ffi::c_int {
     let mut pFix: *mut crate::src::headers::sqliteInt_h::DbFixer = (*p).u.pFix;
     if (*pFix).bTemp == 0 {
-        (*pExpr).flags |= 0x40000000 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u32_0;
+        (*pExpr).flags |= 0x40000000 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U32_0;
     }
     if (*pExpr).op as ::core::ffi::c_int == crate::src::parse::TK_VARIABLE {
         if (*(*(*pFix).pParse).db).init.busy != 0 {
-            (*pExpr).op = crate::src::parse::TK_NULL as crate::src::ext::rtree::rtree::u8_0;
+            (*pExpr).op = crate::src::parse::TK_NULL as crate::src::ext::rtree::rtree::U8_0;
         } else {
             crate::src::src::util::sqlite3ErrorMsg_args(
                 (*pFix).pParse as *mut crate::src::headers::sqliteInt_h::Parse,
@@ -1026,7 +1022,7 @@ pub unsafe extern "C" fn sqlite3FixInit(
     __pFix_ref.zType = zType;
     __pFix_ref.pName = pName;
     __pFix_ref.bTemp = (iDb == 1 as ::core::ffi::c_int) as ::core::ffi::c_int
-        as crate::src::ext::rtree::rtree::u8_0;
+        as crate::src::ext::rtree::rtree::U8_0;
     __pFix_ref.w.pParse = pParse;
     __pFix_ref.w.xExprCallback = Some(
         fixExprCb
@@ -1068,7 +1064,7 @@ pub unsafe extern "C" fn sqlite3FixInit(
             ) -> (),
         >;
     __pFix_ref.w.walkerDepth = 0 as ::core::ffi::c_int;
-    __pFix_ref.w.eCode = 0 as crate::src::fts5::u16_0;
+    __pFix_ref.w.eCode = 0 as crate::src::fts5::U16_0;
     __pFix_ref.w.u.pFix = pFix;
 }
 #[cfg_attr(feature = "test", unsafe(no_mangle))]

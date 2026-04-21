@@ -3,30 +3,30 @@ pub use crate::src::src::hash::Hash;
 pub use crate::src::src::hash::HashElem;
 pub use crate::src::src::pager::Pgno;
 
-pub use crate::src::ext::rtree::rtree::i64_0;
-pub use crate::src::ext::rtree::rtree::u8_0;
-pub use crate::src::ext::rtree::rtree::u32_0;
-pub use crate::src::ext::rtree::rtree::u64_0;
-pub use crate::src::fts5::i16_0;
-pub use crate::src::fts5::u16_0;
+pub use crate::src::ext::rtree::rtree::I64_0;
+pub use crate::src::ext::rtree::rtree::U8_0;
+pub use crate::src::ext::rtree::rtree::U32_0;
+pub use crate::src::ext::rtree::rtree::U64_0;
+pub use crate::src::fts5::I16_0;
+pub use crate::src::fts5::U16_0;
 pub use crate::src::headers::sqlite3_h::SQLITE_NOMEM;
 pub use crate::src::headers::sqlite3_h::SQLITE_STATIC;
 pub use crate::src::headers::sqlite3_h::SQLITE_UTF8;
 pub use crate::src::headers::sqlite3_h::SQLITE_UTF16LE;
-pub use crate::src::headers::sqlite3_h::sqlite_int64;
-pub use crate::src::headers::sqlite3_h::sqlite_uint64;
-pub use crate::src::headers::sqlite3_h::sqlite3_destructor_type;
+pub use crate::src::headers::sqlite3_h::SqliteInt64;
+pub use crate::src::headers::sqlite3_h::SqliteUint64;
+pub use crate::src::headers::sqlite3_h::Sqlite3DestructorType;
 pub use crate::src::headers::sqlite3_h::sqlite3_file;
-pub use crate::src::headers::sqlite3_h::sqlite3_filename;
+pub use crate::src::headers::sqlite3_h::Sqlite3Filename;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_constraint;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_constraint_usage;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_info;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_orderby;
-pub use crate::src::headers::sqlite3_h::sqlite3_int64;
+pub use crate::src::headers::sqlite3_h::Sqlite3Int64;
 pub use crate::src::headers::sqlite3_h::sqlite3_io_methods;
 pub use crate::src::headers::sqlite3_h::sqlite3_module;
-pub use crate::src::headers::sqlite3_h::sqlite3_syscall_ptr;
-pub use crate::src::headers::sqlite3_h::sqlite3_uint64;
+pub use crate::src::headers::sqlite3_h::Sqlite3SyscallPtr;
+pub use crate::src::headers::sqlite3_h::Sqlite3Uint64;
 pub use crate::src::headers::sqlite3_h::sqlite3_vfs;
 pub use crate::src::headers::sqlite3_h::sqlite3_vtab;
 pub use crate::src::headers::sqlite3_h::sqlite3_vtab_cursor;
@@ -104,14 +104,14 @@ pub use crate::src::headers::sqliteInt_h::VTable;
 pub use crate::src::headers::sqliteInt_h::VtabCtx;
 pub use crate::src::headers::sqliteInt_h::Window;
 pub use crate::src::headers::sqliteInt_h::With;
-pub use crate::src::headers::sqliteInt_h::bft;
+pub use crate::src::headers::sqliteInt_h::Bft;
 pub use crate::src::headers::sqliteInt_h::sColMap;
 pub use crate::src::headers::sqliteInt_h::sqlite3;
-pub use crate::src::headers::sqliteInt_h::sqlite3_xauth;
+pub use crate::src::headers::sqliteInt_h::Sqlite3Xauth;
 pub use crate::src::headers::sqliteInt_h::sqlite3InitInfo;
-pub use crate::src::headers::sqliteInt_h::yDbMask;
-pub use crate::src::headers::sqliteInt_h::ynVar;
-pub use crate::src::headers::stdlib::int16_t;
+pub use crate::src::headers::sqliteInt_h::YDbMask;
+pub use crate::src::headers::sqliteInt_h::YnVar;
+pub use crate::src::headers::stdlib::Int16T;
 pub use crate::src::headers::vdbeInt_h::PreUpdate;
 pub use crate::src::headers::vdbeInt_h::sqlite3_context;
 pub use crate::src::headers::vdbeInt_h::sqlite3_value;
@@ -124,13 +124,9 @@ pub use crate::src::src::vdbemem::sqlite3ValueNew;
 pub use crate::src::src::vdbemem::sqlite3ValueSetStr;
 pub use crate::src::src::vdbemem::sqlite3ValueText;
 
-pub use crate::src::headers::stdlib::__int16_t;
-pub use crate::src::headers::stdlib::__uint8_t;
-pub use crate::src::headers::stdlib::__uint16_t;
-pub use crate::src::headers::stdlib::__uint32_t;
-pub use crate::src::headers::stdlib::uint8_t;
-pub use crate::src::headers::stdlib::uint16_t;
-pub use crate::src::headers::stdlib::uint32_t;
+pub use crate::src::headers::stdlib::Uint8T;
+pub use crate::src::headers::stdlib::Uint16T;
+pub use crate::src::headers::stdlib::Uint32T;
 pub use crate::src::headers::vdbeInt_h::Vdbe;
 pub use crate::src::src::vdbe::Mem;
 pub use crate::src::src::vdbe::SubProgram;
@@ -157,104 +153,104 @@ pub const tkEND: ::core::ffi::c_int = 7 as ::core::ffi::c_int;
 pub unsafe extern "C" fn sqlite3_complete(
     mut zSql: *const ::core::ffi::c_char,
 ) -> ::core::ffi::c_int {
-    let mut state: crate::src::ext::rtree::rtree::u8_0 = 0 as crate::src::ext::rtree::rtree::u8_0;
-    let mut token: crate::src::ext::rtree::rtree::u8_0 = 0;
-    static mut trans: [[crate::src::ext::rtree::rtree::u8_0; 8]; 8] = [
+    let mut state: crate::src::ext::rtree::rtree::U8_0 = 0 as crate::src::ext::rtree::rtree::U8_0;
+    let mut token: crate::src::ext::rtree::rtree::U8_0 = 0;
+    static mut trans: [[crate::src::ext::rtree::rtree::U8_0; 8]; 8] = [
         [
-            1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            0 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            3 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            4 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
+            1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            0 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            3 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            4 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
         ],
         [
-            1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            3 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            4 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
+            1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            3 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            4 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
         ],
         [
-            1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
+            1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
         ],
         [
-            1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            3 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            3 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            4 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
+            1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            3 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            3 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            4 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
         ],
         [
-            1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            4 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            4 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
+            1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            4 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            4 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
         ],
         [
-            6 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
+            6 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
         ],
         [
-            6 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            6 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            7 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
+            6 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            6 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            7 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
         ],
         [
-            1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            7 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
-            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0,
+            1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            7 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
+            5 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0,
         ],
     ];
     while *zSql != 0 {
         let mut current_block_65: u64;
         match *zSql as ::core::ffi::c_int {
             59 => {
-                token = tkSEMI as crate::src::ext::rtree::rtree::u8_0;
+                token = tkSEMI as crate::src::ext::rtree::rtree::U8_0;
                 current_block_65 = 10512632378975961025;
             }
             32 | 13 | 9 | 10 | 12 => {
-                token = tkWS as crate::src::ext::rtree::rtree::u8_0;
+                token = tkWS as crate::src::ext::rtree::rtree::U8_0;
                 current_block_65 = 10512632378975961025;
             }
             47 => {
                 if *zSql.offset(1 as isize) as ::core::ffi::c_int != '*' as i32 {
-                    token = tkOTHER as crate::src::ext::rtree::rtree::u8_0;
+                    token = tkOTHER as crate::src::ext::rtree::rtree::U8_0;
                 } else {
                     zSql = zSql.offset(2 as isize);
                     while *zSql.offset(0 as isize) as ::core::ffi::c_int != 0
@@ -267,13 +263,13 @@ pub unsafe extern "C" fn sqlite3_complete(
                         return 0 as ::core::ffi::c_int;
                     }
                     zSql = zSql.offset(1);
-                    token = tkWS as crate::src::ext::rtree::rtree::u8_0;
+                    token = tkWS as crate::src::ext::rtree::rtree::U8_0;
                 }
                 current_block_65 = 10512632378975961025;
             }
             45 => {
                 if *zSql.offset(1 as isize) as ::core::ffi::c_int != '-' as i32 {
-                    token = tkOTHER as crate::src::ext::rtree::rtree::u8_0;
+                    token = tkOTHER as crate::src::ext::rtree::rtree::U8_0;
                 } else {
                     while *zSql as ::core::ffi::c_int != 0
                         && *zSql as ::core::ffi::c_int != '\n' as i32
@@ -284,7 +280,7 @@ pub unsafe extern "C" fn sqlite3_complete(
                         return (state as ::core::ffi::c_int == 1 as ::core::ffi::c_int)
                             as ::core::ffi::c_int;
                     }
-                    token = tkWS as crate::src::ext::rtree::rtree::u8_0;
+                    token = tkWS as crate::src::ext::rtree::rtree::U8_0;
                 }
                 current_block_65 = 10512632378975961025;
             }
@@ -297,7 +293,7 @@ pub unsafe extern "C" fn sqlite3_complete(
                 if *zSql as ::core::ffi::c_int == 0 as ::core::ffi::c_int {
                     return 0 as ::core::ffi::c_int;
                 }
-                token = tkOTHER as crate::src::ext::rtree::rtree::u8_0;
+                token = tkOTHER as crate::src::ext::rtree::rtree::U8_0;
                 current_block_65 = 10512632378975961025;
             }
             96 => {
@@ -310,7 +306,7 @@ pub unsafe extern "C" fn sqlite3_complete(
                 if *(&raw const crate::src::src::global::sqlite3CtypeMap
                     as *const ::core::ffi::c_uchar)
                     .offset(
-                        *zSql as crate::src::ext::rtree::rtree::u8_0 as ::core::ffi::c_uchar
+                        *zSql as crate::src::ext::rtree::rtree::U8_0 as ::core::ffi::c_uchar
                             as isize,
                     ) as ::core::ffi::c_int
                     & 0x46 as ::core::ffi::c_int
@@ -336,9 +332,9 @@ pub unsafe extern "C" fn sqlite3_complete(
                                     6 as ::core::ffi::c_int,
                                 ) == 0 as ::core::ffi::c_int
                             {
-                                token = tkCREATE as crate::src::ext::rtree::rtree::u8_0;
+                                token = tkCREATE as crate::src::ext::rtree::rtree::U8_0;
                             } else {
-                                token = tkOTHER as crate::src::ext::rtree::rtree::u8_0;
+                                token = tkOTHER as crate::src::ext::rtree::rtree::U8_0;
                             }
                         }
                         116 | 84 => {
@@ -349,7 +345,7 @@ pub unsafe extern "C" fn sqlite3_complete(
                                     7 as ::core::ffi::c_int,
                                 ) == 0 as ::core::ffi::c_int
                             {
-                                token = tkTRIGGER as crate::src::ext::rtree::rtree::u8_0;
+                                token = tkTRIGGER as crate::src::ext::rtree::rtree::U8_0;
                             } else if nId == 4 as ::core::ffi::c_int
                                 && crate::src::src::util::sqlite3_strnicmp(
                                     zSql,
@@ -357,7 +353,7 @@ pub unsafe extern "C" fn sqlite3_complete(
                                     4 as ::core::ffi::c_int,
                                 ) == 0 as ::core::ffi::c_int
                             {
-                                token = tkTEMP as crate::src::ext::rtree::rtree::u8_0;
+                                token = tkTEMP as crate::src::ext::rtree::rtree::U8_0;
                             } else if nId == 9 as ::core::ffi::c_int
                                 && crate::src::src::util::sqlite3_strnicmp(
                                     zSql,
@@ -365,9 +361,9 @@ pub unsafe extern "C" fn sqlite3_complete(
                                     9 as ::core::ffi::c_int,
                                 ) == 0 as ::core::ffi::c_int
                             {
-                                token = tkTEMP as crate::src::ext::rtree::rtree::u8_0;
+                                token = tkTEMP as crate::src::ext::rtree::rtree::U8_0;
                             } else {
-                                token = tkOTHER as crate::src::ext::rtree::rtree::u8_0;
+                                token = tkOTHER as crate::src::ext::rtree::rtree::U8_0;
                             }
                         }
                         101 | 69 => {
@@ -378,7 +374,7 @@ pub unsafe extern "C" fn sqlite3_complete(
                                     3 as ::core::ffi::c_int,
                                 ) == 0 as ::core::ffi::c_int
                             {
-                                token = tkEND as crate::src::ext::rtree::rtree::u8_0;
+                                token = tkEND as crate::src::ext::rtree::rtree::U8_0;
                             } else if nId == 7 as ::core::ffi::c_int
                                 && crate::src::src::util::sqlite3_strnicmp(
                                     zSql,
@@ -386,18 +382,18 @@ pub unsafe extern "C" fn sqlite3_complete(
                                     7 as ::core::ffi::c_int,
                                 ) == 0 as ::core::ffi::c_int
                             {
-                                token = tkEXPLAIN as crate::src::ext::rtree::rtree::u8_0;
+                                token = tkEXPLAIN as crate::src::ext::rtree::rtree::U8_0;
                             } else {
-                                token = tkOTHER as crate::src::ext::rtree::rtree::u8_0;
+                                token = tkOTHER as crate::src::ext::rtree::rtree::U8_0;
                             }
                         }
                         _ => {
-                            token = tkOTHER as crate::src::ext::rtree::rtree::u8_0;
+                            token = tkOTHER as crate::src::ext::rtree::rtree::U8_0;
                         }
                     }
                     zSql = zSql.offset((nId - 1 as ::core::ffi::c_int) as isize);
                 } else {
-                    token = tkOTHER as crate::src::ext::rtree::rtree::u8_0;
+                    token = tkOTHER as crate::src::ext::rtree::rtree::U8_0;
                 }
                 current_block_65 = 10512632378975961025;
             }
@@ -412,7 +408,7 @@ pub unsafe extern "C" fn sqlite3_complete(
                 if *zSql as ::core::ffi::c_int == 0 as ::core::ffi::c_int {
                     return 0 as ::core::ffi::c_int;
                 }
-                token = tkOTHER as crate::src::ext::rtree::rtree::u8_0;
+                token = tkOTHER as crate::src::ext::rtree::rtree::U8_0;
             }
             _ => {}
         }
@@ -441,12 +437,12 @@ pub unsafe extern "C" fn sqlite3_complete16(
         pVal,
         -(1 as ::core::ffi::c_int),
         zSql,
-        crate::src::headers::sqliteInt_h::SQLITE_UTF16NATIVE as crate::src::ext::rtree::rtree::u8_0,
+        crate::src::headers::sqliteInt_h::SQLITE_UTF16NATIVE as crate::src::ext::rtree::rtree::U8_0,
         crate::src::headers::sqlite3_h::SQLITE_STATIC,
     );
     zSql8 = crate::src::src::vdbemem::sqlite3ValueText(
         pVal,
-        crate::src::headers::sqlite3_h::SQLITE_UTF8 as crate::src::ext::rtree::rtree::u8_0,
+        crate::src::headers::sqlite3_h::SQLITE_UTF8 as crate::src::ext::rtree::rtree::U8_0,
     ) as *const ::core::ffi::c_char;
     if !zSql8.is_null() {
         rc = sqlite3_complete(zSql8);

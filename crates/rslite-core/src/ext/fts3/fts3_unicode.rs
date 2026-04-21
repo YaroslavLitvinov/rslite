@@ -1,5 +1,5 @@
 pub use crate::__stddef_null_h::NULL;
-pub use crate::__stddef_size_t_h::size_t;
+pub use crate::__stddef_size_t_h::SizeT;
 
 pub use crate::src::ext::fts3::fts3_tokenizer::sqlite3_tokenizer;
 pub use crate::src::ext::fts3::fts3_tokenizer::sqlite3_tokenizer_cursor;
@@ -7,13 +7,13 @@ pub use crate::src::ext::fts3::fts3_tokenizer::sqlite3_tokenizer_module;
 pub use crate::src::ext::fts3::fts3_unicode2::sqlite3FtsUnicodeFold;
 pub use crate::src::ext::fts3::fts3_unicode2::sqlite3FtsUnicodeIsalnum;
 pub use crate::src::ext::fts3::fts3_unicode2::sqlite3FtsUnicodeIsdiacritic;
-pub use crate::src::ext::rtree::rtree::u8_0;
+pub use crate::src::ext::rtree::rtree::U8_0;
 pub use crate::src::headers::sqlite3_h::SQLITE_DONE;
 pub use crate::src::headers::sqlite3_h::SQLITE_ERROR;
 pub use crate::src::headers::sqlite3_h::SQLITE_NOMEM;
 pub use crate::src::headers::sqlite3_h::SQLITE_OK;
-pub use crate::src::headers::sqlite3_h::sqlite_uint64;
-pub use crate::src::headers::sqlite3_h::sqlite3_uint64;
+pub use crate::src::headers::sqlite3_h::SqliteUint64;
+pub use crate::src::headers::sqlite3_h::Sqlite3Uint64;
 pub use crate::src::src::malloc::sqlite3_free;
 pub use crate::src::src::malloc::sqlite3_malloc;
 pub use crate::src::src::malloc::sqlite3_realloc64;
@@ -169,7 +169,7 @@ unsafe extern "C" fn unicodeAddExceptions(
             __p_ref.aiException as *mut ::core::ffi::c_void,
             ((__p_ref.nException + nEntry) as usize)
                 .wrapping_mul(::core::mem::size_of::<::core::ffi::c_int>() as usize)
-                as crate::src::headers::sqlite3_h::sqlite3_uint64,
+                as crate::src::headers::sqlite3_h::Sqlite3Uint64,
         ) as *mut ::core::ffi::c_int;
         if aNew.is_null() {
             return crate::src::headers::sqlite3_h::SQLITE_NOMEM;
@@ -276,7 +276,7 @@ unsafe extern "C" fn unicodeCreate(
     ::libc::memset(
         pNew as *mut ::core::ffi::c_void,
         0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<unicode_tokenizer>() as crate::__stddef_size_t_h::size_t,
+        ::core::mem::size_of::<unicode_tokenizer>() as crate::__stddef_size_t_h::SizeT,
     );
     (*pNew).eRemoveDiacritic = 1 as ::core::ffi::c_int;
     i = 0 as ::core::ffi::c_int;
@@ -288,7 +288,7 @@ unsafe extern "C" fn unicodeCreate(
                 b"remove_diacritics=1\0" as *const u8 as *const ::core::ffi::c_char
                     as *const ::core::ffi::c_void,
                 z as *const ::core::ffi::c_void,
-                19 as crate::__stddef_size_t_h::size_t,
+                19 as crate::__stddef_size_t_h::SizeT,
             ) == 0 as ::core::ffi::c_int
         {
             (*pNew).eRemoveDiacritic = 1 as ::core::ffi::c_int;
@@ -297,7 +297,7 @@ unsafe extern "C" fn unicodeCreate(
                 b"remove_diacritics=0\0" as *const u8 as *const ::core::ffi::c_char
                     as *const ::core::ffi::c_void,
                 z as *const ::core::ffi::c_void,
-                19 as crate::__stddef_size_t_h::size_t,
+                19 as crate::__stddef_size_t_h::SizeT,
             ) == 0 as ::core::ffi::c_int
         {
             (*pNew).eRemoveDiacritic = 0 as ::core::ffi::c_int;
@@ -306,7 +306,7 @@ unsafe extern "C" fn unicodeCreate(
                 b"remove_diacritics=2\0" as *const u8 as *const ::core::ffi::c_char
                     as *const ::core::ffi::c_void,
                 z as *const ::core::ffi::c_void,
-                19 as crate::__stddef_size_t_h::size_t,
+                19 as crate::__stddef_size_t_h::SizeT,
             ) == 0 as ::core::ffi::c_int
         {
             (*pNew).eRemoveDiacritic = 2 as ::core::ffi::c_int;
@@ -315,7 +315,7 @@ unsafe extern "C" fn unicodeCreate(
                 b"tokenchars=\0" as *const u8 as *const ::core::ffi::c_char
                     as *const ::core::ffi::c_void,
                 z as *const ::core::ffi::c_void,
-                11 as crate::__stddef_size_t_h::size_t,
+                11 as crate::__stddef_size_t_h::SizeT,
             ) == 0 as ::core::ffi::c_int
         {
             rc = unicodeAddExceptions(
@@ -329,7 +329,7 @@ unsafe extern "C" fn unicodeCreate(
                 b"separators=\0" as *const u8 as *const ::core::ffi::c_char
                     as *const ::core::ffi::c_void,
                 z as *const ::core::ffi::c_void,
-                11 as crate::__stddef_size_t_h::size_t,
+                11 as crate::__stddef_size_t_h::SizeT,
             ) == 0 as ::core::ffi::c_int
         {
             rc = unicodeAddExceptions(
@@ -367,7 +367,7 @@ unsafe extern "C" fn unicodeOpen(
     ::libc::memset(
         pCsr as *mut ::core::ffi::c_void,
         0 as ::core::ffi::c_int,
-        ::core::mem::size_of::<unicode_cursor>() as crate::__stddef_size_t_h::size_t,
+        ::core::mem::size_of::<unicode_cursor>() as crate::__stddef_size_t_h::SizeT,
     );
     (*pCsr).aInput = aInput as *const ::core::ffi::c_uchar;
     if aInput.is_null() {
@@ -453,7 +453,7 @@ unsafe extern "C" fn unicodeNext(
             let mut zNew: *mut ::core::ffi::c_char = crate::src::src::malloc::sqlite3_realloc64(
                 __pCsr_ref.zToken as *mut ::core::ffi::c_void,
                 (__pCsr_ref.nAlloc + 64 as ::core::ffi::c_int)
-                    as crate::src::headers::sqlite3_h::sqlite3_uint64,
+                    as crate::src::headers::sqlite3_h::Sqlite3Uint64,
             ) as *mut ::core::ffi::c_char;
             if zNew.is_null() {
                 return crate::src::headers::sqlite3_h::SQLITE_NOMEM;
@@ -472,61 +472,61 @@ unsafe extern "C" fn unicodeNext(
             if iOut < 0x80 as ::core::ffi::c_int {
                 let fresh6 = zOut;
                 zOut = zOut.offset(1);
-                *fresh6 = (iOut & 0xff as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u8_0
+                *fresh6 = (iOut & 0xff as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::U8_0
                     as ::core::ffi::c_char;
             } else if iOut < 0x800 as ::core::ffi::c_int {
                 let fresh7 = zOut;
                 zOut = zOut.offset(1);
                 *fresh7 = (0xc0 as ::core::ffi::c_int
                     + (iOut >> 6 as ::core::ffi::c_int & 0x1f as ::core::ffi::c_int)
-                        as crate::src::ext::rtree::rtree::u8_0
+                        as crate::src::ext::rtree::rtree::U8_0
                         as ::core::ffi::c_int) as ::core::ffi::c_char;
                 let fresh8 = zOut;
                 zOut = zOut.offset(1);
                 *fresh8 = (0x80 as ::core::ffi::c_int
-                    + (iOut & 0x3f as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u8_0
+                    + (iOut & 0x3f as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::U8_0
                         as ::core::ffi::c_int) as ::core::ffi::c_char;
             } else if iOut < 0x10000 as ::core::ffi::c_int {
                 let fresh9 = zOut;
                 zOut = zOut.offset(1);
                 *fresh9 = (0xe0 as ::core::ffi::c_int
                     + (iOut >> 12 as ::core::ffi::c_int & 0xf as ::core::ffi::c_int)
-                        as crate::src::ext::rtree::rtree::u8_0
+                        as crate::src::ext::rtree::rtree::U8_0
                         as ::core::ffi::c_int) as ::core::ffi::c_char;
                 let fresh10 = zOut;
                 zOut = zOut.offset(1);
                 *fresh10 = (0x80 as ::core::ffi::c_int
                     + (iOut >> 6 as ::core::ffi::c_int & 0x3f as ::core::ffi::c_int)
-                        as crate::src::ext::rtree::rtree::u8_0
+                        as crate::src::ext::rtree::rtree::U8_0
                         as ::core::ffi::c_int) as ::core::ffi::c_char;
                 let fresh11 = zOut;
                 zOut = zOut.offset(1);
                 *fresh11 = (0x80 as ::core::ffi::c_int
-                    + (iOut & 0x3f as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u8_0
+                    + (iOut & 0x3f as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::U8_0
                         as ::core::ffi::c_int) as ::core::ffi::c_char;
             } else {
                 let fresh12 = zOut;
                 zOut = zOut.offset(1);
                 *fresh12 = (0xf0 as ::core::ffi::c_int
                     + (iOut >> 18 as ::core::ffi::c_int & 0x7 as ::core::ffi::c_int)
-                        as crate::src::ext::rtree::rtree::u8_0
+                        as crate::src::ext::rtree::rtree::U8_0
                         as ::core::ffi::c_int) as ::core::ffi::c_char;
                 let fresh13 = zOut;
                 zOut = zOut.offset(1);
                 *fresh13 = (0x80 as ::core::ffi::c_int
                     + (iOut >> 12 as ::core::ffi::c_int & 0x3f as ::core::ffi::c_int)
-                        as crate::src::ext::rtree::rtree::u8_0
+                        as crate::src::ext::rtree::rtree::U8_0
                         as ::core::ffi::c_int) as ::core::ffi::c_char;
                 let fresh14 = zOut;
                 zOut = zOut.offset(1);
                 *fresh14 = (0x80 as ::core::ffi::c_int
                     + (iOut >> 6 as ::core::ffi::c_int & 0x3f as ::core::ffi::c_int)
-                        as crate::src::ext::rtree::rtree::u8_0
+                        as crate::src::ext::rtree::rtree::U8_0
                         as ::core::ffi::c_int) as ::core::ffi::c_char;
                 let fresh15 = zOut;
                 zOut = zOut.offset(1);
                 *fresh15 = (0x80 as ::core::ffi::c_int
-                    + (iOut & 0x3f as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::u8_0
+                    + (iOut & 0x3f as ::core::ffi::c_int) as crate::src::ext::rtree::rtree::U8_0
                         as ::core::ffi::c_int) as ::core::ffi::c_char;
             }
         }

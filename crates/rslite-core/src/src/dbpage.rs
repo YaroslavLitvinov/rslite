@@ -1,12 +1,12 @@
-pub use crate::__stddef_size_t_h::size_t;
+pub use crate::__stddef_size_t_h::SizeT;
 
 pub use crate::pcache_h::PCache;
-pub use crate::src::ext::rtree::rtree::i64_0;
-pub use crate::src::ext::rtree::rtree::u8_0;
-pub use crate::src::ext::rtree::rtree::u32_0;
-pub use crate::src::ext::rtree::rtree::u64_0;
-pub use crate::src::fts5::i16_0;
-pub use crate::src::fts5::u16_0;
+pub use crate::src::ext::rtree::rtree::I64_0;
+pub use crate::src::ext::rtree::rtree::U8_0;
+pub use crate::src::ext::rtree::rtree::U32_0;
+pub use crate::src::ext::rtree::rtree::U64_0;
+pub use crate::src::fts5::I16_0;
+pub use crate::src::fts5::U16_0;
 pub use crate::src::headers::sqlite3_h::SQLITE_BLOB;
 pub use crate::src::headers::sqlite3_h::SQLITE_CONSTRAINT;
 pub use crate::src::headers::sqlite3_h::SQLITE_ERROR;
@@ -18,21 +18,21 @@ pub use crate::src::headers::sqlite3_h::SQLITE_OK;
 pub use crate::src::headers::sqlite3_h::SQLITE_STATIC;
 pub use crate::src::headers::sqlite3_h::SQLITE_VTAB_DIRECTONLY;
 pub use crate::src::headers::sqlite3_h::SQLITE_VTAB_USES_ALL_SCHEMAS;
-pub use crate::src::headers::sqlite3_h::sqlite_int64;
-pub use crate::src::headers::sqlite3_h::sqlite_uint64;
-pub use crate::src::headers::sqlite3_h::sqlite3_destructor_type;
+pub use crate::src::headers::sqlite3_h::SqliteInt64;
+pub use crate::src::headers::sqlite3_h::SqliteUint64;
+pub use crate::src::headers::sqlite3_h::Sqlite3DestructorType;
 pub use crate::src::headers::sqlite3_h::sqlite3_file;
-pub use crate::src::headers::sqlite3_h::sqlite3_filename;
+pub use crate::src::headers::sqlite3_h::Sqlite3Filename;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_constraint;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_constraint_usage;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_info;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_orderby;
-pub use crate::src::headers::sqlite3_h::sqlite3_int64;
+pub use crate::src::headers::sqlite3_h::Sqlite3Int64;
 pub use crate::src::headers::sqlite3_h::sqlite3_io_methods;
 pub use crate::src::headers::sqlite3_h::sqlite3_module;
 pub use crate::src::headers::sqlite3_h::sqlite3_pcache_page;
-pub use crate::src::headers::sqlite3_h::sqlite3_syscall_ptr;
-pub use crate::src::headers::sqlite3_h::sqlite3_uint64;
+pub use crate::src::headers::sqlite3_h::Sqlite3SyscallPtr;
+pub use crate::src::headers::sqlite3_h::Sqlite3Uint64;
 pub use crate::src::headers::sqlite3_h::sqlite3_vfs;
 pub use crate::src::headers::sqlite3_h::sqlite3_vtab;
 pub use crate::src::headers::sqlite3_h::sqlite3_vtab_cursor;
@@ -110,14 +110,14 @@ pub use crate::src::headers::sqliteInt_h::VTable;
 pub use crate::src::headers::sqliteInt_h::VtabCtx;
 pub use crate::src::headers::sqliteInt_h::Window;
 pub use crate::src::headers::sqliteInt_h::With;
-pub use crate::src::headers::sqliteInt_h::bft;
+pub use crate::src::headers::sqliteInt_h::Bft;
 pub use crate::src::headers::sqliteInt_h::sColMap;
 pub use crate::src::headers::sqliteInt_h::sqlite3;
-pub use crate::src::headers::sqliteInt_h::sqlite3_xauth;
+pub use crate::src::headers::sqliteInt_h::Sqlite3Xauth;
 pub use crate::src::headers::sqliteInt_h::sqlite3InitInfo;
-pub use crate::src::headers::sqliteInt_h::yDbMask;
-pub use crate::src::headers::sqliteInt_h::ynVar;
-pub use crate::src::headers::stdlib::int16_t;
+pub use crate::src::headers::sqliteInt_h::YDbMask;
+pub use crate::src::headers::sqliteInt_h::YnVar;
+pub use crate::src::headers::stdlib::Int16T;
 pub use crate::src::headers::vdbeInt_h::PreUpdate;
 pub use crate::src::headers::vdbeInt_h::sqlite3_context;
 pub use crate::src::headers::vdbeInt_h::sqlite3_value;
@@ -153,13 +153,9 @@ pub use crate::src::src::vdbeapi::sqlite3_value_type;
 pub use crate::src::src::vtab::sqlite3_create_module;
 pub use crate::src::src::vtab::sqlite3_declare_vtab;
 
-pub use crate::src::headers::stdlib::__int16_t;
-pub use crate::src::headers::stdlib::__uint8_t;
-pub use crate::src::headers::stdlib::__uint16_t;
-pub use crate::src::headers::stdlib::__uint32_t;
-pub use crate::src::headers::stdlib::uint8_t;
-pub use crate::src::headers::stdlib::uint16_t;
-pub use crate::src::headers::stdlib::uint32_t;
+pub use crate::src::headers::stdlib::Uint8T;
+pub use crate::src::headers::stdlib::Uint16T;
+pub use crate::src::headers::stdlib::Uint32T;
 pub use crate::src::headers::vdbeInt_h::Vdbe;
 pub use crate::src::src::vdbe::Mem;
 pub use crate::src::src::vdbe::SubProgram;
@@ -222,7 +218,7 @@ unsafe extern "C" fn dbpageConnect(
     if rc == crate::src::headers::sqlite3_h::SQLITE_OK {
         pTab =
             crate::src::src::malloc::sqlite3_malloc64(::core::mem::size_of::<DbpageTable>()
-                as crate::src::headers::sqlite3_h::sqlite3_uint64) as *mut DbpageTable;
+                as crate::src::headers::sqlite3_h::Sqlite3Uint64) as *mut DbpageTable;
         if pTab.is_null() {
             rc = crate::src::headers::sqliteInt_h::SQLITE_NOMEM_BKPT;
         }
@@ -231,7 +227,7 @@ unsafe extern "C" fn dbpageConnect(
         ::libc::memset(
             pTab as *mut ::core::ffi::c_void,
             0 as ::core::ffi::c_int,
-            ::core::mem::size_of::<DbpageTable>() as crate::__stddef_size_t_h::size_t,
+            ::core::mem::size_of::<DbpageTable>() as crate::__stddef_size_t_h::SizeT,
         );
         (*pTab).db = db;
     }
@@ -287,7 +283,7 @@ unsafe extern "C" fn dbpageBestIndex(
             && __p_0_ref.op as ::core::ffi::c_int
                 == crate::src::headers::sqlite3_h::SQLITE_INDEX_CONSTRAINT_EQ
         {
-            __pIdxInfo_ref.estimatedRows = 1 as crate::src::headers::sqlite3_h::sqlite3_int64;
+            __pIdxInfo_ref.estimatedRows = 1 as crate::src::headers::sqlite3_h::Sqlite3Int64;
             __pIdxInfo_ref.idxFlags = crate::src::headers::sqlite3_h::SQLITE_INDEX_SCAN_UNIQUE;
             __pIdxInfo_ref.estimatedCost = 1.0f64;
             (*__pIdxInfo_ref.aConstraintUsage.offset(i as isize)).argvIndex = if iPlan != 0 {
@@ -320,14 +316,14 @@ unsafe extern "C" fn dbpageOpen(
     let mut pCsr: *mut DbpageCursor = ::core::ptr::null_mut::<DbpageCursor>();
     pCsr =
         crate::src::src::malloc::sqlite3_malloc64(::core::mem::size_of::<DbpageCursor>()
-            as crate::src::headers::sqlite3_h::sqlite3_uint64) as *mut DbpageCursor;
+            as crate::src::headers::sqlite3_h::Sqlite3Uint64) as *mut DbpageCursor;
     if pCsr.is_null() {
         return crate::src::headers::sqliteInt_h::SQLITE_NOMEM_BKPT;
     } else {
         ::libc::memset(
             pCsr as *mut ::core::ffi::c_void,
             0 as ::core::ffi::c_int,
-            ::core::mem::size_of::<DbpageCursor>() as crate::__stddef_size_t_h::size_t,
+            ::core::mem::size_of::<DbpageCursor>() as crate::__stddef_size_t_h::SizeT,
         );
         (*pCsr).base.pVtab = pVTab;
         (*pCsr).pgno = 0 as crate::src::src::pager::Pgno;
@@ -441,7 +437,7 @@ unsafe extern "C" fn dbpageColumn(
         0 => {
             crate::src::src::vdbeapi::sqlite3_result_int64(
                 ctx,
-                (*pCsr).pgno as crate::src::headers::sqlite3_h::sqlite3_int64,
+                (*pCsr).pgno as crate::src::headers::sqlite3_h::Sqlite3Int64,
             );
         }
         1 => {
@@ -467,9 +463,9 @@ unsafe extern "C" fn dbpageColumn(
                         ),
                         (*pCsr).szPage,
                         ::core::mem::transmute::<
-                            ::libc::intptr_t,
+                            crate::src::headers::stdlib::IntptrT,
                             Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()>,
-                        >(-(1 as ::core::ffi::c_int) as ::libc::intptr_t),
+                        >(-(1 as ::core::ffi::c_int) as crate::src::headers::stdlib::IntptrT),
                     );
                 }
                 crate::src::src::pager::sqlite3PagerUnref(
@@ -494,10 +490,10 @@ unsafe extern "C" fn dbpageColumn(
 
 unsafe extern "C" fn dbpageRowid(
     mut pCursor: *mut crate::src::headers::sqlite3_h::sqlite3_vtab_cursor,
-    mut pRowid: *mut crate::src::headers::sqlite3_h::sqlite_int64,
+    mut pRowid: *mut crate::src::headers::sqlite3_h::SqliteInt64,
 ) -> ::core::ffi::c_int {
     let pCsr = &*(pCursor as *mut DbpageCursor);
-    *pRowid = pCsr.pgno as crate::src::headers::sqlite3_h::sqlite_int64;
+    *pRowid = pCsr.pgno as crate::src::headers::sqlite3_h::SqliteInt64;
     crate::src::headers::sqlite3_h::SQLITE_OK
 }
 
@@ -525,7 +521,7 @@ unsafe extern "C" fn dbpageUpdate(
     mut pVtab: *mut crate::src::headers::sqlite3_h::sqlite3_vtab,
     mut argc: ::core::ffi::c_int,
     mut argv: *mut *mut crate::src::headers::vdbeInt_h::sqlite3_value,
-    mut _pRowid: *mut crate::src::headers::sqlite3_h::sqlite_int64,
+    mut _pRowid: *mut crate::src::headers::sqlite3_h::SqliteInt64,
 ) -> ::core::ffi::c_int {
     let mut current_block: u64;
     let mut pTab: *mut DbpageTable = pVtab as *mut DbpageTable;
@@ -542,7 +538,7 @@ unsafe extern "C" fn dbpageUpdate(
     let mut szPage: ::core::ffi::c_int = 0;
     let mut isInsert: ::core::ffi::c_int = 0;
     if (*(*pTab).db).flags
-        & crate::src::headers::sqliteInt_h::SQLITE_Defensive as crate::src::ext::rtree::rtree::u64_0
+        & crate::src::headers::sqliteInt_h::SQLITE_Defensive as crate::src::ext::rtree::rtree::U64_0
         != 0
     {
         zErr =
@@ -672,7 +668,7 @@ unsafe extern "C" fn dbpageUpdate(
                                                 ::libc::memcpy(
                                                     aPage as *mut ::core::ffi::c_void,
                                                     pData,
-                                                    szPage as crate::__stddef_size_t_h::size_t,
+                                                    szPage as crate::__stddef_size_t_h::SizeT,
                                                 );
                                                 (*pTab).pgnoTrunc =
                                                     0 as crate::src::src::pager::Pgno;
@@ -832,7 +828,7 @@ pub unsafe extern "C" fn sqlite3DbpageRegister(
                 dbpageRowid
                     as unsafe extern "C" fn(
                         *mut crate::src::headers::sqlite3_h::sqlite3_vtab_cursor,
-                        *mut crate::src::headers::sqlite3_h::sqlite_int64,
+                        *mut crate::src::headers::sqlite3_h::SqliteInt64,
                     ) -> ::core::ffi::c_int,
             ),
             xUpdate: Some(
@@ -841,7 +837,7 @@ pub unsafe extern "C" fn sqlite3DbpageRegister(
                         *mut crate::src::headers::sqlite3_h::sqlite3_vtab,
                         ::core::ffi::c_int,
                         *mut *mut crate::src::headers::vdbeInt_h::sqlite3_value,
-                        *mut crate::src::headers::sqlite3_h::sqlite_int64,
+                        *mut crate::src::headers::sqlite3_h::SqliteInt64,
                     ) -> ::core::ffi::c_int,
             ),
             xBegin: Some(
