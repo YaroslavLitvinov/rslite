@@ -16,6 +16,8 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
       - [forbid_non_camel_case_types_allow_robust](#forbid_non_camel_case_types_allow_robust)
       - [forbid_non_camel_case_types_any](#forbid_non_camel_case_types_any)
       - [forbid_non_camel_case_types_with_warnings_robust](#forbid_non_camel_case_types_with_warnings_robust)
+      - [forbid_non_snake_case](#forbid_non_snake_case)
+      - [forbid_non_upper_case_globals](#forbid_non_upper_case_globals)
       - [no_forbidden_allows_robust](#no_forbidden_allows_robust)
     - [Feature: fts5_no_libc_global](#feature-fts5_no_libc_global)
       - [fts5_no_libc_calls](#fts5_no_libc_calls)
@@ -59,6 +61,12 @@ Verify c_variadic feature isolation: only in printf_c_variadic.rs
 
 #### forbid_non_camel_case_types_with_warnings_robust
 **Description:** Structural: Robust whitespace-tolerant detection of forbidden clippy::non_camel_case_types and warnings allows. Forbids any formatting of allow() with non_camel_case_types or warnings, ignoring whitespace between allow and (.
+
+#### forbid_non_snake_case
+**Description:** Structural: Forbid any allow() attribute for non_snake_case in any form: bare rustc lint or clippy:: prefix, inner (#![...]) or outer (#[...]), alone or combined with other lints, with arbitrary whitespace. Word boundaries prevent false positives on longer identifiers.
+
+#### forbid_non_upper_case_globals
+**Description:** Structural: Forbid any allow() attribute for non_upper_case_globals in any form: bare rustc lint or clippy:: prefix, inner (#![...]) or outer (#[...]), alone or combined with other lints, with arbitrary whitespace. Word boundaries prevent false positives on longer identifiers.
 
 #### no_forbidden_allows_robust
 **Description:** Structural: Robust whitespace-tolerant detection of forbidden clippy allows. Detects any formatting of allow() with forbidden lints, ignoring whitespace between allow and (.

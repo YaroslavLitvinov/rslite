@@ -137,6 +137,18 @@
           "cmd": "! grep -rE \"allow[[:space:]]*\\\\([^)]*\\\\b(clippy::)?non_camel_case_types\\\\b\" \"$PROJECT_ROOT/crates\" --include=\"*.rs\" 2>/dev/null",
           "description": "Structural: Forbid any allow() attribute for non_camel_case_types in any form: bare rustc lint or clippy:: prefix, inner (#![...]) or outer (#[...]), alone or combined with other lints, with arbitrary whitespace. Word boundaries prevent false positives on longer identifiers.",
           "fails_count": 1
+        },
+        "forbid_non_snake_case": {
+          "id": "forbid_non_snake_case",
+          "cmd": "! grep -rE \"allow[[:space:]]*\\([^)]*\\b(clippy::)?non_snake_case\\b\" \"$PROJECT_ROOT/crates\" --include=\"*.rs\" 2>/dev/null",
+          "description": "Structural: Forbid any allow() attribute for non_snake_case in any form: bare rustc lint or clippy:: prefix, inner (#![...]) or outer (#[...]), alone or combined with other lints, with arbitrary whitespace. Word boundaries prevent false positives on longer identifiers.",
+          "fails_count": 1
+        },
+        "forbid_non_upper_case_globals": {
+          "id": "forbid_non_upper_case_globals",
+          "cmd": "! grep -rE \"allow[[:space:]]*\\([^)]*\\b(clippy::)?non_upper_case_globals\\b\" \"$PROJECT_ROOT/crates\" --include=\"*.rs\" 2>/dev/null",
+          "description": "Structural: Forbid any allow() attribute for non_upper_case_globals in any form: bare rustc lint or clippy:: prefix, inner (#![...]) or outer (#[...]), alone or combined with other lints, with arbitrary whitespace. Word boundaries prevent false positives on longer identifiers.",
+          "fails_count": 1
         }
       }
     },
