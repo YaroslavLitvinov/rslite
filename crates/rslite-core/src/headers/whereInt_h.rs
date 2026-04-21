@@ -1,9 +1,9 @@
-use crate::src::ext::rtree::rtree::u32_0;
+use crate::src::ext::rtree::rtree::U32_0;
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct WhereMemBlock {
     pub pNext: *mut crate::src::headers::whereInt_h::WhereMemBlock,
-    pub sz: crate::src::ext::rtree::rtree::u64_0,
+    pub sz: crate::src::ext::rtree::rtree::U64_0,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -30,14 +30,14 @@ pub struct WhereLevel {
     pub addrBody: ::core::ffi::c_int,
     pub regBignull: ::core::ffi::c_int,
     pub addrBignull: ::core::ffi::c_int,
-    pub iLikeRepCntr: crate::src::ext::rtree::rtree::u32_0,
+    pub iLikeRepCntr: crate::src::ext::rtree::rtree::U32_0,
     pub addrLikeRep: ::core::ffi::c_int,
     pub regFilter: ::core::ffi::c_int,
     pub pRJ: *mut crate::src::headers::whereInt_h::WhereRightJoin,
-    pub iFrom: crate::src::ext::rtree::rtree::u8_0,
-    pub op: crate::src::ext::rtree::rtree::u8_0,
-    pub p3: crate::src::ext::rtree::rtree::u8_0,
-    pub p5: crate::src::ext::rtree::rtree::u8_0,
+    pub iFrom: crate::src::ext::rtree::rtree::U8_0,
+    pub op: crate::src::ext::rtree::rtree::U8_0,
+    pub p3: crate::src::ext::rtree::rtree::U8_0,
+    pub p5: crate::src::ext::rtree::rtree::U8_0,
     pub p1: ::core::ffi::c_int,
     pub p2: ::core::ffi::c_int,
     pub u: crate::src::headers::whereInt_h::__anon_union_19,
@@ -66,7 +66,7 @@ pub struct InLoop {
     pub addrInTop: ::core::ffi::c_int,
     pub iBase: ::core::ffi::c_int,
     pub nPrefix: ::core::ffi::c_int,
-    pub eEndLoopOp: crate::src::ext::rtree::rtree::u8_0,
+    pub eEndLoopOp: crate::src::ext::rtree::rtree::U8_0,
 }
 
 #[derive(Copy, Clone)]
@@ -74,16 +74,16 @@ pub struct InLoop {
 pub struct WhereLoop {
     pub prereq: crate::src::headers::sqliteInt_h::Bitmask,
     pub maskSelf: crate::src::headers::sqliteInt_h::Bitmask,
-    pub iTab: crate::src::ext::rtree::rtree::u8_0,
-    pub iSortIdx: crate::src::ext::rtree::rtree::u8_0,
+    pub iTab: crate::src::ext::rtree::rtree::U8_0,
+    pub iSortIdx: crate::src::ext::rtree::rtree::U8_0,
     pub rSetup: crate::src::headers::sqliteInt_h::LogEst,
     pub rRun: crate::src::headers::sqliteInt_h::LogEst,
     pub nOut: crate::src::headers::sqliteInt_h::LogEst,
     pub u: crate::src::headers::whereInt_h::__anon_union_20,
-    pub wsFlags: crate::src::ext::rtree::rtree::u32_0,
-    pub nLTerm: crate::src::fts5::u16_0,
-    pub nSkip: crate::src::fts5::u16_0,
-    pub nLSlot: crate::src::fts5::u16_0,
+    pub wsFlags: crate::src::ext::rtree::rtree::U32_0,
+    pub nLTerm: crate::src::fts5::U16_0,
+    pub nSkip: crate::src::fts5::U16_0,
+    pub nLSlot: crate::src::fts5::U16_0,
     pub aLTerm: *mut *mut crate::src::headers::whereInt_h::WhereTerm,
     pub pNextLoop: *mut crate::src::headers::whereInt_h::WhereLoop,
     pub aLTermSpace: [*mut crate::src::headers::whereInt_h::WhereTerm; 3],
@@ -99,10 +99,10 @@ pub union __anon_union_20 {
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct __anon_struct_12 {
-    pub nEq: crate::src::fts5::u16_0,
-    pub nBtm: crate::src::fts5::u16_0,
-    pub nTop: crate::src::fts5::u16_0,
-    pub nDistinctCol: crate::src::fts5::u16_0,
+    pub nEq: crate::src::fts5::U16_0,
+    pub nBtm: crate::src::fts5::U16_0,
+    pub nTop: crate::src::fts5::U16_0,
+    pub nDistinctCol: crate::src::fts5::U16_0,
     pub pIndex: *mut crate::src::headers::sqliteInt_h::Index,
     pub pOrderBy: *mut crate::src::headers::sqliteInt_h::ExprList,
 }
@@ -111,14 +111,14 @@ pub struct __anon_struct_12 {
 #[repr(C)]
 pub struct __anon_struct_13 {
     pub idxNum: ::core::ffi::c_int,
-    #[bitfield(name = "needFree", ty = "u32_0", bits = "0..=0")]
-    #[bitfield(name = "bOmitOffset", ty = "u32_0", bits = "1..=1")]
-    #[bitfield(name = "bIdxNumHex", ty = "u32_0", bits = "2..=2")]
+    #[bitfield(name = "needFree", ty = "U32_0", bits = "0..=0")]
+    #[bitfield(name = "bOmitOffset", ty = "U32_0", bits = "1..=1")]
+    #[bitfield(name = "bIdxNumHex", ty = "U32_0", bits = "2..=2")]
     pub needFree_bOmitOffset_bIdxNumHex: [u8; 1],
-    pub isOrdered: crate::src::headers::sqliteInt_h::i8_0,
-    pub omitMask: crate::src::fts5::u16_0,
+    pub isOrdered: crate::src::headers::sqliteInt_h::I8_0,
+    pub omitMask: crate::src::fts5::U16_0,
     pub idxStr: *mut ::core::ffi::c_char,
-    pub mHandleIn: crate::src::ext::rtree::rtree::u32_0,
+    pub mHandleIn: crate::src::ext::rtree::rtree::U32_0,
 }
 
 pub const WHERE_LOOP_XFER_SZ: ::core::ffi::c_ulong = 56 as ::core::ffi::c_ulong;
@@ -136,7 +136,7 @@ pub const N_OR_COST: ::core::ffi::c_int = 3 as ::core::ffi::c_int;
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct WhereOrSet {
-    pub n: crate::src::fts5::u16_0,
+    pub n: crate::src::fts5::U16_0,
     pub a: [crate::src::headers::whereInt_h::WhereOrCost; 3],
 }
 
@@ -148,7 +148,7 @@ pub struct WherePath {
     pub nRow: crate::src::headers::sqliteInt_h::LogEst,
     pub rCost: crate::src::headers::sqliteInt_h::LogEst,
     pub rUnsort: crate::src::headers::sqliteInt_h::LogEst,
-    pub isOrdered: crate::src::headers::sqliteInt_h::i8_0,
+    pub isOrdered: crate::src::headers::sqliteInt_h::I8_0,
     pub aLoop: *mut *mut crate::src::headers::whereInt_h::WhereLoop,
 }
 
@@ -158,10 +158,10 @@ pub struct WhereTerm {
     pub pExpr: *mut crate::src::headers::sqliteInt_h::Expr,
     pub pWC: *mut crate::src::headers::whereInt_h::WhereClause,
     pub truthProb: crate::src::headers::sqliteInt_h::LogEst,
-    pub wtFlags: crate::src::fts5::u16_0,
-    pub eOperator: crate::src::fts5::u16_0,
-    pub nChild: crate::src::ext::rtree::rtree::u8_0,
-    pub eMatchOp: crate::src::ext::rtree::rtree::u8_0,
+    pub wtFlags: crate::src::fts5::U16_0,
+    pub eOperator: crate::src::fts5::U16_0,
+    pub nChild: crate::src::ext::rtree::rtree::U8_0,
+    pub eMatchOp: crate::src::ext::rtree::rtree::U8_0,
     pub iParent: ::core::ffi::c_int,
     pub leftCursor: ::core::ffi::c_int,
     pub u: crate::src::headers::whereInt_h::__anon_union_21,
@@ -224,12 +224,12 @@ pub struct WhereScan {
     pub zCollName: *const ::core::ffi::c_char,
     pub pIdxExpr: *mut crate::src::headers::sqliteInt_h::Expr,
     pub k: ::core::ffi::c_int,
-    pub opMask: crate::src::ext::rtree::rtree::u32_0,
+    pub opMask: crate::src::ext::rtree::rtree::U32_0,
     pub idxaff: ::core::ffi::c_char,
     pub iEquiv: ::core::ffi::c_uchar,
     pub nEquiv: ::core::ffi::c_uchar,
     pub aiCur: [::core::ffi::c_int; 11],
-    pub aiColumn: [crate::src::fts5::i16_0; 11],
+    pub aiColumn: [crate::src::fts5::I16_0; 11],
 }
 
 #[derive(Copy, Clone)]
@@ -237,8 +237,8 @@ pub struct WhereScan {
 pub struct WhereClause {
     pub pWInfo: *mut crate::src::headers::whereInt_h::WhereInfo,
     pub pOuter: *mut crate::src::headers::whereInt_h::WhereClause,
-    pub op: crate::src::ext::rtree::rtree::u8_0,
-    pub hasOr: crate::src::ext::rtree::rtree::u8_0,
+    pub op: crate::src::ext::rtree::rtree::U8_0,
+    pub hasOr: crate::src::ext::rtree::rtree::U8_0,
     pub nTerm: ::core::ffi::c_int,
     pub nSlot: ::core::ffi::c_int,
     pub nBase: ::core::ffi::c_int,
@@ -299,12 +299,12 @@ pub struct WhereInfo {
     pub iContinue: ::core::ffi::c_int,
     pub iBreak: ::core::ffi::c_int,
     pub savedNQueryLoop: ::core::ffi::c_int,
-    pub wctrlFlags: crate::src::fts5::u16_0,
+    pub wctrlFlags: crate::src::fts5::U16_0,
     pub iLimit: crate::src::headers::sqliteInt_h::LogEst,
-    pub nLevel: crate::src::ext::rtree::rtree::u8_0,
-    pub nOBSat: crate::src::headers::sqliteInt_h::i8_0,
-    pub eOnePass: crate::src::ext::rtree::rtree::u8_0,
-    pub eDistinct: crate::src::ext::rtree::rtree::u8_0,
+    pub nLevel: crate::src::ext::rtree::rtree::U8_0,
+    pub nOBSat: crate::src::headers::sqliteInt_h::I8_0,
+    pub eOnePass: crate::src::ext::rtree::rtree::U8_0,
+    pub eDistinct: crate::src::ext::rtree::rtree::U8_0,
     #[bitfield(name = "bDeferredSeek", ty = "::core::ffi::c_uint", bits = "0..=0")]
     #[bitfield(name = "untestedTerms", ty = "::core::ffi::c_uint", bits = "1..=1")]
     #[bitfield(name = "bOrderedInnerLoop", ty = "::core::ffi::c_uint", bits = "2..=2")]

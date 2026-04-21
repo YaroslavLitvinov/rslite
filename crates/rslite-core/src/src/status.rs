@@ -1,9 +1,9 @@
-pub use crate::src::ext::rtree::rtree::i64_0;
-pub use crate::src::ext::rtree::rtree::u8_0;
-pub use crate::src::ext::rtree::rtree::u32_0;
-pub use crate::src::ext::rtree::rtree::u64_0;
-pub use crate::src::fts5::i16_0;
-pub use crate::src::fts5::u16_0;
+pub use crate::src::ext::rtree::rtree::I64_0;
+pub use crate::src::ext::rtree::rtree::U8_0;
+pub use crate::src::ext::rtree::rtree::U32_0;
+pub use crate::src::ext::rtree::rtree::U64_0;
+pub use crate::src::fts5::I16_0;
+pub use crate::src::fts5::U16_0;
 pub use crate::src::headers::sqlite3_h::SQLITE_DBSTATUS_CACHE_HIT_1;
 pub use crate::src::headers::sqlite3_h::SQLITE_DBSTATUS_CACHE_MISS;
 pub use crate::src::headers::sqlite3_h::SQLITE_DBSTATUS_CACHE_SPILL;
@@ -20,24 +20,24 @@ pub use crate::src::headers::sqlite3_h::SQLITE_DBSTATUS_STMT_USED;
 pub use crate::src::headers::sqlite3_h::SQLITE_DBSTATUS_TEMPBUF_SPILL;
 pub use crate::src::headers::sqlite3_h::SQLITE_ERROR;
 pub use crate::src::headers::sqlite3_h::SQLITE_OK;
-pub use crate::src::headers::sqlite3_h::sqlite_int64;
-pub use crate::src::headers::sqlite3_h::sqlite_uint64;
+pub use crate::src::headers::sqlite3_h::SqliteInt64;
+pub use crate::src::headers::sqlite3_h::SqliteUint64;
 pub use crate::src::headers::sqlite3_h::sqlite3_file;
-pub use crate::src::headers::sqlite3_h::sqlite3_filename;
+pub use crate::src::headers::sqlite3_h::Sqlite3Filename;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_constraint;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_constraint_usage;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_info;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_orderby;
-pub use crate::src::headers::sqlite3_h::sqlite3_int64;
+pub use crate::src::headers::sqlite3_h::Sqlite3Int64;
 pub use crate::src::headers::sqlite3_h::sqlite3_io_methods;
 pub use crate::src::headers::sqlite3_h::sqlite3_mem_methods;
 pub use crate::src::headers::sqlite3_h::sqlite3_module;
 pub use crate::src::headers::sqlite3_h::sqlite3_mutex_methods;
-pub use crate::src::headers::sqlite3_h::sqlite3_pcache;
+pub use crate::src::headers::sqlite3_h::Sqlite3Pcache;
 pub use crate::src::headers::sqlite3_h::sqlite3_pcache_methods2;
 pub use crate::src::headers::sqlite3_h::sqlite3_pcache_page;
-pub use crate::src::headers::sqlite3_h::sqlite3_syscall_ptr;
-pub use crate::src::headers::sqlite3_h::sqlite3_uint64;
+pub use crate::src::headers::sqlite3_h::Sqlite3SyscallPtr;
+pub use crate::src::headers::sqlite3_h::Sqlite3Uint64;
 pub use crate::src::headers::sqlite3_h::sqlite3_vfs;
 pub use crate::src::headers::sqlite3_h::sqlite3_vtab;
 pub use crate::src::headers::sqlite3_h::sqlite3_vtab_cursor;
@@ -116,24 +116,19 @@ pub use crate::src::headers::sqliteInt_h::VTable;
 pub use crate::src::headers::sqliteInt_h::VtabCtx;
 pub use crate::src::headers::sqliteInt_h::Window;
 pub use crate::src::headers::sqliteInt_h::With;
-pub use crate::src::headers::sqliteInt_h::bft;
-pub use crate::src::headers::sqliteInt_h::i8_0;
+pub use crate::src::headers::sqliteInt_h::Bft;
+pub use crate::src::headers::sqliteInt_h::I8_0;
 pub use crate::src::headers::sqliteInt_h::sColMap;
 pub use crate::src::headers::sqliteInt_h::sqlite3;
-pub use crate::src::headers::sqliteInt_h::sqlite3_xauth;
+pub use crate::src::headers::sqliteInt_h::Sqlite3Xauth;
 pub use crate::src::headers::sqliteInt_h::sqlite3InitInfo;
-pub use crate::src::headers::sqliteInt_h::yDbMask;
-pub use crate::src::headers::sqliteInt_h::ynVar;
-pub use crate::src::headers::stdlib::__int8_t;
-pub use crate::src::headers::stdlib::__int16_t;
-pub use crate::src::headers::stdlib::__uint8_t;
-pub use crate::src::headers::stdlib::__uint16_t;
-pub use crate::src::headers::stdlib::__uint32_t;
-pub use crate::src::headers::stdlib::int8_t;
-pub use crate::src::headers::stdlib::int16_t;
-pub use crate::src::headers::stdlib::uint8_t;
-pub use crate::src::headers::stdlib::uint16_t;
-pub use crate::src::headers::stdlib::uint32_t;
+pub use crate::src::headers::sqliteInt_h::YDbMask;
+pub use crate::src::headers::sqliteInt_h::YnVar;
+pub use crate::src::headers::stdlib::Int8T;
+pub use crate::src::headers::stdlib::Int16T;
+pub use crate::src::headers::stdlib::Uint8T;
+pub use crate::src::headers::stdlib::Uint16T;
+pub use crate::src::headers::stdlib::Uint32T;
 pub use crate::src::headers::vdbeInt_h::__anon_struct_10;
 pub use crate::src::headers::vdbeInt_h::__anon_union_17;
 pub use crate::src::headers::vdbeInt_h::__anon_union_18;
@@ -173,17 +168,17 @@ pub use crate::src::src::vdbe::VdbeOp;
 pub use crate::src::src::vdbe::p4union;
 pub use crate::src::src::vdbeaux::sqlite3VdbeDelete;
 
-pub type sqlite3StatValueType = crate::src::headers::sqlite3_h::sqlite3_int64;
+pub type Sqlite3StatValueType = crate::src::headers::sqlite3_h::Sqlite3Int64;
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct sqlite3StatType {
-    pub nowValue: [sqlite3StatValueType; 10],
-    pub mxValue: [sqlite3StatValueType; 10],
+    pub nowValue: [Sqlite3StatValueType; 10],
+    pub mxValue: [Sqlite3StatValueType; 10],
 }
 
 static mut sqlite3Stat: sqlite3StatType = sqlite3StatType {
     nowValue: [
-        0 as ::core::ffi::c_int as sqlite3StatValueType,
+        0 as ::core::ffi::c_int as Sqlite3StatValueType,
         0,
         0,
         0,
@@ -195,7 +190,7 @@ static mut sqlite3Stat: sqlite3StatType = sqlite3StatType {
         0,
     ],
     mxValue: [
-        0 as ::core::ffi::c_int as sqlite3StatValueType,
+        0 as ::core::ffi::c_int as Sqlite3StatValueType,
         0,
         0,
         0,
@@ -224,11 +219,11 @@ static mut statMutex: [::core::ffi::c_char; 10] = [
 
 pub unsafe extern "C" fn sqlite3StatusValue(
     mut op: ::core::ffi::c_int,
-) -> crate::src::headers::sqlite3_h::sqlite3_int64 {
+) -> crate::src::headers::sqlite3_h::Sqlite3Int64 {
     sqlite3Stat.nowValue[op as usize]
 }
 pub unsafe extern "C" fn sqlite3StatusUp(mut op: ::core::ffi::c_int, mut N: ::core::ffi::c_int) {
-    sqlite3Stat.nowValue[op as usize] += N as sqlite3StatValueType;
+    sqlite3Stat.nowValue[op as usize] += N as Sqlite3StatValueType;
     if sqlite3Stat.nowValue[op as usize] > sqlite3Stat.mxValue[op as usize] {
         sqlite3Stat.mxValue[op as usize] = sqlite3Stat.nowValue[op as usize];
     }
@@ -236,14 +231,14 @@ pub unsafe extern "C" fn sqlite3StatusUp(mut op: ::core::ffi::c_int, mut N: ::co
 #[cfg_attr(feature = "test", unsafe(no_mangle))]
 
 pub unsafe extern "C" fn sqlite3StatusDown(mut op: ::core::ffi::c_int, mut N: ::core::ffi::c_int) {
-    sqlite3Stat.nowValue[op as usize] -= N as sqlite3StatValueType;
+    sqlite3Stat.nowValue[op as usize] -= N as Sqlite3StatValueType;
 }
 
 #[cfg_attr(feature = "test", unsafe(no_mangle))]
 
 pub extern "C" fn sqlite3StatusHighwater(mut op: ::core::ffi::c_int, mut X: ::core::ffi::c_int) {
-    let mut newValue: sqlite3StatValueType = 0;
-    newValue = X as sqlite3StatValueType;
+    let mut newValue: Sqlite3StatValueType = 0;
+    newValue = X as Sqlite3StatValueType;
     unsafe {
         if newValue > sqlite3Stat.mxValue[op as usize] {
             sqlite3Stat.mxValue[op as usize] = newValue;
@@ -253,16 +248,16 @@ pub extern "C" fn sqlite3StatusHighwater(mut op: ::core::ffi::c_int, mut X: ::co
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn sqlite3_status64(
     mut op: ::core::ffi::c_int,
-    mut pCurrent: *mut crate::src::headers::sqlite3_h::sqlite3_int64,
-    mut pHighwater: *mut crate::src::headers::sqlite3_h::sqlite3_int64,
+    mut pCurrent: *mut crate::src::headers::sqlite3_h::Sqlite3Int64,
+    mut pHighwater: *mut crate::src::headers::sqlite3_h::Sqlite3Int64,
     mut resetFlag: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
     let mut pMutex: *mut crate::src::src::mutex_unix::sqlite3_mutex =
         ::core::ptr::null_mut::<crate::src::src::mutex_unix::sqlite3_mutex>();
     if op < 0 as ::core::ffi::c_int
         || op
-            >= (::core::mem::size_of::<[sqlite3StatValueType; 10]>() as usize)
-                .wrapping_div(::core::mem::size_of::<sqlite3StatValueType>() as usize)
+            >= (::core::mem::size_of::<[Sqlite3StatValueType; 10]>() as usize)
+                .wrapping_div(::core::mem::size_of::<Sqlite3StatValueType>() as usize)
                 as ::core::ffi::c_int
     {
         return crate::src::src::main::sqlite3MisuseError(143 as ::core::ffi::c_int);
@@ -273,8 +268,8 @@ pub unsafe extern "C" fn sqlite3_status64(
         crate::src::src::malloc::sqlite3MallocMutex()
     };
     crate::src::src::mutex::sqlite3_mutex_enter(pMutex);
-    *pCurrent = sqlite3Stat.nowValue[op as usize] as crate::src::headers::sqlite3_h::sqlite3_int64;
-    *pHighwater = sqlite3Stat.mxValue[op as usize] as crate::src::headers::sqlite3_h::sqlite3_int64;
+    *pCurrent = sqlite3Stat.nowValue[op as usize] as crate::src::headers::sqlite3_h::Sqlite3Int64;
+    *pHighwater = sqlite3Stat.mxValue[op as usize] as crate::src::headers::sqlite3_h::Sqlite3Int64;
     if resetFlag != 0 {
         sqlite3Stat.mxValue[op as usize] = sqlite3Stat.nowValue[op as usize];
     }
@@ -288,10 +283,10 @@ pub unsafe extern "C" fn sqlite3_status(
     mut pHighwater: *mut ::core::ffi::c_int,
     mut resetFlag: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    let mut iCur: crate::src::headers::sqlite3_h::sqlite3_int64 =
-        0 as crate::src::headers::sqlite3_h::sqlite3_int64;
-    let mut iHwtr: crate::src::headers::sqlite3_h::sqlite3_int64 =
-        0 as crate::src::headers::sqlite3_h::sqlite3_int64;
+    let mut iCur: crate::src::headers::sqlite3_h::Sqlite3Int64 =
+        0 as crate::src::headers::sqlite3_h::Sqlite3Int64;
+    let mut iHwtr: crate::src::headers::sqlite3_h::Sqlite3Int64 =
+        0 as crate::src::headers::sqlite3_h::Sqlite3Int64;
     let mut rc: ::core::ffi::c_int = 0;
     rc = sqlite3_status64(op, &raw mut iCur, &raw mut iHwtr, resetFlag);
     if rc == 0 as ::core::ffi::c_int {
@@ -303,8 +298,8 @@ pub unsafe extern "C" fn sqlite3_status(
 
 unsafe extern "C" fn countLookasideSlots(
     mut p: *mut crate::src::headers::sqliteInt_h::LookasideSlot,
-) -> crate::src::ext::rtree::rtree::u32_0 {
-    let mut cnt: crate::src::ext::rtree::rtree::u32_0 = 0 as crate::src::ext::rtree::rtree::u32_0;
+) -> crate::src::ext::rtree::rtree::U32_0 {
+    let mut cnt: crate::src::ext::rtree::rtree::U32_0 = 0 as crate::src::ext::rtree::rtree::U32_0;
     while !p.is_null() {
         p = (*p).pNext;
         cnt = cnt.wrapping_add(1);
@@ -318,9 +313,9 @@ pub unsafe extern "C" fn sqlite3LookasideUsed(
     mut pHighwater: *mut ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
     let __db_ref = unsafe { &mut *db };
-    let mut nInit: crate::src::ext::rtree::rtree::u32_0 =
+    let mut nInit: crate::src::ext::rtree::rtree::U32_0 =
         countLookasideSlots(__db_ref.lookaside.pInit);
-    let mut nFree: crate::src::ext::rtree::rtree::u32_0 =
+    let mut nFree: crate::src::ext::rtree::rtree::U32_0 =
         countLookasideSlots(__db_ref.lookaside.pFree);
     nInit = nInit.wrapping_add(countLookasideSlots(__db_ref.lookaside.pSmallInit));
     nFree = nFree.wrapping_add(countLookasideSlots(__db_ref.lookaside.pSmallFree));
@@ -336,8 +331,8 @@ pub unsafe extern "C" fn sqlite3LookasideUsed(
 pub unsafe extern "C" fn sqlite3_db_status64(
     mut db: *mut crate::src::headers::sqliteInt_h::sqlite3,
     mut op: ::core::ffi::c_int,
-    mut pCurrent: *mut crate::src::headers::sqlite3_h::sqlite3_int64,
-    mut pHighwtr: *mut crate::src::headers::sqlite3_h::sqlite3_int64,
+    mut pCurrent: *mut crate::src::headers::sqlite3_h::Sqlite3Int64,
+    mut pHighwtr: *mut crate::src::headers::sqlite3_h::Sqlite3Int64,
     mut resetFlag: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
     let mut rc: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_OK;
@@ -347,8 +342,8 @@ pub unsafe extern "C" fn sqlite3_db_status64(
         crate::src::headers::sqlite3_h::SQLITE_DBSTATUS_LOOKASIDE_USED => {
             let mut H: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
             *pCurrent = sqlite3LookasideUsed(db, &raw mut H)
-                as crate::src::headers::sqlite3_h::sqlite3_int64;
-            *pHighwtr = H as crate::src::headers::sqlite3_h::sqlite3_int64;
+                as crate::src::headers::sqlite3_h::Sqlite3Int64;
+            *pHighwtr = H as crate::src::headers::sqlite3_h::Sqlite3Int64;
             if resetFlag != 0 {
                 let mut p: *mut crate::src::headers::sqliteInt_h::LookasideSlot =
                     (*db).lookaside.pFree;
@@ -379,21 +374,21 @@ pub unsafe extern "C" fn sqlite3_db_status64(
         crate::src::headers::sqlite3_h::SQLITE_DBSTATUS_LOOKASIDE_HIT
         | crate::src::headers::sqlite3_h::SQLITE_DBSTATUS_LOOKASIDE_MISS_SIZE
         | crate::src::headers::sqlite3_h::SQLITE_DBSTATUS_LOOKASIDE_MISS_FULL => {
-            *pCurrent = 0 as crate::src::headers::sqlite3_h::sqlite3_int64;
+            *pCurrent = 0 as crate::src::headers::sqlite3_h::Sqlite3Int64;
             *pHighwtr = (*db).lookaside.anStat
                 [(op - crate::src::headers::sqlite3_h::SQLITE_DBSTATUS_LOOKASIDE_HIT) as usize]
-                as crate::src::headers::sqlite3_h::sqlite3_int64;
+                as crate::src::headers::sqlite3_h::Sqlite3Int64;
             if resetFlag != 0 {
                 (*db).lookaside.anStat[(op
                     - crate::src::headers::sqlite3_h::SQLITE_DBSTATUS_LOOKASIDE_HIT)
-                    as usize] = 0 as crate::src::ext::rtree::rtree::u32_0;
+                    as usize] = 0 as crate::src::ext::rtree::rtree::U32_0;
             }
             current_block_105 = 6406431739208918833;
         }
         crate::src::headers::sqlite3_h::SQLITE_DBSTATUS_CACHE_USED_SHARED
         | crate::src::headers::sqlite3_h::SQLITE_DBSTATUS_CACHE_USED => {
-            let mut totalUsed: crate::src::headers::sqlite3_h::sqlite3_int64 =
-                0 as crate::src::headers::sqlite3_h::sqlite3_int64;
+            let mut totalUsed: crate::src::headers::sqlite3_h::Sqlite3Int64 =
+                0 as crate::src::headers::sqlite3_h::Sqlite3Int64;
             let mut i: ::core::ffi::c_int = 0;
             crate::src::src::btmutex::sqlite3BtreeEnterAll(
                 db as *mut crate::src::headers::sqliteInt_h::sqlite3,
@@ -411,7 +406,7 @@ pub unsafe extern "C" fn sqlite3_db_status64(
                     if op == crate::src::headers::sqlite3_h::SQLITE_DBSTATUS_CACHE_USED_SHARED {
                         nByte /= crate::src::src::btree::sqlite3BtreeConnectionCount(pBt);
                     }
-                    totalUsed += nByte as crate::src::headers::sqlite3_h::sqlite3_int64;
+                    totalUsed += nByte as crate::src::headers::sqlite3_h::Sqlite3Int64;
                 }
                 i += 1;
             }
@@ -419,7 +414,7 @@ pub unsafe extern "C" fn sqlite3_db_status64(
                 db as *mut crate::src::headers::sqliteInt_h::sqlite3,
             );
             *pCurrent = totalUsed;
-            *pHighwtr = 0 as crate::src::headers::sqlite3_h::sqlite3_int64;
+            *pHighwtr = 0 as crate::src::headers::sqlite3_h::Sqlite3Int64;
             current_block_105 = 6406431739208918833;
         }
         crate::src::headers::sqlite3_h::SQLITE_DBSTATUS_SCHEMA_USED => {
@@ -456,22 +451,22 @@ pub unsafe extern "C" fn sqlite3_db_status64(
                                     .wrapping_add(__pSchema_ref.fkeyHash.count),
                             ),
                     ) as ::core::ffi::c_int as ::core::ffi::c_int;
-                    nByte_0 = (nByte_0 as crate::src::headers::sqlite3_h::sqlite3_uint64)
+                    nByte_0 = (nByte_0 as crate::src::headers::sqlite3_h::Sqlite3Uint64)
                         .wrapping_add(crate::src::src::malloc::sqlite3_msize(
                             __pSchema_ref.tblHash.ht as *mut ::core::ffi::c_void,
                         )) as ::core::ffi::c_int
                         as ::core::ffi::c_int;
-                    nByte_0 = (nByte_0 as crate::src::headers::sqlite3_h::sqlite3_uint64)
+                    nByte_0 = (nByte_0 as crate::src::headers::sqlite3_h::Sqlite3Uint64)
                         .wrapping_add(crate::src::src::malloc::sqlite3_msize(
                             __pSchema_ref.trigHash.ht as *mut ::core::ffi::c_void,
                         )) as ::core::ffi::c_int
                         as ::core::ffi::c_int;
-                    nByte_0 = (nByte_0 as crate::src::headers::sqlite3_h::sqlite3_uint64)
+                    nByte_0 = (nByte_0 as crate::src::headers::sqlite3_h::Sqlite3Uint64)
                         .wrapping_add(crate::src::src::malloc::sqlite3_msize(
                             __pSchema_ref.idxHash.ht as *mut ::core::ffi::c_void,
                         )) as ::core::ffi::c_int
                         as ::core::ffi::c_int;
-                    nByte_0 = (nByte_0 as crate::src::headers::sqlite3_h::sqlite3_uint64)
+                    nByte_0 = (nByte_0 as crate::src::headers::sqlite3_h::Sqlite3Uint64)
                         .wrapping_add(crate::src::src::malloc::sqlite3_msize(
                             __pSchema_ref.fkeyHash.ht as *mut ::core::ffi::c_void,
                         )) as ::core::ffi::c_int
@@ -502,8 +497,8 @@ pub unsafe extern "C" fn sqlite3_db_status64(
             crate::src::src::btmutex::sqlite3BtreeLeaveAll(
                 db as *mut crate::src::headers::sqliteInt_h::sqlite3,
             );
-            *pHighwtr = 0 as crate::src::headers::sqlite3_h::sqlite3_int64;
-            *pCurrent = nByte_0 as crate::src::headers::sqlite3_h::sqlite3_int64;
+            *pHighwtr = 0 as crate::src::headers::sqlite3_h::Sqlite3Int64;
+            *pCurrent = nByte_0 as crate::src::headers::sqlite3_h::Sqlite3Int64;
             current_block_105 = 6406431739208918833;
         }
         crate::src::headers::sqlite3_h::SQLITE_DBSTATUS_STMT_USED => {
@@ -523,8 +518,8 @@ pub unsafe extern "C" fn sqlite3_db_status64(
             }
             __db_ref.lookaside.pEnd = __db_ref.lookaside.pTrueEnd;
             __db_ref.pnBytesFreed = ::core::ptr::null_mut::<::core::ffi::c_int>();
-            *pHighwtr = 0 as crate::src::headers::sqlite3_h::sqlite3_int64;
-            *pCurrent = nByte_1 as crate::src::headers::sqlite3_h::sqlite3_int64;
+            *pHighwtr = 0 as crate::src::headers::sqlite3_h::Sqlite3Int64;
+            *pCurrent = nByte_1 as crate::src::headers::sqlite3_h::Sqlite3Int64;
             current_block_105 = 6406431739208918833;
         }
         crate::src::headers::sqlite3_h::SQLITE_DBSTATUS_CACHE_SPILL => {
@@ -538,8 +533,8 @@ pub unsafe extern "C" fn sqlite3_db_status64(
             current_block_105 = 2723324002591448311;
         }
         crate::src::headers::sqlite3_h::SQLITE_DBSTATUS_TEMPBUF_SPILL => {
-            let mut nRet_0: crate::src::ext::rtree::rtree::u64_0 =
-                0 as crate::src::ext::rtree::rtree::u64_0;
+            let mut nRet_0: crate::src::ext::rtree::rtree::U64_0 =
+                0 as crate::src::ext::rtree::rtree::U64_0;
             if !(*(*db).aDb.offset(1 as isize)).pBt.is_null() {
                 let mut pPager_1: *mut crate::src::src::pager::Pager =
                     crate::src::src::btree::sqlite3BtreePager((*(*db).aDb.offset(1 as isize)).pBt)
@@ -553,22 +548,22 @@ pub unsafe extern "C" fn sqlite3_db_status64(
                 nRet_0 = nRet_0.wrapping_mul(crate::src::src::btree::sqlite3BtreeGetPageSize(
                     (*(*db).aDb.offset(1 as isize)).pBt,
                 )
-                    as crate::src::ext::rtree::rtree::u64_0);
+                    as crate::src::ext::rtree::rtree::U64_0);
             }
             nRet_0 = nRet_0.wrapping_add((*db).nSpill);
             if resetFlag != 0 {
-                (*db).nSpill = 0 as crate::src::ext::rtree::rtree::u64_0;
+                (*db).nSpill = 0 as crate::src::ext::rtree::rtree::U64_0;
             }
-            *pHighwtr = 0 as crate::src::headers::sqlite3_h::sqlite3_int64;
-            *pCurrent = nRet_0 as crate::src::headers::sqlite3_h::sqlite3_int64;
+            *pHighwtr = 0 as crate::src::headers::sqlite3_h::Sqlite3Int64;
+            *pCurrent = nRet_0 as crate::src::headers::sqlite3_h::Sqlite3Int64;
             current_block_105 = 6406431739208918833;
         }
         crate::src::headers::sqlite3_h::SQLITE_DBSTATUS_DEFERRED_FKS_1 => {
-            *pHighwtr = 0 as crate::src::headers::sqlite3_h::sqlite3_int64;
-            *pCurrent = ((*db).nDeferredImmCons > 0 as crate::src::ext::rtree::rtree::i64_0
-                || (*db).nDeferredCons > 0 as crate::src::ext::rtree::rtree::i64_0)
+            *pHighwtr = 0 as crate::src::headers::sqlite3_h::Sqlite3Int64;
+            *pCurrent = ((*db).nDeferredImmCons > 0 as crate::src::ext::rtree::rtree::I64_0
+                || (*db).nDeferredCons > 0 as crate::src::ext::rtree::rtree::I64_0)
                 as ::core::ffi::c_int
-                as crate::src::headers::sqlite3_h::sqlite3_int64;
+                as crate::src::headers::sqlite3_h::Sqlite3Int64;
             current_block_105 = 6406431739208918833;
         }
         _ => {
@@ -579,8 +574,8 @@ pub unsafe extern "C" fn sqlite3_db_status64(
     match current_block_105 {
         2723324002591448311 => {
             let mut i_1: ::core::ffi::c_int = 0;
-            let mut nRet: crate::src::ext::rtree::rtree::u64_0 =
-                0 as crate::src::ext::rtree::rtree::u64_0;
+            let mut nRet: crate::src::ext::rtree::rtree::U64_0 =
+                0 as crate::src::ext::rtree::rtree::U64_0;
             i_1 = 0 as ::core::ffi::c_int;
             while i_1 < (*db).nDb {
                 if !(*(*db).aDb.offset(i_1 as isize)).pBt.is_null() {
@@ -597,8 +592,8 @@ pub unsafe extern "C" fn sqlite3_db_status64(
                 }
                 i_1 += 1;
             }
-            *pHighwtr = 0 as crate::src::headers::sqlite3_h::sqlite3_int64;
-            *pCurrent = nRet as crate::src::headers::sqlite3_h::sqlite3_int64;
+            *pHighwtr = 0 as crate::src::headers::sqlite3_h::Sqlite3Int64;
+            *pCurrent = nRet as crate::src::headers::sqlite3_h::Sqlite3Int64;
         }
         _ => {}
     }
@@ -613,17 +608,17 @@ pub unsafe extern "C" fn sqlite3_db_status(
     mut pHighwtr: *mut ::core::ffi::c_int,
     mut resetFlag: ::core::ffi::c_int,
 ) -> ::core::ffi::c_int {
-    let mut C: crate::src::headers::sqlite3_h::sqlite3_int64 =
-        0 as crate::src::headers::sqlite3_h::sqlite3_int64;
-    let mut H: crate::src::headers::sqlite3_h::sqlite3_int64 =
-        0 as crate::src::headers::sqlite3_h::sqlite3_int64;
+    let mut C: crate::src::headers::sqlite3_h::Sqlite3Int64 =
+        0 as crate::src::headers::sqlite3_h::Sqlite3Int64;
+    let mut H: crate::src::headers::sqlite3_h::Sqlite3Int64 =
+        0 as crate::src::headers::sqlite3_h::Sqlite3Int64;
     let mut rc: ::core::ffi::c_int = 0;
     rc = sqlite3_db_status64(db, op, &raw mut C, &raw mut H, resetFlag);
     if rc == 0 as ::core::ffi::c_int {
         *pCurrent =
-            (C & 0x7fffffff as crate::src::headers::sqlite3_h::sqlite3_int64) as ::core::ffi::c_int;
+            (C & 0x7fffffff as crate::src::headers::sqlite3_h::Sqlite3Int64) as ::core::ffi::c_int;
         *pHighwtr =
-            (H & 0x7fffffff as crate::src::headers::sqlite3_h::sqlite3_int64) as ::core::ffi::c_int;
+            (H & 0x7fffffff as crate::src::headers::sqlite3_h::Sqlite3Int64) as ::core::ffi::c_int;
     }
     rc
 }

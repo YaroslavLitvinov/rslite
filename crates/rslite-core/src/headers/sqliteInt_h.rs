@@ -40,23 +40,23 @@ pub const SQLITE_DEFAULT_PCACHE_INITSZ: ::core::ffi::c_int = 20 as ::core::ffi::
 
 pub const SQLITE_DEFAULT_SORTERREF_SIZE: ::core::ffi::c_int = 0x7fffffff as ::core::ffi::c_int;
 
-pub type i8_0 = crate::src::headers::stdlib::int8_t;
+pub type I8_0 = crate::src::headers::stdlib::Int8T;
 
-pub type bft = ::core::ffi::c_uint;
+pub type Bft = ::core::ffi::c_uint;
 
-pub const SQLITE_MAX_U32: crate::src::ext::rtree::rtree::u64_0 =
-    ((1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u64_0) << 32 as ::core::ffi::c_int)
-        .wrapping_sub(1 as crate::src::ext::rtree::rtree::u64_0);
+pub const SQLITE_MAX_U32: crate::src::ext::rtree::rtree::U64_0 =
+    ((1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U64_0) << 32 as ::core::ffi::c_int)
+        .wrapping_sub(1 as crate::src::ext::rtree::rtree::U64_0);
 
-pub type tRowcnt = crate::src::ext::rtree::rtree::u64_0;
+pub type TRowcnt = crate::src::ext::rtree::rtree::U64_0;
 
-pub type LogEst = crate::src::headers::stdlib::int16_t;
+pub type LogEst = crate::src::headers::stdlib::Int16T;
 
 pub const LOGEST_MIN: ::core::ffi::c_int = -(32768 as ::core::ffi::c_int);
 
 pub const SQLITE_PTRSIZE: ::core::ffi::c_int = crate::internal::__SIZEOF_POINTER__;
 
-pub type uptr = crate::src::headers::stdlib::uintptr_t;
+pub type Uptr = crate::src::headers::stdlib::UintptrT;
 
 pub const SQLITE_BYTEORDER: ::core::ffi::c_int = 1234 as ::core::ffi::c_int;
 
@@ -66,9 +66,9 @@ pub const SQLITE_LITTLEENDIAN: ::core::ffi::c_int = 1 as ::core::ffi::c_int;
 
 pub const SQLITE_UTF16NATIVE: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_UTF16LE;
 
-pub const LARGEST_UINT64: crate::src::ext::rtree::rtree::u64_0 = 0xffffffff
-    as crate::src::ext::rtree::rtree::u64_0
-    | (0xffffffff as ::core::ffi::c_uint as crate::src::ext::rtree::rtree::u64_0)
+pub const LARGEST_UINT64: crate::src::ext::rtree::rtree::U64_0 = 0xffffffff
+    as crate::src::ext::rtree::rtree::U64_0
+    | (0xffffffff as ::core::ffi::c_uint as crate::src::ext::rtree::rtree::U64_0)
         << 32 as ::core::ffi::c_int;
 
 pub const SQLITE_MAX_MMAP_SIZE: ::core::ffi::c_int = 0x7fff0000 as ::core::ffi::c_int;
@@ -103,7 +103,7 @@ pub const SCHEMA_ROOT: ::core::ffi::c_int = 1 as ::core::ffi::c_int;
 
 pub type StrAccum = crate::src::headers::sqliteInt_h::sqlite3_str;
 
-pub type Bitmask = crate::src::ext::rtree::rtree::u64_0;
+pub type Bitmask = crate::src::ext::rtree::rtree::U64_0;
 
 pub const BMS: ::core::ffi::c_int =
     (::core::mem::size_of::<crate::src::headers::sqliteInt_h::Bitmask>() as usize)
@@ -125,8 +125,8 @@ pub const SQLITE_DEFAULT_SYNCHRONOUS: ::core::ffi::c_int = 2 as ::core::ffi::c_i
 pub struct Db {
     pub zDbSName: *mut ::core::ffi::c_char,
     pub pBt: *mut crate::src::headers::btreeInt_h::Btree,
-    pub safety_level: crate::src::ext::rtree::rtree::u8_0,
-    pub bSyncSet: crate::src::ext::rtree::rtree::u8_0,
+    pub safety_level: crate::src::ext::rtree::rtree::U8_0,
+    pub bSyncSet: crate::src::ext::rtree::rtree::U8_0,
     pub pSchema: *mut crate::src::headers::sqliteInt_h::Schema,
 }
 
@@ -140,9 +140,9 @@ pub struct Schema {
     pub trigHash: crate::src::src::hash::Hash,
     pub fkeyHash: crate::src::src::hash::Hash,
     pub pSeqTab: *mut crate::src::headers::sqliteInt_h::Table,
-    pub file_format: crate::src::ext::rtree::rtree::u8_0,
-    pub enc: crate::src::ext::rtree::rtree::u8_0,
-    pub schemaFlags: crate::src::fts5::u16_0,
+    pub file_format: crate::src::ext::rtree::rtree::U8_0,
+    pub enc: crate::src::ext::rtree::rtree::U8_0,
+    pub schemaFlags: crate::src::fts5::U16_0,
     pub cache_size: ::core::ffi::c_int,
 }
 
@@ -158,12 +158,12 @@ pub const SQLITE_N_LIMIT: ::core::ffi::c_int =
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct Lookaside {
-    pub bDisable: crate::src::ext::rtree::rtree::u32_0,
-    pub sz: crate::src::fts5::u16_0,
-    pub szTrue: crate::src::fts5::u16_0,
-    pub bMalloced: crate::src::ext::rtree::rtree::u8_0,
-    pub nSlot: crate::src::ext::rtree::rtree::u32_0,
-    pub anStat: [crate::src::ext::rtree::rtree::u32_0; 3],
+    pub bDisable: crate::src::ext::rtree::rtree::U32_0,
+    pub sz: crate::src::fts5::U16_0,
+    pub szTrue: crate::src::fts5::U16_0,
+    pub bMalloced: crate::src::ext::rtree::rtree::U8_0,
+    pub nSlot: crate::src::ext::rtree::rtree::U32_0,
+    pub anStat: [crate::src::ext::rtree::rtree::U32_0; 3],
     pub pInit: *mut crate::src::headers::sqliteInt_h::LookasideSlot,
     pub pFree: *mut crate::src::headers::sqliteInt_h::LookasideSlot,
     pub pSmallInit: *mut crate::src::headers::sqliteInt_h::LookasideSlot,
@@ -190,7 +190,7 @@ pub struct FuncDefHash {
     pub a: [*mut crate::src::headers::sqliteInt_h::FuncDef; 23],
 }
 
-pub type sqlite3_xauth = Option<
+pub type Sqlite3Xauth = Option<
     unsafe extern "C" fn(
         *mut ::core::ffi::c_void,
         ::core::ffi::c_int,
@@ -219,34 +219,34 @@ pub struct sqlite3 {
     pub mutex: *mut crate::src::src::mutex_unix::sqlite3_mutex,
     pub aDb: *mut crate::src::headers::sqliteInt_h::Db,
     pub nDb: ::core::ffi::c_int,
-    pub mDbFlags: crate::src::ext::rtree::rtree::u32_0,
-    pub flags: crate::src::ext::rtree::rtree::u64_0,
-    pub lastRowid: crate::src::ext::rtree::rtree::i64_0,
-    pub szMmap: crate::src::ext::rtree::rtree::i64_0,
-    pub nSchemaLock: crate::src::ext::rtree::rtree::u32_0,
+    pub mDbFlags: crate::src::ext::rtree::rtree::U32_0,
+    pub flags: crate::src::ext::rtree::rtree::U64_0,
+    pub lastRowid: crate::src::ext::rtree::rtree::I64_0,
+    pub szMmap: crate::src::ext::rtree::rtree::I64_0,
+    pub nSchemaLock: crate::src::ext::rtree::rtree::U32_0,
     pub openFlags: ::core::ffi::c_uint,
     pub errCode: ::core::ffi::c_int,
     pub errByteOffset: ::core::ffi::c_int,
     pub errMask: ::core::ffi::c_int,
     pub iSysErrno: ::core::ffi::c_int,
-    pub dbOptFlags: crate::src::ext::rtree::rtree::u32_0,
-    pub enc: crate::src::ext::rtree::rtree::u8_0,
-    pub autoCommit: crate::src::ext::rtree::rtree::u8_0,
-    pub temp_store: crate::src::ext::rtree::rtree::u8_0,
-    pub mallocFailed: crate::src::ext::rtree::rtree::u8_0,
-    pub bBenignMalloc: crate::src::ext::rtree::rtree::u8_0,
-    pub dfltLockMode: crate::src::ext::rtree::rtree::u8_0,
+    pub dbOptFlags: crate::src::ext::rtree::rtree::U32_0,
+    pub enc: crate::src::ext::rtree::rtree::U8_0,
+    pub autoCommit: crate::src::ext::rtree::rtree::U8_0,
+    pub temp_store: crate::src::ext::rtree::rtree::U8_0,
+    pub mallocFailed: crate::src::ext::rtree::rtree::U8_0,
+    pub bBenignMalloc: crate::src::ext::rtree::rtree::U8_0,
+    pub dfltLockMode: crate::src::ext::rtree::rtree::U8_0,
     pub nextAutovac: ::core::ffi::c_schar,
-    pub suppressErr: crate::src::ext::rtree::rtree::u8_0,
-    pub vtabOnConflict: crate::src::ext::rtree::rtree::u8_0,
-    pub isTransactionSavepoint: crate::src::ext::rtree::rtree::u8_0,
-    pub mTrace: crate::src::ext::rtree::rtree::u8_0,
-    pub noSharedCache: crate::src::ext::rtree::rtree::u8_0,
-    pub nSqlExec: crate::src::ext::rtree::rtree::u8_0,
-    pub eOpenState: crate::src::ext::rtree::rtree::u8_0,
+    pub suppressErr: crate::src::ext::rtree::rtree::U8_0,
+    pub vtabOnConflict: crate::src::ext::rtree::rtree::U8_0,
+    pub isTransactionSavepoint: crate::src::ext::rtree::rtree::U8_0,
+    pub mTrace: crate::src::ext::rtree::rtree::U8_0,
+    pub noSharedCache: crate::src::ext::rtree::rtree::U8_0,
+    pub nSqlExec: crate::src::ext::rtree::rtree::U8_0,
+    pub eOpenState: crate::src::ext::rtree::rtree::U8_0,
     pub nextPagesize: ::core::ffi::c_int,
-    pub nChange: crate::src::ext::rtree::rtree::i64_0,
-    pub nTotalChange: crate::src::ext::rtree::rtree::i64_0,
+    pub nChange: crate::src::ext::rtree::rtree::I64_0,
+    pub nTotalChange: crate::src::ext::rtree::rtree::I64_0,
     pub aLimit: [::core::ffi::c_int; 12],
     pub nMaxSorterMmap: ::core::ffi::c_int,
     pub init: crate::src::headers::sqliteInt_h::sqlite3InitInfo,
@@ -263,7 +263,7 @@ pub struct sqlite3 {
         unsafe extern "C" fn(
             *mut ::core::ffi::c_void,
             *const ::core::ffi::c_char,
-            crate::src::ext::rtree::rtree::u64_0,
+            crate::src::ext::rtree::rtree::U64_0,
         ) -> (),
     >,
     pub pProfileArg: *mut ::core::ffi::c_void,
@@ -279,7 +279,7 @@ pub struct sqlite3 {
             ::core::ffi::c_int,
             *const ::core::ffi::c_char,
             *const ::core::ffi::c_char,
-            crate::src::headers::sqlite3_h::sqlite_int64,
+            crate::src::headers::sqlite3_h::SqliteInt64,
         ) -> (),
     >,
     pub pAutovacPagesArg: *mut ::core::ffi::c_void,
@@ -288,9 +288,9 @@ pub struct sqlite3 {
         unsafe extern "C" fn(
             *mut ::core::ffi::c_void,
             *const ::core::ffi::c_char,
-            crate::src::ext::rtree::rtree::u32_0,
-            crate::src::ext::rtree::rtree::u32_0,
-            crate::src::ext::rtree::rtree::u32_0,
+            crate::src::ext::rtree::rtree::U32_0,
+            crate::src::ext::rtree::rtree::U32_0,
+            crate::src::ext::rtree::rtree::U32_0,
         ) -> ::core::ffi::c_uint,
     >,
     pub pParse: *mut crate::src::headers::sqliteInt_h::Parse,
@@ -302,8 +302,8 @@ pub struct sqlite3 {
             ::core::ffi::c_int,
             *const ::core::ffi::c_char,
             *const ::core::ffi::c_char,
-            crate::src::headers::sqlite3_h::sqlite3_int64,
-            crate::src::headers::sqlite3_h::sqlite3_int64,
+            crate::src::headers::sqlite3_h::Sqlite3Int64,
+            crate::src::headers::sqlite3_h::Sqlite3Int64,
         ) -> (),
     >,
     pub pPreUpdate: *mut crate::src::headers::vdbeInt_h::PreUpdate,
@@ -336,7 +336,7 @@ pub struct sqlite3 {
     pub pErr: *mut crate::src::headers::vdbeInt_h::sqlite3_value,
     pub u1: crate::src::headers::sqliteInt_h::__anon_union_1,
     pub lookaside: crate::src::headers::sqliteInt_h::Lookaside,
-    pub xAuth: crate::src::headers::sqliteInt_h::sqlite3_xauth,
+    pub xAuth: crate::src::headers::sqliteInt_h::Sqlite3Xauth,
     pub pAuthArg: *mut ::core::ffi::c_void,
     pub xProgress: Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ::core::ffi::c_int>,
     pub pProgressArg: *mut ::core::ffi::c_void,
@@ -355,19 +355,19 @@ pub struct sqlite3 {
     pub busyTimeout: ::core::ffi::c_int,
     pub nSavepoint: ::core::ffi::c_int,
     pub nStatement: ::core::ffi::c_int,
-    pub nDeferredCons: crate::src::ext::rtree::rtree::i64_0,
-    pub nDeferredImmCons: crate::src::ext::rtree::rtree::i64_0,
+    pub nDeferredCons: crate::src::ext::rtree::rtree::I64_0,
+    pub nDeferredImmCons: crate::src::ext::rtree::rtree::I64_0,
     pub pnBytesFreed: *mut ::core::ffi::c_int,
     pub pDbData: *mut crate::src::headers::sqliteInt_h::DbClientData,
-    pub nSpill: crate::src::ext::rtree::rtree::u64_0,
+    pub nSpill: crate::src::ext::rtree::rtree::U64_0,
 }
 
 #[derive(Copy, Clone, BitfieldStruct)]
 #[repr(C)]
 pub struct sqlite3InitInfo {
     pub newTnum: crate::src::src::pager::Pgno,
-    pub iDb: crate::src::ext::rtree::rtree::u8_0,
-    pub busy: crate::src::ext::rtree::rtree::u8_0,
+    pub iDb: crate::src::ext::rtree::rtree::U8_0,
+    pub busy: crate::src::ext::rtree::rtree::U8_0,
     #[bitfield(name = "orphanTrigger", ty = "::core::ffi::c_uint", bits = "0..=0")]
     #[bitfield(name = "imposterTable", ty = "::core::ffi::c_uint", bits = "1..=2")]
     #[bitfield(name = "reopenMemdb", ty = "::core::ffi::c_uint", bits = "3..=3")]
@@ -384,7 +384,7 @@ pub union __anon_union_0 {
         Option<unsafe extern "C" fn(*mut ::core::ffi::c_void, *const ::core::ffi::c_char) -> ()>,
     pub xV2: Option<
         unsafe extern "C" fn(
-            crate::src::ext::rtree::rtree::u32_0,
+            crate::src::ext::rtree::rtree::U32_0,
             *mut ::core::ffi::c_void,
             *mut ::core::ffi::c_void,
             *mut ::core::ffi::c_void,
@@ -463,28 +463,28 @@ pub const SQLITE_DqsDML: ::core::ffi::c_int = 0x40000000 as ::core::ffi::c_int;
 
 pub const SQLITE_EnableView: ::core::ffi::c_uint = 0x80000000 as ::core::ffi::c_uint;
 
-pub const SQLITE_CountRows: crate::src::ext::rtree::rtree::u64_0 =
-    (0x1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u64_0) << 32 as ::core::ffi::c_int;
+pub const SQLITE_CountRows: crate::src::ext::rtree::rtree::U64_0 =
+    (0x1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U64_0) << 32 as ::core::ffi::c_int;
 
-pub const SQLITE_CorruptRdOnly: crate::src::ext::rtree::rtree::u64_0 =
-    (0x2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u64_0) << 32 as ::core::ffi::c_int;
+pub const SQLITE_CorruptRdOnly: crate::src::ext::rtree::rtree::U64_0 =
+    (0x2 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U64_0) << 32 as ::core::ffi::c_int;
 
-pub const SQLITE_ReadUncommit: crate::src::ext::rtree::rtree::u64_0 =
-    (0x4 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u64_0) << 32 as ::core::ffi::c_int;
+pub const SQLITE_ReadUncommit: crate::src::ext::rtree::rtree::U64_0 =
+    (0x4 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U64_0) << 32 as ::core::ffi::c_int;
 
-pub const SQLITE_FkNoAction: crate::src::ext::rtree::rtree::u64_0 =
-    (0x8 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u64_0) << 32 as ::core::ffi::c_int;
+pub const SQLITE_FkNoAction: crate::src::ext::rtree::rtree::U64_0 =
+    (0x8 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U64_0) << 32 as ::core::ffi::c_int;
 
-pub const SQLITE_AttachCreate: crate::src::ext::rtree::rtree::u64_0 = (0x10 as ::core::ffi::c_int
-    as crate::src::ext::rtree::rtree::u64_0)
+pub const SQLITE_AttachCreate: crate::src::ext::rtree::rtree::U64_0 = (0x10 as ::core::ffi::c_int
+    as crate::src::ext::rtree::rtree::U64_0)
     << 32 as ::core::ffi::c_int;
 
-pub const SQLITE_AttachWrite: crate::src::ext::rtree::rtree::u64_0 = (0x20 as ::core::ffi::c_int
-    as crate::src::ext::rtree::rtree::u64_0)
+pub const SQLITE_AttachWrite: crate::src::ext::rtree::rtree::U64_0 = (0x20 as ::core::ffi::c_int
+    as crate::src::ext::rtree::rtree::U64_0)
     << 32 as ::core::ffi::c_int;
 
-pub const SQLITE_Comments: crate::src::ext::rtree::rtree::u64_0 = (0x40 as ::core::ffi::c_int
-    as crate::src::ext::rtree::rtree::u64_0)
+pub const SQLITE_Comments: crate::src::ext::rtree::rtree::U64_0 = (0x40 as ::core::ffi::c_int
+    as crate::src::ext::rtree::rtree::U64_0)
     << 32 as ::core::ffi::c_int;
 
 pub const DBFLAG_SchemaChange: ::core::ffi::c_int = 0x1 as ::core::ffi::c_int;
@@ -516,8 +516,8 @@ pub const SQLITE_STATE_ZOMBIE: ::core::ffi::c_int = 0xa7 as ::core::ffi::c_int;
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct FuncDef {
-    pub nArg: crate::src::fts5::i16_0,
-    pub funcFlags: crate::src::ext::rtree::rtree::u32_0,
+    pub nArg: crate::src::fts5::I16_0,
+    pub funcFlags: crate::src::ext::rtree::rtree::U32_0,
     pub pUserData: *mut ::core::ffi::c_void,
     pub pNext: *mut crate::src::headers::sqliteInt_h::FuncDef,
     pub xSFunc: Option<
@@ -615,8 +615,8 @@ pub const INLINEFUNC_iif: ::core::ffi::c_int = 5 as ::core::ffi::c_int;
 #[repr(C)]
 pub struct Savepoint {
     pub zName: *mut ::core::ffi::c_char,
-    pub nDeferredCons: crate::src::ext::rtree::rtree::i64_0,
-    pub nDeferredImmCons: crate::src::ext::rtree::rtree::i64_0,
+    pub nDeferredCons: crate::src::ext::rtree::rtree::I64_0,
+    pub nDeferredImmCons: crate::src::ext::rtree::rtree::I64_0,
     pub pNext: *mut crate::src::headers::sqliteInt_h::Savepoint,
 }
 
@@ -649,10 +649,10 @@ pub struct Column {
     #[bitfield(name = "eCType", ty = "::core::ffi::c_uint", bits = "4..=7")]
     pub notNull_eCType: [u8; 1],
     pub affinity: ::core::ffi::c_char,
-    pub szEst: crate::src::ext::rtree::rtree::u8_0,
-    pub hName: crate::src::ext::rtree::rtree::u8_0,
-    pub iDflt: crate::src::fts5::u16_0,
-    pub colFlags: crate::src::fts5::u16_0,
+    pub szEst: crate::src::ext::rtree::rtree::U8_0,
+    pub hName: crate::src::ext::rtree::rtree::U8_0,
+    pub iDflt: crate::src::fts5::U16_0,
+    pub colFlags: crate::src::fts5::U16_0,
 }
 
 pub const COLTYPE_CUSTOM: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
@@ -701,7 +701,7 @@ pub const COLFLAG_NOINSERT: ::core::ffi::c_int = 0x62 as ::core::ffi::c_int;
 #[repr(C)]
 pub struct CollSeq {
     pub zName: *mut ::core::ffi::c_char,
-    pub enc: crate::src::ext::rtree::rtree::u8_0,
+    pub enc: crate::src::ext::rtree::rtree::U8_0,
     pub pUser: *mut ::core::ffi::c_void,
     pub xCmp: Option<
         unsafe extern "C" fn(
@@ -756,9 +756,9 @@ pub struct VTable {
     pub pMod: *mut crate::src::headers::sqliteInt_h::Module,
     pub pVtab: *mut crate::src::headers::sqlite3_h::sqlite3_vtab,
     pub nRef: ::core::ffi::c_int,
-    pub bConstraint: crate::src::ext::rtree::rtree::u8_0,
-    pub bAllSchemas: crate::src::ext::rtree::rtree::u8_0,
-    pub eVtabRisk: crate::src::ext::rtree::rtree::u8_0,
+    pub bConstraint: crate::src::ext::rtree::rtree::U8_0,
+    pub bAllSchemas: crate::src::ext::rtree::rtree::U8_0,
+    pub eVtabRisk: crate::src::ext::rtree::rtree::U8_0,
     pub iSavepoint: ::core::ffi::c_int,
     pub pNext: *mut crate::src::headers::sqliteInt_h::VTable,
 }
@@ -778,19 +778,19 @@ pub struct Table {
     pub zColAff: *mut ::core::ffi::c_char,
     pub pCheck: *mut crate::src::headers::sqliteInt_h::ExprList,
     pub tnum: crate::src::src::pager::Pgno,
-    pub nTabRef: crate::src::ext::rtree::rtree::u32_0,
-    pub tabFlags: crate::src::ext::rtree::rtree::u32_0,
-    pub iPKey: crate::src::fts5::i16_0,
-    pub nCol: crate::src::fts5::i16_0,
-    pub nNVCol: crate::src::fts5::i16_0,
+    pub nTabRef: crate::src::ext::rtree::rtree::U32_0,
+    pub tabFlags: crate::src::ext::rtree::rtree::U32_0,
+    pub iPKey: crate::src::fts5::I16_0,
+    pub nCol: crate::src::fts5::I16_0,
+    pub nNVCol: crate::src::fts5::I16_0,
     pub nRowLogEst: crate::src::headers::sqliteInt_h::LogEst,
     pub szTabRow: crate::src::headers::sqliteInt_h::LogEst,
-    pub keyConf: crate::src::ext::rtree::rtree::u8_0,
-    pub eTabType: crate::src::ext::rtree::rtree::u8_0,
+    pub keyConf: crate::src::ext::rtree::rtree::U8_0,
+    pub eTabType: crate::src::ext::rtree::rtree::U8_0,
     pub u: crate::src::headers::sqliteInt_h::__anon_union_3,
     pub pTrigger: *mut crate::src::headers::sqliteInt_h::Trigger,
     pub pSchema: *mut crate::src::headers::sqliteInt_h::Schema,
-    pub aHx: [crate::src::ext::rtree::rtree::u8_0; 16],
+    pub aHx: [crate::src::ext::rtree::rtree::U8_0; 16],
 }
 
 #[derive(Copy, Clone)]
@@ -876,8 +876,8 @@ pub struct FKey {
     pub pNextTo: *mut crate::src::headers::sqliteInt_h::FKey,
     pub pPrevTo: *mut crate::src::headers::sqliteInt_h::FKey,
     pub nCol: ::core::ffi::c_int,
-    pub isDeferred: crate::src::ext::rtree::rtree::u8_0,
-    pub aAction: [crate::src::ext::rtree::rtree::u8_0; 2],
+    pub isDeferred: crate::src::ext::rtree::rtree::U8_0,
+    pub aAction: [crate::src::ext::rtree::rtree::U8_0; 2],
     pub apTrigger: [*mut crate::src::headers::sqliteInt_h::Trigger; 2],
     pub aCol: [crate::src::headers::sqliteInt_h::sColMap; 0],
 }
@@ -930,12 +930,12 @@ pub const OE_Default: ::core::ffi::c_int = 11 as ::core::ffi::c_int;
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct KeyInfo {
-    pub nRef: crate::src::ext::rtree::rtree::u32_0,
-    pub enc: crate::src::ext::rtree::rtree::u8_0,
-    pub nKeyField: crate::src::fts5::u16_0,
-    pub nAllField: crate::src::fts5::u16_0,
+    pub nRef: crate::src::ext::rtree::rtree::U32_0,
+    pub enc: crate::src::ext::rtree::rtree::U8_0,
+    pub nKeyField: crate::src::fts5::U16_0,
+    pub nAllField: crate::src::fts5::U16_0,
     pub db: *mut crate::src::headers::sqliteInt_h::sqlite3,
-    pub aSortFlags: *mut crate::src::ext::rtree::rtree::u8_0,
+    pub aSortFlags: *mut crate::src::ext::rtree::rtree::U8_0,
     pub aColl: [*mut crate::src::headers::sqliteInt_h::CollSeq; 0],
 }
 
@@ -950,19 +950,19 @@ pub struct UnpackedRecord {
     pub aMem: *mut crate::src::src::vdbe::Mem,
     pub u: crate::src::headers::sqliteInt_h::__anon_union_4,
     pub n: ::core::ffi::c_int,
-    pub nField: crate::src::fts5::u16_0,
-    pub default_rc: crate::src::headers::sqliteInt_h::i8_0,
-    pub errCode: crate::src::ext::rtree::rtree::u8_0,
-    pub r1: crate::src::headers::sqliteInt_h::i8_0,
-    pub r2: crate::src::headers::sqliteInt_h::i8_0,
-    pub eqSeen: crate::src::ext::rtree::rtree::u8_0,
+    pub nField: crate::src::fts5::U16_0,
+    pub default_rc: crate::src::headers::sqliteInt_h::I8_0,
+    pub errCode: crate::src::ext::rtree::rtree::U8_0,
+    pub r1: crate::src::headers::sqliteInt_h::I8_0,
+    pub r2: crate::src::headers::sqliteInt_h::I8_0,
+    pub eqSeen: crate::src::ext::rtree::rtree::U8_0,
 }
 
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub union __anon_union_4 {
     pub z: *mut ::core::ffi::c_char,
-    pub i: crate::src::ext::rtree::rtree::i64_0,
+    pub i: crate::src::ext::rtree::rtree::I64_0,
 }
 
 #[derive(Copy, Clone)]
@@ -976,21 +976,21 @@ pub struct CCurHint {
 #[repr(C)]
 pub struct Index {
     pub zName: *mut ::core::ffi::c_char,
-    pub aiColumn: *mut crate::src::fts5::i16_0,
+    pub aiColumn: *mut crate::src::fts5::I16_0,
     pub aiRowLogEst: *mut crate::src::headers::sqliteInt_h::LogEst,
     pub pTable: *mut crate::src::headers::sqliteInt_h::Table,
     pub zColAff: *mut ::core::ffi::c_char,
     pub pNext: *mut crate::src::headers::sqliteInt_h::Index,
     pub pSchema: *mut crate::src::headers::sqliteInt_h::Schema,
-    pub aSortOrder: *mut crate::src::ext::rtree::rtree::u8_0,
+    pub aSortOrder: *mut crate::src::ext::rtree::rtree::U8_0,
     pub azColl: *mut *const ::core::ffi::c_char,
     pub pPartIdxWhere: *mut crate::src::headers::sqliteInt_h::Expr,
     pub aColExpr: *mut crate::src::headers::sqliteInt_h::ExprList,
     pub tnum: crate::src::src::pager::Pgno,
     pub szIdxRow: crate::src::headers::sqliteInt_h::LogEst,
-    pub nKeyCol: crate::src::fts5::u16_0,
-    pub nColumn: crate::src::fts5::u16_0,
-    pub onError: crate::src::ext::rtree::rtree::u8_0,
+    pub nKeyCol: crate::src::fts5::U16_0,
+    pub nColumn: crate::src::fts5::U16_0,
+    pub onError: crate::src::ext::rtree::rtree::U8_0,
     #[bitfield(name = "idxType", ty = "::core::ffi::c_uint", bits = "0..=1")]
     #[bitfield(name = "bUnordered", ty = "::core::ffi::c_uint", bits = "2..=2")]
     #[bitfield(name = "uniqNotNull", ty = "::core::ffi::c_uint", bits = "3..=3")]
@@ -1031,9 +1031,9 @@ pub struct Token {
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct AggInfo {
-    pub directMode: crate::src::ext::rtree::rtree::u8_0,
-    pub useSortingIdx: crate::src::ext::rtree::rtree::u8_0,
-    pub nSortingColumn: crate::src::ext::rtree::rtree::u32_0,
+    pub directMode: crate::src::ext::rtree::rtree::U8_0,
+    pub useSortingIdx: crate::src::ext::rtree::rtree::U8_0,
+    pub nSortingColumn: crate::src::ext::rtree::rtree::U32_0,
     pub sortingIdx: ::core::ffi::c_int,
     pub sortingIdxPTab: ::core::ffi::c_int,
     pub iFirstReg: ::core::ffi::c_int,
@@ -1043,7 +1043,7 @@ pub struct AggInfo {
     pub nAccumulator: ::core::ffi::c_int,
     pub aFunc: *mut crate::src::headers::sqliteInt_h::AggInfo_func,
     pub nFunc: ::core::ffi::c_int,
-    pub selId: crate::src::ext::rtree::rtree::u32_0,
+    pub selId: crate::src::ext::rtree::rtree::U32_0,
 }
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -1063,28 +1063,28 @@ pub struct AggInfo_func {
     pub iDistinct: ::core::ffi::c_int,
     pub iDistAddr: ::core::ffi::c_int,
     pub iOBTab: ::core::ffi::c_int,
-    pub bOBPayload: crate::src::ext::rtree::rtree::u8_0,
-    pub bOBUnique: crate::src::ext::rtree::rtree::u8_0,
-    pub bUseSubtype: crate::src::ext::rtree::rtree::u8_0,
+    pub bOBPayload: crate::src::ext::rtree::rtree::U8_0,
+    pub bOBUnique: crate::src::ext::rtree::rtree::U8_0,
+    pub bUseSubtype: crate::src::ext::rtree::rtree::U8_0,
 }
 
-pub type ynVar = crate::src::fts5::i16_0;
+pub type YnVar = crate::src::fts5::I16_0;
 
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct Expr {
-    pub op: crate::src::ext::rtree::rtree::u8_0,
+    pub op: crate::src::ext::rtree::rtree::U8_0,
     pub affExpr: ::core::ffi::c_char,
-    pub op2: crate::src::ext::rtree::rtree::u8_0,
-    pub flags: crate::src::ext::rtree::rtree::u32_0,
+    pub op2: crate::src::ext::rtree::rtree::U8_0,
+    pub flags: crate::src::ext::rtree::rtree::U32_0,
     pub u: crate::src::headers::sqliteInt_h::__anon_union_5,
     pub pLeft: *mut crate::src::headers::sqliteInt_h::Expr,
     pub pRight: *mut crate::src::headers::sqliteInt_h::Expr,
     pub x: crate::src::headers::sqliteInt_h::__anon_union_6,
     pub nHeight: ::core::ffi::c_int,
     pub iTable: ::core::ffi::c_int,
-    pub iColumn: crate::src::headers::sqliteInt_h::ynVar,
-    pub iAgg: crate::src::fts5::i16_0,
+    pub iColumn: crate::src::headers::sqliteInt_h::YnVar,
+    pub iAgg: crate::src::fts5::I16_0,
     pub w: crate::src::headers::sqliteInt_h::__anon_union_7,
     pub pAggInfo: *mut crate::src::headers::sqliteInt_h::AggInfo,
     pub y: crate::src::headers::sqliteInt_h::__anon_union_8,
@@ -1205,7 +1205,7 @@ pub struct ExprList_item {
 #[derive(Copy, Clone, BitfieldStruct)]
 #[repr(C)]
 pub struct __anon_struct_4 {
-    pub sortFlags: crate::src::ext::rtree::rtree::u8_0,
+    pub sortFlags: crate::src::ext::rtree::rtree::U8_0,
     #[bitfield(name = "eEName", ty = "::core::ffi::c_uint", bits = "0..=1")]
     #[bitfield(name = "done", ty = "::core::ffi::c_uint", bits = "2..=2")]
     #[bitfield(name = "reusable", ty = "::core::ffi::c_uint", bits = "3..=3")]
@@ -1229,8 +1229,8 @@ pub union __anon_union_9 {
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct __anon_struct_5 {
-    pub iOrderByCol: crate::src::fts5::u16_0,
-    pub iAlias: crate::src::fts5::u16_0,
+    pub iOrderByCol: crate::src::fts5::U16_0,
+    pub iAlias: crate::src::fts5::U16_0,
 }
 
 pub const ENAME_NAME: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
@@ -1281,7 +1281,7 @@ pub struct SrcItem {
 #[derive(Copy, Clone, BitfieldStruct)]
 #[repr(C)]
 pub struct __anon_struct_6 {
-    pub jointype: crate::src::ext::rtree::rtree::u8_0,
+    pub jointype: crate::src::ext::rtree::rtree::U8_0,
     #[bitfield(name = "notIndexed", ty = "::core::ffi::c_uint", bits = "0..=0")]
     #[bitfield(name = "isIndexedBy", ty = "::core::ffi::c_uint", bits = "1..=1")]
     #[bitfield(name = "isSubquery", ty = "::core::ffi::c_uint", bits = "2..=2")]
@@ -1310,7 +1310,7 @@ pub struct __anon_struct_6 {
 pub union __anon_union_10 {
     pub zIndexedBy: *mut ::core::ffi::c_char,
     pub pFuncArg: *mut crate::src::headers::sqliteInt_h::ExprList,
-    pub nRow: crate::src::ext::rtree::rtree::u32_0,
+    pub nRow: crate::src::ext::rtree::rtree::U32_0,
 }
 
 #[derive(Copy, Clone)]
@@ -1346,7 +1346,7 @@ pub struct OnOrUsing {
 #[repr(C)]
 pub struct SrcList {
     pub nSrc: ::core::ffi::c_int,
-    pub nAlloc: crate::src::ext::rtree::rtree::u32_0,
+    pub nAlloc: crate::src::ext::rtree::rtree::U32_0,
     pub a: [crate::src::headers::sqliteInt_h::SrcItem; 0],
 }
 
@@ -1419,7 +1419,7 @@ pub struct NameContext {
     pub nRef: ::core::ffi::c_int,
     pub nNcErr: ::core::ffi::c_int,
     pub ncFlags: ::core::ffi::c_int,
-    pub nNestedSelect: crate::src::ext::rtree::rtree::u32_0,
+    pub nNestedSelect: crate::src::ext::rtree::rtree::U32_0,
     pub pWinSelect: *mut crate::src::headers::sqliteInt_h::Select,
 }
 
@@ -1480,8 +1480,8 @@ pub struct Upsert {
     pub pUpsertSet: *mut crate::src::headers::sqliteInt_h::ExprList,
     pub pUpsertWhere: *mut crate::src::headers::sqliteInt_h::Expr,
     pub pNextUpsert: *mut crate::src::headers::sqliteInt_h::Upsert,
-    pub isDoUpdate: crate::src::ext::rtree::rtree::u8_0,
-    pub isDup: crate::src::ext::rtree::rtree::u8_0,
+    pub isDoUpdate: crate::src::ext::rtree::rtree::U8_0,
+    pub isDup: crate::src::ext::rtree::rtree::U8_0,
     pub pToFree: *mut ::core::ffi::c_void,
     pub pUpsertIdx: *mut crate::src::headers::sqliteInt_h::Index,
     pub pUpsertSrc: *mut crate::src::headers::sqliteInt_h::SrcList,
@@ -1493,12 +1493,12 @@ pub struct Upsert {
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct Select {
-    pub op: crate::src::ext::rtree::rtree::u8_0,
+    pub op: crate::src::ext::rtree::rtree::U8_0,
     pub nSelectRow: crate::src::headers::sqliteInt_h::LogEst,
-    pub selFlags: crate::src::ext::rtree::rtree::u32_0,
+    pub selFlags: crate::src::ext::rtree::rtree::U32_0,
     pub iLimit: ::core::ffi::c_int,
     pub iOffset: ::core::ffi::c_int,
-    pub selId: crate::src::ext::rtree::rtree::u32_0,
+    pub selId: crate::src::ext::rtree::rtree::U32_0,
     pub addrOpenEphm: [::core::ffi::c_int; 2],
     pub pEList: *mut crate::src::headers::sqliteInt_h::ExprList,
     pub pSrc: *mut crate::src::headers::sqliteInt_h::SrcList,
@@ -1611,7 +1611,7 @@ pub const SRT_Upfrom_1: ::core::ffi::c_int = 15 as ::core::ffi::c_int;
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct SelectDest {
-    pub eDest: crate::src::ext::rtree::rtree::u8_0,
+    pub eDest: crate::src::ext::rtree::rtree::U8_0,
     pub iSDParm: ::core::ffi::c_int,
     pub iSDParm2: ::core::ffi::c_int,
     pub iSdst: ::core::ffi::c_int,
@@ -1636,10 +1636,10 @@ pub struct TriggerPrg {
     pub pNext: *mut crate::src::headers::sqliteInt_h::TriggerPrg,
     pub pProgram: *mut crate::src::src::vdbe::SubProgram,
     pub orconf: ::core::ffi::c_int,
-    pub aColmask: [crate::src::ext::rtree::rtree::u32_0; 2],
+    pub aColmask: [crate::src::ext::rtree::rtree::U32_0; 2],
 }
 
-pub type yDbMask = ::core::ffi::c_uint;
+pub type YDbMask = ::core::ffi::c_uint;
 
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -1648,8 +1648,8 @@ pub struct IndexedExpr {
     pub iDataCur: ::core::ffi::c_int,
     pub iIdxCur: ::core::ffi::c_int,
     pub iIdxCol: ::core::ffi::c_int,
-    pub bMaybeNullRow: crate::src::ext::rtree::rtree::u8_0,
-    pub aff: crate::src::ext::rtree::rtree::u8_0,
+    pub bMaybeNullRow: crate::src::ext::rtree::rtree::U8_0,
+    pub aff: crate::src::ext::rtree::rtree::U8_0,
     pub pIENext: *mut crate::src::headers::sqliteInt_h::IndexedExpr,
 }
 
@@ -1674,24 +1674,24 @@ pub struct Parse {
     pub pVdbe: *mut crate::src::headers::vdbeInt_h::Vdbe,
     pub rc: ::core::ffi::c_int,
     pub nQueryLoop: crate::src::headers::sqliteInt_h::LogEst,
-    pub nested: crate::src::ext::rtree::rtree::u8_0,
-    pub nTempReg: crate::src::ext::rtree::rtree::u8_0,
-    pub isMultiWrite: crate::src::ext::rtree::rtree::u8_0,
-    pub mayAbort: crate::src::ext::rtree::rtree::u8_0,
-    pub hasCompound: crate::src::ext::rtree::rtree::u8_0,
-    pub disableLookaside: crate::src::ext::rtree::rtree::u8_0,
-    pub prepFlags: crate::src::ext::rtree::rtree::u8_0,
-    pub withinRJSubrtn: crate::src::ext::rtree::rtree::u8_0,
-    pub bHasExists: crate::src::ext::rtree::rtree::u8_0,
-    pub mSubrtnSig: crate::src::ext::rtree::rtree::u8_0,
-    pub eTriggerOp: crate::src::ext::rtree::rtree::u8_0,
-    pub bReturning: crate::src::ext::rtree::rtree::u8_0,
-    pub eOrconf: crate::src::ext::rtree::rtree::u8_0,
-    pub disableTriggers: crate::src::ext::rtree::rtree::u8_0,
-    #[bitfield(name = "colNamesSet", ty = "bft", bits = "0..=0")]
-    #[bitfield(name = "bHasWith", ty = "bft", bits = "1..=1")]
-    #[bitfield(name = "okConstFactor", ty = "bft", bits = "2..=2")]
-    #[bitfield(name = "checkSchema", ty = "bft", bits = "3..=3")]
+    pub nested: crate::src::ext::rtree::rtree::U8_0,
+    pub nTempReg: crate::src::ext::rtree::rtree::U8_0,
+    pub isMultiWrite: crate::src::ext::rtree::rtree::U8_0,
+    pub mayAbort: crate::src::ext::rtree::rtree::U8_0,
+    pub hasCompound: crate::src::ext::rtree::rtree::U8_0,
+    pub disableLookaside: crate::src::ext::rtree::rtree::U8_0,
+    pub prepFlags: crate::src::ext::rtree::rtree::U8_0,
+    pub withinRJSubrtn: crate::src::ext::rtree::rtree::U8_0,
+    pub bHasExists: crate::src::ext::rtree::rtree::U8_0,
+    pub mSubrtnSig: crate::src::ext::rtree::rtree::U8_0,
+    pub eTriggerOp: crate::src::ext::rtree::rtree::U8_0,
+    pub bReturning: crate::src::ext::rtree::rtree::U8_0,
+    pub eOrconf: crate::src::ext::rtree::rtree::U8_0,
+    pub disableTriggers: crate::src::ext::rtree::rtree::U8_0,
+    #[bitfield(name = "colNamesSet", ty = "Bft", bits = "0..=0")]
+    #[bitfield(name = "bHasWith", ty = "Bft", bits = "1..=1")]
+    #[bitfield(name = "okConstFactor", ty = "Bft", bits = "2..=2")]
+    #[bitfield(name = "checkSchema", ty = "Bft", bits = "3..=3")]
     pub colNamesSet_bHasWith_okConstFactor_checkSchema: [u8; 1],
     #[bitfield(padding)]
     pub c2rust_padding: [u8; 3],
@@ -1708,11 +1708,11 @@ pub struct Parse {
     pub pConstExpr: *mut crate::src::headers::sqliteInt_h::ExprList,
     pub pIdxEpr: *mut crate::src::headers::sqliteInt_h::IndexedExpr,
     pub pIdxPartExpr: *mut crate::src::headers::sqliteInt_h::IndexedExpr,
-    pub writeMask: crate::src::headers::sqliteInt_h::yDbMask,
-    pub cookieMask: crate::src::headers::sqliteInt_h::yDbMask,
+    pub writeMask: crate::src::headers::sqliteInt_h::YDbMask,
+    pub cookieMask: crate::src::headers::sqliteInt_h::YDbMask,
     pub nMaxArg: ::core::ffi::c_int,
     pub nSelect: ::core::ffi::c_int,
-    pub nProgressSteps: crate::src::ext::rtree::rtree::u32_0,
+    pub nProgressSteps: crate::src::ext::rtree::rtree::U32_0,
     pub nTableLock: ::core::ffi::c_int,
     pub aTableLock: *mut crate::src::headers::sqliteInt_h::TableLock,
     pub pAinc: *mut crate::src::headers::sqliteInt_h::AutoincInfo,
@@ -1723,14 +1723,14 @@ pub struct Parse {
     pub aTempReg: [::core::ffi::c_int; 8],
     pub pOuterParse: *mut crate::src::headers::sqliteInt_h::Parse,
     pub sNameToken: crate::src::headers::sqliteInt_h::Token,
-    pub oldmask: crate::src::ext::rtree::rtree::u32_0,
-    pub newmask: crate::src::ext::rtree::rtree::u32_0,
+    pub oldmask: crate::src::ext::rtree::rtree::U32_0,
+    pub newmask: crate::src::ext::rtree::rtree::U32_0,
     pub u1: crate::src::headers::sqliteInt_h::__anon_union_15,
     pub sLastToken: crate::src::headers::sqliteInt_h::Token,
-    pub nVar: crate::src::headers::sqliteInt_h::ynVar,
-    pub iPkSortOrder: crate::src::ext::rtree::rtree::u8_0,
-    pub explain: crate::src::ext::rtree::rtree::u8_0,
-    pub eParseMode: crate::src::ext::rtree::rtree::u8_0,
+    pub nVar: crate::src::headers::sqliteInt_h::YnVar,
+    pub iPkSortOrder: crate::src::ext::rtree::rtree::U8_0,
+    pub explain: crate::src::ext::rtree::rtree::U8_0,
+    pub eParseMode: crate::src::ext::rtree::rtree::U8_0,
     pub nVtabLock: ::core::ffi::c_int,
     pub nHeight: ::core::ffi::c_int,
     pub addrExplain: ::core::ffi::c_int,
@@ -1832,9 +1832,9 @@ pub const OPFLAG_PREFORMAT: ::core::ffi::c_int = 0x80 as ::core::ffi::c_int;
 pub struct Trigger {
     pub zName: *mut ::core::ffi::c_char,
     pub table: *mut ::core::ffi::c_char,
-    pub op: crate::src::ext::rtree::rtree::u8_0,
-    pub tr_tm: crate::src::ext::rtree::rtree::u8_0,
-    pub bReturning: crate::src::ext::rtree::rtree::u8_0,
+    pub op: crate::src::ext::rtree::rtree::U8_0,
+    pub tr_tm: crate::src::ext::rtree::rtree::U8_0,
+    pub bReturning: crate::src::ext::rtree::rtree::U8_0,
     pub pWhen: *mut crate::src::headers::sqliteInt_h::Expr,
     pub pColumns: *mut crate::src::headers::sqliteInt_h::IdList,
     pub pSchema: *mut crate::src::headers::sqliteInt_h::Schema,
@@ -1850,8 +1850,8 @@ pub const TRIGGER_AFTER: ::core::ffi::c_int = 2 as ::core::ffi::c_int;
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct TriggerStep {
-    pub op: crate::src::ext::rtree::rtree::u8_0,
-    pub orconf: crate::src::ext::rtree::rtree::u8_0,
+    pub op: crate::src::ext::rtree::rtree::U8_0,
+    pub orconf: crate::src::ext::rtree::rtree::U8_0,
     pub pTrig: *mut crate::src::headers::sqliteInt_h::Trigger,
     pub pSelect: *mut crate::src::headers::sqliteInt_h::Select,
     pub zTarget: *mut ::core::ffi::c_char,
@@ -1883,11 +1883,11 @@ pub struct Returning {
 pub struct sqlite3_str {
     pub db: *mut crate::src::headers::sqliteInt_h::sqlite3,
     pub zText: *mut ::core::ffi::c_char,
-    pub nAlloc: crate::src::ext::rtree::rtree::u32_0,
-    pub mxAlloc: crate::src::ext::rtree::rtree::u32_0,
-    pub nChar: crate::src::ext::rtree::rtree::u32_0,
-    pub accError: crate::src::ext::rtree::rtree::u8_0,
-    pub printfFlags: crate::src::ext::rtree::rtree::u8_0,
+    pub nAlloc: crate::src::ext::rtree::rtree::U32_0,
+    pub mxAlloc: crate::src::ext::rtree::rtree::U32_0,
+    pub nChar: crate::src::ext::rtree::rtree::U32_0,
+    pub accError: crate::src::ext::rtree::rtree::U8_0,
+    pub printfFlags: crate::src::ext::rtree::rtree::U8_0,
 }
 
 pub const SQLITE_PRINTF_INTERNAL: ::core::ffi::c_int = 0x1 as ::core::ffi::c_int;
@@ -1899,7 +1899,7 @@ pub const SQLITE_PRINTF_MALLOCED: ::core::ffi::c_int = 0x4 as ::core::ffi::c_int
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct RCStr {
-    pub nRCRef: crate::src::ext::rtree::rtree::u64_0,
+    pub nRCRef: crate::src::ext::rtree::rtree::U64_0,
 }
 
 pub type InitData = crate::src::headers::sqliteInt_h::__anon_struct_9;
@@ -1911,8 +1911,8 @@ pub struct __anon_struct_9 {
     pub pzErrMsg: *mut *mut ::core::ffi::c_char,
     pub iDb: ::core::ffi::c_int,
     pub rc: ::core::ffi::c_int,
-    pub mInitFlags: crate::src::ext::rtree::rtree::u32_0,
-    pub nInitRow: crate::src::ext::rtree::rtree::u32_0,
+    pub mInitFlags: crate::src::ext::rtree::rtree::U32_0,
+    pub nInitRow: crate::src::ext::rtree::rtree::U32_0,
     pub mxPage: crate::src::src::pager::Pgno,
 }
 
@@ -1928,12 +1928,12 @@ pub const INITFLAG_AlterAdd: ::core::ffi::c_int = 0x3 as ::core::ffi::c_int;
 #[repr(C)]
 pub struct Sqlite3Config {
     pub bMemstat: ::core::ffi::c_int,
-    pub bCoreMutex: crate::src::ext::rtree::rtree::u8_0,
-    pub bFullMutex: crate::src::ext::rtree::rtree::u8_0,
-    pub bOpenUri: crate::src::ext::rtree::rtree::u8_0,
-    pub bUseCis: crate::src::ext::rtree::rtree::u8_0,
-    pub bSmallMalloc: crate::src::ext::rtree::rtree::u8_0,
-    pub bExtraSchemaChecks: crate::src::ext::rtree::rtree::u8_0,
+    pub bCoreMutex: crate::src::ext::rtree::rtree::U8_0,
+    pub bFullMutex: crate::src::ext::rtree::rtree::U8_0,
+    pub bOpenUri: crate::src::ext::rtree::rtree::U8_0,
+    pub bUseCis: crate::src::ext::rtree::rtree::U8_0,
+    pub bSmallMalloc: crate::src::ext::rtree::rtree::U8_0,
+    pub bExtraSchemaChecks: crate::src::ext::rtree::rtree::U8_0,
     pub mxStrlen: ::core::ffi::c_int,
     pub neverCorrupt: ::core::ffi::c_int,
     pub szLookaside: ::core::ffi::c_int,
@@ -1946,14 +1946,14 @@ pub struct Sqlite3Config {
     pub nHeap: ::core::ffi::c_int,
     pub mnReq: ::core::ffi::c_int,
     pub mxReq: ::core::ffi::c_int,
-    pub szMmap: crate::src::headers::sqlite3_h::sqlite3_int64,
-    pub mxMmap: crate::src::headers::sqlite3_h::sqlite3_int64,
+    pub szMmap: crate::src::headers::sqlite3_h::Sqlite3Int64,
+    pub mxMmap: crate::src::headers::sqlite3_h::Sqlite3Int64,
     pub pPage: *mut ::core::ffi::c_void,
     pub szPage: ::core::ffi::c_int,
     pub nPage: ::core::ffi::c_int,
     pub mxParserStack: ::core::ffi::c_int,
     pub sharedCacheEnabled: ::core::ffi::c_int,
-    pub szPma: crate::src::ext::rtree::rtree::u32_0,
+    pub szPma: crate::src::ext::rtree::rtree::U32_0,
     pub isInit: ::core::ffi::c_int,
     pub inProgress: ::core::ffi::c_int,
     pub isMutexInit: ::core::ffi::c_int,
@@ -1969,7 +1969,7 @@ pub struct Sqlite3Config {
         ) -> (),
     >,
     pub pLogArg: *mut ::core::ffi::c_void,
-    pub mxMemdbSize: crate::src::headers::sqlite3_h::sqlite3_int64,
+    pub mxMemdbSize: crate::src::headers::sqlite3_h::Sqlite3Int64,
     pub xTestCallback: Option<unsafe extern "C" fn(::core::ffi::c_int) -> ::core::ffi::c_int>,
     pub bLocaltimeFault: ::core::ffi::c_int,
     pub xAltLocaltime: Option<
@@ -1979,7 +1979,7 @@ pub struct Sqlite3Config {
         ) -> ::core::ffi::c_int,
     >,
     pub iOnceResetThreshold: ::core::ffi::c_int,
-    pub szSorterRef: crate::src::ext::rtree::rtree::u32_0,
+    pub szSorterRef: crate::src::ext::rtree::rtree::U32_0,
     pub iPrngSeed: ::core::ffi::c_uint,
 }
 
@@ -2006,8 +2006,8 @@ pub struct Walker {
         ) -> (),
     >,
     pub walkerDepth: ::core::ffi::c_int,
-    pub eCode: crate::src::fts5::u16_0,
-    pub mWFlags: crate::src::fts5::u16_0,
+    pub eCode: crate::src::fts5::U16_0,
+    pub mWFlags: crate::src::fts5::U16_0,
     pub u: crate::src::headers::sqliteInt_h::__anon_union_16,
 }
 
@@ -2041,7 +2041,7 @@ pub struct DbFixer {
     pub pParse: *mut crate::src::headers::sqliteInt_h::Parse,
     pub w: crate::src::headers::sqliteInt_h::Walker,
     pub pSchema: *mut crate::src::headers::sqliteInt_h::Schema,
-    pub bTemp: crate::src::ext::rtree::rtree::u8_0,
+    pub bTemp: crate::src::ext::rtree::rtree::U8_0,
     pub zDb: *const ::core::ffi::c_char,
     pub zType: *const ::core::ffi::c_char,
     pub pName: *const crate::src::headers::sqliteInt_h::Token,
@@ -2061,7 +2061,7 @@ pub struct Cte {
     pub pSelect: *mut crate::src::headers::sqliteInt_h::Select,
     pub zCteErr: *const ::core::ffi::c_char,
     pub pUse: *mut crate::src::headers::sqliteInt_h::CteUse,
-    pub eM10d: crate::src::ext::rtree::rtree::u8_0,
+    pub eM10d: crate::src::ext::rtree::rtree::U8_0,
 }
 
 pub const M10d_Yes: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
@@ -2087,7 +2087,7 @@ pub struct CteUse {
     pub regRtn: ::core::ffi::c_int,
     pub iCur: ::core::ffi::c_int,
     pub nRowEst: crate::src::headers::sqliteInt_h::LogEst,
-    pub eM10d: crate::src::ext::rtree::rtree::u8_0,
+    pub eM10d: crate::src::ext::rtree::rtree::U8_0,
 }
 
 #[derive(Copy, Clone)]
@@ -2106,11 +2106,11 @@ pub struct Window {
     pub zBase: *mut ::core::ffi::c_char,
     pub pPartition: *mut crate::src::headers::sqliteInt_h::ExprList,
     pub pOrderBy: *mut crate::src::headers::sqliteInt_h::ExprList,
-    pub eFrmType: crate::src::ext::rtree::rtree::u8_0,
-    pub eStart: crate::src::ext::rtree::rtree::u8_0,
-    pub eEnd: crate::src::ext::rtree::rtree::u8_0,
-    pub bImplicitFrame: crate::src::ext::rtree::rtree::u8_0,
-    pub eExclude: crate::src::ext::rtree::rtree::u8_0,
+    pub eFrmType: crate::src::ext::rtree::rtree::U8_0,
+    pub eStart: crate::src::ext::rtree::rtree::U8_0,
+    pub eEnd: crate::src::ext::rtree::rtree::U8_0,
+    pub bImplicitFrame: crate::src::ext::rtree::rtree::U8_0,
+    pub eExclude: crate::src::ext::rtree::rtree::U8_0,
     pub pStart: *mut crate::src::headers::sqliteInt_h::Expr,
     pub pEnd: *mut crate::src::headers::sqliteInt_h::Expr,
     pub ppThis: *mut *mut crate::src::headers::sqliteInt_h::Window,
@@ -2129,7 +2129,7 @@ pub struct Window {
     pub regOne: ::core::ffi::c_int,
     pub regStartRowid: ::core::ffi::c_int,
     pub regEndRowid: ::core::ffi::c_int,
-    pub bExprArgs: crate::src::ext::rtree::rtree::u8_0,
+    pub bExprArgs: crate::src::ext::rtree::rtree::U8_0,
 }
 
 pub const SQLITE_NOMEM_BKPT: ::core::ffi::c_int = crate::src::headers::sqlite3_h::SQLITE_NOMEM;
@@ -2137,13 +2137,13 @@ pub const SQLITE_NOMEM_BKPT: ::core::ffi::c_int = crate::src::headers::sqlite3_h
 pub const SQLITE_IOERR_NOMEM_BKPT: ::core::ffi::c_int =
     crate::src::headers::sqlite3_h::SQLITE_IOERR_NOMEM;
 
-pub const EXP754: crate::src::ext::rtree::rtree::u64_0 = (0x7ff as ::core::ffi::c_int
-    as crate::src::ext::rtree::rtree::u64_0)
+pub const EXP754: crate::src::ext::rtree::rtree::U64_0 = (0x7ff as ::core::ffi::c_int
+    as crate::src::ext::rtree::rtree::U64_0)
     << 52 as ::core::ffi::c_int;
 
-pub const MAN754: crate::src::ext::rtree::rtree::u64_0 =
-    ((1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u64_0) << 52 as ::core::ffi::c_int)
-        .wrapping_sub(1 as crate::src::ext::rtree::rtree::u64_0);
+pub const MAN754: crate::src::ext::rtree::rtree::U64_0 =
+    ((1 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U64_0) << 52 as ::core::ffi::c_int)
+        .wrapping_sub(1 as crate::src::ext::rtree::rtree::U64_0);
 
 #[derive(Copy, Clone)]
 #[repr(C)]

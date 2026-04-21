@@ -1,10 +1,10 @@
-use crate::src::ext::rtree::rtree::u64_0;
+use crate::src::ext::rtree::rtree::U64_0;
 
-pub type sqlite3_stmt = crate::src::headers::vdbeInt_h::Vdbe;
+pub type Sqlite3Stmt = crate::src::headers::vdbeInt_h::Vdbe;
 
-pub type sqlite3_blob = *mut std::ffi::c_void;
+pub type Sqlite3Blob = *mut std::ffi::c_void;
 
-pub type sqlite3_pcache = *mut std::ffi::c_void;
+pub type Sqlite3Pcache = *mut std::ffi::c_void;
 
 pub const SQLITE_VERSION: [::core::ffi::c_char; 7] =
     unsafe { ::core::mem::transmute::<[u8; 7], [::core::ffi::c_char; 7]>(*b"3.51.2\0") };
@@ -27,15 +27,15 @@ pub const SQLITE_SOURCE_ID: [i8; 85] = str_to_i8_array::<85>(
     "2026-01-09 17:27:48 b270f8339eb13b504d0b2ba154ebca966b7dde08e40c3ed7d559749818cbalt1\0",
 );
 
-pub type sqlite_int64 = ::core::ffi::c_longlong;
+pub type SqliteInt64 = ::core::ffi::c_longlong;
 
-pub type sqlite_uint64 = ::core::ffi::c_ulonglong;
+pub type SqliteUint64 = ::core::ffi::c_ulonglong;
 
-pub type sqlite3_int64 = crate::src::headers::sqlite3_h::sqlite_int64;
+pub type Sqlite3Int64 = crate::src::headers::sqlite3_h::SqliteInt64;
 
-pub type sqlite3_uint64 = crate::src::headers::sqlite3_h::sqlite_uint64;
+pub type Sqlite3Uint64 = crate::src::headers::sqlite3_h::SqliteUint64;
 
-pub type sqlite3_callback = Option<
+pub type Sqlite3Callback = Option<
     unsafe extern "C" fn(
         *mut ::core::ffi::c_void,
         ::core::ffi::c_int,
@@ -501,7 +501,7 @@ pub struct sqlite3_io_methods {
             *mut crate::src::headers::sqlite3_h::sqlite3_file,
             *mut ::core::ffi::c_void,
             ::core::ffi::c_int,
-            crate::src::headers::sqlite3_h::sqlite3_int64,
+            crate::src::headers::sqlite3_h::Sqlite3Int64,
         ) -> ::core::ffi::c_int,
     >,
     pub xWrite: Option<
@@ -509,13 +509,13 @@ pub struct sqlite3_io_methods {
             *mut crate::src::headers::sqlite3_h::sqlite3_file,
             *const ::core::ffi::c_void,
             ::core::ffi::c_int,
-            crate::src::headers::sqlite3_h::sqlite3_int64,
+            crate::src::headers::sqlite3_h::Sqlite3Int64,
         ) -> ::core::ffi::c_int,
     >,
     pub xTruncate: Option<
         unsafe extern "C" fn(
             *mut crate::src::headers::sqlite3_h::sqlite3_file,
-            crate::src::headers::sqlite3_h::sqlite3_int64,
+            crate::src::headers::sqlite3_h::Sqlite3Int64,
         ) -> ::core::ffi::c_int,
     >,
     pub xSync: Option<
@@ -527,7 +527,7 @@ pub struct sqlite3_io_methods {
     pub xFileSize: Option<
         unsafe extern "C" fn(
             *mut crate::src::headers::sqlite3_h::sqlite3_file,
-            *mut crate::src::headers::sqlite3_h::sqlite3_int64,
+            *mut crate::src::headers::sqlite3_h::Sqlite3Int64,
         ) -> ::core::ffi::c_int,
     >,
     pub xLock: Option<
@@ -593,7 +593,7 @@ pub struct sqlite3_io_methods {
     pub xFetch: Option<
         unsafe extern "C" fn(
             *mut crate::src::headers::sqlite3_h::sqlite3_file,
-            crate::src::headers::sqlite3_h::sqlite3_int64,
+            crate::src::headers::sqlite3_h::Sqlite3Int64,
             ::core::ffi::c_int,
             *mut *mut ::core::ffi::c_void,
         ) -> ::core::ffi::c_int,
@@ -601,7 +601,7 @@ pub struct sqlite3_io_methods {
     pub xUnfetch: Option<
         unsafe extern "C" fn(
             *mut crate::src::headers::sqlite3_h::sqlite3_file,
-            crate::src::headers::sqlite3_h::sqlite3_int64,
+            crate::src::headers::sqlite3_h::Sqlite3Int64,
             *mut ::core::ffi::c_void,
         ) -> ::core::ffi::c_int,
     >,
@@ -677,9 +677,9 @@ pub const SQLITE_FCNTL_RESET_CACHE: ::core::ffi::c_int = 42 as ::core::ffi::c_in
 
 pub const SQLITE_FCNTL_NULL_IO: ::core::ffi::c_int = 43;
 
-pub type sqlite3_filename = *const ::core::ffi::c_char;
+pub type Sqlite3Filename = *const ::core::ffi::c_char;
 
-pub type sqlite3_syscall_ptr = Option<unsafe extern "C" fn() -> ()>;
+pub type Sqlite3SyscallPtr = Option<unsafe extern "C" fn() -> ()>;
 
 #[derive(Copy, Clone)]
 #[repr(C)]
@@ -693,7 +693,7 @@ pub struct sqlite3_vfs {
     pub xOpen: Option<
         unsafe extern "C" fn(
             *mut crate::src::headers::sqlite3_h::sqlite3_vfs,
-            crate::src::headers::sqlite3_h::sqlite3_filename,
+            crate::src::headers::sqlite3_h::Sqlite3Filename,
             *mut crate::src::headers::sqlite3_h::sqlite3_file,
             ::core::ffi::c_int,
             *mut ::core::ffi::c_int,
@@ -777,21 +777,21 @@ pub struct sqlite3_vfs {
     pub xCurrentTimeInt64: Option<
         unsafe extern "C" fn(
             *mut crate::src::headers::sqlite3_h::sqlite3_vfs,
-            *mut crate::src::headers::sqlite3_h::sqlite3_int64,
+            *mut crate::src::headers::sqlite3_h::Sqlite3Int64,
         ) -> ::core::ffi::c_int,
     >,
     pub xSetSystemCall: Option<
         unsafe extern "C" fn(
             *mut crate::src::headers::sqlite3_h::sqlite3_vfs,
             *const ::core::ffi::c_char,
-            crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+            crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
         ) -> ::core::ffi::c_int,
     >,
     pub xGetSystemCall: Option<
         unsafe extern "C" fn(
             *mut crate::src::headers::sqlite3_h::sqlite3_vfs,
             *const ::core::ffi::c_char,
-        ) -> crate::src::headers::sqlite3_h::sqlite3_syscall_ptr,
+        ) -> crate::src::headers::sqlite3_h::Sqlite3SyscallPtr,
     >,
     pub xNextSystemCall: Option<
         unsafe extern "C" fn(
@@ -852,14 +852,14 @@ pub enum SqliteConfig {
     URI = 17,
     PCACHE2 = 18,
     GETPCACHE2 = 19,
-    COVERING_INDEX_SCAN = 20,
-    MMAP_SIZE = 22,
-    PCACHE_HDRSZ = 24,
+    CoveringIndexScan = 20,
+    MmapSize = 22,
+    PcacheHdrsz = 24,
     PMASZ = 25,
-    STMTJRNL_SPILL = 26,
-    SMALL_MALLOC = 27,
-    MEMDB_MAXSIZE = 29,
-    ROWID_IN_VIEW = 30,
+    StmtjrnlSpill = 26,
+    SmallMalloc = 27,
+    MemdbMaxsize = 29,
+    RowidInView = 30,
 }
 pub const SQLITE_CONFIG_MALLOC_1: ::core::ffi::c_int = SqliteConfig::MALLOC as ::core::ffi::c_int;
 pub const SQLITE_CONFIG_PCACHE2_1: ::core::ffi::c_int = SqliteConfig::PCACHE2 as ::core::ffi::c_int;
@@ -869,53 +869,53 @@ pub const SQLITE_CONFIG_PCACHE2_1: ::core::ffi::c_int = SqliteConfig::PCACHE2 as
 pub enum SqliteDbConfig {
     MAINDBNAME = 1000,
     LOOKASIDE = 1001,
-    ENABLE_FKEY = 1002,
-    ENABLE_TRIGGER = 1003,
-    ENABLE_FTS3_TOKENIZER = 1004,
-    ENABLE_LOAD_EXTENSION = 1005,
-    NO_CKPT_ON_CLOSE = 1006,
-    ENABLE_QPSG = 1007,
-    TRIGGER_EQP = 1008,
-    RESET_DATABASE = 1009,
+    EnableFkey = 1002,
+    EnableTrigger = 1003,
+    EnableFts3Tokenizer = 1004,
+    EnableLoadExtension = 1005,
+    NoCkptOnClose = 1006,
+    EnableQpsg = 1007,
+    TriggerEqp = 1008,
+    ResetDatabase = 1009,
     DEFENSIVE = 1010,
-    WRITABLE_SCHEMA = 1011,
-    LEGACY_ALTER_TABLE = 1012,
-    DQS_DML = 1013,
-    DQS_DDL = 1014,
-    ENABLE_VIEW = 1015,
-    LEGACY_FILE_FORMAT = 1016,
-    TRUSTED_SCHEMA = 1017,
-    STMT_SCANSTATUS = 1018,
-    REVERSE_SCANORDER = 1019,
-    ENABLE_ATTACH_CREATE = 1020,
-    ENABLE_ATTACH_WRITE = 1021,
-    ENABLE_COMMENTS = 1022,
+    WritableSchema = 1011,
+    LegacyAlterTable = 1012,
+    DqsDml = 1013,
+    DqsDdl = 1014,
+    EnableView = 1015,
+    LegacyFileFormat = 1016,
+    TrustedSchema = 1017,
+    StmtScanstatus = 1018,
+    ReverseScanorder = 1019,
+    EnableAttachCreate = 1020,
+    EnableAttachWrite = 1021,
+    EnableComments = 1022,
 }
 impl SqliteDbConfig {
-    pub fn flag_mask(&self) -> Option<u64_0> {
+    pub fn flag_mask(&self) -> Option<U64_0> {
         use crate::src::headers::sqliteInt_h::*;
         match self {
-            Self::ENABLE_FKEY => Some(SQLITE_ForeignKeys as u64_0),
-            Self::ENABLE_TRIGGER => Some(SQLITE_EnableTrigger as u64_0),
-            Self::ENABLE_VIEW => Some(SQLITE_EnableView as u64_0),
-            Self::ENABLE_FTS3_TOKENIZER => Some(SQLITE_Fts3Tokenizer as u64_0),
-            Self::ENABLE_LOAD_EXTENSION => Some(SQLITE_LoadExtension as u64_0),
-            Self::NO_CKPT_ON_CLOSE => Some(SQLITE_NoCkptOnClose as u64_0),
-            Self::ENABLE_QPSG => Some(SQLITE_EnableQPSG as u64_0),
-            Self::TRIGGER_EQP => Some(SQLITE_TriggerEQP as u64_0),
-            Self::RESET_DATABASE => Some(SQLITE_ResetDatabase as u64_0),
-            Self::DEFENSIVE => Some(SQLITE_Defensive as u64_0),
-            Self::WRITABLE_SCHEMA => Some((SQLITE_WriteSchema | SQLITE_NoSchemaError) as u64_0),
-            Self::LEGACY_ALTER_TABLE => Some(SQLITE_LegacyAlter as u64_0),
-            Self::DQS_DDL => Some(SQLITE_DqsDDL as u64_0),
-            Self::DQS_DML => Some(SQLITE_DqsDML as u64_0),
-            Self::LEGACY_FILE_FORMAT => Some(SQLITE_LegacyFileFmt as u64_0),
-            Self::TRUSTED_SCHEMA => Some(SQLITE_TrustedSchema as u64_0),
-            Self::STMT_SCANSTATUS => Some(SQLITE_StmtScanStatus as u64_0),
-            Self::REVERSE_SCANORDER => Some(SQLITE_ReverseOrder as u64_0),
-            Self::ENABLE_ATTACH_CREATE => Some(SQLITE_AttachCreate),
-            Self::ENABLE_ATTACH_WRITE => Some(SQLITE_AttachWrite),
-            Self::ENABLE_COMMENTS => Some(SQLITE_Comments),
+            Self::EnableFkey => Some(SQLITE_ForeignKeys as U64_0),
+            Self::EnableTrigger => Some(SQLITE_EnableTrigger as U64_0),
+            Self::EnableView => Some(SQLITE_EnableView as U64_0),
+            Self::EnableFts3Tokenizer => Some(SQLITE_Fts3Tokenizer as U64_0),
+            Self::EnableLoadExtension => Some(SQLITE_LoadExtension as U64_0),
+            Self::NoCkptOnClose => Some(SQLITE_NoCkptOnClose as U64_0),
+            Self::EnableQpsg => Some(SQLITE_EnableQPSG as U64_0),
+            Self::TriggerEqp => Some(SQLITE_TriggerEQP as U64_0),
+            Self::ResetDatabase => Some(SQLITE_ResetDatabase as U64_0),
+            Self::DEFENSIVE => Some(SQLITE_Defensive as U64_0),
+            Self::WritableSchema => Some((SQLITE_WriteSchema | SQLITE_NoSchemaError) as U64_0),
+            Self::LegacyAlterTable => Some(SQLITE_LegacyAlter as U64_0),
+            Self::DqsDdl => Some(SQLITE_DqsDDL as U64_0),
+            Self::DqsDml => Some(SQLITE_DqsDML as U64_0),
+            Self::LegacyFileFormat => Some(SQLITE_LegacyFileFmt as U64_0),
+            Self::TrustedSchema => Some(SQLITE_TrustedSchema as U64_0),
+            Self::StmtScanstatus => Some(SQLITE_StmtScanStatus as U64_0),
+            Self::ReverseScanorder => Some(SQLITE_ReverseOrder as U64_0),
+            Self::EnableAttachCreate => Some(SQLITE_AttachCreate),
+            Self::EnableAttachWrite => Some(SQLITE_AttachWrite),
+            Self::EnableComments => Some(SQLITE_Comments),
             _ => None,
         }
     }
@@ -1075,9 +1075,9 @@ pub const SQLITE_RESULT_SUBTYPE: ::core::ffi::c_int = 0x1000000 as ::core::ffi::
 
 pub const SQLITE_SELFORDER1: ::core::ffi::c_int = 0x2000000 as ::core::ffi::c_int;
 
-pub type sqlite3_destructor_type = Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()>;
+pub type Sqlite3DestructorType = Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()>;
 
-pub const SQLITE_STATIC: crate::src::headers::sqlite3_h::sqlite3_destructor_type = None;
+pub const SQLITE_STATIC: crate::src::headers::sqlite3_h::Sqlite3DestructorType = None;
 
 pub const SQLITE_TXN_NONE: ::core::ffi::c_int = 0 as ::core::ffi::c_int;
 
@@ -1163,7 +1163,7 @@ pub struct sqlite3_module {
     pub xRowid: Option<
         unsafe extern "C" fn(
             *mut crate::src::headers::sqlite3_h::sqlite3_vtab_cursor,
-            *mut crate::src::headers::sqlite3_h::sqlite3_int64,
+            *mut crate::src::headers::sqlite3_h::Sqlite3Int64,
         ) -> ::core::ffi::c_int,
     >,
     pub xUpdate: Option<
@@ -1171,7 +1171,7 @@ pub struct sqlite3_module {
             *mut crate::src::headers::sqlite3_h::sqlite3_vtab,
             ::core::ffi::c_int,
             *mut *mut crate::src::headers::vdbeInt_h::sqlite3_value,
-            *mut crate::src::headers::sqlite3_h::sqlite3_int64,
+            *mut crate::src::headers::sqlite3_h::Sqlite3Int64,
         ) -> ::core::ffi::c_int,
     >,
     pub xBegin: Option<
@@ -1258,9 +1258,9 @@ pub struct sqlite3_index_info {
     pub needToFreeIdxStr: ::core::ffi::c_int,
     pub orderByConsumed: ::core::ffi::c_int,
     pub estimatedCost: ::core::ffi::c_double,
-    pub estimatedRows: crate::src::headers::sqlite3_h::sqlite3_int64,
+    pub estimatedRows: crate::src::headers::sqlite3_h::Sqlite3Int64,
     pub idxFlags: ::core::ffi::c_int,
-    pub colUsed: crate::src::headers::sqlite3_h::sqlite3_uint64,
+    pub colUsed: crate::src::headers::sqlite3_h::Sqlite3Uint64,
 }
 
 #[derive(Copy, Clone)]
@@ -1400,31 +1400,31 @@ pub const SQLITE_MUTEX_STATIC_VFS1: ::core::ffi::c_int = 11 as ::core::ffi::c_in
 #[derive(Debug, Clone, Copy, PartialEq, Eq, strum_macros::FromRepr)]
 #[repr(i32)]
 pub enum SqliteTestCtrl {
-    PRNG_SAVE = 5,
-    PRNG_RESTORE = 6,
-    FK_NO_ACTION = 7,
-    BITVEC_TEST = 8,
-    FAULT_INSTALL = 9,
-    BENIGN_MALLOC_HOOKS = 10,
-    PENDING_BYTE = 11,
+    PrngSave = 5,
+    PrngRestore = 6,
+    FkNoAction = 7,
+    BitvecTest = 8,
+    FaultInstall = 9,
+    BenignMallocHooks = 10,
+    PendingByte = 11,
     ASSERT = 12,
     ALWAYS = 13,
-    JSON_SELFCHECK = 14,
+    JsonSelfcheck = 14,
     OPTIMIZATIONS = 15,
     GETOPT = 16,
-    INTERNAL_FUNCTIONS = 17,
-    LOCALTIME_FAULT = 18,
-    ONCE_RESET_THRESHOLD = 19,
-    NEVER_CORRUPT = 20,
-    VDBE_COVERAGE = 21,
+    InternalFunctions = 17,
+    LocaltimeFault = 18,
+    OnceResetThreshold = 19,
+    NeverCorrupt = 20,
+    VdbeCoverage = 21,
     BYTEORDER = 22,
     ISINIT = 23,
-    SORTER_MMAP = 24,
+    SorterMmap = 24,
     IMPOSTER = 25,
-    RESULT_INTREAL = 27,
-    PRNG_SEED = 28,
-    EXTRA_SCHEMA_CHECKS = 29,
-    SEEK_COUNT = 30,
+    ResultIntreal = 27,
+    PrngSeed = 28,
+    ExtraSchemaChecks = 29,
+    SeekCount = 30,
     TRACEFLAGS = 31,
     LOGEST = 33,
 }
@@ -1509,36 +1509,36 @@ pub struct sqlite3_pcache_methods2 {
             ::core::ffi::c_int,
             ::core::ffi::c_int,
             ::core::ffi::c_int,
-        ) -> *mut crate::src::headers::sqlite3_h::sqlite3_pcache,
+        ) -> *mut crate::src::headers::sqlite3_h::Sqlite3Pcache,
     >,
     pub xCachesize: Option<
         unsafe extern "C" fn(
-            *mut crate::src::headers::sqlite3_h::sqlite3_pcache,
+            *mut crate::src::headers::sqlite3_h::Sqlite3Pcache,
             ::core::ffi::c_int,
         ) -> (),
     >,
     pub xPagecount: Option<
         unsafe extern "C" fn(
-            *mut crate::src::headers::sqlite3_h::sqlite3_pcache,
+            *mut crate::src::headers::sqlite3_h::Sqlite3Pcache,
         ) -> ::core::ffi::c_int,
     >,
     pub xFetch: Option<
         unsafe extern "C" fn(
-            *mut crate::src::headers::sqlite3_h::sqlite3_pcache,
+            *mut crate::src::headers::sqlite3_h::Sqlite3Pcache,
             ::core::ffi::c_uint,
             ::core::ffi::c_int,
         ) -> *mut crate::src::headers::sqlite3_h::sqlite3_pcache_page,
     >,
     pub xUnpin: Option<
         unsafe extern "C" fn(
-            *mut crate::src::headers::sqlite3_h::sqlite3_pcache,
+            *mut crate::src::headers::sqlite3_h::Sqlite3Pcache,
             *mut crate::src::headers::sqlite3_h::sqlite3_pcache_page,
             ::core::ffi::c_int,
         ) -> (),
     >,
     pub xRekey: Option<
         unsafe extern "C" fn(
-            *mut crate::src::headers::sqlite3_h::sqlite3_pcache,
+            *mut crate::src::headers::sqlite3_h::Sqlite3Pcache,
             *mut crate::src::headers::sqlite3_h::sqlite3_pcache_page,
             ::core::ffi::c_uint,
             ::core::ffi::c_uint,
@@ -1546,14 +1546,14 @@ pub struct sqlite3_pcache_methods2 {
     >,
     pub xTruncate: Option<
         unsafe extern "C" fn(
-            *mut crate::src::headers::sqlite3_h::sqlite3_pcache,
+            *mut crate::src::headers::sqlite3_h::Sqlite3Pcache,
             ::core::ffi::c_uint,
         ) -> (),
     >,
     pub xDestroy:
-        Option<unsafe extern "C" fn(*mut crate::src::headers::sqlite3_h::sqlite3_pcache) -> ()>,
+        Option<unsafe extern "C" fn(*mut crate::src::headers::sqlite3_h::Sqlite3Pcache) -> ()>,
     pub xShrink:
-        Option<unsafe extern "C" fn(*mut crate::src::headers::sqlite3_h::sqlite3_pcache) -> ()>,
+        Option<unsafe extern "C" fn(*mut crate::src::headers::sqlite3_h::Sqlite3Pcache) -> ()>,
 }
 
 pub const SQLITE_CHECKPOINT_NOOP: ::core::ffi::c_int = -(1 as ::core::ffi::c_int);
@@ -1569,19 +1569,19 @@ pub const SQLITE_CHECKPOINT_TRUNCATE: ::core::ffi::c_int = 3 as ::core::ffi::c_i
 #[derive(Debug, Clone, Copy, PartialEq, Eq, strum_macros::FromRepr)]
 #[repr(i32)]
 pub enum SqliteVtabConfig {
-    CONSTRAINT_SUPPORT = 1,
+    ConstraintSupport = 1,
     INNOCUOUS = 2,
     DIRECTONLY = 3,
-    USES_ALL_SCHEMAS = 4,
+    UsesAllSchemas = 4,
 }
 pub const SQLITE_VTAB_CONSTRAINT_SUPPORT: ::core::ffi::c_int =
-    SqliteVtabConfig::CONSTRAINT_SUPPORT as ::core::ffi::c_int;
+    SqliteVtabConfig::ConstraintSupport as ::core::ffi::c_int;
 pub const SQLITE_VTAB_INNOCUOUS: ::core::ffi::c_int =
     SqliteVtabConfig::INNOCUOUS as ::core::ffi::c_int;
 pub const SQLITE_VTAB_DIRECTONLY: ::core::ffi::c_int =
     SqliteVtabConfig::DIRECTONLY as ::core::ffi::c_int;
 pub const SQLITE_VTAB_USES_ALL_SCHEMAS: ::core::ffi::c_int =
-    SqliteVtabConfig::USES_ALL_SCHEMAS as ::core::ffi::c_int;
+    SqliteVtabConfig::UsesAllSchemas as ::core::ffi::c_int;
 
 pub const SQLITE_ROLLBACK: ::core::ffi::c_int = 1 as ::core::ffi::c_int;
 
@@ -1607,14 +1607,14 @@ pub const CARRAY_TEXT: ::core::ffi::c_int = 3 as ::core::ffi::c_int;
 
 pub const CARRAY_BLOB: ::core::ffi::c_int = 4 as ::core::ffi::c_int;
 
-pub type sqlite3_rtree_dbl = ::core::ffi::c_double;
+pub type Sqlite3RtreeDbl = ::core::ffi::c_double;
 
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct sqlite3_rtree_geometry {
     pub pContext: *mut ::core::ffi::c_void,
     pub nParam: ::core::ffi::c_int,
-    pub aParam: *mut crate::src::headers::sqlite3_h::sqlite3_rtree_dbl,
+    pub aParam: *mut crate::src::headers::sqlite3_h::Sqlite3RtreeDbl,
     pub pUser: *mut ::core::ffi::c_void,
     pub xDelUser: Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()>,
 }
@@ -1624,19 +1624,19 @@ pub struct sqlite3_rtree_geometry {
 pub struct sqlite3_rtree_query_info {
     pub pContext: *mut ::core::ffi::c_void,
     pub nParam: ::core::ffi::c_int,
-    pub aParam: *mut crate::src::headers::sqlite3_h::sqlite3_rtree_dbl,
+    pub aParam: *mut crate::src::headers::sqlite3_h::Sqlite3RtreeDbl,
     pub pUser: *mut ::core::ffi::c_void,
     pub xDelUser: Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()>,
-    pub aCoord: *mut crate::src::headers::sqlite3_h::sqlite3_rtree_dbl,
+    pub aCoord: *mut crate::src::headers::sqlite3_h::Sqlite3RtreeDbl,
     pub anQueue: *mut ::core::ffi::c_uint,
     pub nCoord: ::core::ffi::c_int,
     pub iLevel: ::core::ffi::c_int,
     pub mxLevel: ::core::ffi::c_int,
-    pub iRowid: crate::src::headers::sqlite3_h::sqlite3_int64,
-    pub rParentScore: crate::src::headers::sqlite3_h::sqlite3_rtree_dbl,
+    pub iRowid: crate::src::headers::sqlite3_h::Sqlite3Int64,
+    pub rParentScore: crate::src::headers::sqlite3_h::Sqlite3RtreeDbl,
     pub eParentWithin: ::core::ffi::c_int,
     pub eWithin: ::core::ffi::c_int,
-    pub rScore: crate::src::headers::sqlite3_h::sqlite3_rtree_dbl,
+    pub rScore: crate::src::headers::sqlite3_h::Sqlite3RtreeDbl,
     pub apSqlParam: *mut *mut crate::src::headers::vdbeInt_h::sqlite3_value,
 }
 

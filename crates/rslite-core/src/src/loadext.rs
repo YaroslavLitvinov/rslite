@@ -1,6 +1,6 @@
-pub use crate::__stddef_size_t_h::size_t;
+pub use crate::__stddef_size_t_h::SizeT;
 
-pub use crate::internal::__va_list_tag;
+pub use crate::internal::VaListTag;
 pub use crate::src::src::hash::_ht;
 pub use crate::src::src::hash::Hash;
 pub use crate::src::src::hash::HashElem;
@@ -11,38 +11,38 @@ pub use crate::src::src::os::sqlite3OsDlOpen;
 pub use crate::src::src::os::sqlite3OsDlSym;
 pub use crate::src::src::pager::Pgno;
 
-pub use crate::src::ext::rtree::rtree::i64_0;
-pub use crate::src::ext::rtree::rtree::u8_0;
-pub use crate::src::ext::rtree::rtree::u32_0;
-pub use crate::src::ext::rtree::rtree::u64_0;
-pub use crate::src::fts5::i16_0;
-pub use crate::src::fts5::u16_0;
+pub use crate::src::ext::rtree::rtree::I64_0;
+pub use crate::src::ext::rtree::rtree::U8_0;
+pub use crate::src::ext::rtree::rtree::U32_0;
+pub use crate::src::ext::rtree::rtree::U64_0;
+pub use crate::src::fts5::I16_0;
+pub use crate::src::fts5::U16_0;
 pub use crate::src::headers::sqlite3_h::SQLITE_ERROR;
 pub use crate::src::headers::sqlite3_h::SQLITE_MUTEX_STATIC_MAIN;
 pub use crate::src::headers::sqlite3_h::SQLITE_NOMEM;
 pub use crate::src::headers::sqlite3_h::SQLITE_OK;
 pub use crate::src::headers::sqlite3_h::SQLITE_OK_LOAD_PERMANENTLY;
-pub use crate::src::headers::sqlite3_h::sqlite_int64;
-pub use crate::src::headers::sqlite3_h::sqlite_uint64;
-pub use crate::src::headers::sqlite3_h::sqlite3_blob;
-pub use crate::src::headers::sqlite3_h::sqlite3_callback;
+pub use crate::src::headers::sqlite3_h::SqliteInt64;
+pub use crate::src::headers::sqlite3_h::SqliteUint64;
+pub use crate::src::headers::sqlite3_h::Sqlite3Blob;
+pub use crate::src::headers::sqlite3_h::Sqlite3Callback;
 pub use crate::src::headers::sqlite3_h::sqlite3_file;
-pub use crate::src::headers::sqlite3_h::sqlite3_filename;
+pub use crate::src::headers::sqlite3_h::Sqlite3Filename;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_constraint;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_constraint_usage;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_info;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_orderby;
-pub use crate::src::headers::sqlite3_h::sqlite3_int64;
+pub use crate::src::headers::sqlite3_h::Sqlite3Int64;
 pub use crate::src::headers::sqlite3_h::sqlite3_io_methods;
 pub use crate::src::headers::sqlite3_h::sqlite3_module;
-pub use crate::src::headers::sqlite3_h::sqlite3_stmt;
-pub use crate::src::headers::sqlite3_h::sqlite3_syscall_ptr;
-pub use crate::src::headers::sqlite3_h::sqlite3_uint64;
+pub use crate::src::headers::sqlite3_h::Sqlite3Stmt;
+pub use crate::src::headers::sqlite3_h::Sqlite3SyscallPtr;
+pub use crate::src::headers::sqlite3_h::Sqlite3Uint64;
 pub use crate::src::headers::sqlite3_h::sqlite3_vfs;
 pub use crate::src::headers::sqlite3_h::sqlite3_vtab;
 pub use crate::src::headers::sqlite3_h::sqlite3_vtab_cursor;
 pub use crate::src::headers::sqlite3ext_h::sqlite3_api_routines;
-pub use crate::src::headers::sqlite3ext_h::sqlite3_loadext_entry;
+pub use crate::src::headers::sqlite3ext_h::Sqlite3LoadextEntry;
 pub use crate::src::headers::sqliteInt_h::__anon_struct_0;
 pub use crate::src::headers::sqliteInt_h::__anon_struct_1;
 pub use crate::src::headers::sqliteInt_h::__anon_struct_2;
@@ -118,19 +118,19 @@ pub use crate::src::headers::sqliteInt_h::VTable;
 pub use crate::src::headers::sqliteInt_h::VtabCtx;
 pub use crate::src::headers::sqliteInt_h::Window;
 pub use crate::src::headers::sqliteInt_h::With;
-pub use crate::src::headers::sqliteInt_h::bft;
+pub use crate::src::headers::sqliteInt_h::Bft;
 pub use crate::src::headers::sqliteInt_h::sColMap;
 pub use crate::src::headers::sqliteInt_h::sqlite3;
 pub use crate::src::headers::sqliteInt_h::sqlite3_str;
-pub use crate::src::headers::sqliteInt_h::sqlite3_xauth;
+pub use crate::src::headers::sqliteInt_h::Sqlite3Xauth;
 pub use crate::src::headers::sqliteInt_h::sqlite3InitInfo;
-pub use crate::src::headers::sqliteInt_h::yDbMask;
-pub use crate::src::headers::sqliteInt_h::ynVar;
+pub use crate::src::headers::sqliteInt_h::YDbMask;
+pub use crate::src::headers::sqliteInt_h::YnVar;
 pub use crate::src::headers::stdlib::FILENAME_MAX;
-pub use crate::src::headers::stdlib::int16_t;
-pub use crate::src::headers::stdlib::uint8_t;
-pub use crate::src::headers::stdlib::uint16_t;
-pub use crate::src::headers::stdlib::uint32_t;
+pub use crate::src::headers::stdlib::Int16T;
+pub use crate::src::headers::stdlib::Uint8T;
+pub use crate::src::headers::stdlib::Uint16T;
+pub use crate::src::headers::stdlib::Uint32T;
 pub use crate::src::headers::vdbeInt_h::PreUpdate;
 pub use crate::src::headers::vdbeInt_h::sqlite3_context;
 pub use crate::src::headers::vdbeInt_h::sqlite3_value;
@@ -434,10 +434,6 @@ unsafe extern "C" {
     fn sqlite3_log(iErrCode: ::core::ffi::c_int, zFormat: *const ::core::ffi::c_char, ...);
 }
 
-pub use crate::src::headers::stdlib::__int16_t;
-pub use crate::src::headers::stdlib::__uint8_t;
-pub use crate::src::headers::stdlib::__uint16_t;
-pub use crate::src::headers::stdlib::__uint32_t;
 pub use crate::src::headers::vdbeInt_h::Vdbe;
 pub use crate::src::src::vdbe::Mem;
 pub use crate::src::src::vdbe::SubProgram;
@@ -447,7 +443,7 @@ pub use crate::src::src::vdbe::p4union;
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct sqlite3AutoExtList {
-    pub nExt: crate::src::ext::rtree::rtree::u32_0,
+    pub nExt: crate::src::ext::rtree::rtree::U32_0,
     pub aExt: *mut Option<unsafe extern "C" fn() -> ()>,
 }
 
@@ -481,7 +477,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
         bind_blob: Some(
             crate::src::src::vdbeapi::sqlite3_bind_blob
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     ::core::ffi::c_int,
                     *const ::core::ffi::c_void,
                     ::core::ffi::c_int,
@@ -491,7 +487,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
         bind_double: Some(
             crate::src::src::vdbeapi::sqlite3_bind_double
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     ::core::ffi::c_int,
                     ::core::ffi::c_double,
                 ) -> ::core::ffi::c_int,
@@ -499,7 +495,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
         bind_int: Some(
             crate::src::src::vdbeapi::sqlite3_bind_int
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     ::core::ffi::c_int,
                     ::core::ffi::c_int,
                 ) -> ::core::ffi::c_int,
@@ -507,42 +503,42 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
         bind_int64: Some(
             crate::src::src::vdbeapi::sqlite3_bind_int64
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     ::core::ffi::c_int,
-                    crate::src::headers::sqlite3_h::sqlite3_int64,
+                    crate::src::headers::sqlite3_h::Sqlite3Int64,
                 ) -> ::core::ffi::c_int,
         ),
         bind_null: Some(
             crate::src::src::vdbeapi::sqlite3_bind_null
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     ::core::ffi::c_int,
                 ) -> ::core::ffi::c_int,
         ),
         bind_parameter_count: Some(
             crate::src::src::vdbeapi::sqlite3_bind_parameter_count
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                 ) -> ::core::ffi::c_int,
         ),
         bind_parameter_index: Some(
             crate::src::src::vdbeapi::sqlite3_bind_parameter_index
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     *const ::core::ffi::c_char,
                 ) -> ::core::ffi::c_int,
         ),
         bind_parameter_name: Some(
             crate::src::src::vdbeapi::sqlite3_bind_parameter_name
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     ::core::ffi::c_int,
                 ) -> *const ::core::ffi::c_char,
         ),
         bind_text: Some(
             crate::src::src::vdbeapi::sqlite3_bind_text
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     ::core::ffi::c_int,
                     *const ::core::ffi::c_char,
                     ::core::ffi::c_int,
@@ -552,7 +548,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
         bind_text16: Some(
             crate::src::src::vdbeapi::sqlite3_bind_text16
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     ::core::ffi::c_int,
                     *const ::core::ffi::c_void,
                     ::core::ffi::c_int,
@@ -562,7 +558,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
         bind_value: Some(
             crate::src::src::vdbeapi::sqlite3_bind_value
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     ::core::ffi::c_int,
                     *const crate::src::headers::vdbeInt_h::sqlite3_value,
                 ) -> ::core::ffi::c_int,
@@ -632,28 +628,28 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
         column_blob: Some(
             crate::src::src::vdbeapi::sqlite3_column_blob
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     ::core::ffi::c_int,
                 ) -> *const ::core::ffi::c_void,
         ),
         column_bytes: Some(
             crate::src::src::vdbeapi::sqlite3_column_bytes
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     ::core::ffi::c_int,
                 ) -> ::core::ffi::c_int,
         ),
         column_bytes16: Some(
             crate::src::src::vdbeapi::sqlite3_column_bytes16
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     ::core::ffi::c_int,
                 ) -> ::core::ffi::c_int,
         ),
         column_count: Some(
             crate::src::src::vdbeapi::sqlite3_column_count
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                 ) -> ::core::ffi::c_int,
         ),
         column_database_name: None,
@@ -661,50 +657,50 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
         column_decltype: Some(
             crate::src::src::vdbeapi::sqlite3_column_decltype
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     ::core::ffi::c_int,
                 ) -> *const ::core::ffi::c_char,
         ),
         column_decltype16: Some(
             crate::src::src::vdbeapi::sqlite3_column_decltype16
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     ::core::ffi::c_int,
                 ) -> *const ::core::ffi::c_void,
         ),
         column_double: Some(
             crate::src::src::vdbeapi::sqlite3_column_double
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     ::core::ffi::c_int,
                 ) -> ::core::ffi::c_double,
         ),
         column_int: Some(
             crate::src::src::vdbeapi::sqlite3_column_int
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     ::core::ffi::c_int,
                 ) -> ::core::ffi::c_int,
         ),
         column_int64: Some(
             crate::src::src::vdbeapi::sqlite3_column_int64
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     ::core::ffi::c_int,
                 )
-                    -> crate::src::headers::sqlite3_h::sqlite3_int64,
+                    -> crate::src::headers::sqlite3_h::Sqlite3Int64,
         ),
         column_name: Some(
             crate::src::src::vdbeapi::sqlite3_column_name
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     ::core::ffi::c_int,
                 ) -> *const ::core::ffi::c_char,
         ),
         column_name16: Some(
             crate::src::src::vdbeapi::sqlite3_column_name16
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     ::core::ffi::c_int,
                 ) -> *const ::core::ffi::c_void,
         ),
@@ -715,28 +711,28 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
         column_text: Some(
             crate::src::src::vdbeapi::sqlite3_column_text
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     ::core::ffi::c_int,
                 ) -> *const ::core::ffi::c_uchar,
         ),
         column_text16: Some(
             crate::src::src::vdbeapi::sqlite3_column_text16
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     ::core::ffi::c_int,
                 ) -> *const ::core::ffi::c_void,
         ),
         column_type: Some(
             crate::src::src::vdbeapi::sqlite3_column_type
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     ::core::ffi::c_int,
                 ) -> ::core::ffi::c_int,
         ),
         column_value: Some(
             crate::src::src::vdbeapi::sqlite3_column_value
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     ::core::ffi::c_int,
                 )
                     -> *mut crate::src::headers::vdbeInt_h::sqlite3_value,
@@ -863,13 +859,13 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
         data_count: Some(
             crate::src::src::vdbeapi::sqlite3_data_count
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                 ) -> ::core::ffi::c_int,
         ),
         db_handle: Some(
             crate::src::src::vdbeapi::sqlite3_db_handle
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                 )
                     -> *mut crate::src::headers::sqliteInt_h::sqlite3,
         ),
@@ -922,13 +918,13 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
         expired: Some(
             crate::src::src::vdbeapi::sqlite3_expired
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                 ) -> ::core::ffi::c_int,
         ),
         finalize: Some(
             crate::src::src::vdbeapi::sqlite3_finalize
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                 ) -> ::core::ffi::c_int,
         ),
         free: Some(
@@ -973,7 +969,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
                 as unsafe extern "C" fn(
                     *mut crate::src::headers::sqliteInt_h::sqlite3,
                 )
-                    -> crate::src::headers::sqlite3_h::sqlite3_int64,
+                    -> crate::src::headers::sqlite3_h::Sqlite3Int64,
         ),
         libversion: Some(
             crate::src::src::main::sqlite3_libversion
@@ -1008,7 +1004,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
                     *mut crate::src::headers::sqliteInt_h::sqlite3,
                     *const ::core::ffi::c_char,
                     ::core::ffi::c_int,
-                    *mut *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     *mut *const ::core::ffi::c_char,
                 ) -> ::core::ffi::c_int,
         ),
@@ -1018,7 +1014,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
                     *mut crate::src::headers::sqliteInt_h::sqlite3,
                     *const ::core::ffi::c_void,
                     ::core::ffi::c_int,
-                    *mut *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     *mut *const ::core::ffi::c_void,
                 ) -> ::core::ffi::c_int,
         ),
@@ -1030,7 +1026,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
                         unsafe extern "C" fn(
                             *mut ::core::ffi::c_void,
                             *const ::core::ffi::c_char,
-                            crate::src::headers::sqlite3_h::sqlite3_uint64,
+                            crate::src::headers::sqlite3_h::Sqlite3Uint64,
                         ) -> (),
                     >,
                     *mut ::core::ffi::c_void,
@@ -1055,7 +1051,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
         reset: Some(
             crate::src::src::vdbeapi::sqlite3_reset
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                 ) -> ::core::ffi::c_int,
         ),
         result_blob: Some(
@@ -1101,7 +1097,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
             crate::src::src::vdbeapi::sqlite3_result_int64
                 as unsafe extern "C" fn(
                     *mut crate::src::headers::vdbeInt_h::sqlite3_context,
-                    crate::src::headers::sqlite3_h::sqlite3_int64,
+                    crate::src::headers::sqlite3_h::Sqlite3Int64,
                 ) -> (),
         ),
         result_null: Some(
@@ -1189,7 +1185,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
         step: Some(
             crate::src::src::vdbeapi::sqlite3_step
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                 ) -> ::core::ffi::c_int,
         ),
         table_column_metadata: Some(
@@ -1231,8 +1227,8 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
         transfer_bindings: Some(
             crate::src::src::vdbeapi::sqlite3_transfer_bindings
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                 ) -> ::core::ffi::c_int,
         ),
         update_hook: Some(
@@ -1245,7 +1241,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
                             ::core::ffi::c_int,
                             *const ::core::ffi::c_char,
                             *const ::core::ffi::c_char,
-                            crate::src::headers::sqlite3_h::sqlite3_int64,
+                            crate::src::headers::sqlite3_h::Sqlite3Int64,
                         ) -> (),
                     >,
                     *mut ::core::ffi::c_void,
@@ -1292,7 +1288,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
                 as unsafe extern "C" fn(
                     *mut crate::src::headers::vdbeInt_h::sqlite3_value,
                 )
-                    -> crate::src::headers::sqlite3_h::sqlite3_int64,
+                    -> crate::src::headers::sqlite3_h::Sqlite3Int64,
         ),
         value_numeric_type: Some(
             crate::src::src::vdbe::sqlite3_value_numeric_type
@@ -1351,7 +1347,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
                     *mut crate::src::headers::sqliteInt_h::sqlite3,
                     *const ::core::ffi::c_char,
                     ::core::ffi::c_int,
-                    *mut *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     *mut *const ::core::ffi::c_char,
                 ) -> ::core::ffi::c_int,
         ),
@@ -1361,14 +1357,14 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
                     *mut crate::src::headers::sqliteInt_h::sqlite3,
                     *const ::core::ffi::c_void,
                     ::core::ffi::c_int,
-                    *mut *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     *mut *const ::core::ffi::c_void,
                 ) -> ::core::ffi::c_int,
         ),
         clear_bindings: Some(
             crate::src::src::vdbeapi::sqlite3_clear_bindings
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                 ) -> ::core::ffi::c_int,
         ),
         create_module_v2: Some(
@@ -1384,7 +1380,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
         bind_zeroblob: Some(
             crate::src::src::vdbeapi::sqlite3_bind_zeroblob
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     ::core::ffi::c_int,
                     ::core::ffi::c_int,
                 ) -> ::core::ffi::c_int,
@@ -1392,13 +1388,13 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
         blob_bytes: Some(
             crate::src::src::vdbeblob::sqlite3_blob_bytes
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_blob,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Blob,
                 ) -> ::core::ffi::c_int,
         ),
         blob_close: Some(
             crate::src::src::vdbeblob::sqlite3_blob_close
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_blob,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Blob,
                 ) -> ::core::ffi::c_int,
         ),
         blob_open: Some(
@@ -1408,15 +1404,15 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
                     *const ::core::ffi::c_char,
                     *const ::core::ffi::c_char,
                     *const ::core::ffi::c_char,
-                    crate::src::headers::sqlite3_h::sqlite3_int64,
+                    crate::src::headers::sqlite3_h::Sqlite3Int64,
                     ::core::ffi::c_int,
-                    *mut *mut crate::src::headers::sqlite3_h::sqlite3_blob,
+                    *mut *mut crate::src::headers::sqlite3_h::Sqlite3Blob,
                 ) -> ::core::ffi::c_int,
         ),
         blob_read: Some(
             crate::src::src::vdbeblob::sqlite3_blob_read
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_blob,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Blob,
                     *mut ::core::ffi::c_void,
                     ::core::ffi::c_int,
                     ::core::ffi::c_int,
@@ -1425,7 +1421,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
         blob_write: Some(
             crate::src::src::vdbeblob::sqlite3_blob_write
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_blob,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Blob,
                     *const ::core::ffi::c_void,
                     ::core::ffi::c_int,
                     ::core::ffi::c_int,
@@ -1464,11 +1460,11 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
                 as unsafe extern "C" fn(
                     ::core::ffi::c_int,
                 )
-                    -> crate::src::headers::sqlite3_h::sqlite3_int64,
+                    -> crate::src::headers::sqlite3_h::Sqlite3Int64,
         ),
         memory_used: Some(
             crate::src::src::malloc::sqlite3_memory_used
-                as unsafe extern "C" fn() -> crate::src::headers::sqlite3_h::sqlite3_int64,
+                as unsafe extern "C" fn() -> crate::src::headers::sqlite3_h::Sqlite3Int64,
         ),
         mutex_alloc: Some(
             crate::src::src::mutex::sqlite3_mutex_alloc
@@ -1596,14 +1592,14 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
             crate::src::src::vdbeapi::sqlite3_next_stmt
                 as unsafe extern "C" fn(
                     *mut crate::src::headers::sqliteInt_h::sqlite3,
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                 )
-                    -> *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    -> *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
         ),
         sql: Some(
             crate::src::src::vdbeapi::sqlite3_sql
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                 ) -> *const ::core::ffi::c_char,
         ),
         status: Some(
@@ -1726,9 +1722,9 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
         soft_heap_limit64: Some(
             crate::src::src::malloc::sqlite3_soft_heap_limit64
                 as unsafe extern "C" fn(
-                    crate::src::headers::sqlite3_h::sqlite3_int64,
+                    crate::src::headers::sqlite3_h::Sqlite3Int64,
                 )
-                    -> crate::src::headers::sqlite3_h::sqlite3_int64,
+                    -> crate::src::headers::sqlite3_h::Sqlite3Int64,
         ),
         sourceid: Some(
             crate::src::src::main::sqlite3_sourceid
@@ -1737,7 +1733,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
         stmt_status: Some(
             crate::src::src::vdbeapi::sqlite3_stmt_status
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     ::core::ffi::c_int,
                     ::core::ffi::c_int,
                 ) -> ::core::ffi::c_int,
@@ -1783,8 +1779,8 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
         blob_reopen: Some(
             crate::src::src::vdbeblob::sqlite3_blob_reopen
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_blob,
-                    crate::src::headers::sqlite3_h::sqlite3_int64,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Blob,
+                    crate::src::headers::sqlite3_h::Sqlite3Int64,
                 ) -> ::core::ffi::c_int,
         ),
         vtab_config: Some(
@@ -1813,7 +1809,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
                     *mut crate::src::headers::sqliteInt_h::sqlite3,
                     *const ::core::ffi::c_char,
                 )
-                    -> crate::src::headers::sqlite3_h::sqlite3_filename,
+                    -> crate::src::headers::sqlite3_h::Sqlite3Filename,
         ),
         db_readonly: Some(
             crate::src::src::main::sqlite3_db_readonly
@@ -1835,13 +1831,13 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
         stmt_busy: Some(
             crate::src::src::vdbeapi::sqlite3_stmt_busy
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                 ) -> ::core::ffi::c_int,
         ),
         stmt_readonly: Some(
             crate::src::src::vdbeapi::sqlite3_stmt_readonly
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                 ) -> ::core::ffi::c_int,
         ),
         stricmp: Some(
@@ -1854,7 +1850,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
         uri_boolean: Some(
             crate::src::src::main::sqlite3_uri_boolean
                 as unsafe extern "C" fn(
-                    crate::src::headers::sqlite3_h::sqlite3_filename,
+                    crate::src::headers::sqlite3_h::Sqlite3Filename,
                     *const ::core::ffi::c_char,
                     ::core::ffi::c_int,
                 ) -> ::core::ffi::c_int,
@@ -1862,16 +1858,16 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
         uri_int64: Some(
             crate::src::src::main::sqlite3_uri_int64
                 as unsafe extern "C" fn(
-                    crate::src::headers::sqlite3_h::sqlite3_filename,
+                    crate::src::headers::sqlite3_h::Sqlite3Filename,
                     *const ::core::ffi::c_char,
-                    crate::src::headers::sqlite3_h::sqlite3_int64,
+                    crate::src::headers::sqlite3_h::Sqlite3Int64,
                 )
-                    -> crate::src::headers::sqlite3_h::sqlite3_int64,
+                    -> crate::src::headers::sqlite3_h::Sqlite3Int64,
         ),
         uri_parameter: Some(
             crate::src::src::main::sqlite3_uri_parameter
                 as unsafe extern "C" fn(
-                    crate::src::headers::sqlite3_h::sqlite3_filename,
+                    crate::src::headers::sqlite3_h::Sqlite3Filename,
                     *const ::core::ffi::c_char,
                 ) -> *const ::core::ffi::c_char,
         ),
@@ -1901,20 +1897,20 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
         bind_blob64: Some(
             crate::src::src::vdbeapi::sqlite3_bind_blob64
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     ::core::ffi::c_int,
                     *const ::core::ffi::c_void,
-                    crate::src::headers::sqlite3_h::sqlite3_uint64,
+                    crate::src::headers::sqlite3_h::Sqlite3Uint64,
                     Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()>,
                 ) -> ::core::ffi::c_int,
         ),
         bind_text64: Some(
             crate::src::src::vdbeapi::sqlite3_bind_text64
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     ::core::ffi::c_int,
                     *const ::core::ffi::c_char,
-                    crate::src::headers::sqlite3_h::sqlite3_uint64,
+                    crate::src::headers::sqlite3_h::Sqlite3Uint64,
                     Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()>,
                     ::core::ffi::c_uchar,
                 ) -> ::core::ffi::c_int,
@@ -1935,7 +1931,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
         malloc64: Some(
             crate::src::src::malloc::sqlite3_malloc64
                 as unsafe extern "C" fn(
-                    crate::src::headers::sqlite3_h::sqlite3_uint64,
+                    crate::src::headers::sqlite3_h::Sqlite3Uint64,
                 ) -> *mut ::core::ffi::c_void,
         ),
         msize: Some(
@@ -1943,13 +1939,13 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
                 as unsafe extern "C" fn(
                     *mut ::core::ffi::c_void,
                 )
-                    -> crate::src::headers::sqlite3_h::sqlite3_uint64,
+                    -> crate::src::headers::sqlite3_h::Sqlite3Uint64,
         ),
         realloc64: Some(
             crate::src::src::malloc::sqlite3_realloc64
                 as unsafe extern "C" fn(
                     *mut ::core::ffi::c_void,
-                    crate::src::headers::sqlite3_h::sqlite3_uint64,
+                    crate::src::headers::sqlite3_h::Sqlite3Uint64,
                 ) -> *mut ::core::ffi::c_void,
         ),
         reset_auto_extension: Some(sqlite3_reset_auto_extension as unsafe extern "C" fn() -> ()),
@@ -1958,7 +1954,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
                 as unsafe extern "C" fn(
                     *mut crate::src::headers::vdbeInt_h::sqlite3_context,
                     *const ::core::ffi::c_void,
-                    crate::src::headers::sqlite3_h::sqlite3_uint64,
+                    crate::src::headers::sqlite3_h::Sqlite3Uint64,
                     Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()>,
                 ) -> (),
         ),
@@ -1967,7 +1963,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
                 as unsafe extern "C" fn(
                     *mut crate::src::headers::vdbeInt_h::sqlite3_context,
                     *const ::core::ffi::c_char,
-                    crate::src::headers::sqlite3_h::sqlite3_uint64,
+                    crate::src::headers::sqlite3_h::Sqlite3Uint64,
                     Option<unsafe extern "C" fn(*mut ::core::ffi::c_void) -> ()>,
                     ::core::ffi::c_uchar,
                 ) -> (),
@@ -1994,15 +1990,15 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
             crate::src::src::vdbeapi::sqlite3_result_zeroblob64
                 as unsafe extern "C" fn(
                     *mut crate::src::headers::vdbeInt_h::sqlite3_context,
-                    crate::src::headers::sqlite3_h::sqlite3_uint64,
+                    crate::src::headers::sqlite3_h::Sqlite3Uint64,
                 ) -> ::core::ffi::c_int,
         ),
         bind_zeroblob64: Some(
             crate::src::src::vdbeapi::sqlite3_bind_zeroblob64
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     ::core::ffi::c_int,
-                    crate::src::headers::sqlite3_h::sqlite3_uint64,
+                    crate::src::headers::sqlite3_h::Sqlite3Uint64,
                 ) -> ::core::ffi::c_int,
         ),
         value_subtype: Some(
@@ -2022,8 +2018,8 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
             crate::src::src::status::sqlite3_status64
                 as unsafe extern "C" fn(
                     ::core::ffi::c_int,
-                    *mut crate::src::headers::sqlite3_h::sqlite3_int64,
-                    *mut crate::src::headers::sqlite3_h::sqlite3_int64,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Int64,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Int64,
                     ::core::ffi::c_int,
                 ) -> ::core::ffi::c_int,
         ),
@@ -2066,14 +2062,14 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
         expanded_sql: Some(
             crate::src::src::vdbeapi::sqlite3_expanded_sql
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                 ) -> *mut ::core::ffi::c_char,
         ),
         set_last_insert_rowid: Some(
             crate::src::src::main::sqlite3_set_last_insert_rowid
                 as unsafe extern "C" fn(
                     *mut crate::src::headers::sqliteInt_h::sqlite3,
-                    crate::src::headers::sqlite3_h::sqlite3_int64,
+                    crate::src::headers::sqlite3_h::Sqlite3Int64,
                 ) -> (),
         ),
         prepare_v3: Some(
@@ -2083,7 +2079,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
                     *const ::core::ffi::c_char,
                     ::core::ffi::c_int,
                     ::core::ffi::c_uint,
-                    *mut *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     *mut *const ::core::ffi::c_char,
                 ) -> ::core::ffi::c_int,
         ),
@@ -2094,14 +2090,14 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
                     *const ::core::ffi::c_void,
                     ::core::ffi::c_int,
                     ::core::ffi::c_uint,
-                    *mut *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     *mut *const ::core::ffi::c_void,
                 ) -> ::core::ffi::c_int,
         ),
         bind_pointer: Some(
             crate::src::src::vdbeapi::sqlite3_bind_pointer
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     ::core::ffi::c_int,
                     *mut ::core::ffi::c_void,
                     *const ::core::ffi::c_char,
@@ -2268,7 +2264,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
         stmt_isexplain: Some(
             crate::src::src::vdbeapi::sqlite3_stmt_isexplain
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                 ) -> ::core::ffi::c_int,
         ),
         value_frombind: Some(
@@ -2287,33 +2283,33 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
         hard_heap_limit64: Some(
             crate::src::src::malloc::sqlite3_hard_heap_limit64
                 as unsafe extern "C" fn(
-                    crate::src::headers::sqlite3_h::sqlite3_int64,
+                    crate::src::headers::sqlite3_h::Sqlite3Int64,
                 )
-                    -> crate::src::headers::sqlite3_h::sqlite3_int64,
+                    -> crate::src::headers::sqlite3_h::Sqlite3Int64,
         ),
         uri_key: Some(
             crate::src::src::main::sqlite3_uri_key
                 as unsafe extern "C" fn(
-                    crate::src::headers::sqlite3_h::sqlite3_filename,
+                    crate::src::headers::sqlite3_h::Sqlite3Filename,
                     ::core::ffi::c_int,
                 ) -> *const ::core::ffi::c_char,
         ),
         filename_database: Some(
             crate::src::src::main::sqlite3_filename_database
                 as unsafe extern "C" fn(
-                    crate::src::headers::sqlite3_h::sqlite3_filename,
+                    crate::src::headers::sqlite3_h::Sqlite3Filename,
                 ) -> *const ::core::ffi::c_char,
         ),
         filename_journal: Some(
             crate::src::src::main::sqlite3_filename_journal
                 as unsafe extern "C" fn(
-                    crate::src::headers::sqlite3_h::sqlite3_filename,
+                    crate::src::headers::sqlite3_h::Sqlite3Filename,
                 ) -> *const ::core::ffi::c_char,
         ),
         filename_wal: Some(
             crate::src::src::main::sqlite3_filename_wal
                 as unsafe extern "C" fn(
-                    crate::src::headers::sqlite3_h::sqlite3_filename,
+                    crate::src::headers::sqlite3_h::Sqlite3Filename,
                 ) -> *const ::core::ffi::c_char,
         ),
         create_filename: Some(
@@ -2325,11 +2321,11 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
                     ::core::ffi::c_int,
                     *mut *const ::core::ffi::c_char,
                 )
-                    -> crate::src::headers::sqlite3_h::sqlite3_filename,
+                    -> crate::src::headers::sqlite3_h::Sqlite3Filename,
         ),
         free_filename: Some(
             crate::src::src::main::sqlite3_free_filename
-                as unsafe extern "C" fn(crate::src::headers::sqlite3_h::sqlite3_filename) -> (),
+                as unsafe extern "C" fn(crate::src::headers::sqlite3_h::Sqlite3Filename) -> (),
         ),
         database_file_object: Some(
             crate::src::src::pager::sqlite3_database_file_object
@@ -2350,14 +2346,14 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
                 as unsafe extern "C" fn(
                     *mut crate::src::headers::sqliteInt_h::sqlite3,
                 )
-                    -> crate::src::headers::sqlite3_h::sqlite3_int64,
+                    -> crate::src::headers::sqlite3_h::Sqlite3Int64,
         ),
         total_changes64: Some(
             crate::src::src::main::sqlite3_total_changes64
                 as unsafe extern "C" fn(
                     *mut crate::src::headers::sqliteInt_h::sqlite3,
                 )
-                    -> crate::src::headers::sqlite3_h::sqlite3_int64,
+                    -> crate::src::headers::sqlite3_h::Sqlite3Int64,
         ),
         autovacuum_pages: Some(
             crate::src::src::main::sqlite3_autovacuum_pages
@@ -2424,8 +2420,8 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
                     *mut crate::src::headers::sqliteInt_h::sqlite3,
                     *const ::core::ffi::c_char,
                     *mut ::core::ffi::c_uchar,
-                    crate::src::headers::sqlite3_h::sqlite3_int64,
-                    crate::src::headers::sqlite3_h::sqlite3_int64,
+                    crate::src::headers::sqlite3_h::Sqlite3Int64,
+                    crate::src::headers::sqlite3_h::Sqlite3Int64,
                     ::core::ffi::c_uint,
                 ) -> ::core::ffi::c_int,
         ),
@@ -2434,7 +2430,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
                 as unsafe extern "C" fn(
                     *mut crate::src::headers::sqliteInt_h::sqlite3,
                     *const ::core::ffi::c_char,
-                    *mut crate::src::headers::sqlite3_h::sqlite3_int64,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Int64,
                     ::core::ffi::c_uint,
                 ) -> *mut ::core::ffi::c_uchar,
         ),
@@ -2460,7 +2456,7 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
         stmt_explain: Some(
             crate::src::src::vdbeapi::sqlite3_stmt_explain
                 as unsafe extern "C" fn(
-                    *mut crate::src::headers::sqlite3_h::sqlite3_stmt,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Stmt,
                     ::core::ffi::c_int,
                 ) -> ::core::ffi::c_int,
         ),
@@ -2501,8 +2497,8 @@ static mut sqlite3Apis: crate::src::headers::sqlite3ext_h::sqlite3_api_routines 
                 as unsafe extern "C" fn(
                     *mut crate::src::headers::sqliteInt_h::sqlite3,
                     ::core::ffi::c_int,
-                    *mut crate::src::headers::sqlite3_h::sqlite3_int64,
-                    *mut crate::src::headers::sqlite3_h::sqlite3_int64,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Int64,
+                    *mut crate::src::headers::sqlite3_h::Sqlite3Int64,
                     ::core::ffi::c_int,
                 ) -> ::core::ffi::c_int,
         ),
@@ -2517,14 +2513,14 @@ unsafe extern "C" fn sqlite3LoadExtension(
 ) -> ::core::ffi::c_int {
     let mut pVfs: *mut crate::src::headers::sqlite3_h::sqlite3_vfs = (*db).pVfs;
     let mut handle: *mut ::core::ffi::c_void = ::core::ptr::null_mut::<::core::ffi::c_void>();
-    let mut xInit: crate::src::headers::sqlite3ext_h::sqlite3_loadext_entry = None;
+    let mut xInit: crate::src::headers::sqlite3ext_h::Sqlite3LoadextEntry = None;
     let mut zErrmsg: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
     let mut zEntry: *const ::core::ffi::c_char = ::core::ptr::null::<::core::ffi::c_char>();
     let mut zAltEntry: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
     let mut aHandle: *mut *mut ::core::ffi::c_void =
         ::core::ptr::null_mut::<*mut ::core::ffi::c_void>();
-    let mut nMsg: crate::src::ext::rtree::rtree::u64_0 =
-        ::libc::strlen(zFile) as crate::src::ext::rtree::rtree::u64_0;
+    let mut nMsg: crate::src::ext::rtree::rtree::U64_0 =
+        ::libc::strlen(zFile) as crate::src::ext::rtree::rtree::U64_0;
     let mut ii: ::core::ffi::c_int = 0;
     let mut rc: ::core::ffi::c_int = 0;
     static mut azEndings: [*const ::core::ffi::c_char; 1] =
@@ -2534,8 +2530,8 @@ unsafe extern "C" fn sqlite3LoadExtension(
     }
     if (*db).flags
         & crate::src::headers::sqliteInt_h::SQLITE_LoadExtension
-            as crate::src::ext::rtree::rtree::u64_0
-        == 0 as crate::src::ext::rtree::rtree::u64_0
+            as crate::src::ext::rtree::rtree::U64_0
+        == 0 as crate::src::ext::rtree::rtree::U64_0
     {
         if !pzErrMsg.is_null() {
             let err_msg = b"not authorized\0";
@@ -2558,8 +2554,8 @@ unsafe extern "C" fn sqlite3LoadExtension(
     } else {
         b"sqlite3_extension_init\0" as *const u8 as *const ::core::ffi::c_char
     };
-    if !(nMsg > crate::src::src::os::SQLITE_MAX_PATHLEN as crate::src::ext::rtree::rtree::u64_0) {
-        if !(nMsg == 0 as crate::src::ext::rtree::rtree::u64_0) {
+    if !(nMsg > crate::src::src::os::SQLITE_MAX_PATHLEN as crate::src::ext::rtree::rtree::U64_0) {
+        if !(nMsg == 0 as crate::src::ext::rtree::rtree::U64_0) {
             handle = crate::src::src::os::sqlite3OsDlOpen(
                 pVfs as *mut crate::src::headers::sqlite3_h::sqlite3_vfs,
                 zFile,
@@ -2590,10 +2586,10 @@ unsafe extern "C" fn sqlite3LoadExtension(
                 }
                 if nMsg
                     .wrapping_add(::libc::strlen(azEndings[ii as usize])
-                        as crate::src::ext::rtree::rtree::u64_0)
-                    .wrapping_add(1 as crate::src::ext::rtree::rtree::u64_0)
+                        as crate::src::ext::rtree::rtree::U64_0)
+                    .wrapping_add(1 as crate::src::ext::rtree::rtree::U64_0)
                     <= crate::src::src::os::SQLITE_MAX_PATHLEN
-                        as crate::src::ext::rtree::rtree::u64_0
+                        as crate::src::ext::rtree::rtree::U64_0
                 {
                     handle = crate::src::src::os::sqlite3OsDlOpen(
                         pVfs as *mut crate::src::headers::sqlite3_h::sqlite3_vfs,
@@ -2606,7 +2602,7 @@ unsafe extern "C" fn sqlite3LoadExtension(
             if !handle.is_null() {
                 xInit = ::core::mem::transmute::<
                     Option<unsafe extern "C" fn() -> ()>,
-                    crate::src::headers::sqlite3ext_h::sqlite3_loadext_entry,
+                    crate::src::headers::sqlite3ext_h::Sqlite3LoadextEntry,
                 >(crate::src::src::os::sqlite3OsDlSym(
                     pVfs as *mut crate::src::headers::sqlite3_h::sqlite3_vfs,
                     handle,
@@ -2620,7 +2616,7 @@ unsafe extern "C" fn sqlite3LoadExtension(
                         crate::src::src::util::sqlite3Strlen30(zFile);
                     zAltEntry = crate::src::src::malloc::sqlite3_malloc64(
                         (ncFile + 30 as ::core::ffi::c_int)
-                            as crate::src::headers::sqlite3_h::sqlite3_uint64,
+                            as crate::src::headers::sqlite3_h::Sqlite3Uint64,
                     ) as *mut ::core::ffi::c_char;
                     if zAltEntry.is_null() {
                         crate::src::src::os::sqlite3OsDlClose(
@@ -2680,7 +2676,7 @@ unsafe extern "C" fn sqlite3LoadExtension(
                     zEntry = zAltEntry;
                     xInit = ::core::mem::transmute::<
                         Option<unsafe extern "C" fn() -> ()>,
-                        crate::src::headers::sqlite3ext_h::sqlite3_loadext_entry,
+                        crate::src::headers::sqlite3ext_h::Sqlite3LoadextEntry,
                     >(crate::src::src::os::sqlite3OsDlSym(
                         pVfs as *mut crate::src::headers::sqlite3_h::sqlite3_vfs,
                         handle,
@@ -2691,11 +2687,11 @@ unsafe extern "C" fn sqlite3LoadExtension(
                     if !pzErrMsg.is_null() {
                         nMsg = nMsg.wrapping_add(
                             ::libc::strlen(zEntry)
-                                .wrapping_add(300 as crate::__stddef_size_t_h::size_t)
-                                as crate::src::ext::rtree::rtree::u64_0,
+                                .wrapping_add(300 as crate::__stddef_size_t_h::SizeT)
+                                as crate::src::ext::rtree::rtree::U64_0,
                         );
                         zErrmsg = crate::src::src::malloc::sqlite3_malloc64(
-                            nMsg as crate::src::headers::sqlite3_h::sqlite3_uint64,
+                            nMsg as crate::src::headers::sqlite3_h::Sqlite3Uint64,
                         ) as *mut ::core::ffi::c_char;
                         *pzErrMsg = zErrmsg;
                         if !zErrmsg.is_null() {
@@ -2708,7 +2704,7 @@ unsafe extern "C" fn sqlite3LoadExtension(
                             );
                             crate::src::src::os::sqlite3OsDlError(
                                 pVfs as *mut crate::src::headers::sqlite3_h::sqlite3_vfs,
-                                nMsg.wrapping_sub(1 as crate::src::ext::rtree::rtree::u64_0)
+                                nMsg.wrapping_sub(1 as crate::src::ext::rtree::rtree::U64_0)
                                     as ::core::ffi::c_int,
                                 zErrmsg,
                             );
@@ -2762,7 +2758,7 @@ unsafe extern "C" fn sqlite3LoadExtension(
                     db as *mut crate::src::headers::sqliteInt_h::sqlite3,
                     (::core::mem::size_of::<*mut ::core::ffi::c_void>() as usize)
                         .wrapping_mul((__db_ref.nExtension + 1 as ::core::ffi::c_int) as usize)
-                        as crate::src::ext::rtree::rtree::u64_0,
+                        as crate::src::ext::rtree::rtree::U64_0,
                 ) as *mut *mut ::core::ffi::c_void;
                 if aHandle.is_null() {
                     return crate::src::headers::sqliteInt_h::SQLITE_NOMEM_BKPT;
@@ -2772,8 +2768,8 @@ unsafe extern "C" fn sqlite3LoadExtension(
                         __db_ref.aExtension as *const u8,
                         aHandle as *mut u8,
                         ((::core::mem::size_of::<*mut ::core::ffi::c_void>()
-                            as crate::__stddef_size_t_h::size_t)
-                            .wrapping_mul(__db_ref.nExtension as crate::__stddef_size_t_h::size_t))
+                            as crate::__stddef_size_t_h::SizeT)
+                            .wrapping_mul(__db_ref.nExtension as crate::__stddef_size_t_h::SizeT))
                             as usize,
                     );
                 }
@@ -2791,9 +2787,9 @@ unsafe extern "C" fn sqlite3LoadExtension(
         }
     }
     if !pzErrMsg.is_null() {
-        nMsg = nMsg.wrapping_add(300 as crate::src::ext::rtree::rtree::u64_0);
+        nMsg = nMsg.wrapping_add(300 as crate::src::ext::rtree::rtree::U64_0);
         zErrmsg = crate::src::src::malloc::sqlite3_malloc64(
-            nMsg as crate::src::headers::sqlite3_h::sqlite3_uint64,
+            nMsg as crate::src::headers::sqlite3_h::Sqlite3Uint64,
         ) as *mut ::core::ffi::c_char;
         *pzErrMsg = zErrmsg;
         if !zErrmsg.is_null() {
@@ -2806,7 +2802,7 @@ unsafe extern "C" fn sqlite3LoadExtension(
             );
             crate::src::src::os::sqlite3OsDlError(
                 pVfs as *mut crate::src::headers::sqlite3_h::sqlite3_vfs,
-                nMsg.wrapping_sub(1 as crate::src::ext::rtree::rtree::u64_0) as ::core::ffi::c_int,
+                nMsg.wrapping_sub(1 as crate::src::ext::rtree::rtree::U64_0) as ::core::ffi::c_int,
                 zErrmsg,
             );
         }
@@ -2858,18 +2854,18 @@ pub unsafe extern "C" fn sqlite3_enable_load_extension(
     if onoff != 0 {
         (*db).flags |= (crate::src::headers::sqliteInt_h::SQLITE_LoadExtension
             | crate::src::headers::sqliteInt_h::SQLITE_LoadExtFunc)
-            as crate::src::ext::rtree::rtree::u64_0;
+            as crate::src::ext::rtree::rtree::U64_0;
     } else {
         (*db).flags &= !((crate::src::headers::sqliteInt_h::SQLITE_LoadExtension
             | crate::src::headers::sqliteInt_h::SQLITE_LoadExtFunc)
-            as crate::src::ext::rtree::rtree::u64_0);
+            as crate::src::ext::rtree::rtree::U64_0);
     }
     crate::src::src::mutex::sqlite3_mutex_leave((*db).mutex);
     crate::src::headers::sqlite3_h::SQLITE_OK
 }
 
 static mut sqlite3Autoext: sqlite3AutoExtList = sqlite3AutoExtList {
-    nExt: 0 as crate::src::ext::rtree::rtree::u32_0,
+    nExt: 0 as crate::src::ext::rtree::rtree::U32_0,
     aExt: ::core::ptr::null::<Option<unsafe extern "C" fn() -> ()>>()
         as *mut Option<unsafe extern "C" fn() -> ()>,
 };
@@ -2882,13 +2878,13 @@ pub unsafe extern "C" fn sqlite3_auto_extension(
     if rc != 0 {
         return rc;
     } else {
-        let mut i: crate::src::ext::rtree::rtree::u32_0 = 0;
+        let mut i: crate::src::ext::rtree::rtree::U32_0 = 0;
         let mut mutex: *mut crate::src::src::mutex_unix::sqlite3_mutex =
             crate::src::src::mutex::sqlite3MutexAlloc(
                 crate::src::headers::sqlite3_h::SQLITE_MUTEX_STATIC_MAIN,
             );
         crate::src::src::mutex::sqlite3_mutex_enter(mutex);
-        i = 0 as crate::src::ext::rtree::rtree::u32_0;
+        i = 0 as crate::src::ext::rtree::rtree::U32_0;
         while i < sqlite3Autoext.nExt {
             if *sqlite3Autoext.aExt.offset(i as isize) == xInit {
                 break;
@@ -2896,19 +2892,19 @@ pub unsafe extern "C" fn sqlite3_auto_extension(
             i = i.wrapping_add(1);
         }
         if i == sqlite3Autoext.nExt {
-            let mut nByte: crate::src::ext::rtree::rtree::u64_0 = (sqlite3Autoext
+            let mut nByte: crate::src::ext::rtree::rtree::U64_0 = (sqlite3Autoext
                 .nExt
-                .wrapping_add(1 as crate::src::ext::rtree::rtree::u32_0)
+                .wrapping_add(1 as crate::src::ext::rtree::rtree::U32_0)
                 as usize)
                 .wrapping_mul(
                     ::core::mem::size_of::<Option<unsafe extern "C" fn() -> ()>>() as usize,
                 )
-                as crate::src::ext::rtree::rtree::u64_0;
+                as crate::src::ext::rtree::rtree::U64_0;
             let mut aNew: *mut Option<unsafe extern "C" fn() -> ()> =
                 ::core::ptr::null_mut::<Option<unsafe extern "C" fn() -> ()>>();
             aNew = crate::src::src::malloc::sqlite3_realloc64(
                 sqlite3Autoext.aExt as *mut ::core::ffi::c_void,
-                nByte as crate::src::headers::sqlite3_h::sqlite3_uint64,
+                nByte as crate::src::headers::sqlite3_h::Sqlite3Uint64,
             ) as *mut Option<unsafe extern "C" fn() -> ()>;
             if aNew.is_null() {
                 rc = crate::src::headers::sqliteInt_h::SQLITE_NOMEM_BKPT;
@@ -2959,7 +2955,7 @@ pub unsafe extern "C" fn sqlite3_reset_auto_extension() {
         crate::src::src::mutex::sqlite3_mutex_enter(mutex);
         crate::src::src::malloc::sqlite3_free(sqlite3Autoext.aExt as *mut ::core::ffi::c_void);
         sqlite3Autoext.aExt = ::core::ptr::null_mut::<Option<unsafe extern "C" fn() -> ()>>();
-        sqlite3Autoext.nExt = 0 as crate::src::ext::rtree::rtree::u32_0;
+        sqlite3Autoext.nExt = 0 as crate::src::ext::rtree::rtree::U32_0;
         crate::src::src::mutex::sqlite3_mutex_leave(mutex);
     }
 }
@@ -2968,14 +2964,14 @@ pub unsafe extern "C" fn sqlite3_reset_auto_extension() {
 pub unsafe extern "C" fn sqlite3AutoLoadExtensions(
     mut db: *mut crate::src::headers::sqliteInt_h::sqlite3,
 ) {
-    let mut i: crate::src::ext::rtree::rtree::u32_0 = 0;
+    let mut i: crate::src::ext::rtree::rtree::U32_0 = 0;
     let mut go: ::core::ffi::c_int = 1 as ::core::ffi::c_int;
     let mut rc: ::core::ffi::c_int = 0;
-    let mut xInit: crate::src::headers::sqlite3ext_h::sqlite3_loadext_entry = None;
-    if sqlite3Autoext.nExt == 0 as crate::src::ext::rtree::rtree::u32_0 {
+    let mut xInit: crate::src::headers::sqlite3ext_h::Sqlite3LoadextEntry = None;
+    if sqlite3Autoext.nExt == 0 as crate::src::ext::rtree::rtree::U32_0 {
         return;
     }
-    i = 0 as crate::src::ext::rtree::rtree::u32_0;
+    i = 0 as crate::src::ext::rtree::rtree::U32_0;
     while go != 0 {
         let mut zErrmsg: *mut ::core::ffi::c_char = ::core::ptr::null_mut::<::core::ffi::c_char>();
         let mut mutex: *mut crate::src::src::mutex_unix::sqlite3_mutex =
@@ -2991,7 +2987,7 @@ pub unsafe extern "C" fn sqlite3AutoLoadExtensions(
         } else {
             xInit = ::core::mem::transmute::<
                 Option<unsafe extern "C" fn() -> ()>,
-                crate::src::headers::sqlite3ext_h::sqlite3_loadext_entry,
+                crate::src::headers::sqlite3ext_h::Sqlite3LoadextEntry,
             >(*sqlite3Autoext.aExt.offset(i as isize));
         }
         crate::src::src::mutex::sqlite3_mutex_leave(mutex);

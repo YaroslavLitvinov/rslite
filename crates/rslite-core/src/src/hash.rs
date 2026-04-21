@@ -22,10 +22,10 @@ pub struct HashElem {
     pub pKey: *const ::core::ffi::c_char,
     pub h: ::core::ffi::c_uint,
 }
-pub use crate::__stddef_size_t_h::size_t;
+pub use crate::__stddef_size_t_h::SizeT;
 
-pub use crate::src::ext::rtree::rtree::u64_0;
-pub use crate::src::headers::sqlite3_h::sqlite_uint64;
+pub use crate::src::ext::rtree::rtree::U64_0;
+pub use crate::src::headers::sqlite3_h::SqliteUint64;
 pub use crate::src::headers::sqliteInt_h::SQLITE_MALLOC_SOFT_LIMIT;
 pub use crate::src::src::fault::sqlite3BeginBenignMalloc;
 pub use crate::src::src::fault::sqlite3EndBenignMalloc;
@@ -142,7 +142,7 @@ unsafe extern "C" fn rehash(
     new_ht = crate::src::src::malloc::sqlite3Malloc(
         (new_size as usize)
             .wrapping_mul(::core::mem::size_of::<crate::src::src::hash::_ht>() as usize)
-            as crate::src::ext::rtree::rtree::u64_0,
+            as crate::src::ext::rtree::rtree::U64_0,
     ) as *mut crate::src::src::hash::_ht;
     crate::src::src::fault::sqlite3EndBenignMalloc();
     if new_ht.is_null() {
@@ -158,9 +158,9 @@ unsafe extern "C" fn rehash(
     ::libc::memset(
         new_ht as *mut ::core::ffi::c_void,
         0 as ::core::ffi::c_int,
-        (new_size as crate::__stddef_size_t_h::size_t)
+        (new_size as crate::__stddef_size_t_h::SizeT)
             .wrapping_mul(::core::mem::size_of::<crate::src::src::hash::_ht>()
-                as crate::__stddef_size_t_h::size_t),
+                as crate::__stddef_size_t_h::SizeT),
     );
     elem = __pH_ref.first;
     __pH_ref.first = ::core::ptr::null_mut::<crate::src::src::hash::HashElem>();
@@ -290,7 +290,7 @@ pub unsafe extern "C" fn sqlite3HashInsert(
     new_elem = crate::src::src::malloc::sqlite3Malloc(::core::mem::size_of::<
         crate::src::src::hash::HashElem,
     >()
-        as crate::src::ext::rtree::rtree::u64_0)
+        as crate::src::ext::rtree::rtree::U64_0)
         as *mut crate::src::src::hash::HashElem;
     if new_elem.is_null() {
         return data;

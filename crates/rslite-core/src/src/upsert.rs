@@ -1,4 +1,4 @@
-pub use crate::__stddef_size_t_h::size_t;
+pub use crate::__stddef_size_t_h::SizeT;
 
 pub use crate::src::headers::opcodes_h::OP_Column;
 pub use crate::src::headers::opcodes_h::OP_Found;
@@ -11,28 +11,28 @@ pub use crate::src::src::hash::Hash;
 pub use crate::src::src::hash::HashElem;
 pub use crate::src::src::pager::Pgno;
 
-pub use crate::src::ext::rtree::rtree::i64_0;
-pub use crate::src::ext::rtree::rtree::u8_0;
-pub use crate::src::ext::rtree::rtree::u32_0;
-pub use crate::src::ext::rtree::rtree::u64_0;
-pub use crate::src::fts5::i16_0;
-pub use crate::src::fts5::u16_0;
+pub use crate::src::ext::rtree::rtree::I64_0;
+pub use crate::src::ext::rtree::rtree::U8_0;
+pub use crate::src::ext::rtree::rtree::U32_0;
+pub use crate::src::ext::rtree::rtree::U64_0;
+pub use crate::src::fts5::I16_0;
+pub use crate::src::fts5::U16_0;
 pub use crate::src::headers::sqlite3_h::SQLITE_CORRUPT;
 pub use crate::src::headers::sqlite3_h::SQLITE_ERROR;
 pub use crate::src::headers::sqlite3_h::SQLITE_OK;
-pub use crate::src::headers::sqlite3_h::sqlite_int64;
-pub use crate::src::headers::sqlite3_h::sqlite_uint64;
+pub use crate::src::headers::sqlite3_h::SqliteInt64;
+pub use crate::src::headers::sqlite3_h::SqliteUint64;
 pub use crate::src::headers::sqlite3_h::sqlite3_file;
-pub use crate::src::headers::sqlite3_h::sqlite3_filename;
+pub use crate::src::headers::sqlite3_h::Sqlite3Filename;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_constraint;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_constraint_usage;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_info;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_orderby;
-pub use crate::src::headers::sqlite3_h::sqlite3_int64;
+pub use crate::src::headers::sqlite3_h::Sqlite3Int64;
 pub use crate::src::headers::sqlite3_h::sqlite3_io_methods;
 pub use crate::src::headers::sqlite3_h::sqlite3_module;
-pub use crate::src::headers::sqlite3_h::sqlite3_syscall_ptr;
-pub use crate::src::headers::sqlite3_h::sqlite3_uint64;
+pub use crate::src::headers::sqlite3_h::Sqlite3SyscallPtr;
+pub use crate::src::headers::sqlite3_h::Sqlite3Uint64;
 pub use crate::src::headers::sqlite3_h::sqlite3_vfs;
 pub use crate::src::headers::sqlite3_h::sqlite3_vtab;
 pub use crate::src::headers::sqlite3_h::sqlite3_vtab_cursor;
@@ -116,17 +116,17 @@ pub use crate::src::headers::sqliteInt_h::Window;
 pub use crate::src::headers::sqliteInt_h::With;
 pub use crate::src::headers::sqliteInt_h::XN_EXPR;
 pub use crate::src::headers::sqliteInt_h::XN_ROWID;
-pub use crate::src::headers::sqliteInt_h::bft;
+pub use crate::src::headers::sqliteInt_h::Bft;
 pub use crate::src::headers::sqliteInt_h::sColMap;
 pub use crate::src::headers::sqliteInt_h::sqlite3;
-pub use crate::src::headers::sqliteInt_h::sqlite3_xauth;
+pub use crate::src::headers::sqliteInt_h::Sqlite3Xauth;
 pub use crate::src::headers::sqliteInt_h::sqlite3InitInfo;
-pub use crate::src::headers::sqliteInt_h::yDbMask;
-pub use crate::src::headers::sqliteInt_h::ynVar;
-pub use crate::src::headers::stdlib::int16_t;
-pub use crate::src::headers::stdlib::uint8_t;
-pub use crate::src::headers::stdlib::uint16_t;
-pub use crate::src::headers::stdlib::uint32_t;
+pub use crate::src::headers::sqliteInt_h::YDbMask;
+pub use crate::src::headers::sqliteInt_h::YnVar;
+pub use crate::src::headers::stdlib::Int16T;
+pub use crate::src::headers::stdlib::Uint8T;
+pub use crate::src::headers::stdlib::Uint16T;
+pub use crate::src::headers::stdlib::Uint32T;
 pub use crate::src::headers::vdbeInt_h::PreUpdate;
 pub use crate::src::headers::vdbeInt_h::sqlite3_context;
 pub use crate::src::headers::vdbeInt_h::sqlite3_value;
@@ -150,10 +150,6 @@ pub use crate::src::src::resolve::sqlite3ResolveExprListNames;
 pub use crate::src::src::resolve::sqlite3ResolveExprNames;
 pub use crate::src::src::update::sqlite3Update;
 
-pub use crate::src::headers::stdlib::__int16_t;
-pub use crate::src::headers::stdlib::__uint8_t;
-pub use crate::src::headers::stdlib::__uint16_t;
-pub use crate::src::headers::stdlib::__uint32_t;
 pub use crate::src::headers::vdbeInt_h::Vdbe;
 pub use crate::src::src::vdbe::Mem;
 pub use crate::src::src::vdbe::P4_STATIC;
@@ -264,7 +260,7 @@ pub unsafe extern "C" fn sqlite3UpsertNew(
     pNew = crate::src::src::malloc::sqlite3DbMallocZero(
         db as *mut crate::src::headers::sqliteInt_h::sqlite3,
         ::core::mem::size_of::<crate::src::headers::sqliteInt_h::Upsert>()
-            as crate::src::ext::rtree::rtree::u64_0,
+            as crate::src::ext::rtree::rtree::U64_0,
     ) as *mut crate::src::headers::sqliteInt_h::Upsert;
     if pNew.is_null() {
         crate::src::src::expr::sqlite3ExprListDelete(
@@ -293,7 +289,7 @@ pub unsafe extern "C" fn sqlite3UpsertNew(
         __pNew_ref.pUpsertWhere = pWhere;
         __pNew_ref.isDoUpdate =
             (pSet != ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::ExprList>())
-                as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u8_0;
+                as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U8_0;
         __pNew_ref.pNextUpsert = pNext;
     }
     pNew
@@ -345,8 +341,8 @@ pub unsafe extern "C" fn sqlite3UpsertAnalyzeTarget(
         .iCursor;
         if !((*pTab).tabFlags
             & crate::src::headers::sqliteInt_h::TF_WithoutRowid
-                as crate::src::ext::rtree::rtree::u32_0
-            == 0 as crate::src::ext::rtree::rtree::u32_0
+                as crate::src::ext::rtree::rtree::U32_0
+            == 0 as crate::src::ext::rtree::rtree::U32_0
             && (*pTarget).nExpr == 1 as ::core::ffi::c_int
             && {
                 pTerm = (*(&raw mut (*pTarget).a
@@ -358,12 +354,12 @@ pub unsafe extern "C" fn sqlite3UpsertAnalyzeTarget(
             && (*pTerm).iColumn as ::core::ffi::c_int == crate::src::headers::sqliteInt_h::XN_ROWID)
         {
             sCol[0 as ::core::ffi::c_int as usize].op =
-                crate::src::parse::TK_COLLATE as crate::src::ext::rtree::rtree::u8_0;
+                crate::src::parse::TK_COLLATE as crate::src::ext::rtree::rtree::U8_0;
             sCol[0 as ::core::ffi::c_int as usize].pLeft =
                 (&raw mut sCol as *mut crate::src::headers::sqliteInt_h::Expr).offset(1 as isize)
                     as *mut crate::src::headers::sqliteInt_h::Expr;
             sCol[1 as ::core::ffi::c_int as usize].op =
-                crate::src::parse::TK_COLUMN as crate::src::ext::rtree::rtree::u8_0;
+                crate::src::parse::TK_COLUMN as crate::src::ext::rtree::rtree::U8_0;
             sCol[1 as ::core::ffi::c_int as usize].iTable = (*(&raw mut (*pTabList).a
                 as *mut crate::src::headers::sqliteInt_h::SrcItem)
                 .offset(0 as isize))
@@ -434,7 +430,7 @@ pub unsafe extern "C" fn sqlite3UpsertAnalyzeTarget(
                                                 as *mut crate::src::headers::sqliteInt_h::Expr;
                                         sCol[1 as ::core::ffi::c_int as usize].iColumn =
                                             *(*pIdx).aiColumn.offset(ii as isize)
-                                                as crate::src::headers::sqliteInt_h::ynVar;
+                                                as crate::src::headers::sqliteInt_h::YnVar;
                                         pExpr = (&raw mut sCol
                                             as *mut crate::src::headers::sqliteInt_h::Expr)
                                             .offset(0 as isize)
@@ -467,7 +463,7 @@ pub unsafe extern "C" fn sqlite3UpsertAnalyzeTarget(
                                 if !(ii < nn) {
                                     (*pUpsert).pUpsertIdx = pIdx;
                                     if sqlite3UpsertOfIndex(pAll, pIdx) != pUpsert {
-                                        (*pUpsert).isDup = 1 as crate::src::ext::rtree::rtree::u8_0;
+                                        (*pUpsert).isDup = 1 as crate::src::ext::rtree::rtree::U8_0;
                                     }
                                     break;
                                 }
@@ -565,8 +561,8 @@ pub unsafe extern "C" fn sqlite3UpsertDoUpdate(
     if !pIdx.is_null() && iCur != iDataCur {
         if (*pTab).tabFlags
             & crate::src::headers::sqliteInt_h::TF_WithoutRowid
-                as crate::src::ext::rtree::rtree::u32_0
-            == 0 as crate::src::ext::rtree::rtree::u32_0
+                as crate::src::ext::rtree::rtree::U32_0
+            == 0 as crate::src::ext::rtree::rtree::U32_0
         {
             let mut regRowid: ::core::ffi::c_int = crate::src::src::expr::sqlite3GetTempReg(
                 pParse as *mut crate::src::headers::sqliteInt_h::Parse,

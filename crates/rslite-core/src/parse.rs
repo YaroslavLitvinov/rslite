@@ -448,34 +448,34 @@ pub const TK_SPACE: ::core::ffi::c_int = 184 as ::core::ffi::c_int;
 pub const TK_COMMENT: ::core::ffi::c_int = 185 as ::core::ffi::c_int;
 
 pub const TK_ILLEGAL: ::core::ffi::c_int = 186 as ::core::ffi::c_int;
-pub use crate::__stddef_size_t_h::size_t;
+pub use crate::__stddef_size_t_h::SizeT;
 
 pub use crate::src::src::hash::_ht;
 pub use crate::src::src::hash::Hash;
 pub use crate::src::src::hash::HashElem;
 pub use crate::src::src::pager::Pgno;
 
-pub use crate::src::ext::rtree::rtree::i64_0;
-pub use crate::src::ext::rtree::rtree::u8_0;
-pub use crate::src::ext::rtree::rtree::u32_0;
-pub use crate::src::ext::rtree::rtree::u64_0;
-pub use crate::src::fts5::i16_0;
-pub use crate::src::fts5::u16_0;
+pub use crate::src::ext::rtree::rtree::I64_0;
+pub use crate::src::ext::rtree::rtree::U8_0;
+pub use crate::src::ext::rtree::rtree::U32_0;
+pub use crate::src::ext::rtree::rtree::U64_0;
+pub use crate::src::fts5::I16_0;
+pub use crate::src::fts5::U16_0;
 pub use crate::src::headers::sqlite3_h::SQLITE_LIMIT_COMPOUND_SELECT;
 pub use crate::src::headers::sqlite3_h::SQLITE_OK;
-pub use crate::src::headers::sqlite3_h::sqlite_int64;
-pub use crate::src::headers::sqlite3_h::sqlite_uint64;
+pub use crate::src::headers::sqlite3_h::SqliteInt64;
+pub use crate::src::headers::sqlite3_h::SqliteUint64;
 pub use crate::src::headers::sqlite3_h::sqlite3_file;
-pub use crate::src::headers::sqlite3_h::sqlite3_filename;
+pub use crate::src::headers::sqlite3_h::Sqlite3Filename;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_constraint;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_constraint_usage;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_info;
 pub use crate::src::headers::sqlite3_h::sqlite3_index_orderby;
-pub use crate::src::headers::sqlite3_h::sqlite3_int64;
+pub use crate::src::headers::sqlite3_h::Sqlite3Int64;
 pub use crate::src::headers::sqlite3_h::sqlite3_io_methods;
 pub use crate::src::headers::sqlite3_h::sqlite3_module;
-pub use crate::src::headers::sqlite3_h::sqlite3_syscall_ptr;
-pub use crate::src::headers::sqlite3_h::sqlite3_uint64;
+pub use crate::src::headers::sqlite3_h::Sqlite3SyscallPtr;
+pub use crate::src::headers::sqlite3_h::Sqlite3Uint64;
 pub use crate::src::headers::sqlite3_h::sqlite3_vfs;
 pub use crate::src::headers::sqlite3_h::sqlite3_vtab;
 pub use crate::src::headers::sqlite3_h::sqlite3_vtab_cursor;
@@ -594,14 +594,14 @@ pub use crate::src::headers::sqliteInt_h::VTable;
 pub use crate::src::headers::sqliteInt_h::VtabCtx;
 pub use crate::src::headers::sqliteInt_h::Window;
 pub use crate::src::headers::sqliteInt_h::With;
-pub use crate::src::headers::sqliteInt_h::bft;
+pub use crate::src::headers::sqliteInt_h::Bft;
 pub use crate::src::headers::sqliteInt_h::sColMap;
 pub use crate::src::headers::sqliteInt_h::sqlite3;
-pub use crate::src::headers::sqliteInt_h::sqlite3_xauth;
+pub use crate::src::headers::sqliteInt_h::Sqlite3Xauth;
 pub use crate::src::headers::sqliteInt_h::sqlite3InitInfo;
-pub use crate::src::headers::sqliteInt_h::yDbMask;
-pub use crate::src::headers::sqliteInt_h::ynVar;
-pub use crate::src::headers::stdlib::int16_t;
+pub use crate::src::headers::sqliteInt_h::YDbMask;
+pub use crate::src::headers::sqliteInt_h::YnVar;
+pub use crate::src::headers::stdlib::Int16T;
 pub use crate::src::headers::vdbeInt_h::PreUpdate;
 pub use crate::src::headers::vdbeInt_h::sqlite3_context;
 pub use crate::src::headers::vdbeInt_h::sqlite3_value;
@@ -720,13 +720,9 @@ pub use crate::src::src::window::sqlite3WindowChain;
 pub use crate::src::src::window::sqlite3WindowDelete;
 pub use crate::src::src::window::sqlite3WindowListDelete;
 
-pub use crate::src::headers::stdlib::__int16_t;
-pub use crate::src::headers::stdlib::__uint8_t;
-pub use crate::src::headers::stdlib::__uint16_t;
-pub use crate::src::headers::stdlib::__uint32_t;
-pub use crate::src::headers::stdlib::uint8_t;
-pub use crate::src::headers::stdlib::uint16_t;
-pub use crate::src::headers::stdlib::uint32_t;
+pub use crate::src::headers::stdlib::Uint8T;
+pub use crate::src::headers::stdlib::Uint16T;
+pub use crate::src::headers::stdlib::Uint32T;
 pub use crate::src::headers::vdbeInt_h::Vdbe;
 pub use crate::src::src::vdbe::Mem;
 pub use crate::src::src::vdbe::SubProgram;
@@ -754,7 +750,7 @@ pub struct yyStackEntry {
 pub union YYMINORTYPE {
     pub yyinit: ::core::ffi::c_int,
     pub yy0: crate::src::headers::sqliteInt_h::Token,
-    pub yy9: crate::src::ext::rtree::rtree::u32_0,
+    pub yy9: crate::src::ext::rtree::rtree::U32_0,
     pub yy28: TrigEvent,
     pub yy125: *mut crate::src::headers::sqliteInt_h::With,
     pub yy204: *mut crate::src::headers::sqliteInt_h::IdList,
@@ -765,7 +761,7 @@ pub union YYMINORTYPE {
     pub yy402: *mut crate::src::headers::sqliteInt_h::ExprList,
     pub yy403: *mut crate::src::headers::sqliteInt_h::Upsert,
     pub yy421: crate::src::headers::sqliteInt_h::OnOrUsing,
-    pub yy444: crate::src::ext::rtree::rtree::u8_0,
+    pub yy444: crate::src::ext::rtree::rtree::U8_0,
     pub yy481: C2RustUnnamed,
     pub yy483: *mut crate::src::headers::sqliteInt_h::Window,
     pub yy502: ::core::ffi::c_int,
@@ -813,11 +809,11 @@ unsafe extern "C" fn disableLookaside(mut pParse: *mut crate::src::headers::sqli
         &raw mut __pParse_ref.u1.cr as *mut ::core::ffi::c_void,
         0 as ::core::ffi::c_int,
         ::core::mem::size_of::<crate::src::headers::sqliteInt_h::__anon_struct_7>()
-            as crate::__stddef_size_t_h::size_t,
+            as crate::__stddef_size_t_h::SizeT,
     );
     let __db_ref = unsafe { &mut *db };
     __db_ref.lookaside.bDisable = __db_ref.lookaside.bDisable.wrapping_add(1);
-    __db_ref.lookaside.sz = 0 as crate::src::fts5::u16_0;
+    __db_ref.lookaside.sz = 0 as crate::src::fts5::U16_0;
 }
 
 pub const YYWILDCARD: ::core::ffi::c_int = 102 as ::core::ffi::c_int;
@@ -835,7 +831,7 @@ unsafe extern "C" fn parserDoubleLinkSelect(
         loop {
             (*pLoop).pNext = pNext;
             (*pLoop).selFlags |= crate::src::headers::sqliteInt_h::SF_Compound
-                as crate::src::ext::rtree::rtree::u32_0;
+                as crate::src::ext::rtree::rtree::U32_0;
             pNext = pLoop;
             pLoop = (*pLoop).pPrior;
             if pLoop.is_null() {
@@ -868,8 +864,8 @@ unsafe extern "C" fn parserDoubleLinkSelect(
         if (*p).selFlags
             & (crate::src::headers::sqliteInt_h::SF_MultiValue
                 | crate::src::headers::sqliteInt_h::SF_Values)
-                as crate::src::ext::rtree::rtree::u32_0
-            == 0 as crate::src::ext::rtree::rtree::u32_0
+                as crate::src::ext::rtree::rtree::U32_0
+            == 0 as crate::src::ext::rtree::rtree::U32_0
             && {
                 mxSelect = (*(*pParse).db).aLimit
                     [crate::src::headers::sqlite3_h::SQLITE_LIMIT_COMPOUND_SELECT as usize];
@@ -911,7 +907,7 @@ pub const YY_MIN_SHIFTREDUCE: ::core::ffi::c_int = 849 as ::core::ffi::c_int;
 
 unsafe extern "C" fn parserStackRealloc(
     mut pOld: *mut ::core::ffi::c_void,
-    mut newSize: crate::src::headers::sqlite3_h::sqlite3_uint64,
+    mut newSize: crate::src::headers::sqlite3_h::Sqlite3Uint64,
 ) -> *mut ::core::ffi::c_void {
     if crate::src::src::util::sqlite3FaultSim(700 as ::core::ffi::c_int) != 0 {
         ::core::ptr::null_mut::<::core::ffi::c_void>()
@@ -5545,14 +5541,14 @@ unsafe extern "C" fn tokenExpr(
             (*pParse).db as *mut crate::src::headers::sqliteInt_h::sqlite3,
             (::core::mem::size_of::<crate::src::headers::sqliteInt_h::Expr>() as usize)
                 .wrapping_add(t.n as usize)
-                .wrapping_add(1 as usize) as crate::src::ext::rtree::rtree::u64_0,
+                .wrapping_add(1 as usize) as crate::src::ext::rtree::rtree::U64_0,
         ) as *mut crate::src::headers::sqliteInt_h::Expr;
     if !p.is_null() {
         let __p_ref = unsafe { &mut *p };
-        __p_ref.op = op as crate::src::ext::rtree::rtree::u8_0;
+        __p_ref.op = op as crate::src::ext::rtree::rtree::U8_0;
         __p_ref.affExpr = 0 as ::core::ffi::c_char;
         __p_ref.flags =
-            crate::src::headers::sqliteInt_h::EP_Leaf as crate::src::ext::rtree::rtree::u32_0;
+            crate::src::headers::sqliteInt_h::EP_Leaf as crate::src::ext::rtree::rtree::U32_0;
         __p_ref.pRight = ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Expr>();
         __p_ref.pLeft = __p_ref.pRight;
         __p_ref.pAggInfo = ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::AggInfo>();
@@ -5560,17 +5556,17 @@ unsafe extern "C" fn tokenExpr(
             &raw mut __p_ref.x as *mut ::core::ffi::c_void,
             0 as ::core::ffi::c_int,
             ::core::mem::size_of::<crate::src::headers::sqliteInt_h::__anon_union_6>()
-                as crate::__stddef_size_t_h::size_t,
+                as crate::__stddef_size_t_h::SizeT,
         );
         ::libc::memset(
             &raw mut __p_ref.y as *mut ::core::ffi::c_void,
             0 as ::core::ffi::c_int,
             ::core::mem::size_of::<crate::src::headers::sqliteInt_h::__anon_union_8>()
-                as crate::__stddef_size_t_h::size_t,
+                as crate::__stddef_size_t_h::SizeT,
         );
-        __p_ref.op2 = 0 as crate::src::ext::rtree::rtree::u8_0;
+        __p_ref.op2 = 0 as crate::src::ext::rtree::rtree::U8_0;
         __p_ref.iTable = 0 as ::core::ffi::c_int;
-        __p_ref.iColumn = 0 as crate::src::headers::sqliteInt_h::ynVar;
+        __p_ref.iColumn = 0 as crate::src::headers::sqliteInt_h::YnVar;
         __p_ref.u.zToken = p.offset(1 as isize) as *mut crate::src::headers::sqliteInt_h::Expr
             as *mut ::core::ffi::c_char;
         ::core::ptr::copy_nonoverlapping(
@@ -7409,7 +7405,7 @@ unsafe extern "C" fn binaryToUnaryIfNull(
             >= crate::src::headers::sqliteInt_h::PARSE_MODE_RENAME)
     {
         let __pA_ref = unsafe { &mut *pA };
-        __pA_ref.op = op as crate::src::ext::rtree::rtree::u8_0;
+        __pA_ref.op = op as crate::src::ext::rtree::rtree::U8_0;
         crate::src::src::expr::sqlite3ExprDelete(
             db as *mut crate::src::headers::sqliteInt_h::sqlite3,
             __pA_ref.pRight as *mut crate::src::headers::sqliteInt_h::Expr,
@@ -7440,7 +7436,7 @@ unsafe extern "C" fn parserAddExprIdListTerm(
             b"syntax error after column name \"%.*s\"\0" as *const u8 as *const ::core::ffi::c_char,
             &[
                 crate::src::src::printf::PrintfArg::Int(
-                    (*pIdToken).n as crate::src::ext::rtree::rtree::i64_0,
+                    (*pIdToken).n as crate::src::ext::rtree::rtree::I64_0,
                 ),
                 crate::src::src::printf::PrintfArg::Str((*pIdToken).z as *mut ::core::ffi::c_char),
             ],
@@ -7469,7 +7465,7 @@ unsafe extern "C" fn yyGrowStack(mut p: *mut yyParser) -> ::core::ffi::c_int {
         pNew = parserStackRealloc(
             ::core::ptr::null_mut::<::core::ffi::c_void>(),
             (newSize as usize).wrapping_mul(::core::mem::size_of::<yyStackEntry>() as usize)
-                as crate::src::headers::sqlite3_h::sqlite3_uint64,
+                as crate::src::headers::sqlite3_h::Sqlite3Uint64,
         ) as *mut yyStackEntry;
         if pNew.is_null() {
             return 1 as ::core::ffi::c_int;
@@ -7477,16 +7473,16 @@ unsafe extern "C" fn yyGrowStack(mut p: *mut yyParser) -> ::core::ffi::c_int {
         ::core::ptr::copy_nonoverlapping(
             __p_ref.yystack as *const u8,
             pNew as *mut u8,
-            ((oldSize as crate::__stddef_size_t_h::size_t)
+            ((oldSize as crate::__stddef_size_t_h::SizeT)
                 .wrapping_mul(
-                    ::core::mem::size_of::<yyStackEntry>() as crate::__stddef_size_t_h::size_t
+                    ::core::mem::size_of::<yyStackEntry>() as crate::__stddef_size_t_h::SizeT
                 )) as usize,
         );
     } else {
         pNew = parserStackRealloc(
             __p_ref.yystack as *mut ::core::ffi::c_void,
             (newSize as usize).wrapping_mul(::core::mem::size_of::<yyStackEntry>() as usize)
-                as crate::src::headers::sqlite3_h::sqlite3_uint64,
+                as crate::src::headers::sqlite3_h::Sqlite3Uint64,
         ) as *mut yyStackEntry;
         if pNew.is_null() {
             return 1 as ::core::ffi::c_int;
@@ -7522,14 +7518,14 @@ pub unsafe extern "C" fn sqlite3ParserInit(
 #[cfg_attr(feature = "test", unsafe(no_mangle))]
 pub unsafe extern "C" fn sqlite3ParserAlloc(
     mut mallocProc: Option<
-        unsafe extern "C" fn(crate::src::ext::rtree::rtree::u64_0) -> *mut ::core::ffi::c_void,
+        unsafe extern "C" fn(crate::src::ext::rtree::rtree::U64_0) -> *mut ::core::ffi::c_void,
     >,
     mut pParse: *mut crate::src::headers::sqliteInt_h::Parse,
 ) -> *mut ::core::ffi::c_void {
     let mut yypParser: *mut yyParser = ::core::ptr::null_mut::<yyParser>();
     yypParser = Some(mallocProc.expect("non-null function pointer"))
         .expect("non-null function pointer")(
-        ::core::mem::size_of::<yyParser>() as crate::src::ext::rtree::rtree::u64_0
+        ::core::mem::size_of::<yyParser>() as crate::src::ext::rtree::rtree::U64_0
     ) as *mut yyParser;
     if !yypParser.is_null() {
         (*yypParser).pParse = pParse;
@@ -8569,12 +8565,12 @@ unsafe extern "C" fn yy_reduce(
     match yyruleno {
         0 => {
             if (*pParse).pReprepare.is_null() {
-                (*pParse).explain = 1 as crate::src::ext::rtree::rtree::u8_0;
+                (*pParse).explain = 1 as crate::src::ext::rtree::rtree::U8_0;
             }
         }
         1 => {
             if (*pParse).pReprepare.is_null() {
-                (*pParse).explain = 2 as crate::src::ext::rtree::rtree::u8_0;
+                (*pParse).explain = 2 as crate::src::ext::rtree::rtree::U8_0;
             }
         }
         2 => {
@@ -8682,7 +8678,7 @@ unsafe extern "C" fn yy_reduce(
                     as *mut crate::src::headers::sqliteInt_h::Token,
                 ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Token>()
                     as *mut crate::src::headers::sqliteInt_h::Token,
-                0 as crate::src::ext::rtree::rtree::u32_0,
+                0 as crate::src::ext::rtree::rtree::U32_0,
                 (*yymsp.offset(0 as isize)).minor.yy637
                     as *mut crate::src::headers::sqliteInt_h::Select,
             );
@@ -8693,7 +8689,7 @@ unsafe extern "C" fn yy_reduce(
             );
         }
         21 => {
-            (*yymsp.offset(1 as isize)).minor.yy9 = 0 as crate::src::ext::rtree::rtree::u32_0;
+            (*yymsp.offset(1 as isize)).minor.yy9 = 0 as crate::src::ext::rtree::rtree::U32_0;
         }
         22 => {
             yylhsminor.yy9 = (*yymsp.offset(-(2 as ::core::ffi::c_int) as isize))
@@ -8716,18 +8712,18 @@ unsafe extern "C" fn yy_reduce(
                     .minor
                     .yy9 = (crate::src::headers::sqliteInt_h::TF_WithoutRowid
                     | crate::src::headers::sqliteInt_h::TF_NoVisibleRowid)
-                    as crate::src::ext::rtree::rtree::u32_0;
+                    as crate::src::ext::rtree::rtree::U32_0;
             } else {
                 (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
                     .minor
-                    .yy9 = 0 as crate::src::ext::rtree::rtree::u32_0;
+                    .yy9 = 0 as crate::src::ext::rtree::rtree::U32_0;
                 crate::src::printf_c_variadic::sqlite3ErrorMsg_args(
                     pParse as *mut crate::src::headers::sqliteInt_h::Parse,
                     b"unknown table option: %.*s\0" as *const u8 as *const ::core::ffi::c_char,
                     &[
                         crate::src::src::printf::PrintfArg::Int(
                             (*yymsp.offset(0 as isize)).minor.yy0.n
-                                as crate::src::ext::rtree::rtree::i64_0,
+                                as crate::src::ext::rtree::rtree::I64_0,
                         ),
                         crate::src::src::printf::PrintfArg::Str(
                             (*yymsp.offset(0 as isize)).minor.yy0.z as *mut ::core::ffi::c_char,
@@ -8745,16 +8741,16 @@ unsafe extern "C" fn yy_reduce(
                 ) == 0 as ::core::ffi::c_int
             {
                 yylhsminor.yy9 = crate::src::headers::sqliteInt_h::TF_Strict
-                    as crate::src::ext::rtree::rtree::u32_0;
+                    as crate::src::ext::rtree::rtree::U32_0;
             } else {
-                yylhsminor.yy9 = 0 as crate::src::ext::rtree::rtree::u32_0;
+                yylhsminor.yy9 = 0 as crate::src::ext::rtree::rtree::U32_0;
                 crate::src::printf_c_variadic::sqlite3ErrorMsg_args(
                     pParse as *mut crate::src::headers::sqliteInt_h::Parse,
                     b"unknown table option: %.*s\0" as *const u8 as *const ::core::ffi::c_char,
                     &[
                         crate::src::src::printf::PrintfArg::Int(
                             (*yymsp.offset(0 as isize)).minor.yy0.n
-                                as crate::src::ext::rtree::rtree::i64_0,
+                                as crate::src::ext::rtree::rtree::I64_0,
                         ),
                         crate::src::src::printf::PrintfArg::Str(
                             (*yymsp.offset(0 as isize)).minor.yy0.z as *mut ::core::ffi::c_char,
@@ -8984,7 +8980,7 @@ unsafe extern "C" fn yy_reduce(
                 0 as ::core::ffi::c_int,
                 0 as ::core::ffi::c_int,
                 crate::src::headers::sqliteInt_h::SQLITE_IDXTYPE_UNIQUE
-                    as crate::src::ext::rtree::rtree::u8_0,
+                    as crate::src::ext::rtree::rtree::U8_0,
             );
         }
         41 => {
@@ -9180,7 +9176,7 @@ unsafe extern "C" fn yy_reduce(
                 0 as ::core::ffi::c_int,
                 0 as ::core::ffi::c_int,
                 crate::src::headers::sqliteInt_h::SQLITE_IDXTYPE_UNIQUE
-                    as crate::src::ext::rtree::rtree::u8_0,
+                    as crate::src::ext::rtree::rtree::U8_0,
             );
         }
         70 => {
@@ -9285,7 +9281,7 @@ unsafe extern "C" fn yy_reduce(
             let mut dest: crate::src::headers::sqliteInt_h::SelectDest =
                 crate::src::headers::sqliteInt_h::SelectDest {
                     eDest: crate::src::headers::sqliteInt_h::SRT_Output
-                        as crate::src::ext::rtree::rtree::u8_0,
+                        as crate::src::ext::rtree::rtree::U8_0,
                     iSDParm: 0 as ::core::ffi::c_int,
                     iSDParm2: 0 as ::core::ffi::c_int,
                     iSdst: 0 as ::core::ffi::c_int,
@@ -9295,8 +9291,8 @@ unsafe extern "C" fn yy_reduce(
                 };
             if (*(*pParse).db).mDbFlags
                 & crate::src::headers::sqliteInt_h::DBFLAG_EncodingFixed
-                    as crate::src::ext::rtree::rtree::u32_0
-                != 0 as crate::src::ext::rtree::rtree::u32_0
+                    as crate::src::ext::rtree::rtree::U32_0
+                != 0 as crate::src::ext::rtree::rtree::U32_0
                 || crate::src::src::prepare::sqlite3ReadSchema(
                     pParse as *mut crate::src::headers::sqliteInt_h::Parse,
                 ) == crate::src::headers::sqlite3_h::SQLITE_OK
@@ -9385,7 +9381,7 @@ unsafe extern "C" fn yy_reduce(
                         as *mut crate::src::headers::sqliteInt_h::Expr,
                     ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::ExprList>()
                         as *mut crate::src::headers::sqliteInt_h::ExprList,
-                    0 as crate::src::ext::rtree::rtree::u32_0,
+                    0 as crate::src::ext::rtree::rtree::U32_0,
                     ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Expr>()
                         as *mut crate::src::headers::sqliteInt_h::Expr,
                 ) as *mut crate::src::headers::sqliteInt_h::Select;
@@ -9394,20 +9390,20 @@ unsafe extern "C" fn yy_reduce(
                 let __pRhs_ref = unsafe { &mut *pRhs };
                 __pRhs_ref.op = (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
                     .minor
-                    .yy502 as crate::src::ext::rtree::rtree::u8_0;
+                    .yy502 as crate::src::ext::rtree::rtree::U8_0;
                 __pRhs_ref.pPrior = pLhs;
                 if !pLhs.is_null() {
                     (*pLhs).selFlags &= !(crate::src::headers::sqliteInt_h::SF_MultiValue
-                        as crate::src::ext::rtree::rtree::u32_0);
+                        as crate::src::ext::rtree::rtree::U32_0);
                 }
                 __pRhs_ref.selFlags &= !(crate::src::headers::sqliteInt_h::SF_MultiValue
-                    as crate::src::ext::rtree::rtree::u32_0);
+                    as crate::src::ext::rtree::rtree::U32_0);
                 if (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
                     .minor
                     .yy502
                     != crate::src::parse::TK_ALL
                 {
-                    (*pParse).hasCompound = 1 as crate::src::ext::rtree::rtree::u8_0;
+                    (*pParse).hasCompound = 1 as crate::src::ext::rtree::rtree::U8_0;
                 }
             } else {
                 crate::src::src::select::sqlite3SelectDelete(
@@ -9455,7 +9451,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy402 as *mut crate::src::headers::sqliteInt_h::ExprList,
                 (*yymsp.offset(-(7 as ::core::ffi::c_int) as isize))
                     .minor
-                    .yy502 as crate::src::ext::rtree::rtree::u32_0,
+                    .yy502 as crate::src::ext::rtree::rtree::U32_0,
                 (*yymsp.offset(0 as isize)).minor.yy590
                     as *mut crate::src::headers::sqliteInt_h::Expr,
             ) as *mut crate::src::headers::sqliteInt_h::Select;
@@ -9486,7 +9482,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy402 as *mut crate::src::headers::sqliteInt_h::ExprList,
                 (*yymsp.offset(-(8 as ::core::ffi::c_int) as isize))
                     .minor
-                    .yy502 as crate::src::ext::rtree::rtree::u32_0,
+                    .yy502 as crate::src::ext::rtree::rtree::U32_0,
                 (*yymsp.offset(0 as isize)).minor.yy590
                     as *mut crate::src::headers::sqliteInt_h::Expr,
             ) as *mut crate::src::headers::sqliteInt_h::Select;
@@ -9530,7 +9526,7 @@ unsafe extern "C" fn yy_reduce(
                     as *mut crate::src::headers::sqliteInt_h::Expr,
                 ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::ExprList>()
                     as *mut crate::src::headers::sqliteInt_h::ExprList,
-                crate::src::headers::sqliteInt_h::SF_Values as crate::src::ext::rtree::rtree::u32_0,
+                crate::src::headers::sqliteInt_h::SF_Values as crate::src::ext::rtree::rtree::U32_0,
                 ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Expr>()
                     as *mut crate::src::headers::sqliteInt_h::Expr,
             ) as *mut crate::src::headers::sqliteInt_h::Select;
@@ -9724,7 +9720,7 @@ unsafe extern "C" fn yy_reduce(
                     ))
                 .fg
                 .jointype =
-                    (*yymsp.offset(0 as isize)).minor.yy502 as crate::src::ext::rtree::rtree::u8_0;
+                    (*yymsp.offset(0 as isize)).minor.yy502 as crate::src::ext::rtree::rtree::U8_0;
             }
         }
         111 => {
@@ -9932,8 +9928,8 @@ unsafe extern "C" fn yy_reduce(
                             .set_isSubquery(0 as ::core::ffi::c_uint as ::core::ffi::c_uint);
                         if (*(*__pNew_ref.u4.pSubq).pSelect).selFlags
                             & crate::src::headers::sqliteInt_h::SF_NestedFrom
-                                as crate::src::ext::rtree::rtree::u32_0
-                            != 0 as crate::src::ext::rtree::rtree::u32_0
+                                as crate::src::ext::rtree::rtree::U32_0
+                            != 0 as crate::src::ext::rtree::rtree::U32_0
                         {
                             (*pNew)
                                 .fg
@@ -9990,7 +9986,7 @@ unsafe extern "C" fn yy_reduce(
                     ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::ExprList>()
                         as *mut crate::src::headers::sqliteInt_h::ExprList,
                     crate::src::headers::sqliteInt_h::SF_NestedFrom
-                        as crate::src::ext::rtree::rtree::u32_0,
+                        as crate::src::ext::rtree::rtree::U32_0,
                     ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Expr>()
                         as *mut crate::src::headers::sqliteInt_h::Expr,
                 ) as *mut crate::src::headers::sqliteInt_h::Select;
@@ -10489,7 +10485,7 @@ unsafe extern "C" fn yy_reduce(
                         ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::ExprList>()
                             as *mut crate::src::headers::sqliteInt_h::ExprList,
                         crate::src::headers::sqliteInt_h::SF_NestedFrom
-                            as crate::src::ext::rtree::rtree::u32_0,
+                            as crate::src::ext::rtree::rtree::U32_0,
                         ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Expr>()
                             as *mut crate::src::headers::sqliteInt_h::Expr,
                     )
@@ -10922,8 +10918,8 @@ unsafe extern "C" fn yy_reduce(
                     & 0x4 as ::core::ffi::c_int
                     != 0)
             {
-                let mut n: crate::src::ext::rtree::rtree::u32_0 =
-                    (*yymsp.offset(0 as isize)).minor.yy0.n as crate::src::ext::rtree::rtree::u32_0;
+                let mut n: crate::src::ext::rtree::rtree::U32_0 =
+                    (*yymsp.offset(0 as isize)).minor.yy0.n as crate::src::ext::rtree::rtree::U32_0;
                 let ref mut fresh71 = (*yymsp.offset(0 as isize)).minor.yy590;
                 *fresh71 = tokenExpr(
                     pParse,
@@ -11197,7 +11193,7 @@ unsafe extern "C" fn yy_reduce(
                     .pExpr)
                         .flags
                         & crate::src::headers::sqliteInt_h::EP_Propagate
-                            as crate::src::ext::rtree::rtree::u32_0;
+                            as crate::src::ext::rtree::rtree::U32_0;
                 }
             } else {
                 crate::src::src::expr::sqlite3ExprListDelete(
@@ -11304,7 +11300,7 @@ unsafe extern "C" fn yy_reduce(
                     .minor
                     .yy590)
                     .flags |= crate::src::headers::sqliteInt_h::EP_InfixFunc
-                    as crate::src::ext::rtree::rtree::u32_0;
+                    as crate::src::ext::rtree::rtree::U32_0;
             }
         }
         207 => {
@@ -11376,7 +11372,7 @@ unsafe extern "C" fn yy_reduce(
                     .minor
                     .yy590)
                     .flags |= crate::src::headers::sqliteInt_h::EP_InfixFunc
-                    as crate::src::ext::rtree::rtree::u32_0;
+                    as crate::src::ext::rtree::rtree::U32_0;
             }
         }
         208 => {
@@ -11511,10 +11507,10 @@ unsafe extern "C" fn yy_reduce(
         216 => {
             let mut p_3: *mut crate::src::headers::sqliteInt_h::Expr =
                 (*yymsp.offset(0 as isize)).minor.yy590;
-            let mut op: crate::src::ext::rtree::rtree::u8_0 =
+            let mut op: crate::src::ext::rtree::rtree::U8_0 =
                 ((*yymsp.offset(-(1 as ::core::ffi::c_int) as isize)).major as ::core::ffi::c_int
                     + (crate::src::parse::TK_UPLUS - crate::src::parse::TK_PLUS))
-                    as crate::src::ext::rtree::rtree::u8_0;
+                    as crate::src::ext::rtree::rtree::U8_0;
             if !p_3.is_null() && (*p_3).op as ::core::ffi::c_int == crate::src::parse::TK_UPLUS {
                 (*p_3).op = op;
                 let ref mut fresh98 = (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
@@ -11660,8 +11656,8 @@ unsafe extern "C" fn yy_reduce(
                     .minor
                     .yy590)
                     .flags
-                    & 0x8 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::u32_0
-                    != 0 as crate::src::ext::rtree::rtree::u32_0)
+                    & 0x8 as ::core::ffi::c_int as crate::src::ext::rtree::rtree::U32_0
+                    != 0 as crate::src::ext::rtree::rtree::U32_0)
                 {
                     crate::src::src::expr::sqlite3ExprUnmapAndDelete(
                         pParse as *mut crate::src::headers::sqliteInt_h::Parse,
@@ -11991,7 +11987,7 @@ unsafe extern "C" fn yy_reduce(
                         as *mut crate::src::headers::sqliteInt_h::Expr,
                     ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::ExprList>()
                         as *mut crate::src::headers::sqliteInt_h::ExprList,
-                    0 as crate::src::ext::rtree::rtree::u32_0,
+                    0 as crate::src::ext::rtree::rtree::U32_0,
                     ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Expr>()
                         as *mut crate::src::headers::sqliteInt_h::Expr,
                 ) as *mut crate::src::headers::sqliteInt_h::Select;
@@ -12251,7 +12247,7 @@ unsafe extern "C" fn yy_reduce(
                     .minor
                     .yy502,
                 crate::src::headers::sqliteInt_h::SQLITE_IDXTYPE_APPDEF
-                    as crate::src::ext::rtree::rtree::u8_0,
+                    as crate::src::ext::rtree::rtree::U8_0,
             );
             if (*pParse).eParseMode as ::core::ffi::c_int
                 >= crate::src::headers::sqliteInt_h::PARSE_MODE_RENAME
@@ -12587,7 +12583,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy590 as *mut crate::src::headers::sqliteInt_h::Expr,
                 (*yymsp.offset(-(7 as ::core::ffi::c_int) as isize))
                     .minor
-                    .yy502 as crate::src::ext::rtree::rtree::u8_0,
+                    .yy502 as crate::src::ext::rtree::rtree::U8_0,
                 (*yymsp.offset(-(8 as ::core::ffi::c_int) as isize))
                     .minor
                     .yy0
@@ -12613,7 +12609,7 @@ unsafe extern "C" fn yy_reduce(
                     .yy637 as *mut crate::src::headers::sqliteInt_h::Select,
                 (*yymsp.offset(-(6 as ::core::ffi::c_int) as isize))
                     .minor
-                    .yy502 as crate::src::ext::rtree::rtree::u8_0,
+                    .yy502 as crate::src::ext::rtree::rtree::U8_0,
                 (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
                     .minor
                     .yy403 as *mut crate::src::headers::sqliteInt_h::Upsert,
@@ -12893,24 +12889,24 @@ unsafe extern "C" fn yy_reduce(
                 pParse as *mut crate::src::headers::sqliteInt_h::Parse,
                 (*yymsp.offset(0 as isize)).minor.yy125
                     as *mut crate::src::headers::sqliteInt_h::With,
-                1 as crate::src::ext::rtree::rtree::u8_0,
+                1 as crate::src::ext::rtree::rtree::U8_0,
             ) as *mut crate::src::headers::sqliteInt_h::With;
         }
         307 => {
             (*yymsp.offset(0 as isize)).minor.yy444 =
-                crate::src::headers::sqliteInt_h::M10d_Any as crate::src::ext::rtree::rtree::u8_0;
+                crate::src::headers::sqliteInt_h::M10d_Any as crate::src::ext::rtree::rtree::U8_0;
         }
         308 => {
             (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
                 .minor
                 .yy444 =
-                crate::src::headers::sqliteInt_h::M10d_Yes as crate::src::ext::rtree::rtree::u8_0;
+                crate::src::headers::sqliteInt_h::M10d_Yes as crate::src::ext::rtree::rtree::U8_0;
         }
         309 => {
             (*yymsp.offset(-(2 as ::core::ffi::c_int) as isize))
                 .minor
                 .yy444 =
-                crate::src::headers::sqliteInt_h::M10d_No as crate::src::ext::rtree::rtree::u8_0;
+                crate::src::headers::sqliteInt_h::M10d_No as crate::src::ext::rtree::rtree::U8_0;
         }
         310 => {
             let ref mut fresh142 = (*yymsp.offset(-(5 as ::core::ffi::c_int) as isize))
@@ -12934,7 +12930,7 @@ unsafe extern "C" fn yy_reduce(
         }
         311 => {
             (*pParse).set_bHasWith(
-                1 as crate::src::headers::sqliteInt_h::bft as crate::src::headers::sqliteInt_h::bft,
+                1 as crate::src::headers::sqliteInt_h::Bft as crate::src::headers::sqliteInt_h::Bft,
             );
         }
         312 => {
@@ -12998,7 +12994,7 @@ unsafe extern "C" fn yy_reduce(
                     (*yymsp.offset(-(4 as ::core::ffi::c_int) as isize))
                         .minor
                         .yy0
-                        .n as crate::src::ext::rtree::rtree::u64_0,
+                        .n as crate::src::ext::rtree::rtree::U64_0,
                 );
             }
             yylhsminor.yy483 = (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
@@ -13112,7 +13108,7 @@ unsafe extern "C" fn yy_reduce(
                 crate::src::parse::TK_CURRENT,
                 ::core::ptr::null_mut::<crate::src::headers::sqliteInt_h::Expr>()
                     as *mut crate::src::headers::sqliteInt_h::Expr,
-                0 as crate::src::ext::rtree::rtree::u8_0,
+                0 as crate::src::ext::rtree::rtree::U8_0,
             ) as *mut crate::src::headers::sqliteInt_h::Window;
         }
         322 => {
@@ -13191,7 +13187,7 @@ unsafe extern "C" fn yy_reduce(
                 .yy205 = yylhsminor.yy205;
         }
         331 => {
-            (*yymsp.offset(1 as isize)).minor.yy444 = 0 as crate::src::ext::rtree::rtree::u8_0;
+            (*yymsp.offset(1 as isize)).minor.yy444 = 0 as crate::src::ext::rtree::rtree::U8_0;
         }
         332 => {
             (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
@@ -13202,11 +13198,11 @@ unsafe extern "C" fn yy_reduce(
             (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
                 .minor
                 .yy444 = (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize)).major
-                as crate::src::ext::rtree::rtree::u8_0;
+                as crate::src::ext::rtree::rtree::U8_0;
         }
         335 => {
             (*yymsp.offset(0 as isize)).minor.yy444 =
-                (*yymsp.offset(0 as isize)).major as crate::src::ext::rtree::rtree::u8_0;
+                (*yymsp.offset(0 as isize)).major as crate::src::ext::rtree::rtree::U8_0;
         }
         336 => {
             let ref mut fresh157 = (*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
@@ -13243,11 +13239,11 @@ unsafe extern "C" fn yy_reduce(
             yylhsminor.yy483 = crate::src::src::malloc::sqlite3DbMallocZero(
                 (*pParse).db as *mut crate::src::headers::sqliteInt_h::sqlite3,
                 ::core::mem::size_of::<crate::src::headers::sqliteInt_h::Window>()
-                    as crate::src::ext::rtree::rtree::u64_0,
+                    as crate::src::ext::rtree::rtree::U64_0,
             ) as *mut crate::src::headers::sqliteInt_h::Window;
             if !yylhsminor.yy483.is_null() {
                 (*yylhsminor.yy483).eFrmType =
-                    crate::src::parse::TK_FILTER as crate::src::ext::rtree::rtree::u8_0;
+                    crate::src::parse::TK_FILTER as crate::src::ext::rtree::rtree::U8_0;
                 (*yylhsminor.yy483).pFilter = (*yymsp.offset(0 as isize)).minor.yy590;
             } else {
                 crate::src::src::expr::sqlite3ExprDelete(
@@ -13274,7 +13270,7 @@ unsafe extern "C" fn yy_reduce(
             *fresh163 = crate::src::src::malloc::sqlite3DbMallocZero(
                 (*pParse).db as *mut crate::src::headers::sqliteInt_h::sqlite3,
                 ::core::mem::size_of::<crate::src::headers::sqliteInt_h::Window>()
-                    as crate::src::ext::rtree::rtree::u64_0,
+                    as crate::src::ext::rtree::rtree::U64_0,
             ) as *mut crate::src::headers::sqliteInt_h::Window;
             if !(*yymsp.offset(-(1 as ::core::ffi::c_int) as isize))
                 .minor
@@ -13288,7 +13284,7 @@ unsafe extern "C" fn yy_reduce(
                 *fresh164 = crate::src::src::malloc::sqlite3DbStrNDup(
                     (*pParse).db as *mut crate::src::headers::sqliteInt_h::sqlite3,
                     (*yymsp.offset(0 as isize)).minor.yy0.z,
-                    (*yymsp.offset(0 as isize)).minor.yy0.n as crate::src::ext::rtree::rtree::u64_0,
+                    (*yymsp.offset(0 as isize)).minor.yy0.n as crate::src::ext::rtree::rtree::U64_0,
                 );
             }
         }
